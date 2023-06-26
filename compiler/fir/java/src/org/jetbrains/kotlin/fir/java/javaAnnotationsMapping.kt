@@ -184,13 +184,17 @@ private fun List<JavaAnnotationArgument>.mapJavaTargetArguments(session: FirSess
         }
         val classId = StandardClassIds.AnnotationTarget
         resultSet.mapTo(arguments) { buildEnumCall(session, classId, Name.identifier(it.name)) }
+        val elementConeType = ConeClassLikeTypeImpl(
+            classId.toLookupTag(),
+            emptyArray(),
+            isNullable = false,
+            ConeAttributes.Empty
+        )
+        typeRef = buildResolvedTypeRef {
+            type = elementConeType
+        }
         varargElementType = buildResolvedTypeRef {
-            type = ConeClassLikeTypeImpl(
-                classId.toLookupTag(),
-                emptyArray(),
-                isNullable = false,
-                ConeAttributes.Empty
-            ).createOutArrayType()
+            type = elementConeType.createOutArrayType()
         }
     }
 }
