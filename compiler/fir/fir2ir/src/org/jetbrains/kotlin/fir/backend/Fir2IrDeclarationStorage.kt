@@ -17,7 +17,6 @@ import org.jetbrains.kotlin.fir.declarations.builder.buildProperty
 import org.jetbrains.kotlin.fir.declarations.impl.FirDefaultPropertyGetter
 import org.jetbrains.kotlin.fir.declarations.impl.FirDefaultPropertySetter
 import org.jetbrains.kotlin.fir.declarations.utils.*
-import org.jetbrains.kotlin.fir.descriptors.FirBuiltInsPackageFragment
 import org.jetbrains.kotlin.fir.descriptors.FirModuleDescriptor
 import org.jetbrains.kotlin.fir.descriptors.FirPackageFragmentDescriptor
 import org.jetbrains.kotlin.fir.expressions.FirComponentCall
@@ -76,8 +75,6 @@ class Fir2IrDeclarationStorage(
     private val firProvider = session.firProvider
 
     private val fragmentCache: ConcurrentHashMap<FqName, IrExternalPackageFragment> = ConcurrentHashMap()
-
-    private val builtInsFragmentCache: ConcurrentHashMap<FqName, IrExternalPackageFragment> = ConcurrentHashMap()
 
     private val fileCache: ConcurrentHashMap<FirFile, IrFile> = ConcurrentHashMap()
 
@@ -246,17 +243,6 @@ class Fir2IrDeclarationStorage(
     private fun ConeKotlinType.toIrType(typeContext: ConversionTypeContext = ConversionTypeContext.DEFAULT): IrType =
         with(typeConverter) { toIrType(typeContext) }
 
-    private fun getIrExternalOrBuiltInsPackageFragment(fqName: FqName, firOrigin: FirDeclarationOrigin): IrExternalPackageFragment {
-        val isBuiltIn = fqName in BUILT_INS_PACKAGE_FQ_NAMES
-        return if (isBuiltIn) getIrBuiltInsPackageFragment(fqName) else getIrExternalPackageFragment(fqName, firOrigin)
-    }
-
-    private fun getIrBuiltInsPackageFragment(fqName: FqName): IrExternalPackageFragment {
-        return builtInsFragmentCache.getOrPut(fqName) {
-            symbolTable.declareExternalPackageFragment(FirBuiltInsPackageFragment(fqName, moduleDescriptor))
-        }
-    }
-
     fun getIrExternalPackageFragment(
         fqName: FqName,
         firOrigin: FirDeclarationOrigin = FirDeclarationOrigin.Library
@@ -289,10 +275,7 @@ class Fir2IrDeclarationStorage(
 
             when {
                 containerFile != null -> fileCache[containerFile]
-                firBasedSymbol is FirCallableSymbol -> getIrExternalPackageFragment(packageFqName, firOrigin)
-                // TODO: All classes from BUILT_INS_PACKAGE_FQ_NAMES are considered built-ins now,
-                // which is not exact and can lead to some problems
-                else -> getIrExternalOrBuiltInsPackageFragment(packageFqName, firOrigin)
+                else -> getIrExternalPackageFragment(packageFqName, firOrigin)
             }
         }
     }
