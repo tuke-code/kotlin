@@ -405,13 +405,15 @@ abstract class BaseFirBuilder<T>(val baseSession: FirSession, val context: Conte
                 buildConstExpression(
                     sourceElement,
                     ConstantValueKind.Boolean,
-                    convertedText as Boolean
+                    convertedText as Boolean,
+                    setType = false
                 )
             NULL ->
                 buildConstExpression(
                     sourceElement,
                     ConstantValueKind.Null,
-                    null
+                    null,
+                    setType = false
                 )
             else ->
                 throw AssertionError("Unknown literal type: $type, $text")
@@ -437,7 +439,8 @@ abstract class BaseFirBuilder<T>(val baseSession: FirSession, val context: Conte
         return buildConstExpression(
             source.toFirSourceElement(),
             ConstantValueKind.IntegerLiteral,
-            convertedValue
+            convertedValue,
+            setType = false
         )
     }
 
@@ -456,11 +459,15 @@ abstract class BaseFirBuilder<T>(val baseSession: FirSession, val context: Conte
                         OPEN_QUOTE, CLOSING_QUOTE -> continue@L
                         LITERAL_STRING_TEMPLATE_ENTRY -> {
                             sb.append(entry.asText)
-                            buildConstExpression(entry.toFirSourceElement(), ConstantValueKind.String, entry.asText)
+                            buildConstExpression(
+                                entry.toFirSourceElement(), ConstantValueKind.String, entry.asText, setType = false
+                            )
                         }
                         ESCAPE_STRING_TEMPLATE_ENTRY -> {
                             sb.append(entry.unescapedValue)
-                            buildConstExpression(entry.toFirSourceElement(), ConstantValueKind.String, entry.unescapedValue)
+                            buildConstExpression(
+                                entry.toFirSourceElement(), ConstantValueKind.String, entry.unescapedValue, setType = false
+                            )
                         }
                         SHORT_STRING_TEMPLATE_ENTRY, LONG_STRING_TEMPLATE_ENTRY -> {
                             hasExpressions = true
@@ -478,7 +485,7 @@ abstract class BaseFirBuilder<T>(val baseSession: FirSession, val context: Conte
             }
             source = base?.toFirSourceElement()
             // Fast-pass if there is no non-const string expressions
-            if (!hasExpressions) return buildConstExpression(source, ConstantValueKind.String, sb.toString())
+            if (!hasExpressions) return buildConstExpression(source, ConstantValueKind.String, sb.toString(), setType = false)
         }
     }
 
