@@ -745,7 +745,7 @@ class Fir2IrVisitor(
 
             implicitCastInserter.implicitCastFromDispatchReceiver(
                 this, expression.typeRef, calleeReference,
-                conversionScope.defaultConversionTypeContext()
+                conversionScope.defaultConversionTypeOrigin()
             )
         }
     }
@@ -1340,7 +1340,7 @@ class Fir2IrVisitor(
             }
         val irClassReferenceSymbol = when (argument) {
             is FirResolvedReifiedParameterReference -> {
-                classifierStorage.getIrTypeParameterSymbol(argument.symbol, ConversionTypeContext.DEFAULT)
+                classifierStorage.getIrTypeParameterSymbol(argument.symbol, ConversionTypeOrigin.DEFAULT)
             }
             is FirResolvedQualifier -> {
                 when (val symbol = argument.symbol) {
