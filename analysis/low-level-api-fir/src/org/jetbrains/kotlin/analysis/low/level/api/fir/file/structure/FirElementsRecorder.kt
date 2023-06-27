@@ -203,19 +203,20 @@ internal open class FirElementsRecorder : FirVisitor<Unit, MutableMap<KtElement,
     private fun <T> ConstantValueKind<T>.reverseConverted(original: FirConstExpression<T>): FirConstExpression<T>? {
         val value = original.value as? Number ?: return null
         val convertedValue = when (this) {
-            ConstantValueKind.Byte -> value.toByte().unaryMinus()
-            ConstantValueKind.Double -> value.toDouble().unaryMinus()
-            ConstantValueKind.Float -> value.toFloat().unaryMinus()
-            ConstantValueKind.Int -> value.toInt().unaryMinus()
-            ConstantValueKind.Long -> value.toLong().unaryMinus()
-            ConstantValueKind.Short -> value.toShort().unaryMinus()
+            Byte -> value.toByte().unaryMinus()
+            Double -> value.toDouble().unaryMinus()
+            Float -> value.toFloat().unaryMinus()
+            Int -> value.toInt().unaryMinus()
+            Long -> value.toLong().unaryMinus()
+            Short -> value.toShort().unaryMinus()
             else -> null
         } ?: return null
         @Suppress("UNCHECKED_CAST")
         return buildConstExpression(
             original.ktConstantExpression?.toKtPsiSourceElement(),
             this,
-            convertedValue as T
+            convertedValue as T,
+            setType = false
         ).also {
             it.replaceTypeRef(original.typeRef)
         }
