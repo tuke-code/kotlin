@@ -44,8 +44,3 @@ abstract class ConeIntegerLiteralConstantType(
     isUnsigned: Boolean,
     nullability: ConeNullability
 ) : ConeIntegerLiteralType(isUnsigned, nullability)
-
-abstract class ConeIntegerConstantOperatorType(
-    isUnsigned: Boolean,
-    nullability: ConeNullability
-) : ConeIntegerLiteralType(isUnsigned, nullability)

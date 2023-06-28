@@ -9,7 +9,6 @@ import org.jetbrains.kotlin.fir.NoMutableState
 import org.jetbrains.kotlin.fir.resolve.BodyResolveComponents
 import org.jetbrains.kotlin.fir.resolve.calls.ConeCallConflictResolverFactory
 import org.jetbrains.kotlin.fir.resolve.calls.ConeCompositeConflictResolver
-import org.jetbrains.kotlin.fir.resolve.calls.ConeIntegerOperatorConflictResolver
 import org.jetbrains.kotlin.fir.resolve.calls.ConeOverloadConflictResolver
 import org.jetbrains.kotlin.fir.resolve.calls.jvm.ConeEquivalentCallConflictResolver
 import org.jetbrains.kotlin.fir.resolve.inference.InferenceComponents
@@ -31,7 +30,6 @@ object JsCallConflictResolverFactory : ConeCallConflictResolverFactory() {
         return ConeCompositeConflictResolver(
             ConeOverloadConflictResolver(specificityComparator, components, transformerComponents),
             ConeEquivalentCallConflictResolver(specificityComparator, components, transformerComponents),
-            ConeIntegerOperatorConflictResolver,
         )
     }
 }

@@ -384,12 +384,6 @@ abstract class AbstractTypeApproximator(
             }
         }
 
-        if (typeConstructor.isIntegerConstantOperatorTypeConstructor()) {
-            return runIf(conf.integerConstantOperatorType) {
-                typeConstructor.getApproximatedIntegerLiteralType().withNullability(type.isMarkedNullable())
-            }
-        }
-
         return approximateLocalTypes(type, conf, toSuper, depth) // simple classifier type
     }
 

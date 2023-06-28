@@ -16,7 +16,6 @@ object ConeKotlinTypeComparator : Comparator<ConeKotlinType> {
             is ConeIntersectionType -> 4
             is ConeStubType -> 3
             is ConeIntegerLiteralConstantType -> 2
-            is ConeIntegerConstantOperatorType -> 1
             else -> 0
         }
 
@@ -166,9 +165,6 @@ object ConeKotlinTypeComparator : Comparator<ConeKotlinType> {
                 }
                 // Can't compare individual types from each side, since their orders are not guaranteed.
                 return a.hashCode() - b.hashCode()
-            }
-            is ConeIntegerConstantOperatorType -> {
-                return compare(a.nullability, b.nullability)
             }
             else ->
                 error("Unsupported type comparison: ${a.renderForDebugging()} v.s. ${b.renderForDebugging()}")

@@ -16,10 +16,8 @@ import org.jetbrains.kotlin.fir.declarations.builder.buildErrorProperty
 import org.jetbrains.kotlin.fir.declarations.fullyExpandedClass
 import org.jetbrains.kotlin.fir.diagnostics.ConeDiagnostic
 import org.jetbrains.kotlin.fir.expressions.*
-import org.jetbrains.kotlin.fir.resolve.isIntegerLiteralOrOperatorCall
 import org.jetbrains.kotlin.fir.resolve.toFirRegularClass
 import org.jetbrains.kotlin.fir.scopes.FirScope
-import org.jetbrains.kotlin.fir.scopes.impl.originalForWrappedIntegerOperator
 import org.jetbrains.kotlin.fir.symbols.FirBasedSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.*
 import org.jetbrains.kotlin.fir.types.classId
@@ -60,9 +58,6 @@ class CandidateFactory private constructor(
         objectsByName: Boolean = false,
         isFromOriginalTypeInPresenceOfSmartCast: Boolean = false,
     ): Candidate {
-        @Suppress("NAME_SHADOWING")
-        val symbol = symbol.unwrapIntegerOperatorSymbolIfNeeded(callInfo)
-
         val result = Candidate(
             symbol,
             dispatchReceiver,
@@ -110,18 +105,6 @@ class CandidateFactory private constructor(
     private fun FirBasedSymbol<*>.isRegularClassWithoutCompanion(session: FirSession): Boolean {
         val referencedClass = (this as? FirClassLikeSymbol<*>)?.fullyExpandedClass(session) ?: return false
         return referencedClass.classKind != ClassKind.OBJECT && referencedClass.companionObjectSymbol == null
-    }
-
-    private fun FirBasedSymbol<*>.unwrapIntegerOperatorSymbolIfNeeded(callInfo: CallInfo): FirBasedSymbol<*> {
-        if (this !is FirNamedFunctionSymbol) return this
-        // There is no need to unwrap unary operators
-        if (fir.valueParameters.isEmpty()) return this
-        val original = fir.originalForWrappedIntegerOperator ?: return this
-        return if (callInfo.arguments.first().isIntegerLiteralOrOperatorCall()) {
-            this
-        } else {
-            original
-        }
     }
 
     private fun FirExpression?.isCandidateFromCompanionObjectTypeScope(): Boolean {

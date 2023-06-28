@@ -41,7 +41,6 @@ fun ConeKotlinType.renderForDebugInfo(): String {
         }
         is ConeStubType -> "Stub: ${constructor.variable}"
         is ConeIntegerLiteralConstantType -> "ILT: $value"
-        is ConeIntegerConstantOperatorType -> "IOT"
     } + nullabilitySuffix
 }
 

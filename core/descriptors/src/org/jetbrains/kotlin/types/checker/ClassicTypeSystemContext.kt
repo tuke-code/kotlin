@@ -51,10 +51,6 @@ interface ClassicTypeSystemContext : TypeSystemInferenceExtensionContext, TypeSy
         return isIntegerLiteralTypeConstructor()
     }
 
-    override fun TypeConstructorMarker.isIntegerConstantOperatorTypeConstructor(): Boolean {
-        return false
-    }
-
     override fun TypeConstructorMarker.isLocalType(): Boolean {
         require(this is TypeConstructor, this::errorMessage)
         return declarationDescriptor?.classId?.isLocal == true

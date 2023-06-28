@@ -221,10 +221,6 @@ open class ConeTypeRenderer {
             is ConeIntegerLiteralConstantType -> {
                 builder.append("ILT: ${type.value}")
             }
-
-            is ConeIntegerConstantOperatorType -> {
-                builder.append("IOT")
-            }
         }
     }
 }

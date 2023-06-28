@@ -787,7 +787,6 @@ fun ConeKotlinType?.collectUpperBounds(): Set<ConeClassLikeType> {
         is ConeIntersectionType -> intersectedTypes.flatMap { it.collectUpperBounds() }.toSet()
         is ConeFlexibleType -> upperBound.collectUpperBounds()
         is ConeCapturedType -> constructor.supertypes?.flatMap { it.collectUpperBounds() }?.toSet().orEmpty()
-        is ConeIntegerConstantOperatorType -> setOf(getApproximatedType())
         is ConeStubType, is ConeIntegerLiteralConstantType -> throw IllegalStateException("$this should not reach here")
     }
 }

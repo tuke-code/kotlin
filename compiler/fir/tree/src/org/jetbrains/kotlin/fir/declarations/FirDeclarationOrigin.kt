@@ -35,7 +35,6 @@ sealed class FirDeclarationOrigin(
     object IntersectionOverride : FirDeclarationOrigin(fromSupertypes = true)
     object Delegated : FirDeclarationOrigin()
     object RenamedForOverride : FirDeclarationOrigin()
-    object WrappedIntegerOperator : FirDeclarationOrigin()
     object ScriptCustomization : FirDeclarationOrigin()
     class Plugin(val key: GeneratedDeclarationKey) : FirDeclarationOrigin(displayName = "Plugin[$key]", generated = true)
 

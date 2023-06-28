@@ -46,10 +46,6 @@ interface ConeTypeContext : TypeSystemContext, TypeSystemOptimizationContext, Ty
         return this is ConeIntegerLiteralConstantType
     }
 
-    override fun TypeConstructorMarker.isIntegerConstantOperatorTypeConstructor(): Boolean {
-        return this is ConeIntegerConstantOperatorType
-    }
-
     override fun TypeConstructorMarker.isLocalType(): Boolean {
         if (this !is ConeClassLikeLookupTag) return false
         return classId.isLocal

@@ -25,7 +25,6 @@ import org.jetbrains.kotlin.fir.declarations.synthetic.FirSyntheticProperty
 import org.jetbrains.kotlin.fir.declarations.synthetic.FirSyntheticPropertyAccessor
 import org.jetbrains.kotlin.fir.declarations.utils.isLocal
 import org.jetbrains.kotlin.fir.scopes.impl.importedFromObjectOrStaticData
-import org.jetbrains.kotlin.fir.scopes.impl.originalForWrappedIntegerOperator
 import org.jetbrains.kotlin.fir.symbols.FirBasedSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirClassLikeSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirRegularClassSymbol
@@ -84,16 +83,6 @@ internal tailrec fun FirDeclaration.ktSymbolOrigin(): KtSymbolOrigin = when (ori
             }
 
         importedFromObjectData.original.ktSymbolOrigin()
-    }
-
-    FirDeclarationOrigin.WrappedIntegerOperator -> {
-        val original = (this as FirSimpleFunction).originalForWrappedIntegerOperator?.fir
-            ?: errorWithFirSpecificEntries(
-                "Declaration has WrappedIntegerOperator origin, but no originalForWrappedIntegerOperator present",
-                fir = this
-            )
-
-        original.ktSymbolOrigin()
     }
 
     is FirDeclarationOrigin.Plugin -> KtSymbolOrigin.PLUGIN

@@ -31,9 +31,6 @@ import org.jetbrains.kotlin.fir.resolve.diagnostics.ConeTypeParameterInQualified
 import org.jetbrains.kotlin.fir.resolve.inference.ResolvedLambdaAtom
 import org.jetbrains.kotlin.fir.resolve.substitution.ConeSubstitutor
 import org.jetbrains.kotlin.fir.resolve.transformers.body.resolve.*
-import org.jetbrains.kotlin.fir.scopes.impl.ConvertibleIntegerOperators.binaryOperatorsWithSignedArgument
-import org.jetbrains.kotlin.fir.scopes.impl.isWrappedIntegerOperator
-import org.jetbrains.kotlin.fir.scopes.impl.isWrappedIntegerOperatorForUnsignedType
 import org.jetbrains.kotlin.fir.symbols.FirBasedSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirConstructorSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirNamedFunctionSymbol
@@ -136,12 +133,11 @@ class FirCallCompletionResultsWriterTransformer(
 
         var dispatchReceiver = subCandidate.dispatchReceiverExpression()
         var extensionReceiver = subCandidate.chosenExtensionReceiverExpression()
-        if (!declaration.isWrappedIntegerOperator()) {
-            val expectedDispatchReceiverType = (declaration as? FirCallableDeclaration)?.dispatchReceiverType
-            val expectedExtensionReceiverType = (declaration as? FirCallableDeclaration)?.receiverParameter?.typeRef?.coneType
-            dispatchReceiver = dispatchReceiver.transformSingle(integerOperatorApproximator, expectedDispatchReceiverType)
-            extensionReceiver = extensionReceiver.transformSingle(integerOperatorApproximator, expectedExtensionReceiverType)
-        }
+
+        val expectedDispatchReceiverType = (declaration as? FirCallableDeclaration)?.dispatchReceiverType
+        val expectedExtensionReceiverType = (declaration as? FirCallableDeclaration)?.receiverParameter?.typeRef?.coneType
+        dispatchReceiver = dispatchReceiver.transformSingle(integerOperatorApproximator, expectedDispatchReceiverType)
+        extensionReceiver = extensionReceiver.transformSingle(integerOperatorApproximator, expectedExtensionReceiverType)
 
         (qualifiedAccessExpression as? FirQualifiedAccessExpression)?.apply {
             replaceCalleeReference(calleeReference.toResolvedReference())
@@ -434,14 +430,8 @@ class FirCallCompletionResultsWriterTransformer(
             Pair(it.atom, finallySubstituteOrSelf(substitutor.substituteOrSelf(it.returnType)))
         }
 
-        val isIntegerOperator = symbol.isWrappedIntegerOperator()
-
         val arguments = argumentMapping?.map { (argument, valueParameter) ->
             val expectedType = when {
-                isIntegerOperator -> ConeIntegerConstantOperatorTypeImpl(
-                    isUnsigned = symbol.isWrappedIntegerOperatorForUnsignedType() && callInfo.name in binaryOperatorsWithSignedArgument,
-                    ConeNullability.NOT_NULL
-                )
                 valueParameter.isVararg -> valueParameter.returnTypeRef.substitute(this).varargElementType()
                 else -> valueParameter.returnTypeRef.substitute(this)
             }
@@ -756,9 +746,6 @@ class FirCallCompletionResultsWriterTransformer(
     ): FirStatement {
         if (data == ExpectedArgumentType.NoApproximation) return constExpression
         val expectedType = data?.getExpectedType(constExpression)
-        if (expectedType is ConeIntegerConstantOperatorType) {
-            return constExpression
-        }
         return constExpression.transformSingle(integerOperatorApproximator, expectedType)
     }
 
@@ -768,9 +755,6 @@ class FirCallCompletionResultsWriterTransformer(
     ): FirStatement {
         if (data == ExpectedArgumentType.NoApproximation) return integerLiteralOperatorCall
         val expectedType = data?.getExpectedType(integerLiteralOperatorCall)
-        if (expectedType is ConeIntegerConstantOperatorType) {
-            return integerLiteralOperatorCall
-        }
         return integerLiteralOperatorCall.transformSingle(integerOperatorApproximator, expectedType)
     }
 

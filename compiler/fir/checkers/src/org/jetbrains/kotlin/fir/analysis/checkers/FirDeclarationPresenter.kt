@@ -95,10 +95,6 @@ interface FirDeclarationPresenter {
                 append(it.value)
                 append(it.nullability.suffix)
             }
-            is ConeIntegerConstantOperatorType -> {
-                append("IOT")
-                append(it.nullability.suffix)
-            }
             is ConeFlexibleType,
             is ConeIntersectionType,
             is ConeStubType -> {

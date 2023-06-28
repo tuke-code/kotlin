@@ -26,7 +26,6 @@ import org.jetbrains.kotlin.fir.resolve.transformers.body.resolve.resultType
 import org.jetbrains.kotlin.fir.resolvedTypeFromPrototype
 import org.jetbrains.kotlin.fir.scopes.FakeOverrideTypeCalculator
 import org.jetbrains.kotlin.fir.scopes.getFunctions
-import org.jetbrains.kotlin.fir.scopes.impl.originalForWrappedIntegerOperator
 import org.jetbrains.kotlin.fir.symbols.impl.FirNamedFunctionSymbol
 import org.jetbrains.kotlin.fir.types.*
 import org.jetbrains.kotlin.fir.types.impl.FirImplicitBuiltinTypeRef
@@ -94,8 +93,7 @@ class IntegerLiteralAndOperatorApproximationTransformer(
         val calleeReference = call.calleeReference
         // callee reference may also be an error reference and it's ok if wrapped operator function leaks throw it
         if (calleeReference is FirResolvedNamedReference) {
-            val wrappedFunctionSymbol = calleeReference.resolvedSymbol as FirNamedFunctionSymbol
-            val originalFunctionSymbol = wrappedFunctionSymbol.fir.originalForWrappedIntegerOperator!!
+            val originalFunctionSymbol = calleeReference.resolvedSymbol as FirNamedFunctionSymbol
 
             val newCalleeReference = when (calleeReference) {
                 is FirResolvedErrorReference -> buildResolvedErrorReference {

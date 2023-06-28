@@ -442,7 +442,6 @@ internal class KtSymbolByFirBuilder constructor(
                 is ConeDefinitelyNotNullType -> KtFirDefinitelyNotNullType(coneType, this@KtSymbolByFirBuilder)
                 is ConeCapturedType -> KtFirCapturedType(coneType, this@KtSymbolByFirBuilder)
                 is ConeIntegerLiteralConstantType -> KtFirIntegerLiteralType(coneType, this@KtSymbolByFirBuilder)
-                is ConeIntegerConstantOperatorType -> buildKtType(coneType.getApproximatedType())
                 is ConeStubTypeForChainInference -> {
                     // TODO this is a temporary hack to prevent FIR IDE from crashing on builder inference, see KT-50916
                     val typeVariable = coneType.constructor.variable as? ConeTypeParameterBasedTypeVariable

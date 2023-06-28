@@ -252,7 +252,6 @@ object ConeTypeCompatibilityChecker {
             is ConeIntersectionType -> intersectedTypes.flatMap { it.collectLowerBounds() }.toSet()
             is ConeFlexibleType -> lowerBound.collectLowerBounds()
             is ConeCapturedType -> constructor.supertypes?.flatMap { it.collectLowerBounds() }?.toSet().orEmpty()
-            is ConeIntegerConstantOperatorType -> setOf(getApproximatedType())
             is ConeStubType, is ConeIntegerLiteralConstantType -> throw IllegalStateException("$this should not reach here")
         }
     }

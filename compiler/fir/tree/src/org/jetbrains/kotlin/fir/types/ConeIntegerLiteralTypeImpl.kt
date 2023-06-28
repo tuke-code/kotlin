@@ -97,30 +97,6 @@ class ConeIntegerLiteralConstantTypeImpl(
     }
 }
 
-class ConeIntegerConstantOperatorTypeImpl(
-    isUnsigned: Boolean,
-    nullability: ConeNullability
-) : ConeIntegerConstantOperatorType(isUnsigned, nullability) {
-    override val possibleTypes: Collection<ConeClassLikeType> = when (isUnsigned) {
-        false -> setOf(
-            createClassLikeType(StandardClassIds.Int),
-            createClassLikeType(StandardClassIds.Long),
-        )
-        true -> setOf(
-            createClassLikeType(StandardClassIds.UInt),
-            createClassLikeType(StandardClassIds.ULong),
-        )
-    }
-
-    override val supertypes: List<ConeClassLikeType> by lazy {
-        createSupertypeList(this)
-    }
-
-    override fun getApproximatedType(expectedType: ConeKotlinType?): ConeClassLikeType {
-        return getApproximatedTypeImpl(expectedType)
-    }
-}
-
 /**
  * This methods detects common super type only for special rules for integer literal types
  * If it returns null then CST will be found by regular rules using real supertypes
@@ -183,8 +159,6 @@ private object ConeIntegerLiteralTypeExtensions {
                 commonSuperTypeBetweenTwoConstantTypes(left, right)
             }
 
-            left is ConeIntegerConstantOperatorType -> left
-            right is ConeIntegerConstantOperatorType -> right
             else -> null
         }
     }

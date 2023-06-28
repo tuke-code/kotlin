@@ -66,7 +66,6 @@ internal object LLFirResolveMultiDesignationCollector {
         is FirDeclarationOrigin.Synthetic,
         is FirDeclarationOrigin.SubstitutionOverride,
         is FirDeclarationOrigin.SamConstructor,
-        is FirDeclarationOrigin.WrappedIntegerOperator,
         is FirDeclarationOrigin.IntersectionOverride,
         -> {
             when (this) {
