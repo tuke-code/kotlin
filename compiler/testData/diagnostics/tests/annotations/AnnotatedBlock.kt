@@ -9,6 +9,10 @@ fun test(x: String?) {
     if (x != null)
         @Ann() @Ann2() { Unit } // It should be Block with annotations
 
+    @Ann() @Ann2() when { else -> {} }
+    val y = <!WRONG_ANNOTATION_TARGET!>@Ann()<!> <!WRONG_ANNOTATION_TARGET!>@Ann2()<!> when { else -> 42 }
+    val z = <!WRONG_ANNOTATION_TARGET!>@Ann()<!> <!REPEATED_ANNOTATION, WRONG_ANNOTATION_TARGET!>@Ann()<!> when { else -> 48 }
+
     if (x != null)
         <!WRONG_ANNOTATION_TARGET!>@Ann()<!> <!WRONG_ANNOTATION_TARGET!>@Ann2()<!> Unit // Annotations on expression
 

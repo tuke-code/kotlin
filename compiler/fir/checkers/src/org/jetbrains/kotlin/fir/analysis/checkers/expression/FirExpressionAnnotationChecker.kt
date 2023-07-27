@@ -17,10 +17,7 @@ import org.jetbrains.kotlin.diagnostics.DiagnosticReporter
 import org.jetbrains.kotlin.fir.analysis.diagnostics.FirErrors
 import org.jetbrains.kotlin.diagnostics.reportOn
 import org.jetbrains.kotlin.fir.declarations.FirDeclaration
-import org.jetbrains.kotlin.fir.expressions.FirBlock
-import org.jetbrains.kotlin.fir.expressions.FirErrorExpression
-import org.jetbrains.kotlin.fir.expressions.FirExpression
-import org.jetbrains.kotlin.fir.expressions.FirStatement
+import org.jetbrains.kotlin.fir.expressions.*
 import org.jetbrains.kotlin.fir.types.ConeKotlinType
 import org.jetbrains.kotlin.fir.types.coneType
 
@@ -30,21 +27,20 @@ object FirExpressionAnnotationChecker : FirBasicExpressionChecker() {
         // See KT-33658 about annotations on non-expression statements
         if (expression is FirDeclaration ||
             expression !is FirExpression ||
-            expression is FirErrorExpression ||
-            expression is FirBlock && (expression.source?.kind == KtRealSourceElementKind ||
-                    expression.source?.kind == KtFakeSourceElementKind.DesugaredForLoop)
+            expression is FirErrorExpression
         ) return
 
         val annotations = expression.annotations
         if (annotations.isEmpty()) return
 
         val annotationsMap = hashMapOf<ConeKotlinType, MutableList<AnnotationUseSiteTarget?>>()
+        val alwaysCorrectTarget = isTargetAlwaysCorrect(expression)
 
         for (annotation in annotations) {
             val useSiteTarget = annotation.useSiteTarget ?: expression.getDefaultUseSiteTarget(annotation, context)
             val existingTargetsForAnnotation = annotationsMap.getOrPut(annotation.annotationTypeRef.coneType) { arrayListOf() }
 
-            if (KotlinTarget.EXPRESSION !in annotation.getAllowedAnnotationTargets(context.session)) {
+            if (!alwaysCorrectTarget && KotlinTarget.EXPRESSION !in annotation.getAllowedAnnotationTargets(context.session)) {
                 reporter.reportOn(annotation.source, FirErrors.WRONG_ANNOTATION_TARGET, "expression", context)
             }
 
@@ -52,5 +48,15 @@ object FirExpressionAnnotationChecker : FirBasicExpressionChecker() {
 
             existingTargetsForAnnotation.add(useSiteTarget)
         }
+    }
+
+    private fun isTargetAlwaysCorrect(expression: FirStatement): Boolean {
+        if (expression is FirBlock &&
+            (expression.source?.kind?.let { it == KtRealSourceElementKind || it == KtFakeSourceElementKind.DesugaredForLoop } == true)
+        ) {
+            return true
+        }
+
+        return expression is FirWhenExpression && !expression.usedAsExpression
     }
 }

@@ -18,6 +18,23 @@ FILE: AnnotatedBlock.kt
             }
         }
 
+        @R|Ann|() @R|Ann2|() when () {
+            else ->  {
+            }
+        }
+
+        lval y: R|kotlin/Int| = @R|Ann|() @R|Ann2|() when () {
+            else ->  {
+                Int(42)
+            }
+        }
+
+        lval z: R|kotlin/Int| = @R|Ann|() @R|Ann|() when () {
+            else ->  {
+                Int(48)
+            }
+        }
+
         when () {
             !=(R|<local>/x|, Null(null)) ->  {
                 @R|Ann|() @R|Ann2|() Q|kotlin/Unit|
