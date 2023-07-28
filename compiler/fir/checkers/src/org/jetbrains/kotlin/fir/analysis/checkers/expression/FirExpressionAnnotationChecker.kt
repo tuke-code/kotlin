@@ -5,7 +5,6 @@
 
 package org.jetbrains.kotlin.fir.analysis.checkers.expression
 
-import org.jetbrains.kotlin.KtFakeSourceElementKind
 import org.jetbrains.kotlin.KtRealSourceElementKind
 import org.jetbrains.kotlin.descriptors.annotations.AnnotationUseSiteTarget
 import org.jetbrains.kotlin.descriptors.annotations.KotlinTarget
@@ -25,16 +24,17 @@ object FirExpressionAnnotationChecker : FirBasicExpressionChecker() {
     override fun check(expression: FirStatement, context: CheckerContext, reporter: DiagnosticReporter) {
         // Declarations are checked separately
         // See KT-33658 about annotations on non-expression statements
-        if (expression is FirDeclaration ||
-            expression !is FirExpression ||
-            expression is FirErrorExpression
-        ) return
+        if (expression is FirDeclaration) return
 
         val annotations = expression.annotations
         if (annotations.isEmpty()) return
 
         val annotationsMap = hashMapOf<ConeKotlinType, MutableList<AnnotationUseSiteTarget?>>()
-        val alwaysCorrectTarget = isTargetAlwaysCorrect(expression)
+
+        // It's possible to annotate the expression with annotation without EXPRESSION target or even with any target
+        // It includes cases when the expression is erroneous or doesn't return anything (FirWhenExpression)
+        // Even if target is always correct, repeated annotations should be checked anyway, that why there is no return here
+        val alwaysCorrectTarget = expression.isTargetAlwaysCorrect()
 
         for (annotation in annotations) {
             val useSiteTarget = annotation.useSiteTarget ?: expression.getDefaultUseSiteTarget(annotation, context)
@@ -50,13 +50,18 @@ object FirExpressionAnnotationChecker : FirBasicExpressionChecker() {
         }
     }
 
-    private fun isTargetAlwaysCorrect(expression: FirStatement): Boolean {
-        if (expression is FirBlock &&
-            (expression.source?.kind?.let { it == KtRealSourceElementKind || it == KtFakeSourceElementKind.DesugaredForLoop } == true)
-        ) {
-            return true
+    private fun FirStatement.isTargetAlwaysCorrect(): Boolean {
+        if (this !is FirExpression || this is FirErrorExpression) return true
+
+        if (this is FirBlock) {
+            if (source?.kind == KtRealSourceElementKind) {
+                return true // Any annotation can be placed to a real block enclosed by curly braces
+            }
+
+            // If block expression is fake (desugared), its applicability is detected by the last statement
+            return statements.last().isTargetAlwaysCorrect()
         }
 
-        return expression is FirWhenExpression && !expression.usedAsExpression
+        return this is FirWhenExpression && !usedAsExpression // That's the single case when FirExpression is actually not a real expression
     }
 }

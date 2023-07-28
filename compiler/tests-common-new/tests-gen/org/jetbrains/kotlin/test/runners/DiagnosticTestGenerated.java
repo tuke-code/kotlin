@@ -1351,12 +1351,6 @@ public class DiagnosticTestGenerated extends AbstractDiagnosticTest {
             }
 
             @Test
-            @TestMetadata("AnnotatedBlock.kt")
-            public void testAnnotatedBlock() throws Exception {
-                runTest("compiler/testData/diagnostics/tests/annotations/AnnotatedBlock.kt");
-            }
-
-            @Test
             @TestMetadata("AnnotatedConstructor.kt")
             public void testAnnotatedConstructor() throws Exception {
                 runTest("compiler/testData/diagnostics/tests/annotations/AnnotatedConstructor.kt");
@@ -1372,6 +1366,12 @@ public class DiagnosticTestGenerated extends AbstractDiagnosticTest {
             @TestMetadata("annotatedExpressionInsideAnnotation.kt")
             public void testAnnotatedExpressionInsideAnnotation() throws Exception {
                 runTest("compiler/testData/diagnostics/tests/annotations/annotatedExpressionInsideAnnotation.kt");
+            }
+
+            @Test
+            @TestMetadata("AnnotatedFakeExpressions.kt")
+            public void testAnnotatedFakeExpressions() throws Exception {
+                runTest("compiler/testData/diagnostics/tests/annotations/AnnotatedFakeExpressions.kt");
             }
 
             @Test
@@ -1828,6 +1828,12 @@ public class DiagnosticTestGenerated extends AbstractDiagnosticTest {
             @TestMetadata("RecursivelyIncorrectlyAnnotatedParameter.kt")
             public void testRecursivelyIncorrectlyAnnotatedParameter() throws Exception {
                 runTest("compiler/testData/diagnostics/tests/annotations/RecursivelyIncorrectlyAnnotatedParameter.kt");
+            }
+
+            @Test
+            @TestMetadata("RepeatedOnFakeExpressions.kt")
+            public void testRepeatedOnFakeExpressions() throws Exception {
+                runTest("compiler/testData/diagnostics/tests/annotations/RepeatedOnFakeExpressions.kt");
             }
 
             @Test
