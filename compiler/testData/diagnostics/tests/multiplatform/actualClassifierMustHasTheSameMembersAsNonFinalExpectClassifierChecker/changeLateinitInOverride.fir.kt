@@ -2,12 +2,12 @@
 // FILE: common.kt
 
 open class Base {
-    <!INCOMPATIBLE_MATCHING{JVM}!>open var red1: String = ""<!>
-    <!INCOMPATIBLE_MATCHING{JVM}!>open lateinit var red2: String<!>
+    open <!INCOMPATIBLE_MATCHING{JVM}!>var red1: String = ""<!>
+    open lateinit <!INCOMPATIBLE_MATCHING{JVM}!>var red2: String<!>
     open lateinit var green: String
 }
 
-<!INCOMPATIBLE_MATCHING{JVM}!>expect open class Foo : Base {
+expect open <!INCOMPATIBLE_MATCHING{JVM}!>class Foo : Base {
 }<!>
 
 // MODULE: m2-jvm()()(m1-common)

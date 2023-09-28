@@ -130,7 +130,10 @@ internal class ClassMemberGenerator(
                 annotationGenerator.generate(irFunction, firFunction)
             }
             if (firFunction is FirConstructor && irFunction is IrConstructor && !firFunction.isExpect) {
-                val body = factory.createBlockBody(startOffset, endOffset)
+                val source = firFunction.source
+                val body = factory.createBlockBody(
+                    source.startOffsetSkippingComments() ?: source?.startOffset ?: startOffset, source?.endOffset ?: endOffset
+                )
                 val delegatedConstructor = firFunction.delegatedConstructor
                 val irClass = parent as IrClass
                 if (delegatedConstructor != null) {
@@ -167,7 +170,7 @@ internal class ClassMemberGenerator(
 
                 if (delegatedConstructor?.isThis == false) {
                     val instanceInitializerCall = IrInstanceInitializerCallImpl(
-                        startOffset, endOffset, irClass.symbol, irFunction.constructedClassType
+                        body.startOffset, body.endOffset, irClass.symbol, irFunction.constructedClassType
                     )
                     body.statements += instanceInitializerCall
                 }

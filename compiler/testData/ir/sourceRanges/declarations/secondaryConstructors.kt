@@ -12,3 +12,5 @@ class C {
     @Suppress("UNUSED_VARIABLE")
     constructor(x: Any): super()
 }
+
+// FIR_IDENTICAL

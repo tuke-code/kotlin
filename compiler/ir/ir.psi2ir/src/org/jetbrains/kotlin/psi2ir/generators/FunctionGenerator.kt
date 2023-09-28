@@ -16,7 +16,6 @@ import org.jetbrains.kotlin.ir.expressions.IrBody
 import org.jetbrains.kotlin.ir.expressions.IrExpression
 import org.jetbrains.kotlin.ir.expressions.IrExpressionBody
 import org.jetbrains.kotlin.ir.expressions.impl.*
-import org.jetbrains.kotlin.ir.symbols.IrConstructorSymbol
 import org.jetbrains.kotlin.ir.types.impl.IrUninitializedType
 import org.jetbrains.kotlin.ir.util.declareSimpleFunctionWithOverrides
 import org.jetbrains.kotlin.name.Name
@@ -105,7 +104,7 @@ internal class FunctionGenerator(declarationGenerator: DeclarationGenerator) : D
         origin: IrDeclarationOrigin
     ): IrSimpleFunction =
         context.symbolTable.declareSimpleFunctionWithOverrides(
-            ktElement.getStartOffsetOfFunctionDeclarationKeywordOrNull() ?: ktElement.pureStartOffset,
+            ktElement.getStartOffsetOfDeclarationKeywordOrNull() ?: ktElement.pureStartOffset,
             ktElement.pureEndOffset,
             origin,
             descriptor

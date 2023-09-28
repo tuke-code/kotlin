@@ -2,13 +2,13 @@
 // FILE: common.kt
 
 open class Base() {
-    <!INCOMPATIBLE_MATCHING{JVM}!>open fun overrideReturnType(): Any = ""<!>
-    <!INCOMPATIBLE_MATCHING{JVM}!>open fun overrideModality1(): Any = ""<!>
-    <!INCOMPATIBLE_MATCHING{JVM}!>open fun overrideModality2(): Any = ""<!>
-    <!INCOMPATIBLE_MATCHING{JVM}!>protected open fun overrideVisibility(): Any = ""<!>
+    open <!INCOMPATIBLE_MATCHING{JVM}!>fun overrideReturnType(): Any = ""<!>
+    open <!INCOMPATIBLE_MATCHING{JVM}!>fun overrideModality1(): Any = ""<!>
+    open <!INCOMPATIBLE_MATCHING{JVM}!>fun overrideModality2(): Any = ""<!>
+    protected open <!INCOMPATIBLE_MATCHING{JVM}!>fun overrideVisibility(): Any = ""<!>
 }
 
-<!INCOMPATIBLE_MATCHING{JVM}!>expect open class Foo : Base {
+expect open <!INCOMPATIBLE_MATCHING{JVM}!>class Foo : Base {
     fun existingMethod()
     val existingParam: Int
 }<!>

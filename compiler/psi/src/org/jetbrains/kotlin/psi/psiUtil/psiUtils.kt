@@ -23,11 +23,17 @@ import com.intellij.psi.impl.source.tree.LazyParseablePsiElement
 import com.intellij.psi.impl.source.tree.TreeUtil
 import com.intellij.psi.search.PsiSearchScopeUtil
 import com.intellij.psi.search.SearchScope
+import com.intellij.psi.tree.TokenSet
 import com.intellij.psi.util.PsiTreeUtil
 import org.jetbrains.kotlin.KtNodeTypes
 import org.jetbrains.kotlin.diagnostics.PsiDiagnosticUtils
 import org.jetbrains.kotlin.lexer.KtTokens
 import org.jetbrains.kotlin.psi.*
+import org.jetbrains.kotlin.psi.psiUtil.DeclarationTokens.ACCESSOR_DECL_TOKENS
+import org.jetbrains.kotlin.psi.psiUtil.DeclarationTokens.CLASS_DECL_TOKENS
+import org.jetbrains.kotlin.psi.psiUtil.DeclarationTokens.CONSTRUCTOR_DECL_TOKENS
+import org.jetbrains.kotlin.psi.psiUtil.DeclarationTokens.FUNCTION_DECL_TOKENS
+import org.jetbrains.kotlin.psi.psiUtil.DeclarationTokens.PROPERTY_DECL_TOKENS
 import java.util.*
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.contract
@@ -134,7 +140,6 @@ inline fun <reified T : PsiElement, reified V : PsiElement, reified U : PsiEleme
 }
 
 inline fun <reified T : PsiElement> PsiElement.getParentOfType(strict: Boolean, vararg stopAt: Class<out PsiElement>): T? {
-    @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
     return PsiTreeUtil.getParentOfType(this, T::class.java, strict, *stopAt)
 }
 
@@ -347,6 +352,46 @@ val PsiElement.startOffsetSkippingComments: Int
         val firstNonCommentChild = generateSequence(firstChild) { it.nextSibling }
             .firstOrNull { it !is PsiWhiteSpace && it !is PsiComment }
         return firstNonCommentChild?.startOffset ?: startOffset
+    }
+
+object DeclarationTokens {
+    val FUNCTION_DECL_TOKENS = TokenSet.create(KtTokens.FUN_KEYWORD)
+    val ACCESSOR_DECL_TOKENS = TokenSet.create(KtTokens.GET_KEYWORD, KtTokens.SET_KEYWORD)
+    val PROPERTY_DECL_TOKENS = TokenSet.create(KtTokens.VAL_KEYWORD, KtTokens.VAR_KEYWORD)
+    val CLASS_DECL_TOKENS = TokenSet.create(KtTokens.CLASS_KEYWORD, KtTokens.INTERFACE_KEYWORD)
+    val CONSTRUCTOR_DECL_TOKENS = TokenSet.create(KtTokens.CONSTRUCTOR_KEYWORD)
+}
+
+private fun KtElement.getChildTokenStartOffsetOrNull(tokenSet: TokenSet) = node.findChildByType(tokenSet)?.startOffset
+
+fun KtPureElement.getStartOffsetOfDeclarationKeywordOrNull(): Int? =
+    when (this) {
+        is KtNamedFunction -> getChildTokenStartOffsetOrNull(FUNCTION_DECL_TOKENS)
+        is KtPropertyAccessor -> getChildTokenStartOffsetOrNull(ACCESSOR_DECL_TOKENS)
+        is KtProperty -> getChildTokenStartOffsetOrNull(PROPERTY_DECL_TOKENS)
+        is KtParameter -> getChildTokenStartOffsetOrNull(PROPERTY_DECL_TOKENS)
+        is KtClassOrObject -> getChildTokenStartOffsetOrNull(CLASS_DECL_TOKENS)
+        else -> null
+    }
+
+fun KtPureClassOrObject.getStartOffsetOfClassDeclarationOrNull(): Int? =
+    when (this) {
+        is KtClassOrObject -> startOffsetSkippingComments
+        else -> null
+    }
+
+fun KtPureElement.getStartOffsetOfConstructorDeclarationKeywordOrNull(): Int? =
+    when (this) {
+        is KtPrimaryConstructor -> getChildTokenStartOffsetOrNull(CONSTRUCTOR_DECL_TOKENS)
+
+        is KtSecondaryConstructor -> getChildTokenStartOffsetOrNull(CONSTRUCTOR_DECL_TOKENS)
+
+        is KtClassOrObject ->
+            primaryConstructor?.getStartOffsetOfConstructorDeclarationKeywordOrNull()
+                ?: getChildTokenStartOffsetOrNull(CONSTRUCTOR_DECL_TOKENS)
+                ?: getChildTokenStartOffsetOrNull(CLASS_DECL_TOKENS)
+
+        else -> null
     }
 
 fun PsiElement.getStartOffsetIn(ancestor: PsiElement): Int {

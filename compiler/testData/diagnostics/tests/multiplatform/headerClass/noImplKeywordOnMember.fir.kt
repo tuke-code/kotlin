@@ -1,7 +1,7 @@
 // MODULE: m1-common
 // FILE: common.kt
 
-<!INCOMPATIBLE_MATCHING{JVM}!>expect class Foo {
+expect <!INCOMPATIBLE_MATCHING{JVM}!>class Foo {
     fun bar(): String
     <!INCOMPATIBLE_MATCHING{JVM}!>fun bas(f: Int)<!>
 }<!>

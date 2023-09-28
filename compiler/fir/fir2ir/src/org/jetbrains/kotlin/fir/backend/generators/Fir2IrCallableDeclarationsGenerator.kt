@@ -779,9 +779,12 @@ class Fir2IrCallableDeclarationsGenerator(val components: Fir2IrComponents) : Fi
             // See [LocalDeclarationsLowering]: "local function must not have dispatch receiver."
             val isLocal = function is FirSimpleFunction && function.isLocal
             if (function !is FirAnonymousFunction && dispatchReceiverType != null && !isStatic && !isLocal) {
+                val source = function?.source
                 dispatchReceiverParameter = declareThisReceiverParameter(
                     thisType = dispatchReceiverType,
-                    thisOrigin = thisOrigin
+                    thisOrigin = thisOrigin,
+                    startOffset = source?.startOffsetSkippingComments() ?: startOffset,
+                    endOffset = source?.endOffset ?: endOffset,
                 )
             }
         } else {

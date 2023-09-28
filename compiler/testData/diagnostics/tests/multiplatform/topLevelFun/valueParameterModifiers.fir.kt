@@ -3,15 +3,15 @@
 // FILE: common.kt
 
 expect fun f1(s: () -> String)
-<!INCOMPATIBLE_MATCHING{JVM}!>expect inline fun f2(s: () -> String)<!>
+expect inline <!INCOMPATIBLE_MATCHING{JVM}!>fun f2(s: () -> String)<!>
 expect inline fun f3(noinline s: () -> String)
 
 expect fun f4(s: () -> String)
-<!INCOMPATIBLE_MATCHING{JVM}!>expect inline fun f5(s: () -> String)<!>
+expect inline <!INCOMPATIBLE_MATCHING{JVM}!>fun f5(s: () -> String)<!>
 expect inline fun f6(crossinline s: () -> String)
 
-<!INCOMPATIBLE_MATCHING{JVM}!>expect fun f7(x: Any)<!>
-<!INCOMPATIBLE_MATCHING{JVM}!>expect fun f8(vararg x: Any)<!>
+expect <!INCOMPATIBLE_MATCHING{JVM}!>fun f7(x: Any)<!>
+expect <!INCOMPATIBLE_MATCHING{JVM}!>fun f8(vararg x: Any)<!>
 
 // MODULE: m2-jvm()()(m1-common)
 // FILE: jvm.kt

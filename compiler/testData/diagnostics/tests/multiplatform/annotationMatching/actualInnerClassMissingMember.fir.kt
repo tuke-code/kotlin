@@ -2,7 +2,7 @@
 // FILE: common.kt
 annotation class Ann
 
-<!INCOMPATIBLE_MATCHING{JVM}!>expect class A {
+expect <!INCOMPATIBLE_MATCHING{JVM}!>class A {
     <!INCOMPATIBLE_MATCHING{JVM}!>class B {
         @Ann
         fun foo()

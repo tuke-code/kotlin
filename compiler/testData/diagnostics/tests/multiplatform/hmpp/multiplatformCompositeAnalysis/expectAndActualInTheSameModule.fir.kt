@@ -2,7 +2,7 @@
 // MODULE: common
 // TARGET_PLATFORM: Common
 
-<!NO_ACTUAL_FOR_EXPECT{JVM}!>expect class CommonClass {
+expect <!NO_ACTUAL_FOR_EXPECT{JVM}!>class CommonClass {
     fun memberFun()
     val memberProp: Int
     class Nested
@@ -15,10 +15,10 @@ actual class <!ACTUAL_WITHOUT_EXPECT!>CommonClass<!> {
     actual inner class <!ACTUAL_WITHOUT_EXPECT!>Inner<!>
 }
 
-<!NO_ACTUAL_FOR_EXPECT{JVM}!>expect fun commonFun()<!>
+expect <!NO_ACTUAL_FOR_EXPECT{JVM}!>fun commonFun()<!>
 actual fun <!ACTUAL_WITHOUT_EXPECT!>commonFun<!>() {}
 
-<!NO_ACTUAL_FOR_EXPECT{JVM}!>expect val commonProperty: String<!>
+expect <!NO_ACTUAL_FOR_EXPECT{JVM}!>val commonProperty: String<!>
 actual val <!ACTUAL_WITHOUT_EXPECT!>commonProperty<!>: String
     get() = "hello"
 

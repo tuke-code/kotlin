@@ -19,9 +19,9 @@ interface I2
 
 expect fun <T> severalBounds() where T : I1, T : @Ann I2
 
-<!INCOMPATIBLE_MATCHING{JVM}!>expect fun <T> severalBoundsDifferentOrder() where T : I2, T : @Ann I1<!>
+expect <!INCOMPATIBLE_MATCHING{JVM}!>fun <T> severalBoundsDifferentOrder() where T : I2, T : @Ann I1<!>
 
-<!INCOMPATIBLE_MATCHING{JVM}!>expect fun <T> lessTypeParamBoundsOnActual() where T : I1, T : @Ann I2<!>
+expect <!INCOMPATIBLE_MATCHING{JVM}!>fun <T> lessTypeParamBoundsOnActual() where T : I1, T : @Ann I2<!>
 
 expect fun @Ann Any.onReceiver()
 
@@ -51,7 +51,7 @@ expect fun qualifierPartsMatching(arg: WithNested<String>.Nested<@Ann String>)
 
 expect fun qualifierPartsNonMatching(arg: WithNested<String>.Nested<@Ann String>)
 
-<!INCOMPATIBLE_MATCHING{JVM}!>expect fun funTypeVsUserType(arg: () -> @Ann String)<!>
+expect <!INCOMPATIBLE_MATCHING{JVM}!>fun funTypeVsUserType(arg: () -> @Ann String)<!>
 
 expect fun funcTypeReturnType(arg: () -> @Ann Any)
 
@@ -61,46 +61,46 @@ expect fun funcTypeArgType(arg: (arg: @Ann Any) -> Unit)
 
 // MODULE: m1-jvm()()(m1-common)
 // FILE: jvm.kt
-<!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>actual fun <!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>valueParameterType<!>(arg: String) {}<!>
+actual <!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>fun <!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>valueParameterType<!>(arg: String) {}<!>
 
-<!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>actual fun <!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>returnType<!>(): String = ""<!>
+actual <!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>fun <!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>returnType<!>(): String = ""<!>
 
-<!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>actual fun <T : Any> <!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>methodTypeParamBound<!>() {}<!>
+actual <!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>fun <T : Any> <!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>methodTypeParamBound<!>() {}<!>
 
-<!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>actual class <!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>OnClassTypeParamBound<!><T : Any><!>
+actual <!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>class <!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>OnClassTypeParamBound<!><T : Any><!>
 
-<!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>actual fun <T> <!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>typeParamBoundInWhere<!>() where T : Any {}<!>
+actual <!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>fun <T> <!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>typeParamBoundInWhere<!>() where T : Any {}<!>
 
-<!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>actual fun <T> <!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>severalBounds<!>() where T : I1, T : I2 {}<!>
+actual <!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>fun <T> <!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>severalBounds<!>() where T : I1, T : I2 {}<!>
 
 actual fun <T> <!ACTUAL_WITHOUT_EXPECT!>severalBoundsDifferentOrder<!>() where T : @Ann I1, T : I2 {}
 
 actual fun <T> <!ACTUAL_WITHOUT_EXPECT!>lessTypeParamBoundsOnActual<!>() where T : @Ann I2 {}
 
-<!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>actual fun Any.<!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>onReceiver<!>() {}<!>
+actual <!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>fun Any.<!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>onReceiver<!>() {}<!>
 
-<!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>actual class <!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>OnClassSuper<!> : I1<!>
+actual <!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>class <!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>OnClassSuper<!> : I1<!>
 
 actual class OnClassSuperDifferentOrder : @Ann I2, I1
 
-<!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>actual class <!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>OnClassSuperMoreOnActual<!> : I1, I2<!>
+actual <!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>class <!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>OnClassSuperMoreOnActual<!> : I1, I2<!>
 
-<!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>actual class <!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>OnClassSuperTypeParams<!><T> : I3<T><!>
+actual <!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>class <!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>OnClassSuperTypeParams<!><T> : I3<T><!>
 
-<!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>actual fun <!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>deepInParamsTypes<!>(arg: I3<I3<Any>>) {}<!>
+actual <!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>fun <!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>deepInParamsTypes<!>(arg: I3<I3<Any>>) {}<!>
 
-<!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>actual fun <!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>starProjection<!>(arg: I4<*, Any>) {}<!>
+actual <!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>fun <!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>starProjection<!>(arg: I4<*, Any>) {}<!>
 
-<!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>actual fun <T> <!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>typeArgWithVariance<!>(t: I3<out T>) {}<!>
+actual <!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>fun <T> <!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>typeArgWithVariance<!>(t: I3<out T>) {}<!>
 
 actual fun qualifierPartsMatching(arg: WithNested<String>.Nested<@Ann String>) {}
 
-<!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>actual fun <!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>qualifierPartsNonMatching<!>(arg: WithNested<@Ann String>.Nested<String>) {}<!>
+actual <!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>fun <!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>qualifierPartsNonMatching<!>(arg: WithNested<@Ann String>.Nested<String>) {}<!>
 
 actual fun <!ACTUAL_WITHOUT_EXPECT!>funTypeVsUserType<!>(arg: kotlin.jvm.functions.Function0<String>) {}
 
-<!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>actual fun <!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>funcTypeReturnType<!>(arg: () -> Any) {}<!>
+actual <!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>fun <!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>funcTypeReturnType<!>(arg: () -> Any) {}<!>
 
-<!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>actual fun <!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>funcTypeReceiverType<!>(arg: Any.() -> Unit) {}<!>
+actual <!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>fun <!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>funcTypeReceiverType<!>(arg: Any.() -> Unit) {}<!>
 
-<!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>actual fun <!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>funcTypeArgType<!>(arg: (arg: Any) -> Unit) {}<!>
+actual <!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>fun <!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>funcTypeArgType<!>(arg: (arg: Any) -> Unit) {}<!>

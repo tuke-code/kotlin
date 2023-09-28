@@ -28,4 +28,4 @@ abstract class Intermediate : I {
     override fun noAnnotationOnActual() {}
 }
 
-<!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>actual class <!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>FakeOverrideActual<!> : Intermediate(), I<!>
+actual <!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>class <!ACTUAL_ANNOTATIONS_NOT_MATCH_EXPECT!>FakeOverrideActual<!> : Intermediate(), I<!>

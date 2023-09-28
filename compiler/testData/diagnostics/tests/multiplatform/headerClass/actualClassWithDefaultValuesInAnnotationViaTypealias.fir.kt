@@ -7,7 +7,7 @@ expect annotation class Foo3
 expect annotation class Foo4
 expect annotation class Foo5()
 expect annotation class Foo6()
-<!INCOMPATIBLE_MATCHING{JVM}!>expect annotation class Foo7<!INCOMPATIBLE_MATCHING{JVM}!>()<!><!>
+expect annotation <!INCOMPATIBLE_MATCHING{JVM}!>class Foo7<!INCOMPATIBLE_MATCHING{JVM}!>()<!><!>
 
 @<!UNRESOLVED_REFERENCE!>Foo1<!>
 fun foo() {}

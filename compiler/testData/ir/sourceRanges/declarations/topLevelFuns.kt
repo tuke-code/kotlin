@@ -18,3 +18,5 @@ fun test2() {}
 
 private
 fun test3() {}
+
+// FIR_IDENTICAL

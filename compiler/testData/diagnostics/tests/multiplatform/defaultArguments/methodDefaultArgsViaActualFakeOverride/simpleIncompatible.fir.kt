@@ -1,6 +1,6 @@
 // MODULE: m1-common
 // FILE: common.kt
-<!INCOMPATIBLE_MATCHING{JVM}!>expect class Foo {
+expect <!INCOMPATIBLE_MATCHING{JVM}!>class Foo {
     fun foo(param: Int = 1)
     <!NO_ACTUAL_FOR_EXPECT{JVM}!>fun missingOnActual()<!>
 }<!>

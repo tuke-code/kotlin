@@ -1,7 +1,7 @@
 // MODULE: m1-common
 // FILE: common.kt
 
-<!INCOMPATIBLE_MATCHING{JVM}!>expect open class Foo<!>
+expect open <!INCOMPATIBLE_MATCHING{JVM}, INCOMPATIBLE_MATCHING{JVM}!>class Foo<!>
 
 // MODULE: m2-jvm()()(m1-common)
 // FILE: jvm.kt

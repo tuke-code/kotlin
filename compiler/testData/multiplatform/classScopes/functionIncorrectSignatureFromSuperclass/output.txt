@@ -5,9 +5,9 @@ Output:
 -- JVM --
 Exit code: COMPILATION_ERROR
 Output:
-compiler/testData/multiplatform/classScopes/functionIncorrectSignatureFromSuperclass/common.kt:1:1: error: expect declaration `Foo` doesn't match actual `Foo` because some expected members have no actual ones
+compiler/testData/multiplatform/classScopes/functionIncorrectSignatureFromSuperclass/common.kt:1:8: error: expect declaration `Foo` doesn't match actual `Foo` because some expected members have no actual ones
 expect class Foo {
-^
+       ^
 compiler/testData/multiplatform/classScopes/functionIncorrectSignatureFromSuperclass/common.kt:2:5: error: expect declaration `function` doesn't match actual `function` because return type is different
     fun function(b: ByteArray): Int
     ^

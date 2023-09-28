@@ -8,6 +8,7 @@ package org.jetbrains.kotlin.diagnostics
 import com.intellij.lang.LighterASTNode
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.TokenType
+import com.intellij.psi.tree.TokenSet
 import com.intellij.util.diff.FlyweightCapableTreeStructure
 import org.jetbrains.kotlin.KtLightSourceElement
 import org.jetbrains.kotlin.KtSourceElement
@@ -110,3 +111,10 @@ val KtLightSourceElement.startOffsetSkippingComments: Int
         return startOffset + comments.sumOf { it.textLength }
     }
 
+fun KtLightSourceElement.startOffsetOfGivenKeywordsOrNull(tokenSet: TokenSet): Int? {
+    val children = lighterASTNode.getChildren(treeStructure)
+
+    val beforeKeyword = children.takeWhile { it.tokenType !in tokenSet }
+    if (beforeKeyword.size == children.size) return null
+    return startOffset + beforeKeyword.sumOf { it.textLength }
+}

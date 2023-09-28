@@ -12,6 +12,7 @@ import org.jetbrains.kotlin.*
 import org.jetbrains.kotlin.backend.common.actualizer.IrActualizedResult
 import org.jetbrains.kotlin.builtins.StandardNames.DATA_CLASS_COMPONENT_PREFIX
 import org.jetbrains.kotlin.descriptors.ValueClassRepresentation
+import org.jetbrains.kotlin.diagnostics.startOffsetOfGivenKeywordsOrNull
 import org.jetbrains.kotlin.diagnostics.startOffsetSkippingComments
 import org.jetbrains.kotlin.fir.*
 import org.jetbrains.kotlin.fir.builder.buildFileAnnotationsContainer
@@ -54,7 +55,12 @@ import org.jetbrains.kotlin.ir.types.impl.IrErrorTypeImpl
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.name.SpecialNames
 import org.jetbrains.kotlin.name.StandardClassIds
+import org.jetbrains.kotlin.psi.KtConstructor
+import org.jetbrains.kotlin.psi.KtDeclaration
 import org.jetbrains.kotlin.psi.KtFile
+import org.jetbrains.kotlin.psi.psiUtil.DeclarationTokens
+import org.jetbrains.kotlin.psi.psiUtil.getStartOffsetOfConstructorDeclarationKeywordOrNull
+import org.jetbrains.kotlin.psi.psiUtil.getStartOffsetOfDeclarationKeywordOrNull
 import org.jetbrains.kotlin.psi.psiUtil.startOffsetSkippingComments
 import org.jetbrains.kotlin.types.ConstantValueKind
 import org.jetbrains.kotlin.types.Variance
@@ -68,6 +74,25 @@ fun AbstractKtSourceElement?.startOffsetSkippingComments(): Int? {
         is KtLightSourceElement -> this.startOffsetSkippingComments
         else -> null
     }
+}
+
+fun AbstractKtSourceElement?.smartStartOffset(): Int? {
+    return when (this) {
+        is KtPsiSourceElement -> when (val psi = psi) {
+            is KtConstructor<*> -> psi.getStartOffsetOfConstructorDeclarationKeywordOrNull()
+            is KtDeclaration -> psi.getStartOffsetOfDeclarationKeywordOrNull()
+            else -> null
+        } ?: psi.startOffsetSkippingComments
+        is KtLightSourceElement -> when (elementType) {
+            KtNodeTypes.PRIMARY_CONSTRUCTOR, KtNodeTypes.SECONDARY_CONSTRUCTOR -> startOffsetOfGivenKeywordsOrNull(DeclarationTokens.CONSTRUCTOR_DECL_TOKENS)
+            KtNodeTypes.FUN -> startOffsetOfGivenKeywordsOrNull(DeclarationTokens.FUNCTION_DECL_TOKENS)
+            KtNodeTypes.PROPERTY_ACCESSOR -> startOffsetOfGivenKeywordsOrNull(DeclarationTokens.ACCESSOR_DECL_TOKENS)
+            KtNodeTypes.PROPERTY, KtNodeTypes.VALUE_PARAMETER -> startOffsetOfGivenKeywordsOrNull(DeclarationTokens.PROPERTY_DECL_TOKENS)
+            KtNodeTypes.CLASS, KtNodeTypes.OBJECT_DECLARATION -> startOffsetOfGivenKeywordsOrNull(DeclarationTokens.CLASS_DECL_TOKENS)
+            else -> null
+        } ?: this.startOffsetSkippingComments
+        else -> null
+    } ?: this?.startOffset
 }
 
 internal inline fun <T : IrElement> FirElement.convertWithOffsets(f: (startOffset: Int, endOffset: Int) -> T): T {
@@ -88,7 +113,7 @@ internal inline fun <T : IrElement> KtSourceElement?.convertWithOffsets(f: (star
         startOffset = UNDEFINED_OFFSET
         endOffset = UNDEFINED_OFFSET
     } else {
-        startOffset = this?.startOffsetSkippingComments() ?: this?.startOffset ?: UNDEFINED_OFFSET
+        startOffset = this?.smartStartOffset() ?: UNDEFINED_OFFSET
         endOffset = this?.endOffset ?: UNDEFINED_OFFSET
     }
 

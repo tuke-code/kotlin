@@ -5,7 +5,7 @@ expect fun interface F1 {
     fun run()
 }
 
-<!INCOMPATIBLE_MATCHING{JVM}!>expect fun interface F2 {
+expect fun <!INCOMPATIBLE_MATCHING{JVM}!>interface F2 {
     fun run()
 }<!>
 
@@ -21,7 +21,7 @@ expect fun interface F5 {
     fun run()
 }
 
-<!INCOMPATIBLE_MATCHING{JVM}!>expect fun interface F6 {
+expect fun <!INCOMPATIBLE_MATCHING{JVM}!>interface F6 {
     fun run()
 }<!>
 

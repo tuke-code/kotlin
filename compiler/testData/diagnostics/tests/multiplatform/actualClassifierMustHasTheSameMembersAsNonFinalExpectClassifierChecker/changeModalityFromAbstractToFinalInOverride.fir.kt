@@ -5,7 +5,7 @@ interface Base {
     <!INCOMPATIBLE_MATCHING{JVM}!>fun foo()<!>
 }
 
-<!INCOMPATIBLE_MATCHING{JVM}!>expect open <!ABSTRACT_MEMBER_NOT_IMPLEMENTED!>class Foo<!> : Base<!>
+expect open <!INCOMPATIBLE_MATCHING{JVM}!><!ABSTRACT_MEMBER_NOT_IMPLEMENTED!>class Foo<!> : Base<!>
 
 // MODULE: m2-jvm()()(m1-common)
 // FILE: jvm.kt

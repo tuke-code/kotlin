@@ -1,6 +1,6 @@
 // MODULE: m1-common
 // FILE: common.kt
-<!INCOMPATIBLE_MATCHING{JVM}!>expect class Foo {
+expect <!INCOMPATIBLE_MATCHING{JVM}!>class Foo {
     <!INCOMPATIBLE_MATCHING{JVM}!>fun foo(param: Int = 1)<!>
 }<!>
 

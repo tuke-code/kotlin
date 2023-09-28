@@ -22,3 +22,5 @@ class Test {
     fun test3() {}
 
 }
+
+// FIR_IDENTICAL

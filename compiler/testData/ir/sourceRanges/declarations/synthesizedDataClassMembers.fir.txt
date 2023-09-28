@@ -1,5 +1,5 @@
 @0:0..5:0 FILE fqName:<root> fileName:/synthesizedDataClassMembers.kt
-  @0:0..4:1 CLASS CLASS name:C modality:FINAL visibility:public [data] superTypes:[kotlin.Any]
+  @0:5..4:1 CLASS CLASS name:C modality:FINAL visibility:public [data] superTypes:[kotlin.Any]
     @0:12..4:1 CONSTRUCTOR visibility:public <> (x:kotlin.Int, y:kotlin.String, z:kotlin.Any) returnType:<root>.C [primary]
       @1:8..18 VALUE_PARAMETER name:x index:0 type:kotlin.Int
       @2:8..21 VALUE_PARAMETER name:y index:1 type:kotlin.String
@@ -55,7 +55,7 @@
         @-1:-1..-1 RETURN type=kotlin.Nothing from='public final fun component3 (): kotlin.Any [operator] declared in <root>.C'
           @-1:-1..-1 GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:z type:kotlin.Any visibility:private [final]' type=kotlin.Any origin=null
             @-1:-1..-1 GET_VAR '<this>: <root>.C declared in <root>.C.component3' type=<root>.C origin=null
-    @0:0..4:1 FUN GENERATED_DATA_CLASS_MEMBER name:copy visibility:public modality:FINAL <> ($this:<root>.C, x:kotlin.Int, y:kotlin.String, z:kotlin.Any) returnType:<root>.C
+    @0:5..4:1 FUN GENERATED_DATA_CLASS_MEMBER name:copy visibility:public modality:FINAL <> ($this:<root>.C, x:kotlin.Int, y:kotlin.String, z:kotlin.Any) returnType:<root>.C
       @0:0..4:1 VALUE_PARAMETER name:<this> type:<root>.C
       @1:8..18 VALUE_PARAMETER name:x index:0 type:kotlin.Int
         @-1:-1..-1 EXPRESSION_BODY
@@ -170,4 +170,4 @@
               @-1:-1..-1 CONST Boolean type=kotlin.Boolean value=false
         @-1:-1..-1 RETURN type=kotlin.Nothing from='public open fun equals (other: kotlin.Any?): kotlin.Boolean [operator] declared in <root>.C'
           @-1:-1..-1 CONST Boolean type=kotlin.Boolean value=true
-    @0:0..4:1 VALUE_PARAMETER INSTANCE_RECEIVER name:<this> type:<root>.C
+    @0:5..4:1 VALUE_PARAMETER INSTANCE_RECEIVER name:<this> type:<root>.C

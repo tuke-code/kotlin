@@ -1,12 +1,12 @@
 // MODULE: m1-common
 // FILE: common.kt
-<!NO_ACTUAL_FOR_EXPECT!>expect open class A {
+expect open <!NO_ACTUAL_FOR_EXPECT!>class A {
     constructor(s: String)
 
     constructor(n: Number) : <!EXPECTED_CLASS_CONSTRUCTOR_DELEGATION_CALL!>this<!>("A")
 }<!>
 
-<!NO_ACTUAL_FOR_EXPECT!>expect class B : A {
+expect <!NO_ACTUAL_FOR_EXPECT!>class B : A {
     constructor(i: Int)
 
     constructor() : <!EXPECTED_CLASS_CONSTRUCTOR_DELEGATION_CALL!>super<!>("B")

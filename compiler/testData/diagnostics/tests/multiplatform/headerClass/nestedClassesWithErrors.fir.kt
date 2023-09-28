@@ -14,7 +14,7 @@ expect class C {
     <!WRONG_MODIFIER_TARGET!>expect<!> inner class I
 }
 
-<!INCOMPATIBLE_MATCHING{JVM}!>expect class D {
+expect <!INCOMPATIBLE_MATCHING{JVM}!>class D {
     <!NO_ACTUAL_FOR_EXPECT{JVM}!>class N<!>
 }<!>
 

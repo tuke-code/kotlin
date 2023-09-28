@@ -2,27 +2,27 @@
 // FILE: common.kt
 
 expect class E01
-<!INCOMPATIBLE_MATCHING{JVM}!>expect class E02()<!>
-<!INCOMPATIBLE_MATCHING{JVM}!>expect open class E03<!>
+expect <!INCOMPATIBLE_MATCHING{JVM}!>class E02()<!>
+expect open <!INCOMPATIBLE_MATCHING{JVM}!>class E03<!>
 
-<!INCOMPATIBLE_MATCHING{JVM}!>expect class E04 {
+expect <!INCOMPATIBLE_MATCHING{JVM}!>class E04 {
     constructor()
 }<!>
 
-<!INCOMPATIBLE_MATCHING{JVM}!>expect class E05(e: E01)<!>
-<!INCOMPATIBLE_MATCHING{JVM}!>expect class E06 {
+expect <!INCOMPATIBLE_MATCHING{JVM}!>class E05(e: E01)<!>
+expect <!INCOMPATIBLE_MATCHING{JVM}!>class E06 {
     constructor(e: E02)
 }<!>
 
-<!INCOMPATIBLE_MATCHING{JVM}!>expect interface I01<!>
+expect <!INCOMPATIBLE_MATCHING{JVM}!>interface I01<!>
 
 expect class M01 {
     fun foo()
 }
 
-<!INCOMPATIBLE_MATCHING{JVM}!>expect enum class ENUM01<!>
+expect enum <!INCOMPATIBLE_MATCHING{JVM}!>class ENUM01<!>
 
-<!INCOMPATIBLE_MATCHING{JVM}!>expect annotation class ANNO01<!>
+expect annotation <!INCOMPATIBLE_MATCHING{JVM}!>class ANNO01<!>
 
 // MODULE: m2-jvm()()(m1-common)
 // FILE: jvm.kt
