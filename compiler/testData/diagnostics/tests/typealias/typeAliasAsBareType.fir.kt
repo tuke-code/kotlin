@@ -31,5 +31,5 @@ fun <T> testLocal(x: Any) {
     class C
     typealias <!EXPOSED_TYPEALIAS_EXPANDED_TYPE!>CA<!> = C
     if (x is <!NO_TYPE_ARGUMENTS_ON_RHS!>C<!>) {}
-    if (x is <!UNRESOLVED_REFERENCE!>CA<!>) {}
+    if (x is CA) {}
 }

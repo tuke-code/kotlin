@@ -296,7 +296,7 @@ interface ConeTypeContext : TypeSystemContext, TypeSystemOptimizationContext, Ty
             is ConeClassLikeLookupTag -> {
                 when (val symbol = toClassLikeSymbol().also { it?.lazyResolveToPhase(FirResolvePhase.TYPES) }) {
                     is FirClassSymbol<*> -> symbol.fir.superConeTypes
-                    is FirTypeAliasSymbol -> listOfNotNull(symbol.fir.expandedConeType)
+                    is FirTypeAliasSymbol -> listOf(symbol.fir.expandedTypeRef.coneType)
                     else -> listOf(session.builtinTypes.anyType.type)
                 }
             }

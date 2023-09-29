@@ -308,6 +308,12 @@ class BodyResolveContext(
     }
 
     @OptIn(PrivateForInline::class)
+    fun storeTypeAliasIfNotNested(typeAlias: FirTypeAlias, session: FirSession) {
+        if (containerIfAny is FirClass) return
+        updateLastScope { storeTypeAlias(typeAlias, session) }
+    }
+
+    @OptIn(PrivateForInline::class)
     fun storeVariable(variable: FirVariable, session: FirSession) {
         updateLastScope { storeVariable(variable, session) }
     }
