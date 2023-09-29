@@ -238,7 +238,7 @@ object FirUninitializedEnumChecker : FirQualifiedAccessExpressionChecker() {
         val containingClassSymbol = when (this) {
             is FirConstructor -> {
                 if (!isPrimary) return false
-                (containingClassForStaticMemberAttr as? ConeClassLookupTagWithFixedSymbol)?.symbol
+                (containingClassForStaticMemberAttr as? ConeClassLikeLookupTagWithFixedSymbol)?.symbol
             }
             is FirAnonymousInitializer -> {
                 dispatchReceiverType?.toSymbol(session)

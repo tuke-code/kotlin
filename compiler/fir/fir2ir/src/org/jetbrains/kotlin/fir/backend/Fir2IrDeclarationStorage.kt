@@ -38,7 +38,6 @@ import org.jetbrains.kotlin.ir.declarations.lazy.IrLazyClass
 import org.jetbrains.kotlin.ir.expressions.IrSyntheticBodyKind
 import org.jetbrains.kotlin.ir.symbols.*
 import org.jetbrains.kotlin.ir.symbols.impl.IrClassSymbolImpl
-import org.jetbrains.kotlin.ir.types.IrSimpleType
 import org.jetbrains.kotlin.ir.util.*
 import org.jetbrains.kotlin.load.kotlin.FacadeClassSource
 import org.jetbrains.kotlin.name.*
@@ -48,7 +47,6 @@ import org.jetbrains.kotlin.serialization.deserialization.descriptors.Deserializ
 import org.jetbrains.kotlin.serialization.deserialization.descriptors.DeserializedContainerSource
 import org.jetbrains.kotlin.utils.threadLocal
 import java.util.concurrent.ConcurrentHashMap
-import org.jetbrains.kotlin.fir.java.hasJvmFieldAnnotation
 
 @OptIn(LeakedDeclarationCaches::class)
 class Fir2IrDeclarationStorage(
@@ -549,7 +547,7 @@ class Fir2IrDeclarationStorage(
             return containingClassLookupTag.getIrCallableSymbol()
         }
 
-        return if (unmatchedOwner && fakeOverrideOwnerLookupTag is ConeClassLookupTagWithFixedSymbol) {
+        return if (unmatchedOwner && fakeOverrideOwnerLookupTag is ConeClassLikeLookupTagWithFixedSymbol) {
             fakeOverrideOwnerLookupTag.findIrFakeOverride(fir.name, originalProperty) as IrPropertySymbol
         } else {
             originalSymbol
@@ -895,7 +893,7 @@ class Fir2IrDeclarationStorage(
                         }
                     },
                 ) as IrFunctionSymbol
-                if (unmatchedOwner && fakeOverrideOwnerLookupTag is ConeClassLookupTagWithFixedSymbol) {
+                if (unmatchedOwner && fakeOverrideOwnerLookupTag is ConeClassLikeLookupTagWithFixedSymbol) {
                     @OptIn(IrSymbolInternals::class)
                     val originalFunction = originalSymbol.owner as IrSimpleFunction
                     fakeOverrideOwnerLookupTag.findIrFakeOverride(fir.name, originalFunction) as IrFunctionSymbol? ?: originalSymbol
@@ -1061,7 +1059,7 @@ class Fir2IrDeclarationStorage(
             )
         }
         synchronized(symbolTable.lock) {
-            getCachedIrDeclaration(fir, fakeOverrideOwnerLookupTag.takeIf { it !is ConeClassLookupTagWithFixedSymbol }) {
+            getCachedIrDeclaration(fir, fakeOverrideOwnerLookupTag.takeIf { it !is ConeClassLikeLookupTagWithFixedSymbol }) {
                 // Parent calculation provokes declaration calculation for some members from IrBuiltIns
                 @Suppress("UNUSED_EXPRESSION") irParent
                 signature
@@ -1238,7 +1236,7 @@ class Fir2IrDeclarationStorage(
         )
     }
 
-    private inline fun <reified S : IrSymbol, reified D : IrOverridableDeclaration<S>> ConeClassLookupTagWithFixedSymbol.findIrFakeOverride(
+    private inline fun <reified S : IrSymbol, reified D : IrOverridableDeclaration<S>> ConeClassLikeLookupTagWithFixedSymbol.findIrFakeOverride(
         name: Name, originalDeclaration: IrOverridableDeclaration<S>
     ): IrSymbol? {
         val dispatchReceiverIrClass =
