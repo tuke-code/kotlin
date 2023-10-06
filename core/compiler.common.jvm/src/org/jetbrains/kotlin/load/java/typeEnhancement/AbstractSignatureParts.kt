@@ -120,15 +120,15 @@ abstract class AbstractSignatureParts<TAnnotation : Any> {
         val defaultNullability =
             referencedParameterBoundsNullability?.copy(qualifier = NullabilityQualifier.NOT_NULL)
                 ?: defaultTypeQualifier?.nullabilityQualifier
-        val definitelyNotNull =
-            referencedParameterBoundsNullability?.qualifier == NullabilityQualifier.NOT_NULL ||
-                    (typeParameterUse != null && defaultTypeQualifier?.definitelyNotNull == true)
 
         // We should also enhance this type to satisfy the bound of the type parameter it is instantiating:
         // for C<T extends @NotNull V>, C<X!> becomes C<X!!> regardless of the above.
         val substitutedParameterBoundsNullability = typeParameterForArgument?.boundsNullability
             ?.let { if (it.qualifier == NullabilityQualifier.NULLABLE) it.copy(qualifier = NullabilityQualifier.FORCE_FLEXIBILITY) else it }
         val result = mostSpecific(substitutedParameterBoundsNullability, defaultNullability)
+        val definitelyNotNull =
+            referencedParameterBoundsNullability?.qualifier == NullabilityQualifier.NOT_NULL ||
+                    (typeParameterUse != null && (defaultTypeQualifier?.definitelyNotNull == true || result?.qualifier == NullabilityQualifier.NOT_NULL))
         return JavaTypeQualifiers(result?.qualifier, annotationsMutability, definitelyNotNull, result?.isForWarningOnly == true)
     }
 
