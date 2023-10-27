@@ -633,16 +633,6 @@ abstract class BaseGradleIT {
         assertTasksNotExecuted(tasks.toList())
     }
 
-    fun CompiledProject.assertTasksRetrievedFromCache(tasks: Iterable<String>) {
-        for (task in tasks) {
-            assertContains("$task FROM-CACHE")
-        }
-    }
-
-    fun CompiledProject.assertTasksRetrievedFromCache(vararg tasks: String) {
-        assertTasksRetrievedFromCache(tasks.toList())
-    }
-
     fun CompiledProject.assertTasksUpToDate(tasks: Iterable<String>) {
         for (task in tasks) {
             assertContains("$task UP-TO-DATE")

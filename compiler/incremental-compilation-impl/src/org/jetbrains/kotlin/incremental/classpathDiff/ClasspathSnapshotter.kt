@@ -57,7 +57,11 @@ object ClasspathEntrySnapshotter {
                 ClassSnapshotter.snapshot(classes, granularity, metrics)
             }
             return ClasspathEntrySnapshot(
-                classSnapshots = classes.map { it.classFile.unixStyleRelativePath }.zip(snapshots).toMap(LinkedHashMap())
+                classSnapshots = classes.map {
+                    it.classFile.unixStyleRelativePath
+                }.zip(snapshots).filter {
+                    it.second !is InaccessibleClassSnapshot
+                }.toMap(LinkedHashMap())
             )
         }
     }

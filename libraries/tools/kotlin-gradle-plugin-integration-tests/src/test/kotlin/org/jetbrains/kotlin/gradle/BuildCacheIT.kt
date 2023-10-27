@@ -20,6 +20,7 @@ import org.gradle.api.logging.LogLevel
 import org.gradle.util.GradleVersion
 import org.jetbrains.kotlin.gradle.report.BuildReportType
 import org.jetbrains.kotlin.gradle.testbase.*
+import org.jetbrains.kotlin.gradle.util.replaceFirst
 import org.junit.jupiter.api.DisplayName
 import kotlin.io.path.ExperimentalPathApi
 import kotlin.io.path.readText
@@ -197,6 +198,30 @@ class BuildCacheIT : KGPBaseTest() {
                     subProject("app").kotlinSourcesDir().resolve("foo/BB.kt"),
                 )
                 assertIncrementalCompilation(expectedCompiledKotlinFiles = affectedFiles.relativizeTo(projectPath))
+            }
+        }
+    }
+
+    @DisplayName("Adding private class doesn't require cross-module IC")
+    @GradleTest
+    fun testIncrementalCompilationAfterAddingInaccessibleClass(gradleVersion: GradleVersion) {
+        project("incrementalMultiproject", gradleVersion) {
+            enableLocalBuildCache(localBuildCacheDir)
+            build("assemble")
+
+            projectPath.resolve("lib/src/main/kotlin/bar/barUseAB.kt").replaceFirst(
+                "// todo b.a()",
+                """
+                        val anonymous = { x: Int ->
+                            x * x
+                        }
+                        val unused = anonymous(2)
+                """.trimIndent()
+            )
+
+            build("clean", "assemble") {
+                assertTasksFromCache(":app:compileKotlin")
+                assertTasksExecuted(":lib:compileKotlin")
             }
         }
     }
