@@ -11,6 +11,7 @@ import org.gradle.util.GradleVersion
 import org.jetbrains.kotlin.gradle.testbase.*
 import org.jetbrains.kotlin.gradle.testbase.relativizeTo
 import java.nio.file.Path
+import java.util.concurrent.atomic.AtomicInteger
 import kotlin.io.path.appendText
 
 abstract class KmpIncrementalITBase : KGPBaseTest() {
@@ -38,10 +39,13 @@ abstract class KmpIncrementalITBase : KGPBaseTest() {
         )
     }
 
-    protected open fun TestProject.touchAndGet(subproject: String, srcDir: String, name: String): Path {
-        val path = subProject(subproject).kotlinSourcesDir(srcDir).resolve(name)
-        path.appendText("private val nothingMuch = 24")
-        return path
+    protected fun TestProject.resolvePath(subproject: String, srcDir: String, name: String): Path {
+        return subProject(subproject).kotlinSourcesDir(srcDir).resolve(name)
+    }
+
+    protected fun Path.addPrivateVal(): Path {
+        this@addPrivateVal.appendText("private val nothingMuch${changeCounter.incrementAndGet()} = 24")
+        return this@addPrivateVal
     }
 
     protected open fun BuildResult.assertSuccessOrUTD(allTasks: Set<String>, executedTasks: Set<String>) {
@@ -60,5 +64,24 @@ abstract class KmpIncrementalITBase : KGPBaseTest() {
             }
             assertions()
         }
+    }
+
+    // useful for smokes, where multiple different changes are expected to trigger the same compilations
+    protected open fun TestProject.multiStepTestCase(
+        executedTasks: Set<String>,
+        steps: List<() -> Unit>,
+        commonAssertions: BuildResult.() -> Unit = {}
+    ) {
+        for (step in steps) {
+            step()
+            build(gradleTask, buildOptions = defaultBuildOptions.copy(logLevel = LogLevel.DEBUG)) {
+                assertSuccessOrUTD(allTasks = mainCompileTasks, executedTasks = executedTasks)
+                commonAssertions()
+            }
+        }
+    }
+
+    companion object {
+        val changeCounter = AtomicInteger(0)
     }
 }
