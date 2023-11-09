@@ -1,0 +1,41 @@
+FILE: redundantUseSiteTargets.kt
+    public final annotation class Anno1 : R|kotlin/Annotation| {
+        public constructor(): R|Anno1| {
+            super<R|kotlin/Any|>()
+        }
+
+    }
+    public final annotation class Anno2 : R|kotlin/Annotation| {
+        public constructor(): R|Anno2| {
+            super<R|kotlin/Any|>()
+        }
+
+    }
+    public final annotation class Anno3 : R|kotlin/Annotation| {
+        public constructor(): R|Anno3| {
+            super<R|kotlin/Any|>()
+        }
+
+    }
+    public final annotation class Anno4 : R|kotlin/Annotation| {
+        public constructor(): R|Anno4| {
+            super<R|kotlin/Any|>()
+        }
+
+    }
+    @PROPERTY:R|Anno1|() @R|Anno2|() public final var i: R|kotlin/Int|
+        @R|Anno1|() @R|Anno2|() @PROPERTY_SETTER:R|Anno3|() public get(): R|kotlin/Int| {
+            ^ Int(4)
+        }
+        @R|Anno1|() @R|Anno2|() public set(@R|Anno4|() @R|Anno1|() value: R|kotlin/Int|): R|kotlin/Unit| {
+            ^ Q|kotlin/Unit|
+        }
+    public final class Klass : R|kotlin/Any| {
+        public constructor(@R|Anno1|() int: R|kotlin/Int|, @R|Anno1|() b: R|kotlin/Long|): R|Klass| {
+            super<R|kotlin/Any|>()
+        }
+
+        public final val int: R|kotlin/Int| = R|<local>/int|
+            public get(): R|kotlin/Int|
+
+    }

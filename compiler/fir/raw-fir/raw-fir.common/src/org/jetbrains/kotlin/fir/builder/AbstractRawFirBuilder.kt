@@ -14,6 +14,7 @@ import org.jetbrains.kotlin.descriptors.ClassKind
 import org.jetbrains.kotlin.descriptors.EffectiveVisibility
 import org.jetbrains.kotlin.descriptors.Modality
 import org.jetbrains.kotlin.descriptors.Visibilities
+import org.jetbrains.kotlin.descriptors.annotations.AnnotationUseSiteTarget
 import org.jetbrains.kotlin.fir.*
 import org.jetbrains.kotlin.fir.declarations.*
 import org.jetbrains.kotlin.fir.declarations.builder.*
@@ -36,6 +37,7 @@ import org.jetbrains.kotlin.lexer.KtTokens.*
 import org.jetbrains.kotlin.name.*
 import org.jetbrains.kotlin.parsing.*
 import org.jetbrains.kotlin.psi.KtPsiUtil
+import org.jetbrains.kotlin.resolve.UseSiteTargetsList
 import org.jetbrains.kotlin.types.ConstantValueKind
 import org.jetbrains.kotlin.util.OperatorNameConventions
 import org.jetbrains.kotlin.utils.exceptions.ExceptionAttachmentBuilder
@@ -1106,6 +1108,14 @@ abstract class AbstractRawFirBuilder<T>(val baseSession: FirSession, val context
         SETTER(shouldExplicitParameterTypeBePresent = false),
         LAMBDA(shouldExplicitParameterTypeBePresent = false),
         FOR_LOOP(shouldExplicitParameterTypeBePresent = false),
+    }
+
+    fun ValueParameterDeclaration.toUseSiteTarget(): AnnotationUseSiteTarget? {
+        return when (this) {
+            ValueParameterDeclaration.PRIMARY_CONSTRUCTOR -> AnnotationUseSiteTarget.CONSTRUCTOR_PARAMETER
+            ValueParameterDeclaration.SETTER -> AnnotationUseSiteTarget.SETTER_PARAMETER
+            else -> null
+        }
     }
 }
 

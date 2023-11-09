@@ -3238,6 +3238,12 @@ public class FirLightTreeOldFrontendDiagnosticsTestGenerated extends AbstractFir
                 }
 
                 @Test
+                @TestMetadata("redundantUseSiteTargets.kt")
+                public void testRedundantUseSiteTargets() throws Exception {
+                    runTest("compiler/testData/diagnostics/tests/annotations/withUseSiteTarget/redundantUseSiteTargets.kt");
+                }
+
+                @Test
                 @TestMetadata("repeatable.kt")
                 public void testRepeatable() throws Exception {
                     runTest("compiler/testData/diagnostics/tests/annotations/withUseSiteTarget/repeatable.kt");

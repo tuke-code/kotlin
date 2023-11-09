@@ -12,6 +12,7 @@ import org.jetbrains.kotlin.*
 import org.jetbrains.kotlin.builtins.StandardNames
 import org.jetbrains.kotlin.builtins.StandardNames.BACKING_FIELD
 import org.jetbrains.kotlin.descriptors.*
+import org.jetbrains.kotlin.descriptors.annotations.AnnotationUseSiteTarget
 import org.jetbrains.kotlin.descriptors.annotations.AnnotationUseSiteTarget.*
 import org.jetbrains.kotlin.fir.*
 import org.jetbrains.kotlin.fir.analysis.isCallTheFirstStatement
@@ -513,7 +514,7 @@ open class PsiRawFirBuilder(
                         this.isGetter = isGetter
                         this.status = status
                         annotations += accessorAnnotationsFromProperty
-                        extractAnnotationsTo(this)
+                        extractAnnotationsTo(this, if (isGetter) PROPERTY_GETTER else PROPERTY_SETTER)
                         this@PsiRawFirBuilder.context.firFunctionTargets += accessorTarget
                         symbol = FirPropertyAccessorSymbol()
                         extractValueParametersTo(
@@ -675,18 +676,25 @@ open class PsiRawFirBuilder(
                 containingFunctionSymbol = functionSymbol
                 addAnnotationsFrom(
                     this@toFirValueParameter,
-                    isFromPrimaryConstructor = valueParameterDeclaration == ValueParameterDeclaration.PRIMARY_CONSTRUCTOR
+                    isFromPrimaryConstructor = valueParameterDeclaration == ValueParameterDeclaration.PRIMARY_CONSTRUCTOR,
+                    target = valueParameterDeclaration.toUseSiteTarget()
                 )
                 annotations += additionalAnnotations
             }
         }
 
-        private fun FirValueParameterBuilder.addAnnotationsFrom(ktParameter: KtParameter, isFromPrimaryConstructor: Boolean) {
+        private fun FirValueParameterBuilder.addAnnotationsFrom(
+            ktParameter: KtParameter, isFromPrimaryConstructor: Boolean,
+            target: AnnotationUseSiteTarget? = null
+        ) {
+            if (isFromPrimaryConstructor) {
+                Unit
+            }
             for (annotationEntry in ktParameter.annotationEntries) {
-                annotationEntry.convert<FirAnnotation>().takeIf {
+                annotationEntry.convert<FirAnnotationCall>().takeIf {
                     !isFromPrimaryConstructor || it.useSiteTarget.appliesToPrimaryConstructorParameter()
                 }?.let {
-                    annotations += it
+                    annotations += it.dropRedundantUseSiteTargetIfNeeded(target)
                 }
             }
         }
@@ -802,9 +810,9 @@ open class PsiRawFirBuilder(
             container.replaceAnnotations(annotations)
         }
 
-        private fun KtAnnotated.extractAnnotationsTo(container: FirAnnotationContainerBuilder) {
+        private fun KtAnnotated.extractAnnotationsTo(container: FirAnnotationContainerBuilder, target: AnnotationUseSiteTarget? = null) {
             for (annotationEntry in annotationEntries) {
-                container.annotations += annotationEntry.convert<FirAnnotation>()
+                container.annotations += annotationEntry.convert<FirAnnotationCall>().dropRedundantUseSiteTargetIfNeeded(target)
             }
         }
 
@@ -1435,7 +1443,7 @@ open class PsiRawFirBuilder(
                         scopeProvider = baseScopeProvider
                         symbol = FirRegularClassSymbol(context.currentClassId)
 
-                        classOrObject.extractAnnotationsTo(this)
+                        classOrObject.extractAnnotationsTo(this, CONSTRUCTOR_PARAMETER)
                         classOrObject.extractTypeParametersTo(this, symbol)
 
                         context.appendOuterTypeParameters(ignoreLastLevel = true, typeParameters)
@@ -1519,7 +1527,9 @@ open class PsiRawFirBuilder(
 
 
                                 },
-                                addValueParameterAnnotations = { addAnnotationsFrom(it as KtParameter, isFromPrimaryConstructor = true) },
+                                addValueParameterAnnotations = {
+                                    addAnnotationsFrom(it as KtParameter, isFromPrimaryConstructor = true, target = CONSTRUCTOR_PARAMETER)
+                                },
                             ).generate()
                         }
 
@@ -3079,6 +3089,16 @@ open class PsiRawFirBuilder(
             for (annotationEntry in modifierList.getAnnotationEntries()) {
                 annotations += annotationEntry.convert<FirAnnotation>()
             }
+        }
+    }
+
+    private fun FirAnnotationCall.dropRedundantUseSiteTargetIfNeeded(target: AnnotationUseSiteTarget?): FirAnnotationCall {
+        return if (target != null && useSiteTarget == target) {
+            buildAnnotationCallCopy(this) {
+                useSiteTarget = null
+            }
+        } else {
+            this
         }
     }
 }
