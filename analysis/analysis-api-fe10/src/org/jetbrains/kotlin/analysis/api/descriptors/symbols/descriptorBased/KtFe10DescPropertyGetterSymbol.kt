@@ -20,7 +20,7 @@ import org.jetbrains.kotlin.analysis.api.symbols.pointers.KtSymbolPointer
 import org.jetbrains.kotlin.analysis.api.types.KtType
 import org.jetbrains.kotlin.descriptors.PropertyGetterDescriptor
 import org.jetbrains.kotlin.descriptors.hasBody
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.resolve.calls.inference.returnTypeOrNothing
 
 internal class KtFe10DescPropertyGetterSymbol(
@@ -45,8 +45,8 @@ internal class KtFe10DescPropertyGetterSymbol(
     override val hasStableParameterNames: Boolean
         get() = withValidityAssertion { true }
 
-    override val callableIdIfNonLocal: CallableId?
-        get() = withValidityAssertion { descriptor.correspondingProperty.getterCallableIdIfNotLocal }
+    override val callablePathIfNonLocal: CallablePath?
+        get() = withValidityAssertion { descriptor.correspondingProperty.getterCallablePathIfNotLocal }
 
     override val returnType: KtType
         get() = withValidityAssertion { descriptor.returnTypeOrNothing.toKtType(analysisContext) }

@@ -6,7 +6,6 @@
 package org.jetbrains.kotlin.fir.java
 
 import com.intellij.psi.PsiMethod
-import com.intellij.psi.impl.light.LightRecordCanonicalConstructor
 import com.intellij.psi.util.JavaPsiRecordUtil
 import org.jetbrains.kotlin.*
 import org.jetbrains.kotlin.builtins.jvm.JavaToKotlinClassMap
@@ -322,7 +321,7 @@ abstract class FirJavaFacade(
                 }
             }
             val javaClassDeclaredConstructors = javaClass.constructors
-            val constructorId = CallableId(classId.packageFqName, classId.relativeClassName, classId.shortClassName)
+            val constructorId = CallablePath(classId.packageFqName, classId.relativeClassName, classId.shortClassName)
 
             if (javaClassDeclaredConstructors.isEmpty()
                 && javaClass.classKind == ClassKind.CLASS
@@ -430,7 +429,7 @@ abstract class FirJavaFacade(
             val name = recordComponent.name
             if (functionsByName[name].orEmpty().any { it.valueParameters.isEmpty() }) continue
 
-            val componentId = CallableId(classId, name)
+            val componentId = CallablePath(classId, name)
             destination += buildJavaMethod {
                 this.moduleData = moduleData
                 source = recordComponent.toSourceElement(KtFakeSourceElementKind.JavaRecordComponentFunction)
@@ -462,7 +461,7 @@ abstract class FirJavaFacade(
                 this.moduleData = moduleData
                 isFromSource = javaClass.isFromSource
 
-                val constructorId = CallableId(classId, classId.shortClassName)
+                val constructorId = CallablePath(classId, classId.shortClassName)
                 symbol = FirConstructorSymbol(constructorId)
                 status = FirResolvedDeclarationStatusImpl(
                     Visibilities.Public,
@@ -502,7 +501,7 @@ abstract class FirJavaFacade(
         moduleData: FirModuleData,
     ): FirDeclaration {
         val fieldName = javaField.name
-        val fieldId = CallableId(classId.packageFqName, classId.relativeClassName, fieldName)
+        val fieldId = CallablePath(classId.packageFqName, classId.relativeClassName, fieldName)
         val returnType = javaField.type
         return when {
             javaField.isEnumEntry -> buildEnumEntry {
@@ -570,7 +569,7 @@ abstract class FirJavaFacade(
         moduleData: FirModuleData,
     ): FirJavaMethod {
         val methodName = javaMethod.name
-        val methodId = CallableId(classId.packageFqName, classId.relativeClassName, methodName)
+        val methodId = CallablePath(classId.packageFqName, classId.relativeClassName, methodName)
         val methodSymbol = FirNamedFunctionSymbol(methodId)
         val returnType = javaMethod.returnType
         return buildJavaMethod {
@@ -626,7 +625,7 @@ abstract class FirJavaFacade(
 
     private fun convertJavaConstructorToFir(
         javaConstructor: JavaConstructor?,
-        constructorId: CallableId,
+        constructorId: CallablePath,
         javaClass: JavaClass,
         ownerClassBuilder: FirJavaClassBuilder,
         classTypeParameters: List<FirTypeParameter>,
@@ -676,7 +675,7 @@ abstract class FirJavaFacade(
 
     private fun buildConstructorForAnnotationClass(
         javaClass: JavaClass,
-        constructorId: CallableId,
+        constructorId: CallablePath,
         ownerClassBuilder: FirJavaClassBuilder,
         valueParametersForAnnotationConstructor: ValueParametersForAnnotationConstructor,
         moduleData: FirModuleData,

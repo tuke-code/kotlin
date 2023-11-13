@@ -20,7 +20,7 @@ open class FirSymbolRenderer {
 
     protected open fun renderReference(symbol: FirBasedSymbol<*>): String {
         return when (symbol) {
-            is FirCallableSymbol<*> -> symbol.callableId.toString()
+            is FirCallableSymbol<*> -> symbol.callablePath.toString()
             is FirClassLikeSymbol<*> -> symbol.classId.toString()
             else -> "?"
         }

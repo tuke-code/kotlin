@@ -11,7 +11,7 @@ import org.jetbrains.kotlin.analysis.api.contracts.description.KtContractEffectD
 import org.jetbrains.kotlin.analysis.api.lifetime.withValidityAssertion
 import org.jetbrains.kotlin.analysis.api.symbols.markers.*
 import org.jetbrains.kotlin.analysis.api.symbols.pointers.KtSymbolPointer
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.ClassId
 
 public sealed class KtFunctionLikeSymbol : KtCallableSymbol(), KtSymbolWithKind {
@@ -30,7 +30,7 @@ public sealed class KtFunctionLikeSymbol : KtCallableSymbol(), KtSymbolWithKind 
 
 public abstract class KtAnonymousFunctionSymbol : KtFunctionLikeSymbol() {
     final override val symbolKind: KtSymbolKind get() = withValidityAssertion { KtSymbolKind.LOCAL }
-    final override val callableIdIfNonLocal: CallableId? get() = withValidityAssertion { null }
+    final override val callablePathIfNonLocal: CallablePath? get() = withValidityAssertion { null }
 
     final override val typeParameters: List<KtTypeParameterSymbol>
         get() = withValidityAssertion { emptyList() }
@@ -79,7 +79,7 @@ public abstract class KtConstructorSymbol : KtFunctionLikeSymbol(),
     public abstract val isPrimary: Boolean
     public abstract val containingClassIdIfNonLocal: ClassId?
 
-    final override val callableIdIfNonLocal: CallableId? get() = withValidityAssertion { null }
+    final override val callablePathIfNonLocal: CallablePath? get() = withValidityAssertion { null }
     final override val symbolKind: KtSymbolKind get() = withValidityAssertion { KtSymbolKind.CLASS_MEMBER }
     final override val isExtension: Boolean get() = withValidityAssertion { false }
     final override val receiverParameter: KtReceiverParameterSymbol? get() = withValidityAssertion { null }

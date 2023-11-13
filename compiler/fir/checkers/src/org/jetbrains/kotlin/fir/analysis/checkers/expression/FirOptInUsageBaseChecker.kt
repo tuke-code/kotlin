@@ -99,7 +99,7 @@ object FirOptInUsageBaseChecker {
             val annotationType = annotation.annotationTypeRef.coneTypeSafe<ConeClassLikeType>() ?: continue
             val className = when (this) {
                 is FirRegularClass -> name.asString()
-                is FirCallableDeclaration -> symbol.callableId.className?.shortName()?.asString()
+                is FirCallableDeclaration -> symbol.callablePath.className?.shortName()?.asString()
                 else -> null
             }
             result.addIfNotNull(

@@ -231,7 +231,7 @@ object FirInlineDeclarationChecker : FirFunctionChecker() {
         ) {
             if (
                 calledDeclaration == null ||
-                calledDeclaration.callableId.callableName == BACKING_FIELD
+                calledDeclaration.callablePath.callableName == BACKING_FIELD
             ) {
                 return
             }

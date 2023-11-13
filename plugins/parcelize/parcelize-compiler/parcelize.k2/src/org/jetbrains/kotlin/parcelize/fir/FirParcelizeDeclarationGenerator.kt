@@ -22,7 +22,7 @@ import org.jetbrains.kotlin.fir.resolve.fullyExpandedType
 import org.jetbrains.kotlin.fir.resolve.lookupSuperTypes
 import org.jetbrains.kotlin.fir.symbols.impl.*
 import org.jetbrains.kotlin.fir.types.*
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.parcelize.ParcelizeNames.DESCRIBE_CONTENTS_NAME
 import org.jetbrains.kotlin.parcelize.ParcelizeNames.DEST_NAME
@@ -45,23 +45,23 @@ class FirParcelizeDeclarationGenerator(session: FirSession) : FirDeclarationGene
             .filterIsInstance<FirRegularClassSymbol>()
     }
 
-    override fun generateFunctions(callableId: CallableId, context: MemberGenerationContext?): List<FirNamedFunctionSymbol> {
+    override fun generateFunctions(callablePath: CallablePath, context: MemberGenerationContext?): List<FirNamedFunctionSymbol> {
         val owner = context?.owner ?: return emptyList()
         require(owner is FirRegularClassSymbol)
-        val function = when (callableId.callableName) {
+        val function = when (callablePath.callableName) {
             DESCRIBE_CONTENTS_NAME -> {
                 val hasDescribeContentImplementation = owner.hasDescribeContentsImplementation() ||
                         lookupSuperTypes(owner, lookupInterfaces = false, deep = true, session).any {
                             it.fullyExpandedType(session).toRegularClassSymbol(session)?.hasDescribeContentsImplementation() ?: false
                         }
                 runIf(!hasDescribeContentImplementation) {
-                    createMemberFunctionForParcelize(owner, callableId.callableName, session.builtinTypes.intType.type)
+                    createMemberFunctionForParcelize(owner, callablePath.callableName, session.builtinTypes.intType.type)
                 }
             }
             WRITE_TO_PARCEL_NAME -> {
                 val declaredFunctions = owner.declarationSymbols.filterIsInstance<FirNamedFunctionSymbol>()
                 runIf(declaredFunctions.none { it.isWriteToParcel() }) {
-                    createMemberFunctionForParcelize(owner, callableId.callableName, session.builtinTypes.unitType.type) {
+                    createMemberFunctionForParcelize(owner, callablePath.callableName, session.builtinTypes.unitType.type) {
                         valueParameter(DEST_NAME, PARCEL_ID.createConeType(session))
                         valueParameter(FLAGS_NAME, session.builtinTypes.intType.type)
                     }

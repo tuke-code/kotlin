@@ -19,7 +19,7 @@ import org.jetbrains.kotlin.fir.resolve.toSymbol
 import org.jetbrains.kotlin.fir.scopes.FirContainingNamesAwareScope
 import org.jetbrains.kotlin.fir.scopes.unsubstitutedScope
 import org.jetbrains.kotlin.fir.symbols.impl.*
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.name.Name
@@ -122,7 +122,7 @@ abstract class FirAbstractImportingScope(
 internal fun FirSimpleFunction.buildImportedVersion(importedClassId: ClassId): FirSimpleFunction {
     return buildSimpleFunctionCopy(this) {
         origin = FirDeclarationOrigin.ImportedFromObjectOrStatic
-        this.symbol = FirNamedFunctionSymbol(CallableId(importedClassId, name))
+        this.symbol = FirNamedFunctionSymbol(CallablePath(importedClassId, name))
     }.apply {
         importedFromObjectOrStaticData = ImportedFromObjectOrStaticData(importedClassId, this@buildImportedVersion)
     }
@@ -133,7 +133,7 @@ internal fun FirVariable.buildImportedVersion(importedClassId: ClassId): FirVari
         is FirProperty -> {
             buildPropertyCopy(this) {
                 origin = FirDeclarationOrigin.ImportedFromObjectOrStatic
-                this.symbol = FirPropertySymbol(CallableId(importedClassId, name))
+                this.symbol = FirPropertySymbol(CallablePath(importedClassId, name))
                 this.delegateFieldSymbol = null
             }.apply {
                 importedFromObjectOrStaticData = ImportedFromObjectOrStaticData(importedClassId, this@buildImportedVersion)
@@ -142,7 +142,7 @@ internal fun FirVariable.buildImportedVersion(importedClassId: ClassId): FirVari
         is FirField -> {
             buildFieldCopy(this) {
                 origin = FirDeclarationOrigin.ImportedFromObjectOrStatic
-                this.symbol = FirFieldSymbol(CallableId(importedClassId, name))
+                this.symbol = FirFieldSymbol(CallablePath(importedClassId, name))
             }.apply {
                 importedFromObjectOrStaticData = ImportedFromObjectOrStaticData(importedClassId, this@buildImportedVersion)
             }

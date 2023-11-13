@@ -34,7 +34,7 @@ import org.jetbrains.kotlin.fir.symbols.impl.*
 import org.jetbrains.kotlin.fir.symbols.lazyResolveToPhase
 import org.jetbrains.kotlin.fir.types.*
 import org.jetbrains.kotlin.fir.util.ListMultimap
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.name.SpecialNames
@@ -50,7 +50,7 @@ private val FirNamedFunctionSymbol.hasMainFunctionStatus
         else -> false
     }
 
-private val CallableId.isTopLevel get() = className == null
+private val CallablePath.isTopLevel get() = className == null
 
 private fun FirBasedSymbol<*>.isCollectable(): Boolean {
     if (this is FirCallableSymbol<*>) {
@@ -451,7 +451,7 @@ private fun FirDeclarationCollector<FirBasedSymbol<*>>.collectTopLevelConflict(
 }
 
 private fun FirNamedFunctionSymbol.representsMainFunctionAllowingConflictingOverloads(session: FirSession): Boolean {
-    if (name != StandardNames.MAIN || !callableId.isTopLevel || !hasMainFunctionStatus) return false
+    if (name != StandardNames.MAIN || !callablePath.isTopLevel || !hasMainFunctionStatus) return false
     if (receiverParameter != null || typeParameterSymbols.isNotEmpty()) return false
     if (valueParameterSymbols.isEmpty()) return true
     val paramType = valueParameterSymbols.singleOrNull()?.resolvedReturnTypeRef?.coneType?.fullyExpandedType(session) ?: return false

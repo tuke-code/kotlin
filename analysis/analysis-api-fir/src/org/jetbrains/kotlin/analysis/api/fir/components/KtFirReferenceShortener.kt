@@ -985,8 +985,8 @@ private class ElementsToShortenCollector(
     private fun KtExpression.isCompanionMemberUsedForEnumEntryInit(resolvedSymbol: FirCallableSymbol<*>): Boolean {
         val enumEntry = getNonStrictParentOfType<KtEnumEntry>() ?: return false
         val firEnumEntry = enumEntry.resolveToFirSymbol(firResolveSession) as? FirEnumEntrySymbol ?: return false
-        val classNameOfResolvedSymbol = resolvedSymbol.callableId.className ?: return false
-        return firEnumEntry.callableId.className == classNameOfResolvedSymbol.parent() &&
+        val classNameOfResolvedSymbol = resolvedSymbol.callablePath.className ?: return false
+        return firEnumEntry.callablePath.className == classNameOfResolvedSymbol.parent() &&
                 classNameOfResolvedSymbol.shortName() == SpecialNames.DEFAULT_NAME_FOR_COMPANION_OBJECT
     }
 
@@ -1054,7 +1054,7 @@ private class ElementsToShortenCollector(
         val option = callableShortenStrategy(propertySymbol)
         if (option == ShortenStrategy.DO_NOT_SHORTEN) return
 
-        shortenIfAlreadyImportedAsAlias(qualifiedProperty, propertySymbol.callableId.asSingleFqName())?.let {
+        shortenIfAlreadyImportedAsAlias(qualifiedProperty, propertySymbol.callablePath.asSingleFqName())?.let {
             addElementToShorten(it)
             return
         }
@@ -1105,7 +1105,7 @@ private class ElementsToShortenCollector(
         val option = callableShortenStrategy(calledSymbol)
         if (option == ShortenStrategy.DO_NOT_SHORTEN) return
 
-        shortenIfAlreadyImportedAsAlias(qualifiedCallExpression, calledSymbol.callableId.asSingleFqName())?.let {
+        shortenIfAlreadyImportedAsAlias(qualifiedCallExpression, calledSymbol.callablePath.asSingleFqName())?.let {
             addElementToShorten(it)
             return
         }
@@ -1136,7 +1136,7 @@ private class ElementsToShortenCollector(
 
         val nameToImport = shorteningContext.convertToImportableName(calledSymbol)
 
-        val (matchedCallables, otherCallables) = availableCallables.partition { it.symbol.callableId == calledSymbol.callableId }
+        val (matchedCallables, otherCallables) = availableCallables.partition { it.symbol.callablePath == calledSymbol.callablePath }
 
         val importKindFromOption = ImportKind.fromShortenOption(option)
         val importKind = matchedCallables.minOfOrNull { it.importKind } ?: importKindFromOption ?: return
@@ -1195,10 +1195,10 @@ private class ElementsToShortenCollector(
         val candidates = coneAmbiguityError.candidates.map { it.symbol as FirCallableSymbol<*> }
         require(candidates.isNotEmpty()) { "Cannot have zero candidates" }
 
-        val distinctCandidates = candidates.distinctBy { it.callableId }
+        val distinctCandidates = candidates.distinctBy { it.callablePath }
         return distinctCandidates.singleOrNull()
             ?: errorWithAttachment("Expected all candidates to have same callableId but some of them but was different") {
-                withEntry("callableIds", distinctCandidates.map { it.callableId.asSingleFqName() }.joinToString())
+                withEntry("callableIds", distinctCandidates.map { it.callablePath.asSingleFqName() }.joinToString())
             }
     }
 
@@ -1377,7 +1377,7 @@ private class KDocQualifiersToShortenCollector(
         }
 
         resolvedSymbols.firstIsInstanceOrNull<KtCallableSymbol>()?.firSymbol?.let { availableCallable ->
-            return canShorten(fqName, availableCallable.callableId.asSingleFqName()) { callableShortenStrategy(availableCallable) }
+            return canShorten(fqName, availableCallable.callablePath.asSingleFqName()) { callableShortenStrategy(availableCallable) }
         }
 
         resolvedSymbols.firstIsInstanceOrNull<KtClassLikeSymbol>()?.firSymbol?.let { availableClassifier ->

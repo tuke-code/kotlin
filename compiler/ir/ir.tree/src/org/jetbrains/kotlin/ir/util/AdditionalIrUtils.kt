@@ -71,24 +71,24 @@ val IrTypeAlias.classIdOrFail: ClassId
 private val IrDeclarationWithName.classIdOrFailImpl: ClassId
     get() = classIdImpl ?: error("No classId for $this")
 
-val IrFunction.callableId: CallableId
-    get() = callableIdImpl
+val IrFunction.callablePath: CallablePath
+    get() = callablePathImpl
 
-val IrProperty.callableId: CallableId
-    get() = callableIdImpl
+val IrProperty.callablePath: CallablePath
+    get() = callablePathImpl
 
-val IrField.callableId: CallableId
-    get() = callableIdImpl
+val IrField.callablePath: CallablePath
+    get() = callablePathImpl
 
-val IrEnumEntry.callableId: CallableId
-    get() = callableIdImpl
+val IrEnumEntry.callablePath: CallablePath
+    get() = callablePathImpl
 
-private val IrDeclarationWithName.callableIdImpl: CallableId
+private val IrDeclarationWithName.callablePathImpl: CallablePath
     get() {
         if (this.symbol is IrClassifierSymbol) error("Classifiers can not have callableId. Got $this")
         return when (val parent = this.parent) {
-            is IrClass -> parent.classId?.let { CallableId(it, name) }
-            is IrPackageFragment -> CallableId(parent.packageFqName, name)
+            is IrClass -> parent.classId?.let { CallablePath(it, name) }
+            is IrPackageFragment -> CallablePath(parent.packageFqName, name)
             else -> null
         } ?: error("$this has no callableId")
     }

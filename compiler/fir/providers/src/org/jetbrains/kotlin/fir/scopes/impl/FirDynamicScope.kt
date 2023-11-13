@@ -36,7 +36,7 @@ import org.jetbrains.kotlin.fir.types.coneType
 import org.jetbrains.kotlin.fir.types.create
 import org.jetbrains.kotlin.fir.types.impl.ConeClassLikeTypeImpl
 import org.jetbrains.kotlin.fir.types.toLookupTag
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.name.StandardClassIds
 
@@ -149,7 +149,7 @@ class FirDynamicMembersStorage(val session: FirSession) : FirSessionComponent {
         }
 
         this.name = name
-        this.symbol = FirNamedFunctionSymbol(CallableId(DYNAMIC_FQ_NAME, this.name))
+        this.symbol = FirNamedFunctionSymbol(CallablePath(DYNAMIC_FQ_NAME, this.name))
 
         moduleData = session.moduleData
         origin = FirDeclarationOrigin.DynamicScope
@@ -179,7 +179,7 @@ class FirDynamicMembersStorage(val session: FirSession) : FirSessionComponent {
 
     private fun buildPseudoPropertyByName(name: Name) = buildProperty {
         this.name = name
-        this.symbol = FirPropertySymbol(CallableId(DYNAMIC_FQ_NAME, this.name))
+        this.symbol = FirPropertySymbol(CallablePath(DYNAMIC_FQ_NAME, this.name))
 
         status = FirResolvedDeclarationStatusImpl(
             Visibilities.Public,

@@ -5,7 +5,7 @@
 
 package org.jetbrains.kotlin.fir.resolve.transformers.contracts
 
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.name.Name
 
@@ -31,13 +31,13 @@ object FirContractsDslNames {
 
     private const val CONTRACT_BUILDER = "ContractBuilder"
 
-    private fun contractBuilder(name: String): CallableId = id(CONTRACT_PACKAGE, CONTRACT_BUILDER, name)
-    private fun invocationKind(name: String): CallableId = id(CONTRACT_PACKAGE, INVOCATION_KIND_ENUM.callableName.asString(), name)
-    private fun simpleEffect(name: String): CallableId = id(CONTRACT_PACKAGE, SIMPLE_EFFECT.callableName.asString(), name)
-    private fun id(name: String): CallableId = id(CONTRACT_PACKAGE, name)
-    private fun id(packageName: String, name: String): CallableId = id(packageName, className = null, name)
-    internal fun id(packageName: String, className: String?, name: String): CallableId {
-        return CallableId(
+    private fun contractBuilder(name: String): CallablePath = id(CONTRACT_PACKAGE, CONTRACT_BUILDER, name)
+    private fun invocationKind(name: String): CallablePath = id(CONTRACT_PACKAGE, INVOCATION_KIND_ENUM.callableName.asString(), name)
+    private fun simpleEffect(name: String): CallablePath = id(CONTRACT_PACKAGE, SIMPLE_EFFECT.callableName.asString(), name)
+    private fun id(name: String): CallablePath = id(CONTRACT_PACKAGE, name)
+    private fun id(packageName: String, name: String): CallablePath = id(packageName, className = null, name)
+    internal fun id(packageName: String, className: String?, name: String): CallablePath {
+        return CallablePath(
             FqName(packageName),
             className?.let { FqName(it) },
             Name.identifier(name)

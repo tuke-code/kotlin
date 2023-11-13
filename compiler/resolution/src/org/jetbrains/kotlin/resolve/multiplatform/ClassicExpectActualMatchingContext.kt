@@ -10,7 +10,7 @@ import org.jetbrains.kotlin.descriptors.annotations.AnnotationDescriptor
 import org.jetbrains.kotlin.descriptors.annotations.KotlinRetention
 import org.jetbrains.kotlin.incremental.components.NoLookupLocation
 import org.jetbrains.kotlin.mpp.*
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.resolve.DescriptorUtils
@@ -62,12 +62,12 @@ class ClassicExpectActualMatchingContext(
         get() = (this as ClassifierDescriptor).classId!!
     override val TypeAliasSymbolMarker.classId: ClassId
         get() = (this as ClassifierDescriptor).classId!!
-    override val CallableSymbolMarker.callableId: CallableId
+    val CallableSymbolMarker.callablePath: CallablePath
         get() {
             val descriptor = asDescriptor()
             return when (val parent = descriptor.containingDeclaration) {
-                is PackageFragmentDescriptor -> CallableId(parent.fqName, descriptor.name)
-                is ClassifierDescriptor -> CallableId(parent.classId!!, descriptor.name)
+                is PackageFragmentDescriptor -> CallablePath(parent.fqName, descriptor.name)
+                is ClassifierDescriptor -> CallablePath(parent.classId!!, descriptor.name)
                 else -> error("Callable descriptor without callableId: $descriptor")
             }
         }

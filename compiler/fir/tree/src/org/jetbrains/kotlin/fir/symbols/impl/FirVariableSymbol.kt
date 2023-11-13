@@ -13,15 +13,15 @@ import org.jetbrains.kotlin.fir.references.FirControlFlowGraphReference
 import org.jetbrains.kotlin.fir.symbols.lazyResolveToPhase
 import org.jetbrains.kotlin.mpp.PropertySymbolMarker
 import org.jetbrains.kotlin.mpp.ValueParameterSymbolMarker
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.name.Name
 
-sealed class FirVariableSymbol<E : FirVariable>(override val callableId: CallableId) : FirCallableSymbol<E>()
+sealed class FirVariableSymbol<E : FirVariable>(override val callablePath: CallablePath) : FirCallableSymbol<E>()
 
-open class FirPropertySymbol(callableId: CallableId, ) : FirVariableSymbol<FirProperty>(callableId), PropertySymbolMarker {
+open class FirPropertySymbol(callablePath: CallablePath, ) : FirVariableSymbol<FirProperty>(callablePath), PropertySymbolMarker {
     // TODO: should we use this constructor for local variables?
-    constructor(name: Name) : this(CallableId(name))
+    constructor(name: Name) : this(CallablePath(name))
 
     val isLocal: Boolean
         get() = fir.isLocal
@@ -67,16 +67,16 @@ open class FirPropertySymbol(callableId: CallableId, ) : FirVariableSymbol<FirPr
 }
 
 class FirIntersectionOverridePropertySymbol(
-    callableId: CallableId,
+    callablePath: CallablePath,
     override val intersections: Collection<FirCallableSymbol<*>>
-) : FirPropertySymbol(callableId), FirIntersectionCallableSymbol
+) : FirPropertySymbol(callablePath), FirIntersectionCallableSymbol
 
 class FirIntersectionOverrideFieldSymbol(
-    callableId: CallableId,
+    callablePath: CallablePath,
     override val intersections: Collection<FirCallableSymbol<*>>
-) : FirFieldSymbol(callableId), FirIntersectionCallableSymbol
+) : FirFieldSymbol(callablePath), FirIntersectionCallableSymbol
 
-class FirBackingFieldSymbol(callableId: CallableId) : FirVariableSymbol<FirBackingField>(callableId) {
+class FirBackingFieldSymbol(callablePath: CallablePath) : FirVariableSymbol<FirBackingField>(callablePath) {
     val isVal: Boolean
         get() = fir.isVal
 
@@ -90,9 +90,9 @@ class FirBackingFieldSymbol(callableId: CallableId) : FirVariableSymbol<FirBacki
         get() = fir.propertySymbol.fir.getter?.symbol
 }
 
-class FirDelegateFieldSymbol(callableId: CallableId) : FirVariableSymbol<FirProperty>(callableId)
+class FirDelegateFieldSymbol(callablePath: CallablePath) : FirVariableSymbol<FirProperty>(callablePath)
 
-open class FirFieldSymbol(callableId: CallableId) : FirVariableSymbol<FirField>(callableId) {
+open class FirFieldSymbol(callablePath: CallablePath) : FirVariableSymbol<FirField>(callablePath) {
     val hasInitializer: Boolean
         get() = fir.initializer != null
 
@@ -103,12 +103,12 @@ open class FirFieldSymbol(callableId: CallableId) : FirVariableSymbol<FirField>(
         get() = fir.isVar
 }
 
-class FirEnumEntrySymbol(callableId: CallableId) : FirVariableSymbol<FirEnumEntry>(callableId) {
+class FirEnumEntrySymbol(callablePath: CallablePath) : FirVariableSymbol<FirEnumEntry>(callablePath) {
     val initializerObjectSymbol: FirAnonymousObjectSymbol?
         get() = (fir.initializer as? FirAnonymousObjectExpression)?.anonymousObject?.symbol
 }
 
-class FirValueParameterSymbol(name: Name) : FirVariableSymbol<FirValueParameter>(CallableId(name)), ValueParameterSymbolMarker {
+class FirValueParameterSymbol(name: Name) : FirVariableSymbol<FirValueParameter>(CallablePath(name)), ValueParameterSymbolMarker {
     val hasDefaultValue: Boolean
         get() = fir.defaultValue != null
 
@@ -127,7 +127,7 @@ class FirValueParameterSymbol(name: Name) : FirVariableSymbol<FirValueParameter>
 
 class FirErrorPropertySymbol(
     val diagnostic: ConeDiagnostic
-) : FirVariableSymbol<FirErrorProperty>(CallableId(FqName.ROOT, null, NAME)) {
+) : FirVariableSymbol<FirErrorProperty>(CallablePath(FqName.ROOT, null, NAME)) {
     companion object {
         val NAME: Name = Name.special("<error property>")
     }

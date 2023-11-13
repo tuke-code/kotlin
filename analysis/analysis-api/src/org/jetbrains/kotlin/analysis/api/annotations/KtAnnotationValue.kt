@@ -6,7 +6,7 @@
 package org.jetbrains.kotlin.analysis.api.annotations
 
 import org.jetbrains.kotlin.analysis.api.base.KtConstantValue
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.psi.KtClassOrObject
 import org.jetbrains.kotlin.psi.KtElement
@@ -108,7 +108,7 @@ public class KtEnumEntryAnnotationValue(
     /**
      * Fully qualified name of used enum entry.
      */
-    public val callableId: CallableId?,
+    public val callablePath: CallablePath?,
     override val sourcePsi: KtElement?,
 ) : KtAnnotationValue()
 

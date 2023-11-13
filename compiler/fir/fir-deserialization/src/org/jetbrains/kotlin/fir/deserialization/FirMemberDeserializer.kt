@@ -34,7 +34,7 @@ import org.jetbrains.kotlin.fir.types.impl.ConeTypeParameterTypeImpl
 import org.jetbrains.kotlin.fir.types.impl.FirImplicitUnitTypeRef
 import org.jetbrains.kotlin.metadata.ProtoBuf
 import org.jetbrains.kotlin.metadata.deserialization.*
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.name.StandardClassIds
@@ -351,8 +351,8 @@ class FirMemberDeserializer(private val c: FirDeserializationContext) {
     ): FirProperty {
         val flags = if (proto.hasFlags()) proto.flags else loadOldFlags(proto.oldFlags)
         val callableName = c.nameResolver.getName(proto.name)
-        val callableId = CallableId(c.packageFqName, c.relativeClassName, callableName)
-        val symbol = FirPropertySymbol(callableId)
+        val callablePath = CallablePath(c.packageFqName, c.relativeClassName, callableName)
+        val symbol = FirPropertySymbol(callablePath)
         val local = c.childContext(proto.typeParameterList, containingDeclarationSymbol = symbol)
 
         // Per documentation on Property.getter_flags in metadata.proto, if an accessor flags field is absent, its value should be computed
@@ -454,7 +454,7 @@ class FirMemberDeserializer(private val c: FirDeserializationContext) {
             }
             this.containerSource = c.containerSource
             this.initializer = when {
-                Flags.HAS_CONSTANT.get(proto.flags) -> c.constDeserializer.loadConstant(proto, symbol.callableId, c.nameResolver)
+                Flags.HAS_CONSTANT.get(proto.flags) -> c.constDeserializer.loadConstant(proto, symbol.callablePath, c.nameResolver)
                 // classSymbol?.classKind?.isAnnotationClass throws 'Fir is not initialized for FirRegularClassSymbol kotlin/String'
                 classProto != null && Flags.CLASS_KIND.get(classProto.flags) == ProtoBuf.Class.Kind.ANNOTATION_CLASS -> {
                     c.annotationDeserializer.loadAnnotationPropertyDefaultValue(
@@ -509,8 +509,8 @@ class FirMemberDeserializer(private val c: FirDeserializationContext) {
         }
 
         val callableName = c.nameResolver.getName(proto.name)
-        val callableId = CallableId(c.packageFqName, c.relativeClassName, callableName)
-        val symbol = FirNamedFunctionSymbol(callableId)
+        val callablePath = CallablePath(c.packageFqName, c.relativeClassName, callableName)
+        val symbol = FirNamedFunctionSymbol(callablePath)
         val local = c.childContext(proto.typeParameterList, containingDeclarationSymbol = symbol)
 
         val versionRequirements = VersionRequirement.create(proto, c)
@@ -581,8 +581,8 @@ class FirMemberDeserializer(private val c: FirDeserializationContext) {
     ): FirConstructor {
         val flags = proto.flags
         val relativeClassName = c.relativeClassName!!
-        val callableId = CallableId(c.packageFqName, relativeClassName, relativeClassName.shortName())
-        val symbol = FirConstructorSymbol(callableId)
+        val callablePath = CallablePath(c.packageFqName, relativeClassName, relativeClassName.shortName())
+        val symbol = FirConstructorSymbol(callablePath)
         val local = c.childContext(emptyList(), containingDeclarationSymbol = symbol)
         val isPrimary = !Flags.IS_SECONDARY.get(flags)
 

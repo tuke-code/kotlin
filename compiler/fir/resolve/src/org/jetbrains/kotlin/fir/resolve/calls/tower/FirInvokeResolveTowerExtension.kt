@@ -307,7 +307,7 @@ private fun BodyResolveComponents.createExplicitReceiverForInvokeByCallable(
         val fakeSource = info.fakeSourceForImplicitInvokeCallReceiver
         calleeReference = FirNamedReferenceWithCandidate(
             fakeSource,
-            symbol.callableId.callableName,
+            symbol.callablePath.callableName,
             candidate
         )
         dispatchReceiver = candidate.dispatchReceiverExpression()

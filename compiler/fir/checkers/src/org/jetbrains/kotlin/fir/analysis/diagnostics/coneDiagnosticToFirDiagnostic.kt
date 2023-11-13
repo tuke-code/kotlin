@@ -183,7 +183,7 @@ private val KtFakeSourceElementKind.canBeIgnored: Boolean
             || this == KtFakeSourceElementKind.ErrorTypeRef
 
 fun FirBasedSymbol<*>.toInvisibleReferenceDiagnostic(source: KtSourceElement?): KtDiagnostic = when (val symbol = this) {
-    is FirCallableSymbol<*> -> FirErrors.INVISIBLE_REFERENCE.createOn(source, symbol, symbol.visibility, symbol.callableId.classId)
+    is FirCallableSymbol<*> -> FirErrors.INVISIBLE_REFERENCE.createOn(source, symbol, symbol.visibility, symbol.callablePath.classId)
     is FirClassLikeSymbol<*> -> FirErrors.INVISIBLE_REFERENCE.createOn(source, symbol, symbol.visibility, symbol.classId.outerClassId)
     else -> shouldNotBeCalled("Unexpected receiver $javaClass")
 }

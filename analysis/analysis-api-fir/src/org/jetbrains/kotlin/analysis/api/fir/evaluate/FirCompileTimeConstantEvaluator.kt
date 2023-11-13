@@ -28,8 +28,7 @@ import org.jetbrains.kotlin.fir.symbols.impl.FirFieldSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirPropertySymbol
 import org.jetbrains.kotlin.fir.symbols.lazyResolveToPhase
 import org.jetbrains.kotlin.fir.types.*
-import org.jetbrains.kotlin.fir.types.impl.*
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.StandardClassIds
 import org.jetbrains.kotlin.psi.KtElement
 import org.jetbrains.kotlin.resolve.constants.evaluate.CompileTimeType
@@ -51,7 +50,7 @@ internal object FirCompileTimeConstantEvaluator {
             is FirPropertyAccessExpression -> {
                 when (val referredVariable = fir.calleeReference.toResolvedVariableSymbol()) {
                     is FirPropertySymbol -> {
-                        if (referredVariable.callableId.isStringLength) {
+                        if (referredVariable.callablePath.isStringLength) {
                             evaluate(fir.explicitReceiver, mode)?.evaluateStringLength()
                         } else {
                             referredVariable.toConstExpression(mode)
@@ -76,7 +75,7 @@ internal object FirCompileTimeConstantEvaluator {
             else -> null
         }
 
-    private val CallableId.isStringLength: Boolean
+    private val CallablePath.isStringLength: Boolean
         get() = classId == StandardClassIds.String && callableName.identifierOrNullIfSpecial == "length"
 
     private fun FirPropertySymbol.toConstExpression(
@@ -264,8 +263,8 @@ internal object FirCompileTimeConstantEvaluator {
         if (value == null || other.value == null) return null
         // NB: some utils accept very general types, and due to the way operation map works, we should up-cast rhs type.
         val rightType = when {
-            function.symbol.callableId.isStringEquals -> CompileTimeType.ANY
-            function.symbol.callableId.isStringPlus -> CompileTimeType.ANY
+            function.symbol.callablePath.isStringEquals -> CompileTimeType.ANY
+            function.symbol.callablePath.isStringPlus -> CompileTimeType.ANY
             else -> other.kind.toCompileTimeType()
         }
         (value as? String)?.let { opr1 ->
@@ -296,10 +295,10 @@ internal object FirCompileTimeConstantEvaluator {
         }
     }
 
-    private val CallableId.isStringEquals: Boolean
+    private val CallablePath.isStringEquals: Boolean
         get() = classId == StandardClassIds.String && callableName.identifierOrNullIfSpecial == "equals"
 
-    private val CallableId.isStringPlus: Boolean
+    private val CallablePath.isStringPlus: Boolean
         get() = classId == StandardClassIds.String && callableName.identifierOrNullIfSpecial == "plus"
 
     ////// KINDS

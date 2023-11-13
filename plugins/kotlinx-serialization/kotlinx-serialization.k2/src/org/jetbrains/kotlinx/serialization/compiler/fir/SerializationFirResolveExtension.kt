@@ -30,7 +30,7 @@ import org.jetbrains.kotlin.fir.scopes.scopeForSupertype
 import org.jetbrains.kotlin.fir.symbols.SymbolInternals
 import org.jetbrains.kotlin.fir.symbols.impl.*
 import org.jetbrains.kotlin.fir.types.*
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.name.SpecialNames
@@ -139,7 +139,7 @@ class SerializationFirResolveExtension(session: FirSession) : FirDeclarationGene
     }
 
     @OptIn(SymbolInternals::class)
-    private fun <T> getFromSupertype(callableId: CallableId, owner: FirClassSymbol<*>, extractor: (FirTypeScope) -> List<T>): T {
+    private fun <T> getFromSupertype(callablePath: CallablePath, owner: FirClassSymbol<*>, extractor: (FirTypeScope) -> List<T>): T {
         val scopeSession = ScopeSession()
         val scopes = lookupSuperTypes(
             owner, lookupInterfaces = true, deep = false, useSiteSession = session
@@ -147,13 +147,13 @@ class SerializationFirResolveExtension(session: FirSession) : FirDeclarationGene
             useSiteSuperType.scopeForSupertype(session, scopeSession, owner.fir, memberRequiredPhase = null)
         }
         val targets = scopes.flatMap { extractor(it) }
-        return targets.singleOrNull() ?: error("Zero or multiple overrides found for ${callableId.callableName} in $owner")
+        return targets.singleOrNull() ?: error("Zero or multiple overrides found for ${callablePath.callableName} in $owner")
     }
 
     @OptIn(SymbolInternals::class)
-    override fun generateFunctions(callableId: CallableId, context: MemberGenerationContext?): List<FirNamedFunctionSymbol> {
+    override fun generateFunctions(callablePath: CallablePath, context: MemberGenerationContext?): List<FirNamedFunctionSymbol> {
         val owner = context?.owner ?: return emptyList()
-        if (callableId.callableName == SerialEntityNames.SERIALIZER_PROVIDER_NAME) {
+        if (callablePath.callableName == SerialEntityNames.SERIALIZER_PROVIDER_NAME) {
             val serializableClass = if (owner.isCompanion) {
                 val containingSymbol = owner.getContainingDeclarationSymbol(session) as? FirClassSymbol<*> ?: return emptyList()
                 if (with(session) { containingSymbol.shouldHaveGeneratedMethodsInCompanion }) containingSymbol else null
@@ -162,15 +162,15 @@ class SerializationFirResolveExtension(session: FirSession) : FirDeclarationGene
             }
 
             if (serializableClass == null) return emptyList()
-            val serializableGetterInCompanion = generateSerializerGetterInCompanion(owner, serializableClass, callableId)
+            val serializableGetterInCompanion = generateSerializerGetterInCompanion(owner, serializableClass, callablePath)
             val serializableGetterFromFactory = runIf (with(session) { serializableClass.companionNeedsSerializerFactory }) {
-                val original = getFromSupertype(callableId, owner) { it.getFunctions(callableId.callableName) }.fir
-                generateSerializerFactoryVararg(owner, callableId, original)
+                val original = getFromSupertype(callablePath, owner) { it.getFunctions(callablePath.callableName) }.fir
+                generateSerializerFactoryVararg(owner, callablePath, original)
             }
             return listOfNotNull(serializableGetterInCompanion, serializableGetterFromFactory)
         }
         if (!owner.isSerializer) return emptyList()
-        if (callableId.callableName !in setOf(
+        if (callablePath.callableName !in setOf(
                 SpecialNames.INIT,
                 SerialEntityNames.SAVE_NAME,
                 SerialEntityNames.LOAD_NAME,
@@ -178,10 +178,10 @@ class SerializationFirResolveExtension(session: FirSession) : FirDeclarationGene
                 SerialEntityNames.TYPE_PARAMS_SERIALIZERS_GETTER
             )
         ) return emptyList()
-        val target = getFromSupertype(callableId, owner) { it.getFunctions(callableId.callableName) }
+        val target = getFromSupertype(callablePath, owner) { it.getFunctions(callablePath.callableName) }
         val original = target.fir
         val copy = buildSimpleFunctionCopy(original) {
-            symbol = FirNamedFunctionSymbol(callableId)
+            symbol = FirNamedFunctionSymbol(callablePath)
             origin = SerializationPluginKey.origin
             status = original.status.copy(modality = Modality.FINAL)
         }
@@ -191,10 +191,10 @@ class SerializationFirResolveExtension(session: FirSession) : FirDeclarationGene
 
     private fun generateSerializerFactoryVararg(
         owner: FirClassSymbol<*>,
-        callableId: CallableId,
+        callablePath: CallablePath,
         original: FirSimpleFunction
     ): FirNamedFunctionSymbol =
-        createMemberFunction(owner, SerializationPluginKey, callableId.callableName, original.returnTypeRef.coneType) {
+        createMemberFunction(owner, SerializationPluginKey, callablePath.callableName, original.returnTypeRef.coneType) {
             val vpo = original.valueParameters.single()
             valueParameter(vpo.name, vpo.returnTypeRef.coneType, vpo.isCrossinline, vpo.isNoinline, vpo.isVararg, vpo.defaultValue != null)
         }.apply {
@@ -204,12 +204,12 @@ class SerializationFirResolveExtension(session: FirSession) : FirDeclarationGene
     private fun generateSerializerGetterInCompanion(
         owner: FirClassSymbol<*>,
         serializableClassSymbol: FirClassSymbol<*>,
-        callableId: CallableId
+        callablePath: CallablePath
     ): FirNamedFunctionSymbol {
         val function = createMemberFunction(
             owner,
             SerializationPluginKey,
-            callableId.callableName,
+            callablePath.callableName,
             returnTypeProvider = { typeParameters ->
                 val parametersAsArguments = typeParameters.map { it.toConeType() }.toTypedArray<ConeTypeProjection>()
                 kSerializerId.constructClassLikeType(
@@ -234,16 +234,16 @@ class SerializationFirResolveExtension(session: FirSession) : FirDeclarationGene
         return function.symbol
     }
 
-    override fun generateProperties(callableId: CallableId, context: MemberGenerationContext?): List<FirPropertySymbol> {
+    override fun generateProperties(callablePath: CallablePath, context: MemberGenerationContext?): List<FirPropertySymbol> {
         val owner = context?.owner ?: return emptyList()
         if (!owner.isSerializer) return emptyList()
-        if (callableId.callableName != SerialEntityNames.SERIAL_DESC_FIELD_NAME) return emptyList()
+        if (callablePath.callableName != SerialEntityNames.SERIAL_DESC_FIELD_NAME) return emptyList()
 
-        val target = getFromSupertype(callableId, owner) { it.getProperties(callableId.callableName).filterIsInstance<FirPropertySymbol>() }
+        val target = getFromSupertype(callablePath, owner) { it.getProperties(callablePath.callableName).filterIsInstance<FirPropertySymbol>() }
         val property = createMemberProperty(
             owner,
             SerializationPluginKey,
-            callableId.callableName,
+            callablePath.callableName,
             target.resolvedReturnType
         )
 

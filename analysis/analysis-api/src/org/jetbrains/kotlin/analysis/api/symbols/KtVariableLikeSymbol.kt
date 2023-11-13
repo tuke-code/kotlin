@@ -13,7 +13,7 @@ import org.jetbrains.kotlin.analysis.api.lifetime.withValidityAssertion
 import org.jetbrains.kotlin.analysis.api.symbols.markers.*
 import org.jetbrains.kotlin.analysis.api.symbols.pointers.KtSymbolPointer
 import org.jetbrains.kotlin.builtins.StandardNames
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.Name
 
@@ -40,7 +40,7 @@ public abstract class KtBackingFieldSymbol : KtVariableLikeSymbol() {
     final override val psi: PsiElement? get() = withValidityAssertion { null }
     final override val symbolKind: KtSymbolKind get() = withValidityAssertion { KtSymbolKind.LOCAL }
     override val origin: KtSymbolOrigin get() = withValidityAssertion { KtSymbolOrigin.PROPERTY_BACKING_FIELD }
-    final override val callableIdIfNonLocal: CallableId? get() = withValidityAssertion { null }
+    final override val callablePathIfNonLocal: CallablePath? get() = withValidityAssertion { null }
     final override val isExtension: Boolean get() = withValidityAssertion { false }
     final override val receiverParameter: KtReceiverParameterSymbol? get() = withValidityAssertion { null }
     final override val contextReceivers: List<KtContextReceiver> get() = withValidityAssertion { emptyList() }
@@ -211,7 +211,7 @@ public abstract class KtSyntheticJavaPropertySymbol : KtPropertySymbol() {
 }
 
 public abstract class KtLocalVariableSymbol : KtVariableSymbol(), KtSymbolWithKind {
-    final override val callableIdIfNonLocal: CallableId? get() = withValidityAssertion { null }
+    final override val callablePathIfNonLocal: CallablePath? get() = withValidityAssertion { null }
     final override val isExtension: Boolean get() = withValidityAssertion { false }
     final override val receiverParameter: KtReceiverParameterSymbol? get() = withValidityAssertion { null }
     final override val contextReceivers: List<KtContextReceiver> get() = withValidityAssertion { emptyList() }
@@ -228,7 +228,7 @@ public sealed interface KtParameterSymbol : KtAnnotatedSymbol
 
 public abstract class KtValueParameterSymbol : KtVariableLikeSymbol(), KtParameterSymbol, KtSymbolWithKind, KtAnnotatedSymbol {
     final override val symbolKind: KtSymbolKind get() = withValidityAssertion { KtSymbolKind.LOCAL }
-    final override val callableIdIfNonLocal: CallableId? get() = withValidityAssertion { null }
+    final override val callablePathIfNonLocal: CallablePath? get() = withValidityAssertion { null }
     final override val isExtension: Boolean get() = withValidityAssertion { false }
     final override val receiverParameter: KtReceiverParameterSymbol? get() = withValidityAssertion { null }
     final override val contextReceivers: List<KtContextReceiver> get() = withValidityAssertion { emptyList() }

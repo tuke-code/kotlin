@@ -10,30 +10,30 @@ import org.jetbrains.kotlin.fir.expressions.FirAnnotation
 import org.jetbrains.kotlin.fir.resolve.providers.getSymbolByTypeRef
 import org.jetbrains.kotlin.fir.resolve.providers.symbolProvider
 import org.jetbrains.kotlin.fir.symbols.impl.FirRegularClassSymbol
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.name.StandardClassIds
 
-fun CallableId.isInvoke(): Boolean =
+fun CallablePath.isInvoke(): Boolean =
     isKFunctionInvoke()
             || callableName.asString() == "invoke"
             && className?.asString()?.startsWith("Function") == true
             && packageName == StandardClassIds.BASE_KOTLIN_PACKAGE
 
-fun CallableId.isKFunctionInvoke(): Boolean =
+fun CallablePath.isKFunctionInvoke(): Boolean =
     callableName.asString() == "invoke"
             && className?.asString()?.startsWith("KFunction") == true
             && packageName.asString() == "kotlin.reflect"
 
-fun CallableId.isIteratorNext(): Boolean =
+fun CallablePath.isIteratorNext(): Boolean =
     callableName.asString() == "next" && className?.asString()?.endsWith("Iterator") == true
             && packageName.asString() == "kotlin.collections"
 
-fun CallableId.isIteratorHasNext(): Boolean =
+fun CallablePath.isIteratorHasNext(): Boolean =
     callableName.asString() == "hasNext" && className?.asString()?.endsWith("Iterator") == true
             && packageName.asString() == "kotlin.collections"
 
-fun CallableId.isIterator(): Boolean =
+fun CallablePath.isIterator(): Boolean =
     callableName.asString() == "iterator" && packageName.asString() in arrayOf("kotlin.collections", "kotlin.ranges")
 
 fun FirAnnotation.fqName(session: FirSession): FqName? {

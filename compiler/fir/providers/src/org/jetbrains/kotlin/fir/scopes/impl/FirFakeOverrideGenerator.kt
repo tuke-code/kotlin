@@ -28,7 +28,7 @@ import org.jetbrains.kotlin.fir.types.builder.buildResolvedTypeRef
 import org.jetbrains.kotlin.fir.types.impl.ConeTypeParameterTypeImpl
 import org.jetbrains.kotlin.fir.types.impl.FirImplicitTypeRefImplWithoutSource
 import org.jetbrains.kotlin.fir.utils.exceptions.withFirEntry
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.utils.addToStdlib.runIf
 import org.jetbrains.kotlin.utils.exceptions.checkWithAttachment
@@ -60,9 +60,9 @@ object FirFakeOverrideGenerator {
 
     fun createSymbolForSubstitutionOverride(baseSymbol: FirNamedFunctionSymbol, derivedClassId: ClassId? = null): FirNamedFunctionSymbol {
         return if (derivedClassId == null) {
-            FirNamedFunctionSymbol(baseSymbol.callableId)
+            FirNamedFunctionSymbol(baseSymbol.callablePath)
         } else {
-            FirNamedFunctionSymbol(CallableId(derivedClassId, baseSymbol.callableId.callableName))
+            FirNamedFunctionSymbol(CallablePath(derivedClassId, baseSymbol.callablePath.callableName))
         }
     }
 
@@ -346,9 +346,9 @@ object FirFakeOverrideGenerator {
 
     fun createSymbolForSubstitutionOverride(baseSymbol: FirPropertySymbol, derivedClassId: ClassId? = null): FirPropertySymbol {
         return if (derivedClassId == null) {
-            FirPropertySymbol(baseSymbol.callableId)
+            FirPropertySymbol(baseSymbol.callablePath)
         } else {
-            FirPropertySymbol(CallableId(derivedClassId, baseSymbol.callableId.callableName))
+            FirPropertySymbol(CallablePath(derivedClassId, baseSymbol.callablePath.callableName))
         }
     }
 
@@ -662,7 +662,7 @@ object FirFakeOverrideGenerator {
         newReturnType: ConeKotlinType?,
         origin: FirDeclarationOrigin.SubstitutionOverride,
     ): FirFieldSymbol {
-        val symbol = FirFieldSymbol(CallableId(derivedClassLookupTag.classId, baseField.name))
+        val symbol = FirFieldSymbol(CallablePath(derivedClassLookupTag.classId, baseField.name))
         buildField {
             moduleData = session.nullableModuleData ?: baseField.moduleData
             this.symbol = symbol

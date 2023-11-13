@@ -36,7 +36,6 @@ import org.jetbrains.kotlin.fir.types.jvm.FirJavaTypeRef
 import org.jetbrains.kotlin.load.java.structure.JavaClass
 import org.jetbrains.kotlin.load.java.structure.JavaClassifierType
 import org.jetbrains.kotlin.load.java.structure.JavaType
-import org.jetbrains.kotlin.lombok.k2.*
 import org.jetbrains.kotlin.lombok.k2.config.ConeLombokAnnotations.Builder
 import org.jetbrains.kotlin.lombok.k2.config.ConeLombokAnnotations.Singular
 import org.jetbrains.kotlin.lombok.k2.config.LombokService
@@ -44,7 +43,7 @@ import org.jetbrains.kotlin.lombok.k2.config.lombokService
 import org.jetbrains.kotlin.lombok.k2.java.*
 import org.jetbrains.kotlin.lombok.utils.LombokNames
 import org.jetbrains.kotlin.lombok.utils.capitalize
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.Name
 
 class BuilderGenerator(session: FirSession) : FirDeclarationGenerationExtension(session) {
@@ -72,9 +71,9 @@ class BuilderGenerator(session: FirSession) : FirDeclarationGenerationExtension(
         return setOf(name)
     }
 
-    override fun generateFunctions(callableId: CallableId, context: MemberGenerationContext?): List<FirNamedFunctionSymbol> {
+    override fun generateFunctions(callablePath: CallablePath, context: MemberGenerationContext?): List<FirNamedFunctionSymbol> {
         val classSymbol = context?.owner ?: return emptyList()
-        return functionsCache.getValue(classSymbol)?.get(callableId.callableName).orEmpty().map { it.symbol }
+        return functionsCache.getValue(classSymbol)?.get(callablePath.callableName).orEmpty().map { it.symbol }
     }
 
     override fun generateNestedClassLikeDeclaration(
@@ -305,7 +304,7 @@ fun FirClassSymbol<*>.createJavaMethod(
         this.returnTypeRef = returnTypeRef
         this.dispatchReceiverType = dispatchReceiverType
         this.name = name
-        symbol = FirNamedFunctionSymbol(CallableId(classId, name))
+        symbol = FirNamedFunctionSymbol(CallablePath(classId, name))
         status = FirResolvedDeclarationStatusImpl(visibility, modality, visibility.toEffectiveVisibility(this@createJavaMethod)).apply {
             this.isStatic = isStatic
         }

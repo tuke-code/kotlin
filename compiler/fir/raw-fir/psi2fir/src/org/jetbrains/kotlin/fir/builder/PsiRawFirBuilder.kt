@@ -38,7 +38,7 @@ import org.jetbrains.kotlin.fir.types.impl.FirImplicitTypeRefImplWithoutSource
 import org.jetbrains.kotlin.fir.types.impl.FirQualifierPartImpl
 import org.jetbrains.kotlin.fir.types.impl.FirTypeArgumentListImpl
 import org.jetbrains.kotlin.lexer.KtTokens.*
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.name.NameUtils
 import org.jetbrains.kotlin.name.SpecialNames
@@ -617,7 +617,7 @@ open class PsiRawFirBuilder(
                     extractAnnotationsTo(this)
                     this.annotations += annotationsFromProperty
                     name = BACKING_FIELD
-                    symbol = FirBackingFieldSymbol(CallableId(name))
+                    symbol = FirBackingFieldSymbol(CallablePath(name))
                     this.propertySymbol = propertySymbol
                     this.initializer = backingFieldInitializer
                     this.isVar = property.isVar
@@ -939,7 +939,7 @@ open class PsiRawFirBuilder(
                 origin = FirDeclarationOrigin.Synthetic.DelegateField
                 name = NameUtils.delegateFieldName(fieldOrd)
                 returnTypeRef = type
-                symbol = FirFieldSymbol(CallableId(this@PsiRawFirBuilder.context.currentClassId, name))
+                symbol = FirFieldSymbol(CallablePath(this@PsiRawFirBuilder.context.currentClassId, name))
                 isVar = false
                 status = FirDeclarationStatusImpl(Visibilities.Private, Modality.FINAL)
                 initializer = delegateExpression
@@ -1126,7 +1126,7 @@ open class PsiRawFirBuilder(
                 returnTypeRef = delegatedSelfTypeRef
                 this.status = status
                 dispatchReceiverType = owner.obtainDispatchReceiverForConstructor()
-                symbol = FirConstructorSymbol(callableIdForClassConstructor())
+                symbol = FirConstructorSymbol(callablePathForClassConstructor())
                 delegatedConstructor = firDelegatedCall
                 typeParameters += constructorTypeParametersFromConstructedClass(ownerTypeParameters)
                 this.contextReceivers.addAll(convertContextReceivers(owner.contextReceivers))
@@ -1883,7 +1883,7 @@ open class PsiRawFirBuilder(
                 }
                 dispatchReceiverType = owner.obtainDispatchReceiverForConstructor()
                 contextReceivers.addAll(convertContextReceivers(owner.contextReceivers))
-                symbol = FirConstructorSymbol(callableIdForClassConstructor())
+                symbol = FirConstructorSymbol(callablePathForClassConstructor())
                 delegatedConstructor = buildOrLazyDelegatedConstructorCall(
                     isThis = isDelegatedCallToThis(),
                     constructedTypeRef = delegatedTypeRef,
@@ -2398,7 +2398,7 @@ open class PsiRawFirBuilder(
                             status = FirResolvedDeclarationStatusImpl(Visibilities.Local, Modality.FINAL, EffectiveVisibility.Local)
                             isLocal = true
                             this.name = name
-                            symbol = FirPropertySymbol(CallableId(name))
+                            symbol = FirPropertySymbol(CallablePath(name))
                             for (annotationEntry in ktParameter.annotationEntries) {
                                 this.annotations += annotationEntry.convert<FirAnnotation>()
                             }

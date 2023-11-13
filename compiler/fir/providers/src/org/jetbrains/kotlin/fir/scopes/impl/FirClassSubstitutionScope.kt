@@ -185,7 +185,7 @@ class FirClassSubstitutionScope(
         original.lazyResolveToPhase(FirResolvePhase.TYPES)
         val constructor = original.fir
 
-        val symbolForOverride = FirConstructorSymbol(original.callableId)
+        val symbolForOverride = FirConstructorSymbol(original.callablePath)
         val (newTypeParameters, _, _, newReturnType, newSubstitutor, callableCopySubstitution) =
             createSubstitutedData(constructor, symbolForOverride)
 

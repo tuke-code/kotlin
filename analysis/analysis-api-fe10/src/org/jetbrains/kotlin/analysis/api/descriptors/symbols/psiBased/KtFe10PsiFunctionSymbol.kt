@@ -17,7 +17,7 @@ import org.jetbrains.kotlin.analysis.api.descriptors.symbols.isEqualTo
 import org.jetbrains.kotlin.analysis.api.descriptors.symbols.pointers.KtFe10NeverRestoringSymbolPointer
 import org.jetbrains.kotlin.analysis.api.descriptors.symbols.psiBased.base.*
 import org.jetbrains.kotlin.analysis.api.descriptors.utils.cached
-import org.jetbrains.kotlin.analysis.api.impl.base.util.kotlinFunctionInvokeCallableIds
+import org.jetbrains.kotlin.analysis.api.impl.base.util.kotlinFunctionInvokeCallablePaths
 import org.jetbrains.kotlin.analysis.api.lifetime.withValidityAssertion
 import org.jetbrains.kotlin.analysis.api.symbols.KtFunctionSymbol
 import org.jetbrains.kotlin.analysis.api.symbols.KtReceiverParameterSymbol
@@ -33,7 +33,7 @@ import org.jetbrains.kotlin.descriptors.Modality
 import org.jetbrains.kotlin.descriptors.Visibilities
 import org.jetbrains.kotlin.descriptors.Visibility
 import org.jetbrains.kotlin.lexer.KtTokens
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.psi.KtNamedFunction
 import org.jetbrains.kotlin.psi.psiUtil.hasActualModifier
@@ -78,7 +78,7 @@ internal class KtFe10PsiFunctionSymbol(
         get() = withValidityAssertion { false }
 
     override val isBuiltinFunctionInvoke: Boolean
-        get() = withValidityAssertion { callableIdIfNonLocal in kotlinFunctionInvokeCallableIds }
+        get() = withValidityAssertion { callablePathIfNonLocal in kotlinFunctionInvokeCallablePaths }
 
     override val isActual: Boolean
         get() = withValidityAssertion { descriptor?.isActual ?: psi.hasActualModifier() }
@@ -92,8 +92,8 @@ internal class KtFe10PsiFunctionSymbol(
     override val hasStableParameterNames: Boolean
         get() = withValidityAssertion { true }
 
-    override val callableIdIfNonLocal: CallableId?
-        get() = withValidityAssertion { psi.callableIdIfNonLocal }
+    override val callablePathIfNonLocal: CallablePath?
+        get() = withValidityAssertion { psi.callablePathIfNonLocal }
 
     override val returnType: KtType
         get() = withValidityAssertion { descriptor?.returnType?.toKtType(analysisContext) ?: createErrorType() }

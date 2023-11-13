@@ -18,7 +18,7 @@ import org.jetbrains.kotlin.analysis.api.symbols.*
 import org.jetbrains.kotlin.analysis.api.symbols.pointers.KtPsiBasedSymbolPointer
 import org.jetbrains.kotlin.analysis.api.symbols.pointers.KtSymbolPointer
 import org.jetbrains.kotlin.analysis.api.types.KtType
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.resolve.calls.inference.returnTypeOrNothing
 import org.jetbrains.kotlin.resolve.descriptorUtil.isExtension
@@ -40,8 +40,8 @@ internal class KtFe10DescSamConstructorSymbol(
     override val hasStableParameterNames: Boolean
         get() = withValidityAssertion { descriptor.ktHasStableParameterNames }
 
-    override val callableIdIfNonLocal: CallableId?
-        get() = withValidityAssertion { expandedDescriptor.callableIdIfNotLocal }
+    override val callablePathIfNonLocal: CallablePath?
+        get() = withValidityAssertion { expandedDescriptor.callablePathIfNotLocal }
 
     override val returnType: KtType
         get() = withValidityAssertion { descriptor.returnTypeOrNothing.toKtType(analysisContext) }

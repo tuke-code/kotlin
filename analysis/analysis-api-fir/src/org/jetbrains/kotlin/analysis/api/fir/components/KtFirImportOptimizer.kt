@@ -41,7 +41,6 @@ import org.jetbrains.kotlin.psi.*
 import org.jetbrains.kotlin.psi.psiUtil.getCallNameExpression
 import org.jetbrains.kotlin.psi.psiUtil.getPossiblyQualifiedCallExpression
 import org.jetbrains.kotlin.psi.psiUtil.unwrapNullability
-import org.jetbrains.kotlin.resolve.ImportPath
 import org.jetbrains.kotlin.resolve.calls.util.getCalleeExpressionIfAny
 import org.jetbrains.kotlin.util.OperatorNameConventions
 import org.jetbrains.kotlin.utils.exceptions.errorWithAttachment
@@ -246,7 +245,7 @@ internal class KtFirImportOptimizer(
                 val dispatcherClass = dispatchReceiver.classId ?: return null
                 val referencedSymbolName = referencedCallableSymbol?.name ?: return null
 
-                return CallableId(dispatcherClass, referencedSymbolName).asSingleFqName()
+                return CallablePath(dispatcherClass, referencedSymbolName).asSingleFqName()
             }
 
             private fun saveReferencedItem(importableName: FqName, referencedByName: Name) {

@@ -12,10 +12,10 @@ import org.jetbrains.kotlin.analysis.api.symbols.pointers.KtSymbolPointer
 import org.jetbrains.kotlin.fir.FirSession
 import org.jetbrains.kotlin.fir.declarations.FirProperty
 import org.jetbrains.kotlin.fir.symbols.impl.FirCallableSymbol
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 
-internal class KtFirTopLevelPropertySymbolPointer(callableId: CallableId, private val signature: FirCallableSignature) :
-    KtTopLevelCallableSymbolPointer<KtKotlinPropertySymbol>(callableId) {
+internal class KtFirTopLevelPropertySymbolPointer(callablePath: CallablePath, private val signature: FirCallableSignature) :
+    KtTopLevelCallableSymbolPointer<KtKotlinPropertySymbol>(callablePath) {
     override fun KtFirAnalysisSession.chooseCandidateAndCreateSymbol(
         candidates: Collection<FirCallableSymbol<*>>,
         firSession: FirSession,

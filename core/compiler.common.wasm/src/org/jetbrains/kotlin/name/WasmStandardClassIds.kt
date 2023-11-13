@@ -30,10 +30,10 @@ object WasmStandardClassIds {
 
     object Callables {
         @JvmField
-        val JsDefinedExternally = "definedExternally".callableId(BASE_JS_PACKAGE)
+        val JsDefinedExternally = "definedExternally".callablePath(BASE_JS_PACKAGE)
 
         @JvmField
-        val Js = "js".callableId(BASE_JS_PACKAGE)
+        val Js = "js".callablePath(BASE_JS_PACKAGE)
     }
 }
 
@@ -41,4 +41,4 @@ private fun String.jsId() = ClassId(WasmStandardClassIds.BASE_JS_PACKAGE, Name.i
 
 private fun String.wasmId() = ClassId(WasmStandardClassIds.BASE_WASM_PACKAGE, Name.identifier(this))
 
-private fun String.callableId(packageName: FqName) = CallableId(packageName, Name.identifier(this))
+private fun String.callablePath(packageName: FqName) = CallablePath(packageName, Name.identifier(this))

@@ -322,7 +322,7 @@ fun FirBasedSymbol<*>.isVisibleInClass(parentClassSymbol: FirClassSymbol<*>): Bo
 fun FirBasedSymbol<*>.isVisibleInClass(parentClassSymbol: FirClassSymbol<*>, status: FirDeclarationStatus): Boolean {
     val classPackage = parentClassSymbol.classId.packageFqName
     val packageName = when (this) {
-        is FirCallableSymbol<*> -> callableId.packageName
+        is FirCallableSymbol<*> -> callablePath.packageName
         is FirClassLikeSymbol<*> -> classId.packageFqName
         else -> return true
     }
@@ -454,7 +454,7 @@ private fun FirIntersectionCallableSymbol.subjectToManyNotImplemented(sessionHol
 
 private val FirNamedFunctionSymbol.matchesDataClassSyntheticMemberSignatures: Boolean
     get() {
-        val name = callableId.callableName
+        val name = callablePath.callableName
         return (name == OperatorNameConventions.EQUALS && matchesEqualsSignature) ||
                 (name == HASHCODE_NAME && matchesHashCodeSignature) ||
                 (name == OperatorNameConventions.TO_STRING && matchesToStringSignature)
@@ -777,7 +777,7 @@ inline fun FirNamedFunctionSymbol.processOverriddenFunctions(
     val containingClass = getContainingClassSymbol(context.session) as? FirClassSymbol ?: return
     val firTypeScope = containingClass.unsubstitutedScope(context)
 
-    firTypeScope.processFunctionsByName(callableId.callableName) { }
+    firTypeScope.processFunctionsByName(callablePath.callableName) { }
 
     firTypeScope.processOverriddenFunctions(this) {
         action(it)

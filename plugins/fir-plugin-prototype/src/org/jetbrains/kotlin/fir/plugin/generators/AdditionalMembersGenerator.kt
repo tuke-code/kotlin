@@ -15,7 +15,7 @@ import org.jetbrains.kotlin.fir.plugin.createNestedClass
 import org.jetbrains.kotlin.fir.plugin.fqn
 import org.jetbrains.kotlin.fir.types.constructStarProjectedType
 import org.jetbrains.kotlin.fir.symbols.impl.*
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.name.SpecialNames
 
@@ -52,11 +52,11 @@ class AdditionalMembersGenerator(session: FirSession) : FirDeclarationGeneration
         matchedClasses.map { it.classId.createNestedClassId(NESTED_NAME) }
     }
 
-    override fun generateFunctions(callableId: CallableId, context: MemberGenerationContext?): List<FirNamedFunctionSymbol> {
-        if (callableId.callableName != MATERIALIZE_NAME) return emptyList()
+    override fun generateFunctions(callablePath: CallablePath, context: MemberGenerationContext?): List<FirNamedFunctionSymbol> {
+        if (callablePath.callableName != MATERIALIZE_NAME) return emptyList()
         if (context == null) return emptyList()
         val matchedClassSymbol = matchedClasses.firstOrNull { it == context.owner } ?: return emptyList()
-        val function = createMemberFunction(context.owner, Key, callableId.callableName, matchedClassSymbol.constructStarProjectedType())
+        val function = createMemberFunction(context.owner, Key, callablePath.callableName, matchedClassSymbol.constructStarProjectedType())
         return listOf(function.symbol)
     }
 

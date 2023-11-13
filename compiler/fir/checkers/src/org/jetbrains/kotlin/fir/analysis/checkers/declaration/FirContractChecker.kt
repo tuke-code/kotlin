@@ -65,7 +65,7 @@ object FirContractChecker : FirFunctionChecker() {
         if (declaration is FirPropertyAccessor || declaration is FirAnonymousFunction) contractNotAllowed("Contracts are only allowed for functions.")
         else if (declaration.isAbstract || declaration.isOpen || declaration.isOverride) contractNotAllowed("Contracts are not allowed for open or override functions.")
         else if (declaration.isOperator) contractNotAllowed("Contracts are not allowed for operator functions.")
-        else if (declaration.symbol.callableId.isLocal || declaration.visibility == Visibilities.Local) contractNotAllowed("Contracts are not allowed for local functions.")
+        else if (declaration.symbol.callablePath.isLocal || declaration.visibility == Visibilities.Local) contractNotAllowed("Contracts are not allowed for local functions.")
     }
 
     private object DiagnosticExtractor : KtContractDescriptionVisitor<ConeDiagnostic?, Nothing?, ConeKotlinType, ConeDiagnostic>() {

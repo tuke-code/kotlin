@@ -19,14 +19,14 @@ import org.jetbrains.kotlin.fir.references.toResolvedCallableSymbol
 import org.jetbrains.kotlin.fir.resolve.transformers.unwrapAnonymousFunctionExpression
 import org.jetbrains.kotlin.fir.types.FirResolvedTypeRef
 import org.jetbrains.kotlin.fir.types.isSuspendOrKSuspendFunctionType
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.utils.addToStdlib.runIf
 
 object FirJvmSuspensionPointInsideMutexLockChecker : FirFunctionCallChecker() {
-    private val synchronizedCallableId = CallableId(FqName("kotlin"), Name.identifier("synchronized"))
-    private val withLockCallableId = CallableId(FqName("kotlin.concurrent"), Name.identifier("withLock"))
+    private val synchronizedCallablePath = CallablePath(FqName("kotlin"), Name.identifier("synchronized"))
+    private val withLockCallablePath = CallablePath(FqName("kotlin.concurrent"), Name.identifier("withLock"))
     private val synchronizedBlockParamName = Name.identifier("block")
 
     override fun check(expression: FirFunctionCall, context: CheckerContext, reporter: DiagnosticReporter) {
@@ -50,9 +50,9 @@ object FirJvmSuspensionPointInsideMutexLockChecker : FirFunctionCallChecker() {
                     break
                 }
 
-                if (callableSymbol.callableId == synchronizedCallableId &&
+                if (callableSymbol.callablePath == synchronizedCallablePath &&
                     enclosingAnonymousFuncParam?.name == synchronizedBlockParamName ||
-                    callableSymbol.callableId == withLockCallableId
+                    callableSymbol.callablePath == withLockCallablePath
                 ) {
                     isMutexLockFound = true
                 }

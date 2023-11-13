@@ -13,7 +13,7 @@ import org.jetbrains.kotlin.analysis.api.descriptors.symbols.descriptorBased.bas
 import org.jetbrains.kotlin.analysis.api.descriptors.symbols.isEqualTo
 import org.jetbrains.kotlin.analysis.api.descriptors.symbols.pointers.KtFe10NeverRestoringSymbolPointer
 import org.jetbrains.kotlin.analysis.api.descriptors.symbols.psiBased.base.KtFe10PsiSymbol
-import org.jetbrains.kotlin.analysis.api.descriptors.symbols.psiBased.base.callableIdIfNonLocal
+import org.jetbrains.kotlin.analysis.api.descriptors.symbols.psiBased.base.callablePathIfNonLocal
 import org.jetbrains.kotlin.analysis.api.descriptors.symbols.psiBased.base.createErrorType
 import org.jetbrains.kotlin.analysis.api.descriptors.utils.cached
 import org.jetbrains.kotlin.analysis.api.lifetime.withValidityAssertion
@@ -24,7 +24,7 @@ import org.jetbrains.kotlin.analysis.api.symbols.pointers.KtSymbolPointer
 import org.jetbrains.kotlin.analysis.api.types.KtType
 import org.jetbrains.kotlin.descriptors.ClassDescriptor
 import org.jetbrains.kotlin.descriptors.ClassKind
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.psi.KtEnumEntry
@@ -46,8 +46,8 @@ internal class KtFe10PsiEnumEntrySymbol(
             return containingClass.getClassId()
         }
 
-    override val callableIdIfNonLocal: CallableId?
-        get() = withValidityAssertion { psi.callableIdIfNonLocal }
+    override val callablePathIfNonLocal: CallablePath?
+        get() = withValidityAssertion { psi.callablePathIfNonLocal }
 
     override val returnType: KtType
         get() = withValidityAssertion {

@@ -13,7 +13,7 @@ import org.jetbrains.kotlin.analysis.api.annotations.*
 import org.jetbrains.kotlin.builtins.StandardNames
 import org.jetbrains.kotlin.load.java.JvmAbi
 import org.jetbrains.kotlin.load.java.JvmAnnotationNames
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.JvmStandardClassIds
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.name.StandardClassIds
@@ -129,7 +129,7 @@ private fun SymbolLightJavaAnnotation.computeJavaRetentionArguments(): List<KtNa
             it.name == StandardNames.DEFAULT_VALUE_PARAMETER
         }?.expression as? KtEnumEntryAnnotationValue
 
-    val kotlinRetentionName = argumentWithKotlinRetention?.callableId?.callableName?.asString()
+    val kotlinRetentionName = argumentWithKotlinRetention?.callablePath?.callableName?.asString()
     return javaRetentionArguments(kotlinRetentionName)
 }
 
@@ -143,7 +143,7 @@ private fun javaRetentionArguments(kotlinRetentionName: String?): List<KtNamedAn
     KtNamedAnnotationValue(
         name = StandardNames.DEFAULT_VALUE_PARAMETER,
         expression = KtEnumEntryAnnotationValue(
-            callableId = CallableId(
+            callablePath = CallablePath(
                 JvmStandardClassIds.Annotations.Java.RetentionPolicy,
                 Name.identifier(retentionMapping(kotlinRetentionName ?: AnnotationRetention.RUNTIME.name)),
             ),
@@ -226,7 +226,7 @@ private fun SymbolLightJavaAnnotation.computeTargetJavaAnnotationArguments(): Li
             expression = KtArrayAnnotationValue(
                 values = javaTargetNames.map {
                     KtEnumEntryAnnotationValue(
-                        callableId = CallableId(
+                        callablePath = CallablePath(
                             classId = JvmStandardClassIds.Annotations.Java.ElementType,
                             callableName = Name.identifier(it),
                         ),
@@ -242,7 +242,7 @@ private fun SymbolLightJavaAnnotation.computeTargetJavaAnnotationArguments(): Li
 private fun KtAnnotationValue.mapToJavaTarget(): String? {
     if (this !is KtEnumEntryAnnotationValue) return null
 
-    val callableId = callableId ?: return null
+    val callableId = callablePath ?: return null
     if (callableId.classId != StandardClassIds.AnnotationTarget) return null
     return when (callableId.callableName.asString()) {
         AnnotationTarget.CLASS.name -> ElementType.TYPE

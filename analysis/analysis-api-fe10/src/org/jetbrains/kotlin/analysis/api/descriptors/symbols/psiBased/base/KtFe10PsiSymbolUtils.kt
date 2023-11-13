@@ -17,7 +17,7 @@ import org.jetbrains.kotlin.descriptors.Modality
 import org.jetbrains.kotlin.descriptors.Visibilities
 import org.jetbrains.kotlin.descriptors.Visibility
 import org.jetbrains.kotlin.lexer.KtTokens
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.psi.*
@@ -74,7 +74,7 @@ internal val KtElement.ktSymbolKind: KtSymbolKind
         return KtSymbolKind.LOCAL
     }
 
-internal val KtDeclaration.callableIdIfNonLocal: CallableId?
+internal val KtDeclaration.callablePathIfNonLocal: CallablePath?
     get() = calculateCallableId(allowLocal = false)
 
 internal val KtElement.ktSymbolOrigin: KtSymbolOrigin
@@ -86,7 +86,7 @@ internal val KtElement.ktSymbolOrigin: KtSymbolOrigin
         }
     }
 
-internal fun KtDeclaration.calculateCallableId(allowLocal: Boolean): CallableId? {
+internal fun KtDeclaration.calculateCallableId(allowLocal: Boolean): CallablePath? {
     val selfName = this.name ?: return null
     val containingFile = this.containingKtFile
 
@@ -114,7 +114,7 @@ internal fun KtDeclaration.calculateCallableId(allowLocal: Boolean): CallableId?
         current = current.getElementParentDeclaration()
     }
 
-    return CallableId(
+    return CallablePath(
         packageName = containingFile.packageFqName,
         className = if (className.isNotEmpty()) FqName.fromSegments(className.asReversed()) else null,
         callableName = Name.identifier(selfName),

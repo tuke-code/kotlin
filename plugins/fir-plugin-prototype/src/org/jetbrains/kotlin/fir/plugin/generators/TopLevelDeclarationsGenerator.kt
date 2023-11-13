@@ -17,7 +17,7 @@ import org.jetbrains.kotlin.fir.plugin.fqn
 import org.jetbrains.kotlin.fir.types.constructStarProjectedType
 import org.jetbrains.kotlin.fir.symbols.impl.FirNamedFunctionSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirRegularClassSymbol
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.Name
 
@@ -34,31 +34,31 @@ class TopLevelDeclarationsGenerator(session: FirSession) : FirDeclarationGenerat
         predicateBasedProvider.getSymbolsByPredicate(PREDICATE).filterIsInstance<FirRegularClassSymbol>()
     }
 
-    override fun generateFunctions(callableId: CallableId, context: MemberGenerationContext?): List<FirNamedFunctionSymbol> {
+    override fun generateFunctions(callablePath: CallablePath, context: MemberGenerationContext?): List<FirNamedFunctionSymbol> {
         if (context != null) return emptyList()
-        val matchedClassSymbol = findMatchedClassForFunction(callableId) ?: return emptyList()
-        val function = createTopLevelFunction(Key, callableId, session.builtinTypes.stringType.type) {
+        val matchedClassSymbol = findMatchedClassForFunction(callablePath) ?: return emptyList()
+        val function = createTopLevelFunction(Key, callablePath, session.builtinTypes.stringType.type) {
             valueParameter(Name.identifier("value"), matchedClassSymbol.constructStarProjectedType())
         }
         return listOf(function.symbol)
     }
 
-    private fun findMatchedClassForFunction(callableId: CallableId): FirRegularClassSymbol? {
+    private fun findMatchedClassForFunction(callablePath: CallablePath): FirRegularClassSymbol? {
         // We generate only top-level functions
-        if (callableId.classId != null) return null
+        if (callablePath.classId != null) return null
         return matchedClasses
-            .filter { it.classId.packageFqName == callableId.packageName }
-            .firstOrNull { callableId.callableName.identifier == it.classId.toDummyCallableName() }
+            .filter { it.classId.packageFqName == callablePath.packageName }
+            .firstOrNull { callablePath.callableName.identifier == it.classId.toDummyCallableName() }
     }
 
     private fun ClassId.toDummyCallableName(): String {
         return "dummy${shortClassName.identifier}"
     }
 
-    override fun getTopLevelCallableIds(): Set<CallableId> {
+    override fun getTopLevelCallableIds(): Set<CallablePath> {
         return matchedClasses.mapTo(mutableSetOf()) {
             val classId = it.classId
-            CallableId(classId.packageFqName, Name.identifier(classId.toDummyCallableName()))
+            CallablePath(classId.packageFqName, Name.identifier(classId.toDummyCallableName()))
         }
     }
 

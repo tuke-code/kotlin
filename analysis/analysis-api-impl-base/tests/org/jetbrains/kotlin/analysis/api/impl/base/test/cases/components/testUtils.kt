@@ -24,7 +24,7 @@ import org.jetbrains.kotlin.analysis.api.symbols.markers.KtNamedSymbol
 import org.jetbrains.kotlin.analysis.api.types.KtSubstitutor
 import org.jetbrains.kotlin.analysis.api.types.KtType
 import org.jetbrains.kotlin.analysis.utils.printer.prettyPrint
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.types.Variance
 import kotlin.reflect.KProperty1
@@ -39,11 +39,11 @@ internal fun KtAnalysisSession.stringRepresentation(any: Any?): String = with(an
         is KtFunctionLikeSymbol -> buildString {
             append(
                 when (this@with) {
-                    is KtFunctionSymbol -> callableIdIfNonLocal ?: name
-                    is KtSamConstructorSymbol -> callableIdIfNonLocal ?: name
+                    is KtFunctionSymbol -> callablePathIfNonLocal ?: name
+                    is KtSamConstructorSymbol -> callablePathIfNonLocal ?: name
                     is KtConstructorSymbol -> "<constructor>"
-                    is KtPropertyGetterSymbol -> callableIdIfNonLocal ?: "<getter>"
-                    is KtPropertySetterSymbol -> callableIdIfNonLocal ?: "<setter>"
+                    is KtPropertyGetterSymbol -> callablePathIfNonLocal ?: "<getter>"
+                    is KtPropertySetterSymbol -> callablePathIfNonLocal ?: "<setter>"
                     else -> error("unexpected symbol kind in KtCall: ${this@with::class}")
                 }
             )
@@ -92,7 +92,7 @@ internal fun KtAnalysisSession.stringRepresentation(any: Any?): String = with(an
         is KtType -> render()
         is Enum<*> -> name
         is Name -> asString()
-        is CallableId -> toString()
+        is CallablePath -> toString()
         is KtCallableSignature<*> -> this.stringRepresentation()
         else -> buildString {
             val clazz = this@with::class
@@ -130,7 +130,7 @@ private fun KtCallableSignature<*>.stringRepresentation(): String = buildString 
         KtCallableSignature<*>::returnType,
         KtCallableSignature<*>::symbol,
         KtFunctionLikeSignature<*>::valueParameters.takeIf { this@stringRepresentation is KtFunctionLikeSignature<*> },
-        KtCallableSignature<*>::callableIdIfNonLocal
+        KtCallableSignature<*>::callablePathIfNonLocal
     )
     memberProperties.joinTo(this, separator = "\n  ", prefix = "  ") { property ->
         @Suppress("UNCHECKED_CAST")
@@ -182,7 +182,7 @@ internal fun renderScopeWithParentDeclarations(scope: KtScope): String = prettyP
     fun KtSymbol.qualifiedNameString() = when (this) {
         is KtConstructorSymbol -> "<constructor> ${containingClassIdIfNonLocal?.asString()}"
         is KtClassLikeSymbol -> classIdIfNonLocal!!.asString()
-        is KtCallableSymbol -> callableIdIfNonLocal!!.toString()
+        is KtCallableSymbol -> callablePathIfNonLocal!!.toString()
         else -> error("unknown symbol $this")
     }
 

@@ -197,18 +197,18 @@ class LLFirResolveExtensionToolDeclarationProvider internal constructor(
             .flatMapTo(mutableSetOf()) { it.getTopLevelKotlinClassLikeDeclarationNamesInPackage(packageFqName) }
     }
 
-    override fun getTopLevelProperties(callableId: CallableId): Collection<KtProperty> = forbidAnalysis {
-        return getDeclarationProvidersByPackage(callableId.packageName) { it.mayHaveTopLevelCallable(callableId.callableName) }
-            .flatMapTo(mutableListOf()) { it.getTopLevelProperties(callableId) }
+    override fun getTopLevelProperties(callablePath: CallablePath): Collection<KtProperty> = forbidAnalysis {
+        return getDeclarationProvidersByPackage(callablePath.packageName) { it.mayHaveTopLevelCallable(callablePath.callableName) }
+            .flatMapTo(mutableListOf()) { it.getTopLevelProperties(callablePath) }
     }
 
-    override fun getTopLevelFunctions(callableId: CallableId): Collection<KtNamedFunction> = forbidAnalysis {
-        return getDeclarationProvidersByPackage(callableId.packageName) { it.mayHaveTopLevelCallable(callableId.callableName) }
-            .flatMapTo(mutableListOf()) { it.getTopLevelFunctions(callableId) }
+    override fun getTopLevelFunctions(callablePath: CallablePath): Collection<KtNamedFunction> = forbidAnalysis {
+        return getDeclarationProvidersByPackage(callablePath.packageName) { it.mayHaveTopLevelCallable(callablePath.callableName) }
+            .flatMapTo(mutableListOf()) { it.getTopLevelFunctions(callablePath) }
     }
 
-    override fun getTopLevelCallableFiles(callableId: CallableId): Collection<KtFile> = forbidAnalysis {
-        return getDeclarationProvidersByPackage(callableId.packageName) { it.mayHaveTopLevelCallable(callableId.callableName) }
+    override fun getTopLevelCallableFiles(callablePath: CallablePath): Collection<KtFile> = forbidAnalysis {
+        return getDeclarationProvidersByPackage(callablePath.packageName) { it.mayHaveTopLevelCallable(callablePath.callableName) }
             .mapTo(mutableListOf()) { it.kotlinFile }
     }
 

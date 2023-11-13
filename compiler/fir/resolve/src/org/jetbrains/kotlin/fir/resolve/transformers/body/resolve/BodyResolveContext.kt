@@ -447,7 +447,7 @@ class BodyResolveContext(
     ): T {
         val labelName = (owner as? FirRegularClass)?.name
             ?: if (owner.classKind == ClassKind.ENUM_ENTRY) {
-                owner.primaryConstructorIfAny(holder.session)?.callableId?.className?.shortName()
+                owner.primaryConstructorIfAny(holder.session)?.callablePath?.className?.shortName()
             } else null
         val type = owner.defaultType()
         val towerElementsForClass = holder.collectTowerDataElementsForClass(owner, type)

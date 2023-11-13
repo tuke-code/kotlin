@@ -10,7 +10,7 @@ import org.jetbrains.kotlin.analysis.providers.impl.declarationProviders.FileBas
 import org.jetbrains.kotlin.analysis.low.level.api.fir.test.base.AbstractLowLevelApiSingleFileTest
 import org.jetbrains.kotlin.analysis.low.level.api.fir.test.configurators.AnalysisApiFirScriptTestConfigurator
 import org.jetbrains.kotlin.analysis.low.level.api.fir.test.configurators.AnalysisApiFirSourceTestConfigurator
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.name.Name
@@ -52,12 +52,12 @@ abstract class AbstractFileBasedKotlinDeclarationProviderTest : AbstractLowLevel
         }
 
         for (directive in moduleStructure.allDirectives[Directives.FUNCTION]) {
-            val callableId = parseCallableId(directive)
+            val callableId = parseCallablePath(directive)
             assert(provider.getTopLevelFunctions(callableId).isNotEmpty()) { "Function $callableId not found" }
         }
 
         for (directive in moduleStructure.allDirectives[Directives.PROPERTY]) {
-            val callableId = parseCallableId(directive)
+            val callableId = parseCallablePath(directive)
             assert(provider.getTopLevelProperties(callableId).isNotEmpty()) { "Property $callableId not found" }
         }
     }
@@ -99,7 +99,7 @@ abstract class AbstractFileBasedKotlinDeclarationProviderTest : AbstractLowLevel
             }
 
             private fun processCallableDeclaration(declaration: KtCallableDeclaration) {
-                val callableId = declaration.callableId ?: return
+                val callableId = declaration.callablePath ?: return
 
                 if (callableId.classId == null) {
                     assertContains(provider.getTopLevelCallableFiles(callableId), ktFile)
@@ -122,22 +122,22 @@ abstract class AbstractFileBasedKotlinDeclarationProviderTest : AbstractLowLevel
     }
 }
 
-private val KtCallableDeclaration.callableId: CallableId?
+private val KtCallableDeclaration.callablePath: CallablePath?
     get() {
         val callableName = this.nameAsName ?: return null
         when (val owner = PsiTreeUtil.getParentOfType(this, KtDeclaration::class.java, KtFile::class.java)) {
             is KtClassOrObject -> {
                 val classId = owner.getClassId() ?: return null
-                return CallableId(classId, callableName)
+                return CallablePath(classId, callableName)
             }
             is KtFile -> {
-                return CallableId(owner.packageFqName, callableName)
+                return CallablePath(owner.packageFqName, callableName)
             }
             else -> return null
         }
     }
 
-private fun parseCallableId(rawString: String): CallableId {
+private fun parseCallablePath(rawString: String): CallablePath {
     val chunks = rawString.split('#')
     assert(chunks.size == 2) { "Invalid CallableId string format: $rawString" }
 
@@ -147,8 +147,8 @@ private fun parseCallableId(rawString: String): CallableId {
     val callableName = Name.identifier(rawCallableName)
 
     return when {
-        rawQualifier.endsWith('/') -> CallableId(FqName(rawQualifier.dropLast(1).replace('/', '.')), callableName)
-        else -> CallableId(ClassId.fromString(rawQualifier, false), callableName)
+        rawQualifier.endsWith('/') -> CallablePath(FqName(rawQualifier.dropLast(1).replace('/', '.')), callableName)
+        else -> CallablePath(ClassId.fromString(rawQualifier, false), callableName)
     }
 }
 

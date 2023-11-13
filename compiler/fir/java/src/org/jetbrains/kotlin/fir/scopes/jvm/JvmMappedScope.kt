@@ -32,7 +32,7 @@ import org.jetbrains.kotlin.load.java.BuiltinSpecialProperties
 import org.jetbrains.kotlin.load.java.SpecialGenericSignatures
 import org.jetbrains.kotlin.load.java.getPropertyNamesCandidatesByAccessorName
 import org.jetbrains.kotlin.load.kotlin.SignatureBuildingComponents
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.Name
 
@@ -212,7 +212,7 @@ class JvmMappedScope(
 
     private fun createMappedFunction(symbol: FirNamedFunctionSymbol, jdkMemberStatus: JDKMemberStatus): FirNamedFunctionSymbol {
         val oldFunction = symbol.fir
-        val newSymbol = FirNamedFunctionSymbol(CallableId(firKotlinClass.classId, symbol.callableId.callableName))
+        val newSymbol = FirNamedFunctionSymbol(CallablePath(firKotlinClass.classId, symbol.callablePath.callableName))
         FirFakeOverrideGenerator.createCopyForFirFunction(
             newSymbol,
             baseFunction = symbol.fir,
@@ -281,7 +281,7 @@ class JvmMappedScope(
     private fun createMappedConstructor(symbol: FirConstructorSymbol): FirConstructorSymbol {
         val oldConstructor = symbol.fir
         val classId = firKotlinClass.classId
-        val newSymbol = FirConstructorSymbol(CallableId(classId, classId.shortClassName))
+        val newSymbol = FirConstructorSymbol(CallablePath(classId, classId.shortClassName))
         FirFakeOverrideGenerator.createCopyForFirConstructor(
             newSymbol,
             session,

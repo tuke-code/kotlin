@@ -95,7 +95,7 @@ private fun FirAnnotation.asKtAnnotationApplicationForAnnotationWithEnumArgument
                 expression = KtArrayAnnotationValue(
                     values = map {
                         KtEnumEntryAnnotationValue(
-                            callableId = CallableId(
+                            callablePath = CallablePath(
                                 classId = expectedEnumClassId,
                                 callableName = Name.identifier(it),
                             ),
@@ -138,7 +138,7 @@ private fun <T> FirAnnotation.findFromRawArguments(expectedEnumClass: ClassId, t
         if (arg !is FirQualifiedAccessExpression) return
         val callableSymbol = arg.calleeReference.toResolvedCallableSymbol() ?: return
         if (callableSymbol.containingClassLookupTag()?.classId != expectedEnumClass) return
-        val identifier = callableSymbol.callableId.callableName.identifier
+        val identifier = callableSymbol.callablePath.callableName.identifier
         transformer(identifier)?.let(::add)
     }
 

@@ -42,7 +42,7 @@ class TypeAliasConstructorsSubstitutingScope(
 
             processor(
                 buildConstructorCopy(originalConstructorSymbol.fir) {
-                    symbol = FirConstructorSymbol(originalConstructorSymbol.callableId)
+                    symbol = FirConstructorSymbol(originalConstructorSymbol.callablePath)
                     origin = FirDeclarationOrigin.Synthetic.TypeAliasConstructor
 
                     this.typeParameters.clear()

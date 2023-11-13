@@ -46,14 +46,14 @@ abstract class BaseIrGenerator(private val currentClass: IrClass, final override
     IrBuilderWithPluginContext {
 
     private val throwMissedFieldExceptionFunc = compilerContext.referenceFunctions(
-        CallableId(
+        CallablePath(
             SerializationPackages.internalPackageFqName,
             SerialEntityNames.SINGLE_MASK_FIELD_MISSING_FUNC_NAME
         )
     ).singleOrNull()
 
     private val throwMissedFieldExceptionArrayFunc = compilerContext.referenceFunctions(
-        CallableId(
+        CallablePath(
             SerializationPackages.internalPackageFqName,
             SerialEntityNames.ARRAY_MASK_FIELD_MISSING_FUNC_NAME
         )
@@ -330,7 +330,7 @@ abstract class BaseIrGenerator(private val currentClass: IrClass, final override
         property: IrSerializableProperty,
         cachedSerializer: IrExpression?
     ): IrExpression? {
-        val nullableSerClass = compilerContext.referenceProperties(SerialEntityNames.wrapIntoNullableCallableId).single()
+        val nullableSerClass = compilerContext.referenceProperties(SerialEntityNames.wrapIntoNullableCallablePath).single()
 
         val serializerExpression = if (cachedSerializer != null) {
             cachedSerializer
@@ -491,7 +491,7 @@ abstract class BaseIrGenerator(private val currentClass: IrClass, final override
         genericIndex: Int? = null,
         genericGetter: ((Int, IrType) -> IrExpression)? = null
     ): IrExpression? {
-        val nullableSerClass = compilerContext.referenceProperties(SerialEntityNames.wrapIntoNullableCallableId).single()
+        val nullableSerClass = compilerContext.referenceProperties(SerialEntityNames.wrapIntoNullableCallablePath).single()
         if (serializerClassOriginal == null) {
             if (genericIndex == null) return null
             return genericGetter?.invoke(genericIndex, kType)

@@ -33,7 +33,7 @@ import org.jetbrains.kotlin.fir.symbols.impl.FirPropertySymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirSyntheticPropertySymbol
 import org.jetbrains.kotlin.fir.symbols.impl.isExtension
 import org.jetbrains.kotlin.fir.symbols.lazyResolveToPhase
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.Name
 
 internal class KtFirKotlinPropertySymbol(
@@ -80,7 +80,7 @@ internal class KtFirKotlinPropertySymbol(
         KtFirAnnotationListForDeclaration.create(firSymbol, builder)
     }
 
-    override val callableIdIfNonLocal: CallableId? get() = withValidityAssertion { firSymbol.getCallableIdIfNonLocal() }
+    override val callablePathIfNonLocal: CallablePath? get() = withValidityAssertion { firSymbol.getCallableIdIfNonLocal() }
 
     override val typeParameters: List<KtTypeParameterSymbol>
         get() = withValidityAssertion { firSymbol.createKtTypeParameters(builder) }
@@ -135,7 +135,7 @@ internal class KtFirKotlinPropertySymbol(
                     KtFirResultPropertySymbolPointer(requireOwnerPointer())
                 } else {
                     KtFirTopLevelPropertySymbolPointer(
-                        firSymbol.callableId,
+                        firSymbol.callablePath,
                         FirCallableSignature.createSignature(firSymbol),
                     )
                 }

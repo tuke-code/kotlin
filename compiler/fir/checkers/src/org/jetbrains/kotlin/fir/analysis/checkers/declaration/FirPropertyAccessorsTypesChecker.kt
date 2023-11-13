@@ -41,7 +41,7 @@ object FirPropertyAccessorsTypesChecker : FirPropertyChecker() {
         if (getter.visibility != property.visibility) {
             reporter.reportOn(getter.source, FirErrors.GETTER_VISIBILITY_DIFFERS_FROM_PROPERTY_VISIBILITY, context)
         }
-        if (property.symbol.callableId.classId != null && getter.body != null && property.delegate == null) {
+        if (property.symbol.callablePath.classId != null && getter.body != null && property.delegate == null) {
             if (isLegallyAbstract(property, context)) {
                 reporter.reportOn(getter.source, FirErrors.ABSTRACT_PROPERTY_WITH_GETTER, context)
             }
@@ -76,7 +76,7 @@ object FirPropertyAccessorsTypesChecker : FirPropertyChecker() {
         if (visibilityCompareResult == null || visibilityCompareResult > 0) {
             reporter.reportOn(setter.source, FirErrors.SETTER_VISIBILITY_INCONSISTENT_WITH_PROPERTY_VISIBILITY, context)
         }
-        if (property.symbol.callableId.classId != null && property.delegate == null) {
+        if (property.symbol.callablePath.classId != null && property.delegate == null) {
             val isLegallyAbstract = isLegallyAbstract(property, context)
             if (setter.visibility == Visibilities.Private && property.visibility != Visibilities.Private) {
                 if (isLegallyAbstract) {

@@ -296,7 +296,7 @@ private object WhenOnEnumExhaustivenessChecker : WhenExhaustivenessChecker() {
         val checkedEntries = mutableSetOf<FirEnumEntry>()
         whenExpression.accept(ConditionChecker, checkedEntries)
         val notCheckedEntries = allEntries - checkedEntries
-        notCheckedEntries.mapTo(destination) { WhenMissingCase.EnumCheckIsMissing(it.symbol.callableId) }
+        notCheckedEntries.mapTo(destination) { WhenMissingCase.EnumCheckIsMissing(it.symbol.callablePath) }
     }
 
     private object ConditionChecker : AbstractConditionChecker<MutableSet<FirEnumEntry>>() {
@@ -327,7 +327,7 @@ private object WhenOnSealedClassExhaustivenessChecker : WhenExhaustivenessChecke
         (allSubclasses - checkedSubclasses).mapNotNullTo(destination) {
             when (it) {
                 is FirClassSymbol<*> -> WhenMissingCase.IsTypeCheckIsMissing(it.classId, it.fir.classKind.isSingleton)
-                is FirVariableSymbol<*> -> WhenMissingCase.EnumCheckIsMissing(it.callableId)
+                is FirVariableSymbol<*> -> WhenMissingCase.EnumCheckIsMissing(it.callablePath)
                 else -> null
             }
         }

@@ -42,7 +42,7 @@ import org.jetbrains.kotlin.load.java.*
 import org.jetbrains.kotlin.load.java.SpecialGenericSignatures.Companion.ERASED_COLLECTION_PARAMETER_NAMES
 import org.jetbrains.kotlin.load.java.SpecialGenericSignatures.Companion.sameAsBuiltinMethodWithErasedValueParameters
 import org.jetbrains.kotlin.load.java.SpecialGenericSignatures.Companion.sameAsRenamedInJvmBuiltin
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.name.StandardClassIds
 import org.jetbrains.kotlin.types.AbstractTypeChecker
@@ -80,8 +80,8 @@ class JavaClassUseSiteMemberScope(
             moduleData = session.moduleData
             name = property.name
             symbol = FirJavaOverriddenSyntheticPropertySymbol(
-                getterId = getterSymbol.callableId,
-                propertyId = CallableId(getterSymbol.callableId.packageName, getterSymbol.callableId.className, property.name)
+                getterId = getterSymbol.callablePath,
+                propertyId = CallablePath(getterSymbol.callablePath.packageName, getterSymbol.callablePath.className, property.name)
             )
             delegateGetter = getterSymbol.fir
             delegateSetter = setterSymbol?.fir
@@ -359,7 +359,7 @@ class JavaClassUseSiteMemberScope(
                 type = continuationParameterType.typeArguments[0].type ?: return null
             }
             (status as FirDeclarationStatusImpl).isSuspend = true
-            symbol = FirNamedFunctionSymbol(callableId)
+            symbol = FirNamedFunctionSymbol(callablePath)
         }
     }
 
@@ -483,7 +483,7 @@ class JavaClassUseSiteMemberScope(
         var allParametersAreAny = true
         val renamedDeclaredFunction = buildJavaMethodCopy(originalDeclaredFunction.fir as FirJavaMethod) {
             name = naturalName
-            symbol = FirNamedFunctionSymbol(originalDeclaredFunction.callableId)
+            symbol = FirNamedFunctionSymbol(originalDeclaredFunction.callablePath)
             this.valueParameters.clear()
             originalDeclaredFunction.fir.valueParameters.zip(overriddenMemberWithErasedValueParameters.fir.valueParameters)
                 .mapTo(this.valueParameters) { (overrideParameter, parameterFromSupertype) ->
@@ -567,7 +567,7 @@ class JavaClassUseSiteMemberScope(
             val original = it.fir as FirJavaMethod
             buildJavaMethodCopy(original) {
                 name = naturalName
-                symbol = FirNamedFunctionSymbol(it.callableId.copy(callableName = naturalName))
+                symbol = FirNamedFunctionSymbol(it.callablePath.copy(callableName = naturalName))
                 status = original.status.copy(isOperator = true)
             }.apply {
                 initialSignatureAttr = original
@@ -577,7 +577,7 @@ class JavaClassUseSiteMemberScope(
         val renamedFunctionsFromSupertypes = functionsFromSupertypesWithBuiltinJvmName?.overriddenMembers?.map {
             val renamedFunction = buildSimpleFunctionCopy(it.member.fir) {
                 name = naturalName
-                symbol = FirNamedFunctionSymbol(it.member.callableId.copy(callableName = naturalName))
+                symbol = FirNamedFunctionSymbol(it.member.callablePath.copy(callableName = naturalName))
                 origin = FirDeclarationOrigin.RenamedForOverride
             }.apply {
                 initialSignatureAttr = it.member.fir

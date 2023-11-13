@@ -21,7 +21,7 @@ import org.jetbrains.kotlin.analysis.project.structure.builder.buildKtLibraryMod
 import org.jetbrains.kotlin.analysis.project.structure.builder.buildKtSdkModule
 import org.jetbrains.kotlin.analysis.project.structure.builder.buildKtSourceModule
 import org.jetbrains.kotlin.builtins.StandardNames
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.name.Name
@@ -109,7 +109,7 @@ class StandaloneSessionBuilderTest {
         val ktFile = session.modulesWithFiles.getValue(sourceModule).single() as KtFile
 
         val ktCallExpression = ktFile.findDescendantOfType<KtCallExpression>()!!
-        ktCallExpression.assertIsCallOf(CallableId(FqName("commonKLib"), Name.identifier("commonKLibFunction")))
+        ktCallExpression.assertIsCallOf(CallablePath(FqName("commonKLib"), Name.identifier("commonKLibFunction")))
     }
 
     @Test
@@ -166,7 +166,7 @@ class StandaloneSessionBuilderTest {
         }
         val ktFile = session.modulesWithFiles.getValue(sourceModule).single() as KtFile
         val ktCallExpression = ktFile.findDescendantOfType<KtCallExpression>()!!
-        ktCallExpression.assertIsCallOf(CallableId(FqName.ROOT, Name.identifier("foo")))
+        ktCallExpression.assertIsCallOf(CallablePath(FqName.ROOT, Name.identifier("foo")))
     }
 
     private fun doTestKotlinStdLibResolve(
@@ -201,7 +201,7 @@ class StandaloneSessionBuilderTest {
 
         // call
         val ktCallExpression = ktFile.findDescendantOfType<KtCallExpression>()!!
-        ktCallExpression.assertIsCallOf(CallableId(StandardNames.COLLECTIONS_PACKAGE_FQ_NAME, Name.identifier("listOf")))
+        ktCallExpression.assertIsCallOf(CallablePath(StandardNames.COLLECTIONS_PACKAGE_FQ_NAME, Name.identifier("listOf")))
 
         // builtin type
         val typeReference = ktFile.findDescendantOfType<KtNamedFunction>()!!.typeReference!!
@@ -209,13 +209,13 @@ class StandaloneSessionBuilderTest {
     }
 
 
-    private fun KtCallExpression.assertIsCallOf(callableId: CallableId) {
+    private fun KtCallExpression.assertIsCallOf(callablePath: CallablePath) {
         analyze(this) {
             val ktCallInfo = resolveCall()
             Assertions.assertInstanceOf(KtSuccessCallInfo::class.java, ktCallInfo); ktCallInfo as KtSuccessCallInfo
             val symbol = ktCallInfo.successfulFunctionCallOrNull()?.symbol
             Assertions.assertInstanceOf(KtFunctionSymbol::class.java, symbol); symbol as KtFunctionSymbol
-            Assertions.assertEquals(callableId, symbol.callableIdIfNonLocal)
+            Assertions.assertEquals(callablePath, symbol.callablePathIfNonLocal)
         }
     }
 

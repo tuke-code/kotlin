@@ -15,7 +15,7 @@ import org.jetbrains.kotlin.fir.ownerGenerator
 import org.jetbrains.kotlin.fir.render
 import org.jetbrains.kotlin.fir.resolve.substitution.ConeSubstitutor
 import org.jetbrains.kotlin.fir.symbols.impl.*
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.name.SpecialNames
@@ -195,14 +195,14 @@ class FirGeneratedMemberDeclarationsStorage(private val session: FirSession) : F
         private fun generateMemberFunctions(name: Name): List<FirNamedFunctionSymbol> {
             if (name == SpecialNames.INIT) return emptyList()
             return extensionsByCallableName[name].orEmpty()
-                .flatMap { it.generateFunctions(CallableId(classSymbol.classId, name), generationContext) }
+                .flatMap { it.generateFunctions(CallablePath(classSymbol.classId, name), generationContext) }
                 .onEach { it.fir.validate() }
         }
 
         private fun generateMemberProperties(name: Name): List<FirPropertySymbol> {
             if (name == SpecialNames.INIT) return emptyList()
             return extensionsByCallableName[name].orEmpty()
-                .flatMap { it.generateProperties(CallableId(classSymbol.classId, name), generationContext) }
+                .flatMap { it.generateProperties(CallablePath(classSymbol.classId, name), generationContext) }
                 .onEach { it.fir.validate() }
         }
 

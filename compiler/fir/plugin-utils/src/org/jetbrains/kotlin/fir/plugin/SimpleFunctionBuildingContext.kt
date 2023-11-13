@@ -21,17 +21,16 @@ import org.jetbrains.kotlin.fir.symbols.impl.FirClassSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirNamedFunctionSymbol
 import org.jetbrains.kotlin.fir.types.ConeKotlinType
 import org.jetbrains.kotlin.fir.types.toFirResolvedTypeRef
-import org.jetbrains.kotlin.name.CallableId
-import org.jetbrains.kotlin.name.FqName
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.Name
 
 public class SimpleFunctionBuildingContext(
     session: FirSession,
     key: GeneratedDeclarationKey,
     owner: FirClassSymbol<*>?,
-    callableId: CallableId,
+    callablePath: CallablePath,
     private val returnTypeProvider: (List<FirTypeParameter>) -> ConeKotlinType,
-) : FunctionBuildingContext<FirSimpleFunction>(callableId, session, key, owner) {
+) : FunctionBuildingContext<FirSimpleFunction>(callablePath, session, key, owner) {
     private var extensionReceiverTypeProvider: ((List<FirTypeParameter>) -> ConeKotlinType)? = null
 
     /**
@@ -57,8 +56,8 @@ public class SimpleFunctionBuildingContext(
             moduleData = session.moduleData
             origin = key.origin
 
-            symbol = FirNamedFunctionSymbol(callableId)
-            name = callableId.callableName
+            symbol = FirNamedFunctionSymbol(callablePath)
+            name = callablePath.callableName
 
             status = generateStatus()
 
@@ -113,8 +112,8 @@ public fun FirExtension.createMemberFunction(
     returnTypeProvider: (List<FirTypeParameter>) -> ConeKotlinType,
     config: SimpleFunctionBuildingContext.() -> Unit = {}
 ): FirSimpleFunction {
-    val callableId = CallableId(owner.classId, name)
-    return SimpleFunctionBuildingContext(session, key, owner, callableId, returnTypeProvider).apply(config).apply {
+    val callablePath = CallablePath(owner.classId, name)
+    return SimpleFunctionBuildingContext(session, key, owner, callablePath, returnTypeProvider).apply(config).apply {
         status {
             isExpect = owner.isExpect
         }
@@ -122,31 +121,31 @@ public fun FirExtension.createMemberFunction(
 }
 
 /**
- * Creates a top-level function with [callableId] and specified [returnType].
+ * Creates a top-level function with [callablePath] and specified [returnType].
  *
  * Type and value parameters can be configured with [config] builder.
  */
 public fun FirExtension.createTopLevelFunction(
     key: GeneratedDeclarationKey,
-    callableId: CallableId,
+    callablePath: CallablePath,
     returnType: ConeKotlinType,
     config: SimpleFunctionBuildingContext.() -> Unit = {}
 ): FirSimpleFunction {
-    return createTopLevelFunction(key, callableId, { returnType }, config)
+    return createTopLevelFunction(key, callablePath, { returnType }, config)
 }
 
 /**
- * Creates a top-level function with [callableId] and return type provided by [returnTypeProvider].
+ * Creates a top-level function with [callablePath] and return type provided by [returnTypeProvider].
  * Use this overload when return type references type parameters of created function.
  *
  * Type and value parameters can be configured with [config] builder.
  */
 public fun FirExtension.createTopLevelFunction(
     key: GeneratedDeclarationKey,
-    callableId: CallableId,
+    callablePath: CallablePath,
     returnTypeProvider: (List<FirTypeParameter>) -> ConeKotlinType,
     config: SimpleFunctionBuildingContext.() -> Unit = {}
 ): FirSimpleFunction {
-    require(callableId.classId == null)
-    return SimpleFunctionBuildingContext(session, key, owner = null, callableId, returnTypeProvider).apply(config).build()
+    require(callablePath.classId == null)
+    return SimpleFunctionBuildingContext(session, key, owner = null, callablePath, returnTypeProvider).apply(config).build()
 }

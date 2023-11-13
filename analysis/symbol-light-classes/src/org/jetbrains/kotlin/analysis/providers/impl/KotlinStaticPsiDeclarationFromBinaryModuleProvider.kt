@@ -23,7 +23,7 @@ import org.jetbrains.kotlin.asJava.builder.ClsWrapperStubPsiFactory
 import org.jetbrains.kotlin.asJava.classes.lazyPub
 import org.jetbrains.kotlin.builtins.jvm.JavaToKotlinClassMap
 import org.jetbrains.kotlin.load.kotlin.PackagePartProvider
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.util.capitalizeDecapitalize.decapitalizeSmart
@@ -91,10 +91,10 @@ private class KotlinStaticPsiDeclarationFromBinaryModuleProvider(
     }
 
     // TODO(dimonchik0036): support 'is' accessor
-    override fun getProperties(callableId: CallableId): Collection<PsiMember> {
-        val classes = callableId.classId?.let { classId ->
+    override fun getProperties(callablePath: CallablePath): Collection<PsiMember> {
+        val classes = callablePath.classId?.let { classId ->
             getClassesByClassId(classId)
-        } ?: clsClassImplsInPackage(callableId.packageName)
+        } ?: clsClassImplsInPackage(callablePath.packageName)
         return classes.flatMap { psiClass ->
             psiClass.children
                 .filterIsInstance<PsiMember>()
@@ -102,23 +102,23 @@ private class KotlinStaticPsiDeclarationFromBinaryModuleProvider(
                     if (psiMember !is PsiMethod && psiMember !is PsiField) return@filter false
                     val name = psiMember.name ?: return@filter false
                     // PsiField a.k.a. backing field
-                    name == callableId.callableName.identifier ||
+                    name == callablePath.callableName.identifier ||
                             // PsiMethod, i.e., accessors
                             (name.startsWith("get") || name.startsWith("set")) &&
                             // E.g., getFooBar -> FooBar -> fooBar
-                            (name.substring(3).decapitalizeSmart().endsWith(callableId.callableName.identifier))
+                            (name.substring(3).decapitalizeSmart().endsWith(callablePath.callableName.identifier))
 
                 }
         }.toList()
     }
 
-    override fun getFunctions(callableId: CallableId): Collection<PsiMethod> {
-        val classes = callableId.classId?.let { classId ->
+    override fun getFunctions(callablePath: CallablePath): Collection<PsiMethod> {
+        val classes = callablePath.classId?.let { classId ->
             getClassesByClassId(classId)
-        } ?: clsClassImplsInPackage(callableId.packageName)
+        } ?: clsClassImplsInPackage(callablePath.packageName)
         return classes.flatMap { psiClass ->
             psiClass.methods.filter { psiMethod ->
-                psiMethod.name == callableId.callableName.identifier
+                psiMethod.name == callablePath.callableName.identifier
             }
         }.toList()
     }

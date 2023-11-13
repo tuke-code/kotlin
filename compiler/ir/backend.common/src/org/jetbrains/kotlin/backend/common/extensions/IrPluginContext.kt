@@ -16,7 +16,7 @@ import org.jetbrains.kotlin.ir.util.IdSignature
 import org.jetbrains.kotlin.ir.util.IrMessageLogger
 import org.jetbrains.kotlin.ir.util.ReferenceSymbolTable
 import org.jetbrains.kotlin.ir.util.TypeTranslator
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.platform.TargetPlatform
@@ -86,8 +86,8 @@ interface IrPluginContext : IrGeneratorContext {
     fun referenceClass(classId: ClassId): IrClassSymbol?
     fun referenceTypeAlias(classId: ClassId): IrTypeAliasSymbol?
     fun referenceConstructors(classId: ClassId): Collection<IrConstructorSymbol>
-    fun referenceFunctions(callableId: CallableId): Collection<IrSimpleFunctionSymbol>
-    fun referenceProperties(callableId: CallableId): Collection<IrPropertySymbol>
+    fun referenceFunctions(callablePath: CallablePath): Collection<IrSimpleFunctionSymbol>
+    fun referenceProperties(callablePath: CallablePath): Collection<IrPropertySymbol>
 
     // temporary solution to load synthetic top-level declaration
     fun referenceTopLevel(signature: IdSignature, kind: IrDeserializer.TopLevelSymbolKind, moduleDescriptor: ModuleDescriptor): IrSymbol?

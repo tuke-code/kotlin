@@ -7,7 +7,7 @@ package org.jetbrains.kotlin.analysis.providers.impl.declarationProviders
 
 import org.jetbrains.kotlin.analysis.providers.KotlinDeclarationProvider
 import org.jetbrains.kotlin.fileClasses.javaFileFacadeFqName
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.name.Name
@@ -89,18 +89,18 @@ public class FileBasedKotlinDeclarationProvider(public val kotlinFile: KtFile) :
         return getTopLevelDeclarationNames<KtClassLikeDeclaration>(packageFqName)
     }
 
-    override fun getTopLevelProperties(callableId: CallableId): Collection<KtProperty> {
-        return getTopLevelCallables(callableId)
+    override fun getTopLevelProperties(callablePath: CallablePath): Collection<KtProperty> {
+        return getTopLevelCallables(callablePath)
     }
 
-    override fun getTopLevelFunctions(callableId: CallableId): Collection<KtNamedFunction> {
-        return getTopLevelCallables(callableId)
+    override fun getTopLevelFunctions(callablePath: CallablePath): Collection<KtNamedFunction> {
+        return getTopLevelCallables(callablePath)
     }
 
-    override fun getTopLevelCallableFiles(callableId: CallableId): Collection<KtFile> {
+    override fun getTopLevelCallableFiles(callablePath: CallablePath): Collection<KtFile> {
         return buildSet {
-            getTopLevelProperties(callableId).mapTo(this) { it.containingKtFile }
-            getTopLevelFunctions(callableId).mapTo(this) { it.containingKtFile }
+            getTopLevelProperties(callablePath).mapTo(this) { it.containingKtFile }
+            getTopLevelFunctions(callablePath).mapTo(this) { it.containingKtFile }
         }
     }
 
@@ -136,9 +136,9 @@ public class FileBasedKotlinDeclarationProvider(public val kotlinFile: KtFile) :
     override fun findFilesForScript(scriptFqName: FqName): Collection<KtScript> =
         listOfNotNull(kotlinFile.script?.takeIf { it.fqName == scriptFqName })
 
-    private inline fun <reified T : KtCallableDeclaration> getTopLevelCallables(callableId: CallableId): Collection<T> {
-        require(callableId.classId == null)
-        return getTopLevelDeclarations(callableId.packageName, callableId.callableName)
+    private inline fun <reified T : KtCallableDeclaration> getTopLevelCallables(callablePath: CallablePath): Collection<T> {
+        require(callablePath.classId == null)
+        return getTopLevelDeclarations(callablePath.packageName, callablePath.callableName)
     }
 
     private inline fun <reified T : KtNamedDeclaration> getTopLevelDeclarations(packageFqName: FqName, name: Name): Collection<T> {

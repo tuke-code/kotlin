@@ -27,7 +27,7 @@ import org.jetbrains.kotlin.descriptors.PropertyDescriptor
 import org.jetbrains.kotlin.descriptors.Visibilities
 import org.jetbrains.kotlin.descriptors.Visibility
 import org.jetbrains.kotlin.lexer.KtTokens
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.psi.KtProperty
 import org.jetbrains.kotlin.psi.psiUtil.hasActualModifier
@@ -110,8 +110,8 @@ internal class KtFe10PsiKotlinPropertySymbol(
     override val isVal: Boolean
         get() = withValidityAssertion { !psi.isVar }
 
-    override val callableIdIfNonLocal: CallableId?
-        get() = withValidityAssertion { psi.callableIdIfNonLocal }
+    override val callablePathIfNonLocal: CallablePath?
+        get() = withValidityAssertion { psi.callablePathIfNonLocal }
 
     override val returnType: KtType
         get() = withValidityAssertion { descriptor?.type?.toKtType(analysisContext) ?: createErrorType() }

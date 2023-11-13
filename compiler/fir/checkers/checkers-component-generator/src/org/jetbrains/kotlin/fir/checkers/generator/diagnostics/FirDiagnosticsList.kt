@@ -28,7 +28,7 @@ import org.jetbrains.kotlin.fir.types.ConeKotlinType
 import org.jetbrains.kotlin.lexer.KtKeywordToken
 import org.jetbrains.kotlin.lexer.KtModifierKeywordToken
 import org.jetbrains.kotlin.metadata.deserialization.VersionRequirement
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.name.Name
@@ -101,7 +101,7 @@ object DIAGNOSTICS_LIST : DiagnosticList("FirErrors") {
         val INVISIBLE_SETTER by error<PsiElement>(PositioningStrategy.SELECTOR_BY_QUALIFIED) {
             parameter<FirPropertySymbol>("property")
             parameter<Visibility>("visibility")
-            parameter<CallableId>("callableId")
+            parameter<CallablePath>("callableId")
         }
         val INNER_ON_TOP_LEVEL_SCRIPT_CLASS by deprecationError<PsiElement>(LanguageFeature.ProhibitScriptTopLevelInnerClasses)
         val ERROR_SUPPRESSION by warning<PsiElement> {

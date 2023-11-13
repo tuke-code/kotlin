@@ -32,7 +32,7 @@ internal fun FirElement.renderWithClassName(): String =
 
 
 internal fun FirBasedSymbol<*>.name(): String = when (this) {
-    is FirCallableSymbol<*> -> callableId.callableName.asString()
+    is FirCallableSymbol<*> -> callablePath.callableName.asString()
     is FirClassLikeSymbol<*> -> classId.shortClassName.asString()
     is FirAnonymousInitializerSymbol -> "<init>"
     is FirFileSymbol -> "<FILE>"

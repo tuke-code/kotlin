@@ -73,7 +73,7 @@ private fun collectDesignationPath(target: FirElementWithResolveState): List<Fir
         -> {
             requireIsInstance<FirCallableDeclaration>(target)
 
-            if (target.symbol.callableId.isLocal || target.status.visibility == Visibilities.Local) {
+            if (target.symbol.callablePath.isLocal || target.status.visibility == Visibilities.Local) {
                 return null
             }
 

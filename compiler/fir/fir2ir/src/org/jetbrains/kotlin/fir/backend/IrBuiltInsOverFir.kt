@@ -715,7 +715,7 @@ class IrBuiltInsOverFir(
 
     private fun findIrParent(firSymbol: FirCallableSymbol<*>): IrDeclarationParent? {
         return when (val containingClassLookupTag = firSymbol.containingClassLookupTag()) {
-            null -> components.declarationStorage.getIrExternalPackageFragment(firSymbol.callableId.packageName, firSymbol.moduleData)
+            null -> components.declarationStorage.getIrExternalPackageFragment(firSymbol.callablePath.packageName, firSymbol.moduleData)
             else -> components.classifierStorage.findIrClass(containingClassLookupTag)
         }
     }

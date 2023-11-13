@@ -276,7 +276,7 @@ internal fun FirProperty.copyToFreeProperty(approximator: AbstractTypeApproximat
         moduleData = property.moduleData
         origin = FirDeclarationOrigin.Source
 
-        val newPropertySymbol = FirPropertySymbol(property.symbol.callableId)
+        val newPropertySymbol = FirPropertySymbol(property.symbol.callablePath)
         symbol = newPropertySymbol
         returnTypeRef = property.returnTypeRef.approximated(approximator, typeParameterSet, toSuper = true)
         receiverParameter = property.receiverParameter?.let { receiverParameter ->
@@ -288,7 +288,7 @@ internal fun FirProperty.copyToFreeProperty(approximator: AbstractTypeApproximat
         initializer = property.initializer
         delegate = property.delegate
         delegateFieldSymbol = property.delegateFieldSymbol?.let {
-            FirDelegateFieldSymbol(it.callableId)
+            FirDelegateFieldSymbol(it.callablePath)
         }
         getter = property.getter?.copyToFreeAccessor(approximator, newPropertySymbol)
         setter = property.setter?.copyToFreeAccessor(approximator, newPropertySymbol)

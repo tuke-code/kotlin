@@ -25,7 +25,7 @@ import org.jetbrains.kotlin.fir.declarations.utils.isStatic
 import org.jetbrains.kotlin.fir.declarations.utils.modality
 import org.jetbrains.kotlin.fir.declarations.utils.visibility
 import org.jetbrains.kotlin.fir.symbols.impl.FirFieldSymbol
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.Name
 
 internal class KtFirJavaFieldSymbol(
@@ -44,7 +44,7 @@ internal class KtFirJavaFieldSymbol(
     override val name: Name get() = withValidityAssertion { firSymbol.name }
     override val returnType: KtType get() = withValidityAssertion { firSymbol.returnType(builder) }
 
-    override val callableIdIfNonLocal: CallableId? get() = withValidityAssertion { firSymbol.getCallableIdIfNonLocal() }
+    override val callablePathIfNonLocal: CallablePath? get() = withValidityAssertion { firSymbol.getCallableIdIfNonLocal() }
 
     override val modality: Modality get() = withValidityAssertion { firSymbol.modality }
     override val visibility: Visibility get() = withValidityAssertion { firSymbol.visibility }

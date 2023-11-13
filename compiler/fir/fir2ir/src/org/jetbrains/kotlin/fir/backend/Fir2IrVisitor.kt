@@ -462,7 +462,7 @@ class Fir2IrVisitor(
         }
         val initializer = variable.initializer
         val isNextVariable = initializer is FirFunctionCall &&
-                initializer.calleeReference.toResolvedNamedFunctionSymbol()?.callableId?.isIteratorNext() == true &&
+                initializer.calleeReference.toResolvedNamedFunctionSymbol()?.callablePath?.isIteratorNext() == true &&
                 variable.source?.isChildOfForLoop == true
         val irVariable = declarationStorage.createAndCacheIrVariable(
             variable, conversionScope.parentFromStack(),
@@ -933,7 +933,7 @@ class Fir2IrVisitor(
             else -> if (receiver is FirQualifiedAccessExpression && receiver.explicitReceiver == null) {
                 val variableAsFunctionMode = selectorCalleeReference is FirResolvedNamedReference &&
                         selectorCalleeReference.name != OperatorNameConventions.INVOKE &&
-                        (selectorCalleeReference.resolvedSymbol as? FirCallableSymbol)?.callableId?.callableName == OperatorNameConventions.INVOKE
+                        (selectorCalleeReference.resolvedSymbol as? FirCallableSymbol)?.callablePath?.callableName == OperatorNameConventions.INVOKE
                 callGenerator.convertToIrCall(
                     receiver, receiver.resolvedType, explicitReceiverExpression = null,
                     variableAsFunctionMode = variableAsFunctionMode

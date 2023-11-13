@@ -53,7 +53,7 @@ class FirAnnotationTypeQualifierResolver(
             else -> {
                 val name = when (val reference = toReference()) {
                     is FirResolvedNamedReference ->
-                        (reference.resolvedSymbol as? FirCallableSymbol<*>)?.callableId?.callableName?.asString()
+                        (reference.resolvedSymbol as? FirCallableSymbol<*>)?.callablePath?.callableName?.asString()
                     is FirFromMissingDependenciesNamedReference -> reference.name.asString()
                     else -> null
                 }

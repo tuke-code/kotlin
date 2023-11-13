@@ -23,9 +23,8 @@ import org.jetbrains.kotlin.fir.types.coneType
 import org.jetbrains.kotlin.fir.types.isAny
 import org.jetbrains.kotlin.fir.types.isNullableAny
 import org.jetbrains.kotlin.fir.types.lowerBoundIfFlexible
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.ClassId
-import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.util.OperatorNameConventions
 
 /**
@@ -35,7 +34,7 @@ import org.jetbrains.kotlin.util.OperatorNameConventions
  * leading to an unexpected result. See KT-18053
  */
 object FirJvmInconsistentOperatorFromJavaCallChecker : FirFunctionCallChecker() {
-    private val CONCURRENT_HASH_MAP_CALLABLE_ID = CallableId(
+    private val CONCURRENT_HASH_MAP_CALLABLE_ID = CallablePath(
         ClassId.fromString("java/util/concurrent/ConcurrentHashMap"),
         OperatorNameConventions.CONTAINS
     )
@@ -55,7 +54,7 @@ object FirJvmInconsistentOperatorFromJavaCallChecker : FirFunctionCallChecker() 
 
     private fun FirNamedFunctionSymbol.check(source: KtSourceElement?, context: CheckerContext, reporter: DiagnosticReporter): Boolean {
         // Unwrap SubstitutionOverride origin if necessary
-        if (originalOrSelf().callableId == CONCURRENT_HASH_MAP_CALLABLE_ID) {
+        if (originalOrSelf().callablePath == CONCURRENT_HASH_MAP_CALLABLE_ID) {
             reporter.reportOn(source, FirJvmErrors.CONCURRENT_HASH_MAP_CONTAINS_OPERATOR, context)
             return true
         }

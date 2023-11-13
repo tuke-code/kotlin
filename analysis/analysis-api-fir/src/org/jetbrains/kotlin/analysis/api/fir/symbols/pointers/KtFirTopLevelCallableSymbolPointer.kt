@@ -13,15 +13,15 @@ import org.jetbrains.kotlin.analysis.api.symbols.pointers.KtSymbolPointer
 import org.jetbrains.kotlin.fir.FirSession
 import org.jetbrains.kotlin.fir.resolve.providers.symbolProvider
 import org.jetbrains.kotlin.fir.symbols.impl.FirCallableSymbol
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 
 internal abstract class KtTopLevelCallableSymbolPointer<S : KtCallableSymbol>(
-    private val callableId: CallableId
+    private val callablePath: CallablePath
 ) : KtSymbolPointer<S>() {
     @Deprecated("Consider using org.jetbrains.kotlin.analysis.api.KtAnalysisSession.restoreSymbol")
     final override fun restoreSymbol(analysisSession: KtAnalysisSession): S? {
         require(analysisSession is KtFirAnalysisSession)
-        val candidates = analysisSession.getCallableSymbols(callableId)
+        val candidates = analysisSession.getCallableSymbols(callablePath)
         if (candidates.isEmpty()) return null
         val session = candidates.first().fir.moduleData.session
         return analysisSession.chooseCandidateAndCreateSymbol(candidates, session)
@@ -33,9 +33,9 @@ internal abstract class KtTopLevelCallableSymbolPointer<S : KtCallableSymbol>(
     ): S?
 
     abstract override fun pointsToTheSameSymbolAs(other: KtSymbolPointer<KtSymbol>): Boolean
-    protected fun hasTheSameOwner(other: KtTopLevelCallableSymbolPointer<*>): Boolean = other.callableId == callableId
+    protected fun hasTheSameOwner(other: KtTopLevelCallableSymbolPointer<*>): Boolean = other.callablePath == callablePath
 }
 
-private fun KtFirAnalysisSession.getCallableSymbols(callableId: CallableId) =
-    useSiteSession.symbolProvider.getTopLevelCallableSymbols(callableId.packageName, callableId.callableName)
+private fun KtFirAnalysisSession.getCallableSymbols(callablePath: CallablePath) =
+    useSiteSession.symbolProvider.getTopLevelCallableSymbols(callablePath.packageName, callablePath.callableName)
 

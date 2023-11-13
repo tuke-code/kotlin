@@ -16,7 +16,7 @@ import org.jetbrains.kotlin.fir.symbols.impl.FirClassSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirConstructorSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirFunctionSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirNamedFunctionSymbol
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.name.SpecialNames
 
@@ -35,12 +35,12 @@ class LombokConstructorsGenerator(session: FirSession) : FirDeclarationGeneratio
         return cache.getValue(classSymbol)?.mapTo(mutableSetOf()) {
             when (it) {
                 is FirConstructorSymbol -> SpecialNames.INIT
-                else -> it.callableId.callableName
+                else -> it.callablePath.callableName
             }
         } ?: emptySet()
     }
 
-    override fun generateFunctions(callableId: CallableId, context: MemberGenerationContext?): List<FirNamedFunctionSymbol> {
+    override fun generateFunctions(callablePath: CallablePath, context: MemberGenerationContext?): List<FirNamedFunctionSymbol> {
         val owner = context?.owner ?: return emptyList()
         if (!owner.isSuitableJavaClass()) return emptyList()
         return cache.getValue(owner)?.filterIsInstance<FirNamedFunctionSymbol>().orEmpty()

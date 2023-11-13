@@ -8,7 +8,7 @@ package org.jetbrains.kotlin.analysis.providers
 import com.intellij.openapi.project.Project
 import com.intellij.psi.search.GlobalSearchScope
 import org.jetbrains.kotlin.analysis.project.structure.KtModule
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.name.Name
@@ -27,10 +27,10 @@ public abstract class KotlinDeclarationProvider : KotlinComposableProvider {
 
     public abstract fun getTopLevelKotlinClassLikeDeclarationNamesInPackage(packageFqName: FqName): Set<Name>
 
-    public abstract fun getTopLevelProperties(callableId: CallableId): Collection<KtProperty>
-    public abstract fun getTopLevelFunctions(callableId: CallableId): Collection<KtNamedFunction>
+    public abstract fun getTopLevelProperties(callablePath: CallablePath): Collection<KtProperty>
+    public abstract fun getTopLevelFunctions(callablePath: CallablePath): Collection<KtNamedFunction>
 
-    public abstract fun getTopLevelCallableFiles(callableId: CallableId): Collection<KtFile>
+    public abstract fun getTopLevelCallableFiles(callablePath: CallablePath): Collection<KtFile>
 
     public abstract fun getTopLevelCallableNamesInPackage(packageFqName: FqName): Set<Name>
 

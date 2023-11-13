@@ -196,7 +196,7 @@ object FirCallsEffectAnalyzer : FirControlFlowChecker() {
 
             val callSource = node.fir.explicitReceiver?.source ?: node.fir.source
             data.checkExpressionForLeakedSymbols(node.fir.explicitReceiver, callSource) {
-                functionSymbol?.callableId?.isInvoke() != true && contractDescription?.getParameterCallsEffect(-1) == null
+                functionSymbol?.callablePath?.isInvoke() != true && contractDescription?.getParameterCallsEffect(-1) == null
             }
 
             for (arg in node.fir.argumentList.arguments) {
@@ -240,7 +240,7 @@ object FirCallsEffectAnalyzer : FirControlFlowChecker() {
 
             dataForNode = dataForNode.checkReference(node.fir.explicitReceiver.toQualifiedReference()) {
                 when {
-                    functionSymbol?.callableId?.isInvoke() == true -> EventOccurrencesRange.EXACTLY_ONCE
+                    functionSymbol?.callablePath?.isInvoke() == true -> EventOccurrencesRange.EXACTLY_ONCE
                     else -> contractDescription.getParameterCallsEffect(-1) ?: EventOccurrencesRange.UNKNOWN
                 }
             }

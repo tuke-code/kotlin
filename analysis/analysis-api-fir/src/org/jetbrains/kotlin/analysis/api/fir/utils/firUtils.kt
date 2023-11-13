@@ -55,11 +55,11 @@ internal fun KtTypeNullability.toConeNullability() = when (this) {
  * @return An [FqName] by which this symbol can be imported (if it is possible)
  */
 internal fun FirCallableSymbol<*>.computeImportableName(useSiteSession: FirSession): FqName? {
-    if (callableId.isLocal) return null
+    if (callablePath.isLocal) return null
 
     // if classId == null, callable is topLevel
-    val containingClassId = callableId.classId
-        ?: return callableId.asSingleFqName()
+    val containingClassId = callablePath.classId
+        ?: return callablePath.asSingleFqName()
 
     if (this is FirConstructorSymbol) return containingClassId.asSingleFqName()
 
@@ -70,7 +70,7 @@ internal fun FirCallableSymbol<*>.computeImportableName(useSiteSession: FirSessi
             containingClass.classKind == ClassKind.ENUM_CLASS ||
             containingClass.classKind == ClassKind.OBJECT
 
-    return if (canBeImported) callableId.asSingleFqName() else null
+    return if (canBeImported) callablePath.asSingleFqName() else null
 }
 
 internal fun FirExpression.asKtInitializerValue(builder: KtSymbolByFirBuilder, forAnnotationDefaultValue: Boolean): KtInitializerValue {

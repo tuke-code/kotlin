@@ -76,7 +76,7 @@ class FirIntegerConstantOperatorScope(
     private fun wrapIntOperator(originalSymbol: FirNamedFunctionSymbol): FirNamedFunctionSymbol {
         val originalFunction = originalSymbol.fir
         val wrappedFunction = buildSimpleFunctionCopy(originalFunction) {
-            symbol = FirNamedFunctionSymbol(originalSymbol.callableId)
+            symbol = FirNamedFunctionSymbol(originalSymbol.callablePath)
             origin = FirDeclarationOrigin.WrappedIntegerOperator
             returnTypeRef = buildResolvedTypeRef {
                 type = ConeIntegerConstantOperatorTypeImpl(isUnsigned, ConeNullability.NOT_NULL)

@@ -276,7 +276,7 @@ object UnusedChecker : AbstractFirPropertyInitializationChecker() {
             val dataForNode = visitNode(node, data)
             val reference = node.fir.calleeReference.resolved ?: return dataForNode
             val functionSymbol = reference.resolvedSymbol as? FirFunctionSymbol<*> ?: return dataForNode
-            val symbol = if (functionSymbol.callableId.callableName.identifier == "invoke") {
+            val symbol = if (functionSymbol.callablePath.callableName.identifier == "invoke") {
                 localProperties.find { it.name == reference.name && it.resolvedReturnTypeRef.coneType.isBasicFunctionType(session) }
             } else null
             symbol ?: return dataForNode

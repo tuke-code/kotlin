@@ -121,7 +121,7 @@ class FirSignatureEnhancement(
                     predefinedEnhancementInfo = null
                 )
 
-                val symbol = FirFieldSymbol(original.callableId)
+                val symbol = FirFieldSymbol(original.callablePath)
                 buildJavaField {
                     source = firElement.source
                     moduleData = this@FirSignatureEnhancement.moduleData
@@ -165,7 +165,7 @@ class FirSignatureEnhancement(
                 return buildSyntheticProperty {
                     moduleData = this@FirSignatureEnhancement.moduleData
                     this.name = name
-                    symbol = FirJavaOverriddenSyntheticPropertySymbol(accessorSymbol.callableId, accessorSymbol.getterId)
+                    symbol = FirJavaOverriddenSyntheticPropertySymbol(accessorSymbol.callablePath, accessorSymbol.getterId)
                     delegateGetter = enhancedGetterSymbol.fir as FirSimpleFunction
                     delegateSetter = enhancedSetterSymbol?.fir as FirSimpleFunction?
                     status = firElement.status
@@ -193,7 +193,7 @@ class FirSignatureEnhancement(
         }
 
         val enhancedParameters = enhanceTypeParameterBoundsForMethod(firMethod)
-        return enhanceMethod(firMethod, original.callableId, name, enhancedParameters)
+        return enhanceMethod(firMethod, original.callablePath, name, enhancedParameters)
     }
 
     /**
@@ -202,7 +202,7 @@ class FirSignatureEnhancement(
      */
     private fun enhanceMethod(
         firMethod: FirFunction,
-        methodId: CallableId,
+        methodId: CallablePath,
         name: Name?,
         enhancedTypeParameters: List<FirTypeParameterRef>?,
     ): FirFunctionSymbol<*> {

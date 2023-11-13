@@ -1109,7 +1109,7 @@ class HtmlFirDump internal constructor(private var linkResolver: FirLinkResolver
     private fun FirBasedSymbol<*>.describe(): String {
         return when (this) {
             is FirClassLikeSymbol<*> -> classId.asString()
-            is FirCallableSymbol<*> -> callableId.toString()
+            is FirCallableSymbol<*> -> callablePath.toString()
             is FirTypeParameterSymbol -> name.asString()
             else -> ""
         }
@@ -1124,7 +1124,7 @@ class HtmlFirDump internal constructor(private var linkResolver: FirLinkResolver
             +")."
         }
         symbolRef(symbol) {
-            +symbol.callableId.toString()
+            +symbol.callablePath.toString()
         }
         +"("
         generateList(fir.valueParameters) {
@@ -1143,7 +1143,7 @@ class HtmlFirDump internal constructor(private var linkResolver: FirLinkResolver
             +")."
         }
         symbolRef(symbol) {
-            +symbol.callableId.toString()
+            +symbol.callablePath.toString()
         }
         +":"
         generate(fir.returnTypeRef)

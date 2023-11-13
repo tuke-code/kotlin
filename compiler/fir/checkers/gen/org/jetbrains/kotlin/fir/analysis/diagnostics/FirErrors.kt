@@ -57,7 +57,7 @@ import org.jetbrains.kotlin.fir.types.ConeKotlinType
 import org.jetbrains.kotlin.lexer.KtKeywordToken
 import org.jetbrains.kotlin.lexer.KtModifierKeywordToken
 import org.jetbrains.kotlin.metadata.deserialization.VersionRequirement.Version
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.name.Name
@@ -152,7 +152,7 @@ object FirErrors {
     val VAL_OR_VAR_ON_FUN_PARAMETER by error1<KtParameter, KtKeywordToken>(SourceElementPositioningStrategies.VAL_OR_VAR_NODE)
     val VAL_OR_VAR_ON_CATCH_PARAMETER by error1<KtParameter, KtKeywordToken>(SourceElementPositioningStrategies.VAL_OR_VAR_NODE)
     val VAL_OR_VAR_ON_SECONDARY_CONSTRUCTOR_PARAMETER by error1<KtParameter, KtKeywordToken>(SourceElementPositioningStrategies.VAL_OR_VAR_NODE)
-    val INVISIBLE_SETTER by error3<PsiElement, FirPropertySymbol, Visibility, CallableId>(SourceElementPositioningStrategies.SELECTOR_BY_QUALIFIED)
+    val INVISIBLE_SETTER by error3<PsiElement, FirPropertySymbol, Visibility, CallablePath>(SourceElementPositioningStrategies.SELECTOR_BY_QUALIFIED)
     val INNER_ON_TOP_LEVEL_SCRIPT_CLASS by deprecationError0<PsiElement>(ProhibitScriptTopLevelInnerClasses)
     val ERROR_SUPPRESSION by warning1<PsiElement, String>()
     val MISSING_CONSTRUCTOR_KEYWORD by error0<PsiElement>()

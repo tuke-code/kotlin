@@ -13,7 +13,7 @@ import org.jetbrains.kotlin.diagnostics.DiagnosticFactory1
 import org.jetbrains.kotlin.diagnostics.PositioningStrategies
 import org.jetbrains.kotlin.diagnostics.Severity
 import org.jetbrains.kotlin.diagnostics.rendering.Renderers
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.psi.KtElement
@@ -110,8 +110,8 @@ class DebugInfoDiagnosticFactory1 : DiagnosticFactory1<PsiElement, String>,
             return DebugInfoDiagnosticFactory1(name, severity, withExplicitDefinitionOnly)
         }
 
-        fun renderCallableOwner(callableId: CallableId, ownerId: ClassId?, isExplicit: Boolean): String {
-            return renderCallableOwner(callableId.asFqNameForDebugInfo(), ownerId?.asSingleFqName(), isExplicit)
+        fun renderCallableOwner(callablePath: CallablePath, ownerId: ClassId?, isExplicit: Boolean): String {
+            return renderCallableOwner(callablePath.asFqNameForDebugInfo(), ownerId?.asSingleFqName(), isExplicit)
         }
 
         private fun renderCallableOwner(callableFqName: FqName, ownerFqName: FqName?, isImplicit: Boolean): String {

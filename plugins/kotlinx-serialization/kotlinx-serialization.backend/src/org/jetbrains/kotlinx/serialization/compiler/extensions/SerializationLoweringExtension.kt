@@ -11,7 +11,6 @@ import org.jetbrains.kotlin.backend.common.CompilationException
 import org.jetbrains.kotlin.backend.common.extensions.IrGenerationExtension
 import org.jetbrains.kotlin.backend.common.extensions.IrIntrinsicExtension
 import org.jetbrains.kotlin.backend.common.extensions.IrPluginContext
-import org.jetbrains.kotlin.backend.common.runOnFilePostfix
 import org.jetbrains.kotlin.backend.jvm.JvmBackendContext
 import org.jetbrains.kotlin.backend.jvm.ir.fileParent
 import org.jetbrains.kotlin.builtins.StandardNames
@@ -60,7 +59,7 @@ class SerializationPluginContext(baseContext: IrPluginContext, val metadataPlugi
         .single { it.name.asString() == "get" }
 
     internal val intArrayOfFunctionSymbol =
-        referenceFunctions(CallableId(StandardNames.BUILT_INS_PACKAGE_FQ_NAME, Name.identifier("intArrayOf"))).first()
+        referenceFunctions(CallablePath(StandardNames.BUILT_INS_PACKAGE_FQ_NAME, Name.identifier("intArrayOf"))).first()
 
     // Kotlin stdlib declarations
     internal val jvmFieldClassSymbol = referenceClass(JvmStandardClassIds.Annotations.JvmField)!!
@@ -72,7 +71,7 @@ class SerializationPluginContext(baseContext: IrPluginContext, val metadataPlugi
     // as well as several definitions of stdlib functions, including `kotlin.lazy`;
     // in that case `referenceFunctions` might return more than one valid definition of the same function.
     internal val lazyFunctionSymbol =
-        referenceFunctions(CallableId(StandardNames.BUILT_INS_PACKAGE_FQ_NAME, Name.identifier("lazy"))).first {
+        referenceFunctions(CallablePath(StandardNames.BUILT_INS_PACKAGE_FQ_NAME, Name.identifier("lazy"))).first {
             it.owner.valueParameters.size == 2 && it.owner.valueParameters[0].type == lazyModeClass.defaultType
         }
     internal val lazyClass = referenceClass(ClassId.topLevel(SerializationDependencies.LAZY_FQ))!!.owner
@@ -90,14 +89,14 @@ class SerializationPluginContext(baseContext: IrPluginContext, val metadataPlugi
 
     // serialization runtime declarations
     internal val enumSerializerFactoryFunc = baseContext.referenceFunctions(
-        CallableId(
+        CallablePath(
             SerializationPackages.internalPackageFqName,
             SerialEntityNames.ENUM_SERIALIZER_FACTORY_FUNC_NAME
         )
     ).singleOrNull()
 
     internal val annotatedEnumSerializerFactoryFunc = baseContext.referenceFunctions(
-        CallableId(
+        CallablePath(
             SerializationPackages.internalPackageFqName,
             SerialEntityNames.ANNOTATED_ENUM_SERIALIZER_FACTORY_FUNC_NAME
         )
@@ -207,7 +206,7 @@ open class SerializationLoweringExtension @JvmOverloads constructor(
             SerializationIntrinsicsState.DISABLED -> false
             SerializationIntrinsicsState.NORMAL -> {
                 val requiredFunctionsFromRuntime = ctx.irPluginContext?.referenceFunctions(
-                    CallableId(
+                    CallablePath(
                         SerializationPackages.packageFqName,
                         Name.identifier(SerializationJvmIrIntrinsicSupport.noCompiledSerializerMethodName)
                     )

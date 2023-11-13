@@ -6,19 +6,16 @@
 package org.jetbrains.kotlinx.atomicfu.compiler.backend.native
 
 import org.jetbrains.kotlin.backend.common.extensions.IrPluginContext
-import org.jetbrains.kotlin.backend.jvm.functionByName
 import org.jetbrains.kotlin.ir.declarations.IrClass
 import org.jetbrains.kotlin.ir.declarations.IrModuleFragment
 import org.jetbrains.kotlin.ir.symbols.IrClassSymbol
 import org.jetbrains.kotlin.ir.symbols.IrFunctionSymbol
-import org.jetbrains.kotlin.ir.symbols.IrSimpleFunctionSymbol
 import org.jetbrains.kotlin.ir.symbols.IrSymbol
 import org.jetbrains.kotlin.ir.types.*
 import org.jetbrains.kotlin.ir.util.constructors
 import org.jetbrains.kotlin.ir.util.render
 import org.jetbrains.kotlin.name.*
 import org.jetbrains.kotlinx.atomicfu.compiler.backend.common.AbstractAtomicSymbols
-import org.jetbrains.kotlinx.atomicfu.compiler.backend.js.referenceFunction
 
 class NativeAtomicSymbols(
     context: IrPluginContext,
@@ -52,7 +49,7 @@ class NativeAtomicSymbols(
                 }?.symbol ?: error("No `public constructor(size: Int) {}` was found for ${atomicArrayClassSymbol.owner.render()}")
             }
             atomicRefArrayClassSymbol -> {
-                context.referenceFunctions(CallableId(FqName("kotlin.concurrent"), Name.identifier("AtomicArray"))).singleOrNull()
+                context.referenceFunctions(CallablePath(FqName("kotlin.concurrent"), Name.identifier("AtomicArray"))).singleOrNull()
                     ?: error("No factory function `public inline fun <reified T> AtomicArray(size: Int, noinline init: (Int) -> T)` was found for ${atomicArrayClassSymbol.owner.render()}")
             }
             else -> error("Unsupported atomic array class found: ${atomicArrayClassSymbol.owner.render()}")
@@ -61,29 +58,29 @@ class NativeAtomicSymbols(
     // Intrinsics for atomic update of volatile properties
 
     val atomicGetFieldIntrinsic =
-        context.referenceFunctions(CallableId(FqName("kotlin.concurrent"), Name.identifier("atomicGetField"))).single()
+        context.referenceFunctions(CallablePath(FqName("kotlin.concurrent"), Name.identifier("atomicGetField"))).single()
 
     val atomicSetFieldIntrinsic =
-        context.referenceFunctions(CallableId(FqName("kotlin.concurrent"), Name.identifier("atomicSetField"))).single()
+        context.referenceFunctions(CallablePath(FqName("kotlin.concurrent"), Name.identifier("atomicSetField"))).single()
 
     val compareAndSetFieldIntrinsic =
-        context.referenceFunctions(CallableId(FqName("kotlin.concurrent"), Name.identifier("compareAndSetField"))).single()
+        context.referenceFunctions(CallablePath(FqName("kotlin.concurrent"), Name.identifier("compareAndSetField"))).single()
 
     val getAndSetFieldIntrinsic =
-        context.referenceFunctions(CallableId(FqName("kotlin.concurrent"), Name.identifier("getAndSetField"))).single()
+        context.referenceFunctions(CallablePath(FqName("kotlin.concurrent"), Name.identifier("getAndSetField"))).single()
 
     val getAndAddIntFieldIntrinsic =
-        context.referenceFunctions(CallableId(FqName("kotlin.concurrent"), Name.identifier("getAndAddField")))
+        context.referenceFunctions(CallablePath(FqName("kotlin.concurrent"), Name.identifier("getAndAddField")))
             .single { it.owner.returnType.isInt() }
 
     val getAndAddLongFieldIntrinsic =
-        context.referenceFunctions(CallableId(FqName("kotlin.concurrent"), Name.identifier("getAndAddField")))
+        context.referenceFunctions(CallablePath(FqName("kotlin.concurrent"), Name.identifier("getAndAddField")))
             .single { it.owner.returnType.isLong() }
 
-    val intPlusOperator = context.referenceFunctions(CallableId(StandardClassIds.Int, Name.identifier("plus")))
+    val intPlusOperator = context.referenceFunctions(CallablePath(StandardClassIds.Int, Name.identifier("plus")))
         .single { it.owner.valueParameters[0].type.isInt() }
 
-    val longPlusOperator = context.referenceFunctions(CallableId(StandardClassIds.Long, Name.identifier("plus")))
+    val longPlusOperator = context.referenceFunctions(CallablePath(StandardClassIds.Long, Name.identifier("plus")))
         .single { it.owner.valueParameters[0].type.isLong() }
 
     // KMutableProperty0<T>

@@ -10,7 +10,6 @@ import org.jetbrains.kotlin.fir.declarations.FirFile
 import org.jetbrains.kotlin.fir.declarations.FirVariable
 import org.jetbrains.kotlin.fir.resolve.calls.*
 import org.jetbrains.kotlin.fir.types.coneType
-import org.jetbrains.kotlin.fir.types.receiverType
 import org.jetbrains.kotlin.resolve.calls.tasks.ExplicitReceiverKind
 
 /**
@@ -41,7 +40,7 @@ abstract class AbstractCandidateInfoProvider(
         CallInfo(
             firFile, // TODO: consider passing more precise info here, if needed
             callKind = callKind(),
-            name = callableSymbol.callableId.callableName,
+            name = callableSymbol.callablePath.callableName,
             explicitReceiver = explicitReceiver,
             argumentList = argumentList,
             typeArguments = typeArgumentList,

@@ -25,7 +25,7 @@ import org.jetbrains.kotlin.fir.types.ConeClassLikeType
 import org.jetbrains.kotlin.fir.types.ConeFlexibleType
 import org.jetbrains.kotlin.fir.types.coneType
 import org.jetbrains.kotlin.fir.types.isMarkedNullable
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.name.StandardClassIds
@@ -99,7 +99,7 @@ class FirDelegatedMemberScope(
 
             val delegatedSymbol =
                 FirFakeOverrideGenerator.createCopyForFirFunction(
-                    FirNamedFunctionSymbol(CallableId(containingClass.classId, functionSymbol.name)),
+                    FirNamedFunctionSymbol(CallablePath(containingClass.classId, functionSymbol.name)),
                     original,
                     derivedClassLookupTag = dispatchReceiverType.lookupTag,
                     session,
@@ -174,7 +174,7 @@ class FirDelegatedMemberScope(
 
             val delegatedSymbol =
                 FirFakeOverrideGenerator.createCopyForFirProperty(
-                    FirPropertySymbol(CallableId(containingClass.classId, propertySymbol.name)),
+                    FirPropertySymbol(CallablePath(containingClass.classId, propertySymbol.name)),
                     original,
                     derivedClassLookupTag = dispatchReceiverType.lookupTag,
                     session,

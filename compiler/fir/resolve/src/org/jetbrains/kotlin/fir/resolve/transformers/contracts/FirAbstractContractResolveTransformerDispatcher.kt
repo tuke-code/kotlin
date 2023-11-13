@@ -162,7 +162,7 @@ abstract class FirAbstractContractResolveTransformerDispatcher(
                     .apply { replaceConeTypeOrNull(session.builtinTypes.unitType.type) }
             }
 
-            if (resolvedContractCall.toResolvedCallableSymbol()?.callableId != FirContractsDslNames.CONTRACT) {
+            if (resolvedContractCall.toResolvedCallableSymbol()?.callablePath != FirContractsDslNames.CONTRACT) {
                 if (hasBodyContract) {
                     owner.body.replaceFirstStatement<FirContractCallBlock> { resolvedContractCall }
                 }

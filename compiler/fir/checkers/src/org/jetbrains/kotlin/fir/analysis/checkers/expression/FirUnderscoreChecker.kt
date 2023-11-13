@@ -40,7 +40,7 @@ object FirUnderscoreChecker : FirBasicExpressionChecker() {
             return false
         return when (expression) {
             is FirImplicitInvokeCall -> expression.calleeReference.name.asString().isUnderscore
-            is FirCall -> expression.calleeReference.toResolvedSymbol<FirFunctionSymbol<*>>()?.callableId?.callableName?.asString()?.isUnderscore == true
+            is FirCall -> expression.calleeReference.toResolvedSymbol<FirFunctionSymbol<*>>()?.callablePath?.callableName?.asString()?.isUnderscore == true
             else -> true
         }
     }

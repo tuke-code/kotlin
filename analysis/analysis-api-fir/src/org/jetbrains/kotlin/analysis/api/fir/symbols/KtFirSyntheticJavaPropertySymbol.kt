@@ -28,7 +28,7 @@ import org.jetbrains.kotlin.fir.declarations.utils.visibility
 import org.jetbrains.kotlin.fir.symbols.SyntheticSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirSyntheticPropertySymbol
 import org.jetbrains.kotlin.fir.symbols.impl.isExtension
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.Name
 
 internal class KtFirSyntheticJavaPropertySymbol(
@@ -58,7 +58,7 @@ internal class KtFirSyntheticJavaPropertySymbol(
         KtFirAnnotationListForDeclaration.create(firSymbol, builder)
     }
 
-    override val callableIdIfNonLocal: CallableId? get() = withValidityAssertion { firSymbol.getCallableIdIfNonLocal() }
+    override val callablePathIfNonLocal: CallablePath? get() = withValidityAssertion { firSymbol.getCallableIdIfNonLocal() }
 
     override val getter: KtPropertyGetterSymbol
         get() = withValidityAssertion {

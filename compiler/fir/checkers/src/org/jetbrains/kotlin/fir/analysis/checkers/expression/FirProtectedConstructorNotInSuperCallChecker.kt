@@ -43,6 +43,6 @@ object FirProtectedConstructorNotInSuperCallChecker : FirFunctionCallChecker() {
     private fun shouldAllowSuchCallNonetheless(symbol: FirConstructorSymbol, context: CheckerContext): Boolean {
         val containingFile = context.containingFile ?: return false
         val original = symbol.originalIfFakeOverride() ?: symbol
-        return original.origin.isJavaOrEnhancement && original.callableId.packageName == containingFile.packageFqName
+        return original.origin.isJavaOrEnhancement && original.callablePath.packageName == containingFile.packageFqName
     }
 }

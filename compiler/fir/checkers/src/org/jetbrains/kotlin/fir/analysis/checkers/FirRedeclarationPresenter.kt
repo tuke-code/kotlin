@@ -5,10 +5,9 @@
 
 package org.jetbrains.kotlin.fir.analysis.checkers
 
-import org.jetbrains.kotlin.fir.declarations.utils.isOperator
 import org.jetbrains.kotlin.fir.symbols.FirBasedSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.*
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.ClassId
 
 /**
@@ -24,7 +23,7 @@ internal object FirRedeclarationPresenter {
         append(it.relativeClassName.asString())
     }
 
-    private fun StringBuilder.appendRepresentation(it: CallableId) {
+    private fun StringBuilder.appendRepresentation(it: CallablePath) {
         append(it.packageName.asString())
         append('/')
         if (it.className != null) {
@@ -75,14 +74,14 @@ internal object FirRedeclarationPresenter {
 
     fun represent(it: FirNamedFunctionSymbol) = buildString {
         appendRepresentationBeforeCallableId(it)
-        appendRepresentation(it.callableId)
+        appendRepresentation(it.callablePath)
         appendValueParameters(it)
     }
 
 
     fun represent(it: FirVariableSymbol<*>) = buildString {
         appendRepresentationBeforeCallableId(it)
-        appendRepresentation(it.callableId)
+        appendRepresentation(it.callablePath)
 
         if (it is FirFieldSymbol) {
             append("#f")

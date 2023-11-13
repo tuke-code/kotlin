@@ -9,7 +9,7 @@ import org.jetbrains.kotlin.descriptors.ClassKind
 import org.jetbrains.kotlin.descriptors.Modality
 import org.jetbrains.kotlin.descriptors.Visibility
 import org.jetbrains.kotlin.mpp.*
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.types.Variance
@@ -62,7 +62,7 @@ interface K1ExpectActualMatchingContext<T : DeclarationSymbolMarker> : TypeSyste
 
     val RegularClassSymbolMarker.classId: ClassId
     val TypeAliasSymbolMarker.classId: ClassId
-    val CallableSymbolMarker.callableId: CallableId
+    val CallableSymbolMarker.callablePath: CallablePath
     val TypeParameterSymbolMarker.parameterName: Name
     val ValueParameterSymbolMarker.parameterName: Name
 

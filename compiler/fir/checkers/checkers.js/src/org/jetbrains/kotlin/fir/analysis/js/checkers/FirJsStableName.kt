@@ -33,7 +33,7 @@ internal data class FirJsStableName(
                             else -> false
                         }
                     } else {
-                        !symbol.callableId.isLocal && symbol.effectiveVisibility.publicApi
+                        !symbol.callablePath.isLocal && symbol.effectiveVisibility.publicApi
                     }
                 }
                 else -> false

@@ -23,7 +23,7 @@ object FirDivisionByZeroChecker : FirFunctionCallChecker() {
     override fun check(expression: FirFunctionCall, context: CheckerContext, reporter: DiagnosticReporter) {
         val firstValue = (expression.arguments.singleOrNull() as? FirConstExpression<*>)?.value
         if (firstValue != null && (firstValue == 0L || firstValue == 0.0f || firstValue == 0.0)) {
-            val callableId = (expression.calleeReference.toResolvedNamedFunctionSymbol())?.callableId
+            val callableId = (expression.calleeReference.toResolvedNamedFunctionSymbol())?.callablePath
             if (callableId != null && callableId.packageName == defaultPackageName && callableId.callableName == defaultDivName) {
                 reporter.reportOn(expression.source, FirErrors.DIVISION_BY_ZERO, context)
             }

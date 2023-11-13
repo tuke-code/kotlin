@@ -25,7 +25,7 @@ import org.jetbrains.kotlin.load.java.structure.*
 import org.jetbrains.kotlin.lombok.k2.config.ConeLombokAnnotations
 import org.jetbrains.kotlin.lombok.k2.config.LombokService
 import org.jetbrains.kotlin.lombok.k2.config.lombokService
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.name.callableIdForConstructor
@@ -63,7 +63,7 @@ abstract class AbstractConstructorGeneratorPart<T : ConeLombokAnnotations.Constr
         } else {
             FirJavaMethodBuilder().apply {
                 name = staticName
-                val methodSymbol = FirNamedFunctionSymbol(CallableId(classSymbol.classId, staticName)).also { constructorSymbol = it }
+                val methodSymbol = FirNamedFunctionSymbol(CallablePath(classSymbol.classId, staticName)).also { constructorSymbol = it }
                 symbol = methodSymbol
 
                 val classTypeParameterSymbols = classSymbol.fir.typeParameters.map { it.symbol }

@@ -348,6 +348,6 @@ object FirJsExternalChecker : FirBasicDeclarationChecker() {
     private fun FirElement.isDefinedExternallyExpression(): Boolean {
         val declaration = (this as? FirPropertyAccessExpression)
             ?.calleeReference?.toResolvedPropertySymbol() ?: return false
-        return declaration.callableId in JsStandardClassIds.Callables.definedExternallyPropertyNames
+        return declaration.callablePath in JsStandardClassIds.Callables.definedExternallyPropertyNames
     }
 }

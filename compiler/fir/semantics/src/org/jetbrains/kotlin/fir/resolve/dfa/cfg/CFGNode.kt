@@ -202,7 +202,7 @@ class FunctionEnterNode(owner: ControlFlowGraph, override val fir: FirFunction, 
 class FunctionExitNode(owner: ControlFlowGraph, override val fir: FirFunction, level: Int) : CFGNode<FirFunction>(owner, level),
     GraphExitNodeMarker, EdgeLabel {
     override val label: String
-        get() = "return@${fir.symbol.callableId}"
+        get() = "return@${fir.symbol.callablePath}"
 
     override fun <R, D> accept(visitor: ControlFlowGraphVisitor<R, D>, data: D): R {
         return visitor.visitFunctionExitNode(this, data)

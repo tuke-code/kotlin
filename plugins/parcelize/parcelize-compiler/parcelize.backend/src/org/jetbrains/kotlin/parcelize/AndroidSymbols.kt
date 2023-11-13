@@ -23,7 +23,7 @@ import org.jetbrains.kotlin.ir.symbols.*
 import org.jetbrains.kotlin.ir.types.*
 import org.jetbrains.kotlin.ir.util.createImplicitParameterDeclarationWithWrappedDescriptor
 import org.jetbrains.kotlin.ir.util.defaultType
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.parcelize.ParcelizeNames.CREATE_FROM_PARCEL_NAME
@@ -511,13 +511,13 @@ class AndroidSymbols(
         receiver: FqName,
         functionName: String,
     ): IrSimpleFunctionSymbol {
-        val callableId = CallableId(kotlinxCollectionsImmutable, Name.identifier(functionName))
-        return pluginContext.referenceFunctions(callableId)
+        val callablePath = CallablePath(kotlinxCollectionsImmutable, Name.identifier(functionName))
+        return pluginContext.referenceFunctions(callablePath)
             .firstOrNull {
                 it.owner.extensionReceiverParameter?.type?.classFqName == receiver &&
                         it.owner.valueParameters.isEmpty()
             }
-            ?: error("Function from kotlinx.collections.immutable is not found on classpath: $callableId")
+            ?: error("Function from kotlinx.collections.immutable is not found on classpath: $callablePath")
     }
 
     val kotlinIterableToPersistentListExtension: IrSimpleFunctionSymbol by lazy {

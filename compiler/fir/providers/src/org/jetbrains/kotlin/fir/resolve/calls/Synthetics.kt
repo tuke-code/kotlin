@@ -19,7 +19,7 @@ import org.jetbrains.kotlin.fir.symbols.impl.FirNamedFunctionSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirSyntheticPropertySymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirVariableSymbol
 import org.jetbrains.kotlin.fir.types.*
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.types.AbstractTypeChecker
 
@@ -30,15 +30,15 @@ import org.jetbrains.kotlin.types.AbstractTypeChecker
  * Frontend IR creates this kind of symbol each time when x.foo should be resolved to x.getFoo() or x.setFoo().
  */
 class FirSimpleSyntheticPropertySymbol(
-    propertyId: CallableId,
-    getterId: CallableId
+    propertyId: CallablePath,
+    getterId: CallablePath
 ) : FirSyntheticPropertySymbol(propertyId, getterId), SyntheticSymbol {
-    override fun copy(): FirSyntheticPropertySymbol = FirSimpleSyntheticPropertySymbol(callableId, getterId)
+    override fun copy(): FirSyntheticPropertySymbol = FirSimpleSyntheticPropertySymbol(callablePath, getterId)
 }
 
 class FirSyntheticFunctionSymbol(
-    callableId: CallableId
-) : FirNamedFunctionSymbol(callableId), SyntheticSymbol
+    callablePath: CallablePath
+) : FirNamedFunctionSymbol(callablePath), SyntheticSymbol
 
 class FirSyntheticPropertiesScope private constructor(
     val session: FirSession,
@@ -161,15 +161,15 @@ class FirSyntheticPropertiesScope private constructor(
 
     private fun buildSyntheticProperty(propertyName: Name, getter: FirSimpleFunction, setter: FirSimpleFunction?): FirSyntheticProperty {
         val classLookupTag = getter.symbol.originalOrSelf().dispatchReceiverClassLookupTagOrNull()
-        val packageName = classLookupTag?.classId?.packageFqName ?: getter.symbol.callableId.packageName
+        val packageName = classLookupTag?.classId?.packageFqName ?: getter.symbol.callablePath.packageName
         val className = classLookupTag?.classId?.relativeClassName
 
         return buildSyntheticProperty {
             moduleData = session.moduleData
             name = propertyName
             symbol = FirSimpleSyntheticPropertySymbol(
-                getterId = getter.symbol.callableId,
-                propertyId = CallableId(packageName, className, propertyName)
+                getterId = getter.symbol.callablePath,
+                propertyId = CallablePath(packageName, className, propertyName)
             )
             delegateGetter = getter
             delegateSetter = setter

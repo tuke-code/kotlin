@@ -74,4 +74,4 @@ object JsStandardClassIds {
 
 private fun String.jsId() = ClassId(JsStandardClassIds.BASE_JS_PACKAGE, Name.identifier(this))
 
-private fun String.callableId(packageName: FqName) = CallableId(packageName, Name.identifier(this))
+private fun String.callableId(packageName: FqName) = CallablePath(packageName, Name.identifier(this))

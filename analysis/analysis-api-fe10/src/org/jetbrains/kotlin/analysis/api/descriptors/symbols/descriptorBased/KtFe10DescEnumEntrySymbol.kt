@@ -21,7 +21,7 @@ import org.jetbrains.kotlin.analysis.api.symbols.pointers.KtPsiBasedSymbolPointe
 import org.jetbrains.kotlin.analysis.api.symbols.pointers.KtSymbolPointer
 import org.jetbrains.kotlin.analysis.api.types.KtType
 import org.jetbrains.kotlin.descriptors.ClassDescriptor
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.Name
 
@@ -35,10 +35,10 @@ internal class KtFe10DescEnumEntrySymbol(
     override val containingEnumClassIdIfNonLocal: ClassId?
         get() = withValidityAssertion { enumDescriptor.classId }
 
-    override val callableIdIfNonLocal: CallableId?
+    override val callablePathIfNonLocal: CallablePath?
         get() = withValidityAssertion {
             val enumClassId = enumDescriptor.classId ?: return null
-            CallableId(
+            CallablePath(
                 packageName = enumClassId.packageFqName,
                 className = enumClassId.relativeClassName,
                 callableName = descriptor.name

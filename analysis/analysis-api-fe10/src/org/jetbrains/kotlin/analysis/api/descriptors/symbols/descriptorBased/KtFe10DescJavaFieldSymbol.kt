@@ -9,7 +9,7 @@ import org.jetbrains.kotlin.analysis.api.KtAnalysisSession
 import org.jetbrains.kotlin.analysis.api.descriptors.Fe10AnalysisContext
 import org.jetbrains.kotlin.analysis.api.descriptors.symbols.calculateHashCode
 import org.jetbrains.kotlin.analysis.api.descriptors.symbols.descriptorBased.base.KtFe10DescMemberSymbol
-import org.jetbrains.kotlin.analysis.api.descriptors.symbols.descriptorBased.base.callableIdIfNotLocal
+import org.jetbrains.kotlin.analysis.api.descriptors.symbols.descriptorBased.base.callablePathIfNotLocal
 import org.jetbrains.kotlin.analysis.api.descriptors.symbols.descriptorBased.base.toKtType
 import org.jetbrains.kotlin.analysis.api.descriptors.symbols.isEqualTo
 import org.jetbrains.kotlin.analysis.api.descriptors.symbols.pointers.KtFe10NeverRestoringSymbolPointer
@@ -19,7 +19,7 @@ import org.jetbrains.kotlin.analysis.api.symbols.pointers.KtPsiBasedSymbolPointe
 import org.jetbrains.kotlin.analysis.api.symbols.pointers.KtSymbolPointer
 import org.jetbrains.kotlin.analysis.api.types.KtType
 import org.jetbrains.kotlin.load.java.descriptors.JavaPropertyDescriptor
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.resolve.DescriptorUtils
 
@@ -36,8 +36,8 @@ internal class KtFe10DescJavaFieldSymbol(
     override val isVal: Boolean
         get() = withValidityAssertion { !descriptor.isVar }
 
-    override val callableIdIfNonLocal: CallableId?
-        get() = withValidityAssertion { descriptor.callableIdIfNotLocal }
+    override val callablePathIfNonLocal: CallablePath?
+        get() = withValidityAssertion { descriptor.callablePathIfNotLocal }
 
     override val returnType: KtType
         get() = withValidityAssertion { descriptor.returnType.toKtType(analysisContext) }

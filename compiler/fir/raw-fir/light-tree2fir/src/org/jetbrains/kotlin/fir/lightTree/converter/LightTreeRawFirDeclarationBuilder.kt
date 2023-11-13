@@ -755,7 +755,7 @@ class LightTreeRawFirDeclarationBuilder(
             origin = FirDeclarationOrigin.Source
             returnTypeRef = classWrapper.delegatedSelfTypeRef
             name = enumEntryName
-            symbol = FirEnumEntrySymbol(CallableId(context.currentClassId, enumEntryName))
+            symbol = FirEnumEntrySymbol(CallablePath(context.currentClassId, enumEntryName))
             status = FirDeclarationStatusImpl(Visibilities.Public, Modality.FINAL).apply {
                 isStatic = true
                 isExpect = containingClassIsExpectClass
@@ -898,7 +898,7 @@ class LightTreeRawFirDeclarationBuilder(
             return null
         }
 
-        val constructorSymbol = FirConstructorSymbol(callableIdForClassConstructor())
+        val constructorSymbol = FirConstructorSymbol(callablePathForClassConstructor())
         var modifiersIfPresent: Modifier? = null
         val valueParameters = mutableListOf<ValueParameter>()
         var hasConstructorKeyword = false
@@ -1030,7 +1030,7 @@ class LightTreeRawFirDeclarationBuilder(
         var constructorDelegationCall: FirDelegatedConstructorCall? = null
         var block: LighterASTNode? = null
 
-        val constructorSymbol = FirConstructorSymbol(callableIdForClassConstructor())
+        val constructorSymbol = FirConstructorSymbol(callablePathForClassConstructor())
         secondaryConstructor.forEachChildren {
             when (it.tokenType) {
                 MODIFIER_LIST -> modifiers = convertModifierList(it)
@@ -1561,7 +1561,7 @@ class LightTreeRawFirDeclarationBuilder(
                 origin = FirDeclarationOrigin.Source
                 returnTypeRef = returnType
                 name = StandardNames.BACKING_FIELD
-                symbol = FirBackingFieldSymbol(CallableId(name))
+                symbol = FirBackingFieldSymbol(CallablePath(name))
                 this.status = status
                 annotations += modifiers.annotations
                 annotations += annotationsFromProperty
@@ -1946,7 +1946,7 @@ class LightTreeRawFirDeclarationBuilder(
                 origin = FirDeclarationOrigin.Synthetic.DelegateField
                 name = NameUtils.delegateFieldName(delegateFieldsMap.size)
                 returnTypeRef = firTypeRef
-                symbol = FirFieldSymbol(CallableId(context.currentClassId, name))
+                symbol = FirFieldSymbol(CallablePath(context.currentClassId, name))
                 isVar = false
                 status = FirDeclarationStatusImpl(Visibilities.Private, Modality.FINAL)
                 initializer = calculatedFirExpression

@@ -14,7 +14,7 @@ import org.jetbrains.kotlin.fir.symbols.impl.FirCallableSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirClassLikeSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirNamedFunctionSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirPropertySymbol
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.name.Name
@@ -62,12 +62,12 @@ class LLFirCodeFragmentDependenciesSymbolProvider(private val delegate: FirSymbo
             return symbols
         }
 
-        val binarySymbols = LinkedHashMap<CallableId, MutableMap<VirtualFile, MutableList<T>>>()
+        val binarySymbols = LinkedHashMap<CallablePath, MutableMap<VirtualFile, MutableList<T>>>()
         val otherSymbols = ArrayList<T>()
 
         for (symbol in symbols) {
-            if (symbol.callableId.className == null) {
-                val callableId = symbol.callableId
+            if (symbol.callablePath.className == null) {
+                val callableId = symbol.callablePath
 
                 val symbolFile = symbol.fir.psi?.containingFile
                 val symbolVirtualFile = symbolFile?.virtualFile

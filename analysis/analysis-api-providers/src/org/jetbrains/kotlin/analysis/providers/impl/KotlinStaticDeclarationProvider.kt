@@ -105,23 +105,23 @@ public class KotlinStaticDeclarationProvider internal constructor(
         return packageNames.mapTo(mutableSetOf()) { it.asString() }
     }
 
-    override fun getTopLevelProperties(callableId: CallableId): Collection<KtProperty> =
-        index.topLevelPropertyMap[callableId.packageName]
+    override fun getTopLevelProperties(callablePath: CallablePath): Collection<KtProperty> =
+        index.topLevelPropertyMap[callablePath.packageName]
             ?.filter { ktProperty ->
-                ktProperty.nameAsName == callableId.callableName && ktProperty.inScope
+                ktProperty.nameAsName == callablePath.callableName && ktProperty.inScope
             }
             ?: emptyList()
 
-    override fun getTopLevelFunctions(callableId: CallableId): Collection<KtNamedFunction> =
-        index.topLevelFunctionMap[callableId.packageName]
+    override fun getTopLevelFunctions(callablePath: CallablePath): Collection<KtNamedFunction> =
+        index.topLevelFunctionMap[callablePath.packageName]
             ?.filter { ktNamedFunction ->
-                ktNamedFunction.nameAsName == callableId.callableName && ktNamedFunction.inScope
+                ktNamedFunction.nameAsName == callablePath.callableName && ktNamedFunction.inScope
             }
             ?: emptyList()
 
-    override fun getTopLevelCallableFiles(callableId: CallableId): Collection<KtFile> = buildSet {
-        getTopLevelProperties(callableId).mapTo(this) { it.containingKtFile }
-        getTopLevelFunctions(callableId).mapTo(this) { it.containingKtFile }
+    override fun getTopLevelCallableFiles(callablePath: CallablePath): Collection<KtFile> = buildSet {
+        getTopLevelProperties(callablePath).mapTo(this) { it.containingKtFile }
+        getTopLevelFunctions(callablePath).mapTo(this) { it.containingKtFile }
     }
 }
 

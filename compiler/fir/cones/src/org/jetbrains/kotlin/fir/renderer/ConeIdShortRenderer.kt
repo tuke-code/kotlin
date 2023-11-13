@@ -5,7 +5,7 @@
 
 package org.jetbrains.kotlin.fir.renderer
 
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.ClassId
 
 open class ConeIdShortRenderer : ConeIdRenderer() {
@@ -13,7 +13,7 @@ open class ConeIdShortRenderer : ConeIdRenderer() {
         builder.append(classId.relativeClassName.asString())
     }
 
-    override fun renderCallableId(callableId: CallableId) {
-        builder.append(callableId.callableName)
+    override fun renderCallableId(callablePath: CallablePath) {
+        builder.append(callablePath.callableName)
     }
 }

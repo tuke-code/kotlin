@@ -28,7 +28,7 @@ import org.jetbrains.kotlin.fir.symbols.impl.FirCallableSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirNamedFunctionSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirPropertySymbol
 import org.jetbrains.kotlin.fir.types.*
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.StandardClassIds
 import org.jetbrains.kotlin.psi.stubs.elements.KtStubElementTypes
 import org.jetbrains.kotlin.utils.addToStdlib.lastIsInstanceOrNull
@@ -36,7 +36,7 @@ import org.jetbrains.kotlin.utils.addToStdlib.lastIsInstanceOrNull
 object FirSuspendCallChecker : FirQualifiedAccessExpressionChecker() {
     private val BUILTIN_SUSPEND_NAME = StandardClassIds.Callables.suspend.callableName
 
-    internal val KOTLIN_SUSPEND_BUILT_IN_FUNCTION_CALLABLE_ID = CallableId(StandardClassIds.BASE_KOTLIN_PACKAGE, BUILTIN_SUSPEND_NAME)
+    internal val KOTLIN_SUSPEND_BUILT_IN_FUNCTION_CALLABLE_ID = CallablePath(StandardClassIds.BASE_KOTLIN_PACKAGE, BUILTIN_SUSPEND_NAME)
 
     override fun check(expression: FirQualifiedAccessExpression, context: CheckerContext, reporter: DiagnosticReporter) {
         val reference = expression.calleeReference.resolved ?: return
@@ -49,7 +49,7 @@ object FirSuspendCallChecker : FirQualifiedAccessExpressionChecker() {
         if (reference is FirResolvedCallableReference) return
         when (symbol) {
             is FirNamedFunctionSymbol -> if (!symbol.isSuspend) return
-            is FirPropertySymbol -> if (symbol.callableId != StandardClassIds.Callables.coroutineContext) return
+            is FirPropertySymbol -> if (symbol.callablePath != StandardClassIds.Callables.coroutineContext) return
             else -> return
         }
         val enclosingSuspendFunction = findEnclosingSuspendFunction(context)
@@ -77,7 +77,7 @@ object FirSuspendCallChecker : FirQualifiedAccessExpressionChecker() {
         context: CheckerContext,
         reporter: DiagnosticReporter
     ) {
-        if (symbol.callableId == KOTLIN_SUSPEND_BUILT_IN_FUNCTION_CALLABLE_ID) {
+        if (symbol.callablePath == KOTLIN_SUSPEND_BUILT_IN_FUNCTION_CALLABLE_ID) {
             if (reference.name != BUILTIN_SUSPEND_NAME ||
                 expression.explicitReceiver != null ||
                 expression.formOfSuspendModifierForLambdaOrFun() == null

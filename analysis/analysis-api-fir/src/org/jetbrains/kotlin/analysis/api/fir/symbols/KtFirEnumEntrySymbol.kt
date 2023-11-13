@@ -23,7 +23,7 @@ import org.jetbrains.kotlin.fir.declarations.FirResolvePhase
 import org.jetbrains.kotlin.fir.expressions.FirAnonymousObjectExpression
 import org.jetbrains.kotlin.fir.symbols.impl.FirEnumEntrySymbol
 import org.jetbrains.kotlin.fir.symbols.lazyResolveToPhase
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.Name
 
@@ -40,9 +40,9 @@ internal class KtFirEnumEntrySymbol(
 
     override val name: Name get() = withValidityAssertion { firSymbol.name }
     override val returnType: KtType get() = withValidityAssertion { firSymbol.returnType(builder) }
-    override val containingEnumClassIdIfNonLocal: ClassId? get() = withValidityAssertion { callableIdIfNonLocal?.classId }
+    override val containingEnumClassIdIfNonLocal: ClassId? get() = withValidityAssertion { callablePathIfNonLocal?.classId }
 
-    override val callableIdIfNonLocal: CallableId? get() = withValidityAssertion { firSymbol.getCallableIdIfNonLocal() }
+    override val callablePathIfNonLocal: CallablePath? get() = withValidityAssertion { firSymbol.getCallableIdIfNonLocal() }
 
     override val enumEntryInitializer: KtFirEnumEntryInitializerSymbol? by cached {
         if (firSymbol.fir.initializer == null) {

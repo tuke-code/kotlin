@@ -55,7 +55,7 @@ open class FirMangleComputer(
     @OptIn(SymbolInternals::class)
     override fun FirDeclaration.visitParent() {
         val (parentPackageFqName, parentClassId) = when (this) {
-            is FirCallableDeclaration -> this.symbol.callableId.packageName.let { it to containingClassLookupTag()?.classId }
+            is FirCallableDeclaration -> this.symbol.callablePath.packageName.let { it to containingClassLookupTag()?.classId }
             is FirClassLikeDeclaration -> this.symbol.classId.let { it.packageFqName to it.outerClassId }
             else -> return
         }
@@ -114,9 +114,9 @@ open class FirMangleComputer(
         // If a type parameter is declared in a java method, typeParameterContainers will contain the enhanced declaration,
         // but parent will be the non-enhanced version.
         // To work around this, we additionally compare declarations using their callable IDs.
-        val callableId = (parent as? FirCallableDeclaration)?.symbol?.callableId
+        val callableId = (parent as? FirCallableDeclaration)?.symbol?.callablePath
         return typeParameterContainers.indexOfFirst {
-            it == parent || it is FirCallableDeclaration && it.symbol.callableId == callableId
+            it == parent || it is FirCallableDeclaration && it.symbol.callablePath == callableId
         }
     }
 

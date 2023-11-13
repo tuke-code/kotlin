@@ -49,7 +49,7 @@ internal object KtAnnotationValueRenderer {
     }
 
     private fun StringBuilder.renderEnumEntryConstantValue(value: KtEnumEntryAnnotationValue) {
-        append(value.callableId?.asSingleFqName()?.asString())
+        append(value.callablePath?.asSingleFqName()?.asString())
     }
 
     private fun StringBuilder.renderAnnotationConstantValue(application: KtAnnotationApplicationValue) {

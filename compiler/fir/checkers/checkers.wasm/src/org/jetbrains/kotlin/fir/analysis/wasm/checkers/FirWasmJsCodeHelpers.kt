@@ -44,5 +44,5 @@ private fun FirExpression.isJsCodeCall(): Boolean {
     val symbol = calleeReference.toResolvedCallableSymbol()
         ?: return false
 
-    return symbol.callableId == WasmStandardClassIds.Callables.Js
+    return symbol.callablePath == WasmStandardClassIds.Callables.Js
 }

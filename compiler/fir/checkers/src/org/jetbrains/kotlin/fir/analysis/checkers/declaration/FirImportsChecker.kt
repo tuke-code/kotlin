@@ -67,7 +67,7 @@ object FirImportsChecker : FirFileChecker() {
         if (fqName.isRoot || fqName.parent().isRoot) return
         val classId = ClassId.topLevel(fqName.parent())
         val classSymbol = classId.resolveToClass(context) ?: return
-        if (classSymbol.isEnumClass && classSymbol.collectEnumEntries().any { it.callableId.callableName == fqName.shortName() }) {
+        if (classSymbol.isEnumClass && classSymbol.collectEnumEntries().any { it.callablePath.callableName == fqName.shortName() }) {
             reporter.reportOn(import.source, FirErrors.CANNOT_ALL_UNDER_IMPORT_FROM_SINGLETON, classSymbol.classId.shortClassName, context)
         }
     }

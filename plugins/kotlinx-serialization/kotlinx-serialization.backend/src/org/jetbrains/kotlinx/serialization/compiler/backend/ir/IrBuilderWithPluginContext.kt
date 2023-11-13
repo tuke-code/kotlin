@@ -269,7 +269,7 @@ interface IrBuilderWithPluginContext {
 
     fun IrBuilderWithScope.irBinOp(name: Name, lhs: IrExpression, rhs: IrExpression): IrExpression {
         val classFqName = (lhs.type as IrSimpleType).classOrNull!!.owner.fqNameWhenAvailable!!
-        val symbol = compilerContext.referenceFunctions(CallableId(ClassId.topLevel(classFqName), name)).single()
+        val symbol = compilerContext.referenceFunctions(CallablePath(ClassId.topLevel(classFqName), name)).single()
         return irInvoke(lhs, symbol, rhs)
     }
 

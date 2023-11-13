@@ -30,7 +30,7 @@ import org.jetbrains.kotlin.fir.types.ConeTypeProjection
 import org.jetbrains.kotlin.fir.types.builder.buildResolvedTypeRef
 import org.jetbrains.kotlin.fir.types.impl.ConeClassLikeTypeImpl
 import org.jetbrains.kotlin.fir.types.toLookupTag
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.name.StandardClassIds
 
@@ -66,7 +66,7 @@ fun FirRegularClassBuilder.generateValuesFunction(
             isStatic = true
             isExpect = makeExpect
         }
-        symbol = FirNamedFunctionSymbol(CallableId(packageFqName, classFqName, ENUM_VALUES))
+        symbol = FirNamedFunctionSymbol(CallablePath(packageFqName, classFqName, ENUM_VALUES))
         resolvePhase = this@generateValuesFunction.resolvePhase
         body = buildEmptyExpressionBlock().also {
             it.replaceConeTypeOrNull(returnTypeRef.type)
@@ -103,7 +103,7 @@ fun FirRegularClassBuilder.generateValueOfFunction(
             isStatic = true
             isExpect = makeExpect
         }
-        symbol = FirNamedFunctionSymbol(CallableId(packageFqName, classFqName, ENUM_VALUE_OF))
+        symbol = FirNamedFunctionSymbol(CallablePath(packageFqName, classFqName, ENUM_VALUE_OF))
         valueParameters += buildValueParameter vp@{
             source = sourceElement
             containingFunctionSymbol = this@buildSimpleFunction.symbol
@@ -162,7 +162,7 @@ fun FirRegularClassBuilder.generateEntriesGetter(
             isStatic = true
             isExpect = makeExpect
         }
-        symbol = FirPropertySymbol(CallableId(packageFqName, classFqName, ENUM_ENTRIES))
+        symbol = FirPropertySymbol(CallablePath(packageFqName, classFqName, ENUM_ENTRIES))
         resolvePhase = this@generateEntriesGetter.resolvePhase
         getter = FirDefaultPropertyGetter(
             sourceElement?.fakeElement(KtFakeSourceElementKind.EnumGeneratedDeclaration),

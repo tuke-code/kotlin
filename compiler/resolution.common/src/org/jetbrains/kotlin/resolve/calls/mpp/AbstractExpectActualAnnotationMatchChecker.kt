@@ -11,7 +11,6 @@ import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.name.StandardClassIds
 import org.jetbrains.kotlin.resolve.checkers.OptInNames
-import org.jetbrains.kotlin.resolve.multiplatform.ExpectActualCompatibility
 import org.jetbrains.kotlin.utils.zipIfSizesAreEqual
 import org.jetbrains.kotlin.resolve.multiplatform.ExpectActualMatchingCompatibility
 import org.jetbrains.kotlin.resolve.multiplatform.ExpectActualAnnotationsIncompatibilityType as IncompatibilityType
@@ -328,7 +327,7 @@ object AbstractExpectActualAnnotationMatchChecker {
     ): Incompatibility? {
         fun DeclarationSymbolMarker.getEnumEntryName(): Name =
             when (this) {
-                is CallableSymbolMarker -> callableId.callableName
+                is CallableSymbolMarker -> callablePath.callableName
                 is RegularClassSymbolMarker -> classId.shortClassName
                 else -> error("Unexpected type $this")
             }

@@ -22,7 +22,7 @@ import org.jetbrains.kotlin.fir.types.coneType
 import org.jetbrains.kotlin.fir.types.resolvedType
 import org.jetbrains.kotlin.fir.types.toSymbol
 import org.jetbrains.kotlin.fir.visitors.FirDefaultVisitor
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.types.ConstantValueKind
 import org.jetbrains.kotlin.utils.addToStdlib.runIf
@@ -52,7 +52,7 @@ class ConeEffectExtractor(
     }
 
     override fun visitFunctionCall(functionCall: FirFunctionCall, data: Nothing?): ConeContractDescriptionElement {
-        val resolvedId = functionCall.toResolvedCallableSymbol()?.callableId
+        val resolvedId = functionCall.toResolvedCallableSymbol()?.callablePath
             ?: return ConeContractDescriptionError.UnresolvedCall(functionCall.calleeReference.name).asElement()
 
         return when (resolvedId) {
@@ -233,7 +233,7 @@ class ConeEffectExtractor(
 
     private fun FirExpression.parseInvocationKind(): EventOccurrencesRange? {
         if (this !is FirQualifiedAccessExpression) return null
-        val resolvedId = toResolvedCallableSymbol()?.callableId ?: return null
+        val resolvedId = toResolvedCallableSymbol()?.callablePath ?: return null
         return when (resolvedId) {
             FirContractsDslNames.EXACTLY_ONCE_KIND -> EventOccurrencesRange.EXACTLY_ONCE
             FirContractsDslNames.AT_LEAST_ONCE_KIND -> EventOccurrencesRange.AT_LEAST_ONCE
@@ -243,12 +243,12 @@ class ConeEffectExtractor(
         }
     }
 
-    private fun noReceiver(callableId: CallableId): KtErroneousContractElement<ConeKotlinType, ConeDiagnostic> {
-        return ConeContractDescriptionError.NoReceiver(callableId.callableName).asElement()
+    private fun noReceiver(callablePath: CallablePath): KtErroneousContractElement<ConeKotlinType, ConeDiagnostic> {
+        return ConeContractDescriptionError.NoReceiver(callablePath.callableName).asElement()
     }
 
-    private fun noArgument(callableId: CallableId): KtErroneousContractElement<ConeKotlinType, ConeDiagnostic> {
-        return ConeContractDescriptionError.NoArgument(callableId.callableName).asElement()
+    private fun noArgument(callablePath: CallablePath): KtErroneousContractElement<ConeKotlinType, ConeDiagnostic> {
+        return ConeContractDescriptionError.NoArgument(callablePath.callableName).asElement()
     }
 
     private fun FirElement.asContractElement(): ConeContractDescriptionElement {

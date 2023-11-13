@@ -23,7 +23,6 @@ import org.jetbrains.kotlin.fir.resolve.transformers.body.resolve.FirArrayOfCall
 import org.jetbrains.kotlin.fir.symbols.impl.FirConstructorSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirFieldSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirPropertySymbol
-import org.jetbrains.kotlin.fir.types.ConeKotlinType
 import org.jetbrains.kotlin.fir.types.coneType
 import org.jetbrains.kotlin.fir.types.resolvedType
 import org.jetbrains.kotlin.fir.visitors.FirDefaultVisitor
@@ -132,7 +131,7 @@ internal object FirToConstantValueTransformer : FirDefaultVisitor<ConstantValue<
 
         return when {
             symbol.fir is FirEnumEntry -> {
-                val classId = symbol.callableId.classId ?: return null
+                val classId = symbol.callablePath.classId ?: return null
                 EnumValue(classId, (symbol.fir as FirEnumEntry).name)
             }
 
@@ -162,8 +161,8 @@ internal object FirToConstantValueTransformer : FirDefaultVisitor<ConstantValue<
                 return AnnotationValue.create(qualifiedAccessExpression.resolvedType, mapping)
             }
 
-            symbol.callableId.packageName.asString() == "kotlin" -> {
-                val callableName = symbol.callableId.callableName.asString()
+            symbol.callablePath.packageName.asString() == "kotlin" -> {
+                val callableName = symbol.callablePath.callableName.asString()
                 if (callableName !in constantIntrinsicCalls) return null
 
                 val dispatchReceiver = qualifiedAccessExpression.dispatchReceiver
@@ -270,7 +269,7 @@ internal object FirToConstantValueChecker : FirDefaultVisitor<Boolean, FirSessio
         val symbol = qualifiedAccessExpression.toResolvedCallableSymbol() ?: return false
 
         return when {
-            symbol.fir is FirEnumEntry -> symbol.callableId.classId != null
+            symbol.fir is FirEnumEntry -> symbol.callablePath.classId != null
 
             symbol is FirPropertySymbol -> symbol.fir.isConst
 
@@ -280,9 +279,9 @@ internal object FirToConstantValueChecker : FirDefaultVisitor<Boolean, FirSessio
                 symbol.containingClassLookupTag()?.toFirRegularClassSymbol(data)?.classKind == ClassKind.ANNOTATION_CLASS
             }
 
-            symbol.callableId.packageName.asString() == "kotlin" -> {
+            symbol.callablePath.packageName.asString() == "kotlin" -> {
                 val dispatchReceiver = qualifiedAccessExpression.dispatchReceiver
-                when (symbol.callableId.callableName.asString()) {
+                when (symbol.callablePath.callableName.asString()) {
                     !in constantIntrinsicCalls -> false
                     else -> dispatchReceiver?.accept(this, data) ?: false
                 }

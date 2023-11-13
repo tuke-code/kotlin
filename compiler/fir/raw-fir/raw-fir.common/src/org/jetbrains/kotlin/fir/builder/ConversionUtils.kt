@@ -336,7 +336,7 @@ fun <T> FirPropertyBuilder.generateAccessorsByDelegate(
     lazyBodyForGeneratedAccessors: FirLazyBlock? = null,
 ) {
     if (delegateBuilder == null) return
-    val delegateFieldSymbol = FirDelegateFieldSymbol(symbol.callableId).also {
+    val delegateFieldSymbol = FirDelegateFieldSymbol(symbol.callablePath).also {
         this.delegateFieldSymbol = it
     }
 

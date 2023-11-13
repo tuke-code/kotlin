@@ -19,7 +19,7 @@ import org.jetbrains.kotlin.fir.symbols.impl.FirCallableSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirClassLikeSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirNamedFunctionSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirPropertySymbol
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.name.Name
@@ -80,7 +80,7 @@ class FirCachingCompositeSymbolProvider(
 
     override fun getTopLevelCallableSymbols(packageFqName: FqName, name: Name): List<FirCallableSymbol<*>> {
         if (!symbolNamesProvider.mayHaveTopLevelCallable(packageFqName, name)) return emptyList()
-        return topLevelCallableCache.getValue(CallableId(packageFqName, name))
+        return topLevelCallableCache.getValue(CallablePath(packageFqName, name))
     }
 
     @FirSymbolProviderInternals
@@ -91,13 +91,13 @@ class FirCachingCompositeSymbolProvider(
     @FirSymbolProviderInternals
     override fun getTopLevelFunctionSymbolsTo(destination: MutableList<FirNamedFunctionSymbol>, packageFqName: FqName, name: Name) {
         if (!symbolNamesProvider.mayHaveTopLevelCallable(packageFqName, name)) return
-        destination += topLevelFunctionCache.getValue(CallableId(packageFqName, name))
+        destination += topLevelFunctionCache.getValue(CallablePath(packageFqName, name))
     }
 
     @FirSymbolProviderInternals
     override fun getTopLevelPropertySymbolsTo(destination: MutableList<FirPropertySymbol>, packageFqName: FqName, name: Name) {
         if (!symbolNamesProvider.mayHaveTopLevelCallable(packageFqName, name)) return
-        destination += topLevelPropertyCache.getValue(CallableId(packageFqName, name))
+        destination += topLevelPropertyCache.getValue(CallablePath(packageFqName, name))
     }
 
     override fun getPackage(fqName: FqName): FqName? {
@@ -110,18 +110,18 @@ class FirCachingCompositeSymbolProvider(
     }
 
     @OptIn(FirSymbolProviderInternals::class)
-    private fun computeTopLevelCallables(callableId: CallableId): List<FirCallableSymbol<*>> = buildList {
-        providers.forEach { it.getTopLevelCallableSymbolsTo(this, callableId.packageName, callableId.callableName) }
+    private fun computeTopLevelCallables(callablePath: CallablePath): List<FirCallableSymbol<*>> = buildList {
+        providers.forEach { it.getTopLevelCallableSymbolsTo(this, callablePath.packageName, callablePath.callableName) }
     }
 
     @OptIn(FirSymbolProviderInternals::class)
-    private fun computeTopLevelFunctions(callableId: CallableId): List<FirNamedFunctionSymbol> = buildList {
-        providers.forEach { it.getTopLevelFunctionSymbolsTo(this, callableId.packageName, callableId.callableName) }
+    private fun computeTopLevelFunctions(callablePath: CallablePath): List<FirNamedFunctionSymbol> = buildList {
+        providers.forEach { it.getTopLevelFunctionSymbolsTo(this, callablePath.packageName, callablePath.callableName) }
     }
 
     @OptIn(FirSymbolProviderInternals::class)
-    private fun computeTopLevelProperties(callableId: CallableId): List<FirPropertySymbol> = buildList {
-        providers.forEach { it.getTopLevelPropertySymbolsTo(this, callableId.packageName, callableId.callableName) }
+    private fun computeTopLevelProperties(callablePath: CallablePath): List<FirPropertySymbol> = buildList {
+        providers.forEach { it.getTopLevelPropertySymbolsTo(this, callablePath.packageName, callablePath.callableName) }
     }
 
     private fun computePackage(it: FqName): FqName? =

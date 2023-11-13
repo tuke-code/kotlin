@@ -27,7 +27,7 @@ import org.jetbrains.kotlin.diagnostics.DiagnosticSink
 import org.jetbrains.kotlin.diagnostics.Errors
 import org.jetbrains.kotlin.diagnostics.WhenMissingCase
 import org.jetbrains.kotlin.lexer.KtTokens
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.psi.*
 import org.jetbrains.kotlin.resolve.BindingContext
 import org.jetbrains.kotlin.resolve.BindingContext.SMARTCAST
@@ -221,7 +221,7 @@ internal abstract class WhenOnClassExhaustivenessChecker : WhenExhaustivenessChe
             )
         } else {
             val enumClassId = classId.outerClassId ?: error("Enum should have class id")
-            WhenMissingCase.EnumCheckIsMissing(CallableId(enumClassId, classId.shortClassName))
+            WhenMissingCase.EnumCheckIsMissing(CallablePath(enumClassId, classId.shortClassName))
         }
     }
 }

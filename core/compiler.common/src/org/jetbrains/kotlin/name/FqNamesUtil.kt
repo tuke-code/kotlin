@@ -76,10 +76,10 @@ fun <V> FqName.findValueForMostSpecificFqname(values: Map<FqName, V>): V? {
     return suitableItems.minByOrNull { (fqName, _) -> fqName.tail(this).asString().length }?.value
 }
 
-fun ClassId.callableIdForConstructor(): CallableId {
+fun ClassId.callableIdForConstructor(): CallablePath {
     return if (isNestedClass) {
-        CallableId(outerClassId!!, shortClassName)
+        CallablePath(outerClassId!!, shortClassName)
     } else {
-        CallableId(packageFqName, shortClassName)
+        CallablePath(packageFqName, shortClassName)
     }
 }

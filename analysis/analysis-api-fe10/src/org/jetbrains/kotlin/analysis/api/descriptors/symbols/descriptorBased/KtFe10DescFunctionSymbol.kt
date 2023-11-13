@@ -16,7 +16,7 @@ import org.jetbrains.kotlin.analysis.api.descriptors.symbols.isEqualTo
 import org.jetbrains.kotlin.analysis.api.descriptors.symbols.pointers.KtFe10DescFunctionLikeSymbolPointer
 import org.jetbrains.kotlin.analysis.api.descriptors.symbols.pointers.KtFe10NeverRestoringSymbolPointer
 import org.jetbrains.kotlin.analysis.api.descriptors.utils.cached
-import org.jetbrains.kotlin.analysis.api.impl.base.util.kotlinFunctionInvokeCallableIds
+import org.jetbrains.kotlin.analysis.api.impl.base.util.kotlinFunctionInvokeCallablePaths
 import org.jetbrains.kotlin.analysis.api.lifetime.withValidityAssertion
 import org.jetbrains.kotlin.analysis.api.symbols.KtFunctionSymbol
 import org.jetbrains.kotlin.analysis.api.symbols.KtReceiverParameterSymbol
@@ -29,7 +29,7 @@ import org.jetbrains.kotlin.analysis.api.types.KtType
 import org.jetbrains.kotlin.contracts.description.ContractProviderKey
 import org.jetbrains.kotlin.descriptors.FunctionDescriptor
 import org.jetbrains.kotlin.load.java.descriptors.JavaCallableMemberDescriptor
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.resolve.DescriptorUtils
 import org.jetbrains.kotlin.resolve.calls.inference.returnTypeOrNothing
@@ -91,7 +91,7 @@ internal class KtFe10DescFunctionSymbol private constructor(
         get() = withValidityAssertion { descriptor is JavaCallableMemberDescriptor && DescriptorUtils.isStaticDeclaration(descriptor) }
 
     override val isBuiltinFunctionInvoke: Boolean
-        get() = withValidityAssertion { callableIdIfNonLocal in kotlinFunctionInvokeCallableIds }
+        get() = withValidityAssertion { callablePathIfNonLocal in kotlinFunctionInvokeCallablePaths }
 
     override val isActual: Boolean
         get() = withValidityAssertion { descriptor.isActual }
@@ -111,8 +111,8 @@ internal class KtFe10DescFunctionSymbol private constructor(
     override val hasStableParameterNames: Boolean
         get() = withValidityAssertion { descriptor.ktHasStableParameterNames }
 
-    override val callableIdIfNonLocal: CallableId?
-        get() = withValidityAssertion { descriptor.callableIdIfNotLocal }
+    override val callablePathIfNonLocal: CallablePath?
+        get() = withValidityAssertion { descriptor.callablePathIfNotLocal }
 
     override val returnType: KtType
         get() = withValidityAssertion { descriptor.returnTypeOrNothing.toKtType(analysisContext) }
@@ -135,7 +135,7 @@ internal class KtFe10DescFunctionSymbol private constructor(
             return it
         }
 
-        val callableId = descriptor.callableIdIfNotLocal
+        val callableId = descriptor.callablePathIfNotLocal
         if (callableId != null) {
             val signature = descriptor.getSymbolPointerSignature()
             return KtFe10DescFunctionLikeSymbolPointer(callableId, signature)

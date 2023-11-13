@@ -212,7 +212,7 @@ private class CodeFragmentCapturedValueVisitor(
             }
         }
 
-        if (symbol.callableId == StandardClassIds.Callables.coroutineContext) {
+        if (symbol.callablePath == StandardClassIds.Callables.coroutineContext) {
             val isCrossingInlineBounds = isCrossingInlineBounds(element, symbol)
             val capturedValue = CodeFragmentCapturedValue.CoroutineContext(isCrossingInlineBounds)
             register(CodeFragmentCapturedSymbol(capturedValue, symbol, symbol.resolvedReturnTypeRef))
@@ -243,7 +243,7 @@ private class CodeFragmentCapturedValueVisitor(
         val needsRegistration = when (symbol) {
             is FirRegularClassSymbol -> symbol.isLocal
             is FirAnonymousObjectSymbol -> true
-            is FirNamedFunctionSymbol -> symbol.callableId.isLocal
+            is FirNamedFunctionSymbol -> symbol.callablePath.isLocal
             else -> false
         }
 

@@ -66,6 +66,6 @@ object FirCallableDeclarationComparator : Comparator<FirCallableDeclaration> {
         }
 
         // Lastly, compare the fully qualified package name.
-        return a.symbol.callableId.packageName.asString().compareTo(b.symbol.callableId.packageName.asString())
+        return a.symbol.callablePath.packageName.asString().compareTo(b.symbol.callablePath.packageName.asString())
     }
 }

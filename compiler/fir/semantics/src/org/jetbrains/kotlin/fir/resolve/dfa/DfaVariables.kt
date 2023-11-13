@@ -17,7 +17,7 @@ data class Identifier(
     val extensionReceiver: DataFlowVariable?
 ) {
     override fun toString(): String {
-        val callableId = (symbol as? FirCallableSymbol<*>)?.callableId
+        val callableId = (symbol as? FirCallableSymbol<*>)?.callablePath
         return "[$callableId, dispatchReceiver = $dispatchReceiver, extensionReceiver = $extensionReceiver]"
     }
 }

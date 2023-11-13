@@ -317,7 +317,7 @@ class FirDiagnosticsHandler(testServices: TestServices) : FirAnalysisHandler(tes
             val resolvedSymbol = (reference as? FirResolvedNamedReference)?.resolvedSymbol
             val callable = resolvedSymbol?.fir as? FirCallableDeclaration ?: return@report ""
             DebugInfoDiagnosticFactory1.renderCallableOwner(
-                callable.symbol.callableId,
+                callable.symbol.callablePath,
                 callable.containingClassLookupTag()?.classId,
                 callable.containingClassForStaticMemberAttr == null
             )
@@ -334,7 +334,7 @@ class FirDiagnosticsHandler(testServices: TestServices) : FirAnalysisHandler(tes
     ): String {
         if (resolvedSymbol == null) return TypeOfCall.UNRESOLVED.nameToRender
 
-        if ((resolvedSymbol as? FirFunctionSymbol)?.callableId?.callableName == OperatorNameConventions.INVOKE
+        if ((resolvedSymbol as? FirFunctionSymbol)?.callablePath?.callableName == OperatorNameConventions.INVOKE
             && reference.name != OperatorNameConventions.INVOKE
         ) {
             return TypeOfCall.VARIABLE_THROUGH_INVOKE.nameToRender
@@ -357,7 +357,7 @@ class FirDiagnosticsHandler(testServices: TestServices) : FirAnalysisHandler(tes
 
     private fun FirBasedSymbol<*>.fqNameUnsafe(): FqNameUnsafe? = when (this) {
         is FirClassLikeSymbol<*> -> classId.asSingleFqName().toUnsafe()
-        is FirCallableSymbol<*> -> callableId.asFqNameForDebugInfo().toUnsafe()
+        is FirCallableSymbol<*> -> callablePath.asFqNameForDebugInfo().toUnsafe()
         else -> null
     }
 }

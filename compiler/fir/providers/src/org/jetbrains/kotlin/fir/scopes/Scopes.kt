@@ -70,7 +70,7 @@ fun FirNamedFunctionSymbol.overriddenFunctions(
     )
 
     val overriddenFunctions = mutableListOf<FirFunctionSymbol<*>>()
-    firTypeScope.processFunctionsByName(callableId.callableName) { }
+    firTypeScope.processFunctionsByName(callablePath.callableName) { }
     firTypeScope.processOverriddenFunctions(this) {
         overriddenFunctions.add(it)
         ProcessorAction.NEXT

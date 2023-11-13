@@ -22,7 +22,7 @@ import org.jetbrains.kotlin.ir.types.impl.IrTypeProjectionImpl
 import org.jetbrains.kotlin.ir.types.impl.makeTypeProjection
 import org.jetbrains.kotlin.ir.util.*
 import org.jetbrains.kotlin.mpp.*
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.resolve.calls.mpp.ExpectActualCollectionArgumentsCompatibilityCheckStrategy
@@ -101,13 +101,13 @@ internal abstract class IrExpectActualMatchingContext(
     override val TypeAliasSymbolMarker.classId: ClassId
         get() = asIr().classIdOrFail
 
-    override val CallableSymbolMarker.callableId: CallableId
+    override val CallableSymbolMarker.callablePath: CallablePath
         get() = processIr(
-            onFunction = { it.callableId },
-            onProperty = { it.callableId },
-            onField = { it.callableId },
+            onFunction = { it.callablePath },
+            onProperty = { it.callablePath },
+            onField = { it.callablePath },
             onValueParameter = { shouldNotBeCalled() },
-            onEnumEntry = { it.callableId }
+            onEnumEntry = { it.callablePath }
         )
 
     override val TypeParameterSymbolMarker.parameterName: Name

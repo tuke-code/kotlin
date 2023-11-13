@@ -12,7 +12,7 @@ import org.jetbrains.kotlin.fir.scopes.FirContainingNamesAwareScope
 import org.jetbrains.kotlin.fir.scopes.impl.FirClassDeclaredMemberScope
 import org.jetbrains.kotlin.fir.scopes.impl.FirNestedClassifierScope
 import org.jetbrains.kotlin.fir.symbols.impl.*
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.name.Name
@@ -52,8 +52,8 @@ abstract class FirDeclarationGenerationExtension(session: FirSession) : FirExten
     ): FirClassLikeSymbol<*>? = null
 
     // Can be called on STATUS stage
-    open fun generateFunctions(callableId: CallableId, context: MemberGenerationContext?): List<FirNamedFunctionSymbol> = emptyList()
-    open fun generateProperties(callableId: CallableId, context: MemberGenerationContext?): List<FirPropertySymbol> = emptyList()
+    open fun generateFunctions(callablePath: CallablePath, context: MemberGenerationContext?): List<FirNamedFunctionSymbol> = emptyList()
+    open fun generateProperties(callablePath: CallablePath, context: MemberGenerationContext?): List<FirPropertySymbol> = emptyList()
     open fun generateConstructors(context: MemberGenerationContext): List<FirConstructorSymbol> = emptyList()
 
     // Can be called on IMPORTS stage
@@ -70,7 +70,7 @@ abstract class FirDeclarationGenerationExtension(session: FirSession) : FirExten
      */
     open fun getCallableNamesForClass(classSymbol: FirClassSymbol<*>, context: MemberGenerationContext): Set<Name> = emptySet()
     open fun getNestedClassifiersNames(classSymbol: FirClassSymbol<*>, context: NestedClassGenerationContext): Set<Name> = emptySet()
-    open fun getTopLevelCallableIds(): Set<CallableId> = emptySet()
+    open fun getTopLevelCallableIds(): Set<CallablePath> = emptySet()
     open fun getTopLevelClassIds(): Set<ClassId> = emptySet()
 
     fun interface Factory : FirExtension.Factory<FirDeclarationGenerationExtension>
@@ -82,7 +82,7 @@ abstract class FirDeclarationGenerationExtension(session: FirSession) : FirExten
         session.firCachesFactory.createLazyValue { getTopLevelClassIds() }
 
     @FirExtensionApiInternals
-    val topLevelCallableIdsCache: FirLazyValue<Set<CallableId>> =
+    val topLevelCallableIdsCache: FirLazyValue<Set<CallablePath>> =
         session.firCachesFactory.createLazyValue { getTopLevelCallableIds() }
 
 }

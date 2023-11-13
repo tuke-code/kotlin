@@ -14,7 +14,7 @@ import org.jetbrains.kotlin.fir.symbols.impl.FirCallableSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirClassLikeSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirNamedFunctionSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirPropertySymbol
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.psi.KtCallableDeclaration
 import org.jetbrains.kotlin.psi.KtClassLikeDeclaration
@@ -49,7 +49,7 @@ internal abstract class LLFirKotlinSymbolProvider(session: FirSession) : FirSymb
     @FirSymbolProviderInternals
     abstract fun getTopLevelCallableSymbolsTo(
         destination: MutableList<FirCallableSymbol<*>>,
-        callableId: CallableId,
+        callablePath: CallablePath,
         callables: Collection<KtCallableDeclaration>,
     )
 
@@ -59,7 +59,7 @@ internal abstract class LLFirKotlinSymbolProvider(session: FirSession) : FirSymb
     @FirSymbolProviderInternals
     abstract fun getTopLevelFunctionSymbolsTo(
         destination: MutableList<FirNamedFunctionSymbol>,
-        callableId: CallableId,
+        callablePath: CallablePath,
         functions: Collection<KtNamedFunction>,
     )
 
@@ -69,7 +69,7 @@ internal abstract class LLFirKotlinSymbolProvider(session: FirSession) : FirSymb
     @FirSymbolProviderInternals
     abstract fun getTopLevelPropertySymbolsTo(
         destination: MutableList<FirPropertySymbol>,
-        callableId: CallableId,
+        callablePath: CallablePath,
         properties: Collection<KtProperty>,
     )
 

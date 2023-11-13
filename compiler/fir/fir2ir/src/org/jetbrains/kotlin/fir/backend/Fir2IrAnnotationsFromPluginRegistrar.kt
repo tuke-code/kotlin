@@ -98,7 +98,7 @@ class Fir2IrAnnotationsFromPluginRegistrar(private val components: Fir2IrCompone
                 is FirClassLikeDeclaration -> runIf(!classId.isLocal) { classId.topmostParentClassId.toSymbol(session)?.fir }
                 is FirTypeParameter -> containingDeclarationSymbol.fir.topmostParent(session)
                 is FirValueParameter -> containingFunctionSymbol.fir.topmostParent(session)
-                is FirCallableDeclaration -> symbol.callableId.classId
+                is FirCallableDeclaration -> symbol.callablePath.classId
                     ?.takeIf { !it.isLocal }
                     ?.topmostParentClassId
                     ?.toSymbol(session)

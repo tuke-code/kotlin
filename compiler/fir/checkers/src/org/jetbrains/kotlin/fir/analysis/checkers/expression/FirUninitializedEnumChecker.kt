@@ -237,7 +237,7 @@ object FirUninitializedEnumChecker : FirQualifiedAccessExpressionChecker() {
             if (property.delegate == null || property.delegate !is FirFunctionCall) return null
             val delegateCall = property.delegate as FirFunctionCall
             val calleeSymbol = delegateCall.calleeReference.toResolvedNamedFunctionSymbol() ?: return null
-            if (calleeSymbol.callableId.asSingleFqName().asString() != "kotlin.lazy") return null
+            if (calleeSymbol.callablePath.asSingleFqName().asString() != "kotlin.lazy") return null
             val lazyCallArgument = delegateCall.argumentList.arguments.singleOrNull() as? FirLambdaArgumentExpression ?: return null
             return (lazyCallArgument.expression as? FirAnonymousFunctionExpression)?.anonymousFunction
         }

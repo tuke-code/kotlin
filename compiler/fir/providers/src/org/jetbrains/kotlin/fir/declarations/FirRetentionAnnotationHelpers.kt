@@ -23,7 +23,7 @@ fun FirRegularClassSymbol.getRetention(session: FirSession): AnnotationRetention
 
 fun FirAnnotation.getRetention(): AnnotationRetention? {
     val propertyAccess = findArgumentByName(StandardClassIds.Annotations.ParameterNames.retentionValue) as? FirQualifiedAccessExpression
-    val callableId = propertyAccess?.calleeReference?.toResolvedEnumEntrySymbol()?.callableId ?: return null
+    val callableId = propertyAccess?.calleeReference?.toResolvedEnumEntrySymbol()?.callablePath ?: return null
 
     if (callableId.classId != StandardClassIds.AnnotationRetention) {
         return null

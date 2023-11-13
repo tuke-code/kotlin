@@ -18,7 +18,7 @@ import org.jetbrains.kotlin.analysis.api.fir.symbols.pointers.KtFirMemberFunctio
 import org.jetbrains.kotlin.analysis.api.fir.symbols.pointers.KtFirTopLevelFunctionSymbolPointer
 import org.jetbrains.kotlin.analysis.api.fir.symbols.pointers.requireOwnerPointer
 import org.jetbrains.kotlin.analysis.api.fir.utils.cached
-import org.jetbrains.kotlin.analysis.api.impl.base.util.kotlinFunctionInvokeCallableIds
+import org.jetbrains.kotlin.analysis.api.impl.base.util.kotlinFunctionInvokeCallablePaths
 import org.jetbrains.kotlin.analysis.api.lifetime.withValidityAssertion
 import org.jetbrains.kotlin.analysis.api.symbols.KtFunctionSymbol
 import org.jetbrains.kotlin.analysis.api.symbols.KtReceiverParameterSymbol
@@ -37,7 +37,7 @@ import org.jetbrains.kotlin.fir.declarations.FirDeclarationOrigin
 import org.jetbrains.kotlin.fir.declarations.utils.*
 import org.jetbrains.kotlin.fir.symbols.impl.FirNamedFunctionSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.isExtension
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.Name
 
 internal class KtFirFunctionSymbol(
@@ -48,7 +48,7 @@ internal class KtFirFunctionSymbol(
     override val name: Name get() = withValidityAssertion { firSymbol.name }
 
     override val isBuiltinFunctionInvoke: Boolean
-        get() = withValidityAssertion { callableIdIfNonLocal in kotlinFunctionInvokeCallableIds }
+        get() = withValidityAssertion { callablePathIfNonLocal in kotlinFunctionInvokeCallablePaths }
 
     override val contractEffects: List<KtContractEffectDeclaration> by cached {
         firSymbol.resolvedContractDescription?.effects
@@ -84,7 +84,7 @@ internal class KtFirFunctionSymbol(
     override val isActual: Boolean get() = withValidityAssertion { firSymbol.isActual }
     override val isExpect: Boolean get() = withValidityAssertion { firSymbol.isExpect }
 
-    override val callableIdIfNonLocal: CallableId? get() = withValidityAssertion { firSymbol.getCallableIdIfNonLocal() }
+    override val callablePathIfNonLocal: CallablePath? get() = withValidityAssertion { firSymbol.getCallableIdIfNonLocal() }
 
     override val symbolKind: KtSymbolKind
         get() = withValidityAssertion {
@@ -105,7 +105,7 @@ internal class KtFirFunctionSymbol(
 
         return when (val kind = symbolKind) {
             KtSymbolKind.TOP_LEVEL -> KtFirTopLevelFunctionSymbolPointer(
-                firSymbol.callableId,
+                firSymbol.callablePath,
                 FirCallableSignature.createSignature(firSymbol),
             )
 
@@ -117,7 +117,7 @@ internal class KtFirFunctionSymbol(
             )
 
             KtSymbolKind.LOCAL -> throw CanNotCreateSymbolPointerForLocalLibraryDeclarationException(
-                callableIdIfNonLocal?.toString() ?: name.asString()
+                callablePathIfNonLocal?.toString() ?: name.asString()
             )
 
             else -> throw UnsupportedSymbolKind(this::class, kind)

@@ -31,7 +31,7 @@ import org.jetbrains.kotlin.fir.resolve.scope
 import org.jetbrains.kotlin.fir.scopes.CallableCopyTypeCalculator
 import org.jetbrains.kotlin.fir.scopes.getDirectOverriddenProperties
 import org.jetbrains.kotlin.fir.symbols.impl.FirPropertyAccessorSymbol
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 
 internal class KtFirPropertySetterSymbol(
     override val firSymbol: FirPropertyAccessorSymbol,
@@ -73,13 +73,13 @@ internal class KtFirPropertySetterSymbol(
     }
 
     /**
-     * Returns [CallableId] of the delegated Java method if the corresponding property of this setter is a synthetic Java property.
+     * Returns [CallablePath] of the delegated Java method if the corresponding property of this setter is a synthetic Java property.
      * Otherwise, returns `null`
      */
-    override val callableIdIfNonLocal: CallableId? by cached {
+    override val callablePathIfNonLocal: CallablePath? by cached {
         val fir = firSymbol.fir
         if (fir is FirSyntheticPropertyAccessor) {
-            fir.delegate.symbol.callableId
+            fir.delegate.symbol.callablePath
         } else null
     }
 

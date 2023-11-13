@@ -255,7 +255,7 @@ object K1AbstractExpectActualAnnotationMatchChecker {
     ): Incompatibility? {
         fun DeclarationSymbolMarker.getEnumEntryName(): Name =
             when (this) {
-                is CallableSymbolMarker -> callableId.callableName
+                is CallableSymbolMarker -> callablePath.callableName
                 is RegularClassSymbolMarker -> classId.shortClassName
                 else -> error("Unexpected type $this")
             }

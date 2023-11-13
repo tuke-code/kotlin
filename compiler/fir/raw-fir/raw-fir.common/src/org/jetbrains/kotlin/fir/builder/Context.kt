@@ -15,7 +15,7 @@ import org.jetbrains.kotlin.fir.declarations.builder.buildOuterClassTypeParamete
 import org.jetbrains.kotlin.fir.expressions.FirExpression
 import org.jetbrains.kotlin.fir.symbols.impl.FirTypeParameterSymbol
 import org.jetbrains.kotlin.fir.types.ConeClassLikeType
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.name.Name
@@ -26,7 +26,7 @@ class Context<T> {
     var inLocalContext: Boolean = false
     val currentClassId
         get() = when {
-            inLocalContext -> ClassId(CallableId.PACKAGE_FQ_NAME_FOR_LOCAL, className, isLocal = true)
+            inLocalContext -> ClassId(CallablePath.PACKAGE_FQ_NAME_FOR_LOCAL, className, isLocal = true)
             else -> ClassId(packageFqName, className, isLocal = false)
         }
 

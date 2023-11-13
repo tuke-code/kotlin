@@ -624,7 +624,7 @@ class Fir2IrDeclarationStorage(
             isVar = field.isVar
             getter = field.getter
             setter = field.setter
-            symbol = FirPropertySymbol(field.symbol.callableId)
+            symbol = FirPropertySymbol(field.symbol.callablePath)
             isLocal = false
             status = field.status
         }.apply {
@@ -966,7 +966,7 @@ class Fir2IrDeclarationStorage(
         callableDeclaration: FirCallableDeclaration
     ): FirCallableDeclaration? {
         if (irClass is Fir2IrLazyClass) {
-            irClass.getFakeOverridesByName(callableDeclaration.symbol.callableId.callableName)
+            irClass.getFakeOverridesByName(callableDeclaration.symbol.callablePath.callableName)
         }
         val map = fakeOverridesInClass[irClass]
         return map?.get(callableDeclaration.asFakeOverrideKey())
@@ -1249,7 +1249,7 @@ class Fir2IrDeclarationStorage(
         fakeOverrideOwnerLookupTag: ConeClassLikeLookupTag?,
     ): IrDeclarationParent? {
         val firBasedSymbol = callableDeclaration.symbol
-        val callableId = firBasedSymbol.callableId
+        val callableId = firBasedSymbol.callablePath
         val callableOrigin = callableDeclaration.origin
         val parentLookupTag = when {
             // non-static fields can not be fake overrides

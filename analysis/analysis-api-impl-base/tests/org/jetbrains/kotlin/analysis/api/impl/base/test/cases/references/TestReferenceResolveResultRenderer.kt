@@ -52,7 +52,7 @@ object TestReferenceResolveResultRenderer {
         if (symbol is KtPackageSymbol || symbol is KtValueParameterSymbol) return null
         val nonLocalFqName = when (symbol) {
             is KtConstructorSymbol -> symbol.containingClassIdIfNonLocal?.asSingleFqName()
-            is KtCallableSymbol -> symbol.callableIdIfNonLocal?.asSingleFqName()?.parent()
+            is KtCallableSymbol -> symbol.callablePathIfNonLocal?.asSingleFqName()?.parent()
             is KtClassLikeSymbol -> symbol.classIdIfNonLocal?.asSingleFqName()?.parent()
             else -> null
         }

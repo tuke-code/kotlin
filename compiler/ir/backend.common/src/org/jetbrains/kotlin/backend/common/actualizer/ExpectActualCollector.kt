@@ -16,12 +16,12 @@ import org.jetbrains.kotlin.ir.symbols.IrSymbol
 import org.jetbrains.kotlin.ir.symbols.IrTypeAliasSymbol
 import org.jetbrains.kotlin.ir.types.IrTypeSystemContext
 import org.jetbrains.kotlin.ir.types.classifierOrFail
-import org.jetbrains.kotlin.ir.util.callableId
+import org.jetbrains.kotlin.ir.util.callablePath
 import org.jetbrains.kotlin.ir.util.classIdOrFail
 import org.jetbrains.kotlin.ir.visitors.IrElementVisitor
 import org.jetbrains.kotlin.mpp.DeclarationSymbolMarker
 import org.jetbrains.kotlin.mpp.RegularClassSymbolMarker
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.resolve.calls.mpp.AbstractExpectActualChecker
 import org.jetbrains.kotlin.resolve.calls.mpp.AbstractExpectActualMatcher
@@ -87,7 +87,7 @@ internal data class ClassActualizationInfo(
     val actualClasses: Map<ClassId, IrClassSymbol>,
     // mapping from classId to actual typealias
     val actualTypeAliases: Map<ClassId, IrTypeAliasSymbol>,
-    val actualTopLevels: Map<CallableId, List<IrSymbol>>,
+    val actualTopLevels: Map<CallablePath, List<IrSymbol>>,
     val actualSymbolsToFile: Map<IrSymbol, IrFile?>,
 ) {
     fun getActualWithoutExpansion(classId: ClassId): IrSymbol? {
@@ -115,7 +115,7 @@ private class ActualDeclarationsCollector {
 
     private val actualClasses: MutableMap<ClassId, IrClassSymbol> = mutableMapOf()
     private val actualTypeAliasesWithoutExpansion: MutableMap<ClassId, IrTypeAliasSymbol> = mutableMapOf()
-    private val actualTopLevels: MutableMap<CallableId, MutableList<IrSymbol>> = mutableMapOf()
+    private val actualTopLevels: MutableMap<CallablePath, MutableList<IrSymbol>> = mutableMapOf()
     private val actualSymbolsToFile: MutableMap<IrSymbol, IrFile?> = mutableMapOf()
 
     private val visitedActualClasses = mutableSetOf<IrClass>()
@@ -162,23 +162,23 @@ private class ActualDeclarationsCollector {
                 }
             }
             is IrEnumEntry -> {
-                recordActualCallable(element, element.callableId) // If enum entry is located inside expect enum, then this code is not executed
+                recordActualCallable(element, element.callablePath) // If enum entry is located inside expect enum, then this code is not executed
             }
             is IrProperty -> {
                 if (element.isExpect) return
-                recordActualCallable(element, element.callableId)
+                recordActualCallable(element, element.callablePath)
             }
             is IrFunction -> {
                 if (element.isExpect) return
-                recordActualCallable(element, element.callableId)
+                recordActualCallable(element, element.callablePath)
             }
         }
     }
 
-    private fun recordActualCallable(callableDeclaration: IrDeclarationWithName, callableId: CallableId) {
-        if (callableId.classId == null) {
+    private fun recordActualCallable(callableDeclaration: IrDeclarationWithName, callablePath: CallablePath) {
+        if (callablePath.classId == null) {
             actualTopLevels
-                .getOrPut(callableId) { mutableListOf() }
+                .getOrPut(callablePath) { mutableListOf() }
                 .add(callableDeclaration.symbol)
             actualSymbolsToFile[callableDeclaration.symbol] = currentFile
         }
@@ -193,20 +193,20 @@ private class ExpectActualLinkCollector : IrElementVisitor<Unit, ExpectActualLin
 
     override fun visitFunction(declaration: IrFunction, data: MatchingContext) {
         if (declaration.isExpect) {
-            matchExpectCallable(declaration, declaration.callableId, data)
+            matchExpectCallable(declaration, declaration.callablePath, data)
         }
     }
 
     override fun visitProperty(declaration: IrProperty, data: MatchingContext) {
         if (declaration.isExpect) {
-            matchExpectCallable(declaration, declaration.callableId, data)
+            matchExpectCallable(declaration, declaration.callablePath, data)
         }
     }
 
-    private fun matchExpectCallable(declaration: IrDeclarationWithName, callableId: CallableId, context: MatchingContext) {
+    private fun matchExpectCallable(declaration: IrDeclarationWithName, callablePath: CallablePath, context: MatchingContext) {
         matchAndCheckExpectDeclaration(
             declaration.symbol,
-            context.classActualizationInfo.actualTopLevels[callableId].orEmpty(),
+            context.classActualizationInfo.actualTopLevels[callablePath].orEmpty(),
             context,
         )
     }

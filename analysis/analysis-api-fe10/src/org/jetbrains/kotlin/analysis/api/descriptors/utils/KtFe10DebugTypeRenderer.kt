@@ -112,7 +112,7 @@ internal class KtFe10DebugTypeRenderer {
             is KtAnnotationApplicationValue -> renderAnnotationDebug(value.annotationValue.classId, value.annotationValue.arguments)
             is KtArrayAnnotationValue ->
                 printCollection(value.values, separator = ", ", prefix = "[", postfix = "]") { renderConstantValueDebug(it) }
-            is KtEnumEntryAnnotationValue -> append(value.callableId?.asSingleFqName()?.render())
+            is KtEnumEntryAnnotationValue -> append(value.callablePath?.asSingleFqName()?.render())
             is KtConstantAnnotationValue -> append(value.constantValue.constantValueKind.asString).append("(").append(value.constantValue.value.toString()).append(")")
             KtUnsupportedAnnotationValue -> append(KtUnsupportedAnnotationValue::class.java.simpleName)
             is KtKClassAnnotationValue -> append(value.renderAsSourceCode())

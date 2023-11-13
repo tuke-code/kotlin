@@ -25,7 +25,7 @@ import org.jetbrains.kotlin.name.JsStandardClassIds
 
 object FirJsCodeConstantArgumentChecker : FirFunctionCallChecker() {
     override fun check(expression: FirFunctionCall, context: CheckerContext, reporter: DiagnosticReporter) {
-        if (expression.calleeReference.toResolvedCallableSymbol()?.callableId != JsStandardClassIds.Callables.JsCode) {
+        if (expression.calleeReference.toResolvedCallableSymbol()?.callablePath != JsStandardClassIds.Callables.JsCode) {
             return
         }
 

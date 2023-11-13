@@ -22,7 +22,7 @@ import org.jetbrains.kotlin.name.StandardClassIds
 
 object FirContractNotFirstStatementChecker : FirFunctionCallChecker() {
     override fun check(expression: FirFunctionCall, context: CheckerContext, reporter: DiagnosticReporter) {
-        if (StandardClassIds.Callables.contract != expression.toResolvedCallableSymbol()?.callableId) return
+        if (StandardClassIds.Callables.contract != expression.toResolvedCallableSymbol()?.callablePath) return
 
         val containingDeclaration = context.containingDeclarations.last()
         if (!(containingDeclaration is FirFunction && expression.isCorrectlyPlacedIn(containingDeclaration))) {

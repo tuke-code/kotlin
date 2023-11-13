@@ -14,13 +14,13 @@ import org.jetbrains.kotlin.analysis.api.symbols.KtSymbol
 import org.jetbrains.kotlin.analysis.api.symbols.pointers.KtSymbolPointer
 import org.jetbrains.kotlin.descriptors.CallableMemberDescriptor
 import org.jetbrains.kotlin.descriptors.findClassAcrossModuleDependencies
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.resolve.scopes.DescriptorKindFilter
 import org.jetbrains.kotlin.resolve.scopes.MemberScope
 
 class KtFe10DescFunctionLikeSymbolPointer<T : KtFunctionLikeSymbol>(
-    private val callableId: CallableId,
+    private val callablePath: CallablePath,
     private val signature: String
 ) : KtSymbolPointer<T>() {
     @Deprecated("Consider using org.jetbrains.kotlin.analysis.api.KtAnalysisSession.restoreSymbol")
@@ -28,19 +28,19 @@ class KtFe10DescFunctionLikeSymbolPointer<T : KtFunctionLikeSymbol>(
         check(analysisSession is KtFe10AnalysisSession)
         val analysisContext = analysisSession.analysisContext
 
-        val className = callableId.className
+        val className = callablePath.className
         val memberScope = if (className != null) {
-            val outerClassId = ClassId(callableId.packageName, className, isLocal = false)
+            val outerClassId = ClassId(callablePath.packageName, className, isLocal = false)
             analysisContext.resolveSession.moduleDescriptor.findClassAcrossModuleDependencies(outerClassId)
                 ?.unsubstitutedMemberScope
                 ?: MemberScope.Empty
         } else {
-            analysisContext.resolveSession.moduleDescriptor.getPackage(callableId.packageName).memberScope
+            analysisContext.resolveSession.moduleDescriptor.getPackage(callablePath.packageName).memberScope
         }
 
         @Suppress("UNCHECKED_CAST")
         return memberScope
-            .getContributedDescriptors(DescriptorKindFilter.CALLABLES) { it == callableId.callableName }
+            .getContributedDescriptors(DescriptorKindFilter.CALLABLES) { it == callablePath.callableName }
             .filterIsInstance<CallableMemberDescriptor>()
             .firstOrNull { it.getSymbolPointerSignature() == signature }
             ?.toKtCallableSymbol(analysisContext) as? T
@@ -48,6 +48,6 @@ class KtFe10DescFunctionLikeSymbolPointer<T : KtFunctionLikeSymbol>(
 
     override fun pointsToTheSameSymbolAs(other: KtSymbolPointer<KtSymbol>): Boolean = this === other ||
             other is KtFe10DescFunctionLikeSymbolPointer &&
-            other.callableId == callableId &&
+            other.callablePath == callablePath &&
             other.signature == signature
 }

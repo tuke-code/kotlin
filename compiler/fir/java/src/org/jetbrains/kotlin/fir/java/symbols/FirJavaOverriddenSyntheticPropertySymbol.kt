@@ -6,7 +6,7 @@
 package org.jetbrains.kotlin.fir.java.symbols
 
 import org.jetbrains.kotlin.fir.symbols.impl.FirSyntheticPropertySymbol
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 
 /**
  * This is a synthetic property symbol created for Java getter overriding Kotlin property.
@@ -42,8 +42,8 @@ import org.jetbrains.kotlin.name.CallableId
  * And Java "overrides" Kotlin's "base Annotation" class (yes, technically there is no base class for annotations).
  */
 class FirJavaOverriddenSyntheticPropertySymbol(
-    propertyId: CallableId,
-    getterId: CallableId
+    propertyId: CallablePath,
+    getterId: CallablePath
 ) : FirSyntheticPropertySymbol(propertyId, getterId) {
-    override fun copy(): FirSyntheticPropertySymbol = FirJavaOverriddenSyntheticPropertySymbol(callableId, getterId)
+    override fun copy(): FirSyntheticPropertySymbol = FirJavaOverriddenSyntheticPropertySymbol(callablePath, getterId)
 }

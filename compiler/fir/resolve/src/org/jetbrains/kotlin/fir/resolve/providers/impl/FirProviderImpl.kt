@@ -62,18 +62,18 @@ class FirProviderImpl(val session: FirSession, val kotlinScopeProvider: FirKotli
 
         @FirSymbolProviderInternals
         override fun getTopLevelCallableSymbolsTo(destination: MutableList<FirCallableSymbol<*>>, packageFqName: FqName, name: Name) {
-            destination += (state.functionMap[CallableId(packageFqName, null, name)] ?: emptyList())
-            destination += (state.propertyMap[CallableId(packageFqName, null, name)] ?: emptyList())
+            destination += (state.functionMap[CallablePath(packageFqName, null, name)] ?: emptyList())
+            destination += (state.propertyMap[CallablePath(packageFqName, null, name)] ?: emptyList())
         }
 
         @FirSymbolProviderInternals
         override fun getTopLevelFunctionSymbolsTo(destination: MutableList<FirNamedFunctionSymbol>, packageFqName: FqName, name: Name) {
-            destination += (state.functionMap[CallableId(packageFqName, null, name)] ?: emptyList())
+            destination += (state.functionMap[CallablePath(packageFqName, null, name)] ?: emptyList())
         }
 
         @FirSymbolProviderInternals
         override fun getTopLevelPropertySymbolsTo(destination: MutableList<FirPropertySymbol>, packageFqName: FqName, name: Name) {
-            destination += (state.propertyMap[CallableId(packageFqName, null, name)] ?: emptyList())
+            destination += (state.propertyMap[CallablePath(packageFqName, null, name)] ?: emptyList())
         }
 
         override fun getPackage(fqName: FqName): FqName? {
@@ -164,9 +164,9 @@ class FirProviderImpl(val session: FirSession, val kotlinScopeProvider: FirKotli
         private inline fun <reified D : FirCallableDeclaration, S : FirCallableSymbol<D>> registerCallable(
             symbol: S,
             data: FirRecorderData,
-            map: MutableMap<CallableId, List<S>>
+            map: MutableMap<CallablePath, List<S>>
         ) {
-            val callableId = symbol.callableId
+            val callableId = symbol.callablePath
             map.merge(callableId, listOf(symbol)) { a, b -> a + b }
             data.state.callableContainerMap[symbol] = data.file
         }
@@ -210,9 +210,9 @@ class FirProviderImpl(val session: FirSession, val kotlinScopeProvider: FirKotli
         val classifierContainerFileMap = mutableMapOf<ClassId, FirFile>()
         val classifierInPackage = mutableMapOf<FqName, MutableSet<Name>>()
         val classesInPackage = mutableMapOf<FqName, MutableSet<Name>>()
-        val functionMap = mutableMapOf<CallableId, List<FirNamedFunctionSymbol>>()
-        val propertyMap = mutableMapOf<CallableId, List<FirPropertySymbol>>()
-        val constructorMap = mutableMapOf<CallableId, List<FirConstructorSymbol>>()
+        val functionMap = mutableMapOf<CallablePath, List<FirNamedFunctionSymbol>>()
+        val propertyMap = mutableMapOf<CallablePath, List<FirPropertySymbol>>()
+        val constructorMap = mutableMapOf<CallablePath, List<FirConstructorSymbol>>()
         val callableContainerMap = mutableMapOf<FirCallableSymbol<*>, FirFile>()
         val scriptContainerMap = mutableMapOf<FirScriptSymbol, FirFile>()
         val scriptByFilePathMap = mutableMapOf<String, FirScriptSymbol>()

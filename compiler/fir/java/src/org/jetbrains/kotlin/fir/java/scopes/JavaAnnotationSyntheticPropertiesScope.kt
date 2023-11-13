@@ -10,7 +10,6 @@ import org.jetbrains.kotlin.fir.FirSession
 import org.jetbrains.kotlin.fir.copy
 import org.jetbrains.kotlin.fir.declarations.FirSimpleFunction
 import org.jetbrains.kotlin.fir.declarations.UnresolvedDeprecationProvider
-import org.jetbrains.kotlin.fir.declarations.getDeprecationsProviderFromAccessors
 import org.jetbrains.kotlin.fir.declarations.synthetic.buildSyntheticProperty
 import org.jetbrains.kotlin.fir.java.symbols.FirJavaOverriddenSyntheticPropertySymbol
 import org.jetbrains.kotlin.fir.nullableModuleData
@@ -18,7 +17,7 @@ import org.jetbrains.kotlin.fir.scopes.FirDelegatingTypeScope
 import org.jetbrains.kotlin.fir.scopes.FirTypeScope
 import org.jetbrains.kotlin.fir.scopes.ProcessorAction
 import org.jetbrains.kotlin.fir.symbols.impl.*
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.Name
 
@@ -41,8 +40,8 @@ class JavaAnnotationSyntheticPropertiesScope(
         delegateScope.processFunctionsByName(name) { functionSymbol ->
             val function = functionSymbol.fir
             val symbol = syntheticPropertiesCache.getOrPut(functionSymbol) {
-                val callableId = CallableId(classId, name)
-                FirJavaOverriddenSyntheticPropertySymbol(callableId, callableId).also {
+                val callablePath = CallablePath(classId, name)
+                FirJavaOverriddenSyntheticPropertySymbol(callablePath, callablePath).also {
                     buildSyntheticProperty {
                         moduleData = session.nullableModuleData ?: function.moduleData
                         this.name = name

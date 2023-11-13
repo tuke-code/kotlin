@@ -5,7 +5,7 @@
 
 package org.jetbrains.kotlin.diagnostics
 
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.ClassId
 
 sealed class WhenMissingCase {
@@ -51,11 +51,11 @@ sealed class WhenMissingCase {
         }
     }
 
-    class EnumCheckIsMissing(val callableId: CallableId) : WhenMissingCase() {
-        override val branchConditionText: String = callableId.asSingleFqName().toString()
+    class EnumCheckIsMissing(val callablePath: CallablePath) : WhenMissingCase() {
+        override val branchConditionText: String = callablePath.asSingleFqName().toString()
 
         override fun toString(): String {
-            return callableId.callableName.identifier
+            return callablePath.callableName.identifier
         }
     }
 

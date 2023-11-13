@@ -27,7 +27,7 @@ import org.jetbrains.kotlin.fir.symbols.impl.*
 import org.jetbrains.kotlin.fir.types.ConeKotlinType
 import org.jetbrains.kotlin.fir.types.renderReadableWithFqNames
 import org.jetbrains.kotlin.metadata.deserialization.VersionRequirement
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.ClassId
 
 object FirDiagnosticRenderers {
@@ -114,8 +114,8 @@ object FirDiagnosticRenderers {
     }
 
     val RENDER_ENUM_ENTRY_QUOTED = Renderer { enumEntry: FirEnumEntrySymbol ->
-        var name = enumEntry.callableId.callableName.asString()
-        enumEntry.callableId.classId?.let {
+        var name = enumEntry.callablePath.callableName.asString()
+        enumEntry.callablePath.classId?.let {
             name = "${it.shortClassName.asString()}.$name"
         }
         "Enum entry '$name'"
@@ -181,7 +181,7 @@ object FirDiagnosticRenderers {
         "module ${it.name}"
     }
 
-    val NAME_OF_CONTAINING_DECLARATION_OR_FILE = Renderer { symbol: CallableId ->
+    val NAME_OF_CONTAINING_DECLARATION_OR_FILE = Renderer { symbol: CallablePath ->
         NAME_OF_DECLARATION_OR_FILE.render(symbol.classId)
     }
 

@@ -202,7 +202,7 @@ internal class SymbolLightFieldForProperty private constructor(
                 is KtConstantAnnotationValue ->
                     value.constantValue.createPsiExpression(this@SymbolLightFieldForProperty)
                 is KtEnumEntryAnnotationValue ->
-                    value.callableId?.let { createExpressionFromText(it.asSingleFqName().asString(), this@SymbolLightFieldForProperty) }
+                    value.callablePath?.let { createExpressionFromText(it.asSingleFqName().asString(), this@SymbolLightFieldForProperty) }
                 is KtArrayAnnotationValue ->
                     createExpressionFromText(
                         value.values

@@ -53,7 +53,7 @@ fun isValidTypeParameterFromOuterDeclaration(
             }
 
             if (currentDeclaration is FirCallableDeclaration) {
-                val containingClassId = currentDeclaration.symbol.callableId.classId ?: return true
+                val containingClassId = currentDeclaration.symbol.callablePath.classId ?: return true
                 return containsTypeParameter(session.symbolProvider.getClassLikeSymbolByClassId(containingClassId)?.fir)
             } else if (currentDeclaration is FirClass) {
                 for (superTypeRef in currentDeclaration.superTypeRefs) {

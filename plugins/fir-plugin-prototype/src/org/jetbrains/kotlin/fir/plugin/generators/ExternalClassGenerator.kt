@@ -86,13 +86,13 @@ class ExternalClassGenerator(session: FirSession) : FirDeclarationGenerationExte
         }.symbol
     }
 
-    override fun generateFunctions(callableId: CallableId, context: MemberGenerationContext?): List<FirNamedFunctionSymbol> {
-        if (callableId.classId !in classIdsForMatchedClasses || callableId.callableName != MATERIALIZE_NAME) return emptyList()
+    override fun generateFunctions(callablePath: CallablePath, context: MemberGenerationContext?): List<FirNamedFunctionSymbol> {
+        if (callablePath.classId !in classIdsForMatchedClasses || callablePath.callableName != MATERIALIZE_NAME) return emptyList()
         val owner = context?.owner
         require(owner is FirRegularClassSymbol)
         val matchedClassId = owner.matchedClass ?: return emptyList()
         val matchedClassSymbol = session.symbolProvider.getRegularClassSymbolByClassId(matchedClassId) ?: return emptyList()
-        val function = createMemberFunction(owner, Key, callableId.callableName, matchedClassSymbol.constructStarProjectedType())
+        val function = createMemberFunction(owner, Key, callablePath.callableName, matchedClassSymbol.constructStarProjectedType())
         return listOf(function.symbol)
     }
 

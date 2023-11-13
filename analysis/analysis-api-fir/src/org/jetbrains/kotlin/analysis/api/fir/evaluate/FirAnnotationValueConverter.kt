@@ -132,7 +132,7 @@ internal object FirAnnotationValueConverter {
 
                             KtAnnotationApplicationValue(
                                 KtAnnotationApplicationWithArgumentsInfo(
-                                    resolvedSymbol.callableId.classId,
+                                    resolvedSymbol.callablePath.classId,
                                     psi as? KtCallElement,
                                     useSiteTarget = null,
                                     toNamedConstantValue(resultMap, builder),
@@ -147,13 +147,13 @@ internal object FirAnnotationValueConverter {
 
                     is FirNamedFunctionSymbol -> {
                         // arrayOf call with a single vararg argument.
-                        if (resolvedSymbol.callableId.asSingleFqName() in ArrayFqNames.ARRAY_CALL_FQ_NAMES)
+                        if (resolvedSymbol.callablePath.asSingleFqName() in ArrayFqNames.ARRAY_CALL_FQ_NAMES)
                             argumentList.arguments.single().convertConstantExpression(builder)
                         else null
                     }
 
                     is FirEnumEntrySymbol -> {
-                        KtEnumEntryAnnotationValue(resolvedSymbol.callableId, sourcePsi)
+                        KtEnumEntryAnnotationValue(resolvedSymbol.callablePath, sourcePsi)
                     }
 
                     else -> null
@@ -164,7 +164,7 @@ internal object FirAnnotationValueConverter {
                 val reference = calleeReference as? FirResolvedNamedReference ?: return null
                 when (val resolvedSymbol = reference.resolvedSymbol) {
                     is FirEnumEntrySymbol -> {
-                        KtEnumEntryAnnotationValue(resolvedSymbol.callableId, sourcePsi)
+                        KtEnumEntryAnnotationValue(resolvedSymbol.callablePath, sourcePsi)
                     }
 
                     else -> null

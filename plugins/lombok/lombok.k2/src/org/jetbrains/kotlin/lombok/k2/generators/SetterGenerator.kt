@@ -35,7 +35,7 @@ import org.jetbrains.kotlin.lombok.k2.config.lombokService
 import org.jetbrains.kotlin.lombok.utils.AccessorNames
 import org.jetbrains.kotlin.lombok.utils.capitalize
 import org.jetbrains.kotlin.lombok.utils.collectWithNotNull
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.Name
 
 class SetterGenerator(session: FirSession) : FirDeclarationGenerationExtension(session) {
@@ -50,10 +50,10 @@ class SetterGenerator(session: FirSession) : FirDeclarationGenerationExtension(s
         return cache.getValue(classSymbol to context.declaredScope)?.keys ?: emptySet()
     }
 
-    override fun generateFunctions(callableId: CallableId, context: MemberGenerationContext?): List<FirNamedFunctionSymbol> {
+    override fun generateFunctions(callablePath: CallablePath, context: MemberGenerationContext?): List<FirNamedFunctionSymbol> {
         val owner = context?.owner
         if (owner == null || !owner.isSuitableForSetters()) return emptyList()
-        val getter = cache.getValue(owner to context.declaredScope)?.get(callableId.callableName) ?: return emptyList()
+        val getter = cache.getValue(owner to context.declaredScope)?.get(callablePath.callableName) ?: return emptyList()
         return listOf(getter.symbol)
     }
 
@@ -84,7 +84,7 @@ class SetterGenerator(session: FirSession) : FirDeclarationGenerationExtension(s
 
                 dispatchReceiverType = classSymbol.defaultType()
                 name = setterName
-                symbol = FirNamedFunctionSymbol(CallableId(classSymbol.classId, setterName))
+                symbol = FirNamedFunctionSymbol(CallablePath(classSymbol.classId, setterName))
                 val visibility = setterInfo.visibility.toVisibility()
                 status = FirResolvedDeclarationStatusImpl(visibility, Modality.OPEN, visibility.toEffectiveVisibility(classSymbol))
 

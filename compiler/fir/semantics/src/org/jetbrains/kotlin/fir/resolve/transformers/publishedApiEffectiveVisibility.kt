@@ -12,7 +12,6 @@ import org.jetbrains.kotlin.fir.declarations.*
 import org.jetbrains.kotlin.fir.declarations.utils.classId
 import org.jetbrains.kotlin.fir.declarations.utils.effectiveVisibility
 import org.jetbrains.kotlin.fir.expressions.FirAnnotation
-import org.jetbrains.kotlin.fir.expressions.UnresolvedExpressionTypeAccess
 import org.jetbrains.kotlin.fir.expressions.unexpandedClassId
 import org.jetbrains.kotlin.fir.resolve.toSymbol
 import org.jetbrains.kotlin.fir.symbols.ConeClassLikeLookupTag
@@ -121,9 +120,9 @@ fun FirMemberDeclaration.setLazyPublishedVisibility(hasPublishedApi: Boolean, pa
 
     lazyPublishedApiEffectiveVisibility = lazy {
         val containingClassLookupTag = (when {
-            parentProperty != null -> parentProperty.symbol.callableId.classId
+            parentProperty != null -> parentProperty.symbol.callablePath.classId
             this is FirClassLikeDeclaration -> classId.parentClassId
-            this is FirCallableDeclaration -> symbol.callableId.classId
+            this is FirCallableDeclaration -> symbol.callablePath.classId
             else -> null
         })?.toLookupTag()
 

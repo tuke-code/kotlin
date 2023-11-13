@@ -22,7 +22,7 @@ import org.jetbrains.kotlin.fir.scopes.*
 import org.jetbrains.kotlin.fir.scopes.impl.FirTypeIntersectionScopeContext.ResultOfIntersection
 import org.jetbrains.kotlin.fir.symbols.impl.*
 import org.jetbrains.kotlin.fir.types.*
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.utils.addToStdlib.runIf
 import kotlin.contracts.ExperimentalContracts
@@ -364,11 +364,11 @@ class FirTypeIntersectionScopeContext(
     ): FirNamedFunctionSymbol {
         val key = mostSpecific.first() as FirNamedFunctionSymbol
         val keyFir = key.fir
-        val callableId = CallableId(
+        val callablePath = CallablePath(
             dispatchReceiverType.classId ?: keyFir.dispatchReceiverClassLookupTagOrNull()?.classId!!,
             keyFir.name
         )
-        val newSymbol = FirIntersectionOverrideFunctionSymbol(callableId, overrides)
+        val newSymbol = FirIntersectionOverrideFunctionSymbol(callablePath, overrides)
         FirFakeOverrideGenerator.createCopyForFirFunction(
             newSymbol, keyFir, derivedClassLookupTag = null, session,
             FirDeclarationOrigin.IntersectionOverride,
@@ -436,13 +436,13 @@ class FirTypeIntersectionScopeContext(
     private inline fun <reified S : FirVariableSymbol<F>, F : FirVariable> createIntersectionOverrideVariable(
         mostSpecific: Collection<FirCallableSymbol<*>>,
         overrides: Collection<FirCallableSymbol<*>>,
-        createIntersectionOverrideSymbol: (CallableId, Collection<FirCallableSymbol<*>>) -> S,
+        createIntersectionOverrideSymbol: (CallablePath, Collection<FirCallableSymbol<*>>) -> S,
         createCopy: (S, F, returnType: ConeKotlinType?) -> F
     ): S {
         val key = mostSpecific.first() as S
         val keyFir = key.fir
-        val callableId = CallableId(dispatchReceiverType.classId ?: keyFir.dispatchReceiverClassLookupTagOrNull()?.classId!!, keyFir.name)
-        val newSymbol = createIntersectionOverrideSymbol(callableId, overrides)
+        val callablePath = CallablePath(dispatchReceiverType.classId ?: keyFir.dispatchReceiverClassLookupTagOrNull()?.classId!!, keyFir.name)
+        val newSymbol = createIntersectionOverrideSymbol(callablePath, overrides)
         val newReturnType = runIf(!forClassUseSiteScope && mostSpecific.none { (it as FirVariableSymbol<*>).fir.isVar }) {
             intersectReturnTypes(mostSpecific)
         }

@@ -29,7 +29,7 @@ import org.jetbrains.kotlin.fir.resolve.providers.FirCompositeCachedSymbolNamesP
 import org.jetbrains.kotlin.fir.symbols.impl.FirCallableSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirNamedFunctionSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirPropertySymbol
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.name.Name
@@ -87,8 +87,8 @@ internal class LLFirProviderHelper(
                 }
         }
 
-    private val callablesByCallableId =
-        firSession.firCachesFactory.createCache<CallableId, List<FirCallableSymbol<*>>, Collection<KtFile>?> { callableId, context ->
+    private val callablesByCallablePath =
+        firSession.firCachesFactory.createCache<CallablePath, List<FirCallableSymbol<*>>, Collection<KtFile>?> { callableId, context ->
             require(context == null || context.all { it.isPhysical })
             val files = context ?: declarationProvider.getTopLevelCallableFiles(callableId).ifEmpty { return@createCache emptyList() }
             buildList {
@@ -118,38 +118,38 @@ internal class LLFirProviderHelper(
 
     fun getTopLevelCallableSymbols(packageFqName: FqName, name: Name): List<FirCallableSymbol<*>> {
         if (!allowKotlinPackage && packageFqName.isKotlinPackage()) return emptyList()
-        val callableId = CallableId(packageFqName, name)
-        return callablesByCallableId.getValue(callableId)
+        val callablePath = CallablePath(packageFqName, name)
+        return callablesByCallablePath.getValue(callablePath)
     }
 
     /**
      * [callableFiles] are the [KtFile]s which contain callables of the given package and name. If already known, they can be provided to
      * avoid index accesses.
      */
-    fun getTopLevelCallableSymbols(callableId: CallableId, callableFiles: Collection<KtFile>?): List<FirCallableSymbol<*>> {
-        if (!allowKotlinPackage && callableId.packageName.isKotlinPackage()) return emptyList()
-        return callablesByCallableId.getValue(callableId, callableFiles)
+    fun getTopLevelCallableSymbols(callablePath: CallablePath, callableFiles: Collection<KtFile>?): List<FirCallableSymbol<*>> {
+        if (!allowKotlinPackage && callablePath.packageName.isKotlinPackage()) return emptyList()
+        return callablesByCallablePath.getValue(callablePath, callableFiles)
     }
 
     fun getTopLevelFunctionSymbols(packageFqName: FqName, name: Name): List<FirNamedFunctionSymbol> {
         return getTopLevelCallableSymbols(packageFqName, name).filterIsInstance<FirNamedFunctionSymbol>()
     }
 
-    fun getTopLevelFunctionSymbols(callableId: CallableId, callableFiles: Collection<KtFile>): List<FirNamedFunctionSymbol> {
-        return getTopLevelCallableSymbols(callableId, callableFiles).filterIsInstance<FirNamedFunctionSymbol>()
+    fun getTopLevelFunctionSymbols(callablePath: CallablePath, callableFiles: Collection<KtFile>): List<FirNamedFunctionSymbol> {
+        return getTopLevelCallableSymbols(callablePath, callableFiles).filterIsInstance<FirNamedFunctionSymbol>()
     }
 
     fun getTopLevelPropertySymbols(packageFqName: FqName, name: Name): List<FirPropertySymbol> {
         return getTopLevelCallableSymbols(packageFqName, name).filterIsInstance<FirPropertySymbol>()
     }
 
-    fun getTopLevelPropertySymbols(callableId: CallableId, callableFiles: Collection<KtFile>): List<FirPropertySymbol> {
-        return getTopLevelCallableSymbols(callableId, callableFiles).filterIsInstance<FirPropertySymbol>()
+    fun getTopLevelPropertySymbols(callablePath: CallablePath, callableFiles: Collection<KtFile>): List<FirPropertySymbol> {
+        return getTopLevelCallableSymbols(callablePath, callableFiles).filterIsInstance<FirPropertySymbol>()
     }
 
     private fun FirFile.collectCallableDeclarationsTo(list: MutableList<FirCallableSymbol<*>>, name: Name) {
         declarations.mapNotNullTo(list) { declaration ->
-            if (declaration is FirCallableDeclaration && declaration.symbol.callableId.callableName == name) {
+            if (declaration is FirCallableDeclaration && declaration.symbol.callablePath.callableName == name) {
                 declaration.symbol
             } else null
         }

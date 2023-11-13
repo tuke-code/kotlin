@@ -28,7 +28,7 @@ import org.jetbrains.kotlin.ir.util.IdSignature
 import org.jetbrains.kotlin.ir.util.IrMessageLogger
 import org.jetbrains.kotlin.ir.util.ReferenceSymbolTable
 import org.jetbrains.kotlin.ir.util.TypeTranslator
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.platform.TargetPlatform
@@ -103,20 +103,20 @@ class Fir2IrPluginContext(
         )
     }
 
-    override fun referenceFunctions(callableId: CallableId): Collection<IrSimpleFunctionSymbol> {
+    override fun referenceFunctions(callablePath: CallablePath): Collection<IrSimpleFunctionSymbol> {
         return referenceCallableSymbols(
-            callableId.classId,
-            getCallablesFromScope = { getFunctions(callableId.callableName) },
-            getCallablesFromProvider = { getTopLevelFunctionSymbols(callableId.packageName, callableId.callableName) },
+            callablePath.classId,
+            getCallablesFromScope = { getFunctions(callablePath.callableName) },
+            getCallablesFromProvider = { getTopLevelFunctionSymbols(callablePath.packageName, callablePath.callableName) },
             Fir2IrDeclarationStorage::getIrFunctionSymbol
         )
     }
 
-    override fun referenceProperties(callableId: CallableId): Collection<IrPropertySymbol> {
+    override fun referenceProperties(callablePath: CallablePath): Collection<IrPropertySymbol> {
         return referenceCallableSymbols(
-            callableId.classId,
-            getCallablesFromScope = { getProperties(callableId.callableName).filterIsInstance<FirPropertySymbol>() },
-            getCallablesFromProvider = { getTopLevelPropertySymbols(callableId.packageName, callableId.callableName) },
+            callablePath.classId,
+            getCallablesFromScope = { getProperties(callablePath.callableName).filterIsInstance<FirPropertySymbol>() },
+            getCallablesFromProvider = { getTopLevelPropertySymbols(callablePath.packageName, callablePath.callableName) },
             Fir2IrDeclarationStorage::getIrPropertySymbol
         )
     }

@@ -146,8 +146,8 @@ abstract class AbstractFirDeserializedSymbolProvider(
             }
         )
 
-    private val functionCache = session.firCachesFactory.createCache(::loadFunctionsByCallableId)
-    private val propertyCache = session.firCachesFactory.createCache(::loadPropertiesByCallableId)
+    private val functionCache = session.firCachesFactory.createCache(::loadFunctionsByCallablePath)
+    private val propertyCache = session.firCachesFactory.createCache(::loadPropertiesByCallablePath)
 
     // ------------------------ Abstract members ------------------------
 
@@ -231,9 +231,9 @@ abstract class AbstractFirDeserializedSymbolProvider(
         }
     }
 
-    private fun loadFunctionsByCallableId(callableId: CallableId): List<FirNamedFunctionSymbol> {
-        return getPackageParts(callableId.packageName).flatMap { part ->
-            val functionIds = part.topLevelFunctionNameIndex[callableId.callableName] ?: return@flatMap emptyList()
+    private fun loadFunctionsByCallablePath(callablePath: CallablePath): List<FirNamedFunctionSymbol> {
+        return getPackageParts(callablePath.packageName).flatMap { part ->
+            val functionIds = part.topLevelFunctionNameIndex[callablePath.callableName] ?: return@flatMap emptyList()
             functionIds.map {
                 part.context.memberDeserializer.loadFunction(
                     part.proto.getFunction(it),
@@ -243,9 +243,9 @@ abstract class AbstractFirDeserializedSymbolProvider(
         }
     }
 
-    private fun loadPropertiesByCallableId(callableId: CallableId): List<FirPropertySymbol> {
-        return getPackageParts(callableId.packageName).flatMap { part ->
-            val propertyIds = part.topLevelPropertyNameIndex[callableId.callableName] ?: return@flatMap emptyList()
+    private fun loadPropertiesByCallablePath(callablePath: CallablePath): List<FirPropertySymbol> {
+        return getPackageParts(callablePath.packageName).flatMap { part ->
+            val propertyIds = part.topLevelPropertyNameIndex[callablePath.callableName] ?: return@flatMap emptyList()
             propertyIds.map {
                 part.context.memberDeserializer.loadProperty(part.proto.getProperty(it)).symbol
             }
@@ -291,12 +291,12 @@ abstract class AbstractFirDeserializedSymbolProvider(
 
     @FirSymbolProviderInternals
     override fun getTopLevelCallableSymbolsTo(destination: MutableList<FirCallableSymbol<*>>, packageFqName: FqName, name: Name) {
-        val callableId = CallableId(packageFqName, name)
-        destination += functionCache.getCallables(callableId)
-        destination += propertyCache.getCallables(callableId)
+        val callablePath = CallablePath(packageFqName, name)
+        destination += functionCache.getCallables(callablePath)
+        destination += propertyCache.getCallables(callablePath)
     }
 
-    private fun <C : FirCallableSymbol<*>> FirCache<CallableId, List<C>, Nothing?>.getCallables(id: CallableId): List<C> {
+    private fun <C : FirCallableSymbol<*>> FirCache<CallablePath, List<C>, Nothing?>.getCallables(id: CallablePath): List<C> {
         // Don't actually query FirCache when we're sure there are no relevant value
         // It helps to decrease the size of a cache thus leading to better query time
         if (!symbolNamesProvider.mayHaveTopLevelCallable(id.packageName, id.callableName)) return emptyList()
@@ -305,12 +305,12 @@ abstract class AbstractFirDeserializedSymbolProvider(
 
     @FirSymbolProviderInternals
     override fun getTopLevelFunctionSymbolsTo(destination: MutableList<FirNamedFunctionSymbol>, packageFqName: FqName, name: Name) {
-        destination += functionCache.getCallables(CallableId(packageFqName, name))
+        destination += functionCache.getCallables(CallablePath(packageFqName, name))
     }
 
     @FirSymbolProviderInternals
     override fun getTopLevelPropertySymbolsTo(destination: MutableList<FirPropertySymbol>, packageFqName: FqName, name: Name) {
-        destination += propertyCache.getCallables(CallableId(packageFqName, name))
+        destination += propertyCache.getCallables(CallablePath(packageFqName, name))
     }
 
     override fun getClassLikeSymbolByClassId(classId: ClassId): FirClassLikeSymbol<*>? {

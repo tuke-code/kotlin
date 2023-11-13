@@ -16,7 +16,7 @@ import org.jetbrains.kotlin.fir.plugin.createDefaultPrivateConstructor
 import org.jetbrains.kotlin.fir.plugin.createMemberFunction
 import org.jetbrains.kotlin.fir.plugin.fqn
 import org.jetbrains.kotlin.fir.symbols.impl.*
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.name.SpecialNames
 
@@ -34,12 +34,12 @@ class CompanionGenerator(session: FirSession) : FirDeclarationGenerationExtensio
         return createCompanionObject(owner, Key).symbol
     }
 
-    override fun generateFunctions(callableId: CallableId, context: MemberGenerationContext?): List<FirNamedFunctionSymbol> {
+    override fun generateFunctions(callablePath: CallablePath, context: MemberGenerationContext?): List<FirNamedFunctionSymbol> {
         val owner = context?.owner ?: return emptyList()
         val ownerKey = (owner.origin as? FirDeclarationOrigin.Plugin)?.key ?: return emptyList()
         if (ownerKey != Key) return emptyList()
-        if (callableId.callableName != FOO_NAME) return emptyList()
-        val function = createMemberFunction(owner, Key, callableId.callableName, session.builtinTypes.intType.type)
+        if (callablePath.callableName != FOO_NAME) return emptyList()
+        val function = createMemberFunction(owner, Key, callablePath.callableName, session.builtinTypes.intType.type)
         return listOf(function.symbol)
     }
 

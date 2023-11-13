@@ -41,7 +41,7 @@ import org.jetbrains.kotlin.fir.types.impl.FirImplicitBooleanTypeRef
 import org.jetbrains.kotlin.fir.types.impl.FirImplicitIntTypeRef
 import org.jetbrains.kotlin.fir.types.impl.FirImplicitNullableAnyTypeRef
 import org.jetbrains.kotlin.fir.types.impl.FirImplicitStringTypeRef
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.util.OperatorNameConventions
 import org.jetbrains.kotlin.utils.addToStdlib.shouldNotBeCalled
@@ -182,7 +182,7 @@ class FirClassAnySynthesizedMemberScope(
         status = FirResolvedDeclarationStatusImpl(Visibilities.Public, Modality.OPEN, EffectiveVisibility.Public).apply {
             this.isOperator = isOperator
         }
-        symbol = FirNamedFunctionSymbol(CallableId(lookupTag.classId, name))
+        symbol = FirNamedFunctionSymbol(CallablePath(lookupTag.classId, name))
         dispatchReceiverType = this@FirClassAnySynthesizedMemberScope.dispatchReceiverType
     }
 

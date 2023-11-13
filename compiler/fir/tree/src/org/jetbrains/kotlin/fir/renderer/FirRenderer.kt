@@ -272,10 +272,10 @@ class FirRenderer(
             }
             when (callableDeclaration) {
                 is FirSimpleFunction -> {
-                    idRenderer.renderCallableId(callableDeclaration.symbol.callableId)
+                    idRenderer.renderCallableId(callableDeclaration.symbol.callablePath)
                 }
                 is FirVariable -> {
-                    idRenderer.renderCallableId(callableDeclaration.symbol.callableId)
+                    idRenderer.renderCallableId(callableDeclaration.symbol.callablePath)
                 }
                 else -> {}
             }
@@ -921,13 +921,13 @@ class FirRenderer(
 
         override fun visitBackingFieldReference(backingFieldReference: FirBackingFieldReference) {
             print("F|")
-            print(backingFieldReference.resolvedSymbol.fir.propertySymbol.callableId)
+            print(backingFieldReference.resolvedSymbol.fir.propertySymbol.callablePath)
             print("|")
         }
 
         override fun visitDelegateFieldReference(delegateFieldReference: FirDelegateFieldReference) {
             print("D|")
-            print(delegateFieldReference.resolvedSymbol.callableId)
+            print(delegateFieldReference.resolvedSymbol.callablePath)
             print("|")
         }
 

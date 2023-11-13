@@ -43,7 +43,7 @@ import org.jetbrains.kotlin.fir.types.FirErrorTypeRef
 import org.jetbrains.kotlin.fir.types.FirImplicitTypeRef
 import org.jetbrains.kotlin.fir.types.FirTypeRef
 import org.jetbrains.kotlin.fir.types.builder.buildErrorTypeRef
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.Name
 
 class ValueParameter(
@@ -101,7 +101,7 @@ class ValueParameter(
 
     fun <T> toFirPropertyFromPrimaryConstructor(
         moduleData: FirModuleData,
-        callableId: CallableId,
+        callablePath: CallablePath,
         isExpect: Boolean,
         currentDispatchReceiver: ConeClassLikeType?,
         context: Context<T>
@@ -129,7 +129,7 @@ class ValueParameter(
                 }
             }
             isVar = this@ValueParameter.isVar
-            symbol = FirPropertySymbol(callableId)
+            symbol = FirPropertySymbol(callablePath)
             dispatchReceiverType = currentDispatchReceiver
             isLocal = false
             status = FirDeclarationStatusImpl(modifiers.getVisibility(), modifiers.getModality(isClassOrObject = false)).apply {

@@ -5,37 +5,37 @@
 
 package org.jetbrains.kotlin.fir.symbols
 
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.name.Name
 
 object SyntheticCallableId {
     private val syntheticPackageName: FqName = FqName("_synthetic")
 
-    val WHEN = CallableId(
+    val WHEN = CallablePath(
         syntheticPackageName,
         Name.identifier("WHEN_CALL")
     )
-    val TRY = CallableId(
+    val TRY = CallablePath(
         syntheticPackageName,
         Name.identifier("TRY_CALL")
     )
-    val CHECK_NOT_NULL = CallableId(
+    val CHECK_NOT_NULL = CallablePath(
         syntheticPackageName,
         Name.identifier("CHECK_NOT_NULL_CALL")
     )
 
-    val ELVIS_NOT_NULL = CallableId(
+    val ELVIS_NOT_NULL = CallablePath(
         syntheticPackageName,
         Name.identifier("ELVIS_CALL")
     )
 
-    val ID = CallableId(
+    val ID = CallablePath(
         syntheticPackageName,
         Name.identifier("ID_CALL")
     )
 
-    val ACCEPT_SPECIFIC_TYPE = CallableId(
+    val ACCEPT_SPECIFIC_TYPE = CallablePath(
         syntheticPackageName,
         Name.identifier("ACCEPT_SPECIFIC_TYPE_CALL")
     )

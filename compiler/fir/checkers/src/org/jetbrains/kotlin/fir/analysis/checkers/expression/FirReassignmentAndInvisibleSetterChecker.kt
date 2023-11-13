@@ -81,7 +81,7 @@ object FirReassignmentAndInvisibleSetterChecker : FirVariableAssignmentChecker()
                 FirErrors.INVISIBLE_SETTER,
                 callableSymbol,
                 callableSymbol.setterSymbol?.visibility ?: Visibilities.Private,
-                callableSymbol.callableId,
+                callableSymbol.callablePath,
                 context
             )
         }

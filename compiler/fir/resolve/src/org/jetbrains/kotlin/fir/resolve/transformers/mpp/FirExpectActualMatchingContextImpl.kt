@@ -21,7 +21,7 @@ import org.jetbrains.kotlin.fir.symbols.resolvedAnnotationsWithArguments
 import org.jetbrains.kotlin.fir.types.*
 import org.jetbrains.kotlin.fir.types.impl.ConeClassLikeTypeImpl
 import org.jetbrains.kotlin.mpp.*
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.resolve.calls.mpp.ExpectActualCollectionArgumentsCompatibilityCheckStrategy
@@ -66,8 +66,8 @@ class FirExpectActualMatchingContextImpl private constructor(
         get() = asSymbol().classId
     override val TypeAliasSymbolMarker.classId: ClassId
         get() = asSymbol().classId
-    override val CallableSymbolMarker.callableId: CallableId
-        get() = asSymbol().callableId
+    override val CallableSymbolMarker.callablePath: CallablePath
+        get() = asSymbol().callablePath
 
     override val TypeParameterSymbolMarker.parameterName: Name
         get() = asSymbol().name

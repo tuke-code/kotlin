@@ -157,7 +157,7 @@ internal class StubBasedFirDeserializationContext(
         fun createRootContext(
             session: FirSession,
             moduleData: FirModuleData,
-            callableId: CallableId,
+            callablePath: CallablePath,
             parameterListOwner: KtTypeParameterListOwner,
             symbol: FirBasedSymbol<*>,
             initialOrigin: FirDeclarationOrigin,
@@ -166,8 +166,8 @@ internal class StubBasedFirDeserializationContext(
             return createRootContext(
                 moduleData,
                 StubBasedAnnotationDeserializer(session),
-                callableId.packageName,
-                callableId.className,
+                callablePath.packageName,
+                callablePath.className,
                 parameterListOwner,
                 containerSource = containerSource,
                 outerClassSymbol = null,
@@ -286,8 +286,8 @@ internal class StubBasedFirMemberDeserializer(
         existingSymbol: FirPropertySymbol? = null
     ): FirProperty {
         val callableName = property.nameAsSafeName
-        val callableId = CallableId(c.packageFqName, c.relativeClassName, callableName)
-        val symbol = existingSymbol ?: FirPropertySymbol(callableId)
+        val callablePath = CallablePath(c.packageFqName, c.relativeClassName, callableName)
+        val symbol = existingSymbol ?: FirPropertySymbol(callablePath)
         val local = c.childContext(property, containingDeclarationSymbol = symbol)
 
         val returnTypeRef = property.typeReference?.toTypeRef(local)
@@ -368,7 +368,7 @@ internal class StubBasedFirMemberDeserializer(
                 )
             }
             this.containerSource = c.containerSource
-            this.initializer = c.annotationDeserializer.loadConstant(property, symbol.callableId)
+            this.initializer = c.annotationDeserializer.loadConstant(property, symbol.callablePath)
             deprecationsProvider = annotations.getDeprecationsProviderFromAnnotations(c.session, fromJava = false)
 
             property.contextReceivers.mapNotNull { it.typeReference() }.mapTo(contextReceivers, ::loadContextReceiver)
@@ -407,8 +407,8 @@ internal class StubBasedFirMemberDeserializer(
         }
 
         val callableName = function.nameAsSafeName
-        val callableId = CallableId(c.packageFqName, c.relativeClassName, callableName)
-        val symbol = existingSymbol ?: FirNamedFunctionSymbol(callableId)
+        val callablePath = CallablePath(c.packageFqName, c.relativeClassName, callableName)
+        val symbol = existingSymbol ?: FirNamedFunctionSymbol(callablePath)
         val local = c.childContext(function, containingDeclarationSymbol = symbol)
 
         val simpleFunction = buildSimpleFunction {
@@ -472,8 +472,8 @@ internal class StubBasedFirMemberDeserializer(
         classBuilder: FirRegularClassBuilder
     ): FirConstructor {
         val relativeClassName = c.relativeClassName!!
-        val callableId = CallableId(c.packageFqName, relativeClassName, relativeClassName.shortName())
-        val symbol = FirConstructorSymbol(callableId)
+        val callablePath = CallablePath(c.packageFqName, relativeClassName, relativeClassName.shortName())
+        val symbol = FirConstructorSymbol(callablePath)
         val local = c.childContext(constructor, containingDeclarationSymbol = symbol)
         val isPrimary = constructor is KtPrimaryConstructor
 
@@ -594,7 +594,7 @@ internal class StubBasedFirMemberDeserializer(
             this.origin = initialOrigin
             returnTypeRef = buildResolvedTypeRef { type = enumType }
             name = Name.identifier(enumEntryName)
-            this.symbol = FirEnumEntrySymbol(CallableId(classId, name))
+            this.symbol = FirEnumEntrySymbol(CallablePath(classId, name))
             this.status = FirResolvedDeclarationStatusImpl(
                 Visibilities.Public,
                 Modality.FINAL,

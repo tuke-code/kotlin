@@ -26,7 +26,7 @@ import org.jetbrains.kotlin.fir.types.ConeDynamicType
 import org.jetbrains.kotlin.fir.types.create
 import org.jetbrains.kotlin.fir.types.toRegularClassSymbol
 import org.jetbrains.kotlin.fir.utils.exceptions.withFirEntry
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.utils.exceptions.errorWithAttachment
 
@@ -80,11 +80,11 @@ private fun createContextReceiver(
     builder.token
 )
 
-internal fun FirCallableSymbol<*>.getCallableIdIfNonLocal(): CallableId? {
+internal fun FirCallableSymbol<*>.getCallableIdIfNonLocal(): CallablePath? {
     return when {
         origin == FirDeclarationOrigin.DynamicScope -> null
-        callableId.isLocal -> null
-        else -> callableId
+        callablePath.isLocal -> null
+        else -> callablePath
     }
 }
 

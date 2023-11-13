@@ -52,7 +52,7 @@ import org.jetbrains.kotlin.fir.types.builder.buildResolvedTypeRef
 import org.jetbrains.kotlin.fir.types.builder.buildTypeProjectionWithVariance
 import org.jetbrains.kotlin.fir.types.impl.ConeTypeParameterTypeImpl
 import org.jetbrains.kotlin.fir.visitors.FirTransformer
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.resolve.ArrayFqNames
 import org.jetbrains.kotlin.resolve.calls.tasks.ExplicitReceiverKind
@@ -408,10 +408,10 @@ class FirSyntheticCallGenerator(
     }
 
 
-    private fun generateSyntheticSelectFunction(callableId: CallableId): FirSimpleFunction {
+    private fun generateSyntheticSelectFunction(callablePath: CallablePath): FirSimpleFunction {
         // Synthetic function signature:
         //   fun <K> select(vararg values: K): K
-        val functionSymbol = FirSyntheticFunctionSymbol(callableId)
+        val functionSymbol = FirSyntheticFunctionSymbol(callablePath)
 
         val (typeParameter, returnType) = generateSyntheticSelectTypeParameter(functionSymbol)
 
@@ -421,7 +421,7 @@ class FirSyntheticCallGenerator(
             variance = Variance.INVARIANT
         }
 
-        return generateMemberFunction(functionSymbol, callableId.callableName, typeArgument.typeRef).apply {
+        return generateMemberFunction(functionSymbol, callablePath.callableName, typeArgument.typeRef).apply {
             typeParameters += typeParameter
             valueParameters += argumentType.toValueParameter("branches", functionSymbol, isVararg = true)
         }.build()

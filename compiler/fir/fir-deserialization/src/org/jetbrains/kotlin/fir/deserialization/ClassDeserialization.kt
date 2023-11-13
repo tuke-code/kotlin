@@ -35,7 +35,7 @@ import org.jetbrains.kotlin.fir.types.toLookupTag
 import org.jetbrains.kotlin.metadata.ProtoBuf
 import org.jetbrains.kotlin.metadata.SerializationPluginMetadataExtensions
 import org.jetbrains.kotlin.metadata.deserialization.*
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.name.StandardClassIds
@@ -175,7 +175,7 @@ fun deserializeClassToSymbol(
                     this.origin = FirDeclarationOrigin.Library
                     returnTypeRef = buildResolvedTypeRef { type = enumType }
                     name = enumEntryName
-                    this.symbol = FirEnumEntrySymbol(CallableId(classId, enumEntryName))
+                    this.symbol = FirEnumEntrySymbol(CallablePath(classId, enumEntryName))
                     this.status = FirResolvedDeclarationStatusImpl(
                         Visibilities.Public,
                         Modality.FINAL,
@@ -294,7 +294,7 @@ fun FirRegularClassBuilder.addCloneForArrayIfNeeded(classId: ClassId, dispatchRe
             isOverride = true
         }
         name = StandardClassIds.Callables.clone.callableName
-        symbol = FirNamedFunctionSymbol(CallableId(classId, name))
+        symbol = FirNamedFunctionSymbol(CallablePath(classId, name))
         dispatchReceiverType = dispatchReceiver!!
     }
 }

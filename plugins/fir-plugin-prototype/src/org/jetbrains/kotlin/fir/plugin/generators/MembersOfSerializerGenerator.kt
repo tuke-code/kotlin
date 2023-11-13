@@ -19,7 +19,7 @@ import org.jetbrains.kotlin.fir.plugin.fqn
 import org.jetbrains.kotlin.fir.symbols.impl.FirClassSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirNamedFunctionSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirRegularClassSymbol
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.Name
 
 /*
@@ -50,11 +50,11 @@ class MembersOfSerializerGenerator(session: FirSession) : FirDeclarationGenerati
         serializableClassIds.associateBy { Name.identifier("serialize${it.shortClassName.identifier}") }
     }
 
-    override fun generateFunctions(callableId: CallableId, context: MemberGenerationContext?): List<FirNamedFunctionSymbol> {
+    override fun generateFunctions(callablePath: CallablePath, context: MemberGenerationContext?): List<FirNamedFunctionSymbol> {
         val owner = context?.owner ?: return emptyList()
-        val argumentClassId = serializeMethodNames[callableId.callableName] ?: return emptyList()
+        val argumentClassId = serializeMethodNames[callablePath.callableName] ?: return emptyList()
 
-        val function = createMemberFunction(owner, Key, callableId.callableName, session.builtinTypes.unitType.type) {
+        val function = createMemberFunction(owner, Key, callablePath.callableName, session.builtinTypes.unitType.type) {
             valueParameter(X_NAME, argumentClassId.createConeType(session))
         }.apply {
             replaceBody(buildBlock {}.apply { replaceConeTypeOrNull(session.builtinTypes.unitType.type) })

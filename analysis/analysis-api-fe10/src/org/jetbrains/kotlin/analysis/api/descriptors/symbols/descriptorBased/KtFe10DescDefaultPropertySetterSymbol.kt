@@ -27,7 +27,7 @@ import org.jetbrains.kotlin.descriptors.Modality
 import org.jetbrains.kotlin.descriptors.PropertyDescriptor
 import org.jetbrains.kotlin.descriptors.ValueParameterDescriptor
 import org.jetbrains.kotlin.descriptors.Visibility
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.Name
 
 internal class KtFe10DescDefaultPropertySetterSymbol(
@@ -56,8 +56,8 @@ internal class KtFe10DescDefaultPropertySetterSymbol(
     override val hasStableParameterNames: Boolean
         get() = withValidityAssertion { true }
 
-    override val callableIdIfNonLocal: CallableId?
-        get() = withValidityAssertion { propertyDescriptor.setterCallableIdIfNotLocal }
+    override val callablePathIfNonLocal: CallablePath?
+        get() = withValidityAssertion { propertyDescriptor.setterCallablePathIfNotLocal }
 
     override val returnType: KtType
         get() = withValidityAssertion { analysisContext.builtIns.unitType.toKtType(analysisContext) }

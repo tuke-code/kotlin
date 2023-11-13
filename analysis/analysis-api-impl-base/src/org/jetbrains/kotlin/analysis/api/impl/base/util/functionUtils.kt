@@ -6,12 +6,12 @@
 package org.jetbrains.kotlin.analysis.api.impl.base.util
 
 import org.jetbrains.kotlin.builtins.StandardNames
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.util.OperatorNameConventions
 
-val kotlinFunctionInvokeCallableIds = (0..23).flatMapTo(hashSetOf()) { arity ->
+val kotlinFunctionInvokeCallablePaths = (0..23).flatMapTo(hashSetOf()) { arity ->
     listOf(
-        CallableId(StandardNames.getFunctionClassId(arity), OperatorNameConventions.INVOKE),
-        CallableId(StandardNames.getSuspendFunctionClassId(arity), OperatorNameConventions.INVOKE)
+        CallablePath(StandardNames.getFunctionClassId(arity), OperatorNameConventions.INVOKE),
+        CallablePath(StandardNames.getSuspendFunctionClassId(arity), OperatorNameConventions.INVOKE)
     )
 }

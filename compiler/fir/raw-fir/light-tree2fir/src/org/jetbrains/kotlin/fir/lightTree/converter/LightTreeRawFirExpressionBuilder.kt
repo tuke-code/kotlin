@@ -45,7 +45,7 @@ import org.jetbrains.kotlin.fir.types.FirTypeProjection
 import org.jetbrains.kotlin.fir.types.FirTypeRef
 import org.jetbrains.kotlin.fir.types.builder.buildErrorTypeRef
 import org.jetbrains.kotlin.lexer.KtTokens.*
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.SpecialNames
 import org.jetbrains.kotlin.psi.stubs.elements.KtConstantExpressionElementType
 import org.jetbrains.kotlin.psi.stubs.elements.KtNameReferenceExpressionElementType
@@ -1283,7 +1283,7 @@ class LightTreeRawFirExpressionBuilder(
                         status = FirResolvedDeclarationStatusImpl(Visibilities.Local, Modality.FINAL, EffectiveVisibility.Local)
                         isLocal = true
                         this.name = parameter.name
-                        symbol = FirPropertySymbol(CallableId(name))
+                        symbol = FirPropertySymbol(CallablePath(name))
                         annotations += parameter.annotations
                     }.also {
                         it.isCatchParameter = true

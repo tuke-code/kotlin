@@ -6,7 +6,7 @@
 package org.jetbrains.kotlin.name
 
 // NB: with className == null we are at top level
-data class CallableId(
+data class CallablePath(
     val packageName: FqName,
     val className: FqName?,
     val callableName: Name,

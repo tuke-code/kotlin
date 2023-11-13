@@ -18,7 +18,7 @@ import org.jetbrains.kotlin.fir.resolve.providers.symbolProvider
 import org.jetbrains.kotlin.fir.scopes.impl.nestedClassifierScope
 import org.jetbrains.kotlin.fir.scopes.processClassifiersByName
 import org.jetbrains.kotlin.fir.symbols.impl.*
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.name.Name
@@ -44,11 +44,11 @@ class FirExtensionDeclarationsSymbolProvider private constructor(
         generateClassLikeDeclaration(classId)
     }
 
-    private val functionCache: FirCache<CallableId, List<FirNamedFunctionSymbol>, Nothing?> = cachesFactory.createCache { callableId, _ ->
+    private val functionCache: FirCache<CallablePath, List<FirNamedFunctionSymbol>, Nothing?> = cachesFactory.createCache { callableId, _ ->
         generateTopLevelFunctions(callableId)
     }
 
-    private val propertyCache: FirCache<CallableId, List<FirPropertySymbol>, Nothing?> = cachesFactory.createCache { callableId, _ ->
+    private val propertyCache: FirCache<CallablePath, List<FirPropertySymbol>, Nothing?> = cachesFactory.createCache { callableId, _ ->
         generateTopLevelProperties(callableId)
     }
 
@@ -60,7 +60,7 @@ class FirExtensionDeclarationsSymbolProvider private constructor(
         cachesFactory.createLazyValue {
             computeNamesGroupedByPackage(
                 FirDeclarationGenerationExtension::getTopLevelCallableIds,
-                CallableId::packageName, CallableId::callableName
+                CallablePath::packageName, CallablePath::callableName
             )
         }
 
@@ -91,7 +91,7 @@ class FirExtensionDeclarationsSymbolProvider private constructor(
             extensions.flatGroupBy { it.topLevelClassIdsCache.getValue() }
         }
 
-    private val extensionsByTopLevelCallableId: FirLazyValue<Map<CallableId, List<FirDeclarationGenerationExtension>>> =
+    private val extensionsByTopLevelCallablePath: FirLazyValue<Map<CallablePath, List<FirDeclarationGenerationExtension>>> =
         session.firCachesFactory.createLazyValue {
             extensions.flatGroupBy { it.topLevelCallableIdsCache.getValue() }
         }
@@ -130,15 +130,15 @@ class FirExtensionDeclarationsSymbolProvider private constructor(
         }
     }
 
-    private fun generateTopLevelFunctions(callableId: CallableId): List<FirNamedFunctionSymbol> {
-        return extensionsByTopLevelCallableId.getValue()[callableId].orEmpty()
-            .flatMap { it.generateFunctions(callableId, context = null) }
+    private fun generateTopLevelFunctions(callablePath: CallablePath): List<FirNamedFunctionSymbol> {
+        return extensionsByTopLevelCallablePath.getValue()[callablePath].orEmpty()
+            .flatMap { it.generateFunctions(callablePath, context = null) }
             .onEach { it.fir.validate() }
     }
 
-    private fun generateTopLevelProperties(callableId: CallableId): List<FirPropertySymbol> {
-        return extensionsByTopLevelCallableId.getValue()[callableId].orEmpty()
-            .flatMap { it.generateProperties(callableId, context = null) }
+    private fun generateTopLevelProperties(callablePath: CallablePath): List<FirPropertySymbol> {
+        return extensionsByTopLevelCallablePath.getValue()[callablePath].orEmpty()
+            .flatMap { it.generateProperties(callablePath, context = null) }
             .onEach { it.fir.validate() }
     }
 
@@ -167,19 +167,19 @@ class FirExtensionDeclarationsSymbolProvider private constructor(
 
     @FirSymbolProviderInternals
     override fun getTopLevelCallableSymbolsTo(destination: MutableList<FirCallableSymbol<*>>, packageFqName: FqName, name: Name) {
-        val callableId = CallableId(packageFqName, name)
-        destination += functionCache.getValue(callableId)
-        destination += propertyCache.getValue(callableId)
+        val callablePath = CallablePath(packageFqName, name)
+        destination += functionCache.getValue(callablePath)
+        destination += propertyCache.getValue(callablePath)
     }
 
     @FirSymbolProviderInternals
     override fun getTopLevelFunctionSymbolsTo(destination: MutableList<FirNamedFunctionSymbol>, packageFqName: FqName, name: Name) {
-        destination += functionCache.getValue(CallableId(packageFqName, name))
+        destination += functionCache.getValue(CallablePath(packageFqName, name))
     }
 
     @FirSymbolProviderInternals
     override fun getTopLevelPropertySymbolsTo(destination: MutableList<FirPropertySymbol>, packageFqName: FqName, name: Name) {
-        destination += propertyCache.getValue(CallableId(packageFqName, name))
+        destination += propertyCache.getValue(CallablePath(packageFqName, name))
     }
 
     override fun getPackage(fqName: FqName): FqName? {

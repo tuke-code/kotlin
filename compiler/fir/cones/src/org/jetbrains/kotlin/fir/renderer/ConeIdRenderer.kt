@@ -5,7 +5,7 @@
 
 package org.jetbrains.kotlin.fir.renderer
 
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.ClassId
 
 abstract class ConeIdRenderer {
@@ -13,5 +13,5 @@ abstract class ConeIdRenderer {
     lateinit var builder: StringBuilder
 
     abstract fun renderClassId(classId: ClassId)
-    abstract fun renderCallableId(callableId: CallableId)
+    abstract fun renderCallableId(callablePath: CallablePath)
 }

@@ -183,7 +183,7 @@ internal fun checkConstantArguments(
                     val receiver = listOf(expression.dispatchReceiver, expression.extensionReceiver).single { it != null }!!
                     return checkConstantArguments(receiver, session)
                 }
-                propertySymbol.isLocal || propertySymbol.callableId.className?.isRoot == false -> return ConstantArgumentKind.NOT_CONST
+                propertySymbol.isLocal || propertySymbol.callablePath.className?.isRoot == false -> return ConstantArgumentKind.NOT_CONST
                 expressionType.fullyExpandedClassId(session) == StandardClassIds.KClass -> return ConstantArgumentKind.NOT_KCLASS_LITERAL
 
                 //TODO, KT-59822: UNRESOLVED REFERENCE
@@ -279,7 +279,7 @@ private fun FirProperty.isCompileTimeBuiltinProperty(session: FirSession): Boole
 }
 
 private fun FirCallableSymbol<*>?.fromKotlin(): Boolean {
-    return this?.callableId?.packageName?.asString() == "kotlin"
+    return this?.callablePath?.packageName?.asString() == "kotlin"
 }
 
 private fun FirCallableSymbol<*>?.getReferencedClassSymbol(session: FirSession): FirBasedSymbol<*>? =

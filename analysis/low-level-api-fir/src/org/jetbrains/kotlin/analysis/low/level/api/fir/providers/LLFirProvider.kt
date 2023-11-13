@@ -18,7 +18,7 @@ import org.jetbrains.kotlin.fir.declarations.FirFile
 import org.jetbrains.kotlin.fir.resolve.providers.*
 import org.jetbrains.kotlin.fir.symbols.impl.*
 import org.jetbrains.kotlin.fir.utils.exceptions.withFirSymbolEntry
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.name.Name
@@ -88,7 +88,7 @@ internal class LLFirProvider(
     }
 
     override fun getFirCallableContainerFile(symbol: FirCallableSymbol<*>): FirFile? {
-        return symbol.callableId.classId?.let { SyntheticFirClassProvider.getInstance(session).getFirClassifierContainerFileIfAny(it) }
+        return symbol.callablePath.classId?.let { SyntheticFirClassProvider.getInstance(session).getFirClassifierContainerFileIfAny(it) }
             ?: moduleComponents.cache.getContainerFirFile(symbol.fir)
     }
 
@@ -141,10 +141,10 @@ internal class LLFirProvider(
         @FirSymbolProviderInternals
         override fun getTopLevelCallableSymbolsTo(
             destination: MutableList<FirCallableSymbol<*>>,
-            callableId: CallableId,
+            callablePath: CallablePath,
             callables: Collection<KtCallableDeclaration>
         ) {
-            destination += providerHelper.getTopLevelCallableSymbols(callableId, callables.mapTo(mutableSetOf()) { it.containingKtFile })
+            destination += providerHelper.getTopLevelCallableSymbols(callablePath, callables.mapTo(mutableSetOf()) { it.containingKtFile })
         }
 
         override fun getTopLevelFunctionSymbols(packageFqName: FqName, name: Name): List<FirNamedFunctionSymbol> {
@@ -161,10 +161,10 @@ internal class LLFirProvider(
         @FirSymbolProviderInternals
         override fun getTopLevelFunctionSymbolsTo(
             destination: MutableList<FirNamedFunctionSymbol>,
-            callableId: CallableId,
+            callablePath: CallablePath,
             functions: Collection<KtNamedFunction>
         ) {
-            destination += providerHelper.getTopLevelFunctionSymbols(callableId, functions.mapTo(mutableSetOf()) { it.containingKtFile })
+            destination += providerHelper.getTopLevelFunctionSymbols(callablePath, functions.mapTo(mutableSetOf()) { it.containingKtFile })
         }
 
         override fun getTopLevelPropertySymbols(packageFqName: FqName, name: Name): List<FirPropertySymbol> {
@@ -181,10 +181,10 @@ internal class LLFirProvider(
         @FirSymbolProviderInternals
         override fun getTopLevelPropertySymbolsTo(
             destination: MutableList<FirPropertySymbol>,
-            callableId: CallableId,
+            callablePath: CallablePath,
             properties: Collection<KtProperty>
         ) {
-            destination += providerHelper.getTopLevelPropertySymbols(callableId, properties.mapTo(mutableSetOf()) { it.containingKtFile })
+            destination += providerHelper.getTopLevelPropertySymbols(callablePath, properties.mapTo(mutableSetOf()) { it.containingKtFile })
         }
 
         override fun getPackage(fqName: FqName): FqName? =

@@ -41,7 +41,7 @@ import org.jetbrains.kotlin.load.java.descriptors.JavaForKotlinOverridePropertyD
 import org.jetbrains.kotlin.load.java.descriptors.JavaPropertyDescriptor
 import org.jetbrains.kotlin.load.java.sources.JavaSourceElement
 import org.jetbrains.kotlin.load.kotlin.toSourceElement
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.psi.KtCallElement
@@ -454,7 +454,7 @@ internal fun ConstantValue<*>.toKtAnnotationValue(analysisContext: Fe10AnalysisC
             val arrayType = getType(analysisContext.resolveSession.moduleDescriptor)
             KtArrayAnnotationValue(value.expandArrayAnnotationValue(arrayType, analysisContext), sourcePsi = null)
         }
-        is EnumValue -> KtEnumEntryAnnotationValue(CallableId(enumClassId, enumEntryName), sourcePsi = null)
+        is EnumValue -> KtEnumEntryAnnotationValue(CallablePath(enumClassId, enumEntryName), sourcePsi = null)
         is KClassValue -> when (val value = value) {
             is KClassValue.Value.LocalClass -> {
                 val descriptor = value.type.constructor.declarationDescriptor as ClassDescriptor
@@ -481,10 +481,10 @@ internal fun ConstantValue<*>.toKtAnnotationValue(analysisContext: Fe10AnalysisC
     }
 }
 
-internal val CallableMemberDescriptor.callableIdIfNotLocal: CallableId?
+internal val CallableMemberDescriptor.callablePathIfNotLocal: CallablePath?
     get() = calculateCallableId(allowLocal = false)
 
-internal fun CallableMemberDescriptor.calculateCallableId(allowLocal: Boolean): CallableId? {
+internal fun CallableMemberDescriptor.calculateCallableId(allowLocal: Boolean): CallablePath? {
     if (this is SyntheticJavaPropertyDescriptor) {
         return getMethod.calculateCallableId(allowLocal)?.copy(callableName = name)
     }
@@ -496,7 +496,7 @@ internal fun CallableMemberDescriptor.calculateCallableId(allowLocal: Boolean): 
     while (true) {
         when (current) {
             is PackageFragmentDescriptor -> {
-                return CallableId(
+                return CallablePath(
                     packageName = current.fqName,
                     className = if (className.isNotEmpty()) FqName.fromSegments(className.asReversed()) else null,
                     callableName = name,
@@ -504,7 +504,7 @@ internal fun CallableMemberDescriptor.calculateCallableId(allowLocal: Boolean): 
                 )
             }
             is ModuleDescriptor -> {
-                return CallableId(
+                return CallablePath(
                     packageName = FqName.ROOT,
                     className = if (className.isNotEmpty()) FqName.fromSegments(className.asReversed()) else null,
                     callableName = name,
@@ -536,21 +536,21 @@ internal fun CallableMemberDescriptor.calculateCallableId(allowLocal: Boolean): 
     }
 }
 
-internal val PropertyDescriptor.getterCallableIdIfNotLocal: CallableId?
+internal val PropertyDescriptor.getterCallablePathIfNotLocal: CallablePath?
     get() {
         if (this is SyntheticPropertyDescriptor) {
-            return getMethod.callableIdIfNotLocal
+            return getMethod.callablePathIfNotLocal
         }
 
         return null
     }
 
-internal val PropertyDescriptor.setterCallableIdIfNotLocal: CallableId?
+internal val PropertyDescriptor.setterCallablePathIfNotLocal: CallablePath?
     get() {
         if (this is SyntheticPropertyDescriptor) {
             val setMethod = this.setMethod
             if (setMethod != null) {
-                return setMethod.callableIdIfNotLocal
+                return setMethod.callablePathIfNotLocal
             }
         }
 

@@ -7,7 +7,6 @@ package org.jetbrains.kotlin.analysis.api.impl.base.test.cases.components.substi
 
 import org.jetbrains.kotlin.analysis.api.impl.base.test.cases.components.stringRepresentation
 import org.jetbrains.kotlin.analysis.api.renderer.types.impl.KtTypeRendererForSource
-import org.jetbrains.kotlin.analysis.api.symbols.KtConstructorSymbol
 import org.jetbrains.kotlin.analysis.api.symbols.KtFunctionSymbol
 import org.jetbrains.kotlin.analysis.test.framework.base.AbstractAnalysisApiBasedTest
 import org.jetbrains.kotlin.analysis.test.framework.services.expressionMarkerProvider
@@ -42,7 +41,7 @@ abstract class AbstractCreateInheritanceTypeSubstitutorTest : AbstractAnalysisAp
                         withIndent {
                             for (function in functions) {
                                 val signature = function.substitute(substitutor)
-                                append(signature.callableIdIfNonLocal!!.callableName.asString())
+                                append(signature.callablePathIfNonLocal!!.callableName.asString())
                                 printCollection(signature.valueParameters, prefix = "(", postfix = ")") {
                                     append(it.returnType.render(typeRenderer, position = Variance.IN_VARIANCE))
                                 }

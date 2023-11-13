@@ -38,7 +38,7 @@ object FirReturnSyntaxAndLabelChecker : FirReturnExpressionChecker() {
             if (label?.source?.kind !is KtRealSourceElementKind) {
                 val functionCall = context.callsOrAssignments.asReversed().find {
                     it is FirFunctionCall &&
-                            (it.calleeReference.toResolvedNamedFunctionSymbol())?.callableId ==
+                            (it.calleeReference.toResolvedNamedFunctionSymbol())?.callablePath ==
                             FirSuspendCallChecker.KOTLIN_SUSPEND_BUILT_IN_FUNCTION_CALLABLE_ID
                 }
                 if (functionCall is FirFunctionCall &&

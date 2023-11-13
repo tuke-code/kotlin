@@ -21,7 +21,7 @@ object FirWasmDefinedExternallyCallChecker : FirBasicExpressionChecker() {
     override fun check(expression: FirStatement, context: CheckerContext, reporter: DiagnosticReporter) {
         val symbol = expression.calleeReference?.toResolvedCallableSymbol() ?: return
 
-        if (symbol.callableId != WasmStandardClassIds.Callables.JsDefinedExternally) {
+        if (symbol.callablePath != WasmStandardClassIds.Callables.JsDefinedExternally) {
             return
         }
 

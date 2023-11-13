@@ -41,7 +41,7 @@ object DecompiledPsiDeclarationProvider {
         functionLikeSymbol: KtFunctionLikeSymbol,
         project: Project
     ): PsiElement? {
-        return functionLikeSymbol.callableIdIfNonLocal?.let {
+        return functionLikeSymbol.callablePathIfNonLocal?.let {
             val candidates = project.createPsiDeclarationProvider(functionLikeSymbol.scope(project))
                 ?.getFunctions(it)
             if (candidates?.size == 1)
@@ -57,7 +57,7 @@ object DecompiledPsiDeclarationProvider {
         variableLikeSymbol: KtVariableLikeSymbol,
         project: Project
     ): PsiElement? {
-        return variableLikeSymbol.callableIdIfNonLocal?.let {
+        return variableLikeSymbol.callablePathIfNonLocal?.let {
             project.createPsiDeclarationProvider(variableLikeSymbol.scope(project))
                 ?.getProperties(it)
                 // TODO: needs to pick field/getter/setter accordingly?

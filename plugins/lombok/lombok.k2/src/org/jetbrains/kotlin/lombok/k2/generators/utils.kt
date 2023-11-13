@@ -4,7 +4,6 @@ import org.jetbrains.kotlin.builtins.PrimitiveType
 import org.jetbrains.kotlin.fir.declarations.FirConstructor
 import org.jetbrains.kotlin.fir.declarations.FirDeclarationOrigin
 import org.jetbrains.kotlin.fir.declarations.FirFunction
-import org.jetbrains.kotlin.fir.declarations.FirSimpleFunction
 import org.jetbrains.kotlin.fir.java.declarations.FirJavaField
 import org.jetbrains.kotlin.fir.symbols.SymbolInternals
 import org.jetbrains.kotlin.fir.symbols.impl.FirClassSymbol
@@ -71,7 +70,7 @@ fun List<FirFunction>.filterClashingDeclarations(classSymbol: FirClassSymbol<*>)
  */
 private fun sameSignature(a: FirFunction, b: FirFunction): Boolean {
     if (a is FirConstructor && b !is FirConstructor || a !is FirConstructor && b is FirConstructor) return false
-    if (a.symbol.callableId.callableName != b.symbol.callableId.callableName) return false
+    if (a.symbol.callablePath.callableName != b.symbol.callablePath.callableName) return false
     val aVararg = a.valueParameters.any { it.isVararg }
     val bVararg = b.valueParameters.any { it.isVararg }
     val aSize = a.valueParameters.size

@@ -154,10 +154,10 @@ abstract class AbstractRawFirBuilder<T>(val baseSession: FirSession, val context
 
     fun callableIdForName(name: Name) =
         when {
-            context.className.shortNameOrSpecial() == SpecialNames.ANONYMOUS -> CallableId(
+            context.className.shortNameOrSpecial() == SpecialNames.ANONYMOUS -> CallablePath(
                 ClassId(context.packageFqName, SpecialNames.ANONYMOUS_FQ_NAME, isLocal = true), name
             )
-            context.className.isRoot && !context.inLocalContext -> CallableId(context.packageFqName, name)
+            context.className.isRoot && !context.inLocalContext -> CallablePath(context.packageFqName, name)
             context.inLocalContext -> {
                 val pathFqName =
                     context.firFunctionTargets.fold(
@@ -172,9 +172,9 @@ abstract class AbstractRawFirBuilder<T>(val baseSession: FirSession, val context
                         else
                             result.child(Name.identifier(firFunctionTarget.labelName!!))
                     }
-                CallableId(name, pathFqName)
+                CallablePath(name, pathFqName)
             }
-            else -> CallableId(context.packageFqName, context.className, name)
+            else -> CallablePath(context.packageFqName, context.className, name)
         }
 
     fun currentDispatchReceiverType(): ConeClassLikeType? = currentDispatchReceiverType(context)
@@ -187,17 +187,17 @@ abstract class AbstractRawFirBuilder<T>(val baseSession: FirSession, val context
         return dispatchReceivers.getOrNull(dispatchReceivers.lastIndex - 1)
     }
 
-    fun callableIdForClassConstructor(): CallableId {
+    fun callablePathForClassConstructor(): CallablePath {
         val packageName = if (context.inLocalContext) {
-            CallableId.PACKAGE_FQ_NAME_FOR_LOCAL
+            CallablePath.PACKAGE_FQ_NAME_FOR_LOCAL
         } else {
             context.packageFqName
         }
 
         return if (context.className == FqName.ROOT) {
-            CallableId(packageName, Name.special("<anonymous-init>"))
+            CallablePath(packageName, Name.special("<anonymous-init>"))
         } else {
-            CallableId(packageName, context.className, context.className.shortName())
+            CallablePath(packageName, context.className, context.className.shortName())
         }
     }
 
@@ -958,7 +958,7 @@ abstract class AbstractRawFirBuilder<T>(val baseSession: FirSession, val context
                     status = FirDeclarationStatusImpl(firProperty.visibility, Modality.FINAL).apply {
                         isOperator = true
                     }
-                    symbol = FirNamedFunctionSymbol(CallableId(packageFqName, classFqName, name))
+                    symbol = FirNamedFunctionSymbol(CallablePath(packageFqName, classFqName, name))
                     dispatchReceiverType = currentDispatchReceiverType()
                     // Refer to FIR backend ClassMemberGenerator for body generation.
                 }.also {
@@ -1153,7 +1153,7 @@ fun <TBase, TSource : TBase, TParameter : TBase> FirRegularClassBuilder.createDa
         origin = declarationOrigin
         returnTypeRef = classTypeRef
         name = StandardNames.DATA_CLASS_COPY
-        symbol = FirNamedFunctionSymbol(CallableId(classId.packageFqName, classId.relativeClassName, StandardNames.DATA_CLASS_COPY))
+        symbol = FirNamedFunctionSymbol(CallablePath(classId.packageFqName, classId.relativeClassName, StandardNames.DATA_CLASS_COPY))
         dispatchReceiverType = dispatchReceiver
         resolvePhase = this@createDataClassCopyFunction.resolvePhase
         status = if (isFromLibrary) {

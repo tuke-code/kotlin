@@ -6,7 +6,7 @@
 package org.jetbrains.kotlin.analysis.providers.impl.declarationProviders
 
 import org.jetbrains.kotlin.analysis.providers.KotlinDeclarationProvider
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.name.Name
@@ -17,9 +17,9 @@ public object EmptyKotlinDeclarationProvider : KotlinDeclarationProvider() {
     override fun getAllClassesByClassId(classId: ClassId): List<KtClassOrObject> = emptyList()
     override fun getAllTypeAliasesByClassId(classId: ClassId): List<KtTypeAlias> = emptyList()
     override fun getTopLevelKotlinClassLikeDeclarationNamesInPackage(packageFqName: FqName): Set<Name> = emptySet()
-    override fun getTopLevelProperties(callableId: CallableId): List<KtProperty> = emptyList()
-    override fun getTopLevelFunctions(callableId: CallableId): List<KtNamedFunction> = emptyList()
-    override fun getTopLevelCallableFiles(callableId: CallableId): List<KtFile> = emptyList()
+    override fun getTopLevelProperties(callablePath: CallablePath): List<KtProperty> = emptyList()
+    override fun getTopLevelFunctions(callablePath: CallablePath): List<KtNamedFunction> = emptyList()
+    override fun getTopLevelCallableFiles(callablePath: CallablePath): List<KtFile> = emptyList()
     override fun getTopLevelCallableNamesInPackage(packageFqName: FqName): Set<Name> = emptySet()
     override fun findFilesForFacadeByPackage(packageFqName: FqName): List<KtFile> = emptyList()
     override fun findFilesForFacade(facadeFqName: FqName): List<KtFile> = emptyList()

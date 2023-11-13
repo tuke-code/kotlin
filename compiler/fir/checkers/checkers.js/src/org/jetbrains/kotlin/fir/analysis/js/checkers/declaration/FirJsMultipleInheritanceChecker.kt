@@ -54,7 +54,7 @@ object FirJsMultipleInheritanceChecker : FirClassChecker() {
             val overridden = function.overriddenFunctions(symbol, context)
             if (
                 overridden.size > 1 &&
-                overridden.any { it.callableId.classId == supertype.classId }
+                overridden.any { it.callablePath.classId == supertype.classId }
             ) {
                 reporter.reportOn(source, FirJsErrors.WRONG_MULTIPLE_INHERITANCE, function, context)
             }

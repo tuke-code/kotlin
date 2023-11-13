@@ -23,7 +23,7 @@ import org.jetbrains.kotlin.fir.symbols.impl.*
 import org.jetbrains.kotlin.fir.types.ConeKotlinType
 import org.jetbrains.kotlin.fir.types.FirQualifierPart
 import org.jetbrains.kotlin.fir.types.FirTypeRef
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.resolve.calls.tower.CandidateApplicability
@@ -227,9 +227,9 @@ sealed class ConeContractDescriptionError : ConeDiagnostic {
             get() = "$element is not a boolean expression"
     }
 
-    class NotContractDsl(val callableId: CallableId) : ConeContractDescriptionError() {
+    class NotContractDsl(val callablePath: CallablePath) : ConeContractDescriptionError() {
         override val reason: String
-            get() = "$callableId is not a part of contracts DSL"
+            get() = "$callablePath is not a part of contracts DSL"
     }
 
     class IllegalEqualityOperator(val operation: FirOperation) : ConeContractDescriptionError() {
@@ -349,7 +349,7 @@ class ConeUnknownLambdaParameterTypeDiagnostic : ConeDiagnostic {
 private fun describeSymbol(symbol: FirBasedSymbol<*>): String {
     return when (symbol) {
         is FirClassLikeSymbol<*> -> symbol.classId.asString()
-        is FirCallableSymbol<*> -> symbol.callableId.toString()
+        is FirCallableSymbol<*> -> symbol.callablePath.toString()
         else -> "$symbol"
     }
 }

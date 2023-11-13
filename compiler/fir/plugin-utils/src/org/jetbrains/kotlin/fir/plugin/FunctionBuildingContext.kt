@@ -16,11 +16,11 @@ import org.jetbrains.kotlin.fir.symbols.impl.FirFunctionSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirValueParameterSymbol
 import org.jetbrains.kotlin.fir.types.ConeKotlinType
 import org.jetbrains.kotlin.fir.types.toFirResolvedTypeRef
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.Name
 
 public sealed class FunctionBuildingContext<T : FirFunction>(
-    protected val callableId: CallableId,
+    protected val callablePath: CallablePath,
     session: FirSession,
     key: GeneratedDeclarationKey,
     owner: FirClassSymbol<*>?

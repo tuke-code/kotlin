@@ -22,7 +22,7 @@ import org.jetbrains.kotlin.ir.util.IdSignature
 import org.jetbrains.kotlin.ir.util.IrMessageLogger
 import org.jetbrains.kotlin.ir.util.ReferenceSymbolTable
 import org.jetbrains.kotlin.ir.util.TypeTranslator
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.platform.TargetPlatform
@@ -163,12 +163,12 @@ open class IrPluginContextImpl constructor(
         return referenceConstructors(classId.asSingleFqName())
     }
 
-    override fun referenceFunctions(callableId: CallableId): Collection<IrSimpleFunctionSymbol> {
-        return referenceFunctions(callableId.asSingleFqName())
+    override fun referenceFunctions(callablePath: CallablePath): Collection<IrSimpleFunctionSymbol> {
+        return referenceFunctions(callablePath.asSingleFqName())
     }
 
-    override fun referenceProperties(callableId: CallableId): Collection<IrPropertySymbol> {
-        return referenceProperties(callableId.asSingleFqName())
+    override fun referenceProperties(callablePath: CallablePath): Collection<IrPropertySymbol> {
+        return referenceProperties(callablePath.asSingleFqName())
     }
 
     override fun referenceTopLevel(

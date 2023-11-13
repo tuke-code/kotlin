@@ -16,7 +16,6 @@ import org.jetbrains.kotlin.analysis.api.contracts.description.KtContractEffectD
 import org.jetbrains.kotlin.analysis.api.contracts.description.renderKtContractEffectDeclaration
 import org.jetbrains.kotlin.analysis.api.symbols.markers.KtNamedSymbol
 import org.jetbrains.kotlin.analysis.api.symbols.markers.KtPossiblyNamedSymbol
-import org.jetbrains.kotlin.analysis.api.types.KtClassErrorType
 import org.jetbrains.kotlin.analysis.api.types.KtClassTypeQualifier
 import org.jetbrains.kotlin.analysis.api.types.KtErrorType
 import org.jetbrains.kotlin.analysis.api.types.KtNonErrorClassType
@@ -93,7 +92,7 @@ public class DebugSymbolRenderer(
 
         withIndent {
             appendLine()
-            renderProperty(KtCallableSymbol::callableIdIfNonLocal, renderSymbolsFully = false, symbol)
+            renderProperty(KtCallableSymbol::callablePathIfNonLocal, renderSymbolsFully = false, symbol)
             if (symbol is KtNamedSymbol) {
                 appendLine()
                 renderProperty(KtNamedSymbol::name, renderSymbolsFully = false, symbol)
@@ -186,7 +185,7 @@ public class DebugSymbolRenderer(
         append("(")
         when (symbol) {
             is KtClassLikeSymbol -> renderId(symbol.classIdIfNonLocal, symbol)
-            is KtCallableSymbol -> renderId(symbol.callableIdIfNonLocal, symbol)
+            is KtCallableSymbol -> renderId(symbol.callablePathIfNonLocal, symbol)
             is KtNamedSymbol -> renderValue(symbol.name, renderSymbolsFully = false)
             else -> error("Unsupported symbol ${symbol::class}")
         }

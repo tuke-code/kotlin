@@ -40,12 +40,11 @@ import org.jetbrains.kotlin.fir.types.*
 import org.jetbrains.kotlin.fir.types.builder.buildResolvedTypeRef
 import org.jetbrains.kotlin.fir.types.impl.ConeClassLikeTypeImpl
 import org.jetbrains.kotlin.fir.types.impl.ConeTypeParameterTypeImpl
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.name.StandardClassIds
 import org.jetbrains.kotlin.types.Variance
 import org.jetbrains.kotlin.utils.exceptions.errorWithAttachment
-import org.jetbrains.kotlin.utils.addToStdlib.runIf
 import org.jetbrains.kotlin.utils.addToStdlib.unreachableBranch
 
 private val SAM_PARAMETER_NAME = Name.identifier("function")
@@ -247,7 +246,7 @@ class FirSamResolver(
 
     private fun FirClassLikeSymbol<*>.createSyntheticConstructorSymbol() =
         FirSyntheticFunctionSymbol(
-            CallableId(
+            CallablePath(
                 classId.packageFqName,
                 classId.relativeClassName.parent().takeIf { !it.isRoot },
                 classId.shortClassName,

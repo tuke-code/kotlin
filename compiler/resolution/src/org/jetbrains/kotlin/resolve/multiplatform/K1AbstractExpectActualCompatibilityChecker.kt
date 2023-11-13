@@ -270,7 +270,7 @@ object K1AbstractExpectActualCompatibilityChecker {
     ): K1ExpectActualCompatibility<*> {
         require(
             (expectDeclaration is ConstructorSymbolMarker && actualDeclaration is ConstructorSymbolMarker) ||
-                    expectDeclaration.callableId.callableName == actualDeclaration.callableId.callableName
+                    expectDeclaration.callablePath.callableName == actualDeclaration.callablePath.callableName
         ) {
             "This function should be invoked only for declarations with the same name: $expectDeclaration, $actualDeclaration"
         }
@@ -641,7 +641,7 @@ object K1AbstractExpectActualCompatibilityChecker {
         when (this@getName) {
             is ConstructorSymbolMarker -> SpecialNames.INIT
             is ValueParameterSymbolMarker -> parameterName
-            is CallableSymbolMarker -> callableId.callableName
+            is CallableSymbolMarker -> callablePath.callableName
             is RegularClassSymbolMarker -> classId.shortClassName
             is TypeAliasSymbolMarker -> classId.shortClassName
             is TypeParameterSymbolMarker -> parameterName

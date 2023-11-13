@@ -256,7 +256,7 @@ abstract class AbstractFirSpecificAnnotationResolveTransformer(
         ) {
             session.lookupTracker?.recordLookup(
                 calleeReference.name,
-                calleeSymbol.dispatchReceiverType?.classId?.asFqNameString() ?: calleeSymbol.callableId.packageName.asString(),
+                calleeSymbol.dispatchReceiverType?.classId?.asFqNameString() ?: calleeSymbol.callablePath.packageName.asString(),
                 this.source,
                 context.file.source,
             )

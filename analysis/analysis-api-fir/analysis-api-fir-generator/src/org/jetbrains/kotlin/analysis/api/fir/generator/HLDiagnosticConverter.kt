@@ -31,7 +31,7 @@ import org.jetbrains.kotlin.fir.types.FirTypeRef
 import org.jetbrains.kotlin.lexer.KtKeywordToken
 import org.jetbrains.kotlin.lexer.KtModifierKeywordToken
 import org.jetbrains.kotlin.metadata.deserialization.VersionRequirement
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.name.Name
@@ -377,7 +377,7 @@ internal object FirToKtConversionCreator {
         ExpectActualAnnotationsIncompatibilityType::class,
         DeprecationInfo::class,
         ApiVersion::class,
-        CallableId::class,
+        CallablePath::class,
         ClassKind::class,
         FunctionTypeKind::class,
         VersionRequirement.Version::class,

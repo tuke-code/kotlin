@@ -8,7 +8,7 @@ package org.jetbrains.kotlin.analysis.providers.impl.declarationProviders
 import org.jetbrains.kotlin.analysis.providers.KotlinCompositeProvider
 import org.jetbrains.kotlin.analysis.providers.KotlinDeclarationProvider
 import org.jetbrains.kotlin.analysis.providers.impl.KotlinCompositeProviderFactory
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.name.Name
@@ -34,16 +34,16 @@ public class CompositeKotlinDeclarationProvider private constructor(
         return providers.flatMapTo(mutableSetOf()) { it.getTopLevelKotlinClassLikeDeclarationNamesInPackage(packageFqName) }
     }
 
-    override fun getTopLevelProperties(callableId: CallableId): Collection<KtProperty> {
-        return providers.flatMapTo(mutableListOf()) { it.getTopLevelProperties(callableId) }
+    override fun getTopLevelProperties(callablePath: CallablePath): Collection<KtProperty> {
+        return providers.flatMapTo(mutableListOf()) { it.getTopLevelProperties(callablePath) }
     }
 
-    override fun getTopLevelFunctions(callableId: CallableId): Collection<KtNamedFunction> {
-        return providers.flatMapTo(mutableListOf()) { it.getTopLevelFunctions(callableId) }
+    override fun getTopLevelFunctions(callablePath: CallablePath): Collection<KtNamedFunction> {
+        return providers.flatMapTo(mutableListOf()) { it.getTopLevelFunctions(callablePath) }
     }
 
-    override fun getTopLevelCallableFiles(callableId: CallableId): Collection<KtFile> {
-        return providers.flatMapTo(mutableListOf()) { it.getTopLevelCallableFiles(callableId) }
+    override fun getTopLevelCallableFiles(callablePath: CallablePath): Collection<KtFile> {
+        return providers.flatMapTo(mutableListOf()) { it.getTopLevelCallableFiles(callablePath) }
     }
 
     override fun getTopLevelCallableNamesInPackage(packageFqName: FqName): Set<Name> {

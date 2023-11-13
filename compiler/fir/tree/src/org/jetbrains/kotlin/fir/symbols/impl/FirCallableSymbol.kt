@@ -11,11 +11,11 @@ import org.jetbrains.kotlin.fir.symbols.FirBasedSymbol
 import org.jetbrains.kotlin.fir.symbols.lazyResolveToPhase
 import org.jetbrains.kotlin.fir.types.*
 import org.jetbrains.kotlin.mpp.CallableSymbolMarker
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.Name
 
 abstract class FirCallableSymbol<D : FirCallableDeclaration> : FirBasedSymbol<D>(), CallableSymbolMarker {
-    abstract val callableId: CallableId
+    abstract val callablePath: CallablePath
 
     val resolvedReturnTypeRef: FirResolvedTypeRef
         get() {
@@ -74,7 +74,7 @@ abstract class FirCallableSymbol<D : FirCallableDeclaration> : FirBasedSymbol<D>
         get() = fir.dispatchReceiverType
 
     val name: Name
-        get() = callableId.callableName
+        get() = callablePath.callableName
 
     fun getDeprecation(languageVersionSettings: LanguageVersionSettings): DeprecationsPerUseSite? {
         lazyResolveToPhase(FirResolvePhase.COMPILER_REQUIRED_ANNOTATIONS)
@@ -89,7 +89,7 @@ abstract class FirCallableSymbol<D : FirCallableDeclaration> : FirBasedSymbol<D>
         }
     }
 
-    override fun toString(): String = "${this::class.simpleName} $callableId"
+    override fun toString(): String = "${this::class.simpleName} $callablePath"
 }
 
 val FirCallableSymbol<*>.isExtension: Boolean

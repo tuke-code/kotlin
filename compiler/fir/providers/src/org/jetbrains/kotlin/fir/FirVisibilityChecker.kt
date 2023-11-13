@@ -209,7 +209,7 @@ abstract class FirVisibilityChecker : FirSessionComponent {
                         }
                         declaration is FirConstructor && declaration.isFromSealedClass -> {
                             // Sealed class constructor: visible in same package
-                            declaration.symbol.callableId.packageName == useSiteFile.packageFqName
+                            declaration.symbol.callablePath.packageName == useSiteFile.packageFqName
                         }
                         else -> {
                             // Member: visible inside parent class, including all its member classes
@@ -413,7 +413,7 @@ abstract class FirVisibilityChecker : FirSessionComponent {
     // Since they are intrinsified in the codegen, FIR should treat it as visible.
     private fun FirSimpleFunction.isAllowedToBeAccessedFromOutside(): Boolean {
         if (!isFromLibrary) return false
-        val packageName = symbol.callableId.packageName.asString()
+        val packageName = symbol.callablePath.packageName.asString()
         val name = name.asString()
         return packageName == "kotlin.jvm.internal.unsafe" &&
                 (name == "monitorEnter" || name == "monitorExit")
@@ -469,7 +469,7 @@ abstract class FirVisibilityChecker : FirSessionComponent {
         return when (this) {
             is FirClassLikeSymbol<*> -> classId.packageFqName
             is FirPropertyAccessorSymbol -> propertySymbol.packageFqName()
-            is FirCallableSymbol<*> -> callableId.packageName
+            is FirCallableSymbol<*> -> callablePath.packageName
             else -> error("No package fq name for $this")
         }
     }

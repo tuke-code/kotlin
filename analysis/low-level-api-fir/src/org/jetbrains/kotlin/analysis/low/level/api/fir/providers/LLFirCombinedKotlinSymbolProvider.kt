@@ -22,7 +22,7 @@ import org.jetbrains.kotlin.fir.symbols.impl.FirCallableSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirClassLikeSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirNamedFunctionSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirPropertySymbol
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.name.Name
@@ -100,21 +100,21 @@ internal class LLFirCombinedKotlinSymbolProvider private constructor(
     private inline fun <A : KtCallableDeclaration> forEachCallableProvider(
         packageFqName: FqName,
         name: Name,
-        getCallables: (CallableId) -> Collection<A>,
-        provide: LLFirKotlinSymbolProvider.(CallableId, Collection<A>) -> Unit,
+        getCallables: (CallablePath) -> Collection<A>,
+        provide: LLFirKotlinSymbolProvider.(CallablePath, Collection<A>) -> Unit,
     ) {
         if (!symbolNamesProvider.mayHaveTopLevelCallable(packageFqName, name)) return
 
-        val callableId = CallableId(packageFqName, name)
+        val callablePath = CallablePath(packageFqName, name)
 
-        getCallables(callableId)
+        getCallables(callablePath)
             .groupBy { getModule(it) }
             .forEach { (ktModule, callables) ->
                 // If `ktModule` cannot be found in the map, `callables` cannot be processed by any of the available providers, because none
                 // of them belong to the correct module. We can skip in that case, because iterating through all providers wouldn't lead to
                 // any results for `callables`.
                 val provider = providersByKtModule[ktModule] ?: return@forEach
-                provider.provide(callableId, callables)
+                provider.provide(callablePath, callables)
             }
     }
 
@@ -163,5 +163,5 @@ internal class LLFirCombinedKotlinSymbolProvider private constructor(
 /**
  * Callables are provided very rarely (compared to functions/properties individually), so it's okay to hit indices twice here.
  */
-private fun KotlinDeclarationProvider.getTopLevelCallables(callableId: CallableId): List<KtCallableDeclaration> =
-    getTopLevelFunctions(callableId) + getTopLevelProperties(callableId)
+private fun KotlinDeclarationProvider.getTopLevelCallables(callablePath: CallablePath): List<KtCallableDeclaration> =
+    getTopLevelFunctions(callablePath) + getTopLevelProperties(callablePath)

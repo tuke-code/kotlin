@@ -21,7 +21,7 @@ import org.jetbrains.kotlin.analysis.api.symbols.pointers.KtSymbolPointer
 import org.jetbrains.kotlin.analysis.api.types.KtType
 import org.jetbrains.kotlin.descriptors.FunctionDescriptor
 import org.jetbrains.kotlin.descriptors.impl.PropertyDescriptorImpl
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.psi.KtParameter
 import org.jetbrains.kotlin.psi.KtProperty
@@ -78,8 +78,8 @@ internal class KtFe10DescKotlinPropertySymbol(
     override val hasSetter: Boolean
         get() = withValidityAssertion { !descriptor.isDynamic() && !isVal }
 
-    override val callableIdIfNonLocal: CallableId?
-        get() = withValidityAssertion { descriptor.callableIdIfNotLocal }
+    override val callablePathIfNonLocal: CallablePath?
+        get() = withValidityAssertion { descriptor.callablePathIfNotLocal }
 
     override val initializer: KtInitializerValue?
         get() = withValidityAssertion {

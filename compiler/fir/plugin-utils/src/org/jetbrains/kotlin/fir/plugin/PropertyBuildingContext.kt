@@ -23,14 +23,14 @@ import org.jetbrains.kotlin.fir.symbols.impl.FirClassSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirPropertySymbol
 import org.jetbrains.kotlin.fir.types.ConeKotlinType
 import org.jetbrains.kotlin.fir.types.toFirResolvedTypeRef
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.Name
 
 public class PropertyBuildingContext(
     session: FirSession,
     key: GeneratedDeclarationKey,
     owner: FirClassSymbol<*>?,
-    private val callableId: CallableId,
+    private val callablePath: CallablePath,
     private val returnTypeProvider: (List<FirTypeParameterRef>) -> ConeKotlinType,
     private val isVal: Boolean,
     private val hasBackingField: Boolean,
@@ -69,8 +69,8 @@ public class PropertyBuildingContext(
             moduleData = session.moduleData
             origin = key.origin
 
-            symbol = FirPropertySymbol(callableId)
-            name = callableId.callableName
+            symbol = FirPropertySymbol(callablePath)
+            name = callablePath.callableName
 
             val resolvedStatus = generateStatus()
             status = resolvedStatus
@@ -156,8 +156,8 @@ public fun FirExtension.createMemberProperty(
     hasBackingField: Boolean = true,
     config: PropertyBuildingContext.() -> Unit = {}
 ): FirProperty {
-    val callableId = CallableId(owner.classId, name)
-    return PropertyBuildingContext(session, key, owner, callableId, returnTypeProvider, isVal, hasBackingField).apply(config).apply {
+    val callablePath = CallablePath(owner.classId, name)
+    return PropertyBuildingContext(session, key, owner, callablePath, returnTypeProvider, isVal, hasBackingField).apply(config).apply {
         status {
             isExpect = owner.isExpect
         }
@@ -172,13 +172,13 @@ public fun FirExtension.createMemberProperty(
  */
 public fun FirExtension.createTopLevelProperty(
     key: GeneratedDeclarationKey,
-    callableId: CallableId,
+    callablePath: CallablePath,
     returnType: ConeKotlinType,
     isVal: Boolean = true,
     hasBackingField: Boolean = true,
     config: PropertyBuildingContext.() -> Unit = {}
 ): FirProperty {
-    return createTopLevelProperty(key, callableId, { returnType }, isVal, hasBackingField, config)
+    return createTopLevelProperty(key, callablePath, { returnType }, isVal, hasBackingField, config)
 }
 
 /**
@@ -191,12 +191,12 @@ public fun FirExtension.createTopLevelProperty(
  */
 public fun FirExtension.createTopLevelProperty(
     key: GeneratedDeclarationKey,
-    callableId: CallableId,
+    callablePath: CallablePath,
     returnTypeProvider: (List<FirTypeParameterRef>) -> ConeKotlinType,
     isVal: Boolean = true,
     hasBackingField: Boolean = true,
     config: PropertyBuildingContext.() -> Unit = {}
 ): FirProperty {
-    require(callableId.classId == null)
-    return PropertyBuildingContext(session, key, owner = null, callableId, returnTypeProvider, isVal, hasBackingField).apply(config).build()
+    require(callablePath.classId == null)
+    return PropertyBuildingContext(session, key, owner = null, callablePath, returnTypeProvider, isVal, hasBackingField).apply(config).build()
 }

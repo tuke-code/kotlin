@@ -120,7 +120,7 @@ object FirImplementationMismatchChecker : FirClassChecker() {
                 //current symbol needs to be added, because basically it is the implementation
                 cleared + symbol
             }
-            symbol is FirIntersectionCallableSymbol && symbol.callableId.classId == containingClass.classId ->
+            symbol is FirIntersectionCallableSymbol && symbol.callablePath.classId == containingClass.classId ->
                 symbol.intersections
             else -> return
         }

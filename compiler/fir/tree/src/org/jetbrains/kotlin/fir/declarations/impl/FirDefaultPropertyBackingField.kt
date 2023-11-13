@@ -16,7 +16,7 @@ import org.jetbrains.kotlin.fir.expressions.FirAnnotation
 import org.jetbrains.kotlin.fir.symbols.impl.FirBackingFieldSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirPropertySymbol
 import org.jetbrains.kotlin.fir.types.FirTypeRef
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 
 @OptIn(FirImplementationDetail::class)
 class FirDefaultPropertyBackingField(
@@ -47,7 +47,7 @@ class FirDefaultPropertyBackingField(
     getter = null,
     setter = null,
     backingField = null,
-    symbol = FirBackingFieldSymbol(CallableId(BACKING_FIELD)),
+    symbol = FirBackingFieldSymbol(CallablePath(BACKING_FIELD)),
     propertySymbol = propertySymbol,
     initializer = null,
     annotations = annotations.toMutableOrEmpty(),

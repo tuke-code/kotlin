@@ -10,7 +10,7 @@ import org.jetbrains.kotlin.analysis.api.lifetime.withValidityAssertion
 import org.jetbrains.kotlin.analysis.api.symbols.KtCallableSymbol
 import org.jetbrains.kotlin.analysis.api.types.KtSubstitutor
 import org.jetbrains.kotlin.analysis.api.types.KtType
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 
 /**
  * A signature for a callable symbol. Comparing to a `KtCallableSymbol`, a signature can carry use-site type information. For example
@@ -40,9 +40,9 @@ public sealed class KtCallableSignature<out S : KtCallableSymbol> : KtLifetimeOw
     public abstract val receiverType: KtType?
 
     /**
-     * A [CallableId] of a substituted symbol
+     * A [CallablePath] of a substituted symbol
      */
-    public open val callableIdIfNonLocal: CallableId? get() = withValidityAssertion { symbol.callableIdIfNonLocal }
+    public open val callablePathIfNonLocal: CallablePath? get() = withValidityAssertion { symbol.callablePathIfNonLocal }
 
     /**
      * Applies a [substitutor] to the given signature and return a new signature with substituted types.

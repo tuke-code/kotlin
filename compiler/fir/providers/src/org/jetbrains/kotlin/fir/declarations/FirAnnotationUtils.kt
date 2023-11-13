@@ -51,7 +51,7 @@ private val FirExpression.callableNameOfMetaAnnotationArgument: Name?
     get() =
         (this as? FirQualifiedAccessExpression)?.let {
             val callableSymbol = it.calleeReference.toResolvedCallableSymbol()
-            callableSymbol?.callableId?.callableName
+            callableSymbol?.callablePath?.callableName
         }
 
 private val sourceName = Name.identifier("SOURCE")
@@ -82,7 +82,7 @@ private fun FirAnnotation.findUseSiteTargets(): Set<AnnotationUseSiteTarget> = b
         if (arg !is FirQualifiedAccessExpression) return
         val callableSymbol = arg.calleeReference.toResolvedCallableSymbol() ?: return
         if (callableSymbol.containingClassLookupTag()?.classId == StandardClassIds.AnnotationTarget) {
-            USE_SITE_TARGET_NAME_MAP[callableSymbol.callableId.callableName.identifier]?.let { addAll(it) }
+            USE_SITE_TARGET_NAME_MAP[callableSymbol.callablePath.callableName.identifier]?.let { addAll(it) }
         }
     }
 

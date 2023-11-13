@@ -212,14 +212,14 @@ object StandardClassIds {
     }
 
     object Callables {
-        val suspend = "suspend".callableId(BASE_KOTLIN_PACKAGE)
-        val coroutineContext = "coroutineContext".callableId(BASE_COROUTINES_PACKAGE)
+        val suspend = "suspend".callablePath(BASE_KOTLIN_PACKAGE)
+        val coroutineContext = "coroutineContext".callablePath(BASE_COROUTINES_PACKAGE)
 
-        val clone = "clone".callableId(Cloneable)
+        val clone = "clone".callablePath(Cloneable)
 
-        val not = "not".callableId(Boolean)
+        val not = "not".callablePath(Boolean)
 
-        val contract = "contract".callableId(BASE_CONTRACTS_PACKAGE)
+        val contract = "contract".callablePath(BASE_CONTRACTS_PACKAGE)
     }
 
     object Collections {
@@ -257,7 +257,7 @@ private fun String.concurrentId() = ClassId(StandardClassIds.BASE_CONCURRENT_PAC
 
 private fun String.testId() = ClassId(StandardClassIds.BASE_TEST_PACKAGE, Name.identifier(this))
 
-private fun String.callableId(packageName: FqName) = CallableId(packageName, Name.identifier(this))
-private fun String.callableId(classId: ClassId) = CallableId(classId, Name.identifier(this))
+private fun String.callablePath(packageName: FqName) = CallablePath(packageName, Name.identifier(this))
+private fun String.callablePath(classId: ClassId) = CallablePath(classId, Name.identifier(this))
 
 private fun <K, V> Map<K, V>.inverseMap(): Map<V, K> = entries.associate { (k, v) -> v to k }

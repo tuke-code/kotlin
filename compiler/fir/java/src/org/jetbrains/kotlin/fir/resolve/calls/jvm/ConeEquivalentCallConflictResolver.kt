@@ -70,7 +70,7 @@ class ConeEquivalentCallConflictResolver(
         second: FirCallableDeclaration,
         secondCandidate: Candidate
     ): Boolean {
-        if (first.symbol.callableId != second.symbol.callableId) return false
+        if (first.symbol.callablePath != second.symbol.callablePath) return false
         // Emulate behavior from K1 where declarations from the same source module are never equivalent.
         // We expect REDECLARATION or CONFLICTING_OVERLOADS to be reported in those cases.
         // See a.containingDeclaration == b.containingDeclaration check in

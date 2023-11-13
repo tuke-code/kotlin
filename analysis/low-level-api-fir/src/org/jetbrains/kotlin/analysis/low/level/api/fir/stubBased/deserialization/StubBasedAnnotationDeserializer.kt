@@ -23,7 +23,7 @@ import org.jetbrains.kotlin.fir.resolve.toSymbol
 import org.jetbrains.kotlin.fir.types.*
 import org.jetbrains.kotlin.fir.types.builder.buildResolvedTypeRef
 import org.jetbrains.kotlin.lexer.KtTokens
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.name.StandardClassIds
@@ -48,11 +48,11 @@ class StubBasedAnnotationDeserializer(
         return annotations.map { deserializeAnnotation(it) }
     }
 
-    private val constantCache = mutableMapOf<CallableId, FirExpression>()
+    private val constantCache = mutableMapOf<CallablePath, FirExpression>()
 
-    fun loadConstant(property: KtProperty, callableId: CallableId): FirExpression? {
+    fun loadConstant(property: KtProperty, callablePath: CallablePath): FirExpression? {
         if (!property.hasModifier(KtTokens.CONST_KEYWORD)) return null
-        constantCache[callableId]?.let { return it }
+        constantCache[callablePath]?.let { return it }
         val propertyStub = (property.stub ?: loadStubByElement(property)) as? KotlinPropertyStubImpl ?: return null
         val constantValue = propertyStub.constantInitializer ?: return null
         return resolveValue(property, constantValue)

@@ -32,7 +32,7 @@ import org.jetbrains.kotlin.descriptors.PropertySetterDescriptor
 import org.jetbrains.kotlin.descriptors.Visibilities
 import org.jetbrains.kotlin.descriptors.Visibility
 import org.jetbrains.kotlin.lexer.KtTokens
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.psi.KtPropertyAccessor
 import org.jetbrains.kotlin.resolve.BindingContext
 
@@ -69,7 +69,7 @@ internal class KtFe10PsiPropertySetterSymbol(
     override val hasStableParameterNames: Boolean
         get() = withValidityAssertion { true }
 
-    override val callableIdIfNonLocal: CallableId?
+    override val callablePathIfNonLocal: CallablePath?
         get() = withValidityAssertion { null }
 
     override val returnType: KtType

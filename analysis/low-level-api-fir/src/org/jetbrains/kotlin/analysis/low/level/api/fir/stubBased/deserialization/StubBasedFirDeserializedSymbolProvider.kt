@@ -158,10 +158,10 @@ internal open class StubBasedFirDeserializedSymbolProvider(
     }
 
     private fun loadFunctionsByCallableId(
-        callableId: CallableId,
+        callablePath: CallablePath,
         foundFunctions: Collection<KtNamedFunction>?,
     ): List<FirNamedFunctionSymbol> {
-        val topLevelFunctions = foundFunctions ?: declarationProvider.getTopLevelFunctions(callableId)
+        val topLevelFunctions = foundFunctions ?: declarationProvider.getTopLevelFunctions(callablePath)
 
         return ArrayList<FirNamedFunctionSymbol>(topLevelFunctions.size).apply {
             for (function in topLevelFunctions) {
@@ -177,17 +177,17 @@ internal open class StubBasedFirDeserializedSymbolProvider(
                     continue
                 }
 
-                val symbol = FirNamedFunctionSymbol(callableId)
+                val symbol = FirNamedFunctionSymbol(callablePath)
                 val rootContext = StubBasedFirDeserializationContext
-                    .createRootContext(session, moduleData, callableId, function, symbol, functionOrigin, containerSource)
+                    .createRootContext(session, moduleData, callablePath, function, symbol, functionOrigin, containerSource)
 
                 add(rootContext.memberDeserializer.loadFunction(function, null, session, symbol).symbol)
             }
         }
     }
 
-    private fun loadPropertiesByCallableId(callableId: CallableId, foundProperties: Collection<KtProperty>?): List<FirPropertySymbol> {
-        val topLevelProperties = foundProperties ?: declarationProvider.getTopLevelProperties(callableId)
+    private fun loadPropertiesByCallableId(callablePath: CallablePath, foundProperties: Collection<KtProperty>?): List<FirPropertySymbol> {
+        val topLevelProperties = foundProperties ?: declarationProvider.getTopLevelProperties(callablePath)
 
         return buildList {
             for (property in topLevelProperties) {
@@ -196,9 +196,9 @@ internal open class StubBasedFirDeserializedSymbolProvider(
                 val containerSource = getContainerSource(propertyFile, propertyStub?.origin)
                 val propertyOrigin = getDeclarationOriginFor(propertyFile)
 
-                val symbol = FirPropertySymbol(callableId)
+                val symbol = FirPropertySymbol(callablePath)
                 val rootContext = StubBasedFirDeserializationContext
-                    .createRootContext(session, moduleData, callableId, property, symbol, propertyOrigin, containerSource)
+                    .createRootContext(session, moduleData, callablePath, property, symbol, propertyOrigin, containerSource)
 
                 add(rootContext.memberDeserializer.loadProperty(property, null, symbol).symbol)
             }
@@ -249,13 +249,13 @@ internal open class StubBasedFirDeserializedSymbolProvider(
 
     @FirSymbolProviderInternals
     override fun getTopLevelCallableSymbolsTo(destination: MutableList<FirCallableSymbol<*>>, packageFqName: FqName, name: Name) {
-        val callableId = CallableId(packageFqName, name)
-        destination += functionCache.getCallablesWithoutContext(callableId)
-        destination += propertyCache.getCallablesWithoutContext(callableId)
+        val callablePath = CallablePath(packageFqName, name)
+        destination += functionCache.getCallablesWithoutContext(callablePath)
+        destination += propertyCache.getCallablesWithoutContext(callablePath)
     }
 
-    private fun <C : FirCallableSymbol<*>, CONTEXT> FirCache<CallableId, List<C>, CONTEXT?>.getCallablesWithoutContext(
-        id: CallableId,
+    private fun <C : FirCallableSymbol<*>, CONTEXT> FirCache<CallablePath, List<C>, CONTEXT?>.getCallablesWithoutContext(
+        id: CallablePath,
     ): List<C> {
         if (!symbolNamesProvider.mayHaveTopLevelCallable(id.packageName, id.callableName)) return emptyList()
         return getValue(id, null)
@@ -264,44 +264,44 @@ internal open class StubBasedFirDeserializedSymbolProvider(
     @FirSymbolProviderInternals
     override fun getTopLevelCallableSymbolsTo(
         destination: MutableList<FirCallableSymbol<*>>,
-        callableId: CallableId,
+        callablePath: CallablePath,
         callables: Collection<KtCallableDeclaration>,
     ) {
         callables.filterIsInstance<KtNamedFunction>().ifNotEmpty {
-            destination += functionCache.getValue(callableId, this)
+            destination += functionCache.getValue(callablePath, this)
         }
 
         callables.filterIsInstance<KtProperty>().ifNotEmpty {
-            destination += propertyCache.getValue(callableId, this)
+            destination += propertyCache.getValue(callablePath, this)
         }
     }
 
     @FirSymbolProviderInternals
     override fun getTopLevelFunctionSymbolsTo(destination: MutableList<FirNamedFunctionSymbol>, packageFqName: FqName, name: Name) {
-        destination += functionCache.getCallablesWithoutContext(CallableId(packageFqName, name))
+        destination += functionCache.getCallablesWithoutContext(CallablePath(packageFqName, name))
     }
 
     @FirSymbolProviderInternals
     override fun getTopLevelFunctionSymbolsTo(
         destination: MutableList<FirNamedFunctionSymbol>,
-        callableId: CallableId,
+        callablePath: CallablePath,
         functions: Collection<KtNamedFunction>,
     ) {
-        destination += functionCache.getValue(callableId, functions)
+        destination += functionCache.getValue(callablePath, functions)
     }
 
     @FirSymbolProviderInternals
     override fun getTopLevelPropertySymbolsTo(destination: MutableList<FirPropertySymbol>, packageFqName: FqName, name: Name) {
-        destination += propertyCache.getCallablesWithoutContext(CallableId(packageFqName, name))
+        destination += propertyCache.getCallablesWithoutContext(CallablePath(packageFqName, name))
     }
 
     @FirSymbolProviderInternals
     override fun getTopLevelPropertySymbolsTo(
         destination: MutableList<FirPropertySymbol>,
-        callableId: CallableId,
+        callablePath: CallablePath,
         properties: Collection<KtProperty>,
     ) {
-        destination += propertyCache.getValue(callableId, properties)
+        destination += propertyCache.getValue(callablePath, properties)
     }
 
     override fun getPackage(fqName: FqName): FqName? =
@@ -348,10 +348,10 @@ internal open class StubBasedFirDeserializedSymbolProvider(
         //possible overloads spoils here
         //we can't use only this callable instead of index access to fill the cache
         //names check is redundant though as we already have existing callable in scope
-        val callableId = CallableId(packageFqName, shortName)
+        val callablePath = CallablePath(packageFqName, shortName)
         val callableSymbols = when (callableDeclaration) {
-            is KtNamedFunction -> functionCache.getValue(callableId)
-            is KtProperty -> propertyCache.getValue(callableId)
+            is KtNamedFunction -> functionCache.getValue(callablePath)
+            is KtProperty -> propertyCache.getValue(callablePath)
             else -> null
         }
         return callableSymbols?.singleOrNull { it.fir.realPsi == callableDeclaration }

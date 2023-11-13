@@ -14,7 +14,7 @@ import org.jetbrains.kotlin.analysis.api.symbols.KtCallableSymbol
 import org.jetbrains.kotlin.analysis.api.symbols.*
 import org.jetbrains.kotlin.analysis.api.symbols.markers.KtSymbolWithMembers
 import org.jetbrains.kotlin.analysis.utils.printer.parentsOfType
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.name.Name
@@ -231,8 +231,8 @@ internal object KDocReferenceResolver {
         interpretation: FqNameInterpretation,
     ) {
         when (interpretation) {
-            is FqNameInterpretation.FqNameInterpretationAsCallableId -> {
-                collectSymbolsByFqNameInterpretationAsCallableId(interpretation.callableId)
+            is FqNameInterpretation.FqNameInterpretationAsCallablePath -> {
+                collectSymbolsByFqNameInterpretationAsCallablePath(interpretation.callablePath)
             }
 
             is FqNameInterpretation.FqNameInterpretationAsClassId -> {
@@ -256,16 +256,16 @@ internal object KDocReferenceResolver {
     }
 
     context(KtAnalysisSession)
-    private fun MutableCollection<KtSymbol>.collectSymbolsByFqNameInterpretationAsCallableId(callableId: CallableId) {
-        when (val classId = callableId.classId) {
+    private fun MutableCollection<KtSymbol>.collectSymbolsByFqNameInterpretationAsCallablePath(callablePath: CallablePath) {
+        when (val classId = callablePath.classId) {
             null -> {
-                addAll(getTopLevelCallableSymbols(callableId.packageName, callableId.callableName))
+                addAll(getTopLevelCallableSymbols(callablePath.packageName, callablePath.callableName))
             }
 
             else -> {
                 getClassOrObjectSymbolByClassId(classId)
                     ?.getCompositeCombinedMemberAndCompanionObjectScope()
-                    ?.getCallableSymbols(callableId.callableName)
+                    ?.getCallableSymbols(callablePath.callableName)
                     ?.let(::addAll)
             }
         }
@@ -303,7 +303,7 @@ private sealed class FqNameInterpretation {
 
     data class FqNameInterpretationAsPackage(val packageFqName: FqName) : FqNameInterpretation()
     data class FqNameInterpretationAsClassId(val classId: ClassId) : FqNameInterpretation()
-    data class FqNameInterpretationAsCallableId(val callableId: CallableId) : FqNameInterpretation()
+    data class FqNameInterpretationAsCallablePath(val callablePath: CallablePath) : FqNameInterpretation()
 
     companion object {
         fun create(packageParts: List<Name>, classParts: List<Name>, callable: Name?): FqNameInterpretation {
@@ -313,7 +313,7 @@ private sealed class FqNameInterpretation {
             return when {
                 classParts.isEmpty() && callable == null -> FqNameInterpretationAsPackage(packageName)
                 callable == null -> FqNameInterpretationAsClassId(ClassId(packageName, relativeClassName, isLocal = false))
-                else -> FqNameInterpretationAsCallableId(CallableId(packageName, relativeClassName.takeUnless { it.isRoot }, callable))
+                else -> FqNameInterpretationAsCallablePath(CallablePath(packageName, relativeClassName.takeUnless { it.isRoot }, callable))
             }
         }
     }

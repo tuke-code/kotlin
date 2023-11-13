@@ -10,7 +10,7 @@ import org.jetbrains.kotlin.analysis.api.KtAnalysisSession
 import org.jetbrains.kotlin.analysis.api.symbols.KtClassKind
 import org.jetbrains.kotlin.analysis.api.symbols.KtNamedClassOrObjectSymbol
 import org.jetbrains.kotlin.analysis.api.symbols.KtSymbol
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.name.Name
@@ -66,26 +66,26 @@ sealed class SymbolData {
         }
     }
 
-    data class CallableData(val callableId: CallableId) : SymbolData() {
+    data class CallableData(val callablePath: CallablePath) : SymbolData() {
         override fun KtAnalysisSession.toSymbols(ktFile: KtFile): List<KtSymbol> {
-            val classId = callableId.classId
+            val classId = callablePath.classId
             val symbols = if (classId == null) {
-                getTopLevelCallableSymbols(callableId.packageName, callableId.callableName).toList()
+                getTopLevelCallableSymbols(callablePath.packageName, callablePath.callableName).toList()
             } else {
                 val classSymbol =
                     getClassOrObjectSymbolByClassId(classId)
                         ?: error("Class $classId is not found")
-                classSymbol.getCombinedDeclaredMemberScope().getCallableSymbols(callableId.callableName)
+                classSymbol.getCombinedDeclaredMemberScope().getCallableSymbols(callablePath.callableName)
                     .toList()
             }
             if (symbols.isEmpty()) {
-                error("No callable with fqName $callableId found")
+                error("No callable with fqName $callablePath found")
             }
             return symbols
         }
     }
 
-    data class EnumEntryInitializerData(val enumEntryId: CallableId) : SymbolData() {
+    data class EnumEntryInitializerData(val enumEntryId: CallablePath) : SymbolData() {
         override fun KtAnalysisSession.toSymbols(ktFile: KtFile): List<KtSymbol> {
             val classSymbol = enumEntryId.classId?.let { getClassOrObjectSymbolByClassId(it) }
                 ?: error("Cannot find enum class `${enumEntryId.classId}`.")
@@ -108,14 +108,14 @@ sealed class SymbolData {
             data == "script" -> ScriptData
             data.startsWith("class:") -> ClassData(ClassId.fromString(data.removePrefix("class:").trim()))
             data.startsWith("typealias:") -> TypeAliasData(ClassId.fromString(data.removePrefix("typealias:").trim()))
-            data.startsWith("callable:") -> CallableData(extractCallableId(data, "callable:"))
-            data.startsWith("enum_entry_initializer") -> EnumEntryInitializerData(extractCallableId(data, "enum_entry_initializer:"))
+            data.startsWith("callable:") -> CallableData(extractCallablePath(data, "callable:"))
+            data.startsWith("enum_entry_initializer") -> EnumEntryInitializerData(extractCallablePath(data, "enum_entry_initializer:"))
             else -> error("Invalid symbol kind, expected one of: $identifiers")
         }
     }
 }
 
-private fun extractCallableId(data: String, prefix: String): CallableId {
+private fun extractCallablePath(data: String, prefix: String): CallablePath {
     val fullName = data.removePrefix(prefix).trim()
     val name = if ('.' in fullName) fullName.substringAfterLast(".") else fullName.substringAfterLast('/')
     val (packageName, className) = run {
@@ -126,5 +126,5 @@ private fun extractCallableId(data: String, prefix: String): CallableId {
             else -> packageNameWithClassName to null
         }
     }
-    return CallableId(FqName(packageName.replace('/', '.')), className?.let { FqName(it) }, Name.identifier(name))
+    return CallablePath(FqName(packageName.replace('/', '.')), className?.let { FqName(it) }, Name.identifier(name))
 }

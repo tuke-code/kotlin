@@ -42,7 +42,7 @@ inline val FirDeclaration.isSynthetic: Boolean
 val FirDeclaration.isNonLocal
     get() = when (this) {
         is FirFile -> true
-        is FirCallableDeclaration -> !symbol.callableId.isLocal
+        is FirCallableDeclaration -> !symbol.callablePath.isLocal
         is FirClassLikeDeclaration -> !symbol.classId.isLocal
         else -> false
     }
@@ -52,7 +52,7 @@ val FirCallableDeclaration.isExtension get() = receiverParameter != null
 val FirMemberDeclaration.nameOrSpecialName: Name
     get() = when (this) {
         is FirCallableDeclaration ->
-            this.symbol.callableId.callableName
+            this.symbol.callablePath.callableName
         is FirClass ->
             this.classId.shortClassName
         is FirTypeAlias ->

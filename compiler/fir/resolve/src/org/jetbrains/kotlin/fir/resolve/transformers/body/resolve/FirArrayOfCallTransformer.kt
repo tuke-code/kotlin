@@ -89,7 +89,7 @@ class FirArrayOfCallTransformer : FirDefaultTransformer<FirSession>() {
                 ).map { "kotlin/" + it + "ArrayOf" }
 
         private fun isArrayOf(function: FirSimpleFunction, arguments: List<FirExpression>): Boolean =
-            when (function.symbol.callableId.toString()) {
+            when (function.symbol.callablePath.toString()) {
                 "kotlin/emptyArray" -> function.valueParameters.isEmpty() && arguments.isEmpty()
                 in arrayOfNames -> function.valueParameters.size == 1 && function.valueParameters[0].isVararg && arguments.size <= 1
                 else -> false

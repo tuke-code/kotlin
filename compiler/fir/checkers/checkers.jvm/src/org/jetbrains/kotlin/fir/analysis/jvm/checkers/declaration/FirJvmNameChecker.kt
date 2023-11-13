@@ -16,13 +16,10 @@ import org.jetbrains.kotlin.fir.declarations.*
 import org.jetbrains.kotlin.fir.declarations.utils.isInline
 import org.jetbrains.kotlin.fir.declarations.utils.isOverridable
 import org.jetbrains.kotlin.fir.declarations.utils.isOverride
-import org.jetbrains.kotlin.fir.expressions.FirAnnotation
 import org.jetbrains.kotlin.fir.expressions.FirConstExpression
 import org.jetbrains.kotlin.fir.java.findJvmNameAnnotation
 import org.jetbrains.kotlin.fir.resolve.getContainingClass
-import org.jetbrains.kotlin.fir.types.coneType
 import org.jetbrains.kotlin.fir.types.resolvedType
-import org.jetbrains.kotlin.name.JvmStandardClassIds
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.name.StandardClassIds
 
@@ -59,7 +56,7 @@ object FirJvmNameChecker : FirBasicDeclarationChecker() {
 
     private fun CheckerContext.isRenamableFunction(function: FirFunction): Boolean {
         val containingClass = function.getContainingClassSymbol(session)
-        return containingClass != null || !function.symbol.callableId.isLocal
+        return containingClass != null || !function.symbol.callablePath.isLocal
     }
 
     private fun FirRegularClass.isValueClassThatRequiresMangling(): Boolean {

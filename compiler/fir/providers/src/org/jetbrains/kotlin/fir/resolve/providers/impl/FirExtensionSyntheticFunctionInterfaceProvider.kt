@@ -222,7 +222,7 @@ abstract class FirSyntheticFunctionInterfaceProviderBase(
                             this.name = name
                             status = functionStatus
                             symbol = FirNamedFunctionSymbol(
-                                CallableId(packageFqName, relativeClassName, name)
+                                CallablePath(packageFqName, relativeClassName, name)
                             )
                             resolvePhase = FirResolvePhase.ANALYZED_DEPENDENCIES
                             valueParameters += typeArguments.dropLast(1).mapIndexed { index, typeArgument ->

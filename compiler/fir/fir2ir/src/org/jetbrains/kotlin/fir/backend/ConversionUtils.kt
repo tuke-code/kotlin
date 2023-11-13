@@ -511,20 +511,20 @@ internal fun FirReference.statementOrigin(): IrStatementOrigin? = when (this) {
     is FirResolvedNamedReference -> when (val symbol = resolvedSymbol) {
         is FirSyntheticPropertySymbol -> IrStatementOrigin.GET_PROPERTY
         is FirNamedFunctionSymbol -> when {
-            symbol.callableId.isInvoke() ->
+            symbol.callablePath.isInvoke() ->
                 IrStatementOrigin.INVOKE
 
-            source?.kind == KtFakeSourceElementKind.DesugaredForLoop && symbol.callableId.isIteratorNext() ->
+            source?.kind == KtFakeSourceElementKind.DesugaredForLoop && symbol.callablePath.isIteratorNext() ->
                 IrStatementOrigin.FOR_LOOP_NEXT
 
-            source?.kind == KtFakeSourceElementKind.DesugaredForLoop && symbol.callableId.isIteratorHasNext() ->
+            source?.kind == KtFakeSourceElementKind.DesugaredForLoop && symbol.callablePath.isIteratorHasNext() ->
                 IrStatementOrigin.FOR_LOOP_HAS_NEXT
 
-            source?.kind == KtFakeSourceElementKind.DesugaredForLoop && symbol.callableId.isIterator() ->
+            source?.kind == KtFakeSourceElementKind.DesugaredForLoop && symbol.callablePath.isIterator() ->
                 IrStatementOrigin.FOR_LOOP_ITERATOR
 
             source?.elementType == KtNodeTypes.OPERATION_REFERENCE ->
-                nameToOperationConventionOrigin[symbol.callableId.callableName]
+                nameToOperationConventionOrigin[symbol.callablePath.callableName]
 
             source?.kind is KtFakeSourceElementKind.DesugaredComponentFunctionCall ->
                 IrStatementOrigin.COMPONENT_N.withIndex(name.asString().removePrefix(DATA_CLASS_COMPONENT_PREFIX).toInt())
@@ -755,8 +755,8 @@ fun FirVariableAssignment.getIrPrefixPostfixOriginIfAny(): IrStatementOrigin? {
 private fun FirVariableAssignment.getCallableNameFromIntClassIfAny(): Name? {
     val calleeReferenceSymbol = calleeReference?.toResolvedCallableSymbol() ?: return null
     val rValue = rValue
-    if (rValue is FirFunctionCall && calleeReferenceSymbol.callableId.isLocal) {
-        val callableId = rValue.calleeReference.toResolvedCallableSymbol()?.callableId
+    if (rValue is FirFunctionCall && calleeReferenceSymbol.callablePath.isLocal) {
+        val callableId = rValue.calleeReference.toResolvedCallableSymbol()?.callablePath
         if (callableId?.classId == StandardClassIds.Int) {
             return callableId.callableName
         }

@@ -25,7 +25,7 @@ import org.jetbrains.kotlin.name.SpecialNames.ANONYMOUS_FQ_NAME
 object FirInterfaceDefaultMethodCallChecker : FirQualifiedAccessExpressionChecker() {
     override fun check(expression: FirQualifiedAccessExpression, context: CheckerContext, reporter: DiagnosticReporter) {
         val symbol = expression.calleeReference.toResolvedCallableSymbol()
-        val classId = symbol?.callableId?.classId ?: return
+        val classId = symbol?.callablePath?.classId ?: return
         if (classId.isLocal) return
 
         if (expression.explicitReceiverIsNotSuperReference()) return
@@ -51,7 +51,7 @@ object FirInterfaceDefaultMethodCallChecker : FirQualifiedAccessExpressionChecke
 
     private fun CheckerContext.findContainingMember(): FirCallableDeclaration? {
         return findClosest {
-            (it is FirSimpleFunction && it.symbol.callableId.classId?.relativeClassName != ANONYMOUS_FQ_NAME) || it is FirProperty
+            (it is FirSimpleFunction && it.symbol.callablePath.classId?.relativeClassName != ANONYMOUS_FQ_NAME) || it is FirProperty
         }
     }
 }

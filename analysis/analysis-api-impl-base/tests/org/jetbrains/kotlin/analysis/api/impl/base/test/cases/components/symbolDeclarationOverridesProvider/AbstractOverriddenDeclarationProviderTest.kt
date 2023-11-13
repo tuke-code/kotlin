@@ -61,11 +61,11 @@ abstract class AbstractOverriddenDeclarationProviderTest : AbstractAnalysisApiBa
 
     @Suppress("unused")
     private fun KtAnalysisSession.getPath(symbol: KtCallableSymbol): String = when (symbol) {
-        is KtSyntheticJavaPropertySymbol -> symbol.callableIdIfNonLocal?.toString()!!
+        is KtSyntheticJavaPropertySymbol -> symbol.callablePathIfNonLocal?.toString()!!
         else -> {
             val ktDeclaration = symbol.psi as? KtDeclaration
             if (ktDeclaration == null) {
-                symbol.callableIdIfNonLocal?.toString()!!
+                symbol.callablePathIfNonLocal?.toString()!!
             } else {
                 ktDeclaration
                     .parentsOfType<KtDeclaration>(withSelf = true)

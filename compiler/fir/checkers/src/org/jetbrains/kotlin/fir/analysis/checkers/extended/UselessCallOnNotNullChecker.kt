@@ -16,12 +16,12 @@ import org.jetbrains.kotlin.fir.references.toResolvedNamedFunctionSymbol
 import org.jetbrains.kotlin.fir.types.ConeNullability
 import org.jetbrains.kotlin.fir.types.classId
 import org.jetbrains.kotlin.fir.types.resolvedType
-import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.CallablePath
 
 object UselessCallOnNotNullChecker : FirQualifiedAccessExpressionChecker() {
     // todo, KT-59829: add 'call may be reduced' in cases like 's?.isNullOrEmpty()' where 's: String? = ""'
     override fun check(expression: FirQualifiedAccessExpression, context: CheckerContext, reporter: DiagnosticReporter) {
-        val method = expression.getCallableId() ?: return
+        val method = expression.getCallablePath() ?: return
         val calleeOn = expression.explicitReceiver ?: return
         val calleePackageName = calleeOn.getPackage()
         val calleeName = method.callableName.asString()
@@ -32,8 +32,8 @@ object UselessCallOnNotNullChecker : FirQualifiedAccessExpressionChecker() {
         }
     }
 
-    private fun FirQualifiedAccessExpression.getCallableId(): CallableId? {
-        return calleeReference.toResolvedNamedFunctionSymbol()?.callableId
+    private fun FirQualifiedAccessExpression.getCallablePath(): CallablePath? {
+        return calleeReference.toResolvedNamedFunctionSymbol()?.callablePath
     }
 
     private fun FirExpression.getPackage(): String {

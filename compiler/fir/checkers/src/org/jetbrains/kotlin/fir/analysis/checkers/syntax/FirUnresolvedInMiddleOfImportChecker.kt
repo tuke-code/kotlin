@@ -84,6 +84,6 @@ object FirUnresolvedInMiddleOfImportChecker : FirDeclarationSyntaxChecker<FirFil
         val enumClassId = classId.parentClassId ?: return false
         val enumClass =
             (symbolProvider.getClassLikeSymbolByClassId(enumClassId) as? FirRegularClassSymbol)?.takeIf { it.isEnumClass } ?: return false
-        return enumClass.collectEnumEntries().any { it.callableId.callableName == classId.shortClassName }
+        return enumClass.collectEnumEntries().any { it.callablePath.callableName == classId.shortClassName }
     }
 }

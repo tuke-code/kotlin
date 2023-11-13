@@ -62,7 +62,7 @@ internal object PersistenceContextCollector {
     ): CheckerContextForProvider {
         val isLocal = when (declaration) {
             is FirClassLikeDeclaration -> declaration.symbol.classId.isLocal
-            is FirCallableDeclaration -> declaration.symbol.callableId.isLocal
+            is FirCallableDeclaration -> declaration.symbol.callablePath.isLocal
             is FirDanglingModifierList -> declaration.containingClass()?.classId?.isLocal == true
             is FirAnonymousInitializer -> declaration.containingClassId().isLocal
             is FirScript, is FirCodeFragment -> false

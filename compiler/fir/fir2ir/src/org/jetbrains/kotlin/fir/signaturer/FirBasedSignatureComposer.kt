@@ -159,7 +159,7 @@ class FirBasedSignatureComposer(val mangler: FirMangler) {
             }
             is FirCallableDeclaration -> {
                 val classId = containingClassId ?: declaration.containingClassLookupTag()?.classId
-                val packageName = classId?.packageFqName ?: declaration.symbol.callableId.packageName
+                val packageName = classId?.packageFqName ?: declaration.symbol.callablePath.packageName
                 val callableName = declaration.irName
 
                 IdSignature.CommonSignature(

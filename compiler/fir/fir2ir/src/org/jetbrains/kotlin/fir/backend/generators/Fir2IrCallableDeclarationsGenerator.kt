@@ -82,7 +82,7 @@ class Fir2IrCallableDeclarationsGenerator(val components: Fir2IrComponents) : Fi
         val isLambda = function is FirAnonymousFunction && function.isLambda
         val updatedOrigin = when {
             isLambda -> IrDeclarationOrigin.LOCAL_FUNCTION_FOR_LAMBDA
-            function.symbol.callableId.isKFunctionInvoke() -> IrDeclarationOrigin.FAKE_OVERRIDE
+            function.symbol.callablePath.isKFunctionInvoke() -> IrDeclarationOrigin.FAKE_OVERRIDE
             !predefinedOrigin.isExternal && // we should preserve origin for external enums
                     simpleFunction?.isStatic == true &&
                     simpleFunction.name in Fir2IrDeclarationStorage.ENUM_SYNTHETIC_NAMES
@@ -154,7 +154,7 @@ class Fir2IrCallableDeclarationsGenerator(val components: Fir2IrComponents) : Fi
         if (visibility == Visibilities.Local) {
             return created
         }
-        if (function.symbol.callableId.isKFunctionInvoke()) {
+        if (function.symbol.callablePath.isKFunctionInvoke()) {
             (function.symbol.originalForSubstitutionOverride as? FirNamedFunctionSymbol)?.let {
                 created.overriddenSymbols += declarationStorage.getIrFunctionSymbol(it) as IrSimpleFunctionSymbol
             }
