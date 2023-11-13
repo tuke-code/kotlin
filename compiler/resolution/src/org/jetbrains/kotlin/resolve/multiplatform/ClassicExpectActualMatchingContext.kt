@@ -62,7 +62,7 @@ class ClassicExpectActualMatchingContext(
         get() = (this as ClassifierDescriptor).classId!!
     override val TypeAliasSymbolMarker.classId: ClassId
         get() = (this as ClassifierDescriptor).classId!!
-    val CallableSymbolMarker.callablePath: CallablePath
+    override val CallableSymbolMarker.callablePath: CallablePath
         get() {
             val descriptor = asDescriptor()
             return when (val parent = descriptor.containingDeclaration) {
