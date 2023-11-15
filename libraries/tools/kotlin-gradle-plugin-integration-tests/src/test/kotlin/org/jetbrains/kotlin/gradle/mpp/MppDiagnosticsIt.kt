@@ -8,7 +8,9 @@ package org.jetbrains.kotlin.gradle.mpp
 import org.gradle.util.GradleVersion
 import org.jetbrains.kotlin.gradle.plugin.diagnostics.KotlinToolingDiagnostics
 import org.jetbrains.kotlin.gradle.testbase.*
+import org.jetbrains.kotlin.gradle.util.replaceFirst
 import org.jetbrains.kotlin.test.TestMetadata
+import org.junit.jupiter.api.DisplayName
 import java.io.File
 import kotlin.io.path.appendText
 import kotlin.io.path.writeText
@@ -179,6 +181,45 @@ class MppDiagnosticsIt : KGPBaseTest() {
 
             build("help", "--full-stacktrace", buildOptions = options) {
                 assertEqualsToFile(expectedOutputFile("with-full-stacktrace"), extractProjectsAndTheirDiagnostics())
+            }
+        }
+    }
+
+    @GradleTest
+    @DisplayName("Circular dependency of source files is detected in incremental build")
+    fun testLoopDetectionOnIncrementalBuild(gradleVersion: GradleVersion) {
+        nativeProject("expect-actual-fun-or-class-ic", gradleVersion) {
+            val options = buildOptions.copy(showDiagnosticsStacktrace = null, stacktraceMode = null).copyEnsuringK2()
+
+            kotlinSourcesDir("commonMain").resolve("Value.kt").appendText(
+                "inline fun a() = b()"
+            )
+            val secondFun = kotlinSourcesDir("commonMain").resolve("AnotherValue.kt")
+            secondFun.writeText(
+                "inline fun b() { val unused = 2 }"
+            )
+            build("assemble", buildOptions = options)
+
+            secondFun.replaceFirst("{ val unused = 2 }", "= a()")
+
+            //Loop
+//            buildAndFail("compileKotlinJvm", buildOptions = options) {
+//                assertTasksFailed(":compileCommonMainKotlinMetadata")
+//                assertTasksNotExecuted(":compileKotlinJvm")
+//                assertOutputContains("Type checking has run into a recursive problem.")
+//            }
+
+            //Unexpected build execution success
+//            buildAndFail(":compileKotlinJs", buildOptions = options) {
+//                assertTasksFailed("compileCommonMainKotlinMetadata")
+//                assertTasksNotExecuted(":compileKotlinJs")
+//                assertOutputContains("Type checking has run into a recursive problem.")
+//            }
+
+            buildAndFail("compileKotlinNative", buildOptions = options) {
+                assertTasksFailed(":compileKotlinNative")
+                assertTasksNotExecuted(":compileCommonMainKotlinMetadata")
+                assertOutputContains("Type checking has run into a recursive problem.")
             }
         }
     }
