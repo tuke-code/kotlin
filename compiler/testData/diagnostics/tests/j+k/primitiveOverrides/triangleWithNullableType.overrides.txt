@@ -1,0 +1,3 @@
+C:
+  [Enhancement]: public open fun foo(x: R|kotlin/Int?|): R|kotlin/Unit| from Use site scope of /C [id: 0]
+  [Source]: public open fun foo(x: R|kotlin/Int|): R|kotlin/Unit| from Use site scope of /C [id: 0]

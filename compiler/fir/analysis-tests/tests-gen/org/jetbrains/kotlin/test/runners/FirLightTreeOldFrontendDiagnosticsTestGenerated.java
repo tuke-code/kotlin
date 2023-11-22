@@ -22626,6 +22626,24 @@ public class FirLightTreeOldFrontendDiagnosticsTestGenerated extends AbstractFir
                 public void testSpecializedMap() throws Exception {
                     runTest("compiler/testData/diagnostics/tests/j+k/primitiveOverrides/specializedMap.kt");
                 }
+
+                @Test
+                @TestMetadata("triangleWithFlexibleType.kt")
+                public void testTriangleWithFlexibleType() throws Exception {
+                    runTest("compiler/testData/diagnostics/tests/j+k/primitiveOverrides/triangleWithFlexibleType.kt");
+                }
+
+                @Test
+                @TestMetadata("triangleWithNotNullType.kt")
+                public void testTriangleWithNotNullType() throws Exception {
+                    runTest("compiler/testData/diagnostics/tests/j+k/primitiveOverrides/triangleWithNotNullType.kt");
+                }
+
+                @Test
+                @TestMetadata("triangleWithNullableType.kt")
+                public void testTriangleWithNullableType() throws Exception {
+                    runTest("compiler/testData/diagnostics/tests/j+k/primitiveOverrides/triangleWithNullableType.kt");
+                }
             }
 
             @Nested
