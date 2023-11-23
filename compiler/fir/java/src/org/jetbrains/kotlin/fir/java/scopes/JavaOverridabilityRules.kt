@@ -19,16 +19,30 @@ class JavaOverridabilityRules(session: FirSession) : PlatformSpecificOverridabil
         JavaOverrideChecker(session, JavaTypeParameterStack.EMPTY, baseScopes = null, considerReturnTypeKinds = true)
 
     override fun isOverriddenFunction(overrideCandidate: FirSimpleFunction, baseDeclaration: FirSimpleFunction): Boolean? {
-        if (!overrideCandidate.isFromJava() || !baseDeclaration.isFromJava()) return null
-
-        return javaOverrideChecker.isOverriddenFunction(overrideCandidate, baseDeclaration)
+        return if (shouldApplyJavaChecker(overrideCandidate, baseDeclaration)) {
+            javaOverrideChecker.isOverriddenFunction(overrideCandidate, baseDeclaration).takeIf { !it }
+        } else {
+            null
+        }
     }
 
     override fun isOverriddenProperty(overrideCandidate: FirCallableDeclaration, baseDeclaration: FirProperty): Boolean? {
-        if (!overrideCandidate.isFromJava() || !baseDeclaration.isFromJava()) return null
-
-        return javaOverrideChecker.isOverriddenProperty(overrideCandidate, baseDeclaration)
+        return if (shouldApplyJavaChecker(overrideCandidate, baseDeclaration)) {
+            javaOverrideChecker.isOverriddenProperty(overrideCandidate, baseDeclaration).takeIf { !it }
+        } else {
+            null
+        }
     }
 
-    private fun FirCallableDeclaration.isFromJava(): Boolean = unwrapFakeOverrides().origin == FirDeclarationOrigin.Enhancement
+    private fun shouldApplyJavaChecker(overrideCandidate: FirCallableDeclaration, baseDeclaration: FirCallableDeclaration): Boolean {
+        return when {
+            overrideCandidate.isOriginallyFromJava() && baseDeclaration.isOriginallyFromJava() -> true
+            overrideCandidate.isFromJava() || baseDeclaration.isFromJava() -> true
+            else -> false
+        }
+    }
+
+    private fun FirCallableDeclaration.isFromJava(): Boolean = origin == FirDeclarationOrigin.Enhancement
+
+    private fun FirCallableDeclaration.isOriginallyFromJava(): Boolean = unwrapFakeOverrides().origin == FirDeclarationOrigin.Enhancement
 }
