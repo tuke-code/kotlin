@@ -39,13 +39,13 @@ interface RenderContext<RCX : Any, RCLeft : Any, RCRight : Any> {
 
 class State<S : Comparable<S>>(val data: Data<S>) {
     suspend fun render() {
-        val renderer = Renderer.build(xConverter = data.converter) {
+        val renderer = <!NEW_INFERENCE_ERROR!>Renderer.build(xConverter = data.converter) {
             leftScaleCurves = CurveSet(units = Units.Percent)
-            addDecorations {
-                val top = leftScaleValueToY!!(0.67)
-                renderCurrentValue(top)
-            }
-        }
+            <!NEW_INFERENCE_ERROR!>addDecorations {
+                val top = <!UNRESOLVED_REFERENCE_WRONG_RECEIVER!>leftScaleValueToY!!<!>(0.67)
+                <!UNRESOLVED_REFERENCE_WRONG_RECEIVER!>renderCurrentValue<!>(top)
+            }<!>
+        }<!>
     }
 
     private fun RenderContext<S, Double, Unit>.renderCurrentValue(d: Double) {}
