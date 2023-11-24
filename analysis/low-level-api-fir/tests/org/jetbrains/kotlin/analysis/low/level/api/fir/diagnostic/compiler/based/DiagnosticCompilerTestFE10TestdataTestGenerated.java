@@ -40062,6 +40062,12 @@ public class DiagnosticCompilerTestFE10TestdataTestGenerated extends AbstractDia
         }
 
         @Test
+        @TestMetadata("flystoBug.kt")
+        public void testFlystoBug() throws Exception {
+            runTest("compiler/testData/diagnostics/testsWithStdLib/flystoBug.kt");
+        }
+
+        @Test
         @TestMetadata("genericContainer.kt")
         public void testGenericContainer() throws Exception {
             runTest("compiler/testData/diagnostics/testsWithStdLib/genericContainer.kt");

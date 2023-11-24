@@ -1,0 +1,98 @@
+FILE: flystoBug.kt
+    public final class Data<D : R|kotlin/Comparable<D>|> : R|kotlin/Any| {
+        public constructor<D : R|kotlin/Comparable<D>|>(converter: R|DoubleConverter<D>|): R|Data<D>| {
+            super<R|kotlin/Any|>()
+        }
+
+        public final val converter: R|DoubleConverter<D>| = R|<local>/converter|
+            public get(): R|DoubleConverter<D>|
+
+    }
+    public abstract interface Units<UValue : R|kotlin/Any|> : R|DoubleConverter<UValue>| {
+        public final companion object Companion : R|kotlin/Any| {
+            private constructor(): R|Units.Companion| {
+                super<R|kotlin/Any|>()
+            }
+
+            public final val Percent: R|SimpleDoubleUnits| = R|/SimpleDoubleUnits.SimpleDoubleUnits|()
+                public get(): R|SimpleDoubleUnits|
+
+        }
+
+    }
+    public final class SimpleDoubleUnits : R|BaseUnits<kotlin/Double>| {
+        public constructor(): R|SimpleDoubleUnits| {
+            super<R|BaseUnits<kotlin/Double>|>()
+        }
+
+    }
+    public abstract class BaseUnits<BValue : R|kotlin/Any|> : R|Units<BValue>| {
+        public constructor<BValue : R|kotlin/Any|>(): R|BaseUnits<BValue>| {
+            super<R|kotlin/Any|>()
+        }
+
+    }
+    public abstract interface DoubleConverter<DValue : R|kotlin/Any|> : R|kotlin/Any| {
+    }
+    public abstract interface Renderer<TX : R|kotlin/Any|, Left : R|kotlin/Any|, Right : R|kotlin/Any|> : R|kotlin/Any| {
+        public final companion object Companion : R|kotlin/Any| {
+            private constructor(): R|Renderer.Companion| {
+                super<R|kotlin/Any|>()
+            }
+
+            public final fun <BX : R|kotlin/Any|, BLeft : R|kotlin/Any|, BRight : R|kotlin/Any|> build(xConverter: R|DoubleConverter<BX>|, builderCode: R|RendererBuilder<BX, BLeft, BRight>.() -> kotlin/Unit|): R|Renderer<BX, BLeft, BRight>| {
+                ^build Null(null)!!
+            }
+
+        }
+
+    }
+    public final class RendererBuilder<RBX : R|kotlin/Any|, RBLeft : R|kotlin/Any|, RBRight : R|kotlin/Any|> : R|kotlin/Any| {
+        public constructor<RBX : R|kotlin/Any|, RBLeft : R|kotlin/Any|, RBRight : R|kotlin/Any|>(): R|RendererBuilder<RBX, RBLeft, RBRight>| {
+            super<R|kotlin/Any|>()
+        }
+
+        public final var leftScaleCurves: R|CurveSet<RBLeft>?| = Null(null)
+            public get(): R|CurveSet<RBLeft>?|
+            public set(value: R|CurveSet<RBLeft>?|): R|kotlin/Unit|
+
+        public final fun addDecorations(render: R|RenderDecorations<RBX, RBLeft, RBRight>|): R|kotlin/Unit| {
+        }
+
+    }
+    public final typealias RenderDecorations<GDX, GDLeft, GDRight> = R|suspend RenderContext<GDX, GDLeft, GDRight>.() -> kotlin/Unit|
+    public abstract interface RenderContext<RCX : R|kotlin/Any|, RCLeft : R|kotlin/Any|, RCRight : R|kotlin/Any|> : R|kotlin/Any| {
+        public abstract val leftScaleValueToY: R|((RCLeft) -> kotlin/Double)?|
+            public get(): R|((RCLeft) -> kotlin/Double)?|
+
+    }
+    public final class State<S : R|kotlin/Comparable<S>|> : R|kotlin/Any| {
+        public constructor<S : R|kotlin/Comparable<S>|>(data: R|Data<S>|): R|State<S>| {
+            super<R|kotlin/Any|>()
+        }
+
+        public final val data: R|Data<S>| = R|<local>/data|
+            public get(): R|Data<S>|
+
+        public final suspend fun render(): R|kotlin/Unit| {
+            lval renderer: R|Renderer<S, kotlin/Double, kotlin/Unit>| = Q|Renderer|.R|/Renderer.Companion.build|<R|S|, R|kotlin/Double|, R|kotlin/Unit|>(xConverter = this@R|/State|.R|/State.data|.R|SubstitutionOverride</Data.converter: R|DoubleConverter<S>|>|, <L> = build@fun R|RendererBuilder<S, kotlin/Double, kotlin/Unit>|.<anonymous>(): R|kotlin/Unit| <inline=NoInline>  {
+                this@R|special/anonymous|.R|SubstitutionOverride</RendererBuilder.leftScaleCurves: R|CurveSet<Stub (chain inference): TypeVariable(BLeft)>?|>| = R|/CurveSet.CurveSet|<R|kotlin/Double|>(units = Q|Units|.R|/Units.Companion.Percent|)
+                this@R|special/anonymous|.R|SubstitutionOverride</RendererBuilder.addDecorations: R|kotlin/Unit|>|(<L> = addDecorations@fun R|RenderContext<S, kotlin/Double, kotlin/Unit>|.<anonymous>(): R|kotlin/Unit| <inline=NoInline>  {
+                    lval top: R|kotlin/Double| = this@R|special/anonymous|.R|SubstitutionOverride</RenderContext.leftScaleValueToY: R|((Stub (chain inference): TypeVariable(BLeft)) -> kotlin/Double)?|>|!!.R|SubstitutionOverride<kotlin/Function1.invoke: R|kotlin/Double|>|(Double(0.67))
+                    (this@R|/State|, this@R|special/anonymous|).R|/State.renderCurrentValue|(R|<local>/top|)
+                }
+                )
+            }
+            )
+        }
+
+        private final fun R|RenderContext<S, kotlin/Double, kotlin/Unit>|.renderCurrentValue(d: R|kotlin/Double|): R|kotlin/Unit| {
+        }
+
+    }
+    public final class CurveSet<CY : R|kotlin/Any|> : R|kotlin/Any| {
+        public constructor<CY : R|kotlin/Any|>(units: R|Units<CY>|): R|CurveSet<CY>| {
+            super<R|kotlin/Any|>()
+        }
+
+    }
