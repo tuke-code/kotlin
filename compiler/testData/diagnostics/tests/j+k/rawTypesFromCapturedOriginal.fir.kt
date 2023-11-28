@@ -30,7 +30,7 @@ fun StubBasedPsiElement<*>.foo(): KtStringTemplateExpression? {
         // K1: Array<KtStringTemplateExpression>, was K2: Array<PsiElement>
         val expressions = it.getChildrenByType("", STRING_TEMPLATE_EMPTY_ARRAY)
         // Ok in K1, Should not be error in K2
-        return expressions.firstOrNull()
+        return <!RETURN_TYPE_MISMATCH("KtStringTemplateExpression?; PsiElement?")!>expressions.firstOrNull()<!>
     }
     return null
 }
