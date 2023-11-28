@@ -388,9 +388,8 @@ class FirCallCompleter(
             return ConeErrorType(diagnostic)
         }
 
-        return session.typeApproximator.approximateToSuperType(
-            this, TypeApproximatorConfiguration.FinalApproximationAfterResolutionAndInference
-        ) ?: this
+        val conf = TypeApproximatorConfiguration.FinalApproximationAfterResolutionAndInferenceNoCapturedTypes
+        return session.typeApproximator.approximateToSuperType(this, conf) ?: this
     }
 }
 

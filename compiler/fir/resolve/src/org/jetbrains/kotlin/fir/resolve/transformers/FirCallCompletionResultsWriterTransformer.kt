@@ -400,7 +400,8 @@ class FirCallCompletionResultsWriterTransformer(
         val initialType = candidate.substitutor.substituteOrSelf(type)
         val substitutedType = finallySubstituteOrNull(initialType)
         val finalType = typeApproximator.approximateToSuperType(
-            type = substitutedType ?: initialType, TypeApproximatorConfiguration.FinalApproximationAfterResolutionAndInference,
+            type = substitutedType ?: initialType,
+            TypeApproximatorConfiguration.FinalApproximationAfterResolutionAndInferenceNoCapturedTypes,
         ) ?: substitutedType
 
         // This is probably a temporary hack, but it seems necessary because elvis has that attribute and it may leak further like
