@@ -1,0 +1,16 @@
+FILE fqName:<root> fileName:/nativeCrash2.kt
+  FUN name:box visibility:public modality:FINAL <> () returnType:kotlin.String
+    BLOCK_BODY
+      VAR name:res type:kotlin.String [val]
+        CALL 'public open fun toString (): kotlin.String declared in kotlin.Int' type=kotlin.String origin=null
+          $this: CONST Int type=kotlin.Int value=42
+      WHEN type=kotlin.Unit origin=IF
+        BRANCH
+          if: CALL 'public final fun not (): kotlin.Boolean declared in kotlin.Boolean' type=kotlin.Boolean origin=EXCLEQ
+            $this: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EXCLEQ
+              arg0: GET_VAR 'val res: kotlin.String declared in <root>.box' type=kotlin.String origin=null
+              arg1: CONST String type=kotlin.String value="42"
+          then: RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in <root>'
+            GET_VAR 'val res: kotlin.String declared in <root>.box' type=kotlin.String origin=null
+      RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in <root>'
+        CONST String type=kotlin.String value="OK"

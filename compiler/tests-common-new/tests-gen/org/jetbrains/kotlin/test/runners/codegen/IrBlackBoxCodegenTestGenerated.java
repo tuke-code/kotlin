@@ -21637,6 +21637,18 @@ public class IrBlackBoxCodegenTestGenerated extends AbstractIrBlackBoxCodegenTes
             }
 
             @Test
+            @TestMetadata("nativeCrash.kt")
+            public void testNativeCrash() throws Exception {
+                runTest("compiler/testData/codegen/box/inference/builderInference/nativeCrash.kt");
+            }
+
+            @Test
+            @TestMetadata("nativeCrash2.kt")
+            public void testNativeCrash2() throws Exception {
+                runTest("compiler/testData/codegen/box/inference/builderInference/nativeCrash2.kt");
+            }
+
+            @Test
             @TestMetadata("nullability.kt")
             public void testNullability() throws Exception {
                 runTest("compiler/testData/codegen/box/inference/builderInference/nullability.kt");
