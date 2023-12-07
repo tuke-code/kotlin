@@ -134,6 +134,18 @@ public class OutOfContentRootLazyDeclarationResolveForTypeAnnotationsTestGenerat
         }
 
         @Test
+        @TestMetadata("parameterWithAnnotations.kt")
+        public void testParameterWithAnnotations() throws Exception {
+            runTest("analysis/low-level-api-fir/testData/lazyResolveTypeAnnotations/constructor/parameterWithAnnotations.kt");
+        }
+
+        @Test
+        @TestMetadata("parameterWithAnnotationsBodyResolve.kt")
+        public void testParameterWithAnnotationsBodyResolve() throws Exception {
+            runTest("analysis/low-level-api-fir/testData/lazyResolveTypeAnnotations/constructor/parameterWithAnnotationsBodyResolve.kt");
+        }
+
+        @Test
         @TestMetadata("propagationToLocalMemberFunction.kt")
         public void testPropagationToLocalMemberFunction() throws Exception {
             runTest("analysis/low-level-api-fir/testData/lazyResolveTypeAnnotations/constructor/propagationToLocalMemberFunction.kt");
@@ -381,6 +393,24 @@ public class OutOfContentRootLazyDeclarationResolveForTypeAnnotationsTestGenerat
         @TestMetadata("multiDeclaration.kt")
         public void testMultiDeclaration() throws Exception {
             runTest("analysis/low-level-api-fir/testData/lazyResolveTypeAnnotations/function/multiDeclaration.kt");
+        }
+
+        @Test
+        @TestMetadata("parameterAsImplicitReturnType.kt")
+        public void testParameterAsImplicitReturnType() throws Exception {
+            runTest("analysis/low-level-api-fir/testData/lazyResolveTypeAnnotations/function/parameterAsImplicitReturnType.kt");
+        }
+
+        @Test
+        @TestMetadata("parameterAsImplicitReturnTypeBodyResolve.kt")
+        public void testParameterAsImplicitReturnTypeBodyResolve() throws Exception {
+            runTest("analysis/low-level-api-fir/testData/lazyResolveTypeAnnotations/function/parameterAsImplicitReturnTypeBodyResolve.kt");
+        }
+
+        @Test
+        @TestMetadata("parameterAsImplicitReturnTypePropagation.kt")
+        public void testParameterAsImplicitReturnTypePropagation() throws Exception {
+            runTest("analysis/low-level-api-fir/testData/lazyResolveTypeAnnotations/function/parameterAsImplicitReturnTypePropagation.kt");
         }
 
         @Test

@@ -110,6 +110,18 @@ public class ScriptLazyTypeAnnotationsTestGenerated extends AbstractScriptLazyTy
         }
 
         @Test
+        @TestMetadata("parameterWithAnnotationsScript.kts")
+        public void testParameterWithAnnotationsScript() throws Exception {
+            runTest("analysis/low-level-api-fir/testData/lazyResolveTypeAnnotations/constructor/parameterWithAnnotationsScript.kts");
+        }
+
+        @Test
+        @TestMetadata("parameterWithAnnotationsScriptBodyResolve.kts")
+        public void testParameterWithAnnotationsScriptBodyResolve() throws Exception {
+            runTest("analysis/low-level-api-fir/testData/lazyResolveTypeAnnotations/constructor/parameterWithAnnotationsScriptBodyResolve.kts");
+        }
+
+        @Test
         @TestMetadata("propagationToLocalMemberFunctionScript.kts")
         public void testPropagationToLocalMemberFunctionScript() throws Exception {
             runTest("analysis/low-level-api-fir/testData/lazyResolveTypeAnnotations/constructor/propagationToLocalMemberFunctionScript.kts");
@@ -351,6 +363,24 @@ public class ScriptLazyTypeAnnotationsTestGenerated extends AbstractScriptLazyTy
         @TestMetadata("multiDeclarationScript.kts")
         public void testMultiDeclarationScript() throws Exception {
             runTest("analysis/low-level-api-fir/testData/lazyResolveTypeAnnotations/function/multiDeclarationScript.kts");
+        }
+
+        @Test
+        @TestMetadata("parameterAsImplicitReturnTypePropagationScript.kts")
+        public void testParameterAsImplicitReturnTypePropagationScript() throws Exception {
+            runTest("analysis/low-level-api-fir/testData/lazyResolveTypeAnnotations/function/parameterAsImplicitReturnTypePropagationScript.kts");
+        }
+
+        @Test
+        @TestMetadata("parameterAsImplicitReturnTypeScript.kts")
+        public void testParameterAsImplicitReturnTypeScript() throws Exception {
+            runTest("analysis/low-level-api-fir/testData/lazyResolveTypeAnnotations/function/parameterAsImplicitReturnTypeScript.kts");
+        }
+
+        @Test
+        @TestMetadata("parameterAsImplicitReturnTypeScriptBodyResolve.kts")
+        public void testParameterAsImplicitReturnTypeScriptBodyResolve() throws Exception {
+            runTest("analysis/low-level-api-fir/testData/lazyResolveTypeAnnotations/function/parameterAsImplicitReturnTypeScriptBodyResolve.kts");
         }
 
         @Test
