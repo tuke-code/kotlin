@@ -327,4 +327,3 @@ FILE: [ResolvedTo(BODY_RESOLVE)] secondaryConstructorParameterScript.kts
         public final [ResolvedTo(BODY_RESOLVE)] fun R|kotlin/String|.myToInt(): R|kotlin/Int| {
             ^myToInt Int(42)
         }
-

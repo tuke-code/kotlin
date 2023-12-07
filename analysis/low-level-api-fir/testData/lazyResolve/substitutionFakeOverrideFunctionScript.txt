@@ -169,4 +169,3 @@ FILE: [ResolvedTo(BODY_RESOLVE)] substitutionFakeOverrideFunctionScript.kts
             public abstract [ResolvedTo(BODY_RESOLVE)] fun R|T|.resolveMe([ResolvedTo(BODY_RESOLVE)] param: R|T|): R|T|
 
         }
-

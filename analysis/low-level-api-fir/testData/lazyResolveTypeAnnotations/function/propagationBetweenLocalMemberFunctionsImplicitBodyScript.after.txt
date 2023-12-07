@@ -80,4 +80,3 @@ FILE: [ResolvedTo(IMPORTS)] propagationBetweenLocalMemberFunctionsImplicitBodySc
             }
             )
         }
-

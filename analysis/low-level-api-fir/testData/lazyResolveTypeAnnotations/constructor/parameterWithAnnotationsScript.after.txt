@@ -36,4 +36,3 @@ FILE: [ResolvedTo(IMPORTS)] parameterWithAnnotationsScript.kts
             }
 
         }
-

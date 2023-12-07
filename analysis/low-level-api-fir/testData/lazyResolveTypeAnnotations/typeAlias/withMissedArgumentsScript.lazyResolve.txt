@@ -243,4 +243,3 @@ FILE: [ResolvedTo(BODY_RESOLVE)] withMissedArgumentsScript.kts
         }
 
         public final [ResolvedTo(BODY_RESOLVE)] typealias BadArgsInTypeAlias = R|@R|TypeAnnWithArg|()  kotlin/collections/List<@R|TypeAnnWithArg|()  kotlin/collections/List<@R|TypeAnnWithArg|()  kotlin/Int>>|
-

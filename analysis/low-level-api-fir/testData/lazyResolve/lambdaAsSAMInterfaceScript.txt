@@ -322,4 +322,3 @@ FILE: [ResolvedTo(BODY_RESOLVE)] lambdaAsSAMInterfaceScript.kts
             }
             ))
         }
-

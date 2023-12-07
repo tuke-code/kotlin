@@ -360,4 +360,3 @@ FILE: [ResolvedTo(BODY_RESOLVE)] superTypeCallNestedNameClashScript.kts
             }
 
         }
-

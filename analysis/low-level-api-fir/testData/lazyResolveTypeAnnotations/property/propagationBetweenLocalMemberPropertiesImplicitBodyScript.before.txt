@@ -177,4 +177,3 @@ FILE: [ResolvedTo(IMPORTS)] propagationBetweenLocalMemberPropertiesImplicitBodyS
             }
             )
         }
-

@@ -144,4 +144,3 @@ FILE: [ResolvedTo(BODY_RESOLVE)] annotationsScript.kts
 
         @R|kotlin/Suppress|[Types](names = vararg(String(2))) public final [ResolvedTo(BODY_RESOLVE)] fun resolveMe(): R|kotlin/Unit| {
         }
-

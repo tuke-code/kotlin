@@ -35,4 +35,3 @@ FILE: [ResolvedTo(IMPORTS)] nestedAliasWithNestedAnnotationInLocalClassScript.kt
             }
 
         }
-

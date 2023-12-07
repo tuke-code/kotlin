@@ -337,4 +337,3 @@ FILE: [ResolvedTo(BODY_RESOLVE)] localDelegatedPropertyWithPropagatedTypeScript.
             }
             )
         }
-

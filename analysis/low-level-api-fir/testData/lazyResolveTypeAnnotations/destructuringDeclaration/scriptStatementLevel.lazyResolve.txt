@@ -712,4 +712,3 @@ FILE: [ResolvedTo(BODY_RESOLVE)] scriptStatementLevel.kts
 
         public final [ResolvedTo(BODY_RESOLVE)] fun foo(): R|kotlin/Unit| {
         }
-

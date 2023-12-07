@@ -17,12 +17,10 @@ import org.jetbrains.kotlin.fir.builder.PsiRawFirBuilder
 import org.jetbrains.kotlin.fir.contracts.FirRawContractDescription
 import org.jetbrains.kotlin.fir.contracts.impl.FirEmptyContractDescription
 import org.jetbrains.kotlin.fir.declarations.*
-import org.jetbrains.kotlin.fir.declarations.annotationPlatformSupport
 import org.jetbrains.kotlin.fir.declarations.utils.getExplicitBackingField
 import org.jetbrains.kotlin.fir.expressions.*
 import org.jetbrains.kotlin.fir.expressions.impl.FirLazyDelegatedConstructorCall
 import org.jetbrains.kotlin.fir.expressions.impl.FirSingleExpressionBlock
-import org.jetbrains.kotlin.fir.extensions.registeredPluginAnnotations
 import org.jetbrains.kotlin.fir.references.FirDelegateFieldReference
 import org.jetbrains.kotlin.fir.references.FirResolvedNamedReference
 import org.jetbrains.kotlin.fir.references.builder.buildDelegateFieldReference
@@ -53,7 +51,7 @@ internal object FirLazyBodiesCalculator {
     }
 
     fun calculateAllLazyExpressionsInFile(firFile: FirFile) {
-        firFile.transformSingle(FirAllLazyAnnotationCalculatorTransformer, FirLazyAnnotationTransformerData(firFile.moduleData.session))
+        firFile.transformSingle(FirAllLazyAnnotationCalculatorTransformer, firFile.moduleData.session)
         firFile.transformSingle(FirAllLazyBodiesCalculatorTransformer, persistentListOf())
     }
 
@@ -62,14 +60,7 @@ internal object FirLazyBodiesCalculator {
     }
 
     fun calculateAnnotations(firElement: FirElement, session: FirSession) {
-        firElement.transformSingle(FirTargetLazyAnnotationCalculatorTransformer, FirLazyAnnotationTransformerData(session))
-    }
-
-    fun calculateCompilerAnnotations(firElement: FirElementWithResolveState) {
-        firElement.transformSingle(
-            FirTargetLazyAnnotationCalculatorTransformer,
-            FirLazyAnnotationTransformerData(firElement.moduleData.session, FirLazyAnnotationTransformerScope.COMPILER_ONLY)
-        )
+        firElement.transformSingle(FirTargetLazyAnnotationCalculatorTransformer, session)
     }
 
     fun calculateLazyArgumentsForAnnotation(annotationCall: FirAnnotationCall, session: FirSession): FirArgumentList {
@@ -618,30 +609,20 @@ private fun calculateLazyBodyForCodeFragment(designation: FirDesignation) {
     codeFragment.replaceBlock(newCodeFragment.block)
 }
 
-private enum class FirLazyAnnotationTransformerScope {
-    ALL_ANNOTATIONS,
-    COMPILER_ONLY;
-}
-
-private data class FirLazyAnnotationTransformerData(
-    val session: FirSession,
-    val compilerAnnotationsOnly: FirLazyAnnotationTransformerScope = FirLazyAnnotationTransformerScope.ALL_ANNOTATIONS,
-)
-
 private object FirAllLazyAnnotationCalculatorTransformer : FirLazyAnnotationTransformer() {
-    override fun <E : FirElement> transformElement(element: E, data: FirLazyAnnotationTransformerData): E {
+    override fun <E : FirElement> transformElement(element: E, data: FirSession): E {
         element.transformChildren(this, data)
         return element
     }
 }
 
 private object FirTargetLazyAnnotationCalculatorTransformer : FirLazyAnnotationTransformer() {
-    override fun <E : FirElement> transformElement(element: E, data: FirLazyAnnotationTransformerData): E {
+    override fun <E : FirElement> transformElement(element: E, data: FirSession): E {
         element.transformChildren(this, data)
         return element
     }
 
-    override fun transformRegularClass(regularClass: FirRegularClass, data: FirLazyAnnotationTransformerData): FirStatement {
+    override fun transformRegularClass(regularClass: FirRegularClass, data: FirSession): FirStatement {
         regularClass.transformAnnotations(this, data)
         regularClass.transformTypeParameters(this, data)
         regularClass.transformSuperTypeRefs(this, data)
@@ -652,7 +633,7 @@ private object FirTargetLazyAnnotationCalculatorTransformer : FirLazyAnnotationT
         return regularClass
     }
 
-    override fun transformScript(script: FirScript, data: FirLazyAnnotationTransformerData): FirScript {
+    override fun transformScript(script: FirScript, data: FirSession): FirScript {
         script.transformAnnotations(this, data)
         script.forEachDependentDeclaration {
             it.transformSingle(this, data)
@@ -661,42 +642,34 @@ private object FirTargetLazyAnnotationCalculatorTransformer : FirLazyAnnotationT
         return script
     }
 
-    override fun transformBlock(block: FirBlock, data: FirLazyAnnotationTransformerData): FirStatement {
+    override fun transformBlock(block: FirBlock, data: FirSession): FirStatement {
         // We shouldn't process blocks because there are no lazy annotations
         return block
     }
 
-    override fun transformFile(file: FirFile, data: FirLazyAnnotationTransformerData): FirFile {
+    override fun transformFile(file: FirFile, data: FirSession): FirFile {
         file.transformAnnotationsContainer(this, data)
         return file
     }
 }
 
-private abstract class FirLazyAnnotationTransformer : FirTransformer<FirLazyAnnotationTransformerData>() {
-    override fun <E : FirElement> transformElement(element: E, data: FirLazyAnnotationTransformerData): E {
+private abstract class FirLazyAnnotationTransformer : FirTransformer<FirSession>() {
+    override fun <E : FirElement> transformElement(element: E, data: FirSession): E {
         element.transformChildren(this, data)
         return element
     }
 
-    private fun canBeCompilerAnnotation(annotationCall: FirAnnotationCall, session: FirSession): Boolean {
-        val annotationTypeRef = annotationCall.annotationTypeRef
-        if (annotationTypeRef !is FirUserTypeRef) return false
-        if (session.registeredPluginAnnotations.annotations.isNotEmpty()) return true
-        val name = annotationTypeRef.qualifier.last().name
-        return name in session.annotationPlatformSupport.requiredAnnotationsShortClassNames
-    }
-
-    override fun transformErrorTypeRef(errorTypeRef: FirErrorTypeRef, data: FirLazyAnnotationTransformerData): FirTypeRef {
+    override fun transformErrorTypeRef(errorTypeRef: FirErrorTypeRef, data: FirSession): FirTypeRef {
         visitTypeAnnotations(errorTypeRef, data)
         return super.transformErrorTypeRef(errorTypeRef, data)
     }
 
-    override fun transformResolvedTypeRef(resolvedTypeRef: FirResolvedTypeRef, data: FirLazyAnnotationTransformerData): FirTypeRef {
+    override fun transformResolvedTypeRef(resolvedTypeRef: FirResolvedTypeRef, data: FirSession): FirTypeRef {
         visitTypeAnnotations(resolvedTypeRef, data)
         return super.transformResolvedTypeRef(resolvedTypeRef, data)
     }
 
-    private fun visitTypeAnnotations(resolvedTypeRef: FirResolvedTypeRef, data: FirLazyAnnotationTransformerData) {
+    private fun visitTypeAnnotations(resolvedTypeRef: FirResolvedTypeRef, data: FirSession) {
         resolvedTypeRef.coneType.forEachType { coneType ->
             for (typeArgumentAnnotation in coneType.customAnnotations) {
                 typeArgumentAnnotation.accept(this, data)
@@ -704,27 +677,21 @@ private abstract class FirLazyAnnotationTransformer : FirTransformer<FirLazyAnno
         }
     }
 
-    override fun transformAnnotationCall(annotationCall: FirAnnotationCall, data: FirLazyAnnotationTransformerData): FirStatement {
-        val shouldCalculate = data.compilerAnnotationsOnly == FirLazyAnnotationTransformerScope.ALL_ANNOTATIONS ||
-                canBeCompilerAnnotation(annotationCall, data.session)
-        if (shouldCalculate && FirLazyBodiesCalculator.needCalculatingAnnotationCall(annotationCall)) {
-            val newArgumentList = FirLazyBodiesCalculator.calculateLazyArgumentsForAnnotation(annotationCall, data.session)
+    override fun transformAnnotationCall(annotationCall: FirAnnotationCall, data: FirSession): FirStatement {
+        if (FirLazyBodiesCalculator.needCalculatingAnnotationCall(annotationCall)) {
+            val newArgumentList = FirLazyBodiesCalculator.calculateLazyArgumentsForAnnotation(annotationCall, data)
             annotationCall.replaceArgumentList(newArgumentList)
         }
 
-        super.transformAnnotationCall(annotationCall, data)
-        return annotationCall
+        return super.transformAnnotationCall(annotationCall, data)
     }
 
     override fun transformErrorAnnotationCall(
         errorAnnotationCall: FirErrorAnnotationCall,
-        data: FirLazyAnnotationTransformerData,
-    ): FirStatement {
-        transformAnnotationCall(errorAnnotationCall, data)
-        return errorAnnotationCall
-    }
+        data: FirSession,
+    ): FirStatement = transformAnnotationCall(errorAnnotationCall, data)
 
-    override fun transformExpression(expression: FirExpression, data: FirLazyAnnotationTransformerData): FirStatement {
+    override fun transformExpression(expression: FirExpression, data: FirSession): FirStatement {
         if (expression is FirLazyExpression) {
             return expression
         }
@@ -732,7 +699,7 @@ private abstract class FirLazyAnnotationTransformer : FirTransformer<FirLazyAnno
         return super.transformExpression(expression, data)
     }
 
-    override fun transformBlock(block: FirBlock, data: FirLazyAnnotationTransformerData): FirStatement {
+    override fun transformBlock(block: FirBlock, data: FirSession): FirStatement {
         if (block is FirLazyBlock) {
             return block
         }
@@ -742,7 +709,7 @@ private abstract class FirLazyAnnotationTransformer : FirTransformer<FirLazyAnno
 
     override fun transformDelegatedConstructorCall(
         delegatedConstructorCall: FirDelegatedConstructorCall,
-        data: FirLazyAnnotationTransformerData,
+        data: FirSession,
     ): FirStatement {
         if (delegatedConstructorCall is FirLazyDelegatedConstructorCall) {
             return delegatedConstructorCall

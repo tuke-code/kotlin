@@ -82,4 +82,3 @@ FILE: [ResolvedTo(BODY_RESOLVE)] localFunctionInsideStatement.kts
         }
         )
             public [ResolvedTo(BODY_RESOLVE)] get(): R|Builder|
-

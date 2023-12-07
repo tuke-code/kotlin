@@ -196,4 +196,3 @@ FILE: [ResolvedTo(BODY_RESOLVE)] substitutionFakeOverrideWithImplicitTypeScript.
             public abstract [ResolvedTo(BODY_RESOLVE)] fun foo(): R|T|
 
         }
-

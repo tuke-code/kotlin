@@ -428,4 +428,3 @@ FILE: [ResolvedTo(BODY_RESOLVE)] localDelegatedPropertyWithPropagatedTypeUnavail
             }
             )
         }
-

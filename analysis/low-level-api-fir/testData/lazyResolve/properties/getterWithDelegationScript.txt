@@ -251,4 +251,3 @@ FILE: [ResolvedTo(BODY_RESOLVE)] getterWithDelegationScript.kts
             }
 
         }
-

@@ -66,4 +66,3 @@ FILE: [ResolvedTo(BODY_RESOLVE)] statement2.kts
 
         public final [ResolvedTo(BODY_RESOLVE)] val $$result: R|kotlin/Unit| = R|/builder|.R|/Builder.execute|()
             public [ResolvedTo(BODY_RESOLVE)] get(): R|kotlin/Unit|
-

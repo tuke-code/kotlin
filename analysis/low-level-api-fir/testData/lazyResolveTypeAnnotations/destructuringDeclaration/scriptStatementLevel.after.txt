@@ -242,4 +242,3 @@ FILE: [ResolvedTo(IMPORTS)] scriptStatementLevel.kts
         }
 
         public? final? [ResolvedTo(RAW_FIR)] fun foo(): R|kotlin/Unit| { LAZY_BLOCK }
-

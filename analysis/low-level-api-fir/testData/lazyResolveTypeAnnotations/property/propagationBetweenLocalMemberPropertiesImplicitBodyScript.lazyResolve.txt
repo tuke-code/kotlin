@@ -412,4 +412,3 @@ FILE: [ResolvedTo(BODY_RESOLVE)] propagationBetweenLocalMemberPropertiesImplicit
             }
             )
         }
-
