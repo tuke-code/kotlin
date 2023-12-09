@@ -39,6 +39,14 @@ class WasmBoxRunner(
         val startUnitTests = RUN_UNIT_TESTS in testServices.moduleStructure.allDirectives
 
         val testJsQuiet = """
+                    if (console == void 0) {
+                        globalThis.console = {};
+                    }
+        
+                    if (console.log == void 0) {
+                        console.log = print;
+                    }
+
                     let actualResult;
                     try {
                         // Use "dynamic import" to catch exception happened during JS & Wasm modules initialization
@@ -117,7 +125,7 @@ class WasmBoxRunner(
 
             val disableExceptions = DISABLE_WASM_EXCEPTION_HANDLING in testServices.moduleStructure.allDirectives
 
-            val exceptions = listOf(WasmVM.V8, WasmVM.SpiderMonkey).mapNotNull { vm ->
+            val exceptions = listOf(WasmVM.V8, WasmVM.SpiderMonkey, WasmVM.JavaScriptCore).mapNotNull { vm ->
                 vm.runWithCathedExceptions(
                     debugMode = debugMode,
                     disableExceptions = disableExceptions,

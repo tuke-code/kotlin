@@ -62,6 +62,25 @@ internal sealed class WasmVM(val shortName: String) {
             )
     }
 
+    object JavaScriptCore : WasmVM("JSC") {
+        override fun run(
+            entryMjs: String,
+            jsFiles: List<String>,
+            workingDirectory: File?,
+            disableExceptionHandlingIfPossible: Boolean,
+            toolArgs: List<String>
+        ) =
+            tool.run(
+                *toolArgs.toTypedArray(),
+                "--useWebAssemblyTypedFunctionReferences=true",
+                "--useWebAssemblyGC=true",
+                //*if (disableExceptionHandlingIfPossible) ??? arrayOf("--no-wasm-exceptions") else emptyArray(),
+                *jsFiles.toTypedArray(),
+                "--module-file=$entryMjs",
+                workingDirectory = workingDirectory,
+            )
+    }
+
     object NodeJs : WasmVM("NodeJs") {
         override fun run(
             entryMjs: String,
@@ -114,7 +133,7 @@ internal class ExternalTool(val path: String) {
 
         val exitValue = process.waitFor()
         if (exitValue != 0) {
-            fail("Command \"$commandString\" terminated with exit code $exitValue")
+            fail("Command \"$commandString\" terminated with exit code $exitValue in working dir \"$workingDirectory\"")
         }
 
         return stdout.toString()
