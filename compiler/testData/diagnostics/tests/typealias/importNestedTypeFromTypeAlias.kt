@@ -1,3 +1,4 @@
+// FIR_IDENTICAL
 // ISSUE: KT-61694
 
 // FILE: a.kt

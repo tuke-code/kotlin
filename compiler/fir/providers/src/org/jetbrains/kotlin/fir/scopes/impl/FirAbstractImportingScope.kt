@@ -55,7 +55,8 @@ abstract class FirAbstractImportingScope(
         for (import in imports) {
             val importedName = name ?: import.importedName ?: continue
             if (isExcluded(import, importedName)) continue
-            val classId = import.resolvedParentClassId?.createNestedClassId(importedName)
+            val ownerSymbolId = import.resolvedParentClassId?.let { provider.getClassLikeSymbolByClassId(it)?.fullyExpandedSymbol?.classId }
+            val classId = ownerSymbolId?.createNestedClassId(importedName)
                 ?: ClassId.topLevel(import.packageFqName.child(importedName))
             val symbol = provider.getClassLikeSymbolByClassId(classId) ?: continue
             processor(symbol)
