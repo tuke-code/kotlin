@@ -9,10 +9,14 @@ fun <T> @kotlin.internal.NoInfer T.test2(t1: T): T = t1
 @Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE")
 fun <T> test3(t1: @kotlin.internal.NoInfer T): T = t1
 
+@Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE")
+fun <T> test4(t1: T, t2: List<@kotlin.internal.NoInfer T>): T = t1
+
 fun usage() {
-    test1(1, <!TYPE_MISMATCH!>"312"<!>)
+    test1(1, <!TYPE_MISMATCH("Int; String")!>"312"<!>)
     1.test2("")
     <!NEW_INFERENCE_NO_INFORMATION_FOR_PARAMETER!>test3<!>("")
+    test4(1, <!TYPE_MISMATCH("List<Int>; List<String>")!>listOf("a")<!>)
 }
 
 @Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE")
