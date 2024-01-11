@@ -1,4 +1,7 @@
 // !LANGUAGE: +MultiPlatformProjects
+// IGNORE_DIAGNOSTIC_API
+// IGNORE_REVERSED_RESOLVE
+// (no VIRTUAL_MEMBER_HIDDEN)
 // MODULE: m1-common
 // FILE: common.kt
 

@@ -7,9 +7,13 @@ Module: common
     fun bar(x: B): kotlin.Int defined in root package
     fun bar(x: B): kotlin.Int defined in root package
 Module: platform
+/platform.kt:14:1: error: Conflicting overloads: [fun foo(): String]
+
 /platform.kt:14:1: error: Platform declaration clash: The following declarations have the same IR signature (/foo|foo(){}[0]):
     fun foo(): kotlin.Int defined in root package
     fun foo(): kotlin.String defined in root package
+
+/platform.kt:18:1: error: Conflicting overloads: [fun bar(x: A): Int]
 
 /platform.kt:18:1: error: Platform declaration clash: The following declarations have the same IR signature (/bar|bar(B){}[0]):
     fun bar(x: B): kotlin.Int defined in root package

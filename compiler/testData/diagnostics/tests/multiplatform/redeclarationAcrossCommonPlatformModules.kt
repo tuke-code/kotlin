@@ -1,5 +1,3 @@
-// K2 test crashes with "IrSimpleFunctionSymbolImpl is already bound"
-
 // MODULE: m1-common
 // FILE: common.kt
 

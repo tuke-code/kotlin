@@ -1,5 +1,3 @@
-// K2 test crashes with "IrSimpleFunctionSymbolImpl is already bound"
-
 // MODULE: m1-common
 // FILE: common.kt
 
@@ -10,4 +8,4 @@ class Foo
 // FILE: jvm.kt
 
 <!CONFLICTING_OVERLOADS!>fun foo()<!> {}
-class <!PACKAGE_OR_CLASSIFIER_REDECLARATION!>Foo<!>
+class Foo
