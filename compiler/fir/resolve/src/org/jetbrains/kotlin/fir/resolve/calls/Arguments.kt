@@ -19,6 +19,7 @@ import org.jetbrains.kotlin.fir.resolve.inference.model.ConeArgumentConstraintPo
 import org.jetbrains.kotlin.fir.resolve.inference.model.ConeReceiverConstraintPosition
 import org.jetbrains.kotlin.fir.resolve.inference.preprocessCallableReference
 import org.jetbrains.kotlin.fir.resolve.inference.preprocessLambdaArgument
+import org.jetbrains.kotlin.fir.resolve.substitution.AbstractConeSubstitutor
 import org.jetbrains.kotlin.fir.resolve.transformers.ReturnTypeCalculator
 import org.jetbrains.kotlin.fir.resolve.transformers.ensureResolvedTypeDeclaration
 import org.jetbrains.kotlin.fir.symbols.ConeClassLikeLookupTag
@@ -46,7 +47,7 @@ fun Candidate.resolveArgumentExpression(
     sink: CheckerSink,
     context: ResolutionContext,
     isReceiver: Boolean,
-    isDispatch: Boolean
+    isDispatch: Boolean,
 ) {
     when (argument) {
         is FirFunctionCall, is FirWhenExpression, is FirTryExpression, is FirCheckNotNullCall, is FirElvisExpression -> resolveSubCallArgument(
@@ -135,7 +136,7 @@ private fun Candidate.resolveBlockArgument(
     sink: CheckerSink,
     context: ResolutionContext,
     isReceiver: Boolean,
-    isDispatch: Boolean
+    isDispatch: Boolean,
 ) {
     val returnArguments = block.returnExpressions()
     if (returnArguments.isEmpty()) {
@@ -173,7 +174,7 @@ fun Candidate.resolveSubCallArgument(
     context: ResolutionContext,
     isReceiver: Boolean,
     isDispatch: Boolean,
-    useNullableArgumentType: Boolean = false
+    useNullableArgumentType: Boolean = false,
 ) {
     require(argument is FirExpression)
     val candidate = argument.candidate() ?: return resolvePlainExpressionArgument(
@@ -218,7 +219,7 @@ fun Candidate.resolveSubCallArgument(
 //
 // See singleBranchConditionLastStatementInLambda.kt and assignmentUsingIncompletePCLACall.kt tests
 private fun ConeKotlinType.prepareTypeForPartiallyCompletedPCLACall(
-    candidate: Candidate, outerCSBuilder: ConstraintSystemBuilder
+    candidate: Candidate, outerCSBuilder: ConstraintSystemBuilder,
 ): ConeKotlinType {
     if (!candidate.system.usesOuterCs) return this
 
@@ -233,7 +234,7 @@ fun Candidate.resolvePlainExpressionArgument(
     context: ResolutionContext,
     isReceiver: Boolean,
     isDispatch: Boolean,
-    useNullableArgumentType: Boolean = false
+    useNullableArgumentType: Boolean = false,
 ) {
 
     if (expectedType == null) return
@@ -264,7 +265,7 @@ fun Candidate.resolvePlainArgumentType(
     context: ResolutionContext,
     isReceiver: Boolean,
     isDispatch: Boolean,
-    useNullableArgumentType: Boolean = false
+    useNullableArgumentType: Boolean = false,
 ) {
     val position = if (isReceiver) ConeReceiverConstraintPosition(argument) else ConeArgumentConstraintPosition(argument)
 
@@ -297,7 +298,7 @@ private fun argumentTypeWithCustomConversion(
     session: FirSession,
     scopeSession: ScopeSession,
     expectedType: ConeKotlinType,
-    argumentType: ConeKotlinType
+    argumentType: ConeKotlinType,
 ): ConeKotlinType? {
     // Expect the expected type to be a not regular functional type (e.g. suspend or custom)
     val expectedTypeKind = expectedType.functionTypeKind(session) ?: return null
@@ -337,7 +338,7 @@ private fun checkApplicabilityForArgumentType(
     isReceiver: Boolean,
     isDispatch: Boolean,
     sink: CheckerSink,
-    context: ResolutionContext
+    context: ResolutionContext,
 ) {
     if (expectedType == null) return
 
@@ -348,30 +349,12 @@ private fun checkApplicabilityForArgumentType(
             return NullForNotNullType(argument, actualExpectedType)
         }
 
-        fun tryGetConeTypeThatCompatibleWithKtType(type: ConeKotlinType): ConeKotlinType {
-            if (type is ConeTypeVariableType) {
-                val lookupTag = type.typeConstructor
-
-                val constraints = csBuilder.currentStorage().notFixedTypeVariables[lookupTag]?.constraints
-                val constraintTypes = constraints?.mapNotNull { it.type as? ConeKotlinType }
-                if (!constraintTypes.isNullOrEmpty()) {
-                    return ConeTypeIntersector.intersectTypes(context.session.typeContext, constraintTypes)
-                }
-
-                val originalTypeParameter = lookupTag.originalTypeParameter as? ConeTypeParameterLookupTag
-                if (originalTypeParameter != null)
-                    return ConeTypeParameterTypeImpl(originalTypeParameter, type.isNullable, type.attributes)
-            } else if (type is ConeIntegerLiteralType) {
-                return type.possibleTypes.firstOrNull() ?: type
-            }
-
-            return type
-        }
-
         if (argumentType is ConeErrorType || actualExpectedType is ConeErrorType) return ErrorTypeInArguments
 
-        val preparedExpectedType = tryGetConeTypeThatCompatibleWithKtType(actualExpectedType)
-        val preparedActualType = tryGetConeTypeThatCompatibleWithKtType(argumentType)
+        val substitutor = ConeTypeThatCompatibleWithKtTypeSubstitutor(csBuilder, context.session.typeContext)
+
+        val preparedExpectedType = substitutor.substituteOrSelf(actualExpectedType)
+        val preparedActualType = substitutor.substituteOrSelf(argumentType)
         return ArgumentTypeMismatch(
             preparedExpectedType,
             preparedActualType,
@@ -394,11 +377,19 @@ private fun checkApplicabilityForArgumentType(
         return
     }
 
-    if (!csBuilder.addSubtypeConstraintIfCompatible(argumentType, expectedType, position)) {
+    // Perform fast check to get rid of using TypeVariableWithNoInferTypesSubstitutor
+    // Since using `@NoInfer` annotation is quite rare
+    val normalizedExpectType = if (expectedType.containsNoInferArgument()) {
+        TypeVariableWithNoInferTypesSubstitutor(csBuilder, context.session.typeContext).substituteOrSelf(expectedType)
+    } else {
+        expectedType
+    }
+
+    if (!csBuilder.addSubtypeConstraintIfCompatible(argumentType, normalizedExpectType, position)) {
         val smartcastExpression = argument as? FirSmartCastExpression
         if (smartcastExpression != null && !smartcastExpression.isStable) {
             val unstableType = smartcastExpression.smartcastType.coneType
-            if (csBuilder.addSubtypeConstraintIfCompatible(unstableType, expectedType, position)) {
+            if (csBuilder.addSubtypeConstraintIfCompatible(unstableType, normalizedExpectType, position)) {
                 sink.reportDiagnostic(
                     UnstableSmartCast(
                         smartcastExpression,
@@ -414,18 +405,76 @@ private fun checkApplicabilityForArgumentType(
         }
 
         if (!isReceiver) {
-            sink.reportDiagnostic(subtypeError(expectedType))
+            sink.reportDiagnostic(subtypeError(normalizedExpectType))
             return
         }
 
-        val nullableExpectedType = expectedType.withNullability(ConeNullability.NULLABLE, context.session.typeContext)
+        val nullableExpectedType = normalizedExpectType.withNullability(ConeNullability.NULLABLE, context.session.typeContext)
 
         if (csBuilder.addSubtypeConstraintIfCompatible(argumentType, nullableExpectedType, position)) {
             sink.reportDiagnostic(UnsafeCall(argumentType))
         } else {
-            csBuilder.addSubtypeConstraint(argumentType, expectedType, position)
-            sink.reportDiagnostic(InapplicableWrongReceiver(expectedType, argumentType))
+            csBuilder.addSubtypeConstraint(argumentType, normalizedExpectType, position)
+            sink.reportDiagnostic(InapplicableWrongReceiver(normalizedExpectType, argumentType))
         }
+    }
+}
+
+fun ConeKotlinType?.containsNoInferArgument(): Boolean {
+    if (this == null) return false
+
+    if (this is ConeTypeVariableType && attributes.contains(CompilerConeAttributes.NoInfer)) {
+        return true
+    }
+
+    for (typeArgument in typeArguments) {
+        if (typeArgument.type.containsNoInferArgument()) {
+            return true
+        }
+    }
+
+    return false
+}
+
+internal class ConeTypeThatCompatibleWithKtTypeSubstitutor(
+    csBuilder: ConstraintSystemBuilder,
+    private val inferenceContext: ConeInferenceContext,
+) : AbstractConeSubstitutor(inferenceContext) {
+    private val notFixedTypeVariables = csBuilder.currentStorage().notFixedTypeVariables
+
+    override fun substituteType(type: ConeKotlinType): ConeKotlinType? {
+        return when (type) {
+            is ConeTypeVariableType -> {
+                val lookupTag = type.typeConstructor
+
+                val constraints = notFixedTypeVariables[lookupTag]?.constraints
+                val constraintTypes = constraints?.mapNotNull { it.type as? ConeKotlinType }
+                if (!constraintTypes.isNullOrEmpty()) {
+                    return ConeTypeIntersector.intersectTypes(inferenceContext, constraintTypes)
+                }
+
+                val originalTypeParameter = lookupTag.originalTypeParameter as? ConeTypeParameterLookupTag
+                return originalTypeParameter?.let { ConeTypeParameterTypeImpl(it, type.isNullable, type.attributes) } ?: type
+            }
+            is ConeIntegerLiteralType -> {
+                return type.possibleTypes.firstOrNull() ?: type
+            }
+            else -> null
+        }
+    }
+}
+
+internal class TypeVariableWithNoInferTypesSubstitutor(
+    csBuilder: ConstraintSystemBuilder,
+    private val inferenceContext: ConeInferenceContext,
+) : AbstractConeSubstitutor(inferenceContext) {
+    private val notFixedTypeVariables = csBuilder.currentStorage().notFixedTypeVariables
+
+    override fun substituteType(type: ConeKotlinType): ConeKotlinType? {
+        if (type !is ConeTypeVariableType || !type.attributes.contains(CompilerConeAttributes.NoInfer)) return null
+
+        val constraintTypes = notFixedTypeVariables[type.typeConstructor]?.constraints?.mapNotNull { it.type as? ConeKotlinType }
+        return if (!constraintTypes.isNullOrEmpty()) ConeTypeIntersector.intersectTypes(inferenceContext, constraintTypes) else type
     }
 }
 
@@ -435,7 +484,7 @@ internal fun Candidate.resolveArgument(
     parameter: FirValueParameter?,
     isReceiver: Boolean,
     sink: CheckerSink,
-    context: ResolutionContext
+    context: ResolutionContext,
 ) {
     // Lambdas and callable references can be unresolved at this point
     @OptIn(UnresolvedExpressionTypeAccess::class)
@@ -459,7 +508,7 @@ private fun Candidate.prepareExpectedType(
     callInfo: CallInfo,
     argument: FirExpression,
     parameter: FirValueParameter?,
-    context: ResolutionContext
+    context: ResolutionContext,
 ): ConeKotlinType? {
     if (parameter == null) return null
     val basicExpectedType = argument.getExpectedType(parameter/*, LanguageVersionSettings*/)
@@ -522,7 +571,7 @@ private fun getExpectedTypeWithImplicitIntegerCoercion(
     session: FirSession,
     argument: FirExpression,
     parameter: FirValueParameter,
-    candidateExpectedType: ConeKotlinType
+    candidateExpectedType: ConeKotlinType,
 ): ConeKotlinType? {
     if (!session.languageVersionSettings.supportsFeature(LanguageFeature.ImplicitSignedToUnsignedIntegerConversion)) return null
 
@@ -594,7 +643,7 @@ private fun isSubtypeForSamConversion(
     scopeSession: ScopeSession,
     actualExpressionType: ConeKotlinType,
     classLikeExpectedFunctionType: ConeClassLikeType,
-    returnTypeCalculator: ReturnTypeCalculator
+    returnTypeCalculator: ReturnTypeCalculator,
 ): Boolean {
     // TODO: can we replace the function with a call of ConeKotlinType.isSubtypeOfFunctionType from FunctionalTypeUtils.kt,
     // or with a call of AbstractTypeChecker.isSubtypeOf ?
@@ -652,7 +701,7 @@ private fun FirExpression.namedReferenceWithCandidate(): FirNamedReferenceWithCa
     }
 
 fun FirExpression.getExpectedType(
-    parameter: FirValueParameter/*, languageVersionSettings: LanguageVersionSettings*/
+    parameter: FirValueParameter,/*, languageVersionSettings: LanguageVersionSettings*/
 ): ConeKotlinType {
     val shouldUnwrapVarargType = when (this) {
         is FirSpreadArgumentExpression, is FirNamedArgumentExpression -> false
@@ -685,7 +734,7 @@ fun FirExpression.getExpectedType(
 internal fun captureFromTypeParameterUpperBoundIfNeeded(
     argumentType: ConeKotlinType,
     expectedType: ConeKotlinType,
-    session: FirSession
+    session: FirSession,
 ): ConeKotlinType {
     val expectedTypeClassId = expectedType.upperBoundIfFlexible().classId ?: return argumentType
     val simplifiedArgumentType = argumentType.lowerBoundIfFlexible() as? ConeTypeParameterType ?: return argumentType
