@@ -609,11 +609,11 @@ object KotlinToolingDiagnostics {
         )
     }
 
-    object KotlinCompilationSourceDeprecation : ToolingDiagnosticFactory(WARNING) {
+    object KotlinCompilationSourceDeprecation : ToolingDiagnosticFactory(ERROR) {
         operator fun invoke(trace: Throwable?) = build(
             """
                 `KotlinCompilation.source(KotlinSourceSet)` method is deprecated 
-                and will be removed in upcoming Kotlin releases.
+                and has stopped working in Kotlin 2.0.0 release!
 
                 See https://kotl.in/compilation-source-deprecation for details.
             """.trimIndent(),

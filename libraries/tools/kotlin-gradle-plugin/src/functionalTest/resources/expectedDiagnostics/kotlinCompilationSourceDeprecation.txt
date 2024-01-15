@@ -1,4 +1,9 @@
-[KotlinCompilationSourceDeprecation | WARNING] `KotlinCompilation.source(KotlinSourceSet)` method is deprecated
-and will be removed in upcoming Kotlin releases.
+[KotlinCompilationSourceDeprecation | ERROR] `KotlinCompilation.source(KotlinSourceSet)` method is deprecated
+and has stopped working in Kotlin 2.0.0 release!
 
 See https://kotl.in/compilation-source-deprecation for details.
+----
+[UnusedSourceSetsWarning | WARNING] The Kotlin source set customMain was configured but not added to any Kotlin compilation.
+
+You can add a source set to a target's compilation by connecting it with the compilation's default source set using 'dependsOn'.
+See https://kotl.in/connecting-source-sets

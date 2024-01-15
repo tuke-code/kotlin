@@ -92,10 +92,9 @@ internal class KotlinCompilationImpl constructor(
     override val kotlinSourceSets: ObservableSet<KotlinSourceSet>
         get() = sourceSets.kotlinSourceSets
 
-    @Deprecated("scheduled for removal with Kotlin 2.0")
+    @Deprecated("Removed in Kotlin 2.0", level = DeprecationLevel.ERROR)
     override fun source(sourceSet: KotlinSourceSet) {
         project.kotlinToolingDiagnosticsCollector.report(project, KotlinCompilationSourceDeprecation(Throwable()))
-        sourceSets.source(sourceSet)
     }
 
     override fun defaultSourceSet(configure: KotlinSourceSet.() -> Unit) {
