@@ -1,3 +1,4 @@
+// FIR_IDENTICAL
 // WITH_STDLIB
 // FILE: BaseOwnerJava.java
 
