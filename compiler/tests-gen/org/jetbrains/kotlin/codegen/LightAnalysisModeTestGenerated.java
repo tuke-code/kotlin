@@ -16491,11 +16491,6 @@ public class LightAnalysisModeTestGenerated extends AbstractLightAnalysisModeTes
             runTest("compiler/testData/codegen/box/fir/intersectionWithCapturedTypeWithRawUpperBound.kt");
         }
 
-        @TestMetadata("intersectionWithJavaChangedVariance.kt")
-        public void testIntersectionWithJavaChangedVariance() throws Exception {
-            runTest("compiler/testData/codegen/box/fir/intersectionWithJavaChangedVariance.kt");
-        }
-
         @TestMetadata("IrBuiltIns.kt")
         public void testIrBuiltIns() throws Exception {
             runTest("compiler/testData/codegen/box/fir/IrBuiltIns.kt");

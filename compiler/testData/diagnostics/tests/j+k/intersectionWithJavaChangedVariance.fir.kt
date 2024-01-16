@@ -13,4 +13,4 @@ abstract class Impl : BaseOwnerJava {
     override fun setSomething(arg: Collection<BaseOwnerJava>) = throw IllegalStateException()
 }
 
-class Final : Impl(), BaseOwnerJava
+<!ABSTRACT_MEMBER_NOT_IMPLEMENTED!>class Final<!> : Impl(), BaseOwnerJava
