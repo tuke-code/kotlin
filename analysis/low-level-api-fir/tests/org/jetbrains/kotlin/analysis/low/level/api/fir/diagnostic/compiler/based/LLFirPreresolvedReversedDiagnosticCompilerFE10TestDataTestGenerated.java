@@ -21879,6 +21879,12 @@ public class LLFirPreresolvedReversedDiagnosticCompilerFE10TestDataTestGenerated
             }
 
             @Test
+            @TestMetadata("intersectionWithJavaChangedVariance.kt")
+            public void testIntersectionWithJavaChangedVariance() throws Exception {
+                runTest("compiler/testData/diagnostics/tests/j+k/intersectionWithJavaChangedVariance.kt");
+            }
+
+            @Test
             @TestMetadata("invisiblePackagePrivateInheritedMember.kt")
             public void testInvisiblePackagePrivateInheritedMember() throws Exception {
                 runTest("compiler/testData/diagnostics/tests/j+k/invisiblePackagePrivateInheritedMember.kt");

@@ -20049,6 +20049,12 @@ public class LLFirBlackBoxCodegenBasedTestGenerated extends AbstractLLFirBlackBo
         }
 
         @Test
+        @TestMetadata("intersectionWithJavaChangedVariance.kt")
+        public void testIntersectionWithJavaChangedVariance() throws Exception {
+            runTest("compiler/testData/codegen/box/fir/intersectionWithJavaChangedVariance.kt");
+        }
+
+        @Test
         @TestMetadata("IrBuiltIns.kt")
         public void testIrBuiltIns() throws Exception {
             runTest("compiler/testData/codegen/box/fir/IrBuiltIns.kt");
