@@ -20181,6 +20181,12 @@ public class LLFirReversedBlackBoxCodegenBasedTestGenerated extends AbstractLLFi
         }
 
         @Test
+        @TestMetadata("primitiveDoubleJavaKotlinInheriting.kt")
+        public void testPrimitiveDoubleJavaKotlinInheriting() throws Exception {
+            runTest("compiler/testData/codegen/box/fir/primitiveDoubleJavaKotlinInheriting.kt");
+        }
+
+        @Test
         @TestMetadata("publicMethodCallViaPackagePrivateCommon.kt")
         public void testPublicMethodCallViaPackagePrivateCommon() throws Exception {
             runTest("compiler/testData/codegen/box/fir/publicMethodCallViaPackagePrivateCommon.kt");

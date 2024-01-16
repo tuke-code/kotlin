@@ -16601,6 +16601,11 @@ public class LightAnalysisModeTestGenerated extends AbstractLightAnalysisModeTes
             runTest("compiler/testData/codegen/box/fir/notFoundClasses.kt");
         }
 
+        @TestMetadata("primitiveDoubleJavaKotlinInheriting.kt")
+        public void testPrimitiveDoubleJavaKotlinInheriting() throws Exception {
+            runTest("compiler/testData/codegen/box/fir/primitiveDoubleJavaKotlinInheriting.kt");
+        }
+
         @TestMetadata("publicMethodCallViaPackagePrivateCommon.kt")
         public void testPublicMethodCallViaPackagePrivateCommon() throws Exception {
             runTest("compiler/testData/codegen/box/fir/publicMethodCallViaPackagePrivateCommon.kt");
