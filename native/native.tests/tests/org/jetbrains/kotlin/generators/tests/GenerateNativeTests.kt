@@ -332,6 +332,19 @@ fun main() {
             }
         }
 
+        // litmuskt
+        testGroup("native/litmuskt/test", "native/litmuskt/testData") {
+            testClass<AbstractNativeBlackBoxTest>(
+                suiteTestClassName = "LitmusktNativeTestGenerated",
+                annotations = listOf(
+                    litmusktNative(),
+                    provider<UseStandardTestCaseGroupProvider>()
+                )
+            ) {
+                model("classic")
+            }
+        }
+
         generateTestGroupSuiteWithJUnit5 {
             testGroup("native/native.tests/tests-gen", "compiler/testData/klib/dump-abi") {
                 testClass<AbstractNativeLibraryAbiReaderTest>(
@@ -441,3 +454,4 @@ private fun infrastructure() = annotation(Tag::class.java, "infrastructure")
 private fun k1libContents() = annotation(Tag::class.java, "k1libContents")
 private fun k2libContents() = annotation(Tag::class.java, "k2libContents")
 private fun atomicfuNative() = annotation(Tag::class.java, "atomicfu-native")
+private fun litmusktNative() = annotation(Tag::class.java, "litmuskt-native")

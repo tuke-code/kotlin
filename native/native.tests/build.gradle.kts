@@ -62,3 +62,7 @@ val generateTests by generator("org.jetbrains.kotlin.generators.tests.GenerateNa
     javaLauncher.set(project.getToolchainLauncherFor(JdkMajorVersion.JDK_11_0))
     dependsOn(":compiler:generateTestData")
 }
+
+//configurations.forEach {
+//    println("native.tests conf $it")
+//}

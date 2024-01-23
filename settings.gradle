@@ -278,6 +278,9 @@ include ":kotlin-atomicfu-compiler-plugin",
         ":kotlinx-atomicfu-runtime",
         ":atomicfu"
 
+include ":litmuskt-codegen",
+        ":litmuskt"
+
 include ":compiler:fir",
         ":compiler:fir:cones",
         ":compiler:fir:tree",
@@ -827,6 +830,9 @@ project(':kotlin-atomicfu-compiler-plugin').projectDir = file("$rootDir/plugins/
 project(':kotlin-atomicfu-compiler-plugin-embeddable').projectDir = file("$rootDir/plugins/atomicfu/atomicfu-compiler-embeddable")
 project(':kotlinx-atomicfu-runtime').projectDir = file("$rootDir/plugins/atomicfu/atomicfu-runtime")
 project(':atomicfu').projectDir = file("$rootDir/libraries/tools/atomicfu")
+
+project(':litmuskt-codegen').projectDir = file("$rootDir/native/litmuskt/codegen")
+project(':litmuskt').projectDir = file("$rootDir/native/litmuskt/litmus")
 
 project(':kotlin-scripting-ide-services-unshaded').projectDir = "$rootDir/plugins/scripting/scripting-ide-services" as File
 project(':kotlin-scripting-ide-services-test').projectDir = "$rootDir/plugins/scripting/scripting-ide-services-test" as File
