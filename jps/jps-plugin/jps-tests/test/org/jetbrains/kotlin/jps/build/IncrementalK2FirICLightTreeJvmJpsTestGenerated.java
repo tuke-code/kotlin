@@ -142,6 +142,31 @@ public class IncrementalK2FirICLightTreeJvmJpsTestGenerated extends AbstractIncr
             runTest("jps/jps-plugin/testData/incremental/pureKotlin/compilationErrorThenFixedWithPhantomPart3/");
         }
 
+        @TestMetadata("constantOwnershipAsTopLevelConst")
+        public void testConstantOwnershipAsTopLevelConst() throws Exception {
+            runTest("jps/jps-plugin/testData/incremental/pureKotlin/constantOwnershipAsTopLevelConst/");
+        }
+
+        @TestMetadata("constantOwnershipAsTopLevelConstWithJvmName")
+        public void testConstantOwnershipAsTopLevelConstWithJvmName() throws Exception {
+            runTest("jps/jps-plugin/testData/incremental/pureKotlin/constantOwnershipAsTopLevelConstWithJvmName/");
+        }
+
+        @TestMetadata("constantOwnershipByClass")
+        public void testConstantOwnershipByClass() throws Exception {
+            runTest("jps/jps-plugin/testData/incremental/pureKotlin/constantOwnershipByClass/");
+        }
+
+        @TestMetadata("constantOwnershipByCompanionClass")
+        public void testConstantOwnershipByCompanionClass() throws Exception {
+            runTest("jps/jps-plugin/testData/incremental/pureKotlin/constantOwnershipByCompanionClass/");
+        }
+
+        @TestMetadata("constantOwnershipByPackageFragment")
+        public void testConstantOwnershipByPackageFragment() throws Exception {
+            runTest("jps/jps-plugin/testData/incremental/pureKotlin/constantOwnershipByPackageFragment/");
+        }
+
         @TestMetadata("constantRemoved")
         public void testConstantRemoved() throws Exception {
             runTest("jps/jps-plugin/testData/incremental/pureKotlin/constantRemoved/");
@@ -215,11 +240,6 @@ public class IncrementalK2FirICLightTreeJvmJpsTestGenerated extends AbstractIncr
         @TestMetadata("entriesMappings")
         public void testEntriesMappings() throws Exception {
             runTest("jps/jps-plugin/testData/incremental/pureKotlin/entriesMappings/");
-        }
-
-        @TestMetadata("fileWithConstantRemoved")
-        public void testFileWithConstantRemoved() throws Exception {
-            runTest("jps/jps-plugin/testData/incremental/pureKotlin/fileWithConstantRemoved/");
         }
 
         @TestMetadata("fileWithInlineFunctionRemoved")

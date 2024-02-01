@@ -58,7 +58,7 @@ public class IncrementalK2JsKlibCompilerWithScopeExpansionRunnerTestGenerated ex
         }
 
         public void testAllFilesPresentInPureKotlin() throws Exception {
-            KtTestUtil.assertAllTestsPresentByMetadataWithExcluded(this.getClass(), new File("jps/jps-plugin/testData/incremental/pureKotlin"), Pattern.compile("^([^\\.]+)$"), Pattern.compile("^(sealed.*|fileWithConstantRemoved|propertyRedeclaration|funRedeclaration|funVsConstructorOverloadConflict)"), false);
+            KtTestUtil.assertAllTestsPresentByMetadataWithExcluded(this.getClass(), new File("jps/jps-plugin/testData/incremental/pureKotlin"), Pattern.compile("^([^\\.]+)$"), Pattern.compile("^(sealed.*|propertyRedeclaration|funRedeclaration|funVsConstructorOverloadConflict)"), false);
         }
 
         @TestMetadata("annotations")
@@ -144,6 +144,31 @@ public class IncrementalK2JsKlibCompilerWithScopeExpansionRunnerTestGenerated ex
         @TestMetadata("compilationErrorThenFixedWithPhantomPart3")
         public void testCompilationErrorThenFixedWithPhantomPart3() throws Exception {
             runTest("jps/jps-plugin/testData/incremental/pureKotlin/compilationErrorThenFixedWithPhantomPart3/");
+        }
+
+        @TestMetadata("constantOwnershipAsTopLevelConst")
+        public void testConstantOwnershipAsTopLevelConst() throws Exception {
+            runTest("jps/jps-plugin/testData/incremental/pureKotlin/constantOwnershipAsTopLevelConst/");
+        }
+
+        @TestMetadata("constantOwnershipAsTopLevelConstWithJvmName")
+        public void testConstantOwnershipAsTopLevelConstWithJvmName() throws Exception {
+            runTest("jps/jps-plugin/testData/incremental/pureKotlin/constantOwnershipAsTopLevelConstWithJvmName/");
+        }
+
+        @TestMetadata("constantOwnershipByClass")
+        public void testConstantOwnershipByClass() throws Exception {
+            runTest("jps/jps-plugin/testData/incremental/pureKotlin/constantOwnershipByClass/");
+        }
+
+        @TestMetadata("constantOwnershipByCompanionClass")
+        public void testConstantOwnershipByCompanionClass() throws Exception {
+            runTest("jps/jps-plugin/testData/incremental/pureKotlin/constantOwnershipByCompanionClass/");
+        }
+
+        @TestMetadata("constantOwnershipByPackageFragment")
+        public void testConstantOwnershipByPackageFragment() throws Exception {
+            runTest("jps/jps-plugin/testData/incremental/pureKotlin/constantOwnershipByPackageFragment/");
         }
 
         @TestMetadata("constantRemoved")

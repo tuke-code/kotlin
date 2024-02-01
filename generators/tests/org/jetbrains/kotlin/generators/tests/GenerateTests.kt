@@ -132,8 +132,7 @@ fun main(args: Array<String>) {
                 // IC of sealed interfaces are not supported in JS
                 model(
                     "incremental/pureKotlin", extension = null, recursive = false,
-                    // TODO: 'fileWithConstantRemoved' should be fixed in https://youtrack.jetbrains.com/issue/KT-58824
-                    excludedPattern = "^(sealed.*|fileWithConstantRemoved|propertyRedeclaration|funRedeclaration|funVsConstructorOverloadConflict)"
+                    excludedPattern = "^(sealed.*|propertyRedeclaration|funRedeclaration|funVsConstructorOverloadConflict)"
                 )
                 model(
                     "incremental/classHierarchyAffected", extension = null, recursive = false,

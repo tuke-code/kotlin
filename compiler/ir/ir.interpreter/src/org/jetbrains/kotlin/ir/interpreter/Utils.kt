@@ -135,7 +135,11 @@ fun IrFunctionAccessExpression.getVarargType(index: Int): IrType? {
 }
 
 internal fun IrFunction.getCapitalizedFileName(): String {
-    return this.fileOrNull?.name?.replace(".kt", "Kt")?.capitalizeAsciiOnly() ?: "<UNKNOWN>"
+    return this.fileOrNull?.getCapitalizedFileName() ?: "<UNKNOWN>"
+}
+
+internal fun IrFile.getCapitalizedFileName(): String {
+    return name.replace(".kt", "Kt").capitalizeAsciiOnly()
 }
 
 internal fun IrClass.isSubclassOfThrowable(): Boolean {
