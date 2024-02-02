@@ -367,6 +367,7 @@ object FirExpectActualDeclarationChecker : FirBasicDeclarationChecker(MppChecker
         val filesWithAtLeastWeaklyCompatibleExpects = compatibility[ExpectActualMatchingCompatibility.MatchedSuccessfully]
             .orEmpty()
             .map { it.moduleData }
+            .filter { !it.isRegularDependencies }
             .sortedBy { it.name.asString() }
             .toList()
 

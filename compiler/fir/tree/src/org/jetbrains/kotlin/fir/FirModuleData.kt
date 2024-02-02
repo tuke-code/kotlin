@@ -45,6 +45,7 @@ import org.jetbrains.kotlin.resolve.PlatformDependentAnalyzerServices
  */
 abstract class FirModuleData : FirSessionComponent {
     abstract val name: Name
+    abstract val isRegularDependencies: Boolean
     abstract val dependencies: List<FirModuleData>
     abstract val dependsOnDependencies: List<FirModuleData>
 
@@ -87,6 +88,7 @@ class FirModuleDataImpl(
     override val platform: TargetPlatform,
     override val analyzerServices: PlatformDependentAnalyzerServices,
     override val capabilities: FirModuleCapabilities = FirModuleCapabilities.Empty,
+    override val isRegularDependencies: Boolean = false,
     override val isCommon: Boolean = platform.isCommon(),
 ) : FirModuleData() {
     override val session: FirSession

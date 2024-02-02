@@ -47,8 +47,10 @@ internal inline fun <F> PhaseContext.firFrontend(
             val interopModuleData =
                     BinaryModuleData.createDependencyModuleData(
                             Name.special("<regular interop dependencies of $mainModuleName>"),
-                            CommonPlatforms.defaultCommonPlatform, NativePlatformAnalyzerServices,
-                            FirModuleCapabilities.create(listOf(ImplicitIntegerCoercionModuleCapability))
+                            CommonPlatforms.defaultCommonPlatform,
+                            NativePlatformAnalyzerServices,
+                            isRegularDependencies = true,
+                            FirModuleCapabilities.create(listOf(ImplicitIntegerCoercionModuleCapability)),
                     )
             dependencies(interopModuleData, interopLibs.map { it.libraryFile.absolutePath })
         }

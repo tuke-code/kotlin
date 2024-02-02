@@ -60,6 +60,8 @@ class LLFirModuleData private constructor(val ktModule: KtModule) : FirModuleDat
 
     override val isCommon: Boolean get() = ktModule.platform.isCommon()
 
+    override val isRegularDependencies: Boolean get() = false
+
     override val analyzerServices: PlatformDependentAnalyzerServices get() = ktModule.analyzerServices
 
     override val session: FirSession
