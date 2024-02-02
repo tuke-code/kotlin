@@ -41,7 +41,7 @@ abstract class FirAbstractSessionFactory {
     ): FirSession {
         return FirCliSession(sessionProvider, FirSession.Kind.Library).apply session@{
             moduleDataProvider.allModuleData.forEach {
-                if (it.isRegularDependencies) {
+                if (it.dependencyKind == DependencyKind.REGULAR || it.dependencyKind == DependencyKind.FRIENDS) {
                     sessionProvider.registerSession(it, this)
                     it.bindSession(this)
                 }
@@ -58,7 +58,7 @@ abstract class FirAbstractSessionFactory {
                 Name.special("<builtins of ${mainModuleName.asString()}"),
                 moduleDataProvider.platform,
                 moduleDataProvider.analyzerServices,
-                isRegularDependencies = false,
+                dependencyKind = null,
             )
             builtinsModuleData.bindSession(this)
 

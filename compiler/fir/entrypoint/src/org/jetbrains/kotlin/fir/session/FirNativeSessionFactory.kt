@@ -17,7 +17,6 @@ import org.jetbrains.kotlin.fir.resolve.providers.impl.FirBuiltinSyntheticFuncti
 import org.jetbrains.kotlin.fir.scopes.FirKotlinScopeProvider
 import org.jetbrains.kotlin.fir.scopes.FirPlatformClassMapper
 import org.jetbrains.kotlin.fir.session.FirSessionFactoryHelper.registerDefaultComponents
-import org.jetbrains.kotlin.library.isNativeStdlib
 import org.jetbrains.kotlin.library.metadata.impl.KlibResolvedModuleDescriptorsFactoryImpl.Companion.FORWARD_DECLARATIONS_MODULE_NAME
 import org.jetbrains.kotlin.library.metadata.resolver.KotlinResolvedLibrary
 import org.jetbrains.kotlin.name.Name
@@ -50,7 +49,7 @@ object FirNativeSessionFactory : FirAbstractSessionFactory() {
                     FORWARD_DECLARATIONS_MODULE_NAME,
                     moduleDataProvider.platform,
                     moduleDataProvider.analyzerServices,
-                    isRegularDependencies = false,
+                    dependencyKind = null,
                 ).apply {
                     bindSession(session)
                 }

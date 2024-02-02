@@ -8,6 +8,7 @@ package org.jetbrains.kotlin.analysis.low.level.api.fir.project.structure
 import org.jetbrains.kotlin.analysis.low.level.api.fir.sessions.LLFirSession
 import org.jetbrains.kotlin.analysis.low.level.api.fir.sessions.LLFirSessionCache
 import org.jetbrains.kotlin.analysis.project.structure.KtModule
+import org.jetbrains.kotlin.fir.DependencyKind
 import org.jetbrains.kotlin.fir.FirElementWithResolveState
 import org.jetbrains.kotlin.fir.FirModuleData
 import org.jetbrains.kotlin.fir.FirSession
@@ -60,7 +61,7 @@ class LLFirModuleData private constructor(val ktModule: KtModule) : FirModuleDat
 
     override val isCommon: Boolean get() = ktModule.platform.isCommon()
 
-    override val isRegularDependencies: Boolean get() = false
+    override val dependencyKind: DependencyKind? get() = null
 
     override val analyzerServices: PlatformDependentAnalyzerServices get() = ktModule.analyzerServices
 

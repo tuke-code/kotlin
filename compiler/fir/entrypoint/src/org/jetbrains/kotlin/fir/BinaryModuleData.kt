@@ -19,7 +19,7 @@ class BinaryModuleData(
             name: Name,
             platform: TargetPlatform,
             analyzerServices: PlatformDependentAnalyzerServices,
-            isRegularDependencies: Boolean,
+            dependencyKind: DependencyKind?,
             capabilities: FirModuleCapabilities = FirModuleCapabilities.Empty
         ): FirModuleData {
             return FirModuleDataImpl(
@@ -30,7 +30,7 @@ class BinaryModuleData(
                 platform,
                 analyzerServices,
                 capabilities,
-                isRegularDependencies = isRegularDependencies,
+                dependencyKind = dependencyKind,
             )
         }
 
@@ -39,13 +39,13 @@ class BinaryModuleData(
             platform: TargetPlatform,
             analyzerServices: PlatformDependentAnalyzerServices
         ): BinaryModuleData {
-            fun createData(name: String, isRegularDependencies: Boolean): FirModuleData =
-                createDependencyModuleData(Name.special(name), platform, analyzerServices, isRegularDependencies)
+            fun createData(name: String, dependencyKind: DependencyKind): FirModuleData =
+                createDependencyModuleData(Name.special(name), platform, analyzerServices, dependencyKind)
 
             return BinaryModuleData(
-                createData("<regular dependencies of $mainModuleName>", isRegularDependencies = true),
-                createData("<dependsOn dependencies of $mainModuleName>", isRegularDependencies = false),
-                createData("<friends dependencies of $mainModuleName>", isRegularDependencies = false)
+                createData("<regular dependencies of $mainModuleName>", dependencyKind = DependencyKind.REGULAR),
+                createData("<dependsOn dependencies of $mainModuleName>", dependencyKind = DependencyKind.DEPENDS_ON),
+                createData("<friends dependencies of $mainModuleName>", dependencyKind = DependencyKind.FRIENDS)
             )
         }
     }
