@@ -41,8 +41,10 @@ abstract class FirAbstractSessionFactory {
     ): FirSession {
         return FirCliSession(sessionProvider, FirSession.Kind.Library).apply session@{
             moduleDataProvider.allModuleData.forEach {
-                sessionProvider.registerSession(it, this)
-                it.bindSession(this)
+                if (it.isRegularDependencies) {
+                    sessionProvider.registerSession(it, this)
+                    it.bindSession(this)
+                }
             }
 
             registerCliCompilerOnlyComponents()
