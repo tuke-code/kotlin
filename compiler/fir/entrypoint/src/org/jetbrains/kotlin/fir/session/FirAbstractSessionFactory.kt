@@ -56,6 +56,7 @@ abstract class FirAbstractSessionFactory {
                 Name.special("<builtins of ${mainModuleName.asString()}"),
                 moduleDataProvider.platform,
                 moduleDataProvider.analyzerServices,
+                isRegularDependencies = false,
             )
             builtinsModuleData.bindSession(this)
 

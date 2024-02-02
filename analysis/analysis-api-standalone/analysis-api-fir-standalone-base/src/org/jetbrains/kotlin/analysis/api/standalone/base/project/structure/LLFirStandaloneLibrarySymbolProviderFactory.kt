@@ -97,6 +97,7 @@ class LLFirStandaloneLibrarySymbolProviderFactory(private val project: Project) 
             FORWARD_DECLARATIONS_MODULE_NAME,
             moduleDataProvider.platform,
             moduleDataProvider.analyzerServices,
+            isRegularDependencies = false,
         ).apply {
             bindSession(session)
         }
