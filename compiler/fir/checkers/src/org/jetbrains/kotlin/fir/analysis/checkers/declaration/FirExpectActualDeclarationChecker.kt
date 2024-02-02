@@ -191,6 +191,7 @@ object FirExpectActualDeclarationChecker : FirBasicDeclarationChecker(MppChecker
 
         // "expect/actual keyword presence" major case (2)
         if (expectContainingClass == null && expectedSingleCandidate != null &&
+            expectedSingleCandidate.origin == FirDeclarationOrigin.Source &&
             !expectedSingleCandidate.isExpectOrInsideExpect && !declaration.hasActualModifier()
         ) {
             if (expectedSingleCandidate is FirCallableSymbol<*>) {
