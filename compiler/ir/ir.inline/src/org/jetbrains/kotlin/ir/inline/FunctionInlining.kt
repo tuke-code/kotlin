@@ -862,6 +862,9 @@ class FunctionInlining(
                 symbol.owner.type = value
             }
 
+        override var attributeOwnerId: IrAttributeContainer = this
+        override var originalBeforeInline: IrAttributeContainer? = null
+
         override fun <R, D> accept(visitor: IrElementVisitor<R, D>, data: D) =
             visitor.visitGetValue(this, data)
 
