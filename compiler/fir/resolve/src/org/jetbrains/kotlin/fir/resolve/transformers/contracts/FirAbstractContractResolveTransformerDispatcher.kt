@@ -8,13 +8,12 @@ package org.jetbrains.kotlin.fir.resolve.transformers.contracts
 import org.jetbrains.kotlin.KtFakeSourceElementKind
 import org.jetbrains.kotlin.fir.FirFileAnnotationsContainer
 import org.jetbrains.kotlin.fir.FirSession
-import org.jetbrains.kotlin.fir.contracts.FirLegacyRawContractDescription
-import org.jetbrains.kotlin.fir.contracts.FirRawContractDescription
+import org.jetbrains.kotlin.fir.contracts.*
+import org.jetbrains.kotlin.fir.contracts.builder.buildErrorContractDescription
 import org.jetbrains.kotlin.fir.contracts.builder.buildLegacyRawContractDescription
 import org.jetbrains.kotlin.fir.contracts.builder.buildResolvedContractDescription
 import org.jetbrains.kotlin.fir.contracts.description.ConeEffectDeclaration
 import org.jetbrains.kotlin.fir.contracts.impl.FirEmptyContractDescription
-import org.jetbrains.kotlin.fir.contracts.toFirElement
 import org.jetbrains.kotlin.fir.declarations.*
 import org.jetbrains.kotlin.fir.declarations.builder.buildAnonymousFunction
 import org.jetbrains.kotlin.fir.declarations.builder.buildReceiverParameter
@@ -175,10 +174,10 @@ abstract class FirAbstractContractResolveTransformerDispatcher(
             }
 
             val argument = resolvedContractCall.arguments.singleOrNull() as? FirLambdaArgumentExpression
-                ?: return transformOwnerOfErrorContract(owner)
+                ?: return transformOwnerOfErrorContract(owner, contractDescription)
 
             val lambdaBody = (argument.expression as FirAnonymousFunctionExpression).anonymousFunction.body
-                ?: return transformOwnerOfErrorContract(owner)
+                ?: return transformOwnerOfErrorContract(owner, contractDescription)
 
             val resolvedContractDescription = buildResolvedContractDescription {
                 val effectExtractor = ConeEffectExtractor(session, owner, valueParameters)
@@ -346,7 +345,16 @@ abstract class FirAbstractContractResolveTransformerDispatcher(
             return enumEntry
         }
 
-        private fun <T : FirContractDescriptionOwner> transformOwnerOfErrorContract(owner: T): T {
+        private fun <T : FirContractDescriptionOwner> transformOwnerOfErrorContract(
+            owner: T,
+            description: FirLegacyRawContractDescription
+        ): T {
+            owner.replaceContractDescription(
+                buildErrorContractDescription {
+                    source = description.source
+                    diagnostic = description.diagnostic
+                }
+            )
             dataFlowAnalyzer.exitContractDescription()
             return owner
         }

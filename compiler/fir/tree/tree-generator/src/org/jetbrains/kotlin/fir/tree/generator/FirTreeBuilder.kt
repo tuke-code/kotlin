@@ -195,4 +195,5 @@ object FirTreeBuilder : AbstractFirTreeBuilder() {
     val legacyRawContractDescription by element(Contracts, contractDescription)
     val rawContractDescription by element(Contracts, contractDescription)
     val resolvedContractDescription by element(Contracts, contractDescription)
+    val errorContractDescription by element(Contracts, contractDescription)
 }

@@ -5,11 +5,11 @@
 import kotlin.contracts.*
 
 fun passLambdaValue(l: ContractBuilder.() -> Unit) {
-    contract(l)
+    <!ERROR_IN_CONTRACT_DESCRIPTION!>contract(l)<!>
 }
 
 fun passAnonymousFunction(x: Boolean) {
-    contract(fun ContractBuilder.() {
+    <!ERROR_IN_CONTRACT_DESCRIPTION!>contract(fun ContractBuilder.() {
         returns() implies x
-    })
+    })<!>
 }

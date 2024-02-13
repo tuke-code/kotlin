@@ -801,5 +801,9 @@ object NodeConfigurator : AbstractFieldConfigurator<FirTreeBuilder>(FirTreeBuild
             +field("contractCall", functionCall)
             +field("diagnostic", coneDiagnosticType, nullable = true)
         }
+
+        errorContractDescription.configure {
+            +field("diagnostic", coneDiagnosticType, nullable = true)
+        }
     }
 }

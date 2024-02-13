@@ -487,4 +487,7 @@ abstract class FirVisitor<out R, in D> {
 
     open fun visitResolvedContractDescription(resolvedContractDescription: FirResolvedContractDescription, data: D): R =
         visitElement(resolvedContractDescription, data)
+
+    open fun visitErrorContractDescription(errorContractDescription: FirErrorContractDescription, data: D): R =
+        visitElement(errorContractDescription, data)
 }

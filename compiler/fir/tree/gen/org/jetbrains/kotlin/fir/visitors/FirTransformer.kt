@@ -1266,4 +1266,12 @@ abstract class FirTransformer<in D> : FirVisitor<FirElement, D>() {
     final override fun visitResolvedContractDescription(resolvedContractDescription: FirResolvedContractDescription, data: D): FirContractDescription {
         return transformResolvedContractDescription(resolvedContractDescription, data)
     }
+
+    open fun transformErrorContractDescription(errorContractDescription: FirErrorContractDescription, data: D): FirContractDescription {
+        return transformElement(errorContractDescription, data)
+    }
+
+    final override fun visitErrorContractDescription(errorContractDescription: FirErrorContractDescription, data: D): FirContractDescription {
+        return transformErrorContractDescription(errorContractDescription, data)
+    }
 }
