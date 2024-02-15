@@ -6,14 +6,15 @@
 package org.jetbrains.kotlin.sir.tree.generator
 
 import org.jetbrains.kotlin.sir.tree.generator.config.AbstractSwiftIrTreeImplementationConfigurator
+import org.jetbrains.kotlin.sir.tree.generator.model.Element
 
 object ImplementationConfigurator : AbstractSwiftIrTreeImplementationConfigurator() {
 
-    override fun configure() = with(SwiftIrTree) {
+    override fun configure(model: Model) = with(SwiftIrTree) {
         // Declare custom implementation classes, see org.jetbrains.kotlin.fir.tree.generator.ImplementationConfigurator
     }
 
-    override fun configureAllImplementations() {
+    override fun configureAllImplementations(model: Model) {
         // Use configureFieldInAllImplementations to customize certain fields in all implementation classes
         configureFieldInAllImplementations(
             field = "parent",
