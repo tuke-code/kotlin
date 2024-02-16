@@ -107,7 +107,7 @@ object ImplementationConfigurator : AbstractIrTreeImplementationConfigurator() {
         }
 
         impl(valueParameter) {
-            implementation.doPrint = false
+            defaultNull("defaultValue")
         }
 
         impl(variable) {
