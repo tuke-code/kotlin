@@ -5,10 +5,20 @@
 
 package org.jetbrains.kotlin.ir.generator
 
+import org.jetbrains.kotlin.generators.tree.ArbitraryImportable
+import org.jetbrains.kotlin.generators.tree.ClassRef
+import org.jetbrains.kotlin.generators.tree.ImportCollector
 import org.jetbrains.kotlin.generators.tree.StandardTypes
+import org.jetbrains.kotlin.generators.tree.Visibility
+import org.jetbrains.kotlin.generators.tree.printer.FunctionParameter
+import org.jetbrains.kotlin.generators.tree.printer.VariableKind
+import org.jetbrains.kotlin.generators.tree.printer.printFunctionWithBlockBody
+import org.jetbrains.kotlin.generators.tree.printer.printPropertyDeclaration
 import org.jetbrains.kotlin.ir.generator.config.AbstractIrTreeImplementationConfigurator
 import org.jetbrains.kotlin.ir.generator.model.Element
+import org.jetbrains.kotlin.ir.generator.model.Implementation
 import org.jetbrains.kotlin.ir.generator.model.ListField
+import org.jetbrains.kotlin.utils.SmartPrinter
 
 object ImplementationConfigurator : AbstractIrTreeImplementationConfigurator() {
     override fun configure(model: Model): Unit = with(IrTree) {
@@ -23,7 +33,30 @@ object ImplementationConfigurator : AbstractIrTreeImplementationConfigurator() {
             isLateinit("returnType")
         }
         impl(functionWithLateBinding) {
-            implementation.doPrint = false
+            defaultEmptyList("valueParameters")
+            defaultNull("dispatchReceiverParameter", "extensionReceiverParameter", "body", "correspondingPropertySymbol")
+            default("contextReceiverParametersCount", "0")
+            isLateinit("returnType")
+            default("containerSource") {
+                value = "null"
+                withGetter = true
+            }
+            default("isBound") {
+                value = "_symbol != null"
+                withGetter = true
+            }
+            default("symbol") {
+                value = "_symbol ?: error(\"\$this has not acquired a symbol yet\")"
+                withGetter = true
+            }
+            additionalImports(ArbitraryImportable("org.jetbrains.kotlin.ir.descriptors", "toIrBasedDescriptor"))
+            default("descriptor") {
+                value = "_symbol?.descriptor ?: this.toIrBasedDescriptor()"
+                withGetter = true
+            }
+            implementation.generationCallback = {
+                printCodeForLateBinding(implementation, simpleFunctionSymbolType)
+            }
         }
 
         impl(constructor) {
@@ -87,6 +120,30 @@ object ImplementationConfigurator : AbstractIrTreeImplementationConfigurator() {
 
         impl(typeAlias) {
             implementation.doPrint = false
+        }
+    }
+
+    context(ImportCollector)
+    private fun SmartPrinter.printCodeForLateBinding(implementation: Implementation, symbolType: ClassRef<*>) {
+        println()
+        printPropertyDeclaration("_symbol", symbolType.copy(true), VariableKind.VAR, visibility = Visibility.PRIVATE, initializer = "null")
+        println()
+        println()
+        printFunctionWithBlockBody(
+            "acquireSymbol",
+            listOf(FunctionParameter("symbol", symbolType)),
+            implementation.element,
+            override = true,
+        ) {
+            print()
+            println(
+                """
+                assert(_symbol == null) { "${"$"}this already has symbol _symbol" }
+                _symbol = symbol
+                symbol.bind(this)
+                return this
+            """.replaceIndent("    ".repeat(2))
+            )
         }
     }
 
