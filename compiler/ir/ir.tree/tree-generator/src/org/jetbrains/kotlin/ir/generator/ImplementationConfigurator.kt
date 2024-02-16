@@ -67,7 +67,7 @@ object ImplementationConfigurator : AbstractIrTreeImplementationConfigurator() {
         }
 
         impl(field) {
-            implementation.doPrint = false
+            defaultNull("initializer", "correspondingPropertySymbol")
         }
 
         impl(property) {
