@@ -103,7 +103,7 @@ object ImplementationConfigurator : AbstractIrTreeImplementationConfigurator() {
         }
 
         impl(typeParameter) {
-            implementation.doPrint = false
+            defaultEmptyList("superTypes")
         }
 
         impl(valueParameter) {
