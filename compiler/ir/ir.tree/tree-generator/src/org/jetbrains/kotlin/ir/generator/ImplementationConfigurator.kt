@@ -78,7 +78,8 @@ object ImplementationConfigurator : AbstractIrTreeImplementationConfigurator() {
         }
 
         impl(localDelegatedProperty) {
-            implementation.doPrint = false
+            isLateinit("delegate", "getter")
+            defaultNull("setter")
         }
 
         impl(typeParameter) {
