@@ -130,7 +130,7 @@ object ImplementationConfigurator : AbstractIrTreeImplementationConfigurator() {
         }
 
         impl(enumEntry) {
-            implementation.doPrint = false
+            defaultNull("correspondingClass", "initializerExpression")
         }
 
         impl(script) {
