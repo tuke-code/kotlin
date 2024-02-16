@@ -71,7 +71,7 @@ object ImplementationConfigurator : AbstractIrTreeImplementationConfigurator() {
         }
 
         impl(property) {
-            implementation.doPrint = false
+            defaultNull("backingField", "getter", "setter")
         }
         impl(propertyWithLateBinding) {
             implementation.doPrint = false
