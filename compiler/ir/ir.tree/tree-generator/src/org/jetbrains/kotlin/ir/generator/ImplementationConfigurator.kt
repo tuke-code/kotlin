@@ -172,10 +172,6 @@ object ImplementationConfigurator : AbstractIrTreeImplementationConfigurator() {
         impl(file) {
             implementation.doPrint = false
         }
-
-        impl(typeAlias) {
-            implementation.doPrint = false
-        }
     }
 
     context(ImportCollector)
