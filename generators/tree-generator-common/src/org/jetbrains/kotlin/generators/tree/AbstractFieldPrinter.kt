@@ -30,6 +30,12 @@ abstract class AbstractFieldPrinter<Field : AbstractField<*>>(
      */
     protected open fun actualTypeOfField(field: Field): TypeRefWithNullability = field.typeRef
 
+    protected open val printKDoc: Boolean
+        get() = true
+
+    protected open val wrapOptInAnnotations: Boolean
+        get() = false
+
     context(ImportCollector)
     fun printField(
         field: Field,
@@ -51,9 +57,9 @@ abstract class AbstractFieldPrinter<Field : AbstractField<*>>(
                 isLateinit = (inImplementation || field.isFinal) && field.isLateinit,
                 isVolatile = (inImplementation || field.isFinal) && field.isVolatile,
                 optInAnnotation = field.optInAnnotation,
-                printOptInWrapped = defaultValue != null,
+                printOptInWrapped = wrapOptInAnnotations && defaultValue != null,
                 deprecation = field.deprecation,
-                kDoc = field.kDoc,
+                kDoc = field.kDoc.takeIf { printKDoc },
                 initializer = defaultValue.takeUnless { field.withGetter }
             )
             println()

@@ -25,6 +25,9 @@ abstract class AbstractImplementationPrinter<Implementation, Element, Implementa
 
     protected abstract val pureAbstractElementType: ClassRef<*>
 
+    protected open val separateFieldsWithBlankLine: Boolean
+        get() = false
+
     protected abstract fun makeFieldPrinter(printer: SmartPrinter): AbstractFieldPrinter<ImplementationField>
 
     context(ImportCollector)
@@ -62,19 +65,21 @@ abstract class AbstractImplementationPrinter<Implementation, Element, Implementa
             val fieldPrinter = makeFieldPrinter(this)
 
             if (!isInterface && !isAbstract && implementation.fieldsWithoutDefault.isNotEmpty()) {
-                if (implementation.isPublic) {
+                if (implementation.isPublic && implementation.putImplementationOptInInConstructor) {
                     print(" @", implementationOptInAnnotation.render(), " constructor")
                 }
                 println("(")
                 withIndent {
-                    implementation.fieldsWithoutDefault.forEachIndexed { _, field ->
-                        if (field.isParameter) {
-                            print(field.name, ": ", field.typeRef.render())
-                            println(",")
-                        } else if (!field.isFinal) {
-                            fieldPrinter.printField(field, inImplementation = true, override = true, inConstructor = true)
+                    implementation.fieldsWithoutDefault
+                        .reorderFieldsIfNecessary(implementation.constructorParameterOrderOverride)
+                        .forEachIndexed { _, field ->
+                            if (field.isParameter) {
+                                print(field.name, ": ", field.typeRef.render())
+                                println(",")
+                            } else if (!field.isFinal) {
+                                fieldPrinter.printField(field, inImplementation = true, override = true, inConstructor = true)
+                            }
                         }
-                    }
                 }
                 print(")")
             }
@@ -88,6 +93,9 @@ abstract class AbstractImplementationPrinter<Implementation, Element, Implementa
                 val fields = if (isInterface || isAbstract) implementation.allFields
                 else implementation.fieldsWithDefault.filter { it.defaultValueInBase == null }
                 fields.forEachIndexed { index, field ->
+                    if (index > 0 && separateFieldsWithBlankLine) {
+                        println()
+                    }
                     fieldPrinter.printField(
                         field,
                         inImplementation = true,
