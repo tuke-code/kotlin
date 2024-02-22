@@ -75,7 +75,7 @@ internal class ImplementationPrinter(
                         && !element.typeName.endsWith("AnnotationsContainer")
             }.orEmpty()
 
-            val customCalls = fieldsWithoutDefault.filter { it.customInitializationCall != null }
+            val customCalls = fieldsInConstructor.filter { it.customInitializationCall != null }
             if (bindingCalls.isNotEmpty() || customCalls.isNotEmpty()) {
                 println()
                 println("init {")
