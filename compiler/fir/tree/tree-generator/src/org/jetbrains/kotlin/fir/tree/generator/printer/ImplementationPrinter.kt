@@ -51,7 +51,7 @@ internal class ImplementationPrinter(
             when (this) {
                 is FieldWithDefault -> origin.transform()
 
-                is FirField ->
+                is SimpleField ->
                     println("$name = ${name}${call()}transform(transformer, data)")
 
                 is FieldList -> {
@@ -138,7 +138,7 @@ internal class ImplementationPrinter(
                                         )
                                     } else {
                                         when (field.origin) {
-                                            is FirField -> {
+                                            is SimpleField -> {
                                                 println(field.acceptString())
                                             }
 

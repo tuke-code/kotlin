@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2023 JetBrains s.r.o. and Kotlin Programming Language contributors.
+ * Copyright 2010-2024 JetBrains s.r.o. and Kotlin Programming Language contributors.
  * Use of this source code is governed by the Apache 2.0 license that can be found in the license/LICENSE.txt file.
  */
 
@@ -128,7 +128,7 @@ data class TypeRefWithVariance<out T : TypeRef>(val variance: Variance, val type
         TypeRefWithVariance(variance, typeRef.substitute(map))
 }
 
-interface ElementOrRef<Element> : ParametrizedTypeRef<ElementOrRef<Element>, NamedTypeParameterRef>, ClassOrElementRef
+sealed interface ElementOrRef<Element> : ParametrizedTypeRef<ElementOrRef<Element>, NamedTypeParameterRef>, ClassOrElementRef
         where Element : AbstractElement<Element, *, *> {
     val element: Element
 
@@ -319,6 +319,6 @@ fun ClassOrElementRef.inheritanceClauseParenthesis(): String = when (this) {
 }
 
 val TypeRef.nullable: Boolean
-    get() = (this as? TypeRefWithNullability)?.nullable ?: false
+    get() = (this as? TypeRefWithNullability)?.nullable == true
 
 fun TypeRef.renderingIsNotSupported(): Nothing = error("Rendering is not supported for ${this::class.simpleName}")
