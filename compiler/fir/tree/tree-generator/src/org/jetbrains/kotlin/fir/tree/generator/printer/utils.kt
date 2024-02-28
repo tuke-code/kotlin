@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2023 JetBrains s.r.o. and Kotlin Programming Language contributors.
+ * Copyright 2010-2024 JetBrains s.r.o. and Kotlin Programming Language contributors.
  * Use of this source code is governed by the Apache 2.0 license that can be found in the license/LICENSE.txt file.
  */
 
@@ -10,7 +10,6 @@ import org.jetbrains.kotlin.fir.tree.generator.BASE_PACKAGE
 import org.jetbrains.kotlin.fir.tree.generator.firTransformerType
 import org.jetbrains.kotlin.fir.tree.generator.model.Field
 import org.jetbrains.kotlin.fir.tree.generator.model.FieldList
-import org.jetbrains.kotlin.fir.tree.generator.model.FieldWithDefault
 import org.jetbrains.kotlin.generators.tree.*
 import org.jetbrains.kotlin.generators.tree.printer.FunctionParameter
 import org.jetbrains.kotlin.generators.tree.printer.printFunctionDeclaration
@@ -83,10 +82,10 @@ fun SmartPrinter.replaceFunctionDeclaration(
 
 fun Field.getMutableType(forBuilder: Boolean = false): TypeRefWithNullability = when (this) {
     is FieldList -> when {
+        !forBuilder && !isMutable -> typeRef
         isMutableOrEmptyList && !forBuilder -> type(BASE_PACKAGE, "MutableOrEmptyList", kind = TypeKind.Class)
         isMutable -> StandardTypes.mutableList
         else -> StandardTypes.list
     }.withArgs(baseType).copy(nullable)
-    is FieldWithDefault -> if (isMutable) origin.getMutableType() else typeRef
     else -> typeRef
 }

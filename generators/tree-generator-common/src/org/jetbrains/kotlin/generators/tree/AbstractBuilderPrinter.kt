@@ -14,8 +14,7 @@ import org.jetbrains.kotlin.utils.withIndent
 abstract class AbstractBuilderPrinter<Element, Implementation, BuilderField, ElementField>(val printer: SmartPrinter)
         where Element : AbstractElement<Element, ElementField, Implementation>,
               Implementation : AbstractImplementation<Implementation, Element, BuilderField>,
-              BuilderField : AbstractField<*>,
-              BuilderField : AbstractFieldWithDefaultValue<*>,
+              BuilderField : AbstractField<ElementField>,
               ElementField : AbstractField<ElementField> {
 
     companion object {
@@ -218,8 +217,7 @@ abstract class AbstractBuilderPrinter<Element, Implementation, BuilderField, Ele
     ): Pair<Boolean, Boolean> {
         if (field.withGetter && !fieldIsUseless || field.invisibleField) return false to false
         if (field.origin is ListField) {
-            @Suppress("UNCHECKED_CAST")
-            printFieldListInBuilder(field.origin as ElementField, builder, fieldIsUseless)
+            printFieldListInBuilder(field.origin, builder, fieldIsUseless)
             return true to false
         }
         val defaultValue = if (fieldIsUseless)

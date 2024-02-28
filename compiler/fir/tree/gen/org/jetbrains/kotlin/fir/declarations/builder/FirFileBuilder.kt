@@ -10,7 +10,6 @@
 
 package org.jetbrains.kotlin.fir.declarations.builder
 
-import kotlin.contracts.*
 import org.jetbrains.kotlin.KtSourceElement
 import org.jetbrains.kotlin.KtSourceFile
 import org.jetbrains.kotlin.KtSourceFileLinesMapping
@@ -23,6 +22,7 @@ import org.jetbrains.kotlin.fir.declarations.*
 import org.jetbrains.kotlin.fir.declarations.impl.FirFileImpl
 import org.jetbrains.kotlin.fir.expressions.FirAnnotation
 import org.jetbrains.kotlin.fir.symbols.impl.FirFileSymbol
+import kotlin.contracts.*
 
 @FirBuilderDsl
 class FirFileBuilder : FirAnnotationContainerBuilder {

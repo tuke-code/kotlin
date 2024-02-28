@@ -5,7 +5,7 @@
 
 package org.jetbrains.kotlin.generators.tree
 
-abstract class AbstractField<Field : AbstractField<Field>> : AbstractFieldWithDefaultValue<Field> {
+abstract class AbstractField<Field : AbstractField<Field>> {
 
     abstract val name: String
 
@@ -13,6 +13,8 @@ abstract class AbstractField<Field : AbstractField<Field>> : AbstractFieldWithDe
 
     val nullable: Boolean
         get() = typeRef.nullable
+
+    abstract val origin: Field
 
     var kDoc: String? = null
 
@@ -29,6 +31,14 @@ abstract class AbstractField<Field : AbstractField<Field>> : AbstractFieldWithDe
     open var optInAnnotation: ClassRef<*>? = null
 
     abstract var isMutable: Boolean
+
+    abstract var withGetter: Boolean
+
+    abstract var customSetter: String?
+
+    abstract var defaultValueInImplementation: String?
+
+    abstract var defaultValueInBuilder: String?
 
     open var customInitializationCall: String? = null
 

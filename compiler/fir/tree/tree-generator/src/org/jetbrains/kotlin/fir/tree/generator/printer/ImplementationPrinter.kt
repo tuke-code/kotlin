@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2023 JetBrains s.r.o. and Kotlin Programming Language contributors.
+ * Copyright 2010-2024 JetBrains s.r.o. and Kotlin Programming Language contributors.
  * Use of this source code is governed by the Apache 2.0 license that can be found in the license/LICENSE.txt file.
  */
 
@@ -16,25 +16,24 @@ import org.jetbrains.kotlin.generators.tree.printer.printTransformChildrenMethod
 import org.jetbrains.kotlin.utils.SmartPrinter
 import org.jetbrains.kotlin.utils.withIndent
 
-private class ImplementationFieldPrinter(printer: SmartPrinter) : AbstractFieldPrinter<FieldWithDefault>(printer) {
+private class ImplementationFieldPrinter(printer: SmartPrinter) : AbstractFieldPrinter<Field>(printer) {
 
     private fun Field.isMutableOrEmptyIfList(): Boolean = when (this) {
         is FieldList -> isMutableOrEmptyList
-        is FieldWithDefault -> origin.isMutableOrEmptyIfList()
         else -> true
     }
 
-    override fun forceMutable(field: FieldWithDefault): Boolean = field.isMutable && field.isMutableOrEmptyIfList()
+    override fun forceMutable(field: Field): Boolean = field.isMutable && field.isMutableOrEmptyIfList()
 
-    override fun actualTypeOfField(field: FieldWithDefault) = field.getMutableType()
+    override fun actualTypeOfField(field: Field) = field.getMutableType()
 
     override val wrapOptInAnnotations
         get() = true
 }
 
 internal class ImplementationPrinter(
-    printer: SmartPrinter
-) : AbstractImplementationPrinter<Implementation, Element, FieldWithDefault>(printer) {
+    printer: SmartPrinter,
+) : AbstractImplementationPrinter<Implementation, Element, Field>(printer) {
 
     override val implementationOptInAnnotation: ClassRef<*>
         get() = firImplementationDetailType
@@ -43,14 +42,12 @@ internal class ImplementationPrinter(
     override val pureAbstractElementType: ClassRef<*>
         get() = org.jetbrains.kotlin.fir.tree.generator.pureAbstractElementType
 
-    override fun makeFieldPrinter(printer: SmartPrinter): AbstractFieldPrinter<FieldWithDefault> = ImplementationFieldPrinter(printer)
+    override fun makeFieldPrinter(printer: SmartPrinter): AbstractFieldPrinter<Field> = ImplementationFieldPrinter(printer)
 
     context(ImportCollector)
     override fun SmartPrinter.printAdditionalMethods(implementation: Implementation) {
         fun Field.transform() {
             when (this) {
-                is FieldWithDefault -> origin.transform()
-
                 is SimpleField ->
                     println("$name = ${name}${call()}transform(transformer, data)")
 
@@ -336,4 +333,4 @@ internal class ImplementationPrinter(
 }
 
 private val Field.hasSymbolType: Boolean
-    get() = (typeRef as? ClassRef<*>)?.simpleName?.contains("Symbol") ?: false
+    get() = (typeRef as? ClassRef<*>)?.simpleName?.contains("Symbol") == true

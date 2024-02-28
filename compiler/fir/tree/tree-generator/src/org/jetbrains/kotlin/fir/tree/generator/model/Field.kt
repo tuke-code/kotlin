@@ -24,8 +24,7 @@ sealed class Field : AbstractField<Field>() {
 
     var withBindThis = true
 
-    override val origin: Field
-        get() = this
+    override var origin: Field = this
 
     override var withGetter: Boolean = false
     override var defaultValueInImplementation: String? = null
@@ -49,12 +48,11 @@ sealed class Field : AbstractField<Field>() {
 
     override fun updateFieldsInCopy(copy: Field) {
         super.updateFieldsInCopy(copy)
-        if (copy !is FieldWithDefault) {
-            copy.needsSeparateTransform = needsSeparateTransform
-            copy.needTransformInOtherChildren = needTransformInOtherChildren
-            copy.useNullableForReplace = useNullableForReplace
-            copy.customInitializationCall = customInitializationCall
-        }
+        copy.origin = origin
+        copy.needsSeparateTransform = needsSeparateTransform
+        copy.needTransformInOtherChildren = needTransformInOtherChildren
+        copy.useNullableForReplace = useNullableForReplace
+        copy.customInitializationCall = customInitializationCall
         copy.parentHasSeparateTransform = parentHasSeparateTransform
     }
 
@@ -67,77 +65,6 @@ sealed class Field : AbstractField<Field>() {
         parentHasSeparateTransform = parentField.needsSeparateTransform
         if (parentField.nullable != nullable && haveSameClass) {
             useNullableForReplace = true
-        }
-    }
-}
-
-// ----------- Field with default -----------
-
-class FieldWithDefault(override val origin: Field) : Field(), AbstractFieldWithDefaultValue<Field> {
-    override val name: String get() = origin.name
-    override val typeRef: TypeRefWithNullability get() = origin.typeRef
-    override var isVolatile: Boolean = origin.isVolatile
-    override var withReplace: Boolean
-        get() = origin.withReplace
-        set(_) {}
-    override val isChild: Boolean
-        get() = origin.isChild
-    override val containsElement: Boolean
-        get() = origin.containsElement
-    override var needsSeparateTransform: Boolean
-        get() = origin.needsSeparateTransform
-        set(_) {}
-
-    override var needTransformInOtherChildren: Boolean
-        get() = origin.needTransformInOtherChildren
-        set(_) {}
-
-    override var isFinal: Boolean
-        get() = origin.isFinal
-        set(_) {}
-
-    override var isLateinit: Boolean
-        get() = origin.isLateinit
-        set(_) {}
-
-    override var isParameter: Boolean
-        get() = origin.isParameter
-        set(_) {}
-
-    override var customInitializationCall: String?
-        get() = origin.customInitializationCall
-        set(_) {}
-
-    override var optInAnnotation: ClassRef<*>?
-        get() = origin.optInAnnotation
-        set(_) {}
-
-    override var defaultValueInImplementation: String? = origin.defaultValueInImplementation
-    override var defaultValueInBuilder: String? = null
-    override var isMutable: Boolean = origin.isMutable
-    override val isMutableOrEmptyList: Boolean
-        get() = origin.isMutableOrEmptyList
-
-    override var isMutableInInterface: Boolean = origin.isMutableInInterface
-    override var withGetter: Boolean = false
-    override var customSetter: String? = null
-    override var fromDelegate: Boolean = false
-    override val overriddenTypes: MutableSet<TypeRefWithNullability>
-        get() = origin.overriddenTypes
-
-    override val arbitraryImportables: MutableList<Importable>
-        get() = origin.arbitraryImportables
-
-    override var useNullableForReplace: Boolean
-        get() = origin.useNullableForReplace
-        set(_) {}
-
-    override fun internalCopy(): Field {
-        return FieldWithDefault(origin).also {
-            it.defaultValueInImplementation = defaultValueInImplementation
-            it.isMutable = isMutable
-            it.withGetter = withGetter
-            it.fromDelegate = fromDelegate
         }
     }
 }

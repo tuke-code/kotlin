@@ -10,7 +10,6 @@
 
 package org.jetbrains.kotlin.fir.expressions.builder
 
-import kotlin.contracts.*
 import org.jetbrains.kotlin.KtSourceElement
 import org.jetbrains.kotlin.fir.FirImplementationDetail
 import org.jetbrains.kotlin.fir.builder.FirAnnotationContainerBuilder
@@ -19,6 +18,7 @@ import org.jetbrains.kotlin.fir.expressions.FirAnnotation
 import org.jetbrains.kotlin.fir.expressions.FirDelegatedConstructorCall
 import org.jetbrains.kotlin.fir.expressions.FirMultiDelegatedConstructorCall
 import org.jetbrains.kotlin.fir.expressions.impl.FirMultiDelegatedConstructorCallImpl
+import kotlin.contracts.*
 
 @FirBuilderDsl
 class FirMultiDelegatedConstructorCallBuilder : FirAnnotationContainerBuilder {
