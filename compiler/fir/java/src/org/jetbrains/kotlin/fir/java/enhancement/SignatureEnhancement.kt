@@ -202,9 +202,9 @@ class FirSignatureEnhancement(
         }
 
         val firMethod = original.fir
-        val enhancedTypeParameters = performBoundsResolution(firMethod.typeParameters)
+        performBoundsResolution(firMethod.typeParameters)
         return enhanceMethod(
-            firMethod, original.callableId, name, enhancedTypeParameters, original is FirIntersectionOverrideFunctionSymbol
+            firMethod, original.callableId, name, firMethod.typeParameters, original is FirIntersectionOverrideFunctionSymbol
         )
     }
 
@@ -350,7 +350,6 @@ class FirSignatureEnhancement(
                             "Unexpected type parameter type: ${typeParameter::class.simpleName}"
                         }
 
-                        // TODO: we probably shouldn't build a copy second time. See performFirstRoundOfBoundsResolution (KT-60446)
                         val newTypeParameter = buildTypeParameterCopy(typeParameter) {
                             origin = declarationOrigin
                             symbol = FirTypeParameterSymbol()
@@ -435,10 +434,9 @@ class FirSignatureEnhancement(
         function.replaceStatus(newStatus)
     }
 
-    fun performBoundsResolution(typeParameters: List<FirTypeParameterRef>): List<FirTypeParameterRef> {
-        val (initialBounds, enhancedTypeParameters) = performFirstRoundOfBoundsResolution(typeParameters)
-        enhanceTypeParameterBoundsAfterFirstRound(enhancedTypeParameters, initialBounds)
-        return enhancedTypeParameters
+    fun performBoundsResolution(typeParameters: List<FirTypeParameterRef>) {
+        val initialBounds = performFirstRoundOfBoundsResolution(typeParameters)
+        enhanceTypeParameterBoundsAfterFirstRound(typeParameters, initialBounds)
     }
 
     /**
@@ -454,25 +452,18 @@ class FirSignatureEnhancement(
      *
      * See the usages of FirJavaTypeConversionMode.TYPE_PARAMETER_BOUND_FIRST_ROUND
      */
-    private fun performFirstRoundOfBoundsResolution(typeParameters: List<FirTypeParameterRef>): Pair<List<List<FirTypeRef>>, List<FirTypeParameterRef>> {
+    private fun performFirstRoundOfBoundsResolution(typeParameters: List<FirTypeParameterRef>): List<List<FirTypeRef>> {
         val initialBounds: MutableList<List<FirTypeRef>> = mutableListOf()
-        val typeParametersCopy = ArrayList<FirTypeParameterRef>(typeParameters.size)
         for (typeParameter in typeParameters) {
-            typeParametersCopy += if (typeParameter is FirTypeParameter) {
+            if (typeParameter is FirTypeParameter) {
                 initialBounds.add(typeParameter.bounds.toList())
-                buildTypeParameterCopy(typeParameter) {
-                    // TODO: we should create a new symbol to avoid clashing (KT-60445)
-                    bounds.clear()
-                    typeParameter.bounds.mapTo(bounds) {
-                        it.resolveIfJavaType(session, javaTypeParameterStack, FirJavaTypeConversionMode.TYPE_PARAMETER_BOUND_FIRST_ROUND)
-                    }
-                }
-            } else {
-                typeParameter
+                typeParameter.replaceBounds(typeParameter.bounds.map {
+                    it.resolveIfJavaType(session, javaTypeParameterStack, FirJavaTypeConversionMode.TYPE_PARAMETER_BOUND_FIRST_ROUND)
+                })
             }
         }
 
-        return initialBounds to typeParametersCopy
+        return initialBounds
     }
 
     /**

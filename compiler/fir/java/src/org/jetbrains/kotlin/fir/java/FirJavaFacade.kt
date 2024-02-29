@@ -179,9 +179,7 @@ abstract class FirJavaFacade(
         // 2. Enhance type parameter bounds - may refer to each other, take default nullability from annotations
         // 3. (will happen lazily in FirJavaClass.superTypeRefs) Enhance super types - may refer to type parameter bounds, take default nullability from annotations
         val enhancement = FirSignatureEnhancement(firJavaClass, session) { emptyList() }
-        val enhancedTypeParameters = enhancement.performBoundsResolution(firJavaClass.typeParameters)
-        firJavaClass.typeParameters.clear()
-        firJavaClass.typeParameters += enhancedTypeParameters
+        enhancement.performBoundsResolution(firJavaClass.typeParameters)
 
         updateStatuses(firJavaClass, parentClassSymbol)
 
