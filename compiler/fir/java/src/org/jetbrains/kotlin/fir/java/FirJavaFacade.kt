@@ -166,18 +166,22 @@ abstract class FirJavaFacade(
         parentClassTypeParameterStackCache.remove(classSymbol)
         parentClassEffectiveVisibilityCache.remove(classSymbol)
 
-        // This is where the problems begin. We need to enhance nullability of super types and type parameter bounds,
+        // We need to enhance nullability of super types and type parameter bounds,
         // for which we need the annotations of this class as they may specify default nullability.
         // However, all three - annotations, type parameter bounds, and supertypes - can refer to other classes,
         // which will cause the type parameter bounds and supertypes of *those* classes to get enhanced first,
         // but they may refer back to this class again - which, thanks to the magic of symbol resolver caches,
-        // will be observed in a state where we've not done the enhancement yet. For those cases, we must publish
-        // at least unenhanced resolved types, or else FIR may crash upon encountering a FirJavaTypeRef where FirResolvedTypeRef
-        // is expected.
+        // will be observed in a state where we've not done the enhancement yet.
+        // For those cases, we must publish at least unenhanced resolved types,
+        // or else FIR may crash upon encountering a FirJavaTypeRef where FirResolvedTypeRef is expected.
 
-        // 1. (will happen lazily in FirJavaClass.annotations) Resolve annotations
-        // 2. Enhance type parameter bounds - may refer to each other, take default nullability from annotations
-        // 3. (will happen lazily in FirJavaClass.superTypeRefs) Enhance super types - may refer to type parameter bounds, take default nullability from annotations
+        // 1. (will happen lazily in FirJavaClass.annotations)
+        // Resolve annotations
+        // 2. Enhance type parameter bounds - may refer to each other, take default nullability from annotations.
+        // Note: we replace type parameter bounds in place. In principle, it's possible to replace them,
+        // but in this case we must update all references to them, and looks like it gives us nothing.
+        // 3. (will happen lazily in FirJavaClass.superTypeRefs)
+        // Enhance super types - may refer to type parameter bounds, take default nullability from annotations
         val enhancement = FirSignatureEnhancement(firJavaClass, session) { emptyList() }
         enhancement.performBoundsResolution(firJavaClass.typeParameters)
 
