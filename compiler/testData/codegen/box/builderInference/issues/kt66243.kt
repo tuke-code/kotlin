@@ -1,6 +1,6 @@
 // ISSUE: KT-66243
 // IGNORE_BACKEND_K1: ANY
-// Reason: Could not load module <Error module>
+// Reason: red code
 
 class A<T>
 class Test<T> {

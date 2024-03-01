@@ -13,6 +13,6 @@ fun <T> builder(x: Test<T>.() -> Unit): Test<T> {
 fun check() {
     val x = builder {
         add(1)
-        lambdaInVariable =  <!BUILDER_INFERENCE_STUB_PARAMETER_TYPE!>{}<!>
+        lambdaInVariable =  {}
     }
 }

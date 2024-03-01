@@ -14,7 +14,6 @@ import org.jetbrains.kotlin.psi.KtBinaryExpression
 import org.jetbrains.kotlin.psi.KtLambdaExpression
 import org.jetbrains.kotlin.psi.KtNameReferenceExpression
 import org.jetbrains.kotlin.psi.psiUtil.getParentOfType
-import org.jetbrains.kotlin.resolve.BindingContext
 import org.jetbrains.kotlin.resolve.calls.model.ResolvedCall
 import org.jetbrains.kotlin.resolve.calls.util.getType
 import org.jetbrains.kotlin.types.StubTypeForBuilderInference
@@ -41,12 +40,7 @@ object BuilderInferenceAssignmentChecker : CallChecker {
             context.trace.report(Errors.TYPE_MISMATCH.on(right, leftType, rightType))
         } else if (right is KtLambdaExpression) {
             val functionLiteral = right.functionLiteral
-            val functionDescriptor = context.trace.get(BindingContext.FUNCTION, right.functionLiteral) ?: return
-            for ((index, valueParameterDescriptor) in functionDescriptor.valueParameters.withIndex()) {
-                if (valueParameterDescriptor.type !is StubTypeForBuilderInference) continue
-                val target = functionLiteral.valueParameters.getOrNull(index) ?: functionLiteral
-                context.trace.report(Errors.BUILDER_INFERENCE_STUB_PARAMETER_TYPE.on(target, valueParameterDescriptor.name))
-            }
+            StubForBuilderInferenceLambdaParameterTypeChecker.checkFunctionLiteral(functionLiteral, context)
         }
     }
 }

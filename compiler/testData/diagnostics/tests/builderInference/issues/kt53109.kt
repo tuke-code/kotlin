@@ -3,7 +3,7 @@
 
 fun test() {
     val buildee = build {
-        typeVariableConsumer = <!BUILDER_INFERENCE_STUB_PARAMETER_TYPE!>{ consumeTargetType(it) }<!>
+        typeVariableConsumer = <!BUILDER_INFERENCE_STUB_PARAMETER_TYPE!>{ consumeTargetType(<!BUILDER_INFERENCE_STUB_PARAMETER_TYPE!>it<!>) }<!>
     }
     // exact type equality check — turns unexpected compile-time behavior into red code
     // considered to be non-user-reproducible code for the purposes of these tests

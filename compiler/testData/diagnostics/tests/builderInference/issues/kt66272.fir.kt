@@ -4,7 +4,7 @@ data class DataClass(val data: String)
 
 fun test() {
     A.create {
-        it.group().apply(<!BUILDER_INFERENCE_STUB_PARAMETER_TYPE!>it<!>, ::DataClass)
+        it.group().apply(it, ::DataClass)
     }
 }
 open class A<O, F> {

@@ -12,12 +12,13 @@ import org.jetbrains.kotlin.diagnostics.Errors
 import org.jetbrains.kotlin.psi.KtDeclaration
 import org.jetbrains.kotlin.psi.KtParameter
 import org.jetbrains.kotlin.types.StubTypeForBuilderInference
+import org.jetbrains.kotlin.types.typeUtil.contains
 
 object StubForBuilderInferenceParameterTypeChecker : DeclarationChecker {
     override fun check(declaration: KtDeclaration, descriptor: DeclarationDescriptor, context: DeclarationCheckerContext) {
         if (declaration !is KtParameter ||
             descriptor !is ValueDescriptor ||
-            descriptor.returnType !is StubTypeForBuilderInference
+            descriptor.returnType?.contains { it is StubTypeForBuilderInference } != true
         ) return
         if (context.languageVersionSettings.supportsFeature(LanguageFeature.NoBuilderInferenceWithoutAnnotationRestriction)) return
 
