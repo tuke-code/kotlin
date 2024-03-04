@@ -8,7 +8,7 @@ fun test() {
             TargetType()
         }<!>,
         <!BUILDER_INFERENCE_MULTI_LAMBDA_RESTRICTION!>{
-            consumeTargetTypeBase(<!BUILDER_INFERENCE_STUB_PARAMETER_TYPE!>it<!>)
+            consumeTargetTypeBase(it)
         }<!>
     )
     // exact type equality check — turns unexpected compile-time behavior into red code

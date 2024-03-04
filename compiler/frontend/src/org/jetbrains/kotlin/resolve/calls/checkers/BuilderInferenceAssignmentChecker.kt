@@ -14,11 +14,13 @@ import org.jetbrains.kotlin.psi.KtBinaryExpression
 import org.jetbrains.kotlin.psi.KtLambdaExpression
 import org.jetbrains.kotlin.psi.KtNameReferenceExpression
 import org.jetbrains.kotlin.psi.psiUtil.getParentOfType
+import org.jetbrains.kotlin.resolve.BindingContext
 import org.jetbrains.kotlin.resolve.calls.model.ResolvedCall
 import org.jetbrains.kotlin.resolve.calls.util.getType
 import org.jetbrains.kotlin.types.StubTypeForBuilderInference
 import org.jetbrains.kotlin.types.expressions.BasicExpressionTypingVisitor
 import org.jetbrains.kotlin.types.isError
+import org.jetbrains.kotlin.types.typeUtil.contains
 
 object BuilderInferenceAssignmentChecker : CallChecker {
     override fun check(resolvedCall: ResolvedCall<*>, reportOn: PsiElement, context: CallCheckerContext) {
@@ -40,7 +42,20 @@ object BuilderInferenceAssignmentChecker : CallChecker {
             context.trace.report(Errors.TYPE_MISMATCH.on(right, leftType, rightType))
         } else if (right is KtLambdaExpression) {
             val functionLiteral = right.functionLiteral
-            StubForBuilderInferenceLambdaParameterTypeChecker.checkFunctionLiteral(functionLiteral, context)
+            val functionDescriptor = context.trace.get(BindingContext.FUNCTION, functionLiteral) ?: return
+            for ((index, valueParameterDescriptor) in functionDescriptor.valueParameters.withIndex()) {
+                if (!valueParameterDescriptor.type.contains { it is StubTypeForBuilderInference }) continue
+                val target = functionLiteral.valueParameters.getOrNull(index) ?: functionLiteral
+                context.trace.report(Errors.BUILDER_INFERENCE_STUB_PARAMETER_TYPE.on(target, valueParameterDescriptor.name))
+            }
+            for (parameter in functionLiteral.valueParameters) {
+                val destructuringDeclaration = parameter.destructuringDeclaration ?: continue
+                for (entry in destructuringDeclaration.entries) {
+                    val componentVariable = context.trace.get(BindingContext.VARIABLE, entry) ?: continue
+                    if (!componentVariable.type.contains { it is StubTypeForBuilderInference }) continue
+                    context.trace.report(Errors.BUILDER_INFERENCE_STUB_PARAMETER_TYPE.on(entry, componentVariable.name))
+                }
+            }
         }
     }
 }

@@ -11,6 +11,6 @@ fun foo() {
 
 fun bar() {
     buildMap {
-        mapValues { (<!BUILDER_INFERENCE_STUB_PARAMETER_TYPE!>key: Int<!>, <!BUILDER_INFERENCE_STUB_PARAMETER_TYPE!>value: String<!>) -> "1" }
+        mapValues { (key: Int, value: String) -> "1" }
     }
 }

@@ -7,10 +7,9 @@ package org.jetbrains.kotlin.resolve.calls.checkers
 
 import com.intellij.psi.PsiElement
 import org.jetbrains.kotlin.config.LanguageFeature
-import org.jetbrains.kotlin.descriptors.ValueDescriptor
+import org.jetbrains.kotlin.descriptors.SimpleFunctionDescriptor
 import org.jetbrains.kotlin.diagnostics.Errors
 import org.jetbrains.kotlin.psi.KtFunctionLiteral
-import org.jetbrains.kotlin.psi.KtNameReferenceExpression
 import org.jetbrains.kotlin.psi.LambdaArgument
 import org.jetbrains.kotlin.resolve.BindingContext
 import org.jetbrains.kotlin.resolve.calls.model.ResolvedCall
@@ -25,14 +24,17 @@ object StubForBuilderInferenceLambdaParameterTypeChecker : CallChecker {
                 if (valueArgument is LambdaArgument) {
                     val functionLiteral = valueArgument.getLambdaExpression()?.functionLiteral ?: continue
                     checkFunctionLiteral(functionLiteral, context)
-                } else {
-                    val expression = valueArgument.getArgumentExpression() as? KtNameReferenceExpression ?: continue
-                    val referenceTarget = context.trace.get(BindingContext.REFERENCE_TARGET, expression) as? ValueDescriptor ?: continue
-                    val type = context.trace.getType(expression) ?: continue
-                    if (type.contains { it is StubTypeForBuilderInference }) {
-                        // TODO: maybe we should check ValueDescriptor.type on just type variables instead!!!
-                        context.trace.report(Errors.BUILDER_INFERENCE_STUB_PARAMETER_TYPE.on(expression, referenceTarget.name))
-                    }
+                }
+            }
+        }
+        val resultingDescriptor = resolvedCall.resultingDescriptor as? SimpleFunctionDescriptor ?: return
+        if (resultingDescriptor.dispatchReceiverParameter?.type?.contains { it is StubTypeForBuilderInference } == true) {
+            context.trace.report(Errors.BUILDER_INFERENCE_STUB_PARAMETER_TYPE.on(reportOn, resultingDescriptor.name))
+        }
+        if (resultingDescriptor.returnType?.contains { it is StubTypeForBuilderInference } == true) {
+            for (valueParameterDescriptor in resolvedCall.resultingDescriptor.valueParameters) {
+                if (valueParameterDescriptor.type.contains { it is StubTypeForBuilderInference } == true) {
+                    //context.trace.report(Errors.BUILDER_INFERENCE_STUB_PARAMETER_TYPE.on(reportOn, valueParameterDescriptor.name))
                 }
             }
         }
@@ -53,5 +55,27 @@ object StubForBuilderInferenceLambdaParameterTypeChecker : CallChecker {
                 context.trace.report(Errors.BUILDER_INFERENCE_STUB_PARAMETER_TYPE.on(entry, componentVariable.name))
             }
         }
+    }
+}
+
+
+// ISSUE: KT-66272
+
+data class DataClass(val data: String)
+
+fun test() {
+    A.create {
+        it.group().apply(it) { DataClass(it) }
+    }
+}
+open class A<O, F> {
+    open fun group(): A<F, String> {
+        return null!!
+    }
+    fun <R> apply(instance: A<O, *>, function: (F) -> R): A<O, R> {
+        return null!!
+    }
+    companion object {
+        fun <T> create(a: (A<T, T>) -> A<T, T>) {}
     }
 }

@@ -4,10 +4,10 @@
 fun test() {
     val buildee = parallelBuild(
         <!BUILDER_INFERENCE_MULTI_LAMBDA_RESTRICTION!>{
-            consumeTargetTypeBase(<!BUILDER_INFERENCE_STUB_PARAMETER_TYPE!>it<!>)
+            consumeTargetTypeBase(it)
         }<!>,
         <!BUILDER_INFERENCE_MULTI_LAMBDA_RESTRICTION!>{
-            consumeTargetType(<!BUILDER_INFERENCE_STUB_PARAMETER_TYPE!>it<!>)
+            consumeTargetType(it)
         }<!>
     )
     // exact type equality check — turns unexpected compile-time behavior into red code
