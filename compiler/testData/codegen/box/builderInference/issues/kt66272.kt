@@ -1,4 +1,3 @@
-// FIR_IDENTICAL
 // ISSUE: KT-66272
 // IGNORE_BACKEND_K1: ANY
 // Reason: Could not load module <Error module>
