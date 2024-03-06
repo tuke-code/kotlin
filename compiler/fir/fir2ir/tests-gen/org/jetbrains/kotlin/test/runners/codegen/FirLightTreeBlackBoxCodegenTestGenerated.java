@@ -33308,6 +33308,24 @@ public class FirLightTreeBlackBoxCodegenTestGenerated extends AbstractFirLightTr
     }
 
     @Test
+    @TestMetadata("fieldFakeOverride.kt")
+    public void testFieldFakeOverride() {
+      runTest("compiler/testData/codegen/box/javaInterop/fieldFakeOverride.kt");
+    }
+
+    @Test
+    @TestMetadata("fieldFakeOverride2.kt")
+    public void testFieldFakeOverride2() {
+      runTest("compiler/testData/codegen/box/javaInterop/fieldFakeOverride2.kt");
+    }
+
+    @Test
+    @TestMetadata("fieldFakeOverride3.kt")
+    public void testFieldFakeOverride3() {
+      runTest("compiler/testData/codegen/box/javaInterop/fieldFakeOverride3.kt");
+    }
+
+    @Test
     @TestMetadata("genericSamProjectedOut.kt")
     public void testGenericSamProjectedOut() {
       runTest("compiler/testData/codegen/box/javaInterop/genericSamProjectedOut.kt");

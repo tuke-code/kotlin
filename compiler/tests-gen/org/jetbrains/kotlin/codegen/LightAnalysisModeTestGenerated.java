@@ -28234,6 +28234,21 @@ public class LightAnalysisModeTestGenerated extends AbstractLightAnalysisModeTes
       runTest("compiler/testData/codegen/box/javaInterop/delegationToJavaDnn.kt");
     }
 
+    @TestMetadata("fieldFakeOverride.kt")
+    public void testFieldFakeOverride() {
+      runTest("compiler/testData/codegen/box/javaInterop/fieldFakeOverride.kt");
+    }
+
+    @TestMetadata("fieldFakeOverride2.kt")
+    public void testFieldFakeOverride2() {
+      runTest("compiler/testData/codegen/box/javaInterop/fieldFakeOverride2.kt");
+    }
+
+    @TestMetadata("fieldFakeOverride3.kt")
+    public void testFieldFakeOverride3() {
+      runTest("compiler/testData/codegen/box/javaInterop/fieldFakeOverride3.kt");
+    }
+
     @TestMetadata("genericSamProjectedOut.kt")
     public void testGenericSamProjectedOut() {
       runTest("compiler/testData/codegen/box/javaInterop/genericSamProjectedOut.kt");
