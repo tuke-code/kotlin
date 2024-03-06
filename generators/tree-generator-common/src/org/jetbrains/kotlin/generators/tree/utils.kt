@@ -1,31 +1,45 @@
 /*
- * Copyright 2010-2023 JetBrains s.r.o. and Kotlin Programming Language contributors.
+ * Copyright 2010-2024 JetBrains s.r.o. and Kotlin Programming Language contributors.
  * Use of this source code is governed by the Apache 2.0 license that can be found in the license/LICENSE.txt file.
  */
 
 package org.jetbrains.kotlin.generators.tree
 
 /**
- * Runs [block] on this element and all its parents recursively.
+ * Returns a bottom-up hierarchy of inheritance, from this element's parents, to its top-most base elements, recursively,
+ * in a breach first manner.
  */
-fun <Element : AbstractElement<Element, *, *>> Element.traverseParents(block: (Element) -> Unit) {
-    traverseParentsUntil { block(it); false }
+fun <Element : AbstractElement<Element, *, *>> Element.elementAncestorsBreachFirst(): Sequence<Element> = sequence {
+    for (parent in elementParents) {
+        yield(parent.element)
+        yieldAll(parent.element.elementAncestorsBreachFirst())
+    }
 }
 
 /**
- * Runs [block] on this element and all its parents recursively.
- *
- * If [block] returns `true` at any point, aborts iteration and returns `true`.
- *
- * If [block] always returns `false`, visits all the parents and returns `false`.
+ * Returns a bottom-up hierarchy of inheritance, from this element, to its top-most base elements, recursively,
+ * in a breach first manner.
  */
-fun <Element : AbstractElement<Element, *, *>> Element.traverseParentsUntil(block: (Element) -> Boolean): Boolean {
-    if (block(this)) return true
+fun <Element : AbstractElement<Element, *, *>> Element.elementAncestorsAndSelfBreachFirst(): Sequence<Element> =
+    sequenceOf(this) + elementAncestorsBreachFirst()
+
+/**
+ * Returns a bottom-up hierarchy of inheritance, from this element's parents, to its top-most base elements, recursively,
+ * in a breach first manner.
+ */
+fun <Element : AbstractElement<Element, *, *>> Element.elementAncestorsBreathFirst(): Sequence<Element> = sequence {
+    yieldAll(elementParents.map { it.element })
     for (parent in elementParents) {
-        if (parent.element.traverseParentsUntil(block)) return true
+        yieldAll(parent.element.elementAncestorsBreachFirst())
     }
-    return false
 }
+
+/**
+ * Returns a bottom-up hierarchy of inheritance, from this element, to its top-most base elements, recursively,
+ * in a breach first manner.
+ */
+fun <Element : AbstractElement<Element, *, *>> Element.elementAncestorsAndSelfBreathFirst(): Sequence<Element> =
+    sequenceOf(this) + elementAncestorsBreathFirst()
 
 /**
  * For each tree element, sets its [AbstractElement.baseTransformerType] to one of its parents if that parent type is used at least once as
@@ -46,10 +60,10 @@ fun <Element : AbstractElement<Element, *, *>> detectBaseTransformerTypes(model:
     }
 
     for (element in model.elements) {
-        element.traverseParents {
+        element.elementAncestorsBreachFirst().forEach {
             if (it in usedAsFieldType) {
                 element.baseTransformerType = it
-                return@traverseParents
+                return@forEach
             }
         }
     }
