@@ -35,7 +35,6 @@ open class IrClassImpl @IrImplementationDetail constructor(
 ) : IrClass() {
     override var annotations: List<IrConstructorCall> = emptyList()
 
-    override lateinit var parent: IrDeclarationParent
 
     override var isExternal: Boolean = false
 

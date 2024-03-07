@@ -29,7 +29,6 @@ class IrEnumEntryImpl @IrImplementationDetail constructor(
 ) : IrEnumEntry() {
     override var annotations: List<IrConstructorCall> = emptyList()
 
-    override lateinit var parent: IrDeclarationParent
 
     @ObsoleteDescriptorBasedAPI
     override val descriptor: ClassDescriptor

@@ -29,28 +29,10 @@ dependencies {
 
 val generationRoot = projectDir.resolve("gen")
 
-val generateTree by tasks.registering(NoDebugJavaExec::class) {
-
-    val generatorRoot = "$projectDir/tree-generator/src/"
-
-    val generatorConfigurationFiles = fileTree(generatorRoot) {
-        include("**/*.kt")
-    }
-
-    inputs.files(generatorConfigurationFiles)
-    outputs.dirs(generationRoot)
-
-    args(generationRoot)
-    workingDir = rootDir
-    classpath = generatorClasspath
-    mainClass.set("org.jetbrains.kotlin.ir.generator.MainKt")
-    systemProperties["line.separator"] = "\n"
-}
-
 sourceSets {
     "main" {
         projectDefault()
-        java.srcDirs(generateTree)
+        java.srcDirs(generationRoot)
     }
     "test" {}
 }

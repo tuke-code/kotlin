@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2020 JetBrains s.r.o. and Kotlin Programming Language contributors.
+ * Copyright 2010-2024 JetBrains s.r.o. and Kotlin Programming Language contributors.
  * Use of this source code is governed by the Apache 2.0 license that can be found in the license/LICENSE.txt file.
  */
 
@@ -36,12 +36,13 @@ class Fir2IrLazyConstructor(
     override var origin: IrDeclarationOrigin,
     override val fir: FirConstructor,
     override val symbol: IrConstructorSymbol,
-    override var parent: IrDeclarationParent
+    parent: IrDeclarationParent,
 ) : IrConstructor(), AbstractFir2IrLazyDeclaration<FirConstructor>, Fir2IrTypeParametersContainer,
     Fir2IrComponents by components {
     init {
         symbol.bind(this)
         classifierStorage.preCacheTypeParameters(fir)
+        this.parent = parent
     }
 
     override var annotations: List<IrConstructorCall> by createLazyAnnotations()

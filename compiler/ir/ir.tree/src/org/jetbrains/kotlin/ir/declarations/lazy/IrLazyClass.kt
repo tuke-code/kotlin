@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2018 JetBrains s.r.o. and Kotlin Programming Language contributors.
+ * Copyright 2010-2024 JetBrains s.r.o. and Kotlin Programming Language contributors.
  * Use of this source code is governed by the Apache 2.0 license that can be found in the license/LICENSE.txt file.
  */
 
@@ -43,10 +43,9 @@ class IrLazyClass(
     override val typeTranslator: TypeTranslator
 ) : IrClass(), IrLazyDeclarationBase, DeserializableClass {
     init {
+        parent = lazyParent()
         symbol.bind(this)
     }
-
-    override var parent: IrDeclarationParent by createLazyParent()
 
     override var annotations: List<IrConstructorCall> by createLazyAnnotations()
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2023 JetBrains s.r.o. and Kotlin Programming Language contributors.
+ * Copyright 2010-2024 JetBrains s.r.o. and Kotlin Programming Language contributors.
  * Use of this source code is governed by the Apache 2.0 license that can be found in the license/LICENSE.txt file.
  */
 
@@ -46,14 +46,15 @@ class Fir2IrLazyProperty(
     override val fir: FirProperty,
     val containingClass: FirRegularClass?,
     symbols: PropertySymbols,
-    override var parent: IrDeclarationParent,
-    override var isFakeOverride: Boolean
+    parent: IrDeclarationParent,
+    override var isFakeOverride: Boolean,
 ) : IrProperty(), AbstractFir2IrLazyDeclaration<FirProperty>, Fir2IrComponents by components {
     override val symbol: IrPropertySymbol = symbols.propertySymbol
 
     init {
         symbol.bind(this)
         classifierStorage.preCacheTypeParameters(fir)
+        this.parent = parent
     }
 
     override var annotations: List<IrConstructorCall> by createLazyAnnotations()

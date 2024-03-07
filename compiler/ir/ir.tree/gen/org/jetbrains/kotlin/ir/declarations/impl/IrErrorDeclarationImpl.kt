@@ -31,8 +31,6 @@ class IrErrorDeclarationImpl @IrImplementationDetail constructor(
     @ObsoleteDescriptorBasedAPI
     override lateinit var descriptor: DeclarationDescriptor
 
-    override lateinit var parent: IrDeclarationParent
-
     override val symbol: IrSymbol
         get() = error("Should never be called")
 }

@@ -36,7 +36,6 @@ class IrTypeParameterImpl @IrImplementationDetail constructor(
 ) : IrTypeParameter() {
     override var annotations: List<IrConstructorCall> = emptyList()
 
-    override lateinit var parent: IrDeclarationParent
 
     @ObsoleteDescriptorBasedAPI
     override val descriptor: TypeParameterDescriptor

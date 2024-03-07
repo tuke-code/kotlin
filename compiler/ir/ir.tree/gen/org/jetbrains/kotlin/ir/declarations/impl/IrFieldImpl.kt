@@ -37,7 +37,6 @@ class IrFieldImpl @IrImplementationDetail constructor(
 ) : IrField() {
     override var annotations: List<IrConstructorCall> = emptyList()
 
-    override lateinit var parent: IrDeclarationParent
 
     override var metadata: MetadataSource? = null
 

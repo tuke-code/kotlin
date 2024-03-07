@@ -35,7 +35,6 @@ class IrVariableImpl(
 ) : IrVariable() {
     override var annotations: List<IrConstructorCall> = emptyList()
 
-    override lateinit var parent: IrDeclarationParent
 
     override val factory: IrFactory
         get() = error("Create IrVariableImpl directly")

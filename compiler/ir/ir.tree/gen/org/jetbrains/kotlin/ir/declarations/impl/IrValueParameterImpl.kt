@@ -40,7 +40,6 @@ class IrValueParameterImpl @IrImplementationDetail constructor(
 ) : IrValueParameter() {
     override var annotations: List<IrConstructorCall> = emptyList()
 
-    override lateinit var parent: IrDeclarationParent
 
     @ObsoleteDescriptorBasedAPI
     override val descriptor: ParameterDescriptor
