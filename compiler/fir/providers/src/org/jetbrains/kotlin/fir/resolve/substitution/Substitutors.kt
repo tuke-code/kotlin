@@ -81,7 +81,24 @@ abstract class AbstractConeSubstitutor(protected val typeContext: ConeTypeContex
         }
     }
 
+    private fun substituteFlexibleTypeWithDefinitelyNotNullBound(type: ConeFlexibleType): ConeKotlinType? {
+        val upperBound = type.upperBound
+        if (!upperBound.isMarkedNullable) return null
+        val lowerBound = type.lowerBound
+        if (lowerBound !is ConeDefinitelyNotNullType) return null
+        val lowerBoundUnwrapped = lowerBound.original
+        if (lowerBoundUnwrapped.isMarkedNullable ||
+            lowerBoundUnwrapped.withNullability(ConeNullability.NULLABLE, typeContext) != upperBound
+        ) return null
+
+        return substituteType(lowerBoundUnwrapped)?.takeIf { it.isMarkedNullable }
+    }
+
     override fun substituteOrNull(type: ConeKotlinType): ConeKotlinType? {
+        if (type is ConeFlexibleType) {
+            substituteFlexibleTypeWithDefinitelyNotNullBound(type)?.let { return it }
+        }
+
         val newType = substituteType(type)
 
         if (newType != null && type is ConeDefinitelyNotNullType) {
