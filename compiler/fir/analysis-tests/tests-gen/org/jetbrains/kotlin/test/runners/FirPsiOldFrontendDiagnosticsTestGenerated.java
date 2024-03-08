@@ -22313,6 +22313,12 @@ public class FirPsiOldFrontendDiagnosticsTestGenerated extends AbstractFirPsiDia
       }
 
       @Test
+      @TestMetadata("futureGet.kt")
+      public void testFutureGet() {
+        runTest("compiler/testData/diagnostics/tests/j+k/futureGet.kt");
+      }
+
+      @Test
       @TestMetadata("genericConstructorWithMultipleBounds.kt")
       public void testGenericConstructorWithMultipleBounds() {
         runTest("compiler/testData/diagnostics/tests/j+k/genericConstructorWithMultipleBounds.kt");
