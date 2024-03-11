@@ -19,7 +19,6 @@ abstract class AbstractBuilderConfigurator<Element, Implementation, BuilderField
 ) where Element : AbstractElement<Element, ElementField, Implementation>,
         Implementation : AbstractImplementation<Implementation, Element, BuilderField>,
         BuilderField : AbstractField<*>,
-        BuilderField : AbstractFieldWithDefaultValue<*>,
         ElementField : AbstractField<ElementField> {
 
     /**
