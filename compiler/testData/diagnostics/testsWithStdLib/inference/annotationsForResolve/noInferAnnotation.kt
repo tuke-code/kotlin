@@ -1,5 +1,14 @@
 // DIAGNOSTICS: -UNUSED_PARAMETER
 
+// FILE: Java.java
+
+class Java {
+    static <K> void g0(K k) { }
+    static void g1(In<String> k) { }
+}
+
+// FILE: Kotlin.kt
+
 @Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE")
 fun <T> test1(t1: T, t2: @kotlin.internal.NoInfer T): T = t1
 
@@ -19,6 +28,13 @@ fun <E> id(e: E): In<@kotlin.internal.NoInfer E> = TODO()
 fun test5(x: In<String>) {}
 fun In<String>.test6() {}
 
+open class A
+class B : A()
+class Out<out T>
+@Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE")
+fun <E> f2(e: E): Out<@kotlin.internal.NoInfer E> = TODO()
+fun <T> test7(t: T, x: Out<T>) {}
+
 fun usage(y: Int) {
     test1(1, <!TYPE_MISMATCH("Int; String")!>"312"<!>)
     1.test2("")
@@ -27,6 +43,15 @@ fun usage(y: Int) {
     val x: In<String> = <!TYPE_MISMATCH!>id(y)<!>
     test5(<!TYPE_MISMATCH!>id(y)<!>)
     id(y).<!UNRESOLVED_REFERENCE_WRONG_RECEIVER!>test6<!>()
+    test7(B(), f2(A()))
+}
+
+@Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE")
+fun <E> f(): @kotlin.internal.NoInfer E = TODO()
+
+fun flexibleTypes(y: Int) {
+    Java.g0(f<Int>())
+    Java.g1(<!TYPE_MISMATCH!>id(y)<!>)
 }
 
 @Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE")

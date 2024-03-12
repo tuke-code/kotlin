@@ -14,6 +14,7 @@ import org.jetbrains.kotlin.fir.expressions.FirExpression
 import org.jetbrains.kotlin.fir.expressions.FirFunctionCall
 import org.jetbrains.kotlin.fir.expressions.impl.FirResolvedArgumentList
 import org.jetbrains.kotlin.fir.expressions.toResolvedCallableSymbol
+import org.jetbrains.kotlin.fir.resolve.substitution.ConeSubstitutor
 import org.jetbrains.kotlin.fir.resolve.substitution.ConeSubstitutorByMap
 import org.jetbrains.kotlin.fir.symbols.impl.FirTypeParameterSymbol
 import org.jetbrains.kotlin.fir.types.*
@@ -52,24 +53,29 @@ object FirFunctionNoInferArgumentsChecker : FirFunctionCallChecker(MppCheckerKin
             return
         }
 
+        val expressionSymbol = expression.toResolvedCallableSymbol() ?: return
+
         val substitution = mutableMapOf<FirTypeParameterSymbol, ConeKotlinType>()
-        val substitutor = ConeSubstitutorByMap(substitution, context.session)
+
+        val typeParameterToArgumentMap =
+            expressionSymbol.typeParameterSymbols.zip(expression.typeArguments).associate { (typeParameterSymbol, typeArgument) ->
+                typeParameterSymbol to typeArgument.toConeTypeProjection().type
+            }
 
         fun matchTypeArgumentAndParameter(argumentType: ConeKotlinType, parameterType: ConeKotlinType) {
-            if (parameterType is ConeTypeParameterType) {
-                val parameterSymbol = parameterType.toSymbol(context.session) as FirTypeParameterSymbol
+            val lowerParameterType = parameterType.lowerBoundIfFlexible().originalIfDefinitelyNotNullable()
+            if (lowerParameterType is ConeTypeParameterType) {
+                val parameterSymbol = lowerParameterType.toSymbol(context.session) as FirTypeParameterSymbol
                 if (substitution[parameterSymbol] == null) {
-                    // If type parameter is encountered, then it's type is captured by type argument
+                    // If a type parameter is encountered, then it's type is captured by a type of type argument (owned by the current function)
+                    // or argument type (if it's an outer parameter)
                     // It could cause type mismatch error on other type parameters marked with `@NoInfer` annotation
-                    substitution[parameterSymbol] = argumentType
+                    substitution[parameterSymbol] = typeParameterToArgumentMap[parameterSymbol] ?: argumentType
                 }
             } else {
-                val argumentTypeArguments = argumentType.typeArguments
-                val parameterTypeArguments = parameterType.typeArguments
-                val count = minOf(argumentTypeArguments.size, parameterTypeArguments.size)
-                for (index in 0 until count) {
-                    argumentTypeArguments[index].type?.let { argType ->
-                        parameterTypeArguments[index].type?.let { paramType ->
+                for ((argumentTypeArgument, parameterTypeArgument) in argumentType.typeArguments.zip(parameterType.typeArguments)) {
+                    argumentTypeArgument.type?.let { argType ->
+                        parameterTypeArgument.type?.let { paramType ->
                             matchTypeArgumentAndParameter(argType, paramType)
                         }
                     }
@@ -77,10 +83,22 @@ object FirFunctionNoInferArgumentsChecker : FirFunctionCallChecker(MppCheckerKin
             }
         }
 
+        // Use such a trick to avoid returning empty substitutor if substitution (map) is not yet initialized
+        // If the substitution is empty during creating `ConeSubstitutor`,
+        // its reference isn't captured and postponed initialization doesn't work
+        var substitutor: ConeSubstitutor? = null
+        fun getSubstitutor(): ConeSubstitutor {
+            if (substitution.isEmpty()) return ConeSubstitutor.Empty
+
+            if (substitutor == null) substitutor = ConeSubstitutorByMap.create(substitution, context.session)
+
+            return substitutor
+        }
+
         fun checkNoInferMismatch(argumentExpression: FirExpression, parameterType: ConeKotlinType) {
             if (argumentExpression.resolvedType.containsNoInferAttribute() || parameterType.containsNoInferAttribute()) {
                 val argumentType = argumentExpression.resolvedType
-                val substitutedType = substitutor.substituteOrSelf(parameterType)
+                val substitutedType = getSubstitutor().substituteOrSelf(parameterType)
                 if (!AbstractTypeChecker.isSubtypeOf(context.session.typeContext, argumentType, substitutedType)) {
                     reporter.reportOn(
                         argumentExpression.source,
