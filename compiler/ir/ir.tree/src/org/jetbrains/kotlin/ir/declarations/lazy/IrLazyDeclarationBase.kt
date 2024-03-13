@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2018 JetBrains s.r.o. and Kotlin Programming Language contributors.
+ * Copyright 2010-2024 JetBrains s.r.o. and Kotlin Programming Language contributors.
  * Use of this source code is governed by the Apache 2.0 license that can be found in the license/LICENSE.txt file.
  */
 
@@ -14,6 +14,7 @@ import org.jetbrains.kotlin.ir.expressions.IrConstructorCall
 import org.jetbrains.kotlin.ir.symbols.impl.IrValueParameterSymbolImpl
 import org.jetbrains.kotlin.ir.types.IrType
 import org.jetbrains.kotlin.ir.util.DeclarationStubGenerator
+import org.jetbrains.kotlin.ir.util.DeserializableClass
 import org.jetbrains.kotlin.ir.util.TypeTranslator
 import org.jetbrains.kotlin.types.KotlinType
 import kotlin.properties.ReadWriteProperty
@@ -62,7 +63,18 @@ interface IrLazyDeclarationBase : IrDeclaration {
                 val parent = this.takeUnless { it is IrClass }?.let {
                     stubGenerator.generateOrGetFacadeClass(descriptor)
                 } ?: stubGenerator.generateOrGetEmptyExternalPackageFragmentStub(containingDeclaration)
-                parent.declarations.add(this)
+
+                if (parent is IrExternalPackageFragment || parent is DeserializableClass) {
+                    parent.declarations.add(this)
+                } else {
+                    assert(this in parent.declarations) {
+                        """
+                        !!! parent.declarations.add(this):
+                        parent = $parent
+                        this = $this
+                        """.trimIndent()
+                    }
+                }
                 parent
             }
             is ClassDescriptor -> stubGenerator.generateClassStub(containingDeclaration)
