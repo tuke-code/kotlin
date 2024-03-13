@@ -36605,6 +36605,12 @@ public class FirPsiOldFrontendDiagnosticsTestGenerated extends AbstractFirPsiDia
       }
 
       @Test
+      @TestMetadata("changeInFirstOverloadResolution.kt")
+      public void testChangeInFirstOverloadResolution() {
+        runTest("compiler/testData/diagnostics/tests/testsWithJava21/changeInFirstOverloadResolution.kt");
+      }
+
+      @Test
       @TestMetadata("implementationsForSequencedCollection.kt")
       public void testImplementationsForSequencedCollection() {
         runTest("compiler/testData/diagnostics/tests/testsWithJava21/implementationsForSequencedCollection.kt");
