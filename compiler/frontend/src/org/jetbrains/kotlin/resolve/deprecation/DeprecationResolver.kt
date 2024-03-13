@@ -66,6 +66,12 @@ class DeprecationResolver(
             }
             descriptor is CallableMemberDescriptor -> {
                 if (descriptor is SyntheticPropertyDescriptor && descriptor.setMethod == null) {
+                    // Here we make synthetic read-only properties equivalent to their getter in terms of deprecation.
+                    // Mostly it's done because of KT-65235.
+                    // About the case with read-write properties (setMethod != null), it was decided not to touch them.
+                    // Normally this case should depend on a fact if we are now doing read or write (we don't know it here).
+                    // Also, we don't know important use-cases with hidden read-write synthetic properties,
+                    // so we decided not to break things here.
                     val getterDeprecations = descriptor.getMethod.getOwnDeprecations()
                     if (getterDeprecations.isNotEmpty()) {
                         return DeprecationInfo(getterDeprecations, hasInheritedDeprecations = false)
