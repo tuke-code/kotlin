@@ -65,6 +65,12 @@ class DeprecationResolver(
                 return originalMethodDeprecationInfo.copy(deprecations = filteredDeprecations)
             }
             descriptor is CallableMemberDescriptor -> {
+                if (descriptor is SyntheticPropertyDescriptor && descriptor.setMethod == null) {
+                    val getterDeprecations = descriptor.getMethod.getOwnDeprecations()
+                    if (getterDeprecations.isNotEmpty()) {
+                        return DeprecationInfo(getterDeprecations, hasInheritedDeprecations = false)
+                    }
+                }
                 val inheritedDeprecations = listOfNotNull(deprecationByOverridden(descriptor))
                 when (inheritedDeprecations.isNotEmpty()) {
                     true -> when (languageVersionSettings.supportsFeature(LanguageFeature.StopPropagatingDeprecationThroughOverrides)) {
