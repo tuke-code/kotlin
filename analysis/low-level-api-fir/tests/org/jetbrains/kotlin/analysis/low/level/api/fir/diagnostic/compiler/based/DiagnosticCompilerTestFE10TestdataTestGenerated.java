@@ -24505,9 +24505,21 @@ public class DiagnosticCompilerTestFE10TestdataTestGenerated extends AbstractDia
       }
 
       @Test
+      @TestMetadata("inaccessibleGenericTypeUnspecifiedBehavior.kt")
+      public void testInaccessibleGenericTypeUnspecifiedBehavior() {
+        runTest("compiler/testData/diagnostics/tests/multimodule/inaccessibleGenericTypeUnspecifiedBehavior.kt");
+      }
+
+      @Test
       @TestMetadata("InaccessibleGenericTypeVariousCases.kt")
       public void testInaccessibleGenericTypeVariousCases() {
         runTest("compiler/testData/diagnostics/tests/multimodule/InaccessibleGenericTypeVariousCases.kt");
+      }
+
+      @Test
+      @TestMetadata("inaccessibleTypesUnspecifiedBehavior.kt")
+      public void testInaccessibleTypesUnspecifiedBehavior() {
+        runTest("compiler/testData/diagnostics/tests/multimodule/inaccessibleTypesUnspecifiedBehavior.kt");
       }
 
       @Test
