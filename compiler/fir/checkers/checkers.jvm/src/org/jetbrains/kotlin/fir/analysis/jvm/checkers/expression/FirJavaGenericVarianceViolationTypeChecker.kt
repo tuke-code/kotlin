@@ -154,8 +154,7 @@ object FirJavaGenericVarianceViolationTypeChecker : FirFunctionCallChecker(MppCh
             )
             is ConeDefinitelyNotNullType -> ConeDefinitelyNotNullType(original.removeOutProjection(isCovariant))
             is ConeIntersectionType -> ConeIntersectionType(
-                intersectedTypes.map { it.removeOutProjection(isCovariant) },
-                alternativeType?.removeOutProjection(isCovariant)
+                intersectedTypes.map { it.removeOutProjection(isCovariant) }
             )
             is ConeClassLikeTypeImpl -> ConeClassLikeTypeImpl(
                 lookupTag,

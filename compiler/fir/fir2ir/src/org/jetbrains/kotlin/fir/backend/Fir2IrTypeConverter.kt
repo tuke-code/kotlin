@@ -331,9 +331,7 @@ class Fir2IrTypeConverter(
         if (type is ConeClassLikeType && type.typeArguments.isEmpty()) return type
         val substitutor = object : AbstractConeSubstitutor(session.typeContext) {
             override fun substituteType(type: ConeKotlinType): ConeKotlinType? {
-                return if (type is ConeIntersectionType) {
-                    type.alternativeType?.let { substituteOrSelf(it) }
-                } else null
+                return null
             }
         }
         return substitutor.substituteOrSelf(type).approximateForIrOrSelf(c)

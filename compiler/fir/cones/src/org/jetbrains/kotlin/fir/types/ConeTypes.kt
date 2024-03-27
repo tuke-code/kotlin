@@ -221,8 +221,7 @@ class ConeRawType private constructor(
  * To comply with this contract, construct new intersection types only via [org.jetbrains.kotlin.fir.types.ConeTypeIntersector].
  */
 class ConeIntersectionType(
-    val intersectedTypes: Collection<ConeKotlinType>,
-    val alternativeType: ConeKotlinType? = null,
+    val intersectedTypes: Collection<ConeKotlinType>
 ) : ConeSimpleKotlinType(), IntersectionTypeConstructorMarker {
     override val typeArguments: Array<out ConeTypeProjection>
         get() = EMPTY_ARRAY

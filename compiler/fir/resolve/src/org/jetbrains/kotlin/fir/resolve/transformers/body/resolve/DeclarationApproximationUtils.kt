@@ -49,9 +49,7 @@ private class UnnecessaryAttributesRemover(session: FirSession) : AbstractConeSu
 private fun ConeKotlinType.substituteAlternativesInPublicType(session: FirSession): ConeKotlinType {
     val substitutor = object : AbstractConeSubstitutor(session.typeContext) {
         override fun substituteType(type: ConeKotlinType): ConeKotlinType? {
-            if (type !is ConeIntersectionType) return null
-            val alternativeType = type.alternativeType ?: return null
-            return substituteOrSelf(alternativeType)
+            return null
         }
     }
     return substitutor.substituteOrSelf(this)

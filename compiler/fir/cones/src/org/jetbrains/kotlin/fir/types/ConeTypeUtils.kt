@@ -92,12 +92,8 @@ fun ConeSimpleKotlinType.originalIfDefinitelyNotNullable(): ConeSimpleKotlinType
     }
 }
 
-fun ConeIntersectionType.withAlternative(alternativeType: ConeKotlinType): ConeIntersectionType {
-    return ConeIntersectionType(intersectedTypes, alternativeType)
-}
-
 fun ConeIntersectionType.mapTypes(func: (ConeKotlinType) -> ConeKotlinType): ConeIntersectionType {
-    return ConeIntersectionType(intersectedTypes.map(func), alternativeType?.let(func))
+    return ConeIntersectionType(intersectedTypes.map(func))
 }
 
 fun ConeClassLikeType.withArguments(typeArguments: Array<out ConeTypeProjection>): ConeClassLikeType = when (this) {

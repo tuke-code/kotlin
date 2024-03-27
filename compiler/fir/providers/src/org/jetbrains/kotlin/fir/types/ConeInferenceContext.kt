@@ -99,8 +99,7 @@ interface ConeInferenceContext : TypeSystemInferenceExtensionContext, ConeTypeCo
                 constructor
             } else {
                 ConeIntersectionType(
-                    constructor.intersectedTypes.map { it.withAttributes(coneAttributes) },
-                    constructor.alternativeType?.withAttributes(coneAttributes)
+                    constructor.intersectedTypes.map { it.withAttributes(coneAttributes) }
                 )
             }
             else -> error("!")
@@ -588,7 +587,7 @@ interface ConeInferenceContext : TypeSystemInferenceExtensionContext, ConeTypeCo
         val intersectionType = firstCandidate.lowerBoundIfFlexible() as? ConeIntersectionType ?: error {
             "Expected type is intersection, found $firstCandidate"
         }
-        return intersectionType.withAlternative(secondCandidate)
+        return intersectionType
     }
 
     override fun useRefinedBoundsForTypeVariableInFlexiblePosition(): Boolean = session.languageVersionSettings.supportsFeature(
