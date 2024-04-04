@@ -5,11 +5,13 @@
 
 package org.jetbrains.kotlin.fir.resolve.inference
 
+import org.jetbrains.kotlin.fir.FirSession
 import org.jetbrains.kotlin.fir.declarations.FirAnonymousFunction
 import org.jetbrains.kotlin.fir.resolve.inference.model.ConeArgumentConstraintPosition
 import org.jetbrains.kotlin.fir.resolve.inference.model.ConeFixVariableConstraintPosition
 import org.jetbrains.kotlin.fir.symbols.ConeTypeParameterLookupTag
 import org.jetbrains.kotlin.fir.types.*
+import org.jetbrains.kotlin.fir.types.ConeKotlinTypeProjection
 import org.jetbrains.kotlin.name.StandardClassIds
 import org.jetbrains.kotlin.resolve.calls.inference.components.ConstraintSystemUtilContext
 import org.jetbrains.kotlin.resolve.calls.inference.components.PostponedArgumentInputTypesResolver
@@ -19,7 +21,12 @@ import org.jetbrains.kotlin.resolve.calls.model.PostponedAtomWithRevisableExpect
 import org.jetbrains.kotlin.types.model.KotlinTypeMarker
 import org.jetbrains.kotlin.types.model.TypeVariableMarker
 
-object ConeConstraintSystemUtilContext : ConstraintSystemUtilContext {
+class ConeConstraintSystemUtilContext(val session: FirSession) : ConstraintSystemUtilContext {
+    private val typeContext: ConeInferenceContext = object : ConeInferenceContext {
+        override val session: FirSession
+            get() = this@ConeConstraintSystemUtilContext.session
+    }
+
     override fun TypeVariableMarker.shouldBeFlexible(): Boolean {
         if (this !is ConeTypeVariable) return false
         val typeParameter =
@@ -34,9 +41,62 @@ object ConeConstraintSystemUtilContext : ConstraintSystemUtilContext {
         return typeParameterSymbol.resolvedAnnotationClassIds.any { it == StandardClassIds.Annotations.OnlyInputTypes }
     }
 
-    override fun KotlinTypeMarker.unCapture(): KotlinTypeMarker {
+    override fun KotlinTypeMarker.unCapture(): ConeKotlinType {
         require(this is ConeKotlinType)
+        when (this) {
+            is ConeFlexibleType -> {
+                val lower = lowerBound.unCapture().let {
+                    when (it) {
+                        is ConeFlexibleType -> it.lowerBound
+                        is ConeSimpleKotlinType -> it
+                    }
+                }
+                val upper = upperBound.unCapture().let {
+                    when (it) {
+                        is ConeFlexibleType -> it.upperBound
+                        is ConeSimpleKotlinType -> it
+                    }
+                }
+                return if (lower !== lowerBound || upper !== upperBound) {
+                    ConeFlexibleType(lower, upper)
+                } else {
+                    this
+                }
+            }
+            is ConeCapturedType -> return unCapture()
+            is ConeTypeParameterType, is ConeTypeVariableType -> return this
+            is ConeClassLikeType -> {
+                val newArguments = typeArguments.map(::unCaptureProjection)
+                return withArguments(newArguments.toTypedArray())
+            }
+            is ConeSimpleKotlinType -> return this
+        }
+    }
+
+    private fun ConeCapturedType.unCapture(): ConeKotlinType {
+        lowerType?.let { return it }
+        constructor.supertypes?.takeIf { it.isNotEmpty() }?.let {
+            if (it.size == 1) return it.single()
+            return ConeTypeIntersector.intersectTypes(typeContext, it)
+        }
+        constructor.projection.type?.let {
+            return it
+        }
         return this
+    }
+
+    private fun unCaptureProjection(projection: ConeTypeProjection): ConeTypeProjection {
+        val unCapturedProjection = (projection.type as? ConeCapturedType)?.constructor?.projection ?: projection
+        if (unCapturedProjection !is ConeKotlinTypeProjection || unCapturedProjection.type is ConeErrorType) return unCapturedProjection
+
+        val newArguments = unCapturedProjection.type.typeArguments.map(::unCaptureProjection).toTypedArray()
+        val newType = (unCapturedProjection.type as? ConeClassLikeType)?.withArguments(newArguments) ?: return unCapturedProjection
+        return when (unCapturedProjection) {
+            is ConeKotlinTypeProjectionIn -> ConeKotlinTypeProjectionIn(newType)
+            is ConeKotlinTypeProjectionOut -> ConeKotlinTypeProjectionOut(newType)
+            is ConeKotlinTypeConflictingProjection -> unCapturedProjection
+            is ConeKotlinType -> newType
+        }
     }
 
     override fun TypeVariableMarker.isReified(): Boolean {

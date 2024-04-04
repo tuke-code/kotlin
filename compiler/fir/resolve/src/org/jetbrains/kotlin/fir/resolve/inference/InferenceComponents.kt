@@ -21,7 +21,8 @@ class InferenceComponents(val session: FirSession) : FirSessionComponent {
     private val approximator = session.typeApproximator
 
     val trivialConstraintTypeInferenceOracle: TrivialConstraintTypeInferenceOracle = TrivialConstraintTypeInferenceOracle.create(typeContext)
-    private val incorporator = ConstraintIncorporator(approximator, trivialConstraintTypeInferenceOracle, ConeConstraintSystemUtilContext)
+    private val constraintSystemUtilContext = ConeConstraintSystemUtilContext(session)
+    private val incorporator = ConstraintIncorporator(approximator, trivialConstraintTypeInferenceOracle, constraintSystemUtilContext)
     private val injector = ConstraintInjector(
         incorporator,
         approximator,
@@ -33,7 +34,7 @@ class InferenceComponents(val session: FirSession) : FirSessionComponent {
         VariableFixationFinder(trivialConstraintTypeInferenceOracle, session.languageVersionSettings)
     val postponedArgumentInputTypesResolver: PostponedArgumentInputTypesResolver =
         PostponedArgumentInputTypesResolver(
-            resultTypeResolver, variableFixationFinder, ConeConstraintSystemUtilContext, session.languageVersionSettings
+            resultTypeResolver, variableFixationFinder, constraintSystemUtilContext, session.languageVersionSettings
         )
 
     val constraintSystemFactory: ConstraintSystemFactory = ConstraintSystemFactory()
