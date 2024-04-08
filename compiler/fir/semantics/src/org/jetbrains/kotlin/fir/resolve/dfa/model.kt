@@ -6,6 +6,7 @@
 package org.jetbrains.kotlin.fir.resolve.dfa
 
 import kotlinx.collections.immutable.PersistentSet
+import org.jetbrains.kotlin.fir.symbols.impl.FirEnumEntrySymbol
 import org.jetbrains.kotlin.fir.types.ConeErrorType
 import org.jetbrains.kotlin.fir.types.ConeKotlinType
 import kotlin.contracts.ExperimentalContracts
@@ -23,9 +24,26 @@ class MutableTypeStatement(
     override val exactType: MutableSet<ConeKotlinType> = linkedSetOf(),
 ) : TypeStatement()
 
+data class PersistentNegativeTypeStatement(
+    override val variable: RealVariable,
+    override val types: PersistentSet<ConeKotlinType>,
+    override val entries: PersistentSet<FirEnumEntrySymbol>,
+) : NegativeTypeStatement()
+
+class MutableNegativeTypeStatement(
+    override val variable: RealVariable,
+    override val types: MutableSet<ConeKotlinType> = linkedSetOf(),
+    override val entries: MutableSet<FirEnumEntrySymbol> = linkedSetOf(),
+) : NegativeTypeStatement()
+
 // --------------------------------------- Aliases ---------------------------------------
 
-typealias TypeStatements = Map<RealVariable, TypeStatement>
+typealias TypeStatements = Pair<Map<RealVariable, TypeStatement>, Map<RealVariable, NegativeTypeStatement>>
+
+fun emptyTypeStatements(): TypeStatements = Pair(mapOf(), mapOf())
+
+fun TypeStatements.isEmpty(): Boolean = first.isEmpty() && second.isEmpty()
+fun TypeStatements.isNotEmpty(): Boolean = first.isNotEmpty() || second.isNotEmpty()
 
 // --------------------------------------- DSL ---------------------------------------
 
@@ -44,6 +62,12 @@ infix fun OperationStatement.implies(effect: Statement): Implication = Implicati
 
 infix fun RealVariable.typeEq(type: ConeKotlinType): MutableTypeStatement =
     MutableTypeStatement(this, if (type is ConeErrorType) linkedSetOf() else linkedSetOf(type))
+
+infix fun RealVariable.typeNotEq(type: ConeKotlinType): MutableNegativeTypeStatement =
+    MutableNegativeTypeStatement(this, types = if (type is ConeErrorType) linkedSetOf() else linkedSetOf(type))
+
+infix fun RealVariable.entryNotEq(entry: FirEnumEntrySymbol): MutableNegativeTypeStatement =
+    MutableNegativeTypeStatement(this, entries = linkedSetOf(entry))
 
 // --------------------------------------- Utils ---------------------------------------
 

@@ -9,6 +9,7 @@ import kotlinx.collections.immutable.toPersistentSet
 import org.jetbrains.kotlin.config.LanguageFeature
 import org.jetbrains.kotlin.contracts.description.LogicOperationKind
 import org.jetbrains.kotlin.contracts.description.canBeRevisited
+import org.jetbrains.kotlin.descriptors.ClassKind
 import org.jetbrains.kotlin.descriptors.Modality
 import org.jetbrains.kotlin.fir.*
 import org.jetbrains.kotlin.fir.contracts.description.ConeConditionalEffectDeclaration
@@ -33,6 +34,7 @@ import org.jetbrains.kotlin.fir.scopes.getFunctions
 import org.jetbrains.kotlin.fir.scopes.impl.toConeType
 import org.jetbrains.kotlin.fir.scopes.unsubstitutedScope
 import org.jetbrains.kotlin.fir.symbols.impl.FirClassSymbol
+import org.jetbrains.kotlin.fir.symbols.impl.FirEnumEntrySymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirPropertySymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirTypeParameterSymbol
 import org.jetbrains.kotlin.fir.types.*
@@ -171,6 +173,13 @@ abstract class FirDataFlowAnalyzer(
         val variable = flow.getRealVariableWithoutUnwrappingAlias(expression) ?: return null
         val types = flow.getTypeStatement(variable)?.exactType?.ifEmpty { null } ?: return null
         return variable.getStability(flow, types) to types
+    }
+
+    open fun getNegativeTypesFromSmartcastInfo(expression: FirExpression): Pair<SmartcastStability, NegativeTypeStatement>? {
+        val flow = currentSmartCastPosition ?: return null
+        val variable = flow.getRealVariableWithoutUnwrappingAlias(expression) ?: return null
+        val typeStatement = flow.getNegativeTypeStatement(variable) ?: return null
+        return variable.getStability(flow, typeStatement.types) to typeStatement
     }
 
     fun returnExpressionsOfAnonymousFunctionOrNull(function: FirAnonymousFunction): Collection<FirAnonymousFunctionReturnExpressionInfo>? =
@@ -391,6 +400,7 @@ abstract class FirDataFlowAnalyzer(
                         val expressionVariable = SyntheticVariable(typeOperatorCall)
                         if (operandVariable.isReal()) {
                             flow.addImplication((expressionVariable eq isType) implies (operandVariable typeEq type))
+                            flow.addImplication((expressionVariable eq !isType) implies (operandVariable typeNotEq type))
                         }
                         if (!type.canBeNull(components.session)) {
                             // x is (T & Any) => x != null
@@ -555,15 +565,28 @@ abstract class FirDataFlowAnalyzer(
         if (leftOperandVariable !is RealVariable && rightOperandVariable !is RealVariable) return
 
         if (operation == FirOperation.EQ || operation == FirOperation.NOT_EQ) {
-            if (hasOverriddenEquals(leftOperandType)) return
+            val rightIsEnum = rightOperand.toResolvedCallableReference(components.session)?.resolvedSymbol is FirEnumEntrySymbol
+            val rightIsObject = rightOperandType.toRegularClassSymbol(components.session)?.classKind == ClassKind.OBJECT
+            if (hasOverriddenEquals(leftOperandType) && !rightIsEnum && !rightIsObject) return
         }
 
-        if (leftOperandVariable is RealVariable) {
-            flow.addImplication((expressionVariable eq isEq) implies (leftOperandVariable typeEq rightOperandType))
+        fun handle(operandVariable: DataFlowVariable?, otherOperand: FirExpression, otherOperandType: ConeKotlinType) {
+            if (operandVariable is RealVariable) {
+                flow.addImplication((expressionVariable eq isEq) implies (operandVariable typeEq otherOperandType))
+
+                if (otherOperandType.toRegularClassSymbol(components.session)?.classKind == ClassKind.OBJECT) {
+                    flow.addImplication((expressionVariable eq !isEq) implies (operandVariable typeNotEq otherOperandType))
+                }
+
+                val otherEntry = otherOperand.toResolvedCallableReference(components.session)?.resolvedSymbol as? FirEnumEntrySymbol
+                if (otherEntry != null) {
+                    flow.addImplication((expressionVariable eq !isEq) implies (operandVariable entryNotEq otherEntry))
+                }
+            }
         }
-        if (rightOperandVariable is RealVariable) {
-            flow.addImplication((expressionVariable eq isEq) implies (rightOperandVariable typeEq leftOperandType))
-        }
+
+        handle(leftOperandVariable, rightOperand, rightOperandType)
+        handle(rightOperandVariable, leftOperand, leftOperandType)
     }
 
     private fun hasOverriddenEquals(type: ConeKotlinType): Boolean {
@@ -1223,7 +1246,7 @@ abstract class FirDataFlowAnalyzer(
                             logicSystem.approveOperationStatement(flowFromRight, rightVariable!! eq saturatingValue)
                         }
                     )
-                } else emptyMap()
+                } else Pair(emptyMap(), emptyMap())
                 if (inferMoreImplications) {
                     // The entire boolean expression has to be true or false, so the `or` of the two is always correct.
                     flow.addAllStatements(logicSystem.orForTypeStatements(whenSaturating, whenNotSaturating))
@@ -1550,12 +1573,20 @@ abstract class FirDataFlowAnalyzer(
         }
     }
 
+    private fun MutableFlow.addNegativeTypeStatement(info: NegativeTypeStatement) {
+        logicSystem.addNegativeTypeStatement(this, info)
+    }
+
     private fun MutableFlow.addAllStatements(statements: TypeStatements) {
-        statements.values.forEach { addTypeStatement(it) }
+        val (positive, negative) = statements
+        positive.values.forEach { addTypeStatement(it) }
+        negative.values.forEach { addNegativeTypeStatement(it) }
     }
 
     private fun MutableFlow.addAllConditionally(condition: OperationStatement, statements: TypeStatements) {
-        statements.values.forEach { addImplication(condition implies it) }
+        val (positive, negative) = statements
+        positive.values.forEach { addImplication(condition implies it) }
+        negative.values.forEach { addImplication(condition implies it) }
     }
 
     private fun MutableFlow.addAllConditionally(condition: OperationStatement, from: Flow) {
@@ -1564,14 +1595,18 @@ abstract class FirDataFlowAnalyzer(
 
     // Merging flow from two nodes can discard type statements. `mergedFlow.getTypeStatementsNotInheritedFrom(parentFlow)`
     // will produce the statements that were discarded (and maybe some that weren't).
-    private fun MutableFlow.getTypeStatementsNotInheritedFrom(parent: Flow): TypeStatements =
-        buildMap {
-            parent.knownVariables.forEach {
-                if (unwrapVariable(it) != it) return@forEach // will add a statement for the aliased variable instead
-                val statement = parent.getTypeStatement(it)
-                if (statement != null && statement != getTypeStatement(it)) put(it, statement)
-            }
+    private fun MutableFlow.getTypeStatementsNotInheritedFrom(parent: Flow): TypeStatements {
+        val positive = mutableMapOf<RealVariable, TypeStatement>()
+        val negative = mutableMapOf<RealVariable, NegativeTypeStatement>()
+        parent.knownVariables.forEach {
+            if (unwrapVariable(it) != it) return@forEach // will add a statement for the aliased variable instead
+            val statement = parent.getTypeStatement(it)
+            if (statement != null && statement != getTypeStatement(it)) positive.put(it, statement)
+            val negativeStatement = parent.getNegativeTypeStatement(it)
+            if (negativeStatement != null && negativeStatement != getNegativeTypeStatement(it)) negative.put(it, negativeStatement)
         }
+        return Pair(positive, negative)
+    }
 
     private fun MutableFlow.commitOperationStatement(statement: OperationStatement) {
         addAllStatements(logicSystem.approveOperationStatement(this, statement, removeApprovedOrImpossible = true))

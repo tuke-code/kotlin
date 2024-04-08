@@ -115,7 +115,7 @@ object FirReturnsImpliesAnalyzer : FirControlFlowChecker(MppCheckerKind.Common) 
             }
         }
 
-        val conditionStatements = logicSystem.approveContractStatement(
+        val (conditionStatements, _) = logicSystem.approveContractStatement(
             effectDeclaration.condition, argumentVariables, substitutor = null
         ) { logicSystem.approveOperationStatement(flow, it) } ?: return true
 

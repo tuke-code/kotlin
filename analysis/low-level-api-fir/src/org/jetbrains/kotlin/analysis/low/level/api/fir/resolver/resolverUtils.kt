@@ -61,5 +61,8 @@ internal open class StubBodyResolveTransformerComponents(
 
             override fun getTypeUsingSmartcastInfo(expression: FirExpression): Pair<SmartcastStability, Set<ConeKotlinType>>? =
                 null
+
+            override fun getNegativeTypesFromSmartcastInfo(expression: FirExpression): Pair<SmartcastStability, NegativeTypeStatement>? =
+                null
         }
 }

@@ -7,6 +7,7 @@ package org.jetbrains.kotlin.fir.resolve.dfa
 
 import kotlinx.collections.immutable.*
 import org.jetbrains.kotlin.fir.FirSession
+import org.jetbrains.kotlin.fir.symbols.impl.FirEnumEntrySymbol
 import org.jetbrains.kotlin.fir.types.*
 import org.jetbrains.kotlin.types.AbstractTypeChecker
 import java.util.*
@@ -49,6 +50,7 @@ abstract class LogicSystem(private val context: ConeInferenceContext) {
             result.copyCommonAliases(flows)
         }
         result.copyStatements(statementFlows, commonFlow, union)
+        result.copyNegativeStatements(statementFlows, commonFlow, union)
         result.copyImplications(statementFlows)
         return result
     }
@@ -68,14 +70,32 @@ abstract class LogicSystem(private val context: ConeInferenceContext) {
         return PersistentTypeStatement(variable, newExactType).also { flow.approvedTypeStatements[variable] = it }
     }
 
-    fun addTypeStatements(flow: MutableFlow, statements: TypeStatements): List<TypeStatement> =
-        statements.values.mapNotNull { addTypeStatement(flow, it) }
+    fun addNegativeTypeStatement(flow: MutableFlow, statement: NegativeTypeStatement): NegativeTypeStatement? {
+        if (statement.isEmpty) return null
+        val variable = statement.variable
+        val oldStatement = flow.approvedNegativeTypeStatements[variable]
+        val oldTypes = oldStatement?.types
+        val newTypes = oldTypes?.addAll(statement.types) ?: statement.types.toPersistentSet()
+        val oldEntries = oldStatement?.entries
+        val newEntries = oldEntries?.addAll(statement.entries) ?: statement.entries.toPersistentSet()
+        return PersistentNegativeTypeStatement(variable, newTypes, newEntries).also { flow.approvedNegativeTypeStatements[variable] = it }
+    }
+
+    fun addTypeStatements(flow: MutableFlow, statements: TypeStatements): Pair<List<TypeStatement>, List<NegativeTypeStatement>> {
+        val (positives, negatives) = statements
+        return Pair(
+            positives.values.mapNotNull { addTypeStatement(flow, it) },
+            negatives.values.mapNotNull { addNegativeTypeStatement(flow, it) }
+        )
+    }
 
     fun addImplication(flow: MutableFlow, implication: Implication) {
         val effect = implication.effect
         val redundant = effect == implication.condition || when (effect) {
             is TypeStatement ->
                 effect.isEmpty || flow.approvedTypeStatements[effect.variable]?.exactType?.containsAll(effect.exactType) == true
+            is NegativeTypeStatement ->
+                effect.isEmpty || flow.approvedNegativeTypeStatements[effect.variable]?.types?.containsAll(effect.types) == true
             // Synthetic variables can only be referenced in tree order, so implications with synthetic variables can
             // only look like "if <expression> is A, then <part of that expression> is B". If we don't already have any
             // statements about a part of the expression, then we never will, as we're already exiting the entire expression.
@@ -207,6 +227,27 @@ abstract class LogicSystem(private val context: ConeInferenceContext) {
         }
     }
 
+    // everything from the function above applies here as well
+    private fun MutableFlow.copyNegativeStatements(flows: Collection<PersistentFlow>, commonFlow: PersistentFlow, union: Boolean) {
+        flows.flatMapTo(mutableSetOf()) { it.knownVariables }.forEach computeStatement@{ variable ->
+            val statement = if (variable in directAliasMap) {
+                return@computeStatement // statements about alias == statements about aliased variable
+            } else if (!union) {
+                or(flows.mapTo(mutableSetOf()) { it.getNegativeTypeStatement(variable) ?: return@computeStatement })
+            } else if (assignmentIndex[variable] == commonFlow.assignmentIndex[variable]) {
+                and(flows.mapNotNullTo(mutableSetOf()) { it.getNegativeTypeStatement(variable) })
+            } else {
+                val byAssignment =
+                    flows.groupByTo(mutableMapOf(), { it.assignmentIndex[variable] ?: -1 }, { it.getNegativeTypeStatement(variable) })
+                byAssignment.remove(commonFlow.assignmentIndex[variable] ?: -1)
+                or(byAssignment.values.mapTo(mutableSetOf()) { and(it.filterNotNull()) ?: return@computeStatement })
+            }
+            if (statement?.isNotEmpty == true) {
+                approvedNegativeTypeStatements[variable] = statement.toPersistent()
+            }
+        }
+    }
+
     private fun MutableFlow.copyImplications(flows: Collection<PersistentFlow>) {
         when (flows.size) {
             0 -> {}
@@ -222,7 +263,7 @@ abstract class LogicSystem(private val context: ConeInferenceContext) {
             if (AbstractTypeChecker.RUN_SLOW_ASSERTIONS) {
                 assert(variable !in backwardsAliasMap)
                 assert(variable !in implications)
-                assert(variable !in approvedTypeStatements)
+                assert(variable !in approvedTypeStatements && variable !in approvedNegativeTypeStatements)
             }
             val siblings = backwardsAliasMap.getValue(original)
             if (siblings.size > 1) {
@@ -240,6 +281,7 @@ abstract class LogicSystem(private val context: ConeInferenceContext) {
             variableStorage.replaceReceiverReferencesInMembers(variable, replacementOrNext) { old, new -> replaceVariable(old, new) }
             implications.replaceVariable(variable, replacementOrNext)
             approvedTypeStatements.replaceVariable(variable, replacementOrNext)
+            approvedNegativeTypeStatements.replaceVariable(variable, replacementOrNext)
             if (aliases != null && replacementOrNext != null) {
                 directAliasMap -= replacementOrNext
                 val withoutSelf = aliases - replacementOrNext
@@ -257,6 +299,7 @@ abstract class LogicSystem(private val context: ConeInferenceContext) {
         removeApprovedOrImpossible: Boolean
     ): TypeStatements {
         val result = mutableMapOf<RealVariable, MutableTypeStatement>()
+        val negativeResult = mutableMapOf<RealVariable, MutableNegativeTypeStatement>()
         val queue = LinkedList<OperationStatement>().apply { this += approvedStatement }
         val approved = mutableSetOf<OperationStatement>()
         while (queue.isNotEmpty()) {
@@ -279,6 +322,8 @@ abstract class LogicSystem(private val context: ConeInferenceContext) {
                         is OperationStatement -> queue += effect
                         is TypeStatement ->
                             result.getOrPut(effect.variable) { MutableTypeStatement(effect.variable) } += effect
+                        is NegativeTypeStatement ->
+                            negativeResult.getOrPut(effect.variable) { MutableNegativeTypeStatement(effect.variable) } += effect
                     }
                 }
                 removeApprovedOrImpossible && knownValue != null
@@ -291,40 +336,77 @@ abstract class LogicSystem(private val context: ConeInferenceContext) {
                 }
             }
         }
-        return result
+        return Pair(result, negativeResult)
     }
 
     // ------------------------------- Public TypeStatement util functions -------------------------------
 
-    fun orForTypeStatements(left: TypeStatements, right: TypeStatements): TypeStatements = when {
-        left.isEmpty() -> left
-        right.isEmpty() -> right
-        else -> buildMap {
-            for ((variable, leftStatement) in left) {
-                put(variable, or(listOf(leftStatement, right[variable] ?: continue)) ?: continue)
+    fun orForTypeStatements(left: TypeStatements, right: TypeStatements): TypeStatements {
+        fun <A> worker(left: Map<RealVariable, A>, right: Map<RealVariable, A>, combine: (Collection<A>) -> A?): Map<RealVariable, A> =
+            when {
+                left.isEmpty() -> left
+                right.isEmpty() -> right
+                else -> buildMap {
+                    for ((variable, leftStatement) in left) {
+                        put(variable, combine(listOf(leftStatement, right[variable] ?: continue)) ?: continue)
+                    }
+                }
             }
-        }
+
+        val (leftPositive, leftNegative) = left
+        val (rightPositive, rightNegative) = right
+        return Pair(worker(leftPositive, rightPositive, ::or), worker(leftNegative, rightNegative, ::or))
     }
 
-    fun andForTypeStatements(left: TypeStatements, right: TypeStatements): TypeStatements = when {
-        left.isEmpty() -> right
-        right.isEmpty() -> left
-        else -> left.toMutableMap().apply {
-            for ((variable, rightStatement) in right) {
-                this[variable] = and(this[variable], rightStatement)
+    fun andForTypeStatements(left: TypeStatements, right: TypeStatements): TypeStatements {
+        fun <A> worker(left: Map<RealVariable, A>, right: Map<RealVariable, A>, combine: (A?, A) -> A): Map<RealVariable, A> =
+            when {
+                left.isEmpty() -> right
+                right.isEmpty() -> left
+                else -> left.toMutableMap().apply {
+                    for ((variable, rightStatement) in right) {
+                        this[variable] = combine(this[variable], rightStatement)
+                    }
+                }
             }
-        }
+
+        val (leftPositive, leftNegative) = left
+        val (rightPositive, rightNegative) = right
+        return Pair(worker(leftPositive, rightPositive, this::and), worker(leftNegative, rightNegative, this::and))
     }
 
     private operator fun MutableTypeStatement.plusAssign(other: TypeStatement) {
         exactType += other.exactType
     }
 
+    private operator fun MutableNegativeTypeStatement.plusAssign(other: NegativeTypeStatement) {
+        types += other.types
+        entries += other.entries
+    }
+
     fun and(a: TypeStatement?, b: TypeStatement): TypeStatement {
         return a?.toMutable()?.apply { this += b } ?: b
     }
 
+    fun and(a: NegativeTypeStatement?, b: NegativeTypeStatement): NegativeTypeStatement {
+        return a?.toMutable()?.apply { this += b } ?: b
+    }
+
     fun and(statements: Collection<TypeStatement>): TypeStatement? {
+        when (statements.size) {
+            0 -> return null
+            1 -> return statements.first()
+        }
+        val iterator = statements.iterator()
+        val result = iterator.next().toMutable()
+        while (iterator.hasNext()) {
+            result += iterator.next()
+        }
+        return result
+    }
+
+    @JvmName("andNegativeTypes")
+    fun and(statements: Collection<NegativeTypeStatement>): NegativeTypeStatement? {
         when (statements.size) {
             0 -> return null
             1 -> return statements.first()
@@ -355,6 +437,18 @@ abstract class LogicSystem(private val context: ConeInferenceContext) {
         }
         return PersistentTypeStatement(variable, persistentSetOf(result))
     }
+
+    @JvmName("orNegativeTypes")
+    fun or(statements: Collection<NegativeTypeStatement>): NegativeTypeStatement? {
+        when (statements.size) {
+            0 -> return null
+            1 -> return statements.first()
+        }
+        val variable = statements.first().variable
+        val types = statements.map { it.types }.reduceOrNull(Set<ConeKotlinType>::intersect) ?: persistentSetOf()
+        val entries = statements.map { it.entries }.reduceOrNull(Set<FirEnumEntrySymbol>::intersect) ?: persistentSetOf()
+        return PersistentNegativeTypeStatement(variable, types.toPersistentSet(), entries.toPersistentSet())
+    }
 }
 
 private fun TypeStatement.toPersistent(): PersistentTypeStatement = when (this) {
@@ -363,13 +457,32 @@ private fun TypeStatement.toPersistent(): PersistentTypeStatement = when (this) 
     else -> PersistentTypeStatement(variable, exactType.toPersistentSet())
 }
 
+private fun NegativeTypeStatement.toPersistent(): PersistentNegativeTypeStatement = when (this) {
+    is PersistentNegativeTypeStatement -> this
+    // If this statement was obtained via `toMutable`, `toPersistentSet` will call `build`.
+    else -> PersistentNegativeTypeStatement(variable, types.toPersistentSet(), entries.toPersistentSet())
+}
+
 private fun TypeStatement.toMutable(): MutableTypeStatement = when (this) {
     is PersistentTypeStatement -> MutableTypeStatement(variable, exactType.builder())
     else -> MutableTypeStatement(variable, LinkedHashSet(exactType))
 }
 
+private fun NegativeTypeStatement.toMutable(): MutableNegativeTypeStatement = when (this) {
+    is PersistentNegativeTypeStatement -> MutableNegativeTypeStatement(variable, types.builder(), entries.builder())
+    else -> MutableNegativeTypeStatement(variable, LinkedHashSet(types), LinkedHashSet(entries))
+}
+
 @JvmName("replaceVariableInStatements")
 private fun MutableMap<RealVariable, PersistentTypeStatement>.replaceVariable(from: RealVariable, to: RealVariable?) {
+    val existing = remove(from) ?: return
+    if (to != null) {
+        put(to, existing.copy(variable = to))
+    }
+}
+
+@JvmName("replaceVariableInNegativeStatements")
+private fun MutableMap<RealVariable, PersistentNegativeTypeStatement>.replaceVariable(from: RealVariable, to: RealVariable?) {
     val existing = remove(from) ?: return
     if (to != null) {
         put(to, existing.copy(variable = to))
@@ -419,6 +532,8 @@ private fun Statement.replaceVariable(from: RealVariable, to: RealVariable): Sta
     return when (this) {
         is OperationStatement -> copy(variable = to)
         is PersistentTypeStatement -> copy(variable = to)
+        is PersistentNegativeTypeStatement -> copy(variable = to)
         is MutableTypeStatement -> MutableTypeStatement(to, exactType)
+        is MutableNegativeTypeStatement -> MutableNegativeTypeStatement(to, types, entries)
     }
 }

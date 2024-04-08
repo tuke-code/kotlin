@@ -5,6 +5,7 @@
 
 package org.jetbrains.kotlin.fir.resolve.dfa
 
+import org.jetbrains.kotlin.fir.symbols.impl.FirEnumEntrySymbol
 import org.jetbrains.kotlin.fir.types.ConeKotlinType
 
 sealed class Statement {
@@ -36,6 +37,22 @@ sealed class TypeStatement : Statement() {
 
     final override fun toString(): String {
         return "$variable: ${exactType.joinToString(separator = " & ")}"
+    }
+}
+
+sealed class NegativeTypeStatement : Statement() {
+    abstract override val variable: RealVariable
+    abstract val types: Set<ConeKotlinType>
+    abstract val entries: Set<FirEnumEntrySymbol>
+
+    val isEmpty: Boolean
+        get() = types.isEmpty() && entries.isEmpty()
+
+    val isNotEmpty: Boolean
+        get() = !isEmpty
+
+    override fun toString(): String {
+        return "$variable: - $types - $entries"
     }
 }
 
