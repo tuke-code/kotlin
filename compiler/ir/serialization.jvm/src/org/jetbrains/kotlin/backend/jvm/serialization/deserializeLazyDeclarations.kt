@@ -31,6 +31,7 @@ import org.jetbrains.kotlin.ir.types.IrTypeSystemContext
 import org.jetbrains.kotlin.ir.util.*
 import org.jetbrains.kotlin.ir.visitors.IrElementVisitorVoid
 import org.jetbrains.kotlin.ir.visitors.acceptChildrenVoid
+import org.jetbrains.kotlin.ir.visitors.acceptVoid
 import org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature as ProtoIdSignature
 import org.jetbrains.kotlin.backend.common.serialization.proto.IrDeclaration as ProtoDeclaration
 import org.jetbrains.kotlin.backend.common.serialization.proto.IrExpression as ProtoExpression
@@ -102,6 +103,22 @@ fun deserializeFromByteArray(
             ExternalDependenciesGenerator(symbolTable, irProviders).generateUnboundSymbolsAsDependencies()
         }
     }
+
+    toplevelParent.acceptVoid(object : IrElementVisitorVoid {
+        override fun visitElement(element: IrElement) {
+            val snapshot = mutableListOf<IrElement>()
+            element.acceptChildrenVoid(object : IrElementVisitorVoid {
+                override fun visitElement(element: IrElement) {
+                    snapshot += element
+                }
+            })
+
+            for (child in snapshot) {
+                child.acceptChildrenVoid(this)
+            }
+        }
+    })
+
     toplevelParent.patchDeclarationParents()
     buildFakeOverridesForLocalClasses(symbolTable, typeSystemContext, symbolDeserializer, toplevelParent)
 }
@@ -111,7 +128,7 @@ private class IrLibraryFileFromAnnotation(
     private val signatures: List<ProtoIdSignature>,
     private val strings: List<String>,
     private val bodies: List<JvmIr.XStatementOrExpression>,
-    private val debugInfo: List<String>
+    private val debugInfo: List<String>,
 ) : IrLibraryFile() {
     override fun declaration(index: Int): ProtoDeclaration {
         error("This method is never supposed to be called")
@@ -132,7 +149,7 @@ private class IrLibraryFileFromAnnotation(
 private fun referencePublicSymbol(
     symbolTable: SymbolTable,
     idSig: IdSignature,
-    symbolKind: BinarySymbolData.SymbolKind
+    symbolKind: BinarySymbolData.SymbolKind,
 ): IrSymbol {
     with(symbolTable) {
         return when (symbolKind) {
@@ -153,7 +170,7 @@ private fun referencePublicSymbol(
 fun makeSimpleFakeOverrideBuilder(
     symbolTable: SymbolTable,
     typeSystemContext: IrTypeSystemContext,
-    symbolDeserializer: IrSymbolDeserializer
+    symbolDeserializer: IrSymbolDeserializer,
 ): IrLinkerFakeOverrideProvider {
     return IrLinkerFakeOverrideProvider(
         object : FileLocalAwareLinker {
@@ -161,7 +178,7 @@ fun makeSimpleFakeOverrideBuilder(
                 symbolDeserializer.referencePropertyByLocalSignature(idSignature)
 
             override fun tryReferencingSimpleFunctionByLocalSignature(
-                parent: IrDeclaration, idSignature: IdSignature
+                parent: IrDeclaration, idSignature: IdSignature,
             ): IrSimpleFunctionSymbol =
                 symbolDeserializer.referenceSimpleFunctionByLocalSignature(idSignature)
         },
@@ -178,7 +195,7 @@ private fun buildFakeOverridesForLocalClasses(
     symbolTable: SymbolTable,
     typeSystemContext: IrTypeSystemContext,
     symbolDeserializer: IrSymbolDeserializer,
-    toplevel: IrClass
+    toplevel: IrClass,
 ) {
     val builder = makeSimpleFakeOverrideBuilder(symbolTable, typeSystemContext, symbolDeserializer)
     toplevel.acceptChildrenVoid(
@@ -197,7 +214,7 @@ private fun buildFakeOverridesForLocalClasses(
 }
 
 class PrePopulatedDeclarationTable(
-    sig2symbol: Map<IdSignature, IrSymbol>
+    sig2symbol: Map<IdSignature, IrSymbol>,
 ) : FakeOverrideDeclarationTable(JvmIrMangler, signatureSerializerFactory = ::IdSignatureFactory) {
     private val symbol2Sig = sig2symbol.entries.associate { (x, y) -> y to x }
 

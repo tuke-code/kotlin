@@ -32,10 +32,6 @@ interface AbstractFir2IrLazyDeclaration<F> :
         }
     }
 
-    override fun lazyParent(): IrDeclarationParent {
-        return parent
-    }
-
     override val stubGenerator: DeclarationStubGenerator
         get() = shouldNotBeCalled()
     override val typeTranslator: TypeTranslator

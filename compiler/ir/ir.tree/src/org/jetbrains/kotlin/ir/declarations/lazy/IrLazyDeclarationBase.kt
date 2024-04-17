@@ -49,26 +49,25 @@ interface IrLazyDeclarationBase : IrDeclaration {
         descriptor.annotations.mapNotNull(typeTranslator.constantValueGenerator::generateAnnotationConstructorCall).toMutableList()
     }
 
-    fun createLazyParent(): ReadWriteProperty<Any?, IrDeclarationParent> = lazyVar(stubGenerator.lock, ::lazyParent)
-
-    fun lazyParent(): IrDeclarationParent {
-        val currentDescriptor = descriptor
-
-        val containingDeclaration =
-            ((currentDescriptor as? PropertyAccessorDescriptor)?.correspondingProperty ?: currentDescriptor).containingDeclaration
-
-        return when (containingDeclaration) {
-            is PackageFragmentDescriptor -> run {
-                val parent = this.takeUnless { it is IrClass }?.let {
-                    stubGenerator.generateOrGetFacadeClass(descriptor)
-                } ?: stubGenerator.generateOrGetEmptyExternalPackageFragmentStub(containingDeclaration)
-                parent.declarations.add(this)
-                parent
-            }
-            is ClassDescriptor -> stubGenerator.generateClassStub(containingDeclaration)
-            is FunctionDescriptor -> stubGenerator.generateFunctionStub(containingDeclaration)
-            is PropertyDescriptor -> stubGenerator.generateFunctionStub(containingDeclaration.run { getter ?: setter!! })
-            else -> throw AssertionError("Package or class expected: $containingDeclaration; for $currentDescriptor")
+    //fun createLazyParent(): ReadWriteProperty<Any?, IrDeclarationParent> = lazyVar(stubGenerator.lock, ::lazyParent)
+    /*fun createLazyParent(): ReadWriteProperty<Any?, IrDeclarationParent> {
+        //val creationStack = StackWalker.getInstance().walk { it.skip(1).limit(8).toList() }
+        val creationStack = try {
+            throw Exception()
+        } catch (exc: Exception) {
+            exc.stackTrace.drop(2).take(15)
         }
-    }
+
+        return object : ReadWriteProperty<Any?, IrDeclarationParent> {
+            var _value: IrDeclarationParent? = null
+
+            override fun getValue(thisRef: Any?, property: KProperty<*>): IrDeclarationParent {
+                return _value ?: throw UninitializedPropertyAccessException("Parent not initialized: $thisRef\nCreation stacktrace:\n${creationStack.joinToString("\n")}")
+            }
+
+            override fun setValue(thisRef: Any?, property: KProperty<*>, value: IrDeclarationParent) {
+                _value = value
+            }
+        }
+    }*/
 }

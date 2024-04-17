@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 import org.jetbrains.kotlin.ideaExt.idea
 
@@ -55,7 +56,14 @@ sourceSets {
     "test" {}
 }
 
+//jvmTarget = "9"
+tasks.withType<JavaCompile> {
+    //sourceCompatibility = "9"
+    //targetCompatibility = "9"
+}
+
 tasks.withType<KotlinJvmCompile> {
+    //compilerOptions.jvmTarget.set(JvmTarget.JVM_9)
     compilerOptions.freeCompilerArgs.add("-Xinline-classes")
     compilerOptions.freeCompilerArgs.add("-Xconsistent-data-class-copy-visibility")
 }
