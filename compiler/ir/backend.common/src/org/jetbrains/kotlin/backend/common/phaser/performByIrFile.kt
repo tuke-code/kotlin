@@ -53,19 +53,19 @@ private class PerformByIrFilePhase<Context : CommonBackendContext>(
     }
 
     private fun invokeSequential(
-        phaseConfig: PhaseConfigurationService, phaserState: PhaserState<IrModuleFragment>, context: Context, input: IrModuleFragment
+        phaseConfig: PhaseConfigurationService, phaserState: PhaserState<IrModuleFragment>, context: Context, input: IrModuleFragment,
     ): IrModuleFragment {
-        for (irFile in input.files) {
-            try {
-                val filePhaserState = phaserState.changePhaserStateType<IrModuleFragment, IrFile>()
-                for (phase in lower) {
+        for (phase in lower) {
+            val filePhaserState = phaserState.changePhaserStateType<IrModuleFragment, IrFile>()
+            for (irFile in input.files) {
+                try {
                     phase.invoke(phaseConfig, filePhaserState, context, irFile)
-                }
-            } catch (e: Throwable) {
-                CodegenUtil.reportBackendException(e, "IR lowering", irFile.fileEntry.name) { offset ->
-                    irFile.fileEntry.takeIf { it.supportsDebugInfo }?.let {
-                        val (line, column) = it.getLineAndColumnNumbers(offset)
-                        line to column
+                } catch (e: Throwable) {
+                    CodegenUtil.reportBackendException(e, "IR lowering", irFile.fileEntry.name) { offset ->
+                        irFile.fileEntry.takeIf { it.supportsDebugInfo }?.let {
+                            val (line, column) = it.getLineAndColumnNumbers(offset)
+                            line to column
+                        }
                     }
                 }
             }
