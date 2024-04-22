@@ -15,6 +15,7 @@ import org.jetbrains.kotlin.analysis.test.framework.project.structure.ktTestModu
 import org.jetbrains.kotlin.analysis.utils.printer.parentOfType
 import org.jetbrains.kotlin.psi.KtElement
 import org.jetbrains.kotlin.psi.KtFile
+import org.jetbrains.kotlin.psi.analysisContext
 import org.jetbrains.kotlin.psi.psiUtil.collectDescendantsOfType
 import org.jetbrains.kotlin.psi.psiUtil.elementsInRange
 import org.jetbrains.kotlin.psi.psiUtil.endOffset
@@ -102,7 +103,14 @@ class ExpressionMarkerProvider : TestService {
         return carets.getAllCarets(file.name)
     }
 
-    fun getSelectedRangeOrNull(file: PsiFile): TextRange? = selected[file.name]
+    fun getSelectedRangeOrNull(file: PsiFile): TextRange? {
+        selected[file.name]?.let { return it }
+
+        // If `file` is a dangling file, we need to get the range from the context file.
+        val contextFile = (file as? KtFile)?.analysisContext as? KtFile ?: return null
+        return selected[contextFile.name]
+    }
+
     fun getSelectedRange(file: PsiFile): TextRange = getSelectedRangeOrNull(file) ?: error("No selected expression found in file")
 
     inline fun <reified P : KtElement> getElementOfTypeAtCaret(file: KtFile, caretTag: String? = null): P {
