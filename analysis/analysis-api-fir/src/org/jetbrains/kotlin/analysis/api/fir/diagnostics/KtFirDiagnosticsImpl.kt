@@ -4851,6 +4851,11 @@ internal class SyntheticPropertyWithoutJavaOriginImpl(
     token: KtLifetimeToken,
 ) : KtAbstractFirDiagnostic<PsiElement>(firDiagnostic, token), KtFirDiagnostic.SyntheticPropertyWithoutJavaOrigin
 
+internal class ReferenceToPackagePrivateClassFieldImpl(
+    firDiagnostic: KtPsiDiagnostic,
+    token: KtLifetimeToken,
+) : KtAbstractFirDiagnostic<PsiElement>(firDiagnostic, token), KtFirDiagnostic.ReferenceToPackagePrivateClassField
+
 internal class ImplementingFunctionInterfaceImpl(
     firDiagnostic: KtPsiDiagnostic,
     token: KtLifetimeToken,

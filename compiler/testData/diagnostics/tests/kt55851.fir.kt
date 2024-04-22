@@ -18,7 +18,7 @@ import test.Jaba
 
 fun box(): String {
     // Any of the following two lines is enough to crash the program in runtime (trying to access Base...)
-    Jaba()::s.get()
-    Jaba::s.invoke(Jaba())
+    <!REFERENCE_TO_PACKAGE_PRIVATE_CLASS_FIELD!>Jaba()::s<!>.get()
+    <!REFERENCE_TO_PACKAGE_PRIVATE_CLASS_FIELD!>Jaba::s<!>.invoke(Jaba())
     return "OK"
 }

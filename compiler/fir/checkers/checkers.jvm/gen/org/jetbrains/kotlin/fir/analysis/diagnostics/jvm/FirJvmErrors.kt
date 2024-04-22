@@ -141,6 +141,7 @@ object FirJvmErrors {
     val JAVA_SAM_INTERFACE_CONSTRUCTOR_REFERENCE: KtDiagnosticFactory0 by error0<PsiElement>()
     val NO_REFLECTION_IN_CLASS_PATH: KtDiagnosticFactory0 by warning0<PsiElement>()
     val SYNTHETIC_PROPERTY_WITHOUT_JAVA_ORIGIN: KtDiagnosticFactory2<FirNamedFunctionSymbol, Name> by warning2<PsiElement, FirNamedFunctionSymbol, Name>(SourceElementPositioningStrategies.REFERENCED_NAME_BY_QUALIFIED)
+    val REFERENCE_TO_PACKAGE_PRIVATE_CLASS_FIELD: KtDiagnosticFactory0 by error0<PsiElement>()
 
     init {
         RootDiagnosticRendererFactory.registerFactory(FirJvmErrorsDefaultMessages)

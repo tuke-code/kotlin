@@ -225,5 +225,6 @@ object JVM_DIAGNOSTICS_LIST : DiagnosticList("FirJvmErrors") {
             parameter<FirNamedFunctionSymbol>("originalSymbol")
             parameter<Name>("functionName")
         }
+        val REFERENCE_TO_PACKAGE_PRIVATE_CLASS_FIELD by error<PsiElement>()
     }
 }

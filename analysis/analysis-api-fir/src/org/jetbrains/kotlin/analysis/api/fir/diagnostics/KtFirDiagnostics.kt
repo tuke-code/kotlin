@@ -4020,6 +4020,10 @@ sealed interface KtFirDiagnostic<PSI : PsiElement> : KtDiagnosticWithPsi<PSI> {
         val functionName: Name
     }
 
+    interface ReferenceToPackagePrivateClassField : KtFirDiagnostic<PsiElement> {
+        override val diagnosticClass get() = ReferenceToPackagePrivateClassField::class
+    }
+
     interface ImplementingFunctionInterface : KtFirDiagnostic<KtClassOrObject> {
         override val diagnosticClass get() = ImplementingFunctionInterface::class
     }
