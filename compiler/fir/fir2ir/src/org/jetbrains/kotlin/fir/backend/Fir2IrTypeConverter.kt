@@ -329,12 +329,7 @@ class Fir2IrTypeConverter(
 
     private fun approximateType(type: ConeSimpleKotlinType): ConeKotlinType {
         if (type is ConeClassLikeType && type.typeArguments.isEmpty()) return type
-        val substitutor = object : AbstractConeSubstitutor(session.typeContext) {
-            override fun substituteType(type: ConeKotlinType): ConeKotlinType? {
-                return null
-            }
-        }
-        return substitutor.substituteOrSelf(type).approximateForIrOrSelf(c)
+        return type.approximateForIrOrSelf(c)
     }
 }
 
