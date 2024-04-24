@@ -24,7 +24,5 @@ class IrGetClassImpl internal constructor(
     override var type: IrType,
     override var argument: IrExpression,
 ) : IrGetClass() {
-    override var attributeOwnerId: IrAttributeContainer = this
-
     override var originalBeforeInline: IrAttributeContainer? = null
 }

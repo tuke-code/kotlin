@@ -27,7 +27,5 @@ class IrSuspensionPointImpl internal constructor(
     override var result: IrExpression,
     override var resumeResult: IrExpression,
 ) : IrSuspensionPoint() {
-    override var attributeOwnerId: IrAttributeContainer = this
-
     override var originalBeforeInline: IrAttributeContainer? = null
 }

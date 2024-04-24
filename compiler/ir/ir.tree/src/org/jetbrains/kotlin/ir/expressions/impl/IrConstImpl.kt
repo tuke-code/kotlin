@@ -24,7 +24,6 @@ class IrConstImpl<T> internal constructor(
     override var kind: IrConstKind<T>,
     override var value: T,
 ) : IrConst<T>() {
-    override var attributeOwnerId: IrAttributeContainer = this
     override var originalBeforeInline: IrAttributeContainer? = null
 
     companion object {

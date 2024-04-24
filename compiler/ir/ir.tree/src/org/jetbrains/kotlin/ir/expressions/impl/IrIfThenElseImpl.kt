@@ -21,7 +21,6 @@ class IrIfThenElseImpl internal constructor(
     override var type: IrType,
     override var origin: IrStatementOrigin?,
 ) : IrWhen() {
-    override var attributeOwnerId: IrAttributeContainer = this
     override var originalBeforeInline: IrAttributeContainer? = null
 
     override val branches: MutableList<IrBranch> = SmartList()

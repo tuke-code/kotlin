@@ -25,7 +25,5 @@ class IrSuspendableExpressionImpl internal constructor(
     override var suspensionPointId: IrExpression,
     override var result: IrExpression,
 ) : IrSuspendableExpression() {
-    override var attributeOwnerId: IrAttributeContainer = this
-
     override var originalBeforeInline: IrAttributeContainer? = null
 }

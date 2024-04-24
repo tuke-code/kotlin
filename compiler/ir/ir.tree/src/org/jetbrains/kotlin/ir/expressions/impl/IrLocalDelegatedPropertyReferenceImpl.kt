@@ -43,6 +43,5 @@ class IrLocalDelegatedPropertyReferenceImpl(
     override var extensionReceiver: IrExpression? = null
     override val valueArguments: Array<IrExpression?> = initializeParameterArguments(0)
 
-    override var attributeOwnerId: IrAttributeContainer = this
     override var originalBeforeInline: IrAttributeContainer? = null
 }

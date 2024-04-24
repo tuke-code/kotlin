@@ -42,7 +42,6 @@ class IrFunctionReferenceImpl(
     override var extensionReceiver: IrExpression? = null
     override val valueArguments: Array<IrExpression?> = initializeParameterArguments(valueArgumentsCount)
 
-    override var attributeOwnerId: IrAttributeContainer = this
     override var originalBeforeInline: IrAttributeContainer? = null
 
     companion object {

@@ -24,8 +24,6 @@ class IrBreakImpl internal constructor(
     override var type: IrType,
     override var loop: IrLoop,
 ) : IrBreak() {
-    override var attributeOwnerId: IrAttributeContainer = this
-
     override var originalBeforeInline: IrAttributeContainer? = null
 
     override var label: String? = null

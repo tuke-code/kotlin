@@ -37,7 +37,6 @@ class IrConstructorCallImpl(
 
     override var contextReceiversCount = 0
 
-    override var attributeOwnerId: IrAttributeContainer = this
     override var originalBeforeInline: IrAttributeContainer? = null
 
     companion object {

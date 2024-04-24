@@ -24,8 +24,6 @@ class IrContinueImpl internal constructor(
     override var type: IrType,
     override var loop: IrLoop,
 ) : IrContinue() {
-    override var attributeOwnerId: IrAttributeContainer = this
-
     override var originalBeforeInline: IrAttributeContainer? = null
 
     override var label: String? = null

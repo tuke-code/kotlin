@@ -16,10 +16,19 @@
 
 package org.jetbrains.kotlin.ir
 
+import org.jetbrains.kotlin.ir.declarations.IrAttributeContainer
 import org.jetbrains.kotlin.ir.visitors.IrElementTransformer
 import org.jetbrains.kotlin.ir.visitors.IrElementVisitor
 
 abstract class IrElementBase : IrElement {
+    private var _attributeOwnerId: IrAttributeContainer? = this as? IrAttributeContainer
+
+    var attributeOwnerId: IrAttributeContainer
+        get() = _attributeOwnerId!!
+        set(value) {
+            _attributeOwnerId = value
+        }
+
     override fun <D> transform(transformer: IrElementTransformer<D>, data: D): IrElement =
         accept(transformer, data)
 

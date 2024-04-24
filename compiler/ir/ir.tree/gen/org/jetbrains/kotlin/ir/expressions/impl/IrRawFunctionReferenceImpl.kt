@@ -24,7 +24,5 @@ class IrRawFunctionReferenceImpl internal constructor(
     override var type: IrType,
     override var symbol: IrFunctionSymbol,
 ) : IrRawFunctionReference() {
-    override var attributeOwnerId: IrAttributeContainer = this
-
     override var originalBeforeInline: IrAttributeContainer? = null
 }

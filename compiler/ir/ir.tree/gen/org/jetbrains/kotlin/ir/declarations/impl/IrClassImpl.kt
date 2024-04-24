@@ -42,8 +42,6 @@ open class IrClassImpl @IrImplementationDetail constructor(
     @UnsafeDuringIrConstructionAPI
     override val declarations: MutableList<IrDeclaration> = ArrayList()
 
-    override var attributeOwnerId: IrAttributeContainer = this
-
     override var originalBeforeInline: IrAttributeContainer? = null
 
     override var metadata: MetadataSource? = null

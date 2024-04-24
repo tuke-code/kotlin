@@ -25,8 +25,6 @@ class IrBlockImpl internal constructor(
     override var type: IrType,
     override var origin: IrStatementOrigin?,
 ) : IrBlock() {
-    override var attributeOwnerId: IrAttributeContainer = this
-
     override var originalBeforeInline: IrAttributeContainer? = null
 
     override val statements: MutableList<IrStatement> = ArrayList(2)

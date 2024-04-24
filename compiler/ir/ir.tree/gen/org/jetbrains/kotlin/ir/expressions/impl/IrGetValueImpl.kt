@@ -26,7 +26,5 @@ class IrGetValueImpl internal constructor(
     override var symbol: IrValueSymbol,
     override var origin: IrStatementOrigin?,
 ) : IrGetValue() {
-    override var attributeOwnerId: IrAttributeContainer = this
-
     override var originalBeforeInline: IrAttributeContainer? = null
 }

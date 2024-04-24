@@ -25,8 +25,6 @@ class IrCompositeImpl internal constructor(
     override var type: IrType,
     override var origin: IrStatementOrigin?,
 ) : IrComposite() {
-    override var attributeOwnerId: IrAttributeContainer = this
-
     override var originalBeforeInline: IrAttributeContainer? = null
 
     override val statements: MutableList<IrStatement> = ArrayList(2)

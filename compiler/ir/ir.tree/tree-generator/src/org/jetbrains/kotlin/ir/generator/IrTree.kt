@@ -322,9 +322,12 @@ object IrTree : AbstractTreeBuilder() {
               idempotence invariant and can contain a chain of declarations.
         """.trimIndent()
 
-        +field("attributeOwnerId", attributeContainer, isChild = false) {
-            skipInIrFactory()
+        generationCallback = {
+            println()
+            printPropertyDeclaration("attributeOwnerId", attributeContainer, VariableKind.VAR)
+            println()
         }
+
         // null <=> this element wasn't inlined
         +field("originalBeforeInline", attributeContainer, nullable = true, isChild = false) {
             skipInIrFactory()

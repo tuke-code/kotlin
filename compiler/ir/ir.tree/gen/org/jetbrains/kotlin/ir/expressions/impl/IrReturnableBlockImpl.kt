@@ -29,8 +29,6 @@ class IrReturnableBlockImpl internal constructor(
     override var origin: IrStatementOrigin?,
     override val symbol: IrReturnableBlockSymbol,
 ) : IrReturnableBlock() {
-    override var attributeOwnerId: IrAttributeContainer = this
-
     override var originalBeforeInline: IrAttributeContainer? = null
 
     override val statements: MutableList<IrStatement> = ArrayList(2)

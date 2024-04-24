@@ -25,8 +25,6 @@ class IrTryImpl internal constructor(
     override val endOffset: Int,
     override var type: IrType,
 ) : IrTry() {
-    override var attributeOwnerId: IrAttributeContainer = this
-
     override var originalBeforeInline: IrAttributeContainer? = null
 
     override lateinit var tryResult: IrExpression

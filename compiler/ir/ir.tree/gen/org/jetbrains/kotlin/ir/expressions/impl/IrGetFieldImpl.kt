@@ -29,8 +29,6 @@ class IrGetFieldImpl internal constructor(
     override var superQualifierSymbol: IrClassSymbol?,
     override var origin: IrStatementOrigin?,
 ) : IrGetField() {
-    override var attributeOwnerId: IrAttributeContainer = this
-
     override var originalBeforeInline: IrAttributeContainer? = null
 
     override var receiver: IrExpression? = null

@@ -83,10 +83,6 @@ class IrLazyProperty(
         get() = null
         set(_) = error("We should never need to store metadata of external declarations.")
 
-    override var attributeOwnerId: IrAttributeContainer
-        get() = this
-        set(_) = error("We should never need to change attributeOwnerId of external declarations.")
-
     override var originalBeforeInline: IrAttributeContainer?
         get() = this
         set(_) = error("We should never need to change originalBeforeInline of external declarations.")
