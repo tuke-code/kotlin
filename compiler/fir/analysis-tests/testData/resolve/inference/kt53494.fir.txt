@@ -33,7 +33,7 @@ FILE: kt53494.kt
 
         ^test_1 when () {
             (R|<local>/t| is R|T|) ->  {
-                R|/Wrapped.Wrapped|<R|it(kotlin/Nothing? & T)|>(R|<local>/t|)
+                R|/Wrapped.Wrapped|<R|T|>(R|<local>/t|)
             }
             else ->  {
                 Q|Default|
@@ -49,7 +49,7 @@ FILE: kt53494.kt
             else ->  {
                 when () {
                     (R|<local>/t| is R|T|) ->  {
-                        R|/Wrapped.Wrapped|<R|it(kotlin/Nothing? & T)|>(R|<local>/t|)
+                        R|/Wrapped.Wrapped|<R|T|>(R|<local>/t|)
                     }
                     else ->  {
                         Q|Default|
