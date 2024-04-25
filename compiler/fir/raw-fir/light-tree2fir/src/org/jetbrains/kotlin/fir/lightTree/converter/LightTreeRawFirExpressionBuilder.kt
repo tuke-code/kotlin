@@ -711,7 +711,8 @@ class LightTreeRawFirExpressionBuilder(
         }
 
         val builder: FirQualifiedAccessExpressionBuilder = if (hasArguments) {
-            val builder = if (isImplicitInvoke) FirImplicitInvokeCallBuilder() else FirFunctionCallBuilder()
+            val builder: FirAbstractFunctionCallBuilder =
+                if (isImplicitInvoke) FirImplicitInvokeCallBuilder() else FirFunctionCallBuilder()
             builder.apply {
                 this.source = source
                 this.calleeReference = calleeReference
