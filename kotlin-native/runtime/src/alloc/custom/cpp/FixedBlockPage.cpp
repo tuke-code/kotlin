@@ -19,11 +19,11 @@ namespace kotlin::alloc {
 FixedBlockPage* FixedBlockPage::Create(uint32_t blockSize) noexcept {
     CustomAllocInfo("FixedBlockPage::Create(%u)", blockSize);
     RuntimeAssert(blockSize <= FIXED_BLOCK_PAGE_MAX_BLOCK_SIZE, "blockSize too large for FixedBlockPage");
-    return new (SafeAlloc(FIXED_BLOCK_PAGE_SIZE)) FixedBlockPage(blockSize);
+    return new (SafeAlloc(FIXED_BLOCK_PAGE_SIZE())) FixedBlockPage(blockSize);
 }
 
 void FixedBlockPage::Destroy() noexcept {
-    Free(this, FIXED_BLOCK_PAGE_SIZE);
+    Free(this, FIXED_BLOCK_PAGE_SIZE());
 }
 
 FixedBlockPage::FixedBlockPage(uint32_t blockSize) noexcept : blockSize_(blockSize) {

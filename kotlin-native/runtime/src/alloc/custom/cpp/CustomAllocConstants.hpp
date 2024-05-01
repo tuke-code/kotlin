@@ -9,16 +9,19 @@
 #include <cstddef>
 #include <cstdint>
 
+#include "CompilerConstants.hpp"
 #include "FixedBlockPage.hpp"
 #include "NextFitPage.hpp"
 #include "ExtraObjectPage.hpp"
 
 inline constexpr const size_t KiB = 1024;
 
-inline constexpr const size_t FIXED_BLOCK_PAGE_SIZE = (256 * KiB);
+inline constexpr size_t FIXED_BLOCK_PAGE_SIZE() {
+        return kotlin::compiler::fixedBlockPageSize() * KiB;
+}
 inline constexpr const int FIXED_BLOCK_PAGE_MAX_BLOCK_SIZE = 128;
-inline constexpr const size_t FIXED_BLOCK_PAGE_CELL_COUNT =
-        ((FIXED_BLOCK_PAGE_SIZE - sizeof(kotlin::alloc::FixedBlockPage)) / sizeof(kotlin::alloc::FixedBlockCell));
+inline const size_t FIXED_BLOCK_PAGE_CELL_COUNT =
+        ((FIXED_BLOCK_PAGE_SIZE() - sizeof(kotlin::alloc::FixedBlockPage)) / sizeof(kotlin::alloc::FixedBlockCell));
 
 inline constexpr const size_t NEXT_FIT_PAGE_SIZE = (256 * KiB);
 inline constexpr const size_t NEXT_FIT_PAGE_CELL_COUNT =
