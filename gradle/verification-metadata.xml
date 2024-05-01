@@ -38,6 +38,9 @@
          <trust group="org.jetbrains.kotlin" name="kotlin-klib-commonizer-embeddable" version="2\.0\.20(-.+)?|2\.0\.0(-.+)?" regex="true"/>
          <trust group="org.jetbrains.kotlin" name="kotlin-native-prebuilt" version="2\.0\.20(-.+)?|2\.0\.0(-.+)?" regex="true"/>
          <trust group="org.jetbrains.kotlin" name="kotlin-native-utils" version="2\.0\.20(-.+)?|2\.0\.0(-.+)?" regex="true"/>
+         <trust group="org.jetbrains.kotlin" name="kotlin-power-assert" version="2\.0\.20(-.+)?|2\.0\.0(-.+)?" regex="true"/>
+         <trust group="org.jetbrains.kotlin" name="kotlin-power-assert-compiler-plugin" version="2\.0\.20(-.+)?|2\.0\.0(-.+)?" regex="true"/>
+         <trust group="org.jetbrains.kotlin" name="kotlin-power-assert-compiler-plugin-embeddable" version="2\.0\.20(-.+)?|2\.0\.0(-.+)?" regex="true"/>
          <trust group="org.jetbrains.kotlin" name="kotlin-project-model" version="2\.0\.20(-.+)?|2\.0\.0(-.+)?" regex="true"/>
          <trust group="org.jetbrains.kotlin" name="kotlin-reflect" version="2\.0\.20(-.+)?|2\.0\.0(-.+)?" regex="true"/>
          <trust group="org.jetbrains.kotlin" name="kotlin-sam-with-receiver" version="2\.0\.20(-.+)?|2\.0\.0(-.+)?" regex="true"/>
