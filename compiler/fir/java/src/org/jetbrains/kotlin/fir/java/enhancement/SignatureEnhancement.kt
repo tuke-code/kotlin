@@ -561,6 +561,12 @@ class FirSignatureEnhancement(
     ) {
         for (typeParameter in this) {
             if (typeParameter is FirJavaTypeParameter) {
+                if (!typeParameter.areBoundsAlreadyResolved()) {
+                    throw AssertionError(
+                        "Attempt to run the 3rd and 4th rounds of Java type parameter bounds enhancement without finishing 2nd round!" +
+                                " ownerSymbol = ${typeParameter.containingDeclarationSymbol} typeParameter = ${typeParameter.name}"
+                    )
+                }
                 typeParameter.replaceEnhancedBounds(block)
             }
         }
