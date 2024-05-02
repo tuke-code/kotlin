@@ -114,6 +114,24 @@ inline fun checkWithAttachment(
     }
 }
 
+@Deprecated(message = "Used by Power-Assert", level = DeprecationLevel.HIDDEN)
+@OptIn(ExperimentalContracts::class)
+inline fun checkWithAttachment(
+    condition: Boolean,
+    message: () -> String,
+    attachmentName: String = "info.txt",
+    buildAttachment: ExceptionAttachmentBuilder.() -> Unit = {},
+    diagram: () -> String,
+) {
+    contract { returns() implies (condition) }
+
+    if (!condition) {
+        val exception = KotlinIllegalStateExceptionWithAttachments(message() + "\n" + diagram())
+        exception.buildAttachment(attachmentName) { buildAttachment() }
+        throw exception
+    }
+}
+
 @OptIn(ExperimentalContracts::class)
 inline fun requireWithAttachment(
     condition: Boolean,
@@ -125,6 +143,24 @@ inline fun requireWithAttachment(
 
     if (!condition) {
         val exception = KotlinIllegalArgumentExceptionWithAttachments(message())
+        exception.buildAttachment(attachmentName) { buildAttachment() }
+        throw exception
+    }
+}
+
+@Deprecated(message = "Used by Power-Assert", level = DeprecationLevel.HIDDEN)
+@OptIn(ExperimentalContracts::class)
+inline fun requireWithAttachment(
+    condition: Boolean,
+    message: () -> String,
+    attachmentName: String = "info.txt",
+    buildAttachment: ExceptionAttachmentBuilder.() -> Unit = {},
+    diagram: () -> String,
+) {
+    contract { returns() implies (condition) }
+
+    if (!condition) {
+        val exception = KotlinIllegalArgumentExceptionWithAttachments(message() + "\n" + diagram())
         exception.buildAttachment(attachmentName) { buildAttachment() }
         throw exception
     }

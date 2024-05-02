@@ -25,5 +25,7 @@ powerAssert {
     functions = listOf(
         "kotlin.check",
         "kotlin.require",
+        "org.jetbrains.kotlin.utils.exceptions.checkWithAttachment",
+        "org.jetbrains.kotlin.utils.exceptions.requireWithAttachment",
     )
 }
