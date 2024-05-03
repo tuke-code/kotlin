@@ -467,8 +467,8 @@ class FirSignatureEnhancement(
     }
 
     fun performBoundsResolution(typeParameters: List<FirTypeParameterRef>, source: KtSourceElement?) {
-        performFirstRoundOfBoundsResolution(typeParameters, source)
-        enhanceTypeParameterBoundsAfterFirstRound(typeParameters, source)
+        val initialBounds = performFirstRoundOfBoundsResolution(typeParameters, source)
+        enhanceTypeParameterBoundsAfterFirstRound(typeParameters, initialBounds, source)
     }
 
     private fun performBoundsResolutionIfNeeded(typeParameters: List<FirTypeParameterRef>, source: KtSourceElement?) {
@@ -494,14 +494,14 @@ class FirSignatureEnhancement(
     private fun performFirstRoundOfBoundsResolution(
         typeParameters: List<FirTypeParameterRef>,
         source: KtSourceElement?,
-    ) {
+    ): List<List<FirTypeRef>> {
+        val result = mutableListOf<List<FirTypeRef>>()
         for (typeParameter in typeParameters) {
             if (typeParameter is FirJavaTypeParameter) {
-                typeParameter.resolveInitialBoundsIfJavaTypes(
-                    session, javaTypeParameterStack, source, FirJavaTypeConversionMode.TYPE_PARAMETER_BOUND_FIRST_ROUND
-                )
+                result += typeParameter.performFirstRoundOfBoundsResolution(session, javaTypeParameterStack, source)
             }
         }
+        return result
     }
 
     /**
@@ -515,15 +515,13 @@ class FirSignatureEnhancement(
      */
     private fun performSecondRoundOfBoundsResolution(
         typeParameters: List<FirTypeParameterRef>,
+        initialBounds: List<List<FirTypeRef>>,
         source: KtSourceElement?,
     ) {
         var currentIndex = 0
         for (typeParameter in typeParameters) {
             if (typeParameter is FirJavaTypeParameter) {
-                typeParameter.resolveInitialBoundsIfJavaTypes(
-                    session, javaTypeParameterStack, source, FirJavaTypeConversionMode.TYPE_PARAMETER_BOUND_AFTER_FIRST_ROUND
-                )
-
+                typeParameter.performSecondRoundOfBoundsResolution(session, javaTypeParameterStack, source, initialBounds[currentIndex])
                 currentIndex++
             }
         }
@@ -540,9 +538,10 @@ class FirSignatureEnhancement(
      */
     private fun enhanceTypeParameterBoundsAfterFirstRound(
         typeParameters: List<FirTypeParameterRef>,
+        initialBounds: List<List<FirTypeRef>>,
         source: KtSourceElement?,
     ) {
-        performSecondRoundOfBoundsResolution(typeParameters, source)
+        performSecondRoundOfBoundsResolution(typeParameters, initialBounds, source)
 
         // Type parameters can have interdependencies between them. Assuming that there are no top-level cycles
         // (`A : B, B : A` - invalid), the cycles can still appear when type parameters use each other in argument

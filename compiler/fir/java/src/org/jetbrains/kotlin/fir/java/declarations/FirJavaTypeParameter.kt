@@ -45,7 +45,7 @@ class FirJavaTypeParameter(
     override val name: Name,
     override val symbol: FirTypeParameterSymbol,
     override val containingDeclarationSymbol: FirBasedSymbol<*>,
-    private var initialBounds: MutableOrEmptyList<FirTypeRef>,
+    private var storedBounds: MutableList<FirTypeRef>,
     override var annotations: MutableOrEmptyList<FirAnnotation>,
 ) : FirTypeParameter() {
     override val variance: Variance
@@ -54,20 +54,19 @@ class FirJavaTypeParameter(
     override val isReified: Boolean
         get() = false
 
-    private var enhancedBounds: MutableList<FirResolvedTypeRef>? = null
-
     private var conversionModeObserver = FirJavaTypeConversionMode.DEFAULT
 
     override val bounds: List<FirTypeRef>
         get() {
-            enhancedBounds?.let { return it }
-            if (containingDeclarationSymbol is FirClassSymbol) {
+            if (containingDeclarationSymbol is FirClassSymbol &&
+                conversionModeObserver < FirJavaTypeConversionMode.TYPE_PARAMETER_BOUND_FIRST_ROUND
+            ) {
                 throw AssertionError(
                     "Attempt to access Java class type parameter bounds before their enhancement!" +
                             " ownerSymbol = $containingDeclarationSymbol typeParameter = $name"
                 )
             }
-            return initialBounds
+            return storedBounds
         }
 
     init {
@@ -78,46 +77,51 @@ class FirJavaTypeParameter(
     internal fun areBoundsAlreadyResolved(): Boolean =
         conversionModeObserver == FirJavaTypeConversionMode.TYPE_PARAMETER_BOUND_AFTER_FIRST_ROUND
 
-    internal fun resolveInitialBoundsIfJavaTypes(
+    internal fun performFirstRoundOfBoundsResolution(
         session: FirSession,
         javaTypeParameterStack: JavaTypeParameterStack,
         source: KtSourceElement?,
-        mode: FirJavaTypeConversionMode,
-    ) {
-        when (mode) {
-            FirJavaTypeConversionMode.TYPE_PARAMETER_BOUND_FIRST_ROUND -> {
-                if (conversionModeObserver != FirJavaTypeConversionMode.DEFAULT) {
-                    throw AssertionError(
-                        "Attempt to repeat the first round of Java type parameter bounds enhancement!" +
-                                " ownerSymbol = $containingDeclarationSymbol typeParameter = $name"
-                    )
-                }
-            }
-            FirJavaTypeConversionMode.TYPE_PARAMETER_BOUND_AFTER_FIRST_ROUND -> {
-                if (conversionModeObserver != FirJavaTypeConversionMode.TYPE_PARAMETER_BOUND_FIRST_ROUND) {
-                    throw AssertionError(
-                        "Attempt to repeat the second round of Java type parameter bounds enhancement!" +
-                                " ownerSymbol = $containingDeclarationSymbol typeParameter = $name"
-                    )
-                }
-            }
-            else -> throw AssertionError("Incorrect conversion mode for Java type parameter bounds enhancement $mode")
+    ): List<FirTypeRef> {
+        if (conversionModeObserver != FirJavaTypeConversionMode.DEFAULT) {
+            throw AssertionError(
+                "Attempt to repeat the first round of Java type parameter bounds enhancement!" +
+                        " ownerSymbol = $containingDeclarationSymbol typeParameter = $name"
+            )
         }
-        conversionModeObserver = mode
-        enhancedBounds = initialBounds.mapTo(mutableListOf()) {
+        val initialBounds = storedBounds
+        conversionModeObserver = FirJavaTypeConversionMode.TYPE_PARAMETER_BOUND_FIRST_ROUND
+        storedBounds = initialBounds.mapTo(mutableListOf()) {
             it.resolveIfJavaType(
-                session, javaTypeParameterStack, source, mode
+                session, javaTypeParameterStack, source, conversionModeObserver
             ) as FirResolvedTypeRef
         }
-        if (mode == FirJavaTypeConversionMode.TYPE_PARAMETER_BOUND_AFTER_FIRST_ROUND) {
-            initialBounds = MutableOrEmptyList.empty()
+        return initialBounds
+    }
+
+    internal fun performSecondRoundOfBoundsResolution(
+        session: FirSession,
+        javaTypeParameterStack: JavaTypeParameterStack,
+        source: KtSourceElement?,
+        initialBounds: List<FirTypeRef>,
+    ) {
+        if (conversionModeObserver != FirJavaTypeConversionMode.TYPE_PARAMETER_BOUND_FIRST_ROUND) {
+            throw AssertionError(
+                "Attempt to repeat the second round of Java type parameter bounds enhancement!" +
+                        " ownerSymbol = $containingDeclarationSymbol typeParameter = $name"
+            )
+        }
+        conversionModeObserver = FirJavaTypeConversionMode.TYPE_PARAMETER_BOUND_AFTER_FIRST_ROUND
+        storedBounds = initialBounds.mapTo(mutableListOf()) {
+            it.resolveIfJavaType(
+                session, javaTypeParameterStack, source, conversionModeObserver
+            ) as FirResolvedTypeRef
         }
     }
 
     internal inline fun replaceEnhancedBounds(
         crossinline block: (FirTypeParameter, FirResolvedTypeRef) -> FirResolvedTypeRef
     ) {
-        enhancedBounds!!.replaceAll { block(this, it) }
+        storedBounds.replaceAll { block(this, it as FirResolvedTypeRef) }
     }
 
     override fun <R, D> acceptChildren(visitor: FirVisitor<R, D>, data: D) {
@@ -163,7 +167,7 @@ class FirJavaTypeParameterBuilder : FirAnnotationContainerBuilder {
             name,
             symbol,
             containingDeclarationSymbol,
-            bounds.toMutableOrEmpty(),
+            bounds,
             annotations.toMutableOrEmpty(),
         )
     }
