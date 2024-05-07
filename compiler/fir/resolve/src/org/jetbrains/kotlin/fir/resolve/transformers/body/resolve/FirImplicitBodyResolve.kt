@@ -19,6 +19,7 @@ import org.jetbrains.kotlin.fir.resolve.FirRegularTowerDataContexts
 import org.jetbrains.kotlin.fir.resolve.ResolutionMode
 import org.jetbrains.kotlin.fir.resolve.ScopeSession
 import org.jetbrains.kotlin.fir.resolve.providers.firProvider
+import org.jetbrains.kotlin.fir.resolve.toSymbol
 import org.jetbrains.kotlin.fir.resolve.transformers.AdapterForResolveProcessor
 import org.jetbrains.kotlin.fir.resolve.transformers.FirTransformerBasedResolveProcessor
 import org.jetbrains.kotlin.fir.resolve.transformers.ReturnTypeCalculator
@@ -311,11 +312,12 @@ open class ReturnTypeCalculatorWithJump(
             val file = provider.getFirCallableContainerFile(symbol)
             val script = file?.declarations?.firstIsInstanceOrNull<FirScript>()
 
-            val outerClasses = generateSequence(symbol.containingClassLookupTag()?.classId) { classId ->
-                classId.outerClassId
-            }.mapTo(mutableListOf()) { provider.getFirClassifierByFqName(it) }
+            val containingClassSymbol = symbol.containingClassLookupTag()?.toSymbol(session)
+            val outerClasses = generateSequence(containingClassSymbol) { classSymbol ->
+                classSymbol.getContainingClassLookupTag()?.toSymbol(session)
+            }.mapTo(mutableListOf()) { it.fir }
 
-            if (file == null || outerClasses.any { it == null }) {
+            if (file == null) {
                 return buildErrorTypeRef {
                     diagnostic = ConeSimpleDiagnostic(
                         "Cannot calculate return type (local class/object?)",
@@ -323,7 +325,7 @@ open class ReturnTypeCalculatorWithJump(
                     )
                 }
             }
-            (listOfNotNull(file, script) + outerClasses.filterNotNull().asReversed()) to null
+            (listOfNotNull(file, script) + outerClasses.asReversed()) to null
         }
 
         val previousTowerDataContexts = outerBodyResolveContext?.regularTowerDataContexts
