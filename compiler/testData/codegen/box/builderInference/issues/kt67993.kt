@@ -6,11 +6,15 @@
 // Reason: see KT-68031
 
 class Builder<T> {
-    fun add(x: T) {}
+    var res: T? = null
+
+    fun add(x: T) {
+        res = x
+    }
 }
 
-fun <T> foo(build: Builder<T>.() -> Unit) {
-    Builder<T>().apply(build)
+fun <T> foo(build: Builder<T>.() -> Unit): T {
+    return Builder<T>().apply(build).res!!
 }
 
 class C {
@@ -20,7 +24,11 @@ class C {
                 add(foo())
             }
 
-            private fun foo() = "..."
-        }
+            private fun foo() = "OK"
+        }.bar()
     }
+}
+
+fun box(): String {
+    return C().a
 }
