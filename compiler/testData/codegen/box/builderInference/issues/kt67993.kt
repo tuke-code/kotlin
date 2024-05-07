@@ -1,9 +1,6 @@
 // FIR_IDENTICAL
 // ISSUE: KT-67993
 // WITH_STDLIB
-// IGNORE_REVERSED_RESOLVE
-// IGNORE_NON_REVERSED_RESOLVE
-// Reason: see KT-68031
 
 class Builder<T> {
     var res: T? = null
