@@ -17,6 +17,9 @@ abstract class ReturnTypeCalculator {
 
     abstract fun tryCalculateReturnTypeOrNull(declaration: FirCallableDeclaration): FirResolvedTypeRef?
 
+    open fun tryCalculateReturnTypeFromPCLA(declaration: FirCallableDeclaration): FirResolvedTypeRef? =
+        tryCalculateReturnTypeOrNull(declaration)
+
     fun tryCalculateReturnType(declaration: FirCallableDeclaration): FirResolvedTypeRef {
         return tryCalculateReturnTypeOrNull(declaration)
             ?: errorWithAttachment("Return type cannot be calculated for ${declaration::class.simpleName}") {

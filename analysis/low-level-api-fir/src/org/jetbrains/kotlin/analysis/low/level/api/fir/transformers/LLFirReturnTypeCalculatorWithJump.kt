@@ -14,7 +14,6 @@ import org.jetbrains.kotlin.analysis.low.level.api.fir.util.checkCanceled
 import org.jetbrains.kotlin.descriptors.EffectiveVisibility
 import org.jetbrains.kotlin.descriptors.Visibilities
 import org.jetbrains.kotlin.fir.declarations.*
-import org.jetbrains.kotlin.fir.declarations.utils.effectiveVisibility
 import org.jetbrains.kotlin.fir.declarations.utils.visibility
 import org.jetbrains.kotlin.fir.resolve.ScopeSession
 import org.jetbrains.kotlin.fir.resolve.transformers.body.resolve.ReturnTypeCalculatorWithJump
@@ -51,11 +50,19 @@ internal class LLFirReturnTypeCalculatorWithJump(
         return declaration.returnTypeRef as FirResolvedTypeRef
     }
 
-    override fun tryCalculateReturnTypeOrNull(declaration: FirCallableDeclaration): FirResolvedTypeRef? {
-        checkCanceled()
-        if (declaration.visibility != Visibilities.Local && declaration.effectiveVisibility == EffectiveVisibility.Local) {
+    override fun tryCalculateReturnTypeFromPCLA(declaration: FirCallableDeclaration): FirResolvedTypeRef? {
+        if (declaration !is FirConstructor
+            && declaration.origin !is FirDeclarationOrigin.SamConstructor
+            && declaration.visibility != Visibilities.Local
+            && (declaration.status as? FirResolvedDeclarationStatus)?.effectiveVisibility == EffectiveVisibility.Local
+        ) {
             return null
         }
+        return tryCalculateReturnTypeOrNull(declaration)
+    }
+
+    override fun tryCalculateReturnTypeOrNull(declaration: FirCallableDeclaration): FirResolvedTypeRef {
+        checkCanceled()
         return super.tryCalculateReturnTypeOrNull(declaration)
     }
 }

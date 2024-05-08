@@ -248,7 +248,7 @@ class FirPCLAInferenceSession(
         if ((symbol as? FirCallableSymbol)?.resolvedContextReceivers?.isNotEmpty() == true) return false
 
         // Accesses to local variables or local functions which return types contain not fixed TVs
-        val returnType = (symbol as? FirCallableSymbol)?.fir?.let(returnTypeCalculator::tryCalculateReturnTypeOrNull)
+        val returnType = (symbol as? FirCallableSymbol)?.fir?.let(returnTypeCalculator::tryCalculateReturnTypeFromPCLA)
         if (returnType?.type?.containsNotFixedTypeVariables() == true) return false
 
         // Now, we've got some sort of call/variable access/callable reference/synthetic call (see hierarchy of FirResolvable)

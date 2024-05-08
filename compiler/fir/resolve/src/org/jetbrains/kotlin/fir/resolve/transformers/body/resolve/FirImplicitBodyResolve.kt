@@ -206,7 +206,7 @@ open class ReturnTypeCalculatorWithJump(
 
     var outerTowerDataContexts: FirRegularTowerDataContexts? = null
 
-    override fun tryCalculateReturnTypeOrNull(declaration: FirCallableDeclaration): FirResolvedTypeRef? {
+    override fun tryCalculateReturnTypeOrNull(declaration: FirCallableDeclaration): FirResolvedTypeRef {
         // Local declarations must be handled by `ReturnTypeCalculatorForFullBodyResolve` to avoid resolution cycles in LL FIR.
         if (declaration.visibility == Visibilities.Local) {
             return ReturnTypeCalculatorForFullBodyResolve.Default.tryCalculateReturnType(declaration)
