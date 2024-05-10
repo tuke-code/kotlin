@@ -560,11 +560,9 @@ class FirSignatureEnhancement(
     ) {
         for (typeParameter in this) {
             if (typeParameter is FirJavaTypeParameter) {
-                if (!typeParameter.areBoundsAlreadyResolved()) {
-                    throw AssertionError(
-                        "Attempt to run the 3rd and 4th rounds of Java type parameter bounds enhancement without finishing 2nd round!" +
-                                " ownerSymbol = ${typeParameter.containingDeclarationSymbol} typeParameter = ${typeParameter.name}"
-                    )
+                check(typeParameter.areBoundsAlreadyResolved()) {
+                    "Attempt to run the 3rd and 4th rounds of Java type parameter bounds enhancement without finishing 2nd round!" +
+                            " ownerSymbol = ${typeParameter.containingDeclarationSymbol} typeParameter = ${typeParameter.name}"
                 }
                 typeParameter.replaceEnhancedBounds(block)
             }
@@ -575,7 +573,7 @@ class FirSignatureEnhancement(
         typeParameter: FirTypeParameter,
         bound: FirResolvedTypeRef,
         forceOnlyHeadTypeConstructor: Boolean,
-    ) = EnhancementSignatureParts(
+    ): FirResolvedTypeRef = EnhancementSignatureParts(
         session, typeQualifierResolver, typeParameter, isCovariant = false, forceOnlyHeadTypeConstructor,
         AnnotationQualifierApplicabilityType.TYPE_PARAMETER_BOUNDS, contextQualifiers
     ).enhance(bound, emptyList(), FirJavaTypeConversionMode.TYPE_PARAMETER_BOUND_AFTER_FIRST_ROUND)

@@ -32,6 +32,7 @@ import org.jetbrains.kotlin.fir.visitors.FirTransformer
 import org.jetbrains.kotlin.fir.visitors.FirVisitor
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.types.Variance
+import org.jetbrains.kotlin.utils.addToStdlib.shouldNotBeCalled
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -61,7 +62,7 @@ class FirJavaTypeParameter(
             if (containingDeclarationSymbol is FirClassSymbol &&
                 conversionModeObserver < FirJavaTypeConversionMode.TYPE_PARAMETER_BOUND_FIRST_ROUND
             ) {
-                throw AssertionError(
+                error(
                     "Attempt to access Java class type parameter bounds before their enhancement!" +
                             " ownerSymbol = $containingDeclarationSymbol typeParameter = $name"
                 )
@@ -82,11 +83,9 @@ class FirJavaTypeParameter(
         javaTypeParameterStack: JavaTypeParameterStack,
         source: KtSourceElement?,
     ): List<FirTypeRef> {
-        if (conversionModeObserver != FirJavaTypeConversionMode.DEFAULT) {
-            throw AssertionError(
-                "Attempt to repeat the first round of Java type parameter bounds enhancement!" +
-                        " ownerSymbol = $containingDeclarationSymbol typeParameter = $name"
-            )
+        require(conversionModeObserver == FirJavaTypeConversionMode.DEFAULT) {
+            "Attempt to repeat the first round of Java type parameter bounds enhancement!" +
+                    " ownerSymbol = $containingDeclarationSymbol typeParameter = $name"
         }
         val initialBounds = storedBounds
         conversionModeObserver = FirJavaTypeConversionMode.TYPE_PARAMETER_BOUND_FIRST_ROUND
@@ -104,11 +103,9 @@ class FirJavaTypeParameter(
         source: KtSourceElement?,
         initialBounds: List<FirTypeRef>,
     ) {
-        if (conversionModeObserver != FirJavaTypeConversionMode.TYPE_PARAMETER_BOUND_FIRST_ROUND) {
-            throw AssertionError(
-                "Attempt to repeat the second round of Java type parameter bounds enhancement!" +
-                        " ownerSymbol = $containingDeclarationSymbol typeParameter = $name"
-            )
+        require(conversionModeObserver == FirJavaTypeConversionMode.TYPE_PARAMETER_BOUND_FIRST_ROUND) {
+            "Attempt to repeat the second round of Java type parameter bounds enhancement!" +
+                    " ownerSymbol = $containingDeclarationSymbol typeParameter = $name"
         }
         conversionModeObserver = FirJavaTypeConversionMode.TYPE_PARAMETER_BOUND_AFTER_FIRST_ROUND
         storedBounds = initialBounds.mapTo(mutableListOf()) {
@@ -130,15 +127,15 @@ class FirJavaTypeParameter(
     }
 
     override fun <D> transformChildren(transformer: FirTransformer<D>, data: D): FirJavaTypeParameter {
-        throw AssertionError("Should not be called")
+        shouldNotBeCalled()
     }
 
     override fun <D> transformAnnotations(transformer: FirTransformer<D>, data: D): FirJavaTypeParameter {
-        throw AssertionError("Should not be called")
+        shouldNotBeCalled()
     }
 
     override fun replaceBounds(newBounds: List<FirTypeRef>) {
-        throw AssertionError("Should not be called")
+        shouldNotBeCalled()
     }
 
     override fun replaceAnnotations(newAnnotations: List<FirAnnotation>) {
