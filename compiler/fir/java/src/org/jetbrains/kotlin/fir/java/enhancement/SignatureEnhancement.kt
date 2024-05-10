@@ -68,6 +68,7 @@ import org.jetbrains.kotlin.types.model.KotlinTypeMarker
 import org.jetbrains.kotlin.types.model.TypeParameterMarker
 import org.jetbrains.kotlin.types.model.TypeSystemContext
 import org.jetbrains.kotlin.util.PrivateForInline
+import org.jetbrains.kotlin.utils.addToStdlib.firstIsInstance
 import org.jetbrains.kotlin.utils.exceptions.errorWithAttachment
 
 class FirSignatureEnhancement(
@@ -223,7 +224,7 @@ class FirSignatureEnhancement(
         }
 
         val firMethod = original.fir
-        performBoundsResolutionIfNeeded(firMethod.typeParameters, firMethod.source)
+        performBoundsResolutionForMethodTypeParameters(firMethod.typeParameters, firMethod.source)
         return enhanceMethod(
             firMethod,
             original.callableId,
@@ -467,15 +468,24 @@ class FirSignatureEnhancement(
     }
 
     fun performBoundsResolution(typeParameters: List<FirTypeParameterRef>, source: KtSourceElement?) {
+        if (typeParameters.isEmpty()) return
         val initialBounds = performFirstRoundOfBoundsResolution(typeParameters, source)
+        requireNotNull(initialBounds) {
+            val firstParameterSymbol = typeParameters.firstIsInstance<FirJavaTypeParameter>().symbol
+            "Attempt to repeat the first round of Java type parameter bounds enhancement!" +
+                    " ownerSymbol = ${firstParameterSymbol.containingDeclarationSymbol} " +
+                    "typeParameters = ${firstParameterSymbol.name}"
+        }
         enhanceTypeParameterBoundsAfterFirstRound(typeParameters, initialBounds, source)
     }
 
-    private fun performBoundsResolutionIfNeeded(typeParameters: List<FirTypeParameterRef>, source: KtSourceElement?) {
-        if (typeParameters.all { it !is FirTypeParameter || it is FirJavaTypeParameter && it.areBoundsAlreadyResolved() }) {
-            return
+    private fun performBoundsResolutionForMethodTypeParameters(typeParameters: List<FirTypeParameterRef>, source: KtSourceElement?) {
+        if (typeParameters.isEmpty()) return
+        val initialBounds = performFirstRoundOfBoundsResolution(typeParameters, source)
+        if (initialBounds != null) {
+            // Empty means here "Bounds are already enhanced, it's not necessary to continue"
+            enhanceTypeParameterBoundsAfterFirstRound(typeParameters, initialBounds, source)
         }
-        performBoundsResolution(typeParameters, source)
     }
 
     /**
@@ -494,11 +504,15 @@ class FirSignatureEnhancement(
     private fun performFirstRoundOfBoundsResolution(
         typeParameters: List<FirTypeParameterRef>,
         source: KtSourceElement?,
-    ): List<List<FirTypeRef>> {
+    ): List<List<FirTypeRef>>? {
         val result = mutableListOf<List<FirTypeRef>>()
         for (typeParameter in typeParameters) {
             if (typeParameter is FirJavaTypeParameter) {
-                result += typeParameter.performFirstRoundOfBoundsResolution(session, javaTypeParameterStack, source)
+                val initialBounds = typeParameter.performFirstRoundOfBoundsResolution(session, javaTypeParameterStack, source)
+                if (initialBounds == null) {
+                    return null
+                }
+                result += initialBounds
             }
         }
         return result

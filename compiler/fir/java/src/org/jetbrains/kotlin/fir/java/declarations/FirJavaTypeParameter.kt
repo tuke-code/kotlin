@@ -55,6 +55,7 @@ class FirJavaTypeParameter(
     override val isReified: Boolean
         get() = false
 
+    @Volatile
     private var conversionModeObserver = FirJavaTypeConversionMode.DEFAULT
 
     override val bounds: List<FirTypeRef>
@@ -82,13 +83,12 @@ class FirJavaTypeParameter(
         session: FirSession,
         javaTypeParameterStack: JavaTypeParameterStack,
         source: KtSourceElement?,
-    ): List<FirTypeRef> {
-        require(conversionModeObserver == FirJavaTypeConversionMode.DEFAULT) {
-            "Attempt to repeat the first round of Java type parameter bounds enhancement!" +
-                    " ownerSymbol = $containingDeclarationSymbol typeParameter = $name"
-        }
+    ): List<FirTypeRef>? {
+        val doIt = conversionModeUpdater.compareAndSet(
+            this, FirJavaTypeConversionMode.DEFAULT, FirJavaTypeConversionMode.TYPE_PARAMETER_BOUND_FIRST_ROUND
+        )
+        if (!doIt) return null
         val initialBounds = storedBounds
-        conversionModeObserver = FirJavaTypeConversionMode.TYPE_PARAMETER_BOUND_FIRST_ROUND
         storedBounds = initialBounds.mapTo(mutableListOf()) {
             it.resolveIfJavaType(
                 session, javaTypeParameterStack, source, conversionModeObserver
@@ -103,11 +103,14 @@ class FirJavaTypeParameter(
         source: KtSourceElement?,
         initialBounds: List<FirTypeRef>,
     ) {
-        require(conversionModeObserver == FirJavaTypeConversionMode.TYPE_PARAMETER_BOUND_FIRST_ROUND) {
+        val doIt = conversionModeUpdater.compareAndSet(
+            this, FirJavaTypeConversionMode.TYPE_PARAMETER_BOUND_FIRST_ROUND,
+            FirJavaTypeConversionMode.TYPE_PARAMETER_BOUND_AFTER_FIRST_ROUND
+        )
+        require(doIt) {
             "Attempt to repeat the second round of Java type parameter bounds enhancement!" +
                     " ownerSymbol = $containingDeclarationSymbol typeParameter = $name"
         }
-        conversionModeObserver = FirJavaTypeConversionMode.TYPE_PARAMETER_BOUND_AFTER_FIRST_ROUND
         storedBounds = initialBounds.mapTo(mutableListOf()) {
             it.resolveIfJavaType(
                 session, javaTypeParameterStack, source, conversionModeObserver
@@ -140,6 +143,14 @@ class FirJavaTypeParameter(
 
     override fun replaceAnnotations(newAnnotations: List<FirAnnotation>) {
         annotations = newAnnotations.toMutableOrEmpty()
+    }
+
+    companion object {
+        private val conversionModeUpdater = java.util.concurrent.atomic.AtomicReferenceFieldUpdater.newUpdater(
+            FirJavaTypeParameter::class.java,
+            FirJavaTypeConversionMode::class.java,
+            "conversionModeObserver"
+        )
     }
 }
 
