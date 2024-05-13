@@ -534,6 +534,10 @@ class FirSignatureEnhancement(
     ) {
         var currentIndex = 0
         for (typeParameter in typeParameters) {
+            /**
+             * This 'if' condition, together with currentIndex++, must be synchronized
+             * with the same 'if' inside [performFirstRoundOfBoundsResolution]
+             */
             if (typeParameter is FirJavaTypeParameter) {
                 typeParameter.performSecondRoundOfBoundsResolution(session, javaTypeParameterStack, source, initialBounds[currentIndex])
                 currentIndex++

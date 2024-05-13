@@ -33,6 +33,7 @@ import org.jetbrains.kotlin.fir.visitors.FirVisitor
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.types.Variance
 import org.jetbrains.kotlin.utils.addToStdlib.shouldNotBeCalled
+import java.util.concurrent.locks.ReentrantLock
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -57,6 +58,8 @@ class FirJavaTypeParameter(
 
     @Volatile
     private var conversionModeObserver = FirJavaTypeConversionMode.DEFAULT
+
+    private val boundsResolveLock = ReentrantLock()
 
     override val bounds: List<FirTypeRef>
         get() {
@@ -84,17 +87,25 @@ class FirJavaTypeParameter(
         javaTypeParameterStack: JavaTypeParameterStack,
         source: KtSourceElement?,
     ): List<FirTypeRef>? {
-        val doIt = conversionModeUpdater.compareAndSet(
-            this, FirJavaTypeConversionMode.DEFAULT, FirJavaTypeConversionMode.TYPE_PARAMETER_BOUND_FIRST_ROUND
-        )
-        if (!doIt) return null
-        val initialBounds = storedBounds
-        storedBounds = initialBounds.mapTo(mutableListOf()) {
-            it.resolveIfJavaType(
-                session, javaTypeParameterStack, source, conversionModeObserver
-            ) as FirResolvedTypeRef
+        if (conversionModeObserver != FirJavaTypeConversionMode.DEFAULT) {
+            return null
         }
-        return initialBounds
+        val initialBounds = storedBounds
+        boundsResolveLock.lock()
+        try {
+            if (conversionModeObserver != FirJavaTypeConversionMode.DEFAULT) {
+                return null
+            }
+            conversionModeObserver = FirJavaTypeConversionMode.TYPE_PARAMETER_BOUND_FIRST_ROUND
+            storedBounds = initialBounds.mapTo(mutableListOf()) {
+                it.resolveIfJavaType(
+                    session, javaTypeParameterStack, source, FirJavaTypeConversionMode.TYPE_PARAMETER_BOUND_FIRST_ROUND
+                ) as FirResolvedTypeRef
+            }
+            return initialBounds
+        } finally {
+            boundsResolveLock.unlock()
+        }
     }
 
     internal fun performSecondRoundOfBoundsResolution(
@@ -103,17 +114,14 @@ class FirJavaTypeParameter(
         source: KtSourceElement?,
         initialBounds: List<FirTypeRef>,
     ) {
-        val doIt = conversionModeUpdater.compareAndSet(
-            this, FirJavaTypeConversionMode.TYPE_PARAMETER_BOUND_FIRST_ROUND,
-            FirJavaTypeConversionMode.TYPE_PARAMETER_BOUND_AFTER_FIRST_ROUND
-        )
-        require(doIt) {
+        require(conversionModeObserver == FirJavaTypeConversionMode.TYPE_PARAMETER_BOUND_FIRST_ROUND) {
             "Attempt to repeat the second round of Java type parameter bounds enhancement!" +
                     " ownerSymbol = $containingDeclarationSymbol typeParameter = $name"
         }
+        conversionModeObserver = FirJavaTypeConversionMode.TYPE_PARAMETER_BOUND_AFTER_FIRST_ROUND
         storedBounds = initialBounds.mapTo(mutableListOf()) {
             it.resolveIfJavaType(
-                session, javaTypeParameterStack, source, conversionModeObserver
+                session, javaTypeParameterStack, source, FirJavaTypeConversionMode.TYPE_PARAMETER_BOUND_AFTER_FIRST_ROUND
             ) as FirResolvedTypeRef
         }
     }
@@ -143,14 +151,6 @@ class FirJavaTypeParameter(
 
     override fun replaceAnnotations(newAnnotations: List<FirAnnotation>) {
         annotations = newAnnotations.toMutableOrEmpty()
-    }
-
-    companion object {
-        private val conversionModeUpdater = java.util.concurrent.atomic.AtomicReferenceFieldUpdater.newUpdater(
-            FirJavaTypeParameter::class.java,
-            FirJavaTypeConversionMode::class.java,
-            "conversionModeObserver"
-        )
     }
 }
 
