@@ -7,6 +7,7 @@ package org.jetbrains.kotlin.analysis.api.fir.evaluate
 
 import org.jetbrains.kotlin.KtSourceElement
 import org.jetbrains.kotlin.analysis.api.base.KaConstantValue
+import org.jetbrains.kotlin.analysis.api.fir.KaFirSession
 import org.jetbrains.kotlin.analysis.low.level.api.fir.util.errorWithFirSpecificEntries
 import org.jetbrains.kotlin.fir.FirElement
 import org.jetbrains.kotlin.fir.declarations.FirCallableDeclaration
@@ -55,18 +56,19 @@ internal object FirCompileTimeConstantEvaluator {
     // TODO: Handle boolean operators, class reference, array, annotation values, etc.
     fun evaluate(
         fir: FirElement?,
+        analysisSession: KaFirSession,
     ): FirLiteralExpression? =
         when (fir) {
             is FirPropertyAccessExpression -> {
                 when (val referredVariable = fir.calleeReference.toResolvedVariableSymbol()) {
                     is FirPropertySymbol -> {
                         if (referredVariable.callableId.isStringLength) {
-                            evaluate(fir.explicitReceiver)?.evaluateStringLength()
+                            evaluate(fir.explicitReceiver, analysisSession)?.evaluateStringLength()
                         } else {
-                            referredVariable.toLiteralExpression()
+                            referredVariable.toLiteralExpression(analysisSession)
                         }
                     }
-                    is FirFieldSymbol -> referredVariable.toLiteralExpression()
+                    is FirFieldSymbol -> referredVariable.toLiteralExpression(analysisSession)
                     else -> null
                 }
             }
@@ -74,13 +76,13 @@ internal object FirCompileTimeConstantEvaluator {
                 fir.adaptToConstKind()
             }
             is FirFunctionCall -> {
-                evaluateFunctionCall(fir)
+                evaluateFunctionCall(fir, analysisSession)
             }
             is FirStringConcatenationCall -> {
-                evaluateStringConcatenationCall(fir)
+                evaluateStringConcatenationCall(fir, analysisSession)
             }
             is FirNamedReference -> {
-                fir.toResolvedPropertySymbol()?.toLiteralExpression()
+                fir.toResolvedPropertySymbol()?.toLiteralExpression(analysisSession)
             }
             else -> null
         }
@@ -88,22 +90,23 @@ internal object FirCompileTimeConstantEvaluator {
     private val CallableId.isStringLength: Boolean
         get() = classId == StandardClassIds.String && callableName.identifierOrNullIfSpecial == "length"
 
-    private fun FirPropertySymbol.toLiteralExpression(): FirLiteralExpression? {
+    private fun FirPropertySymbol.toLiteralExpression(analysisSession: KaFirSession): FirLiteralExpression? {
         return if (isConst && isVal) {
-            withTrackingVariableEvaluation(this) { evaluate(resolvedInitializer) }
+            withTrackingVariableEvaluation(this) { evaluate(resolvedInitializer, analysisSession) }
         } else null
     }
 
-    private fun FirFieldSymbol.toLiteralExpression(): FirLiteralExpression? {
+    private fun FirFieldSymbol.toLiteralExpression(analysisSession: KaFirSession): FirLiteralExpression? {
         return if (isStatic && isFinal && isVal) {
-            withTrackingVariableEvaluation(this) { evaluate(resolvedInitializer) }
+            withTrackingVariableEvaluation(this) { evaluate(resolvedInitializer, analysisSession) }
         } else null
     }
 
     fun evaluateAsKtConstantValue(
         fir: FirElement,
+        analysisSession: KaFirSession,
     ): KaConstantValue? {
-        val evaluated = evaluate(fir) ?: return null
+        val evaluated = evaluate(fir, analysisSession) ?: return null
 
         val value = evaluated.value
         val psi = evaluated.psi as? KtElement
@@ -152,10 +155,11 @@ internal object FirCompileTimeConstantEvaluator {
 
     private fun evaluateStringConcatenationCall(
         stringConcatenationCall: FirStringConcatenationCall,
+        analysisSession: KaFirSession,
     ): FirLiteralExpression? {
         val concatenated = buildString {
             for (arg in stringConcatenationCall.arguments) {
-                val evaluated = evaluate(arg) ?: return null
+                val evaluated = evaluate(arg, analysisSession) ?: return null
                 append(evaluated.value.toString())
             }
         }
@@ -165,16 +169,17 @@ internal object FirCompileTimeConstantEvaluator {
 
     private fun evaluateFunctionCall(
         functionCall: FirFunctionCall,
+        analysisSession: KaFirSession,
     ): FirLiteralExpression? {
         val function = functionCall.getOriginalFunction() as? FirSimpleFunction ?: return null
 
-        val opr1 = evaluate(functionCall.explicitReceiver) ?: return null
+        val opr1 = evaluate(functionCall.explicitReceiver, analysisSession) ?: return null
         opr1.evaluate(function)?.let {
             return it.adjustType(functionCall.resolvedType)
         }
 
         val argument = functionCall.arguments.firstOrNull() ?: return null
-        val opr2 = evaluate(argument) ?: return null
+        val opr2 = evaluate(argument, analysisSession) ?: return null
         opr1.evaluate(function, opr2)?.let {
             return it.adjustType(functionCall.resolvedType)
         }

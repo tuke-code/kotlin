@@ -203,7 +203,7 @@ internal object FirAnnotationValueConverter {
             }
 
             else -> null
-        } ?: FirCompileTimeConstantEvaluator.evaluate(this)
+        } ?: FirCompileTimeConstantEvaluator.evaluate(this, builder.analysisSession)
             ?.convertConstantExpression(builder.analysisSession)
     }
 

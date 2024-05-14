@@ -42,7 +42,7 @@ internal class KaFirCompileTimeConstantProvider(
         return when {
             fir is FirPropertyAccessExpression || fir is FirExpression || fir is FirNamedReference -> {
                 try {
-                    FirCompileTimeConstantEvaluator.evaluateAsKtConstantValue(fir)
+                    FirCompileTimeConstantEvaluator.evaluateAsKtConstantValue(fir, analysisSession)
                 } catch (e: ArithmeticException) {
                     KaConstantValue.KaErrorConstantValue(e.localizedMessage, sourcePsi)
                 }
