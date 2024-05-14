@@ -59,6 +59,12 @@ public class FirStandaloneNormalAnalysisSourceModuleCompileTimeConstantEvaluator
   }
 
   @Test
+  @TestMetadata("booleanOperatorMore.kt")
+  public void testBooleanOperatorMore() {
+    runTest("analysis/analysis-api/testData/components/compileTimeConstantProvider/evaluate/booleanOperatorMore.kt");
+  }
+
+  @Test
   @TestMetadata("integerLiteral_minusOne_entire.kt")
   public void testIntegerLiteral_minusOne_entire() {
     runTest("analysis/analysis-api/testData/components/compileTimeConstantProvider/evaluate/integerLiteral_minusOne_entire.kt");
