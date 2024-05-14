@@ -31,7 +31,7 @@ import org.jetbrains.kotlin.types.model.defaultType
 class FirPCLAInferenceSession(
     private val outerCandidate: Candidate,
     private val inferenceComponents: InferenceComponents,
-    private val returnTypeCalculator: ReturnTypeCalculator,
+    internal var returnTypeCalculator: ReturnTypeCalculator,
 ) : FirInferenceSession() {
 
     var currentCommonSystem: NewConstraintSystemImpl = prepareSharedBaseSystem(outerCandidate.system, inferenceComponents)

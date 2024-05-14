@@ -18,6 +18,7 @@ import org.jetbrains.kotlin.fir.expressions.FirAnnotationCall
 import org.jetbrains.kotlin.fir.resolve.FirRegularTowerDataContexts
 import org.jetbrains.kotlin.fir.resolve.ResolutionMode
 import org.jetbrains.kotlin.fir.resolve.ScopeSession
+import org.jetbrains.kotlin.fir.resolve.inference.FirPCLAInferenceSession
 import org.jetbrains.kotlin.fir.resolve.providers.firProvider
 import org.jetbrains.kotlin.fir.resolve.toSymbol
 import org.jetbrains.kotlin.fir.resolve.transformers.AdapterForResolveProcessor
@@ -97,6 +98,11 @@ fun <F : FirClassLikeDeclaration> F.runContractAndBodiesResolutionForLocalClass(
         outerTransformer = components.transformer,
     )
 
+    val returnTypeCalculatorFromPCLA = with(components.context.inferenceSession as? FirPCLAInferenceSession) {
+        val previous = this?.returnTypeCalculator
+        this?.returnTypeCalculator = returnTypeCalculator
+        previous
+    }
     val newContext = components.context.createSnapshotForLocalClasses(returnTypeCalculator, targetedClasses)
     returnTypeCalculator.outerBodyResolveContext = newContext
 
@@ -111,7 +117,11 @@ fun <F : FirClassLikeDeclaration> F.runContractAndBodiesResolutionForLocalClass(
         outerBodyResolveContext = newContext,
     )
 
-    return this.transform(transformer, resolutionMode)
+    val result: F = this.transform(transformer, resolutionMode)
+    if (returnTypeCalculatorFromPCLA != null) {
+        (components.context.inferenceSession as FirPCLAInferenceSession).returnTypeCalculator = returnTypeCalculatorFromPCLA
+    }
+    return result
 }
 
 open class FirImplicitAwareBodyResolveTransformer(
