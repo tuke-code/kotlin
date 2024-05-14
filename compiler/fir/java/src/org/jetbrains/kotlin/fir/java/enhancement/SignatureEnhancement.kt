@@ -224,7 +224,7 @@ class FirSignatureEnhancement(
         }
 
         val firMethod = original.fir
-        performBoundsResolutionForMethodTypeParameters(firMethod.typeParameters, firMethod.source)
+        performBoundsResolution(firMethod.typeParameters, firMethod.source)
         return enhanceMethod(
             firMethod,
             original.callableId,
@@ -477,15 +477,6 @@ class FirSignatureEnhancement(
                     "typeParameters = ${firstParameterSymbol.name}"
         }
         enhanceTypeParameterBoundsAfterFirstRound(typeParameters, initialBounds, source)
-    }
-
-    private fun performBoundsResolutionForMethodTypeParameters(typeParameters: List<FirTypeParameterRef>, source: KtSourceElement?) {
-        if (typeParameters.isEmpty()) return
-        val initialBounds = performFirstRoundOfBoundsResolution(typeParameters, source)
-        if (initialBounds != null) {
-            // Empty means here "Bounds are already enhanced, it's not necessary to continue"
-            enhanceTypeParameterBoundsAfterFirstRound(typeParameters, initialBounds, source)
-        }
     }
 
     /**
