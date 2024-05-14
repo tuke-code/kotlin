@@ -10,29 +10,18 @@ import org.jetbrains.kotlin.analysis.api.base.KaConstantValue
 import org.jetbrains.kotlin.analysis.api.fir.KaFirSession
 import org.jetbrains.kotlin.analysis.low.level.api.fir.util.errorWithFirSpecificEntries
 import org.jetbrains.kotlin.fir.FirElement
-import org.jetbrains.kotlin.fir.declarations.FirCallableDeclaration
-import org.jetbrains.kotlin.fir.declarations.FirSimpleFunction
+import org.jetbrains.kotlin.fir.FirEvaluatorResult
 import org.jetbrains.kotlin.fir.declarations.utils.isConst
-import org.jetbrains.kotlin.fir.declarations.utils.isFinal
-import org.jetbrains.kotlin.fir.declarations.utils.isStatic
-import org.jetbrains.kotlin.fir.expressions.*
+import org.jetbrains.kotlin.fir.expressions.FirExpression
+import org.jetbrains.kotlin.fir.expressions.FirExpressionEvaluator
+import org.jetbrains.kotlin.fir.expressions.FirLiteralExpression
+import org.jetbrains.kotlin.fir.expressions.PrivateConstantEvaluatorAPI
 import org.jetbrains.kotlin.fir.expressions.builder.buildLiteralExpression
 import org.jetbrains.kotlin.fir.psi
 import org.jetbrains.kotlin.fir.references.FirNamedReference
-import org.jetbrains.kotlin.fir.references.FirResolvedNamedReference
 import org.jetbrains.kotlin.fir.references.toResolvedPropertySymbol
-import org.jetbrains.kotlin.fir.references.toResolvedVariableSymbol
-import org.jetbrains.kotlin.fir.symbols.FirBasedSymbol
-import org.jetbrains.kotlin.fir.symbols.impl.FirFieldSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirPropertySymbol
-import org.jetbrains.kotlin.fir.symbols.impl.FirVariableSymbol
-import org.jetbrains.kotlin.fir.types.*
-import org.jetbrains.kotlin.name.CallableId
-import org.jetbrains.kotlin.name.StandardClassIds
 import org.jetbrains.kotlin.psi.KtElement
-import org.jetbrains.kotlin.resolve.constants.evaluate.CompileTimeType
-import org.jetbrains.kotlin.resolve.constants.evaluate.evalBinaryOp
-import org.jetbrains.kotlin.resolve.constants.evaluate.evalUnaryOp
 import org.jetbrains.kotlin.types.ConstantValueKind
 
 /**
@@ -40,46 +29,19 @@ import org.jetbrains.kotlin.types.ConstantValueKind
  * and the argument, are compile-time constant as well.
  */
 internal object FirCompileTimeConstantEvaluator {
-    private val variablesInProcessOfEvaluation = ThreadLocal.withInitial { mutableSetOf<FirVariableSymbol<*>>() }
-
-    private inline fun <R> withTrackingVariableEvaluation(variableSymbol: FirVariableSymbol<*>, f: () -> R): R? {
-        if (!variablesInProcessOfEvaluation.get().add(variableSymbol)) {
-            return null
-        }
-        return try {
-            f()
-        } finally {
-            variablesInProcessOfEvaluation.get().remove(variableSymbol)
-        }
-    }
-
-    // TODO: Handle boolean operators, class reference, array, annotation values, etc.
+    @OptIn(PrivateConstantEvaluatorAPI::class)
     fun evaluate(
         fir: FirElement?,
         analysisSession: KaFirSession,
     ): FirLiteralExpression? =
         when (fir) {
-            is FirPropertyAccessExpression -> {
-                when (val referredVariable = fir.calleeReference.toResolvedVariableSymbol()) {
-                    is FirPropertySymbol -> {
-                        if (referredVariable.callableId.isStringLength) {
-                            evaluate(fir.explicitReceiver, analysisSession)?.evaluateStringLength()
-                        } else {
-                            referredVariable.toLiteralExpression(analysisSession)
-                        }
-                    }
-                    is FirFieldSymbol -> referredVariable.toLiteralExpression(analysisSession)
-                    else -> null
+            is FirExpression -> {
+                val evaluatorResult = FirExpressionEvaluator.evaluateExpression(fir, analysisSession.useSiteSession)
+                if (evaluatorResult is FirEvaluatorResult.DivisionByZero) {
+                    throw ArithmeticException("/ by zero") // TODO: return error instead
                 }
-            }
-            is FirLiteralExpression -> {
-                fir.adaptToConstKind()
-            }
-            is FirFunctionCall -> {
-                evaluateFunctionCall(fir, analysisSession)
-            }
-            is FirStringConcatenationCall -> {
-                evaluateStringConcatenationCall(fir, analysisSession)
+                val literalExpression = (evaluatorResult as? FirEvaluatorResult.Evaluated)?.result as? FirLiteralExpression
+                literalExpression?.adaptToConstKind()
             }
             is FirNamedReference -> {
                 fir.toResolvedPropertySymbol()?.toLiteralExpression(analysisSession)
@@ -87,18 +49,9 @@ internal object FirCompileTimeConstantEvaluator {
             else -> null
         }
 
-    private val CallableId.isStringLength: Boolean
-        get() = classId == StandardClassIds.String && callableName.identifierOrNullIfSpecial == "length"
-
     private fun FirPropertySymbol.toLiteralExpression(analysisSession: KaFirSession): FirLiteralExpression? {
         return if (isConst && isVal) {
-            withTrackingVariableEvaluation(this) { evaluate(resolvedInitializer, analysisSession) }
-        } else null
-    }
-
-    private fun FirFieldSymbol.toLiteralExpression(analysisSession: KaFirSession): FirLiteralExpression? {
-        return if (isStatic && isFinal && isVal) {
-            withTrackingVariableEvaluation(this) { evaluate(resolvedInitializer, analysisSession) }
+            evaluate(resolvedInitializer, analysisSession)
         } else null
     }
 
@@ -153,198 +106,6 @@ internal object FirCompileTimeConstantEvaluator {
         )
     }
 
-    private fun evaluateStringConcatenationCall(
-        stringConcatenationCall: FirStringConcatenationCall,
-        analysisSession: KaFirSession,
-    ): FirLiteralExpression? {
-        val concatenated = buildString {
-            for (arg in stringConcatenationCall.arguments) {
-                val evaluated = evaluate(arg, analysisSession) ?: return null
-                append(evaluated.value.toString())
-            }
-        }
-
-        return ConstantValueKind.String.toLiteralExpression(stringConcatenationCall.source, concatenated)
-    }
-
-    private fun evaluateFunctionCall(
-        functionCall: FirFunctionCall,
-        analysisSession: KaFirSession,
-    ): FirLiteralExpression? {
-        val function = functionCall.getOriginalFunction() as? FirSimpleFunction ?: return null
-
-        val opr1 = evaluate(functionCall.explicitReceiver, analysisSession) ?: return null
-        opr1.evaluate(function)?.let {
-            return it.adjustType(functionCall.resolvedType)
-        }
-
-        val argument = functionCall.arguments.firstOrNull() ?: return null
-        val opr2 = evaluate(argument, analysisSession) ?: return null
-        opr1.evaluate(function, opr2)?.let {
-            return it.adjustType(functionCall.resolvedType)
-        }
-        return null
-    }
-
-    private fun FirLiteralExpression.adjustType(expectedType: ConeKotlinType): FirLiteralExpression {
-        val expectedKind = expectedType.toConstantValueKind()
-        // Note that the resolved type for the const expression is not always matched with the const kind. For example,
-        //   fun foo(x: Int) {
-        //     when (x) {
-        //       -2_147_483_628 -> ...
-        //   } }
-        // That constant is encoded as `unaryMinus` call with the const 2147483628 of long type, while the resolved type is Int.
-        // After computing the compile time constant, we need to adjust its type here.
-        val expression =
-            if (expectedKind != null && expectedKind != kind && value is Number) {
-                val typeAdjustedValue = expectedKind.convertToNumber(value as Number)!!
-                expectedKind.toLiteralExpression(source, typeAdjustedValue)
-            } else {
-                this
-            }
-        // Lastly, we should preserve the resolved type of the original function call.
-        return expression.apply {
-            replaceConeTypeOrNull(expectedType)
-        }
-    }
-
-    private fun ConstantValueKind.toCompileTimeType(): CompileTimeType {
-        return when (this) {
-            ConstantValueKind.Byte -> CompileTimeType.BYTE
-            ConstantValueKind.Short -> CompileTimeType.SHORT
-            ConstantValueKind.Int -> CompileTimeType.INT
-            ConstantValueKind.Long -> CompileTimeType.LONG
-            ConstantValueKind.Double -> CompileTimeType.DOUBLE
-            ConstantValueKind.Float -> CompileTimeType.FLOAT
-            ConstantValueKind.Char -> CompileTimeType.CHAR
-            ConstantValueKind.Boolean -> CompileTimeType.BOOLEAN
-            ConstantValueKind.String -> CompileTimeType.STRING
-
-            else -> CompileTimeType.ANY
-        }
-    }
-
-    // Unary operators
-    private fun FirLiteralExpression.evaluate(function: FirSimpleFunction): FirLiteralExpression? {
-        if (value == null) return null
-        (value as? String)?.let { opr ->
-            evalUnaryOp(
-                function.name.asString(),
-                kind.toCompileTimeType(),
-                opr
-            )?.let {
-                return it.toConstantValueKind().toLiteralExpression(source, it)
-            }
-        }
-        return kind.convertToNumber(value)?.let { opr ->
-            evalUnaryOp(
-                function.name.asString(),
-                kind.toCompileTimeType(),
-                opr
-            )?.let {
-                it.toConstantValueKind().toLiteralExpression(source, it)
-            }
-        }
-    }
-
-    private fun FirLiteralExpression.evaluateStringLength(): FirLiteralExpression? {
-        return (value as? String)?.length?.let {
-            it.toConstantValueKind().toLiteralExpression(source, it)
-        }
-    }
-
-    // Binary operators
-    private fun FirLiteralExpression.evaluate(
-        function: FirSimpleFunction,
-        other: FirLiteralExpression
-    ): FirLiteralExpression? {
-        if (value == null || other.value == null) return null
-        // NB: some utils accept very general types, and due to the way operation map works, we should up-cast rhs type.
-        val rightType = when {
-            function.symbol.callableId.isStringEquals -> CompileTimeType.ANY
-            function.symbol.callableId.isStringPlus -> CompileTimeType.ANY
-            else -> other.kind.toCompileTimeType()
-        }
-        (value as? String)?.let { opr1 ->
-            other.value?.let { opr2 ->
-                evalBinaryOp(
-                    function.name.asString(),
-                    kind.toCompileTimeType(),
-                    opr1,
-                    rightType,
-                    opr2
-                )?.let {
-                    return it.toConstantValueKind().toLiteralExpression(source, it)
-                }
-            }
-        }
-        return kind.convertToNumber(value)?.let { opr1 ->
-            other.kind.convertToNumber(other.value)?.let { opr2 ->
-                evalBinaryOp(
-                    function.name.asString(),
-                    kind.toCompileTimeType(),
-                    opr1,
-                    other.kind.toCompileTimeType(),
-                    opr2
-                )?.let {
-                    it.toConstantValueKind().toLiteralExpression(source, it)
-                }
-            }
-        }
-    }
-
-    private val CallableId.isStringEquals: Boolean
-        get() = classId == StandardClassIds.String && callableName.identifierOrNullIfSpecial == "equals"
-
-    private val CallableId.isStringPlus: Boolean
-        get() = classId == StandardClassIds.String && callableName.identifierOrNullIfSpecial == "plus"
-
-    ////// KINDS
-
-    private fun ConeKotlinType.toConstantValueKind(): ConstantValueKind? =
-        when (this) {
-            is ConeErrorType -> null
-            is ConeLookupTagBasedType -> lookupTag.name.asString().toConstantValueKind()
-            is ConeFlexibleType -> upperBound.toConstantValueKind()
-            is ConeCapturedType -> lowerType?.toConstantValueKind() ?: constructor.supertypes!!.first().toConstantValueKind()
-            is ConeDefinitelyNotNullType -> original.toConstantValueKind()
-            is ConeIntersectionType -> intersectedTypes.first().toConstantValueKind()
-            is ConeStubType, is ConeIntegerLiteralType, is ConeTypeVariableType -> null
-        }
-
-    private fun String.toConstantValueKind(): ConstantValueKind? =
-        when (this) {
-            "Byte" -> ConstantValueKind.Byte
-            "Double" -> ConstantValueKind.Double
-            "Float" -> ConstantValueKind.Float
-            "Int" -> ConstantValueKind.Int
-            "Long" -> ConstantValueKind.Long
-            "Short" -> ConstantValueKind.Short
-
-            "Char" -> ConstantValueKind.Char
-            "String" -> ConstantValueKind.String
-            "Boolean" -> ConstantValueKind.Boolean
-
-            else -> null
-        }
-
-    private fun <T> T.toConstantValueKind(): ConstantValueKind =
-        when (this) {
-            is Byte -> ConstantValueKind.Byte
-            is Double -> ConstantValueKind.Double
-            is Float -> ConstantValueKind.Float
-            is Int -> ConstantValueKind.Int
-            is Long -> ConstantValueKind.Long
-            is Short -> ConstantValueKind.Short
-
-            is Char -> ConstantValueKind.Char
-            is String -> ConstantValueKind.String
-            is Boolean -> ConstantValueKind.Boolean
-
-            null -> ConstantValueKind.Null
-            else -> error("Unknown constant value")
-        }
-
     private fun ConstantValueKind.convertToNumber(value: Any?): Any? {
         if (value == null) {
             return null
@@ -370,12 +131,4 @@ internal object FirCompileTimeConstantEvaluator {
 
     private fun ConstantValueKind.toLiteralExpression(source: KtSourceElement?, value: Any?): FirLiteralExpression =
         buildLiteralExpression(source, this, value, setType = false)
-
-    private fun FirFunctionCall.getOriginalFunction(): FirCallableDeclaration? {
-        val symbol: FirBasedSymbol<*>? = when (val reference = calleeReference) {
-            is FirResolvedNamedReference -> reference.resolvedSymbol
-            else -> null
-        }
-        return symbol?.fir as? FirCallableDeclaration
-    }
 }

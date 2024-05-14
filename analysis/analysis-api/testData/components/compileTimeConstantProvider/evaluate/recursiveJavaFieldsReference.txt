@@ -1,3 +1,5 @@
 expression: JavaConst.x
 constant: NOT_EVALUATED
 constantValueKind: NOT_EVALUATED
+
+TODO: fails in K2, fix in next commit
