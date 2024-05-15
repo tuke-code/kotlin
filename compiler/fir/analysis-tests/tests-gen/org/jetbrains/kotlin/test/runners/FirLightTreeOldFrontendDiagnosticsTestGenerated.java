@@ -31855,6 +31855,18 @@ public class FirLightTreeOldFrontendDiagnosticsTestGenerated extends AbstractFir
       }
 
       @Test
+      @TestMetadata("samConversionGenericParameterNullability.kt")
+      public void testSamConversionGenericParameterNullability() {
+        runTest("compiler/testData/diagnostics/tests/samConversions/samConversionGenericParameterNullability.kt");
+      }
+
+      @Test
+      @TestMetadata("samConversionGenericParameterNullabilityDnnRepresentation.kt")
+      public void testSamConversionGenericParameterNullabilityDnnRepresentation() {
+        runTest("compiler/testData/diagnostics/tests/samConversions/samConversionGenericParameterNullabilityDnnRepresentation.kt");
+      }
+
+      @Test
       @TestMetadata("samConversionToGeneric.kt")
       public void testSamConversionToGeneric() {
         runTest("compiler/testData/diagnostics/tests/samConversions/samConversionToGeneric.kt");
