@@ -33,23 +33,18 @@ internal object FirCompileTimeConstantEvaluator {
     private fun evaluate(
         fir: FirElement?,
         analysisSession: KaFirSession,
-    ): FirLiteralExpression? =
+    ): FirEvaluatorResult =
         when (fir) {
             is FirExpression -> {
-                val evaluatorResult = FirExpressionEvaluator.evaluateExpression(fir, analysisSession.useSiteSession)
-                if (evaluatorResult is FirEvaluatorResult.DivisionByZero) {
-                    throw ArithmeticException("/ by zero") // TODO: return error instead
-                }
-                val literalExpression = (evaluatorResult as? FirEvaluatorResult.Evaluated)?.result as? FirLiteralExpression
-                literalExpression?.adaptToConstKind()
+                FirExpressionEvaluator.evaluateExpression(fir, analysisSession.useSiteSession)
             }
             is FirNamedReference -> {
-                fir.toResolvedPropertySymbol()?.toLiteralExpression(analysisSession)
+                fir.toResolvedPropertySymbol()?.evaluatePropertyInitializer(analysisSession)
             }
             else -> null
-        }
+        } ?: FirEvaluatorResult.NotEvaluated
 
-    private fun FirPropertySymbol.toLiteralExpression(analysisSession: KaFirSession): FirLiteralExpression? {
+    private fun FirPropertySymbol.evaluatePropertyInitializer(analysisSession: KaFirSession): FirEvaluatorResult? {
         return if (isConst && isVal) {
             evaluate(resolvedInitializer, analysisSession)
         } else null
@@ -59,7 +54,12 @@ internal object FirCompileTimeConstantEvaluator {
         fir: FirElement,
         analysisSession: KaFirSession,
     ): KaConstantValue? {
-        val evaluated = evaluate(fir, analysisSession) ?: return null
+        val evaluatorResult = evaluate(fir, analysisSession)
+        if (evaluatorResult is FirEvaluatorResult.DivisionByZero) {
+            return KaConstantValue.KaErrorConstantValue("/ by zero", sourcePsi = fir.psi as? KtElement)
+        }
+        if (evaluatorResult !is FirEvaluatorResult.Evaluated) return null
+        val evaluated = (evaluatorResult.result as? FirLiteralExpression)?.adaptToConstKind() ?: return null
 
         val value = evaluated.value
         val psi = evaluated.psi as? KtElement

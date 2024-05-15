@@ -27,7 +27,7 @@ internal class KaFirCompileTimeConstantProvider(
     override fun evaluate(
         expression: KtExpression,
     ): KaConstantValue? {
-        return evaluateFir(expression.getOrBuildFir(firResolveSession), expression)
+        return evaluateFir(expression.getOrBuildFir(firResolveSession))
     }
 
     override fun evaluateAsAnnotationValue(expression: KtExpression): KaAnnotationValue? =
@@ -37,15 +37,10 @@ internal class KaFirCompileTimeConstantProvider(
 
     private fun evaluateFir(
         fir: FirElement?,
-        sourcePsi: KtExpression,
     ): KaConstantValue? {
         return when {
             fir is FirPropertyAccessExpression || fir is FirExpression || fir is FirNamedReference -> {
-                try {
-                    FirCompileTimeConstantEvaluator.evaluateAsKtConstantValue(fir, analysisSession)
-                } catch (e: ArithmeticException) {
-                    KaConstantValue.KaErrorConstantValue(e.localizedMessage, sourcePsi)
-                }
+                FirCompileTimeConstantEvaluator.evaluateAsKtConstantValue(fir, analysisSession)
             }
             // For invalid code like the following,
             // ```

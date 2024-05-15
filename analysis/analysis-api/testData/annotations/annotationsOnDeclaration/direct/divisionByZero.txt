@@ -1,1 +1,5 @@
-TODO: fails in K2, fix in subsequent commits
+KtDeclaration: KtClass Foo
+annotations: [
+  Anno(value = error("/ by zero"))
+    psi: KtAnnotationEntry
+]
