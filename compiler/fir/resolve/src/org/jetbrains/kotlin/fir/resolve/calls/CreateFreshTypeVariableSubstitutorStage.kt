@@ -18,7 +18,7 @@ import org.jetbrains.kotlin.fir.resolve.substitution.ConeSubstitutor
 import org.jetbrains.kotlin.fir.resolve.substitution.substitutorByMap
 import org.jetbrains.kotlin.fir.scopes.impl.toConeType
 import org.jetbrains.kotlin.fir.symbols.ConeTypeParameterLookupTag
-import org.jetbrains.kotlin.fir.symbols.impl.FirCallableSymbol
+import org.jetbrains.kotlin.fir.symbols.impl.FirClassLikeSymbol
 import org.jetbrains.kotlin.fir.symbols.lazyResolveToPhase
 import org.jetbrains.kotlin.fir.types.*
 import org.jetbrains.kotlin.name.StandardClassIds
@@ -138,7 +138,7 @@ internal object CreateFreshTypeVariableSubstitutorStage : ResolutionStage() {
         val containingDeclarationSymbol = typeParameter.symbol.containingDeclarationSymbol
         // To remove constructors (they use class type parameters)
         return if (
-            containingDeclarationSymbol is FirCallableSymbol &&
+            containingDeclarationSymbol !is FirClassLikeSymbol &&
             // To remove SAMs
             containingDeclarationSymbol !is FirSyntheticFunctionSymbol &&
             typeParameter.shouldBeFlexible(session.typeContext)
