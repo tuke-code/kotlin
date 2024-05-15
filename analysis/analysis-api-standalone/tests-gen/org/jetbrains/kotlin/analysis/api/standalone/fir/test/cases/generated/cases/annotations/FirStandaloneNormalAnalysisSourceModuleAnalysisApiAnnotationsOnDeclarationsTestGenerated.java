@@ -86,6 +86,12 @@ public class FirStandaloneNormalAnalysisSourceModuleAnalysisApiAnnotationsOnDecl
     }
 
     @Test
+    @TestMetadata("divisionByZero.kt")
+    public void testDivisionByZero() {
+      runTest("analysis/analysis-api/testData/annotations/annotationsOnDeclaration/direct/divisionByZero.kt");
+    }
+
+    @Test
     @TestMetadata("emptyJavaSpreadParameter.kt")
     public void testEmptyJavaSpreadParameter() {
       runTest("analysis/analysis-api/testData/annotations/annotationsOnDeclaration/direct/emptyJavaSpreadParameter.kt");

@@ -203,8 +203,8 @@ internal object FirAnnotationValueConverter {
             }
 
             else -> null
-        } ?: FirCompileTimeConstantEvaluator.evaluate(this, builder.analysisSession)
-            ?.convertConstantExpression(builder.analysisSession)
+        } ?: FirCompileTimeConstantEvaluator.evaluateAsKtConstantValue(this, builder.analysisSession)
+            ?.let { KaConstantAnnotationValue(it, token) }
     }
 
     private fun computeErrorCallClassId(call: FirGetClassCall): ClassId? {

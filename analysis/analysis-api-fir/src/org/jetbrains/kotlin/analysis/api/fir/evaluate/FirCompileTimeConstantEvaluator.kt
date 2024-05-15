@@ -30,7 +30,7 @@ import org.jetbrains.kotlin.types.ConstantValueKind
  */
 internal object FirCompileTimeConstantEvaluator {
     @OptIn(PrivateConstantEvaluatorAPI::class)
-    fun evaluate(
+    private fun evaluate(
         fir: FirElement?,
         analysisSession: KaFirSession,
     ): FirLiteralExpression? =
