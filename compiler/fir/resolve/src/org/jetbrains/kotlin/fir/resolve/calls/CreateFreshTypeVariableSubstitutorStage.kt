@@ -107,7 +107,15 @@ internal object CreateFreshTypeVariableSubstitutorStage : ResolutionStage() {
      * }
      * ```
      *
-     * We keep more sound constraint T = SomeType for regular and SAM constructor calls. Typical examples are:
+     * We keep more sound constraint T = SomeType for regular constructor calls with all types
+     * and SAM constructor calls with not-null types only. Typical examples are:
+     *
+     * ```
+     * // Expected type: ArrayList<String?>, not ArrayList<String!>
+     * val x = ArrayList<String?>()
+     * // Expected type: ArrayList<String>
+     * val y = ArrayList<String>()
+     * ```
      *
      * ```
      * fun test1() = J1<Int>() // type should be J1<Int>, not J1<Int!>
@@ -121,6 +129,8 @@ internal object CreateFreshTypeVariableSubstitutorStage : ResolutionStage() {
      * // Again, type should be J<String> and not J<String!>
      * fun test1() = J<String> { x -> x }
      *
+     * // But here we expect x: String! and no error
+     * fun test2() = J<String?> { x -> x.length.toString() }
      *
      * // FILE: J.java
      * public interface J<T> {
@@ -139,8 +149,8 @@ internal object CreateFreshTypeVariableSubstitutorStage : ResolutionStage() {
         // To remove constructors (they use class type parameters)
         return if (
             containingDeclarationSymbol !is FirClassLikeSymbol &&
-            // To remove SAMs
-            containingDeclarationSymbol !is FirSyntheticFunctionSymbol &&
+            // To remove SAMs for non-null bounds
+            (containingDeclarationSymbol !is FirSyntheticFunctionSymbol || type.isMarkedNullable) &&
             typeParameter.shouldBeFlexible(session.typeContext)
         ) {
             when (type) {
