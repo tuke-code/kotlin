@@ -43024,6 +43024,12 @@ public class FirLightTreeOldFrontendDiagnosticsTestGenerated extends AbstractFir
         }
 
         @Test
+        @TestMetadata("suspendConversionBetweenFunInterfaces.kt")
+        public void testSuspendConversionBetweenFunInterfaces() {
+          runTest("compiler/testData/diagnostics/testsWithStdLib/coroutines/inference/suspendConversionBetweenFunInterfaces.kt");
+        }
+
+        @Test
         @TestMetadata("twoReceiversInScope.kt")
         public void testTwoReceiversInScope() {
           runTest("compiler/testData/diagnostics/testsWithStdLib/coroutines/inference/twoReceiversInScope.kt");
