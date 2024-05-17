@@ -63,7 +63,10 @@ class ConeConstraintSystemUtilContext(val session: FirSession) : ConstraintSyste
                     this
                 }
             }
-            is ConeCapturedType -> return unCapture()
+            is ConeCapturedType -> return unCapture().let {
+                // If either captured type or its uncaptured "original" is nullable, the result should be nullable
+                it.withNullability(minOf(nullability, it.nullability), typeContext)
+            }
             is ConeTypeParameterType, is ConeTypeVariableType -> return this
             is ConeClassLikeType -> {
                 val newArguments = typeArguments.map(::unCaptureProjection)
