@@ -2080,12 +2080,6 @@ public class FirLightTreeOldFrontendDiagnosticsWithoutAliasExpansionTestGenerate
       }
 
       @Nested
-      @TestMetadata("compiler/testData/diagnostics/testsWithStdLib/annotations/jvmDefault")
-      @TestDataPath("$PROJECT_ROOT")
-      public class JvmDefault {
-      }
-
-      @Nested
       @TestMetadata("compiler/testData/diagnostics/testsWithStdLib/annotations/jvmStatic")
       @TestDataPath("$PROJECT_ROOT")
       public class JvmStatic {
@@ -2323,6 +2317,12 @@ public class FirLightTreeOldFrontendDiagnosticsWithoutAliasExpansionTestGenerate
       public void testCheckEnhancedUpperBoundsWithEnabledImprovements() {
         runTest("compiler/testData/diagnostics/testsWithStdLib/java/checkEnhancedUpperBoundsWithEnabledImprovements.kt");
       }
+    }
+
+    @Nested
+    @TestMetadata("compiler/testData/diagnostics/testsWithStdLib/jvmDefault")
+    @TestDataPath("$PROJECT_ROOT")
+    public class JvmDefault {
     }
 
     @Nested
