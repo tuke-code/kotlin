@@ -90,6 +90,9 @@ class ConeConstraintSystemUtilContext(val session: FirSession) : ConstraintSyste
 
     private fun unCaptureProjection(projection: ConeTypeProjection): ConeTypeProjection {
         val unCapturedProjection = (projection.type as? ConeCapturedType)?.constructor?.projection ?: projection
+        if (unCapturedProjection is ConeStarProjection) {
+            return projection
+        }
         if (unCapturedProjection !is ConeKotlinTypeProjection || unCapturedProjection.type is ConeErrorType) return unCapturedProjection
 
         val newArguments = unCapturedProjection.type.typeArguments.map(::unCaptureProjection).toTypedArray()
