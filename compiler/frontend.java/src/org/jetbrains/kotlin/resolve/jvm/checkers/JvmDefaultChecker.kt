@@ -9,8 +9,8 @@ import com.intellij.openapi.project.Project
 import org.jetbrains.kotlin.config.JvmAnalysisFlags
 import org.jetbrains.kotlin.config.JvmDefaultMode
 import org.jetbrains.kotlin.config.JvmDefaultMode.ALL_COMPATIBILITY
-import org.jetbrains.kotlin.config.JvmTarget
 import org.jetbrains.kotlin.descriptors.*
+import org.jetbrains.kotlin.diagnostics.Diagnostic
 import org.jetbrains.kotlin.load.java.descriptors.JavaCallableMemberDescriptor
 import org.jetbrains.kotlin.load.java.descriptors.JavaMethodDescriptor
 import org.jetbrains.kotlin.load.kotlin.computeJvmDescriptor
@@ -29,9 +29,30 @@ import org.jetbrains.kotlin.resolve.jvm.annotations.hasJvmDefaultNoCompatibility
 import org.jetbrains.kotlin.resolve.jvm.annotations.isCompiledToJvmDefault
 import org.jetbrains.kotlin.resolve.jvm.diagnostics.ErrorsJvm
 import org.jetbrains.kotlin.util.getNonPrivateTraitMembersForDelegation
+import org.jetbrains.kotlin.util.findNonPrivateInterfaceImplementation
 
-class JvmDefaultChecker(private val jvmTarget: JvmTarget, project: Project) : DeclarationChecker {
-
+/**
+ * Checks several things related to the interoperability of `-Xjvm-default` modes, as well as compatibility annotations:
+ *
+ * 1. Report an error if `@JvmDefaultWithCompatibility` or `@JvmDefaultWithoutCompatibility` is applied incorrectly.
+ * 2. "Specialization check" (KT-39603): report an error if a class compiled in the 'all-compatibility' mode inherits a non-abstract
+ *    interface member with a signature change (e.g. because of generic specialization).
+ * 3. "Mixed mode check": report an error in case an implicit override in base class compiled in the 'disable' mode would incorrectly be
+ *    called at runtime in a diamond hierarchy:
+ *    ```
+ *    // -Xjvm-default=disable
+ *    interface A { fun f() {} }
+ *    open class AImpl : A
+ *
+ *    // -Xjvm-default=all/all-compatibility
+ *    interface B { override fun f() {} }
+ *    class BImpl : AImpl(), B
+ *    // ^ error, because otherwise `BImpl().f()` would call the implementation from A, not from B.
+ *    ```
+ *
+ * Note that if the specialization check reports an error for a member, the mixed mode check is not run for that member.
+ */
+class JvmDefaultChecker(project: Project) : DeclarationChecker {
     private val ideService = LanguageVersionSettingsProvider.getInstance(project)
 
     override fun check(declaration: KtDeclaration, descriptor: DeclarationDescriptor, context: DeclarationCheckerContext) {
@@ -40,67 +61,34 @@ class JvmDefaultChecker(private val jvmTarget: JvmTarget, project: Project) : De
         if (checkJvmCompatibilityAnnotations(descriptor, declaration, context, jvmDefaultMode)) return
 
         if (!jvmDefaultMode.isEnabled || descriptor !is ClassDescriptor || isInterface(descriptor) || isAnnotationClass(descriptor)) return
-        // JvmDefaults members checks across class hierarchy:
-        // 1. If in old scheme class have implicit override with different signature than overridden method (e.g. generic specialization)
-        // report error because absent of it's can affect library ABI
-        // 2. If it's mixed hierarchy with implicit override in base class and override one in inherited derived interface report error.
-        // Otherwise the implicit class override would be used for dispatching method calls (but not more specialized)
+
         val performSpecializationCheck =
-            jvmDefaultMode == JvmDefaultMode.ALL_COMPATIBILITY && !descriptor.hasJvmDefaultNoCompatibilityAnnotation() &&
+            jvmDefaultMode == ALL_COMPATIBILITY && !descriptor.hasJvmDefaultNoCompatibilityAnnotation() &&
                     //TODO: maybe remove this check for JVM compatibility
-                    !(descriptor.modality !== Modality.OPEN && descriptor.modality !== Modality.ABSTRACT || descriptor.isEffectivelyPrivateApi)
+                    (descriptor.modality == Modality.OPEN || descriptor.modality == Modality.ABSTRACT) &&
+                    !descriptor.isEffectivelyPrivateApi
 
-        //Should we check clash with implicit class member (that comes from old compilation scheme) and specialization for compatibility mode
-        // If specialization check is reported clash one shouldn't be reported
-        if (descriptor.getSuperClassNotAny() == null && !performSpecializationCheck) return
+        if (!performSpecializationCheck && descriptor.getSuperClassNotAny() == null) return
 
-        getNonPrivateTraitMembersForDelegation(
-            descriptor,
-            returnImplNotDelegate = true
-        ).filter { (_, actualImplementation) -> actualImplementation.isCompiledToJvmDefaultWithProperMode(jvmDefaultMode) }
-            .forEach { (inheritedMember, actualImplementation) ->
-                if (actualImplementation is FunctionDescriptor && inheritedMember is FunctionDescriptor) {
-                    if (checkSpecializationInCompatibilityMode(
-                            inheritedMember,
-                            actualImplementation,
-                            context,
-                            declaration,
-                            performSpecializationCheck
-                        )
-                    ) {
-                        checkPossibleClashMember(inheritedMember, actualImplementation, jvmDefaultMode, context, declaration)
-                    }
-                } else if (actualImplementation is PropertyDescriptor && inheritedMember is PropertyDescriptor) {
-                    val getterImpl = actualImplementation.getter
-                    val getterInherited = inheritedMember.getter
-                    if (getterImpl == null || getterInherited == null || jvmDefaultMode != ALL_COMPATIBILITY ||
-                        checkSpecializationInCompatibilityMode(
-                            getterInherited,
-                            getterImpl,
-                            context,
-                            declaration,
-                            performSpecializationCheck
-                        )
-                    ) {
-                        if (actualImplementation.isVar && inheritedMember.isVar) {
-                            val setterImpl = actualImplementation.setter
-                            val setterInherited = inheritedMember.setter
-                            if (setterImpl != null && setterInherited != null) {
-                                if (!checkSpecializationInCompatibilityMode(
-                                        setterInherited,
-                                        setterImpl,
-                                        context,
-                                        declaration,
-                                        performSpecializationCheck
-                                    )
-                                ) return@forEach
-                            }
-                        }
+        for ((fakeOverride, implementation) in getNonPrivateTraitMembersForDelegation(descriptor, returnImplNotDelegate = true)) {
+            if (!implementation.isCompiledToJvmDefaultWithProperMode(jvmDefaultMode)) continue
 
-                        checkPossibleClashMember(inheritedMember, actualImplementation, jvmDefaultMode, context, declaration)
-                    }
+            var diagnostic: Diagnostic? = null
+            if (performSpecializationCheck) {
+                if (implementation is FunctionDescriptor && fakeOverride is FunctionDescriptor) {
+                    diagnostic = checkSpecializationInCompatibilityMode(fakeOverride, implementation, declaration)
+                } else if (implementation is PropertyDescriptor && fakeOverride is PropertyDescriptor) {
+                    diagnostic = checkSpecializationInCompatibilityMode(fakeOverride.getter, implementation.getter, declaration)
+                        ?: checkSpecializationInCompatibilityMode(fakeOverride.setter, implementation.setter, declaration)
                 }
             }
+
+            if (diagnostic == null) {
+                diagnostic = checkDiamondInheritanceInMixedMode(fakeOverride, implementation, jvmDefaultMode, declaration)
+            }
+
+            diagnostic?.let(context.trace::report)
+        }
     }
 
     private fun checkJvmCompatibilityAnnotations(
@@ -132,71 +120,56 @@ class JvmDefaultChecker(private val jvmTarget: JvmTarget, project: Project) : De
     }
 
     private fun checkSpecializationInCompatibilityMode(
-        inheritedFun: FunctionDescriptor,
-        actualImplementation: FunctionDescriptor,
-        context: DeclarationCheckerContext,
+        fakeOverride: FunctionDescriptor?,
+        implementation: FunctionDescriptor?,
         declaration: KtDeclaration,
-        performSpecializationCheck: Boolean
-    ): Boolean {
-        if (!performSpecializationCheck || actualImplementation is JavaMethodDescriptor) return true
-        val inheritedSignature = inheritedFun.computeJvmDescriptor(withReturnType = true, withName = false)
-        val originalImplementation = actualImplementation.original
+    ): Diagnostic? {
+        if (implementation is JavaMethodDescriptor) return null
+        if (fakeOverride == null || implementation == null) return null
+        val inheritedSignature = fakeOverride.computeJvmDescriptor(withReturnType = true, withName = false)
+        val originalImplementation = implementation.original
         val actualSignature = originalImplementation.computeJvmDescriptor(withReturnType = true, withName = false)
         if (inheritedSignature != actualSignature) {
             //NB: this diagnostics should be a bit tuned, see box/jvm8/defaults/allCompatibility/kt14243_2.kt for details
-            context.trace.report(
-                ErrorsJvm.EXPLICIT_OVERRIDE_REQUIRED_IN_COMPATIBILITY_MODE.on(
-                    declaration,
-                    getDirectMember(inheritedFun),
-                    getDirectMember(originalImplementation)
-                )
+            return ErrorsJvm.EXPLICIT_OVERRIDE_REQUIRED_IN_COMPATIBILITY_MODE.on(
+                declaration, getDirectMember(fakeOverride), getDirectMember(originalImplementation)
             )
-            return false
         }
-        return true
+        return null
     }
 
-    private fun checkPossibleClashMember(
-        inheritedFun: CallableMemberDescriptor,
-        actualImplementation: CallableMemberDescriptor,
+    private fun checkDiamondInheritanceInMixedMode(
+        fakeOverride: CallableMemberDescriptor,
+        implementation: CallableMemberDescriptor,
         jvmDefaultMode: JvmDefaultMode,
-        context: DeclarationCheckerContext,
-        declaration: KtDeclaration
-    ) {
-        val clashMember = findPossibleClashMember(inheritedFun, jvmDefaultMode)
-        if (clashMember != null) {
-            context.trace.report(
-                ErrorsJvm.EXPLICIT_OVERRIDE_REQUIRED_IN_MIXED_MODE.on(
-                    declaration,
-                    getDirectMember(actualImplementation),
-                    getDirectMember(clashMember),
-                    jvmDefaultMode.description
-                )
-            )
-        }
+        declaration: KtDeclaration,
+    ): Diagnostic? {
+        val clashMember = findProblematicDiamondMember(fakeOverride, jvmDefaultMode) ?: return null
+        return ErrorsJvm.EXPLICIT_OVERRIDE_REQUIRED_IN_MIXED_MODE.on(
+            declaration, getDirectMember(implementation), getDirectMember(clashMember), jvmDefaultMode.description
+        )
     }
 
-    private fun findPossibleClashMember(
-        inheritedFun: CallableMemberDescriptor,
+    private fun findProblematicDiamondMember(
+        fakeOverride: CallableMemberDescriptor,
         jvmDefaultMode: JvmDefaultMode
     ): CallableMemberDescriptor? {
-        val classDescriptor = inheritedFun.containingDeclaration
+        val classDescriptor = fakeOverride.containingDeclaration
         if (classDescriptor !is ClassDescriptor || classDescriptor.getSuperClassNotAny() == null) return null
         val classMembers =
-            inheritedFun.overriddenDescriptors.filter { !isInterface(it.containingDeclaration) && !isAnnotationClass(it.containingDeclaration) }
+            fakeOverride.overriddenDescriptors.filter { !isInterface(it.containingDeclaration) && !isAnnotationClass(it.containingDeclaration) }
         val implicitDefaultImplsDelegate =
             classMembers.firstOrNull {
                 //TODO: additional processing for platform dependent method is required (https://youtrack.jetbrains.com/issue/KT-42697)
                 it !is JavaCallableMemberDescriptor &&
-                        getNonPrivateTraitMembersForDelegation(it, true)?.isCompiledToJvmDefaultWithProperMode(jvmDefaultMode) == false
+                        findNonPrivateInterfaceImplementation(it, true)?.isCompiledToJvmDefaultWithProperMode(jvmDefaultMode) == false
             }
         if (implicitDefaultImplsDelegate != null) return implicitDefaultImplsDelegate
-        return classMembers.firstNotNullOfOrNull { findPossibleClashMember(it, jvmDefaultMode) }
+        return classMembers.firstNotNullOfOrNull { findProblematicDiamondMember(it, jvmDefaultMode) }
     }
 
     private fun CallableMemberDescriptor.isCompiledToJvmDefaultWithProperMode(compilationDefaultMode: JvmDefaultMode) =
         isCompiledToJvmDefaultWithProperMode(ideService, compilationDefaultMode)
-
 }
 
 internal fun CallableMemberDescriptor.isCompiledToJvmDefaultWithProperMode(
