@@ -7,28 +7,28 @@ package org.jetbrains.kotlin.analysis.api.impl.base.permissions
 
 import com.intellij.openapi.application.Application
 import com.intellij.openapi.application.ApplicationManager
+import com.intellij.openapi.project.DumbService
+import com.intellij.openapi.project.Project
 import org.jetbrains.kotlin.analysis.api.permissions.KaAnalysisPermissionRegistry
 import org.jetbrains.kotlin.analysis.providers.KaCachedService
 import org.jetbrains.kotlin.analysis.providers.permissions.KaAnalysisPermissionChecker
 import org.jetbrains.kotlin.analysis.providers.permissions.KotlinAnalysisPermissionOptions
 
-internal class KaBaseAnalysisPermissionChecker : KaAnalysisPermissionChecker {
-    /**
-     * Caches [KaAnalysisPermissionRegistry] to avoid repeated `getService` calls in [analyze][org.jetbrains.kotlin.analysis.api.analyze]
-     * and validity assertions.
-     */
+internal class KaBaseAnalysisPermissionChecker(private val project: Project) : KaAnalysisPermissionChecker {
+    // We cache several services to avoid repeated `getService` calls in `analyze` and validity assertions.
     @KaCachedService
     private val permissionRegistry by lazy(LazyThreadSafetyMode.PUBLICATION) {
         KaAnalysisPermissionRegistry.getInstance()
     }
 
-    /**
-     * Caches [KotlinAnalysisPermissionOptions] to avoid repeated `getService` calls in [analyze][org.jetbrains.kotlin.analysis.api.analyze]
-     * and validity assertions.
-     */
     @KaCachedService
     private val permissionOptions by lazy(LazyThreadSafetyMode.PUBLICATION) {
         KotlinAnalysisPermissionOptions.getInstance()
+    }
+
+    @KaCachedService
+    private val dumbService by lazy(LazyThreadSafetyMode.PUBLICATION) {
+        DumbService.getInstance(project)
     }
 
     override fun isAnalysisAllowed(): Boolean {
@@ -37,6 +37,7 @@ internal class KaBaseAnalysisPermissionChecker : KaAnalysisPermissionChecker {
         if (isProhibitedEdtAnalysis(application)) return false
         if (isProhibitedWriteActionAnalysis(application)) return false
         if (permissionRegistry.explicitAnalysisRestriction != null) return false
+        if (dumbService.isDumb) return false
 
         return true
     }
@@ -54,6 +55,10 @@ internal class KaBaseAnalysisPermissionChecker : KaAnalysisPermissionChecker {
 
         permissionRegistry.explicitAnalysisRestriction?.let { restriction ->
             return "Resolve is explicitly forbidden in the current action: ${restriction.description}."
+        }
+
+        if (dumbService.isDumb) {
+            return "Called during dumb mode."
         }
 
         error("Cannot get a rejection reason when analysis is allowed.")
