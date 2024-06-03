@@ -15,21 +15,16 @@ import org.jetbrains.kotlin.analysis.api.session.KaSessionProvider
 import org.jetbrains.kotlin.analysis.project.structure.KtModule
 import org.jetbrains.kotlin.analysis.providers.KaCachedService
 import org.jetbrains.kotlin.analysis.providers.lifetime.KtLifetimeTokenProvider
-import org.jetbrains.kotlin.psi.KtElement
 import org.jetbrains.kotlin.analysis.providers.permissions.KaAnalysisPermissionChecker
+import org.jetbrains.kotlin.psi.KtElement
 
 abstract class KaBaseSessionProvider(project: Project) : KaSessionProvider(project) {
-    /**
-     * Caches [KaAnalysisPermissionChecker] to avoid repeated [Project.getService] calls in [analyze].
-     */
+    // We cache several services to avoid repeated `getService` calls in `analyze`.
     @KaCachedService
     private val permissionChecker by lazy(LazyThreadSafetyMode.PUBLICATION) {
         KaAnalysisPermissionChecker.getInstance(project)
     }
 
-    /**
-     * Caches [KaBaseLifetimeTracker] to avoid repeated [Project.getService] calls in [analyze].
-     */
     @KaCachedService
     private val lifetimeTracker by lazy(LazyThreadSafetyMode.PUBLICATION) {
         KaBaseLifetimeTracker.getInstance(project)

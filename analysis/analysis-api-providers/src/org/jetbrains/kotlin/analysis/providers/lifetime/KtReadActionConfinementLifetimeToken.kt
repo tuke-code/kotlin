@@ -23,15 +23,10 @@ public class KtReadActionConfinementLifetimeToken(
 ) : KaLifetimeToken() {
     private val onCreatedTimeStamp = modificationTracker.modificationCount
 
-    /**
-     * Caches [KaAnalysisPermissionChecker] to avoid repeated [Project.getService] calls in validity assertions.
-     */
+    // We cache several services to avoid repeated `getService` calls in validity assertions.
     @KaCachedService
     private val permissionChecker = KaAnalysisPermissionChecker.getInstance(project)
 
-    /**
-     * Caches [KaLifetimeTracker] to avoid repeated [Project.getService] calls in validity assertions.
-     */
     @KaCachedService
     private val lifetimeTracker = KaLifetimeTracker.getInstance(project)
 
