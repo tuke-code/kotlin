@@ -16,7 +16,7 @@ import kotlin.reflect.KClass
  * `L2` with a dependency on another library `L1` containing the type alias declaration. If the use-site session depends on `L2` but not on
  * `L1`, the abbreviated type won't be resolvable even if the expanded type is.
  */
-class AbbreviatedTypeAttribute(
+data class AbbreviatedTypeAttribute(
     override val coneType: ConeKotlinType,
 ) : ConeAttributeWithConeType<AbbreviatedTypeAttribute>() {
     override fun union(other: AbbreviatedTypeAttribute?): AbbreviatedTypeAttribute? = null

@@ -43411,6 +43411,12 @@ public class FirPsiOldFrontendDiagnosticsTestGenerated extends AbstractFirPsiDia
       }
 
       @Test
+      @TestMetadata("mapNotNullWithElvis.kt")
+      public void testMapNotNullWithElvis() {
+        runTest("compiler/testData/diagnostics/testsWithStdLib/coroutines/mapNotNullWithElvis.kt");
+      }
+
+      @Test
       @TestMetadata("mixingSuspendability.kt")
       public void testMixingSuspendability() {
         runTest("compiler/testData/diagnostics/testsWithStdLib/coroutines/mixingSuspendability.kt");
