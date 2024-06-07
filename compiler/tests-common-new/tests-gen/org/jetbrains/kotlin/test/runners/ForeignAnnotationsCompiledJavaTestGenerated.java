@@ -775,6 +775,12 @@ public class ForeignAnnotationsCompiledJavaTestGenerated extends AbstractForeign
         }
 
         @Test
+        @TestMetadata("NullMarkedOnFunctionExtension.kt")
+        public void testNullMarkedOnFunctionExtension() {
+          runTest("compiler/testData/diagnostics/foreignAnnotationsTests/java8Tests/jspecify/strictMode/NullMarkedOnFunctionExtension.kt");
+        }
+
+        @Test
         @TestMetadata("NullMarkedVsPackageNullUnmarked.kt")
         public void testNullMarkedVsPackageNullUnmarked() {
           runTest("compiler/testData/diagnostics/foreignAnnotationsTests/java8Tests/jspecify/strictMode/NullMarkedVsPackageNullUnmarked.kt");
@@ -1028,6 +1034,12 @@ public class ForeignAnnotationsCompiledJavaTestGenerated extends AbstractForeign
         @TestMetadata("notNullTypeAgainstNullableWildcard.kt")
         public void testNotNullTypeAgainstNullableWildcard() {
           runTest("compiler/testData/diagnostics/foreignAnnotationsTests/java8Tests/jspecify/warnMode/notNullTypeAgainstNullableWildcard.kt");
+        }
+
+        @Test
+        @TestMetadata("NullMarkedOnFunctionExtension.kt")
+        public void testNullMarkedOnFunctionExtension() {
+          runTest("compiler/testData/diagnostics/foreignAnnotationsTests/java8Tests/jspecify/warnMode/NullMarkedOnFunctionExtension.kt");
         }
 
         @Test
