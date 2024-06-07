@@ -23,7 +23,7 @@ import org.jetbrains.kotlin.utils.addIfNotNull
 
 object JavaOverrideWithWrongNullabilityOverrideChecker : DeclarationChecker {
     private val typePreparatorUnwrappingEnhancement: KotlinTypePreparator = object : KotlinTypePreparator() {
-        override fun prepareType(type: KotlinTypeMarker): UnwrappedType =
+        override fun prepareType(type: KotlinTypeMarker, dropAttributes: Boolean): UnwrappedType =
             super.prepareType(type).let { it.getEnhancementDeeply() ?: it }.unwrap()
     }
 

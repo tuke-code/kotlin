@@ -273,7 +273,7 @@ class JavaNullabilityChecker(val upperBoundChecker: UpperBoundChecker) : Additio
         val typeCheckerForEnhancedTypes = NewKotlinTypeCheckerImpl(
             kotlinTypeRefiner = KotlinTypeRefiner.Default,
             kotlinTypePreparator = object : KotlinTypePreparator() {
-                override fun prepareType(type: KotlinTypeMarker): UnwrappedType =
+                override fun prepareType(type: KotlinTypeMarker, dropAttributes: Boolean): UnwrappedType =
                     super.prepareType(type).let { it.getEnhancementDeeply() ?: it }.unwrap()
             }
         )

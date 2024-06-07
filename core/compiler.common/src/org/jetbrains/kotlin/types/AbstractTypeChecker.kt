@@ -34,8 +34,8 @@ open class TypeCheckerState(
         return kotlinTypeRefiner.refineType(type)
     }
 
-    fun prepareType(type: KotlinTypeMarker): KotlinTypeMarker {
-        return kotlinTypePreparator.prepareType(type)
+    fun prepareType(type: KotlinTypeMarker, dropAttributes: Boolean = false): KotlinTypeMarker {
+        return kotlinTypePreparator.prepareType(type, dropAttributes)
     }
 
     open fun customIsSubtypeOf(subType: KotlinTypeMarker, superType: KotlinTypeMarker): Boolean = true
@@ -395,7 +395,7 @@ object AbstractTypeChecker {
 
             if (size > 1 && (state.typeSystemContext as? TypeSystemInferenceExtensionContext)?.isK2 == true) {
                 // Here we want to filter out equivalent types to avoid unnecessary forking
-                mapTo(mutableSetOf()) { state.prepareType(it).asSimpleType() ?: it }
+                mapTo(mutableSetOf()) { state.prepareType(it, dropAttributes = true).asSimpleType() ?: it }
             } else {
                 // TODO: drop this branch together with K1 code
                 map { state.prepareType(it).asSimpleType() ?: it }

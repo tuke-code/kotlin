@@ -54,7 +54,7 @@ abstract class KotlinTypePreparator : AbstractTypePreparator() {
         return type
     }
 
-    override fun prepareType(type: KotlinTypeMarker): UnwrappedType {
+    override fun prepareType(type: KotlinTypeMarker, dropAttributes: Boolean): UnwrappedType {
         require(type is KotlinType)
         val unwrappedType = type.unwrap()
         return when (unwrappedType) {
