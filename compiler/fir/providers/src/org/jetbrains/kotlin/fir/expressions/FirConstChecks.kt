@@ -313,12 +313,7 @@ private class FirConstCheckVisitor(
 
                 return when {
                     isConstWithoutInitializer -> ConstantArgumentKind.VALID_CONST
-                    propertySymbol.isConst -> {
-                        // even if called on CONSTANT_EVALUATION, it's safe to call resolvedInitializer, as intializers of const vals
-                        // are resolved at previous IMPLICIT_TYPES_BODY_RESOLVE phase
-                        val initializer = propertySymbol.resolvedInitializer
-                        propertySymbol.visit { initializer?.accept(this, data) } ?: ConstantArgumentKind.RESOLUTION_ERROR
-                    }
+                    propertySymbol.isConst -> visitVariableInitializer(propertySymbol, data)
 
                     // if it called at checkers stage it's safe to call resolvedInitializer
                     // even if it will trigger BODY_RESOLVE phase, we don't violate phase contracts
@@ -336,13 +331,19 @@ private class FirConstCheckVisitor(
             }
             is FirFieldSymbol -> {
                 if (propertySymbol.isStatic && propertySymbol.modality == Modality.FINAL && propertySymbol.hasConstantInitializer) {
-                    return ConstantArgumentKind.VALID_CONST
+                    return visitVariableInitializer(propertySymbol, data)
                 }
             }
             is FirEnumEntrySymbol -> return ConstantArgumentKind.VALID_CONST
         }
 
         return ConstantArgumentKind.NOT_CONST
+    }
+
+    private fun visitVariableInitializer(symbol: FirVariableSymbol<*>, data: Nothing?): ConstantArgumentKind {
+        // even if called on CONSTANT_EVALUATION, it's safe to call resolvedInitializer, as initializers of const vals
+        // are resolved at previous IMPLICIT_TYPES_BODY_RESOLVE phase
+        return symbol.visit { symbol.resolvedInitializer?.accept(this, data) } ?: ConstantArgumentKind.RESOLUTION_ERROR
     }
 
     override fun visitIntegerLiteralOperatorCall(
