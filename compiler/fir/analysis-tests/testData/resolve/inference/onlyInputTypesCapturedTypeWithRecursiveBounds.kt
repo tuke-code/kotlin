@@ -12,7 +12,7 @@ enum class MyEnum : I {
 open class Foo<P>(val data: Map<P, Any?>) where P : Enum<P>, P : I
 
 private fun test(node: Foo<*>) {
-    node.data.get(MyEnum.EnumEntry)
+    node.data.<!TYPE_INFERENCE_ONLY_INPUT_TYPES_ERROR!>get<!>(MyEnum.EnumEntry)
     val map = node.data
     map.get(MyEnum.EnumEntry)
 }
@@ -20,9 +20,9 @@ private fun test(node: Foo<*>) {
 open class FooEnumMap<P>(val data: EnumMap<P, Any?>) where P : Enum<P>, P : I
 
 private fun test(node: FooEnumMap<*>) {
-    node.data.get(MyEnum.EnumEntry)
+    node.data.<!TYPE_INFERENCE_ONLY_INPUT_TYPES_ERROR!>get<!>(MyEnum.EnumEntry)
     val map = node.data
-    map.get(MyEnum.EnumEntry)
+    map.<!TYPE_INFERENCE_ONLY_INPUT_TYPES_ERROR!>get<!>(MyEnum.EnumEntry)
 }
 
 open class Foo2<P : I>(val data: Map<P, Any?>)
