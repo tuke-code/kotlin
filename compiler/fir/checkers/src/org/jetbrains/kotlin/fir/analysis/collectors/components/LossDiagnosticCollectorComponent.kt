@@ -28,6 +28,6 @@ class LossDiagnosticCollectorComponent(
         }
 
         val source = element.source
-        reporter.reportOn(source, FirErrors.OTHER_ERROR, data)
+        reporter.reportOn(source, FirErrors.OTHER_ERROR_WITH_REASON, element.diagnostic.reason, data)
     }
 }
