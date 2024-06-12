@@ -372,6 +372,11 @@ enum class LanguageFeature(
     // this feature will eventually switch this warning to an error
     ProhibitScriptTopLevelInnerClasses(sinceVersion = null, kind = OTHER),
 
+    // Disabled for indefinite time. Probably will never be enabled.
+    // This flag enables additional checks in K2 for possibly lost diagnostics.
+    // As known at the moment, it never adds something to the report.
+    AdditionalErrorsInK2DiagnosticReporter(sinceVersion = null, kind = BUG_FIX), // KT-63945
+
     // Experimental features
 
     BreakContinueInInlineLambdas(null), // KT-1436
