@@ -334,10 +334,12 @@ fun compileModuleToAnalyzedFir(
 fun collectLostDiagnosticsOnCompilerOutputs(outputs: List<ModuleCompilerAnalyzedOutput>, collector: BaseDiagnosticsCollector) {
     for (output in outputs) {
         val session = output.session
-        if (session.languageVersionSettings.supportsFeature(LanguageFeature.AdditionalErrorsInK2DiagnosticReporter)) {
+        val languageVersionSettings = session.languageVersionSettings
+        if (languageVersionSettings.supportsFeature(LanguageFeature.AdditionalErrorsInK2DiagnosticReporter)) {
+            val forWarnings = languageVersionSettings.supportsFeature(LanguageFeature.AdditionalErrorsInK2DiagnosticReporterForWarnings)
             for (file in output.fir) {
                 val path = file.sourceFile?.path ?: continue
-                if (collector.diagnosticsByFilePath[path].isNullOrEmpty()) {
+                if (forWarnings || collector.diagnosticsByFilePath[path].isNullOrEmpty()) {
                     session.collectLostDiagnosticsOnFile(
                         output.scopeSession,
                         file,

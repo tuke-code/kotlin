@@ -1,0 +1,13 @@
+warning: ATTENTION!
+This build uses unsafe internal compiler arguments:
+
+-XXLanguage:-AdditionalErrorsInK2DiagnosticReporterForWarnings
+
+This mode is not recommended for production use,
+as no stability/compatibility guarantees are given on
+compiler or generated code. Use it at your own risk!
+
+compiler/testData/cli/jvm/kt63945.kt:5:17: warning: type argument for type parameter 'T' cannot be inferred because it has incompatible upper bounds: A, B (multiple incompatible classes). This will become an error in a future release.
+fun test(): B = find()
+                ^^^^
+OK

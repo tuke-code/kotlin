@@ -374,8 +374,13 @@ enum class LanguageFeature(
 
     // Disabled for indefinite time. Probably will never be enabled.
     // This flag enables additional checks in K2 for possibly lost diagnostics.
+    // These checks are executed if file has no other diagnostics, including warnings.
     // As known at the moment, it never adds something to the report.
     AdditionalErrorsInK2DiagnosticReporter(sinceVersion = null, kind = BUG_FIX), // KT-63945
+
+    // Neighbor feature for the previous one, for testing purposes
+    // With both features on, lost diagnostic checks are executed also if file has only warnings (but still no errors).
+    AdditionalErrorsInK2DiagnosticReporterForWarnings(sinceVersion = null, kind = BUG_FIX), // KT-63945
 
     // Experimental features
 

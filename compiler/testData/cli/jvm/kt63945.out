@@ -1,0 +1,4 @@
+compiler/testData/cli/jvm/kt63945.kt:5:17: error: unknown error: CS errors: /find.
+fun test(): B = find()
+                ^^^^
+COMPILATION_ERROR

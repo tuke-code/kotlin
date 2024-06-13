@@ -1053,6 +1053,16 @@ public class CliTestGenerated extends AbstractCliTest {
       runTest("compiler/testData/cli/jvm/kt51846_backendThreadsValidation3.args");
     }
 
+    @TestMetadata("kt63945.args")
+    public void testKt63945() {
+      runTest("compiler/testData/cli/jvm/kt63945.args");
+    }
+
+    @TestMetadata("kt63945a.args")
+    public void testKt63945a() {
+      runTest("compiler/testData/cli/jvm/kt63945a.args");
+    }
+
     @TestMetadata("languageVersion.args")
     public void testLanguageVersion() {
       runTest("compiler/testData/cli/jvm/languageVersion.args");
