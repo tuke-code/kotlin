@@ -43,6 +43,7 @@ import org.jetbrains.kotlin.codegen.state.GenerationState
 import org.jetbrains.kotlin.config.CommonConfigurationKeys
 import org.jetbrains.kotlin.config.CompilerConfiguration
 import org.jetbrains.kotlin.config.JVMConfigurationKeys
+import org.jetbrains.kotlin.config.LanguageFeature
 import org.jetbrains.kotlin.config.languageVersionSettings
 import org.jetbrains.kotlin.diagnostics.DiagnosticReporter
 import org.jetbrains.kotlin.diagnostics.impl.BaseDiagnosticsCollector
@@ -52,6 +53,7 @@ import org.jetbrains.kotlin.fir.backend.jvm.*
 import org.jetbrains.kotlin.fir.backend.utils.extractFirDeclarations
 import org.jetbrains.kotlin.fir.extensions.FirAnalysisHandlerExtension
 import org.jetbrains.kotlin.fir.extensions.FirExtensionRegistrar
+import org.jetbrains.kotlin.fir.languageVersionSettings
 import org.jetbrains.kotlin.fir.pipeline.*
 import org.jetbrains.kotlin.fir.resolve.providers.FirSymbolProvider
 import org.jetbrains.kotlin.fir.session.IncrementalCompilationContext
@@ -320,8 +322,31 @@ fun compileModuleToAnalyzedFir(
     }
     outputs.runPlatformCheckers(diagnosticsReporter)
 
+    val hasSomeErrors = diagnosticsReporter.hasErrors
+    if (!hasSomeErrors) {
+        collectLostDiagnosticsOnCompilerOutputs(outputs, diagnosticsReporter)
+    }
+
     performanceManager?.notifyAnalysisFinished()
     return FirResult(outputs)
+}
+
+fun collectLostDiagnosticsOnCompilerOutputs(outputs: List<ModuleCompilerAnalyzedOutput>, collector: BaseDiagnosticsCollector) {
+    for (output in outputs) {
+        val session = output.session
+        if (session.languageVersionSettings.supportsFeature(LanguageFeature.AdditionalErrorsInK2DiagnosticReporter)) {
+            for (file in output.fir) {
+                val path = file.sourceFile?.path ?: continue
+                if (collector.diagnosticsByFilePath[path].isNullOrEmpty()) {
+                    session.collectLostDiagnosticsOnFile(
+                        output.scopeSession,
+                        file,
+                        collector
+                    )
+                }
+            }
+        }
+    }
 }
 
 fun createIncrementalCompilationScope(

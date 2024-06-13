@@ -20,6 +20,7 @@ import org.jetbrains.kotlin.cli.common.messages.MessageCollector
 import org.jetbrains.kotlin.cli.common.prepareJvmSessions
 import org.jetbrains.kotlin.cli.jvm.compiler.pipeline.ModuleCompilerEnvironment
 import org.jetbrains.kotlin.cli.jvm.compiler.pipeline.ModuleCompilerIrBackendInput
+import org.jetbrains.kotlin.cli.jvm.compiler.pipeline.collectLostDiagnosticsOnCompilerOutputs
 import org.jetbrains.kotlin.cli.jvm.compiler.pipeline.convertToIrAndActualizeForJvm
 import org.jetbrains.kotlin.cli.jvm.compiler.pipeline.generateCodeFromIr
 import org.jetbrains.kotlin.codegen.state.GenerationState
@@ -28,18 +29,15 @@ import org.jetbrains.kotlin.compiler.plugin.ComponentRegistrar
 import org.jetbrains.kotlin.config.CommonConfigurationKeys
 import org.jetbrains.kotlin.config.CompilerConfiguration
 import org.jetbrains.kotlin.config.JVMConfigurationKeys
-import org.jetbrains.kotlin.config.LanguageFeature
 import org.jetbrains.kotlin.diagnostics.DiagnosticReporterFactory
 import org.jetbrains.kotlin.diagnostics.impl.BaseDiagnosticsCollector
 import org.jetbrains.kotlin.diagnostics.impl.PendingDiagnosticsCollectorWithSuppress
 import org.jetbrains.kotlin.fir.backend.jvm.JvmFir2IrExtensions
 import org.jetbrains.kotlin.fir.extensions.FirAnalysisHandlerExtension
 import org.jetbrains.kotlin.fir.extensions.FirExtensionRegistrar
-import org.jetbrains.kotlin.fir.languageVersionSettings
 import org.jetbrains.kotlin.fir.pipeline.Fir2IrActualizedResult
 import org.jetbrains.kotlin.fir.pipeline.FirResult
 import org.jetbrains.kotlin.fir.pipeline.buildResolveAndCheckFirFromKtFiles
-import org.jetbrains.kotlin.fir.pipeline.collectLostDiagnostics
 import org.jetbrains.kotlin.fir.pipeline.runPlatformCheckers
 import org.jetbrains.kotlin.load.kotlin.incremental.components.IncrementalCompilationComponents
 import org.jetbrains.kotlin.modules.Module
@@ -215,22 +213,7 @@ object FirKotlinToJvmBytecodeCompiler {
 
         val hasSomeErrors = syntaxErrors || scriptsInCommonSourcesErrors || diagnosticsReporter.hasErrors
         if (!hasSomeErrors) {
-            for (output in outputs) {
-                val session = output.session
-                if (session.languageVersionSettings.supportsFeature(LanguageFeature.AdditionalErrorsInK2DiagnosticReporter)) {
-                    for (file in output.fir) {
-                        val path = file.sourceFile?.path ?: continue
-                        val diagnostics = diagnosticsReporter.diagnosticsByFilePath[path].orEmpty()
-                        if (diagnostics.isEmpty()) {
-                            session.collectLostDiagnostics(
-                                output.scopeSession,
-                                file,
-                                DiagnosticReporterFactory.createPendingReporter()
-                            )
-                        }
-                    }
-                }
-            }
+            collectLostDiagnosticsOnCompilerOutputs(outputs, diagnosticsReporter)
         }
 
         performanceManager?.notifyAnalysisFinished()
