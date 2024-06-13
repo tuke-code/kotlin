@@ -23,7 +23,7 @@ import org.jetbrains.kotlin.fir.analysis.diagnostics.FirErrors
 import org.jetbrains.kotlin.fir.builder.FirSyntaxErrors
 import org.jetbrains.kotlin.fir.declarations.*
 import org.jetbrains.kotlin.fir.expressions.*
-import org.jetbrains.kotlin.fir.pipeline.collectLostDiagnostics
+import org.jetbrains.kotlin.fir.pipeline.collectLostDiagnosticsOnFile
 import org.jetbrains.kotlin.fir.pipeline.runCheckers
 import org.jetbrains.kotlin.fir.references.FirNamedReference
 import org.jetbrains.kotlin.fir.references.FirResolvedNamedReference
@@ -701,7 +701,7 @@ open class FirDiagnosticCollectorService(val testServices: TestServices) : TestS
             for (file in allFiles) {
                 val diagnostics = result[file]
                 if (diagnostics.isEmpty() && !hasSyntaxDiagnostics(file)) {
-                    platformPart.session.collectLostDiagnostics(
+                    platformPart.session.collectLostDiagnosticsOnFile(
                         platformPart.firAnalyzerFacade.scopeSession,
                         file,
                         DiagnosticReporterFactory.createPendingReporter()

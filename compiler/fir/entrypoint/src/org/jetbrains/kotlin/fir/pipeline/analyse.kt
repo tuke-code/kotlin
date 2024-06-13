@@ -44,7 +44,7 @@ fun FirSession.runCheckers(
     }
 }
 
-fun FirSession.collectLostDiagnostics(
+fun FirSession.collectLostDiagnosticsOnFile(
     scopeSession: ScopeSession,
     file: FirFile,
     reporter: BaseDiagnosticsCollector,
