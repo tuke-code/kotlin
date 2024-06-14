@@ -128,12 +128,16 @@ private fun ConeSimpleKotlinType.enhanceInflexibleType(
             // Note: this means that almost always isDeprecation = false (three lines below)
             //throw AssertionError()
         }
-        val newAttributes = attributes.plus(EnhancedTypeForWarningAttribute(enhanced, isDeprecation = convertErrorToWarning && effectiveQualifiers.enhancesSomethingForError()))
 
         if (enhancedTag != lookupTag) {
             // Handle case when mutability was enhanced and nullability was enhanced for warning.
-            enhancedTag.constructType(enhanced.typeArguments, isNullable, newAttributes)
+            enhancedTag.constructType(enhanced.typeArguments, isNullable, enhanced.attributes)
         } else {
+            val newAttributes = attributes.plus(
+                EnhancedTypeForWarningAttribute(
+                    enhanced, isDeprecation = convertErrorToWarning && effectiveQualifiers.enhancesSomethingForError()
+                )
+            )
             this.withAttributes(newAttributes).withArguments(enhanced.typeArguments)
         }.applyIf(isFromDefinitelyNotNullType) {
             // If the original type was DNN, we need to wrap the result in a DNN type because `this` is the non-DNN part of the original.
