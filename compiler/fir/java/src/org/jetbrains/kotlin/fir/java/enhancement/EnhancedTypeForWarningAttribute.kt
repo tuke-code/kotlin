@@ -30,7 +30,7 @@ data class EnhancedTypeForWarningAttribute(
         get() = true
 }
 
-val ConeAttributes.enhancedTypeForWarning: EnhancedTypeForWarningAttribute? by ConeAttributes.attributeAccessor<EnhancedTypeForWarningAttribute>()
+private val ConeAttributes.enhancedTypeForWarning: EnhancedTypeForWarningAttribute? by ConeAttributes.attributeAccessor<EnhancedTypeForWarningAttribute>()
 
 val ConeKotlinType.enhancedTypeForWarning: ConeKotlinType?
     get() = attributes.enhancedTypeForWarning?.coneType
