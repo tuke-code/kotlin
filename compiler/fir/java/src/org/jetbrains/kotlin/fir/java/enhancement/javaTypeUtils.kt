@@ -123,6 +123,11 @@ private fun ConeSimpleKotlinType.enhanceInflexibleType(
     )
 
     return if (enhanced != null && (effectiveQualifiers.isNullabilityQualifierForWarning || convertErrorToWarning)) {
+        if (!effectiveQualifiers.isNullabilityQualifierForWarning && convertErrorToWarning) {
+            // 1 hit found: testErrorArgumentOfWarningBefore
+            // Note: this means that almost always isDeprecation = false (three lines below)
+            //throw AssertionError()
+        }
         val newAttributes = attributes.plus(EnhancedTypeForWarningAttribute(enhanced, isDeprecation = convertErrorToWarning && effectiveQualifiers.enhancesSomethingForError()))
 
         if (enhancedTag != lookupTag) {
