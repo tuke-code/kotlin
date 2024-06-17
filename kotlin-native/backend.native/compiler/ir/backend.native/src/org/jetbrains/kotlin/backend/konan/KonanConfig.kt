@@ -15,7 +15,6 @@ import org.jetbrains.kotlin.cli.common.config.kotlinSourceRoots
 import org.jetbrains.kotlin.cli.common.messages.CompilerMessageSeverity
 import org.jetbrains.kotlin.config.CommonConfigurationKeys
 import org.jetbrains.kotlin.config.CompilerConfiguration
-import org.jetbrains.kotlin.config.IrVerificationMode
 import org.jetbrains.kotlin.config.KotlinCompilerVersion
 import org.jetbrains.kotlin.ir.linkage.partial.partialLinkageConfig
 import org.jetbrains.kotlin.konan.file.File
@@ -205,6 +204,11 @@ class KonanConfig(val project: Project, val configuration: CompilerConfiguration
 
     val fixedBlockPageSize: UInt
         get() = configuration.get(BinaryOptions.fixedBlockPageSize) ?: defaultFixedBlockPageSize
+
+    private val defaultFixedBlockStartupDelay: UInt get() = 32u
+
+    val fixedBlockStartupDelay: UInt
+        get() = configuration.get(BinaryOptions.fixedBlockStartupDelay) ?: defaultFixedBlockStartupDelay
 
     val concurrentWeakSweep: Boolean
         get() = configuration.get(BinaryOptions.concurrentWeakSweep) ?: true
@@ -546,6 +550,8 @@ class KonanConfig(val project: Project, val configuration: CompilerConfiguration
             append("-gc_mark_single_threaded${if (gcMarkSingleThreaded) "TRUE" else "FALSE"}")
         if (fixedBlockPageSize != defaultFixedBlockPageSize)
             append("-fixed_block_page_size$fixedBlockPageSize")
+        if (fixedBlockStartupDelay != defaultFixedBlockStartupDelay)
+            append("-fixed_block_startup_delay$fixedBlockStartupDelay")
     }
 
     private val userCacheFlavorString = buildString {

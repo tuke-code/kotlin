@@ -96,7 +96,7 @@ ALWAYS_INLINE uint8_t* CustomAllocator::Allocate(uint64_t size) noexcept {
     RuntimeAssert(size, "CustomAllocator::Allocate cannot allocate 0 bytes");
     CustomAllocDebug("CustomAllocator::Allocate(%" PRIu64 ")", size);
     uint64_t cellCount = (size + sizeof(Cell) - 1) / sizeof(Cell);
-    if (cellCount <= FIXED_BLOCK_PAGE_MAX_BLOCK_SIZE) {
+    if (cellCount <= FIXED_BLOCK_PAGE_MAX_BLOCK_SIZE && !heap_.IsBlockSizeDelayed(cellCount)) {
         return AllocateInFixedBlockPage(cellCount);
     } else if (cellCount > NEXT_FIT_PAGE_MAX_BLOCK_SIZE) {
         return AllocateInSingleObjectPage(cellCount);
