@@ -121,6 +121,7 @@ object FirJvmErrors {
     val JVM_DEFAULT_IN_DECLARATION: KtDiagnosticFactory1<String> = KtDiagnosticFactory1("JVM_DEFAULT_IN_DECLARATION", ERROR, SourceElementPositioningStrategies.DECLARATION_SIGNATURE_OR_DEFAULT, KtElement::class)
     val JVM_DEFAULT_WITH_COMPATIBILITY_IN_DECLARATION: KtDiagnosticFactory0 = KtDiagnosticFactory0("JVM_DEFAULT_WITH_COMPATIBILITY_IN_DECLARATION", ERROR, SourceElementPositioningStrategies.DEFAULT, KtElement::class)
     val JVM_DEFAULT_WITH_COMPATIBILITY_NOT_ON_INTERFACE: KtDiagnosticFactory0 = KtDiagnosticFactory0("JVM_DEFAULT_WITH_COMPATIBILITY_NOT_ON_INTERFACE", ERROR, SourceElementPositioningStrategies.DEFAULT, KtElement::class)
+    val EXPLICIT_OVERRIDE_REQUIRED_IN_COMPATIBILITY_MODE: KtDiagnosticFactory2<FirCallableSymbol<*>, FirCallableSymbol<*>> = KtDiagnosticFactory2("EXPLICIT_OVERRIDE_REQUIRED_IN_COMPATIBILITY_MODE", ERROR, SourceElementPositioningStrategies.DECLARATION_SIGNATURE_OR_DEFAULT, KtElement::class)
 
     // External Declaration
     val EXTERNAL_DECLARATION_CANNOT_BE_ABSTRACT: KtDiagnosticFactory0 = KtDiagnosticFactory0("EXTERNAL_DECLARATION_CANNOT_BE_ABSTRACT", ERROR, SourceElementPositioningStrategies.ABSTRACT_MODIFIER, KtDeclaration::class)

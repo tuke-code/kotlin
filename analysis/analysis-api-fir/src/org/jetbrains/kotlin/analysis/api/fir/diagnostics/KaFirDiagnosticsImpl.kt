@@ -4882,6 +4882,13 @@ internal class JvmDefaultWithCompatibilityNotOnInterfaceImpl(
     token: KaLifetimeToken,
 ) : KaAbstractFirDiagnostic<KtElement>(firDiagnostic, token), KaFirDiagnostic.JvmDefaultWithCompatibilityNotOnInterface
 
+internal class ExplicitOverrideRequiredInCompatibilityModeImpl(
+    override val specialization: KaCallableSymbol,
+    override val original: KaCallableSymbol,
+    firDiagnostic: KtPsiDiagnostic,
+    token: KaLifetimeToken,
+) : KaAbstractFirDiagnostic<KtElement>(firDiagnostic, token), KaFirDiagnostic.ExplicitOverrideRequiredInCompatibilityMode
+
 internal class ExternalDeclarationCannotBeAbstractImpl(
     firDiagnostic: KtPsiDiagnostic,
     token: KaLifetimeToken,

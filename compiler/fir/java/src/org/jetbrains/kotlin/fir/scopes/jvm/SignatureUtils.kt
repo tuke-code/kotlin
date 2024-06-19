@@ -8,7 +8,9 @@ package org.jetbrains.kotlin.fir.scopes.jvm
 import org.jetbrains.kotlin.builtins.jvm.JavaToKotlinClassMap
 import org.jetbrains.kotlin.fir.FirElement
 import org.jetbrains.kotlin.fir.containingClassLookupTag
+import org.jetbrains.kotlin.fir.declarations.FirCallableDeclaration
 import org.jetbrains.kotlin.fir.declarations.FirFunction
+import org.jetbrains.kotlin.fir.declarations.FirProperty
 import org.jetbrains.kotlin.fir.declarations.FirSimpleFunction
 import org.jetbrains.kotlin.fir.symbols.impl.FirTypeParameterSymbol
 import org.jetbrains.kotlin.fir.types.*
@@ -64,11 +66,21 @@ fun FirFunction.computeJvmDescriptor(
     }
 }
 
+fun FirProperty.computeJvmDescriptor(): String = buildString {
+    append(name.asString())
+
+    append("(")
+    receiverParameter?.let {
+        appendParameterType(FirTypeRef::coneTypeSafe, it.typeRef, it, this@computeJvmDescriptor)
+    }
+    append(")")
+}
+
 private fun StringBuilder.appendParameterType(
     typeConversion: (FirTypeRef) -> ConeKotlinType?,
     type: FirTypeRef,
     parameter: FirElement,
-    firFunction: FirFunction,
+    callable: FirCallableDeclaration,
 ) {
     typeConversion(type)?.let { coneType ->
         try {
@@ -85,7 +97,7 @@ private fun StringBuilder.appendParameterType(
                 }
 
                 withFirEntry("parameter", parameter)
-                withFirEntry("function", firFunction)
+                withFirEntry("function", callable)
             }
         }
     }

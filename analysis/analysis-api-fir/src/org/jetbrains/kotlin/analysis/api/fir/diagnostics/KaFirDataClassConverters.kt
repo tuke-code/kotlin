@@ -5801,6 +5801,14 @@ internal val KT_DIAGNOSTIC_CONVERTER = KaDiagnosticConverterBuilder.buildConvert
             token,
         )
     }
+    add(FirJvmErrors.EXPLICIT_OVERRIDE_REQUIRED_IN_COMPATIBILITY_MODE) { firDiagnostic ->
+        ExplicitOverrideRequiredInCompatibilityModeImpl(
+            firSymbolBuilder.callableBuilder.buildCallableSymbol(firDiagnostic.a),
+            firSymbolBuilder.callableBuilder.buildCallableSymbol(firDiagnostic.b),
+            firDiagnostic as KtPsiDiagnostic,
+            token,
+        )
+    }
     add(FirJvmErrors.EXTERNAL_DECLARATION_CANNOT_BE_ABSTRACT) { firDiagnostic ->
         ExternalDeclarationCannotBeAbstractImpl(
             firDiagnostic as KtPsiDiagnostic,

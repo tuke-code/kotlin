@@ -165,6 +165,10 @@ object JVM_DIAGNOSTICS_LIST : DiagnosticList("FirJvmErrors") {
         }
         val JVM_DEFAULT_WITH_COMPATIBILITY_IN_DECLARATION by error<KtElement>()
         val JVM_DEFAULT_WITH_COMPATIBILITY_NOT_ON_INTERFACE by error<KtElement>()
+        val EXPLICIT_OVERRIDE_REQUIRED_IN_COMPATIBILITY_MODE by error<KtElement>(PositioningStrategy.DECLARATION_SIGNATURE_OR_DEFAULT) {
+            parameter<FirCallableSymbol<*>>("specialization")
+            parameter<FirCallableSymbol<*>>("original")
+        }
     }
 
     val EXTERNAL_DECLARATION by object : DiagnosticGroup("External Declaration") {

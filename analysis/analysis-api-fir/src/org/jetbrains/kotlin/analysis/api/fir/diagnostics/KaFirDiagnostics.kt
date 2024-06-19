@@ -4046,6 +4046,12 @@ sealed interface KaFirDiagnostic<PSI : PsiElement> : KaDiagnosticWithPsi<PSI> {
         override val diagnosticClass get() = JvmDefaultWithCompatibilityNotOnInterface::class
     }
 
+    interface ExplicitOverrideRequiredInCompatibilityMode : KaFirDiagnostic<KtElement> {
+        override val diagnosticClass get() = ExplicitOverrideRequiredInCompatibilityMode::class
+        val specialization: KaCallableSymbol
+        val original: KaCallableSymbol
+    }
+
     interface ExternalDeclarationCannotBeAbstract : KaFirDiagnostic<KtDeclaration> {
         override val diagnosticClass get() = ExternalDeclarationCannotBeAbstract::class
     }
