@@ -6,6 +6,7 @@
 package org.jetbrains.kotlin.fir.scopes.jvm
 
 import org.jetbrains.kotlin.builtins.jvm.JavaToKotlinClassMap
+import org.jetbrains.kotlin.fir.FirElement
 import org.jetbrains.kotlin.fir.containingClassLookupTag
 import org.jetbrains.kotlin.fir.declarations.FirFunction
 import org.jetbrains.kotlin.fir.declarations.FirSimpleFunction
@@ -46,26 +47,11 @@ fun FirFunction.computeJvmDescriptor(
     }
 
     append("(")
+    receiverParameter?.let {
+        appendParameterType(typeConversion, it.typeRef, it, this@computeJvmDescriptor)
+    }
     for (parameter in valueParameters) {
-        typeConversion(parameter.returnTypeRef)?.let { coneType ->
-            try {
-                appendConeType(coneType, typeConversion, mutableSetOf())
-            } catch (e: ConcurrentModificationException) {
-                errorWithAttachment("CME from appendConeType", cause = e) {
-                    withEntry("typeClass", coneType::class.simpleName)
-                    withEntry("type", coneType) {
-                        try {
-                            it.renderForDebugging()
-                        } catch (e: Throwable) {
-                            "Render is failed due to ${e::class}"
-                        }
-                    }
-
-                    withFirEntry("parameter", parameter)
-                    withFirEntry("function", this@computeJvmDescriptor)
-                }
-            }
-        }
+        appendParameterType(typeConversion, parameter.returnTypeRef, parameter, this@computeJvmDescriptor)
     }
     append(")")
 
@@ -74,6 +60,33 @@ fun FirFunction.computeJvmDescriptor(
             append("V")
         } else {
             typeConversion(returnTypeRef)?.let { appendConeType(it, typeConversion, mutableSetOf()) }
+        }
+    }
+}
+
+private fun StringBuilder.appendParameterType(
+    typeConversion: (FirTypeRef) -> ConeKotlinType?,
+    type: FirTypeRef,
+    parameter: FirElement,
+    firFunction: FirFunction,
+) {
+    typeConversion(type)?.let { coneType ->
+        try {
+            appendConeType(coneType, typeConversion, mutableSetOf())
+        } catch (e: ConcurrentModificationException) {
+            errorWithAttachment("CME from appendConeType", cause = e) {
+                withEntry("typeClass", coneType::class.simpleName)
+                withEntry("type", coneType) {
+                    try {
+                        it.renderForDebugging()
+                    } catch (e: Throwable) {
+                        "Render is failed due to ${e::class}"
+                    }
+                }
+
+                withFirEntry("parameter", parameter)
+                withFirEntry("function", firFunction)
+            }
         }
     }
 }
