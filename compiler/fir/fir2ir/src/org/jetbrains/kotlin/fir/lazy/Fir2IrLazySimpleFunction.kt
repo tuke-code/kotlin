@@ -29,28 +29,28 @@ class Fir2IrLazySimpleFunction(
     startOffset: Int,
     endOffset: Int,
     origin: IrDeclarationOrigin,
-    override val fir: FirSimpleFunction,
+    fir: FirSimpleFunction,
     private val firParent: FirRegularClass?,
     symbol: IrSimpleFunctionSymbol,
     parent: IrDeclarationParent,
     isFakeOverride: Boolean
-) : AbstractFir2IrLazyFunction<FirSimpleFunction>(c, startOffset, endOffset, origin, symbol, parent, isFakeOverride) {
+) : AbstractFir2IrLazyFunction<FirSimpleFunction>(c, startOffset, endOffset, origin, symbol, parent, isFakeOverride, fir) {
     init {
         symbol.bind(this)
         classifierStorage.preCacheTypeParameters(fir)
     }
 
-    override var annotations: List<IrConstructorCall> by createLazyAnnotations()
+    override var annotations: List<IrConstructorCall> = createNonLazyAnnotations()
 
     override var name: Name
         get() = fir.name
         set(_) = mutationNotSupported()
 
-    override var returnType: IrType by lazyVar(lock) {
+    override var returnType: IrType = run {
         fir.returnTypeRef.toIrType(typeConverter)
     }
 
-    override var dispatchReceiverParameter: IrValueParameter? by lazyVar(lock) {
+    override var dispatchReceiverParameter: IrValueParameter? = run {
         val containingClass = parent as? IrClass
         if (containingClass != null && shouldHaveDispatchReceiver(containingClass)) {
             val thisType = Fir2IrCallableDeclarationsGenerator.computeDispatchReceiverType(
@@ -63,7 +63,7 @@ class Fir2IrLazySimpleFunction(
         } else null
     }
 
-    override var extensionReceiverParameter: IrValueParameter? by lazyVar(lock) {
+    override var extensionReceiverParameter: IrValueParameter? = run {
         fir.receiverParameter?.let {
             createThisReceiverParameter(it.typeRef.toIrType(typeConverter), it)
         }
@@ -71,7 +71,7 @@ class Fir2IrLazySimpleFunction(
 
     override var contextReceiverParametersCount: Int = fir.contextReceiversForFunctionOrContainingProperty().size
 
-    override var valueParameters: List<IrValueParameter> by lazyVar(lock) {
+    override var valueParameters: List<IrValueParameter> = run {
         declarationStorage.enterScope(this.symbol)
 
         buildList {

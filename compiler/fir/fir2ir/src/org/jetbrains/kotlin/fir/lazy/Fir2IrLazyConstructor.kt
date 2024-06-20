@@ -47,7 +47,7 @@ class Fir2IrLazyConstructor(
         classifierStorage.preCacheTypeParameters(fir)
     }
 
-    override var annotations: List<IrConstructorCall> by createLazyAnnotations()
+    override var annotations: List<IrConstructorCall> = createNonLazyAnnotations()
     override lateinit var typeParameters: List<IrTypeParameter>
 
     override var isPrimary: Boolean
@@ -79,11 +79,11 @@ class Fir2IrLazyConstructor(
     override var visibility: DescriptorVisibility = c.visibilityConverter.convertToDescriptorVisibility(fir.visibility)
         set(_) = mutationNotSupported()
 
-    override var returnType: IrType by lazyVar(lock) {
+    override var returnType: IrType = run {
         fir.returnTypeRef.toIrType(typeConverter)
     }
 
-    override var dispatchReceiverParameter: IrValueParameter? by lazyVar(lock) {
+    override var dispatchReceiverParameter: IrValueParameter? = run {
         val containingClass = parent as? IrClass
         val outerClass = containingClass?.parentClassOrNull
         if (containingClass?.isInner == true && outerClass != null) {
@@ -102,7 +102,7 @@ class Fir2IrLazyConstructor(
 
     override var contextReceiverParametersCount: Int = fir.contextReceivers.size
 
-    override var valueParameters: List<IrValueParameter> by lazyVar(lock) {
+    override var valueParameters: List<IrValueParameter> = run {
         declarationStorage.enterScope(this.symbol)
 
         buildList {

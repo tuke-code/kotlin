@@ -39,40 +39,37 @@ class Fir2IrLazyPropertyAccessor(
     parent: IrDeclarationParent,
     isFakeOverride: Boolean,
     override var correspondingPropertySymbol: IrPropertySymbol?
-) : AbstractFir2IrLazyFunction<FirCallableDeclaration>(c, startOffset, endOffset, origin, symbol, parent, isFakeOverride) {
+) : AbstractFir2IrLazyFunction<FirCallableDeclaration>(c, startOffset, endOffset, origin, symbol, parent, isFakeOverride,firAccessor ?: firParentProperty) {
     init {
         symbol.bind(this)
     }
-
-    override val fir: FirCallableDeclaration
-        get() = firAccessor ?: firParentProperty
 
     // TODO: investigate why some deserialized properties are inline
     override var isInline: Boolean
         get() = firAccessor?.isInline == true
         set(_) = mutationNotSupported()
 
-    override var annotations: List<IrConstructorCall> by when {
-        firAccessor != null -> createLazyAnnotations()
-        else -> lazyVar<List<IrConstructorCall>>(lock) { emptyList() }
+    override var annotations: List<IrConstructorCall> = when {
+        firAccessor != null -> createNonLazyAnnotations()
+        else -> emptyList()
     }
 
     override var name: Name
         get() = Name.special("<${if (isSetter) "set" else "get"}-${firParentProperty.name}>")
         set(_) = mutationNotSupported()
 
-    override var returnType: IrType by lazyVar(lock) {
+    override var returnType: IrType = run {
         if (isSetter) builtins.unitType else firParentProperty.returnTypeRef.toIrType(typeConverter, conversionTypeContext)
     }
 
-    override var dispatchReceiverParameter: IrValueParameter? by lazyVar(lock) {
+    override var dispatchReceiverParameter: IrValueParameter? = run {
         val containingClass = (parent as? IrClass)?.takeUnless { it.isFacadeClass }
         if (containingClass != null && shouldHaveDispatchReceiver(containingClass)) {
             createThisReceiverParameter(thisType = containingClass.thisReceiver?.type ?: error("No this receiver for containing class"))
         } else null
     }
 
-    override var extensionReceiverParameter: IrValueParameter? by lazyVar(lock) {
+    override var extensionReceiverParameter: IrValueParameter? = run {
         firParentProperty.receiverParameter?.let {
             createThisReceiverParameter(it.typeRef.toIrType(typeConverter, conversionTypeContext), it)
         }
@@ -80,7 +77,7 @@ class Fir2IrLazyPropertyAccessor(
 
     override var contextReceiverParametersCount: Int = fir.contextReceiversForFunctionOrContainingProperty().size
 
-    override var valueParameters: List<IrValueParameter> by lazyVar(lock) {
+    override var valueParameters: List<IrValueParameter> = run {
         if (!isSetter && contextReceiverParametersCount == 0) emptyList()
         else {
             declarationStorage.enterScope(this.symbol)
@@ -157,5 +154,5 @@ class Fir2IrLazyPropertyAccessor(
     override val containerSource: DeserializedContainerSource?
         get() = firParentProperty.containerSource
 
-    private val conversionTypeContext = if (isSetter) ConversionTypeOrigin.SETTER else ConversionTypeOrigin.DEFAULT
+    private val conversionTypeContext get() = if (isSetter) ConversionTypeOrigin.SETTER else ConversionTypeOrigin.DEFAULT
 }

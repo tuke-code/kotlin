@@ -46,7 +46,7 @@ class Fir2IrLazyField(
         symbol.bind(this)
     }
 
-    override var annotations: List<IrConstructorCall> by createLazyAnnotations()
+    override var annotations: List<IrConstructorCall> = createNonLazyAnnotations()
 
     @ObsoleteDescriptorBasedAPI
     override val descriptor: PropertyDescriptor
@@ -75,7 +75,7 @@ class Fir2IrLazyField(
         get() = fir.returnTypeRef.toIrType(c)
         set(_) = mutationNotSupported()
 
-    override var initializer: IrExpressionBody? by lazyVar(lock) {
+    override var initializer: IrExpressionBody? = run {
         val field = fir.unwrapFakeOverrides()
         val evaluatedInitializer = (field.propertyIfBackingField as? FirProperty)?.evaluatedInitializer?.unwrapOr<FirExpression> {}
         when (val initializer = evaluatedInitializer ?: field.initializer) {
