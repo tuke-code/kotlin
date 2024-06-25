@@ -32,15 +32,9 @@ internal class JvmLateinitLowering(private val context: JvmBackendContext) : Fil
     override fun lower(irFile: IrFile) {
         val transformer = Transformer(context)
         irFile.transformChildrenVoid(transformer)
-
-        for (variable in transformer.lateinitVariables) {
-            variable.isLateinit = false
-        }
     }
 
     private class Transformer(private val backendContext: JvmBackendContext) : IrElementTransformerVoid() {
-        val lateinitVariables = mutableListOf<IrVariable>()
-
         override fun visitField(declaration: IrField): IrStatement {
             if (declaration.isLateinitBackingField()) {
                 assert(declaration.initializer == null) {
@@ -62,8 +56,6 @@ internal class JvmLateinitLowering(private val context: JvmBackendContext) : Fil
                 declaration.isVar = true
                 declaration.initializer =
                     IrConstImpl.constNull(declaration.startOffset, declaration.endOffset, backendContext.irBuiltIns.nothingNType)
-
-                lateinitVariables += declaration
             }
 
             return declaration
