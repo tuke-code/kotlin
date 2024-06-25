@@ -62,7 +62,6 @@ void Kotlin_Uuid_getRandomBytes(KRef byteArray, KInt size) {
         if (ret >= 0) {
             count += ret;
         } else if (errno != EINTR) { // repeat if interrupted
-            throwReadingRandomBytesFailed("getrandom returned a negative value: %ld, errno: %d", ret, errno);
             throwReadingRandomBytesFailed("getrandom returned a negative value: %ld, error: %s", ret, strerror(errno));
         }
     }
