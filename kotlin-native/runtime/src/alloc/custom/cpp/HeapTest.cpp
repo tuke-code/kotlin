@@ -8,6 +8,7 @@
 #include <random>
 
 #include "CompilerConstants.hpp"
+#include "CustomAllocConstants.hpp"
 #include "ExtraObjectPage.hpp"
 #include "FixedBlockPage.hpp"
 #include "GCApi.hpp"
@@ -47,8 +48,10 @@ TEST(CustomAllocTest, HeapReuseFixedBlockPages) {
     FixedBlockPage* pages[MAX];
     kotlin::alloc::FinalizerQueue finalizerQueue;
     for (int blocks = MIN; blocks < MAX; ++blocks) {
-        pages[blocks] = heap.GetFixedBlockPage(blocks, finalizerQueue);
-        uint8_t* obj = pages[blocks]->TryAllocate(blocks);
+        uint32_t bucket = FixedBlockPage::BucketIndex(blocks);
+        uint32_t bucketSize = FixedBlockPage::BucketSize(blocks);
+        pages[blocks] = heap.GetFixedBlockPage(bucket, bucketSize, finalizerQueue);
+        uint8_t* obj = pages[blocks]->TryAllocate(bucketSize);
         size_t size = installType(obj, &fakeTypes[blocks]);
         EXPECT_EQ(size, static_cast<size_t>(blocks * 8));
         mark(obj); // to make the page survive a sweep
@@ -57,7 +60,9 @@ TEST(CustomAllocTest, HeapReuseFixedBlockPages) {
     auto gcHandle = kotlin::gc::GCHandle::createFakeForTests();
     heap.Sweep(gcHandle);
     for (int blocks = MIN; blocks < MAX; ++blocks) {
-        EXPECT_EQ(pages[blocks], heap.GetFixedBlockPage(blocks, finalizerQueue));
+        uint32_t bucket = FixedBlockPage::BucketIndex(blocks);
+        uint32_t bucketSize = FixedBlockPage::BucketSize(blocks);
+        EXPECT_EQ(pages[blocks], heap.GetFixedBlockPage(bucket, bucketSize, finalizerQueue));
     }
 }
 
@@ -79,11 +84,11 @@ TEST(CustomAllocTest, HeapReuseNextFitPages) {
 
 TEST(CustomAllocTest, HeapFixedBlockPageStartupDelay) {
     Heap heap(kotlin::compiler::fixedBlockStartupDelay());
-    for (int blocks = MIN_BLOCK_SIZE; blocks < FIXED_BLOCK_PAGE_MAX_BLOCK_SIZE; ++blocks) {
+    for (uint32_t bucket = 0; bucket < FIXED_BLOCK_PAGE_MAX_BUCKET; ++bucket) {
         for (int i = 0 ; i < kotlin::compiler::fixedBlockStartupDelay() ; ++i) {
-            EXPECT_TRUE(heap.IsBlockSizeDelayed(blocks));
+            EXPECT_TRUE(heap.IsFixedBlockPageBucketDelayed(bucket));
         }
-        EXPECT_FALSE(heap.IsBlockSizeDelayed(blocks));
+        EXPECT_FALSE(heap.IsFixedBlockPageBucketDelayed(bucket));
     }
 }
 

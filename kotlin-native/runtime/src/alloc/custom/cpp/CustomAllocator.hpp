@@ -9,6 +9,7 @@
 #include <atomic>
 #include <cstring>
 
+#include "CustomAllocConstants.hpp"
 #include "ExtraObjectData.hpp"
 #include "ExtraObjectPage.hpp"
 #include "Heap.hpp"
@@ -50,7 +51,7 @@ private:
     uint8_t* AllocateInNextFitPageSlowPath(uint32_t cellCount) noexcept;
 
     uint8_t* AllocateInFixedBlockPage(uint32_t cellCount) noexcept;
-    uint8_t* AllocateInFixedBlockPageSlowPath(FixedBlockPage* overflownPage, uint32_t cellCount) noexcept;
+    uint8_t* AllocateInFixedBlockPageSlowPath(FixedBlockPage* overflownPage, uint32_t bucket, uint32_t cellCount) noexcept;
 
     uint8_t* AllocateExtraObject() noexcept;
     uint8_t* AllocateExtraObjectSlowPath() noexcept;
@@ -58,7 +59,7 @@ private:
 
     Heap& heap_;
     NextFitPage* nextFitPage_;
-    FixedBlockPage* fixedBlockPages_[FIXED_BLOCK_PAGE_MAX_BLOCK_SIZE + 1];
+    FixedBlockPage* fixedBlockPages_[FIXED_BLOCK_PAGE_MAX_BUCKET + 1];
     ExtraObjectPage* extraObjectPage_;
     FinalizerQueue finalizerQueue_;
 };

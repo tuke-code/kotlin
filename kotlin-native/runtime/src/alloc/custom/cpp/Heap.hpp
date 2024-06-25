@@ -35,7 +35,7 @@ public:
     // seen by one sweeper.
     FinalizerQueue Sweep(gc::GCHandle gcHandle) noexcept;
 
-    FixedBlockPage* GetFixedBlockPage(uint32_t cellCount, FinalizerQueue& finalizerQueue) noexcept;
+    FixedBlockPage* GetFixedBlockPage(uint32_t bucket, uint32_t bucketSize, FinalizerQueue& finalizerQueue) noexcept;
     NextFitPage* GetNextFitPage(uint32_t cellCount, FinalizerQueue& finalizerQueue) noexcept;
     SingleObjectPage* GetSingleObjectPage(uint64_t cellCount, FinalizerQueue& finalizerQueue) noexcept;
     ExtraObjectPage* GetExtraObjectPage(FinalizerQueue& finalizerQueue) noexcept;
@@ -43,7 +43,7 @@ public:
     void AddToFinalizerQueue(FinalizerQueue queue) noexcept;
     FinalizerQueue ExtractFinalizerQueue() noexcept;
 
-    bool IsBlockSizeDelayed(uint32_t cellCount) noexcept;
+    bool IsFixedBlockPageBucketDelayed(uint32_t bucket) noexcept;
 
     // Test method
     std::vector<ObjHeader*> GetAllocatedObjects() noexcept;
@@ -52,12 +52,12 @@ public:
     auto& allocatedSizeTracker() noexcept { return allocatedSizeTracker_; }
 
 private:
-    PageStore<FixedBlockPage> fixedBlockPages_[FIXED_BLOCK_PAGE_MAX_BLOCK_SIZE + 1];
+    PageStore<FixedBlockPage> fixedBlockPages_[FIXED_BLOCK_PAGE_MAX_BUCKET + 1];
     PageStore<NextFitPage> nextFitPages_;
     PageStore<SingleObjectPage> singleObjectPages_;
     PageStore<ExtraObjectPage> extraObjectPages_;
 
-    std::atomic<uint8_t> fixedBlockSizeDelay_[FIXED_BLOCK_PAGE_MAX_BLOCK_SIZE + 1];
+    std::atomic<uint8_t> fixedBlockBucketDelay_[FIXED_BLOCK_PAGE_MAX_BUCKET + 1];
 
     FinalizerQueue pendingFinalizerQueue_;
     std::mutex pendingFinalizerQueueMutex_;

@@ -35,6 +35,17 @@ uint8_t* alloc(FixedBlockPage* page, size_t blockSize) {
     return ptr;
 }
 
+TEST(CustomAllocTest, FixedBlockPageBuckets) {
+    for (uint32_t size = 2; size <= FIXED_BLOCK_PAGE_MAX_BLOCK_SIZE; ++size) {
+        uint32_t bucket = FixedBlockPage::BucketIndex(size);
+        uint32_t bucketSize = FixedBlockPage::BucketSize(size);
+        EXPECT_LE(size, bucketSize);
+        uint32_t nextBucket = FixedBlockPage::BucketIndex(size + 1);
+        EXPECT_TRUE(nextBucket == bucket || (nextBucket == bucket + 1 && bucketSize == size));
+    }
+    EXPECT_EQ(FIXED_BLOCK_PAGE_MAX_BUCKET, FixedBlockPage::BucketIndex(FIXED_BLOCK_PAGE_MAX_BLOCK_SIZE));
+}
+
 TEST(CustomAllocTest, FixedBlockPageConsequtiveAlloc) {
     for (uint32_t size = 2; size <= FIXED_BLOCK_PAGE_MAX_BLOCK_SIZE; ++size) {
         FixedBlockPage* page = FixedBlockPage::Create(size);

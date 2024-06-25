@@ -96,7 +96,7 @@ ALWAYS_INLINE uint8_t* CustomAllocator::Allocate(uint64_t size) noexcept {
     RuntimeAssert(size, "CustomAllocator::Allocate cannot allocate 0 bytes");
     CustomAllocDebug("CustomAllocator::Allocate(%" PRIu64 ")", size);
     uint64_t cellCount = (size + sizeof(Cell) - 1) / sizeof(Cell);
-    if (cellCount <= FIXED_BLOCK_PAGE_MAX_BLOCK_SIZE && !heap_.IsBlockSizeDelayed(cellCount)) {
+    if (cellCount <= FIXED_BLOCK_PAGE_MAX_BLOCK_SIZE) {
         return AllocateInFixedBlockPage(cellCount);
     } else if (cellCount > NEXT_FIT_PAGE_MAX_BLOCK_SIZE) {
         return AllocateInSingleObjectPage(cellCount);
@@ -131,23 +131,28 @@ NO_INLINE uint8_t* CustomAllocator::AllocateInNextFitPageSlowPath(uint32_t cellC
 
 ALWAYS_INLINE uint8_t* CustomAllocator::AllocateInFixedBlockPage(uint32_t cellCount) noexcept {
     CustomAllocDebug("CustomAllocator::AllocateInFixedBlockPage(%u)", cellCount);
-    FixedBlockPage* page = fixedBlockPages_[cellCount];
+    uint32_t bucket = FixedBlockPage::BucketIndex(cellCount);
+    if (heap_.IsFixedBlockPageBucketDelayed(bucket)) {
+        return AllocateInNextFitPage(cellCount);
+    }
+    uint32_t bucketSize = FixedBlockPage::BucketSize(cellCount);
+    FixedBlockPage* page = fixedBlockPages_[bucket];
     if (page) {
-        uint8_t* block = page->TryAllocate(cellCount);
+        uint8_t* block = page->TryAllocate(bucketSize);
         if (block) return block;
     }
-    return AllocateInFixedBlockPageSlowPath(page, cellCount);
+    return AllocateInFixedBlockPageSlowPath(page, bucket, bucketSize);
 }
 
-NO_INLINE uint8_t* CustomAllocator::AllocateInFixedBlockPageSlowPath(FixedBlockPage* overflownPage, uint32_t cellCount) noexcept {
+NO_INLINE uint8_t* CustomAllocator::AllocateInFixedBlockPageSlowPath(FixedBlockPage* overflownPage, uint32_t bucket, uint32_t bucketSize) noexcept {
     CustomAllocDebug("Failed to allocate in current FixedBlockPage(%p)", overflownPage);
     if (overflownPage != nullptr) {
         overflownPage->OnPageOverflow();
     }
-    while (auto* page = heap_.GetFixedBlockPage(cellCount, finalizerQueue_)) {
-        uint8_t* block = page->TryAllocate(cellCount);
+    while (auto* page = heap_.GetFixedBlockPage(bucket, bucketSize, finalizerQueue_)) {
+        uint8_t* block = page->TryAllocate(bucketSize);
         if (block) {
-            fixedBlockPages_[cellCount] = page;
+            fixedBlockPages_[bucket] = page;
             return block;
         }
     }

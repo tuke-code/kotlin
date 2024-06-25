@@ -11,6 +11,7 @@
 #include <vector>
 
 #include "AtomicStack.hpp"
+#include "Common.h"
 #include "ExtraObjectPage.hpp"
 #include "GCStatistics.hpp"
 #include "AnyPage.hpp"
@@ -37,6 +38,9 @@ public:
     static GCSweepScope currentGCSweepScope(gc::GCHandle& handle) noexcept { return handle.sweep(); }
 
     static FixedBlockPage* Create(uint32_t blockSize) noexcept;
+
+    ALWAYS_INLINE static uint32_t BucketIndex(uint32_t blockSize) noexcept;
+    ALWAYS_INLINE static uint32_t BucketSize(uint32_t blockSize) noexcept;
 
     void Destroy() noexcept;
 

@@ -19,7 +19,17 @@ inline constexpr const size_t KiB = 1024;
 inline constexpr size_t FIXED_BLOCK_PAGE_SIZE() {
         return kotlin::compiler::fixedBlockPageSize() * KiB;
 }
-inline constexpr const int FIXED_BLOCK_PAGE_MAX_BLOCK_SIZE = 128;
+
+const uint32_t FIXED_BLOCK_PAGE_BUCKET_BIT_LENGTH = 2;
+const uint32_t FIXED_BLOCK_PAGE_BUCKET_BIT_MASK = (1 << FIXED_BLOCK_PAGE_BUCKET_BIT_LENGTH) - 1;
+
+inline constexpr const int FIXED_BLOCK_PAGE_MAX_BLOCK_SIZE = 127;
+
+// FIXED_BLOCK_PAGE_MAX_BUCKET should ideally be computed as
+// FixedBlockPage::BucketIndex(FIXED_BLOCK_PAGE_MAX_BLOCK_SIZE), but the
+// bit-tricks in that function can only be made constexpr with C++20. It is
+// instead hand set and validated by FixedBlockPageTest.
+inline constexpr const uint32_t FIXED_BLOCK_PAGE_MAX_BUCKET = 23;
 inline const size_t FIXED_BLOCK_PAGE_CELL_COUNT =
         ((FIXED_BLOCK_PAGE_SIZE() - sizeof(kotlin::alloc::FixedBlockPage)) / sizeof(kotlin::alloc::FixedBlockCell));
 
