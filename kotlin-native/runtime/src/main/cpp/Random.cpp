@@ -27,7 +27,7 @@
 namespace {
 
 #if KONAN_LINUX || KONAN_WINDOWS
-void throwReadingRandomBytesFailed(const char* format, ...) {
+RUNTIME_NORETURN void throwReadingRandomBytesFailed(const char* format, ...) __attribute__((format(printf, 1, 2))) {
     va_list args;
     va_start(args, format);
     std::array<char, 128> buffer;
@@ -62,6 +62,7 @@ void Kotlin_Uuid_getRandomBytes(KRef byteArray, KInt size) {
             count += ret;
         } else if (errno != EINTR) { // repeat if interrupted
             throwReadingRandomBytesFailed("getrandom returned a negative value: %ld, errno: %d", ret, errno);
+            throwReadingRandomBytesFailed("getrandom returned a negative value: %ld, error: %s", ret, strerror(errno));
         }
     }
 #elif KONAN_WINDOWS
