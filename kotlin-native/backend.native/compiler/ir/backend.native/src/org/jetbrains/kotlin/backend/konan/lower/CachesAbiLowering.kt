@@ -40,7 +40,6 @@ internal class CachesAbiSupport(mapping: NativeMapping, private val irFactory: I
     private val outerThisAccessors = mapping.outerThisCacheAccessors
     private val lateinitPropertyAccessors = mapping.lateinitPropertyCacheAccessors
     private val topLevelFieldAccessors = mapping.topLevelFieldCacheAccessors
-    private val lateInitFieldToNullableField = mapping.lateInitFieldToNullableField
 
 
     fun getOuterThisAccessor(irClass: IrClass): IrSimpleFunction {
@@ -81,12 +80,11 @@ internal class CachesAbiSupport(mapping: NativeMapping, private val irFactory: I
         require(irProperty.isLateinit) { "Expected a lateinit property but was: ${irProperty.render()}" }
         return lateinitPropertyAccessors.getOrPut(irProperty) {
             val backingField = irProperty.backingField ?: error("Lateinit property ${irProperty.render()} should have a backing field")
-            val actualField = lateInitFieldToNullableField[backingField] ?: backingField
             val owner = irProperty.parent
             irFactory.buildFun {
                 name = getMangledNameFor("${irProperty.name}_field", owner)
                 origin = INTERNAL_ABI_ORIGIN
-                returnType = actualField.type
+                returnType = backingField.type
             }.apply {
                 parent = irProperty.getPackageFragment()
                 attributeOwnerId = irProperty // To be able to get the file.

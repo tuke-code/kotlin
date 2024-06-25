@@ -105,22 +105,10 @@ private val stringConcatenationLoweringPhase = makeIrModulePhase(
     description = "Call toString() for values of some types when concatenating strings"
 )
 
-private val lateinitNullableFieldsPhase = makeIrModulePhase(
-    ::NullableFieldsForLateinitCreationLowering,
-    name = "LateinitNullableFields",
-    description = "Create nullable fields for lateinit properties"
-)
-
-private val lateinitDeclarationLoweringPhase = makeIrModulePhase(
-    ::NullableFieldsDeclarationLowering,
-    name = "LateinitDeclarations",
-    description = "Reference nullable fields from properties and getters + insert checks"
-)
-
-private val lateinitUsageLoweringPhase = makeIrModulePhase(
-    ::LateinitUsageLowering,
-    name = "LateinitUsage",
-    description = "Insert checks for lateinit field references"
+private val lateinitPhase = makeIrModulePhase(
+    ::LateinitLowering,
+    name = "LateinitLowering",
+    description = "Lower lateinit properties and variables"
 )
 
 private val kotlinNothingValueExceptionPhase = makeIrModulePhase(
@@ -151,7 +139,7 @@ private val sharedVariablesLoweringPhase = makeIrModulePhase(
     ::SharedVariablesLowering,
     name = "SharedVariablesLowering",
     description = "Box captured mutable variables",
-    prerequisite = setOf(lateinitDeclarationLoweringPhase, lateinitUsageLoweringPhase)
+    prerequisite = setOf(lateinitPhase)
 )
 
 private val localClassesInInlineLambdasPhase = makeIrModulePhase(
@@ -787,9 +775,7 @@ val inlineCallableReferenceToLambdaPhase = makeIrModulePhase<JsIrBackendContext>
 val loweringList = listOf<SimpleNamedCompilerPhase<JsIrBackendContext, IrModuleFragment, IrModuleFragment>>(
     validateIrBeforeLowering,
     jsCodeOutliningPhase,
-    lateinitNullableFieldsPhase,
-    lateinitDeclarationLoweringPhase,
-    lateinitUsageLoweringPhase,
+    lateinitPhase,
     sharedVariablesLoweringPhase,
     localClassesInInlineLambdasPhase,
     localClassesInInlineFunctionsPhase,

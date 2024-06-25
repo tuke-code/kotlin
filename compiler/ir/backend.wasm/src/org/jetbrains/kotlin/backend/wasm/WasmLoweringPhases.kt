@@ -14,7 +14,6 @@ import org.jetbrains.kotlin.backend.common.lower.loops.ForLoopsLowering
 import org.jetbrains.kotlin.backend.common.lower.optimizations.PropertyAccessorInlineLowering
 import org.jetbrains.kotlin.backend.common.phaser.*
 import org.jetbrains.kotlin.backend.wasm.lower.*
-import org.jetbrains.kotlin.ir.backend.js.JsIrBackendContext
 import org.jetbrains.kotlin.ir.backend.js.lower.*
 import org.jetbrains.kotlin.ir.backend.js.lower.coroutines.AddContinuationToFunctionCallsLowering
 import org.jetbrains.kotlin.ir.backend.js.lower.coroutines.JsSuspendFunctionsLowering
@@ -62,22 +61,10 @@ private val stringConcatenationLowering = makeIrModulePhase(
     description = "String concatenation lowering"
 )
 
-private val lateinitNullableFieldsPhase = makeIrModulePhase(
-    ::NullableFieldsForLateinitCreationLowering,
-    name = "LateinitNullableFields",
-    description = "Create nullable fields for lateinit properties"
-)
-
-private val lateinitDeclarationLoweringPhase = makeIrModulePhase(
-    ::NullableFieldsDeclarationLowering,
-    name = "LateinitDeclarations",
-    description = "Reference nullable fields from properties and getters + insert checks"
-)
-
-private val lateinitUsageLoweringPhase = makeIrModulePhase(
-    ::LateinitUsageLowering,
-    name = "LateinitUsage",
-    description = "Insert checks for lateinit field references"
+private val lateinitPhase = makeIrModulePhase(
+    ::LateinitLowering,
+    name = "LateinitLowering",
+    description = "Lower lateinit properties and variables"
 )
 
 private val rangeContainsLoweringPhase = makeIrModulePhase(
@@ -103,10 +90,7 @@ private val sharedVariablesLoweringPhase = makeIrModulePhase(
     ::SharedVariablesLowering,
     name = "SharedVariablesLowering",
     description = "Box captured mutable variables",
-    prerequisite = setOf(
-        lateinitDeclarationLoweringPhase,
-        lateinitUsageLoweringPhase
-    )
+    prerequisite = setOf(lateinitPhase)
 )
 
 private val localClassesInInlineLambdasPhase = makeIrModulePhase(
@@ -652,9 +636,7 @@ val loweringList = listOf(
     excludeDeclarationsFromCodegenPhase,
     expectDeclarationsRemovingPhase,
 
-    lateinitNullableFieldsPhase,
-    lateinitDeclarationLoweringPhase,
-    lateinitUsageLoweringPhase,
+    lateinitPhase,
     rangeContainsLoweringPhase,
     arrayConstructorReferencePhase,
     arrayConstructorPhase,
