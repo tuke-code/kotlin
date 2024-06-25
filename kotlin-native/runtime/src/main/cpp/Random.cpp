@@ -27,7 +27,7 @@
 namespace {
 
 #if KONAN_LINUX || KONAN_WINDOWS
-RUNTIME_NORETURN void throwReadingRandomBytesFailed(const char* format, ...) __attribute__((format(printf, 1, 2))) {
+RUNTIME_NORETURN __attribute__((format(printf, 1, 2))) void throwReadingRandomBytesFailed(const char* format, ...) {
     va_list args;
     va_start(args, format);
     std::array<char, 128> buffer;
