@@ -334,8 +334,8 @@ fun compileModuleToAnalyzedFir(
 fun collectLostDiagnosticsOnCompilerOutputs(outputs: List<ModuleCompilerAnalyzedOutput>, collector: BaseDiagnosticsCollector) {
     for (output in outputs) {
         val session = output.session
-        val languageVersionSettings = session.languageVersionSettings
-        if (languageVersionSettings.supportsFeature(LanguageFeature.AdditionalErrorsInK2DiagnosticReporter)) {
+        //val languageVersionSettings = session.languageVersionSettings
+        //if (languageVersionSettings.supportsFeature(LanguageFeature.AdditionalErrorsInK2DiagnosticReporter)) {
             for (file in output.fir) {
                 session.collectLostDiagnosticsOnFile(
                     output.scopeSession,
@@ -343,7 +343,7 @@ fun collectLostDiagnosticsOnCompilerOutputs(outputs: List<ModuleCompilerAnalyzed
                     collector
                 )
             }
-        }
+        //}
     }
 }
 
