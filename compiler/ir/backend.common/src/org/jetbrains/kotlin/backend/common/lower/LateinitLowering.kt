@@ -39,10 +39,7 @@ class LateinitLowering(private val context: CommonBackendContext) : FileLowering
         override fun visitProperty(declaration: IrProperty): IrStatement {
             if (declaration.isRealLateinit()) {
                 val backingField = declaration.backingField!!
-                assert(backingField.initializer == null) {
-                    "lateinit property backing field should not have an initializer:\n${declaration.dump()}"
-                }
-                backingField.type = backingField.type.makeNullable()
+                transformBackingField(backingField, declaration)
 
                 declaration.getter?.let {
                     transformGetter(backingField, it)
@@ -115,13 +112,13 @@ class LateinitLowering(private val context: CommonBackendContext) : FileLowering
                 val irPropertyRef = it as? IrPropertyReference
                     ?: throw AssertionError("Property reference expected: ${it.render()}")
                 val property = irPropertyRef.getter?.owner?.resolveFakeOverride()?.correspondingPropertySymbol?.owner
-                    ?.transform(this, null) as IrProperty?
                     ?: throw AssertionError("isInitialized cannot be invoked on ${it.render()}")
                 require(property.isLateinit) {
                     "isInitialized invoked on non-lateinit property ${property.render()}"
                 }
                 val backingField = property.backingField
                     ?: throw AssertionError("Lateinit property is supposed to have a backing field")
+                transformBackingField(backingField, property)
                 backendContext.createIrBuilder(it.symbol, expression.startOffset, expression.endOffset).run {
                     irNotEquals(
                         irGetField(it.dispatchReceiver, backingField),
@@ -129,6 +126,13 @@ class LateinitLowering(private val context: CommonBackendContext) : FileLowering
                     )
                 }
             }
+        }
+
+        private fun transformBackingField(backingField: IrField, property: IrProperty) {
+            assert(backingField.initializer == null) {
+                "lateinit property backing field should not have an initializer:\n${property.dump()}"
+            }
+            backingField.type = backingField.type.makeNullable()
         }
 
         private fun transformGetter(backingField: IrField, getter: IrFunction) {
