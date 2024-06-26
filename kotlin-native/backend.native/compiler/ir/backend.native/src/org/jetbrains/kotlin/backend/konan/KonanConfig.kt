@@ -280,6 +280,10 @@ class KonanConfig(val project: Project, val configuration: CompilerConfiguration
                 ?: false // For now disabled by default due to performance penalty.
     }
 
+    val pagedAllocator: Boolean by lazy {
+        configuration.get(BinaryOptions.pagedAllocator) ?: true
+    }
+
     internal val bridgesPolicy: BridgesPolicy by lazy {
         if (genericSafeCasts) BridgesPolicy.BOX_UNBOX_CASTS else BridgesPolicy.BOX_UNBOX_ONLY
     }

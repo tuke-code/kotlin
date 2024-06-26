@@ -31,6 +31,7 @@ extern "C" const int32_t Kotlin_concurrentWeakSweep;
 extern "C" const int32_t Kotlin_gcMarkSingleThreaded;
 extern "C" const int32_t Kotlin_freezingEnabled;
 extern "C" const int32_t Kotlin_freezingChecksEnabled;
+extern "C" const int32_t Kotlin_pagedAllocator;
 
 class SourceInfo;
 
@@ -100,6 +101,10 @@ ALWAYS_INLINE inline bool concurrentWeakSweep() noexcept {
 
 ALWAYS_INLINE inline bool gcMarkSingleThreaded() noexcept {
     return Kotlin_gcMarkSingleThreaded != 0;
+}
+
+ALWAYS_INLINE inline bool pagedAllocator() noexcept {
+    return Kotlin_pagedAllocator != 0;
 }
 
 

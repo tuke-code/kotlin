@@ -59,7 +59,7 @@ private:
     Heap& heap_;
     NextFitPage* nextFitPage_;
     FixedBlockPage* fixedBlockPages_[FIXED_BLOCK_PAGE_MAX_BLOCK_SIZE + 1];
-    ExtraObjectPage* extraObjectPage_;
+    ExtraObjectPage* extraObjectPage_; // TODO extra objs in single page
     FinalizerQueue finalizerQueue_;
 };
 

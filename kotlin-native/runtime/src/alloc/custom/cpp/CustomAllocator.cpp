@@ -5,9 +5,7 @@
 
 #include "CustomAllocator.hpp"
 
-#include <atomic>
 #include <cstdint>
-#include <cstdlib>
 #include <cinttypes>
 #include <cstring>
 #include <new>
@@ -96,18 +94,21 @@ ALWAYS_INLINE uint8_t* CustomAllocator::Allocate(uint64_t size) noexcept {
     RuntimeAssert(size, "CustomAllocator::Allocate cannot allocate 0 bytes");
     CustomAllocDebug("CustomAllocator::Allocate(%" PRIu64 ")", size);
     uint64_t cellCount = (size + sizeof(Cell) - 1) / sizeof(Cell);
+    if (!compiler::pagedAllocator()) {
+        return AllocateInSingleObjectPage(cellCount);
+    }
     if (cellCount <= FIXED_BLOCK_PAGE_MAX_BLOCK_SIZE) {
         return AllocateInFixedBlockPage(cellCount);
-    } else if (cellCount > NEXT_FIT_PAGE_MAX_BLOCK_SIZE) {
-        return AllocateInSingleObjectPage(cellCount);
-    } else {
-        return AllocateInNextFitPage(cellCount);
     }
+    if (cellCount > NEXT_FIT_PAGE_MAX_BLOCK_SIZE) {
+        return AllocateInSingleObjectPage(cellCount);
+    }
+    return AllocateInNextFitPage(cellCount);
 }
 
 uint8_t* CustomAllocator::AllocateInSingleObjectPage(uint64_t cellCount) noexcept {
     CustomAllocDebug("CustomAllocator::AllocateInSingleObjectPage(%" PRIu64 ")", cellCount);
-    uint8_t* block = heap_.GetSingleObjectPage(cellCount, finalizerQueue_)->TryAllocate();
+    uint8_t* block = heap_.GetSingleObjectPage(cellCount, finalizerQueue_)->Allocate(cellCount * sizeof(Cell));
     return block;
 }
 
