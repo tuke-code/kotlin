@@ -32,6 +32,7 @@ import org.jetbrains.kotlin.cli.common.messages.MessageUtil
 import org.jetbrains.kotlin.cli.js.klib.*
 import org.jetbrains.kotlin.cli.jvm.compiler.EnvironmentConfigFiles
 import org.jetbrains.kotlin.cli.jvm.compiler.KotlinCoreEnvironment
+import org.jetbrains.kotlin.cli.jvm.compiler.pipeline.collectLostDiagnosticsOnCompilerOutputs
 import org.jetbrains.kotlin.cli.jvm.plugins.PluginCliParser
 import org.jetbrains.kotlin.config.*
 import org.jetbrains.kotlin.diagnostics.DiagnosticReporterFactory
@@ -620,6 +621,11 @@ class K2JsIrCompiler : CLICompiler<K2JSCompilerArguments>() {
 
         performanceManager?.notifyAnalysisFinished()
         if (analyzedOutput.reportCompilationErrors(moduleStructure, diagnosticsReporter, messageCollector)) {
+            throw CompilationErrorException()
+        }
+        collectLostDiagnosticsOnCompilerOutputs(analyzedOutput.output, diagnosticsReporter)
+        val renderName = configuration.getBoolean(CLIConfigurationKeys.RENDER_DIAGNOSTIC_INTERNAL_NAME)
+        if (FirDiagnosticsCompilerResultsReporter.reportToMessageCollector(diagnosticsReporter, messageCollector, renderName)) {
             throw CompilationErrorException()
         }
 
