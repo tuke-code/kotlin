@@ -336,16 +336,12 @@ fun collectLostDiagnosticsOnCompilerOutputs(outputs: List<ModuleCompilerAnalyzed
         val session = output.session
         val languageVersionSettings = session.languageVersionSettings
         if (languageVersionSettings.supportsFeature(LanguageFeature.AdditionalErrorsInK2DiagnosticReporter)) {
-            val forWarnings = languageVersionSettings.supportsFeature(LanguageFeature.AdditionalErrorsInK2DiagnosticReporterForWarnings)
             for (file in output.fir) {
-                val path = file.sourceFile?.path ?: continue
-                if (forWarnings || collector.diagnosticsByFilePath[path].isNullOrEmpty()) {
-                    session.collectLostDiagnosticsOnFile(
-                        output.scopeSession,
-                        file,
-                        collector
-                    )
-                }
+                session.collectLostDiagnosticsOnFile(
+                    output.scopeSession,
+                    file,
+                    collector
+                )
             }
         }
     }

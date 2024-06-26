@@ -700,7 +700,7 @@ open class FirDiagnosticCollectorService(val testServices: TestServices) : TestS
             val lostDiagnostics = listMultimapOf<FirFile, DiagnosticWithKmpCompilationMode>()
             for (file in allFiles) {
                 val diagnostics = result[file]
-                if (diagnostics.isEmpty() && !hasSyntaxDiagnostics(file)) {
+                if (diagnostics.none { it.diagnostic.severity == Severity.ERROR } && !hasSyntaxDiagnostics(file)) {
                     platformPart.session.collectLostDiagnosticsOnFile(
                         platformPart.firAnalyzerFacade.scopeSession,
                         file,

@@ -5,6 +5,7 @@
 
 package org.jetbrains.kotlin.fir.analysis.collectors.components
 
+import org.jetbrains.kotlin.config.LanguageFeature
 import org.jetbrains.kotlin.diagnostics.DiagnosticReporter
 import org.jetbrains.kotlin.diagnostics.impl.PendingDiagnosticsCollectorWithSuppress
 import org.jetbrains.kotlin.diagnostics.reportOn
@@ -13,6 +14,10 @@ import org.jetbrains.kotlin.fir.FirSession
 import org.jetbrains.kotlin.fir.analysis.checkers.context.CheckerContext
 import org.jetbrains.kotlin.fir.analysis.diagnostics.FirErrors
 import org.jetbrains.kotlin.fir.diagnostics.FirDiagnosticHolder
+import org.jetbrains.kotlin.fir.resolve.calls.InferenceError
+import org.jetbrains.kotlin.fir.resolve.calls.InferredEmptyIntersectionDiagnostic
+import org.jetbrains.kotlin.fir.resolve.diagnostics.ConeDiagnosticWithSingleCandidate
+import org.jetbrains.kotlin.resolve.calls.inference.model.InferredEmptyIntersectionWarning
 
 class LossDiagnosticCollectorComponent(
     session: FirSession,
@@ -28,6 +33,20 @@ class LossDiagnosticCollectorComponent(
         }
 
         val source = element.source
-        reporter.reportOn(source, FirErrors.OTHER_ERROR_WITH_REASON, element.diagnostic.reason, data)
+        val diagnostic = element.diagnostic
+        if (diagnostic is ConeDiagnosticWithSingleCandidate) {
+            if (!data.languageVersionSettings.supportsFeature(LanguageFeature.AdditionalErrorsInK2DiagnosticReporterForWarnings)
+                && diagnostic.candidate.diagnostics.all {
+                    when (it) {
+                        is InferredEmptyIntersectionDiagnostic -> !it.isError
+                        is InferenceError -> it.constraintError is InferredEmptyIntersectionWarning
+                        else -> false
+                    }
+                }
+            ) {
+                return
+            }
+        }
+        reporter.reportOn(source, FirErrors.OTHER_ERROR_WITH_REASON, diagnostic.reason, data)
     }
 }
