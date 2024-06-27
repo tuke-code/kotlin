@@ -64,6 +64,7 @@ object FirJvmSessionFactory : FirAbstractSessionFactory() {
                 listOfNotNull(
                     JvmClassFileBasedSymbolProvider(
                         session,
+                        session.languageVersionSettings,
                         moduleDataProvider,
                         kotlinScopeProvider,
                         packagePartProvider,

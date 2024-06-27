@@ -6,11 +6,10 @@
 package org.jetbrains.kotlin.fir.java.deserialization
 
 import org.jetbrains.kotlin.SpecialJvmAnnotations
-import org.jetbrains.kotlin.fir.FirSession
+import org.jetbrains.kotlin.config.LanguageVersionSettings
 import org.jetbrains.kotlin.fir.expressions.*
 import org.jetbrains.kotlin.fir.expressions.builder.*
 import org.jetbrains.kotlin.fir.java.createConstantOrError
-import org.jetbrains.kotlin.fir.languageVersionSettings
 import org.jetbrains.kotlin.fir.symbols.ConeClassLikeLookupTag
 import org.jetbrains.kotlin.fir.types.*
 import org.jetbrains.kotlin.fir.types.builder.buildResolvedTypeRef
@@ -22,7 +21,10 @@ import org.jetbrains.kotlin.name.StandardClassIds
 import org.jetbrains.kotlin.resolve.constants.ClassLiteralValue
 import org.jetbrains.kotlin.utils.toMetadataVersion
 
-internal class AnnotationsLoader(private val session: FirSession, private val kotlinClassFinder: KotlinClassFinder) {
+internal class AnnotationsLoader(
+    private val languageVersionSettings: LanguageVersionSettings,
+    private val kotlinClassFinder: KotlinClassFinder,
+) {
     private abstract inner class AnnotationsLoaderVisitorImpl : KotlinJvmBinaryClass.AnnotationArgumentVisitor {
         abstract fun visitExpression(name: Name?, expr: FirExpression)
 
@@ -120,7 +122,7 @@ internal class AnnotationsLoader(private val session: FirSession, private val ko
         }
 
         private fun createConstant(value: Any?): FirExpression {
-            return value.createConstantOrError(session)
+            return value.createConstantOrError()
         }
     }
 
@@ -183,7 +185,7 @@ internal class AnnotationsLoader(private val session: FirSession, private val ko
         if (classId.outerClassId == null || classId.shortClassName.asString() != JvmAbi.REPEATABLE_ANNOTATION_CONTAINER_NAME
         ) return false
 
-        val klass = kotlinClassFinder.findKotlinClass(classId, session.languageVersionSettings.languageVersion.toMetadataVersion())
+        val klass = kotlinClassFinder.findKotlinClass(classId, languageVersionSettings.languageVersion.toMetadataVersion())
         return klass != null && SpecialJvmAnnotations.isAnnotatedWithContainerMetaAnnotation(klass)
     }
 

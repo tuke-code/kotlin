@@ -173,7 +173,6 @@ internal fun JavaAnnotationArgument.toFirExpression(
     val expectedArrayElementTypeIfArray = expectedConeType?.lowerBoundIfFlexible()?.arrayElementType() ?: expectedConeType
     val argument = when (this) {
         is JavaLiteralAnnotationArgument -> value.createConstantOrError(
-            session,
             expectedArrayElementTypeIfArray
         )
         is JavaArrayAnnotationArgument -> buildArrayLiteral {
@@ -376,9 +375,7 @@ private fun buildFirAnnotation(
 
                 classId == JvmStandardClassIds.Annotations.Java.Deprecated -> {
                     mapOf(
-                        StandardClassIds.Annotations.ParameterNames.deprecatedMessage to "Deprecated in Java".createConstantOrError(
-                            session,
-                        )
+                        StandardClassIds.Annotations.ParameterNames.deprecatedMessage to "Deprecated in Java".createConstantOrError()
                     )
                 }
 

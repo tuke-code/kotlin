@@ -11,6 +11,7 @@ import org.jetbrains.kotlin.fir.declarations.FirDeclarationOrigin
 import org.jetbrains.kotlin.fir.deserialization.SingleModuleDataProvider
 import org.jetbrains.kotlin.fir.java.deserialization.JvmClassFileBasedSymbolProvider
 import org.jetbrains.kotlin.fir.java.deserialization.OptionalAnnotationClassesProvider
+import org.jetbrains.kotlin.fir.languageVersionSettings
 import org.jetbrains.kotlin.fir.resolve.providers.FirSymbolProvider
 import org.jetbrains.kotlin.fir.scopes.kotlinScopeProvider
 import org.jetbrains.kotlin.fir.session.environment.AbstractProjectEnvironment
@@ -34,6 +35,7 @@ fun IncrementalCompilationContext.createSymbolProviders(
         symbolProviderForBinariesFromIncrementalCompilation =
             JvmClassFileBasedSymbolProvider(
                 session,
+                session.languageVersionSettings,
                 moduleDataProvider,
                 kotlinScopeProvider,
                 precompiledBinariesPackagePartProvider,

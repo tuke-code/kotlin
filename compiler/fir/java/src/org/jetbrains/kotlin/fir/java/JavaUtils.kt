@@ -62,7 +62,7 @@ val JavaClass.classKind: ClassKind
 fun JavaClass.hasMetadataAnnotation(): Boolean =
     annotations.any { it.isResolvedTo(JvmAnnotationNames.METADATA_FQ_NAME) }
 
-internal fun Any?.createConstantOrError(session: FirSession, expectedConeType: ConeKotlinType? = null): FirExpression {
+internal fun Any?.createConstantOrError(expectedConeType: ConeKotlinType? = null): FirExpression {
     val value = if (this is Int && expectedConeType != null) {
         // special case for Java literals in annotation default values:
         // literal value is always integer, but an expected parameter type can be any other number type
@@ -73,12 +73,12 @@ internal fun Any?.createConstantOrError(session: FirSession, expectedConeType: C
             else -> this
         }
     } else this
-    return value.createConstantIfAny(session) ?: buildErrorExpression {
+    return value.createConstantIfAny() ?: buildErrorExpression {
         diagnostic = ConeSimpleDiagnostic("Unknown value in JavaLiteralAnnotationArgument: $this", DiagnosticKind.Java)
     }
 }
 
-internal fun Any?.createConstantIfAny(session: FirSession, unsigned: Boolean = false): FirExpression? {
+internal fun Any?.createConstantIfAny(unsigned: Boolean = false): FirExpression? {
     return when (this) {
         is Byte -> buildLiteralExpression(
             null, if (unsigned) ConstantValueKind.UnsignedByte else ConstantValueKind.Byte, this, setType = true
@@ -107,14 +107,14 @@ internal fun Any?.createConstantIfAny(session: FirSession, unsigned: Boolean = f
         is String -> buildLiteralExpression(
             null, ConstantValueKind.String, this, setType = true
         )
-        is ByteArray -> toList().createArrayLiteral(session, ConstantValueKind.Byte)
-        is ShortArray -> toList().createArrayLiteral(session, ConstantValueKind.Short)
-        is IntArray -> toList().createArrayLiteral(session, ConstantValueKind.Int)
-        is LongArray -> toList().createArrayLiteral(session, ConstantValueKind.Long)
-        is CharArray -> toList().createArrayLiteral(session, ConstantValueKind.Char)
-        is FloatArray -> toList().createArrayLiteral(session, ConstantValueKind.Float)
-        is DoubleArray -> toList().createArrayLiteral(session, ConstantValueKind.Double)
-        is BooleanArray -> toList().createArrayLiteral(session, ConstantValueKind.Boolean)
+        is ByteArray -> toList().createArrayLiteral(ConstantValueKind.Byte)
+        is ShortArray -> toList().createArrayLiteral(ConstantValueKind.Short)
+        is IntArray -> toList().createArrayLiteral(ConstantValueKind.Int)
+        is LongArray -> toList().createArrayLiteral(ConstantValueKind.Long)
+        is CharArray -> toList().createArrayLiteral(ConstantValueKind.Char)
+        is FloatArray -> toList().createArrayLiteral(ConstantValueKind.Float)
+        is DoubleArray -> toList().createArrayLiteral(ConstantValueKind.Double)
+        is BooleanArray -> toList().createArrayLiteral(ConstantValueKind.Boolean)
         null -> buildLiteralExpression(
             null, ConstantValueKind.Null, null, setType = true
         )
@@ -123,14 +123,14 @@ internal fun Any?.createConstantIfAny(session: FirSession, unsigned: Boolean = f
     }
 }
 
-private fun <T> List<T>.createArrayLiteral(session: FirSession, kind: ConstantValueKind): FirArrayLiteral {
+private fun <T> List<T>.createArrayLiteral(kind: ConstantValueKind): FirArrayLiteral {
     return buildArrayLiteral {
         argumentList = buildArgumentList {
             for (element in this@createArrayLiteral) {
-                arguments += element.createConstantOrError(session)
+                arguments += element.createConstantOrError()
             }
         }
-        coneTypeOrNull = kind.expectedConeType(session).createArrayType()
+        coneTypeOrNull = kind.expectedConeType(session = null).createArrayType()
     }
 }
 

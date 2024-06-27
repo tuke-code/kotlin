@@ -217,7 +217,7 @@ class JvmBinaryAnnotationDeserializer(
         val signature = getCallableSignature(propertyProto, nameResolver, typeTable, CallableKind.PROPERTY_GETTER) ?: return null
         val firExpr = annotationInfo.annotationMethodsDefaultValues[signature]
         return if (firExpr is FirLiteralExpression && expectedPropertyType.coneType.isUnsignedType && firExpr.kind.isSignedNumber)
-            firExpr.value.createConstantIfAny(session, unsigned = true)
+            firExpr.value.createConstantIfAny(unsigned = true)
         else
             firExpr
     }
@@ -308,7 +308,7 @@ private fun FirSession.loadMemberAnnotations(
     kotlinClassFinder: KotlinClassFinder,
 ): MemberAnnotations {
     val memberAnnotations = hashMapOf<MemberSignature, MutableList<FirAnnotation>>()
-    val annotationsLoader = AnnotationsLoader(this, kotlinClassFinder)
+    val annotationsLoader = AnnotationsLoader(languageVersionSettings, kotlinClassFinder)
     val annotationMethodsDefaultValues = hashMapOf<MemberSignature, FirExpression>()
 
     kotlinBinaryClass.visitMembers(object : KotlinJvmBinaryClass.MemberVisitor {

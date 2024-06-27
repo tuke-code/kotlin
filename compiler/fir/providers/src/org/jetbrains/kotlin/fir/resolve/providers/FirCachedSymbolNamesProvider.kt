@@ -6,6 +6,7 @@
 package org.jetbrains.kotlin.fir.resolve.providers
 
 import org.jetbrains.kotlin.fir.FirSession
+import org.jetbrains.kotlin.fir.caches.FirCachesFactory
 import org.jetbrains.kotlin.fir.caches.createCache
 import org.jetbrains.kotlin.fir.caches.firCachesFactory
 import org.jetbrains.kotlin.fir.caches.getValue
@@ -18,7 +19,9 @@ import org.jetbrains.kotlin.utils.flatMapToNullableSet
 /**
  * A [FirSymbolNamesProvider] that caches all name sets.
  */
-abstract class FirCachedSymbolNamesProvider(protected val session: FirSession) : FirSymbolNamesProvider() {
+abstract class FirCachedSymbolNamesProvider(
+    protected val firCachesFactory: FirCachesFactory,
+) : FirSymbolNamesProvider() {
     abstract fun computePackageNames(): Set<String>?
 
     /**
@@ -62,7 +65,7 @@ abstract class FirCachedSymbolNamesProvider(protected val session: FirSession) :
     }
 
     private val topLevelClassifierNamesByPackage =
-        session.firCachesFactory.createCache(::computeTopLevelClassifierNames)
+        firCachesFactory.createCache(::computeTopLevelClassifierNames)
 
     private val topLevelCallablePackageNames by lazy(LazyThreadSafetyMode.PUBLICATION) {
         // See the comment in `topLevelClassifierPackageNames` above for reasoning about `hasSpecific*PackageNamesComputation`.
@@ -73,7 +76,7 @@ abstract class FirCachedSymbolNamesProvider(protected val session: FirSession) :
     }
 
     private val topLevelCallableNamesByPackage =
-        session.firCachesFactory.createCache(::computeTopLevelCallableNames)
+        firCachesFactory.createCache(::computeTopLevelCallableNames)
 
     override fun getPackageNames(): Set<String>? = cachedPackageNames
 
@@ -104,7 +107,7 @@ abstract class FirCachedSymbolNamesProvider(protected val session: FirSession) :
 class FirDelegatingCachedSymbolNamesProvider(
     session: FirSession,
     private val delegate: FirSymbolNamesProvider,
-) : FirCachedSymbolNamesProvider(session) {
+) : FirCachedSymbolNamesProvider(session.firCachesFactory) {
     override fun computePackageNames(): Set<String>? = delegate.getPackageNames()
 
     override val hasSpecificClassifierPackageNamesComputation: Boolean get() = delegate.hasSpecificClassifierPackageNamesComputation
@@ -132,7 +135,7 @@ class FirDelegatingCachedSymbolNamesProvider(
 open class FirCompositeCachedSymbolNamesProvider(
     session: FirSession,
     val providers: List<FirSymbolNamesProvider>,
-) : FirCachedSymbolNamesProvider(session) {
+) : FirCachedSymbolNamesProvider(session.firCachesFactory) {
     override fun computePackageNames(): Set<String>? = providers.flatMapToNullableSet { it.getPackageNames() }
 
     override val hasSpecificClassifierPackageNamesComputation: Boolean = providers.any { it.hasSpecificClassifierPackageNamesComputation }

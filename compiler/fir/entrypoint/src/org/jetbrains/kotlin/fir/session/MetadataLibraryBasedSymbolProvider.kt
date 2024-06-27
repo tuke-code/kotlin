@@ -7,6 +7,7 @@ package org.jetbrains.kotlin.fir.session
 
 import org.jetbrains.kotlin.fir.FirModuleData
 import org.jetbrains.kotlin.fir.FirSession
+import org.jetbrains.kotlin.fir.caches.firCachesFactory
 import org.jetbrains.kotlin.fir.declarations.FirDeclarationOrigin
 import org.jetbrains.kotlin.fir.declarations.FirFunction
 import org.jetbrains.kotlin.fir.declarations.FirProperty
@@ -37,7 +38,7 @@ abstract class MetadataLibraryBasedSymbolProvider<L : MetadataLibrary>(
     kotlinScopeProvider: FirKotlinScopeProvider,
     defaultDeserializationOrigin: FirDeclarationOrigin = FirDeclarationOrigin.Library,
 ) : AbstractFirDeserializedSymbolProvider(
-    session, moduleDataProvider, kotlinScopeProvider, defaultDeserializationOrigin, KlibMetadataSerializerProtocol
+    session, session.firCachesFactory, moduleDataProvider, kotlinScopeProvider, defaultDeserializationOrigin, KlibMetadataSerializerProtocol
 ) {
     private class MetadataLibraryPackagePartCacheDataExtra(val library: MetadataLibrary) : PackagePartsCacheData.Extra
 

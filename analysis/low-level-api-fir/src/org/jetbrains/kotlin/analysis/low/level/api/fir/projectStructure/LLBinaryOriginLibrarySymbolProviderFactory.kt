@@ -14,6 +14,7 @@ import org.jetbrains.kotlin.fir.FirSession
 import org.jetbrains.kotlin.fir.deserialization.SingleModuleDataProvider
 import org.jetbrains.kotlin.fir.java.FirJavaFacade
 import org.jetbrains.kotlin.fir.java.deserialization.JvmClassFileBasedSymbolProvider
+import org.jetbrains.kotlin.fir.languageVersionSettings
 import org.jetbrains.kotlin.fir.resolve.providers.FirSymbolProvider
 import org.jetbrains.kotlin.fir.resolve.providers.impl.FirBuiltinSymbolProvider
 import org.jetbrains.kotlin.fir.resolve.providers.impl.FirBuiltinSyntheticFunctionInterfaceProvider
@@ -52,6 +53,7 @@ class LLBinaryOriginLibrarySymbolProviderFactory(private val project: Project) :
         return listOf(
             JvmClassFileBasedSymbolProvider(
                 session,
+                session.languageVersionSettings,
                 moduleDataProvider,
                 kotlinScopeProvider,
                 packagePartProvider,

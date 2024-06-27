@@ -16,6 +16,7 @@ import org.jetbrains.kotlin.fir.expressions.*
 import org.jetbrains.kotlin.fir.expressions.builder.buildSpreadArgumentExpression
 import org.jetbrains.kotlin.fir.expressions.builder.buildVarargArgumentsExpression
 import org.jetbrains.kotlin.fir.resolve.providers.symbolProvider
+import org.jetbrains.kotlin.fir.symbols.impl.ConeClassLikeLookupTagImpl
 import org.jetbrains.kotlin.fir.types.*
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.StandardClassIds
@@ -101,15 +102,18 @@ fun FirBlock.writeResultType(session: FirSession) {
     resultType = resultExpression?.coneTypeOrNull ?: session.builtinTypes.unitType.type
 }
 
-fun ConstantValueKind.expectedConeType(session: FirSession): ConeKotlinType {
+fun ConstantValueKind.expectedConeType(session: FirSession?): ConeKotlinType {
     fun constructLiteralType(classId: ClassId, isNullable: Boolean = false): ConeKotlinType {
-        val symbol = session.symbolProvider.getClassLikeSymbolByClassId(classId)
-            ?: return ConeErrorType(ConeSimpleDiagnostic("Missing stdlib class: $classId", DiagnosticKind.MissingStdlibClass))
-        return symbol.toLookupTag().constructClassType(ConeTypeProjection.EMPTY_ARRAY, isNullable)
+        val lookupTag = if (session != null) {
+            val symbol = session.symbolProvider.getClassLikeSymbolByClassId(classId)
+                ?: return ConeErrorType(ConeSimpleDiagnostic("Missing stdlib class: $classId", DiagnosticKind.MissingStdlibClass))
+            symbol.toLookupTag()
+        } else ConeClassLikeLookupTagImpl(classId)
+        return lookupTag.constructClassType(ConeTypeProjection.EMPTY_ARRAY, isNullable)
     }
     return when (this) {
-        ConstantValueKind.Null -> session.builtinTypes.nullableNothingType.type
-        ConstantValueKind.Boolean -> session.builtinTypes.booleanType.type
+        ConstantValueKind.Null -> constructLiteralType(StandardClassIds.Nothing, isNullable = true)
+        ConstantValueKind.Boolean -> constructLiteralType(StandardClassIds.Boolean)
         ConstantValueKind.Char -> constructLiteralType(StandardClassIds.Char)
         ConstantValueKind.Byte -> constructLiteralType(StandardClassIds.Byte)
         ConstantValueKind.Short -> constructLiteralType(StandardClassIds.Short)

@@ -34,7 +34,7 @@ class MetadataSymbolProvider(
     private val kotlinClassFinder: KotlinMetadataFinder,
     defaultDeserializationOrigin: FirDeclarationOrigin = FirDeclarationOrigin.Library
 ) : AbstractFirDeserializedSymbolProvider(
-    session, moduleDataProvider, kotlinScopeProvider, defaultDeserializationOrigin, BuiltInSerializerProtocol
+    session, session.firCachesFactory, moduleDataProvider, kotlinScopeProvider, defaultDeserializationOrigin, BuiltInSerializerProtocol
 ) {
     private val classDataFinder = MetadataClassDataFinder(kotlinClassFinder)
 

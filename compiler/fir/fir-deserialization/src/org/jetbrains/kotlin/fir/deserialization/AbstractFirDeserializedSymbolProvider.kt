@@ -8,6 +8,7 @@ package org.jetbrains.kotlin.fir.deserialization
 import org.jetbrains.kotlin.fir.FirModuleData
 import org.jetbrains.kotlin.fir.FirSession
 import org.jetbrains.kotlin.fir.caches.FirCache
+import org.jetbrains.kotlin.fir.caches.FirCachesFactory
 import org.jetbrains.kotlin.fir.caches.createCache
 import org.jetbrains.kotlin.fir.caches.firCachesFactory
 import org.jetbrains.kotlin.fir.caches.getValue
@@ -92,6 +93,7 @@ typealias DeserializedTypeAliasPostProcessor = (FirTypeAliasSymbol) -> Unit
 
 abstract class AbstractFirDeserializedSymbolProvider(
     session: FirSession,
+    firCachesFactory: FirCachesFactory,
     val moduleDataProvider: ModuleDataProvider,
     val kotlinScopeProvider: FirKotlinScopeProvider,
     val defaultDeserializationOrigin: FirDeclarationOrigin,
@@ -107,7 +109,7 @@ abstract class AbstractFirDeserializedSymbolProvider(
         computePackageSetWithNonClassDeclarations()
     }
 
-    override val symbolNamesProvider: FirSymbolNamesProvider = object : FirCachedSymbolNamesProvider(session) {
+    override val symbolNamesProvider: FirSymbolNamesProvider = object : FirCachedSymbolNamesProvider(firCachesFactory) {
         override fun computePackageNames(): Set<String>? = null
 
         override val hasSpecificClassifierPackageNamesComputation: Boolean get() = false
@@ -141,14 +143,14 @@ abstract class AbstractFirDeserializedSymbolProvider(
     }
 
     private val typeAliasesNamesByPackage: FirCache<FqName, Set<Name>, Nothing?> =
-        session.firCachesFactory.createCache { fqName: FqName ->
+        firCachesFactory.createCache { fqName: FqName ->
             getPackageParts(fqName).flatMapTo(mutableSetOf()) { it.typeAliasNameIndex.keys }
         }
 
-    private val packagePartsCache = session.firCachesFactory.createCache(::tryComputePackagePartInfos)
+    private val packagePartsCache = firCachesFactory.createCache(::tryComputePackagePartInfos)
 
     private val typeAliasCache: FirCache<ClassId, FirTypeAliasSymbol?, FirDeserializationContext?> =
-        session.firCachesFactory.createCacheWithPostCompute(
+        firCachesFactory.createCacheWithPostCompute(
             createValue = { classId, _ -> findAndDeserializeTypeAlias(classId) },
             postCompute = { _, symbol, postProcessor ->
                 if (postProcessor != null && symbol != null) {
@@ -158,7 +160,7 @@ abstract class AbstractFirDeserializedSymbolProvider(
         )
 
     private val classCache: FirCache<ClassId, FirRegularClassSymbol?, FirDeserializationContext?> =
-        session.firCachesFactory.createCacheWithPostCompute(
+        firCachesFactory.createCacheWithPostCompute(
             createValue = { classId, context -> findAndDeserializeClass(classId, context) },
             postCompute = { _, symbol, postProcessor ->
                 if (postProcessor != null && symbol != null) {
@@ -167,8 +169,8 @@ abstract class AbstractFirDeserializedSymbolProvider(
             }
         )
 
-    private val functionCache = session.firCachesFactory.createCache(::loadFunctionsByCallableId)
-    private val propertyCache = session.firCachesFactory.createCache(::loadPropertiesByCallableId)
+    private val functionCache = firCachesFactory.createCache(::loadFunctionsByCallableId)
+    private val propertyCache = firCachesFactory.createCache(::loadPropertiesByCallableId)
 
     // ------------------------ Abstract members ------------------------
 

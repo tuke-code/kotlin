@@ -552,7 +552,7 @@ abstract class FirJavaFacade(
 
                 lazyInitializer = lazy {
                     // NB: null should be converted to null
-                    javaField.initializerValue?.createConstantIfAny(session)
+                    javaField.initializerValue?.createConstantIfAny()
                 }
 
                 lazyHasConstantInitializer = lazy {

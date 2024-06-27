@@ -7,10 +7,12 @@ package org.jetbrains.kotlin.fir.java.deserialization
 
 import org.jetbrains.kotlin.config.AnalysisFlags
 import org.jetbrains.kotlin.config.KotlinCompilerVersion
+import org.jetbrains.kotlin.config.LanguageVersionSettings
 import org.jetbrains.kotlin.descriptors.SourceElement
 import org.jetbrains.kotlin.fir.FirSession
 import org.jetbrains.kotlin.fir.ThreadSafeMutableState
 import org.jetbrains.kotlin.fir.builder.toMutableOrEmpty
+import org.jetbrains.kotlin.fir.caches.firCachesFactory
 import org.jetbrains.kotlin.fir.declarations.FirDeclarationOrigin
 import org.jetbrains.kotlin.fir.declarations.getDeprecationsProvider
 import org.jetbrains.kotlin.fir.deserialization.*
@@ -49,6 +51,7 @@ import java.nio.file.Paths
 @ThreadSafeMutableState
 class JvmClassFileBasedSymbolProvider(
     session: FirSession,
+    languageVersionSettings: LanguageVersionSettings,
     moduleDataProvider: ModuleDataProvider,
     kotlinScopeProvider: FirKotlinScopeProvider,
     private val packagePartProvider: PackagePartProvider,
@@ -56,12 +59,12 @@ class JvmClassFileBasedSymbolProvider(
     private val javaFacade: FirJavaFacade,
     defaultDeserializationOrigin: FirDeclarationOrigin = FirDeclarationOrigin.Library
 ) : AbstractFirDeserializedSymbolProvider(
-    session, moduleDataProvider, kotlinScopeProvider, defaultDeserializationOrigin, BuiltInSerializerProtocol
+    session, session.firCachesFactory, moduleDataProvider, kotlinScopeProvider, defaultDeserializationOrigin, BuiltInSerializerProtocol
 ) {
-    private val annotationsLoader = AnnotationsLoader(session, kotlinClassFinder)
-    private val ownMetadataVersion: JvmMetadataVersion = session.languageVersionSettings.languageVersion.toMetadataVersion()
+    private val annotationsLoader = AnnotationsLoader(languageVersionSettings, kotlinClassFinder)
+    private val ownMetadataVersion: JvmMetadataVersion = languageVersionSettings.languageVersion.toMetadataVersion()
 
-    private val reportErrorsOnPreReleaseDependencies = with(session.languageVersionSettings) {
+    private val reportErrorsOnPreReleaseDependencies = with(languageVersionSettings) {
         !getFlag(AnalysisFlags.skipPrereleaseCheck) && !isPreRelease() && !KotlinCompilerVersion.isPreRelease()
     }
 
