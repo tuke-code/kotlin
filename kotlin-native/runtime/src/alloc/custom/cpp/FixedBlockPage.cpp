@@ -33,6 +33,9 @@ FixedBlockPage::FixedBlockPage(uint32_t blockSize) noexcept : blockSize_(blockSi
     end_ = FIXED_BLOCK_PAGE_CELL_COUNT / blockSize * blockSize;
 }
 
+// Computes the index of the bucket that the requested blockSize would end up
+// in. Formally, it computes the number of unique bucket sizes smaller than
+// BucketSize(blockSize).
 ALWAYS_INLINE uint32_t FixedBlockPage::BucketIndex(uint32_t blockSize) noexcept {
     // If blockSize isn't big enough for the bucket to contain two sizes, then escape early
     if (blockSize < 2 << FIXED_BLOCK_PAGE_BUCKET_BIT_LENGTH) {
@@ -65,6 +68,9 @@ ALWAYS_INLINE uint32_t FixedBlockPage::BucketIndex(uint32_t blockSize) noexcept 
     }
 }
 
+// Rounds the requested blockSize up to the smallest bucket size where it fits.
+// It keeps the (BIT_LENGTH+1) most significant bits intact, and sets the
+// remaining less significant bits to 1.
 ALWAYS_INLINE uint32_t FixedBlockPage::BucketSize(uint32_t blockSize) noexcept {
     uint32_t bucketSize = blockSize | (uint32_t(-1) >> (__builtin_clz(blockSize) + FIXED_BLOCK_PAGE_BUCKET_BIT_LENGTH + 1));
     return bucketSize;
