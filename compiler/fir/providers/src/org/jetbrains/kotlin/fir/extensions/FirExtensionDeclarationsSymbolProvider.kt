@@ -102,7 +102,7 @@ class FirExtensionDeclarationsSymbolProvider private constructor(
         return when {
             classId.isLocal -> null
             classId.isNestedClass -> {
-                val owner = session.symbolProvider.getClassLikeSymbolByClassId(classId.outerClassId!!) as? FirClassSymbol<*> ?: return null
+                val owner = getClassLikeSymbolByClassId(classId.outerClassId!!) as? FirClassSymbol<*> ?: return null
                 val nestedClassifierScope = session.nestedClassifierScope(owner.fir) ?: return null
                 var result: FirClassLikeSymbol<*>? = null
                 nestedClassifierScope.processClassifiersByName(classId.shortClassName) {
