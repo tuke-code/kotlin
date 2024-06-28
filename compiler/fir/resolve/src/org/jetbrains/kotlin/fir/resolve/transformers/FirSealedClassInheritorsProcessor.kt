@@ -14,11 +14,9 @@ import org.jetbrains.kotlin.fir.declarations.utils.*
 import org.jetbrains.kotlin.fir.expressions.FirStatement
 import org.jetbrains.kotlin.fir.languageVersionSettings
 import org.jetbrains.kotlin.fir.resolve.ScopeSession
-import org.jetbrains.kotlin.fir.resolve.getSymbolByLookupTag
-import org.jetbrains.kotlin.fir.resolve.providers.FirSymbolProvider
 import org.jetbrains.kotlin.fir.resolve.providers.dependenciesSymbolProvider
 import org.jetbrains.kotlin.fir.resolve.providers.getRegularClassSymbolByClassId
-import org.jetbrains.kotlin.fir.resolve.providers.symbolProvider
+import org.jetbrains.kotlin.fir.resolve.toSymbol
 import org.jetbrains.kotlin.fir.symbols.lazyResolveToPhase
 import org.jetbrains.kotlin.fir.symbols.impl.FirClassifierSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirRegularClassSymbol
@@ -67,10 +65,8 @@ class FirSealedClassInheritorsProcessor(
                 data.computeIfAbsent(regularClass) { mutableSetOf() }
             }
 
-            val symbolProvider = session.symbolProvider
-
             for (typeRef in regularClass.superTypeRefs) {
-                val parent = extractClassFromTypeRef(symbolProvider, typeRef).takeIf { it?.modality == Modality.SEALED } ?: continue
+                val parent = extractClassFromTypeRef(typeRef).takeIf { it?.modality == Modality.SEALED } ?: continue
                 // Inheritors of sealed class are allowed only in same package
                 if (parent.classId.packageFqName != regularClass.classId.packageFqName) continue
                 val inheritors = data.computeIfAbsent(parent) { mutableSetOf() }
@@ -98,14 +94,14 @@ class FirSealedClassInheritorsProcessor(
             }
         }
 
-        private fun extractClassFromTypeRef(symbolProvider: FirSymbolProvider, typeRef: FirTypeRef): FirRegularClass? {
+        private fun extractClassFromTypeRef(typeRef: FirTypeRef): FirRegularClass? {
             val lookupTag = (typeRef.coneType as? ConeLookupTagBasedType)?.lookupTag ?: return null
-            val classLikeSymbol: FirClassifierSymbol<*> = symbolProvider.getSymbolByLookupTag(lookupTag) ?: return null
+            val classLikeSymbol: FirClassifierSymbol<*> = lookupTag.toSymbol(session) ?: return null
             return when (classLikeSymbol) {
                 is FirRegularClassSymbol -> classLikeSymbol.fir
                 is FirTypeAliasSymbol -> {
                     classLikeSymbol.lazyResolveToPhase(FirResolvePhase.SUPER_TYPES)
-                    extractClassFromTypeRef(symbolProvider, classLikeSymbol.fir.expandedTypeRef)
+                    extractClassFromTypeRef(classLikeSymbol.fir.expandedTypeRef)
                 }
                 else -> null
             }

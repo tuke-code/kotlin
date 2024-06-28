@@ -8,7 +8,7 @@ package org.jetbrains.kotlin.fir.resolve.providers
 import org.jetbrains.kotlin.fir.FirSession
 import org.jetbrains.kotlin.fir.FirSessionComponent
 import org.jetbrains.kotlin.fir.resolve.fullyExpandedType
-import org.jetbrains.kotlin.fir.resolve.getSymbolByLookupTag
+import org.jetbrains.kotlin.fir.resolve.toSymbol
 import org.jetbrains.kotlin.fir.scopes.FirScope
 import org.jetbrains.kotlin.fir.scopes.getDeclaredConstructors
 import org.jetbrains.kotlin.fir.scopes.getFunctions
@@ -79,10 +79,10 @@ fun FirSymbolProvider.getClassDeclaredPropertySymbols(classId: ClassId, name: Na
     return classMemberScope?.getProperties(name).orEmpty()
 }
 
-inline fun <reified T : FirBasedSymbol<*>> FirSymbolProvider.getSymbolByTypeRef(typeRef: FirTypeRef): T? {
-    val lookupTag = (typeRef.coneTypeSafe<ConeSimpleKotlinType>()?.fullyExpandedType(session) as? ConeLookupTagBasedType)?.lookupTag
+inline fun <reified T : FirBasedSymbol<*>> FirSession.getSymbolByTypeRef(typeRef: FirTypeRef): T? {
+    val lookupTag = (typeRef.coneTypeSafe<ConeSimpleKotlinType>()?.fullyExpandedType(this) as? ConeLookupTagBasedType)?.lookupTag
         ?: return null
-    return getSymbolByLookupTag(lookupTag) as? T
+    return lookupTag.toSymbol(this) as? T
 }
 
 fun FirSymbolProvider.getRegularClassSymbolByClassId(classId: ClassId): FirRegularClassSymbol? {
