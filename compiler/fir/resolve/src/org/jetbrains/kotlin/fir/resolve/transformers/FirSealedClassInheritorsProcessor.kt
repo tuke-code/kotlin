@@ -87,7 +87,7 @@ class FirSealedClassInheritorsProcessor(
 
         private fun collectInheritorsOfCorrespondingExpectSealedClass(expectClassId: ClassId, inheritors: MutableSet<ClassId>) {
             if (!session.languageVersionSettings.supportsFeature(LanguageFeature.MultiPlatformProjects)) return
-            val correspondingExpectClass = session.dependenciesSymbolProvider.getRegularClassSymbolByClassId(expectClassId)?.fir ?: return
+            val correspondingExpectClass = session.getRegularClassSymbolByClassId(expectClassId)?.fir ?: return
             if (correspondingExpectClass.isExpect && correspondingExpectClass.isSealed) {
                 val commonInheritors = correspondingExpectClass.getSealedClassInheritors(correspondingExpectClass.moduleData.session)
                 inheritors.addAll(commonInheritors)

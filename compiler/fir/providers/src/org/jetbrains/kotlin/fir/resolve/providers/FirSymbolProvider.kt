@@ -10,8 +10,6 @@ import org.jetbrains.kotlin.fir.FirSessionComponent
 import org.jetbrains.kotlin.fir.resolve.fullyExpandedType
 import org.jetbrains.kotlin.fir.resolve.toSymbol
 import org.jetbrains.kotlin.fir.scopes.FirScope
-import org.jetbrains.kotlin.fir.scopes.getDeclaredConstructors
-import org.jetbrains.kotlin.fir.scopes.getFunctions
 import org.jetbrains.kotlin.fir.scopes.getProperties
 import org.jetbrains.kotlin.fir.scopes.impl.declaredMemberScope
 import org.jetbrains.kotlin.fir.symbols.FirBasedSymbol
@@ -59,22 +57,12 @@ abstract class FirSymbolProvider(val session: FirSession) : FirSessionComponent 
     abstract fun getPackage(fqName: FqName): FqName? // TODO: Replace to symbol sometime
 }
 
-private fun FirSymbolProvider.getClassDeclaredMemberScope(classId: ClassId): FirScope? {
-    val classSymbol = getClassLikeSymbolByClassId(classId) as? FirRegularClassSymbol ?: return null
-    return session.declaredMemberScope(classSymbol.fir, memberRequiredPhase = null)
+private fun FirSession.getClassDeclaredMemberScope(classId: ClassId): FirScope? {
+    val classSymbol = symbolProvider.getClassLikeSymbolByClassId(classId) as? FirRegularClassSymbol ?: return null
+    return declaredMemberScope(classSymbol.fir, memberRequiredPhase = null)
 }
 
-fun FirSymbolProvider.getClassDeclaredConstructors(classId: ClassId): List<FirConstructorSymbol> {
-    val classMemberScope = getClassDeclaredMemberScope(classId)
-    return classMemberScope?.getDeclaredConstructors().orEmpty()
-}
-
-fun FirSymbolProvider.getClassDeclaredFunctionSymbols(classId: ClassId, name: Name): List<FirNamedFunctionSymbol> {
-    val classMemberScope = getClassDeclaredMemberScope(classId)
-    return classMemberScope?.getFunctions(name).orEmpty()
-}
-
-fun FirSymbolProvider.getClassDeclaredPropertySymbols(classId: ClassId, name: Name): List<FirVariableSymbol<*>> {
+fun FirSession.getClassDeclaredPropertySymbols(classId: ClassId, name: Name): List<FirVariableSymbol<*>> {
     val classMemberScope = getClassDeclaredMemberScope(classId)
     return classMemberScope?.getProperties(name).orEmpty()
 }
@@ -85,8 +73,8 @@ inline fun <reified T : FirBasedSymbol<*>> FirSession.getSymbolByTypeRef(typeRef
     return lookupTag.toSymbol(this) as? T
 }
 
-fun FirSymbolProvider.getRegularClassSymbolByClassId(classId: ClassId): FirRegularClassSymbol? {
-    return getClassLikeSymbolByClassId(classId) as? FirRegularClassSymbol
+fun FirSession.getRegularClassSymbolByClassId(classId: ClassId): FirRegularClassSymbol? {
+    return symbolProvider.getClassLikeSymbolByClassId(classId) as? FirRegularClassSymbol
 }
 
 fun ClassId.toSymbol(session: FirSession): FirClassifierSymbol<*>? {
