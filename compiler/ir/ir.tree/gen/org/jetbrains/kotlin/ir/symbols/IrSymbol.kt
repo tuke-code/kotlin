@@ -178,6 +178,7 @@ sealed interface IrReturnTargetSymbol : IrSymbol {
  *
  * @see IrRawFunctionReference.symbol
  * @see IrFunctionReference.symbol
+ * @see IrAdaptedFunctionReference.originalFunction
  */
 sealed interface IrFunctionSymbol : IrReturnTargetSymbol, FunctionSymbolMarker {
     @UnsafeDuringIrConstructionAPI
@@ -217,6 +218,15 @@ interface IrSimpleFunctionSymbol : IrFunctionSymbol, IrBindableSymbol<FunctionDe
 interface IrReturnableBlockSymbol : IrReturnTargetSymbol, IrBindableSymbol<FunctionDescriptor, IrReturnableBlock>
 
 /**
+ * A symbol whose [owner] is either [IrProperty] or [IrLocalDelegatedProperty].
+ *
+ * Generated from: [org.jetbrains.kotlin.ir.generator.IrSymbolTree.declarationWithAccessorsSymbol]
+ *
+ * @see IrAdaptedPropertyReference.originalProperty
+ */
+sealed interface IrDeclarationWithAccessorsSymbol : IrSymbol
+
+/**
  * A symbol whose [owner] is [IrProperty].
  *
  * Generated from: [org.jetbrains.kotlin.ir.generator.IrSymbolTree.propertySymbol]
@@ -228,7 +238,7 @@ interface IrReturnableBlockSymbol : IrReturnTargetSymbol, IrBindableSymbol<Funct
  * @see IrSimpleFunction.correspondingPropertySymbol
  * @see IrPropertyReference.symbol
  */
-interface IrPropertySymbol : IrBindableSymbol<PropertyDescriptor, IrProperty>, PropertySymbolMarker
+interface IrPropertySymbol : IrBindableSymbol<PropertyDescriptor, IrProperty>, IrDeclarationWithAccessorsSymbol, PropertySymbolMarker
 
 /**
  * A symbol whose [owner] is [IrLocalDelegatedProperty].
@@ -237,7 +247,7 @@ interface IrPropertySymbol : IrBindableSymbol<PropertyDescriptor, IrProperty>, P
  *
  * @see IrLocalDelegatedPropertyReference.symbol
  */
-interface IrLocalDelegatedPropertySymbol : IrBindableSymbol<VariableDescriptorWithAccessors, IrLocalDelegatedProperty>
+interface IrLocalDelegatedPropertySymbol : IrDeclarationWithAccessorsSymbol, IrBindableSymbol<VariableDescriptorWithAccessors, IrLocalDelegatedProperty>
 
 /**
  * A symbol whose [owner] is [IrTypeAlias].

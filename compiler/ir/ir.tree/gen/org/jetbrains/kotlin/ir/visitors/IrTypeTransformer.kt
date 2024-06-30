@@ -82,6 +82,11 @@ interface IrTypeTransformer<out R, in D> : IrElementVisitor<R, D> {
         return super.visitMemberAccess(expression, data)
     }
 
+    override fun visitAdaptedFunctionReference(expression: IrAdaptedFunctionReference, data: D): R {
+        expression.samConversion = transformType(expression, expression.samConversion, data)
+        return super.visitAdaptedFunctionReference(expression, data)
+    }
+
     override fun visitClassReference(expression: IrClassReference, data: D): R {
         expression.classType = transformType(expression, expression.classType, data)
         return super.visitClassReference(expression, data)

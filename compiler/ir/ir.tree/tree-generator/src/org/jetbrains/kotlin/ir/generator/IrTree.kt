@@ -16,6 +16,7 @@ import org.jetbrains.kotlin.ir.generator.IrSymbolTree.anonymousInitializerSymbol
 import org.jetbrains.kotlin.ir.generator.IrSymbolTree.classSymbol
 import org.jetbrains.kotlin.ir.generator.IrSymbolTree.classifierSymbol
 import org.jetbrains.kotlin.ir.generator.IrSymbolTree.constructorSymbol
+import org.jetbrains.kotlin.ir.generator.IrSymbolTree.declarationWithAccessorsSymbol
 import org.jetbrains.kotlin.ir.generator.IrSymbolTree.enumEntrySymbol
 import org.jetbrains.kotlin.ir.generator.IrSymbolTree.externalPackageFragmentSymbol
 import org.jetbrains.kotlin.ir.generator.IrSymbolTree.fieldSymbol
@@ -36,6 +37,7 @@ import org.jetbrains.kotlin.ir.generator.IrSymbolTree.variableSymbol
 import org.jetbrains.kotlin.ir.generator.config.AbstractTreeBuilder
 import org.jetbrains.kotlin.ir.generator.model.Element
 import org.jetbrains.kotlin.ir.generator.model.Element.Category.*
+import org.jetbrains.kotlin.ir.generator.model.ListField
 import org.jetbrains.kotlin.ir.generator.model.ListField.Mutability.*
 import org.jetbrains.kotlin.ir.generator.model.ListField.Mutability.Array
 import org.jetbrains.kotlin.ir.generator.model.ListField.Mutability.MutableList
@@ -802,6 +804,26 @@ object IrTree : AbstractTreeBuilder() {
         +referencedSymbol("getter", simpleFunctionSymbol)
         +referencedSymbol("setter", simpleFunctionSymbol, nullable = true)
     }
+
+    val adaptedFunctionReference: Element by element(Expression) {
+        parent(expression)
+
+        +referencedSymbol("originalFunction", functionSymbol)
+        +listField("capturedValues", expression, nullable = false, mutability = ListField.Mutability.MutableList)
+        +field("invokeFunction", functionExpression)
+        +field("origin", statementOriginType, nullable = true)
+        +field("samConversion", irTypeType, nullable = true)
+    }
+    val adaptedPropertyReference: Element by element(Expression) {
+        parent(expression)
+
+        +referencedSymbol("originalProperty", declarationWithAccessorsSymbol)
+        +listField("capturedValues", expression, nullable = false, mutability = ListField.Mutability.MutableList)
+        +field("getterFunction", functionExpression)
+        +field("setterFunction", functionExpression, nullable = true)
+        +field("origin", statementOriginType, nullable = true)
+    }
+
     val classReference: Element by element(Expression) {
         parent(declarationReference)
 

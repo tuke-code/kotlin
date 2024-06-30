@@ -129,6 +129,15 @@ abstract class IrTypeTransformerVoid : IrTypeTransformer<Unit, Nothing?>, IrElem
         super<IrElementVisitorVoid>.visitMemberAccess(expression)
     }
 
+    final override fun visitAdaptedFunctionReference(expression: IrAdaptedFunctionReference, data: Nothing?) {
+        visitAdaptedFunctionReference(expression)
+    }
+
+    override fun visitAdaptedFunctionReference(expression: IrAdaptedFunctionReference) {
+        expression.samConversion = transformType(expression, expression.samConversion)
+        super<IrElementVisitorVoid>.visitAdaptedFunctionReference(expression)
+    }
+
     final override fun visitClassReference(expression: IrClassReference, data: Nothing?) {
         visitClassReference(expression)
     }

@@ -157,6 +157,12 @@ interface IrElementVisitor<out R, in D> {
     fun visitLocalDelegatedPropertyReference(expression: IrLocalDelegatedPropertyReference, data: D): R =
         visitCallableReference(expression, data)
 
+    fun visitAdaptedFunctionReference(expression: IrAdaptedFunctionReference, data: D): R =
+        visitExpression(expression, data)
+
+    fun visitAdaptedPropertyReference(expression: IrAdaptedPropertyReference, data: D): R =
+        visitExpression(expression, data)
+
     fun visitClassReference(expression: IrClassReference, data: D): R =
         visitDeclarationReference(expression, data)
 

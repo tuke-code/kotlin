@@ -318,6 +318,44 @@ fun IrFunctionExpressionImpl(
     origin = origin,
 )
 
+fun IrAdaptedFunctionReferenceImpl(
+    startOffset: Int,
+    endOffset: Int,
+    type: IrType,
+    originalFunction: IrFunctionSymbol,
+    invokeFunction: IrFunctionExpression,
+    samConversion: IrType?,
+    origin: IrStatementOrigin? = null
+) = IrAdaptedFunctionReferenceImpl(
+    constructorIndicator = null,
+    startOffset = startOffset,
+    endOffset = endOffset,
+    type = type,
+    originalFunction = originalFunction,
+    invokeFunction = invokeFunction,
+    samConversion = samConversion,
+    origin = origin
+)
+
+fun IrAdaptedPropertyReferenceImpl(
+    startOffset: Int,
+    endOffset: Int,
+    type: IrType,
+    originalProperty: IrDeclarationWithAccessorsSymbol,
+    getterFunction: IrFunctionExpression,
+    setterFunction: IrFunctionExpression?,
+    origin: IrStatementOrigin? = null
+) = IrAdaptedPropertyReferenceImpl(
+    constructorIndicator = null,
+    startOffset = startOffset,
+    endOffset = endOffset,
+    type = type,
+    originalProperty = originalProperty,
+    getterFunction = getterFunction,
+    setterFunction = setterFunction,
+    origin = origin
+)
+
 fun IrGetClassImpl(
     startOffset: Int,
     endOffset: Int,
