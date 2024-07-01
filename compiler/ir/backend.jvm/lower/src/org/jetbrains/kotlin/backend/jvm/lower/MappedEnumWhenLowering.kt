@@ -62,10 +62,10 @@ import org.jetbrains.kotlin.util.OperatorNameConventions
 )
 internal class MappedEnumWhenLowering(override val context: JvmBackendContext) : EnumWhenLowering(context) {
     private val intArray = context.irBuiltIns.primitiveArrayForType.getValue(context.irBuiltIns.intType)
-    private val intArrayConstructor = intArray.constructors.single { it.owner.valueParameters.size == 1 }
-    private val intArrayGet = intArray.functions.single { it.owner.name == OperatorNameConventions.GET }
-    private val intArraySet = intArray.functions.single { it.owner.name == OperatorNameConventions.SET }
-    private val refArraySize = context.irBuiltIns.arrayClass.owner.properties.single { it.name.toString() == "size" }.getter!!
+    private val intArrayConstructor = context.irBuiltIns.findBuiltInClassConstructors(intArray).single { it.owner.valueParameters.size == 1 }
+    private val intArrayGet = context.irBuiltIns.findBuiltInClassMemberFunctions(intArray, OperatorNameConventions.GET).single()
+    private val intArraySet = context.irBuiltIns.findBuiltInClassMemberFunctions(intArray, OperatorNameConventions.SET).single()
+    private val refArraySize = context.irBuiltIns.findBuiltInClassMemberProperties(intArray, Name.identifier("size")).single().owner.getter!!
 
     // To avoid visibility-related issues, classes containing the mappings are direct children
     // of the classes in which they are used. This field tracks which container is the innermost one.

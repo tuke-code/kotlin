@@ -169,7 +169,7 @@ internal class AddContinuationLowering(context: JvmBackendContext) : SuspendLowe
             +irSetField(
                 irGet(function.dispatchReceiverParameter!!), labelField,
                 irCallOp(
-                    context.irBuiltIns.intClass.functions.single { it.owner.name == OperatorNameConventions.OR },
+                    context.irBuiltIns.getBinaryOperator(OperatorNameConventions.OR, context.irBuiltIns.intType, context.irBuiltIns.intType),
                     context.irBuiltIns.intType,
                     irGetField(irGet(function.dispatchReceiverParameter!!), labelField),
                     irInt(signBit)

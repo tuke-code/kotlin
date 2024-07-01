@@ -6,6 +6,7 @@
 package org.jetbrains.kotlin.backend.jvm.ir
 
 import org.jetbrains.kotlin.backend.jvm.unboxInlineClass
+import org.jetbrains.kotlin.builtins.StandardNames
 import org.jetbrains.kotlin.ir.builders.*
 import org.jetbrains.kotlin.ir.expressions.IrConstructorCall
 import org.jetbrains.kotlin.ir.expressions.IrExpression
@@ -15,6 +16,8 @@ import org.jetbrains.kotlin.ir.types.*
 import org.jetbrains.kotlin.ir.util.constructors
 import org.jetbrains.kotlin.ir.util.functions
 import org.jetbrains.kotlin.ir.util.getPropertyGetter
+import org.jetbrains.kotlin.name.Name
+import org.jetbrains.kotlin.utils.addToStdlib.butIf
 
 inline fun JvmIrBuilder.irArray(arrayType: IrType, block: IrArrayBuilder.() -> Unit): IrExpression =
     IrArrayBuilder(this, arrayType).apply { block() }.build()
@@ -64,7 +67,7 @@ class IrArrayBuilder(val builder: JvmIrBuilder, val arrayType: IrType) {
         val arrayConstructor = if (unwrappedArrayType.isBoxedArray)
             builder.irSymbols.arrayOfNulls
         else
-            unwrappedArrayType.classOrNull!!.constructors.single { it.owner.valueParameters.size == 1 }
+            builder.context.irBuiltIns.findBuiltInClassConstructors(unwrappedArrayType.classOrNull!!).single { it.owner.valueParameters.size == 1 }
 
         return builder.irCall(arrayConstructor, unwrappedArrayType).apply {
             if (typeArgumentsCount != 0)
@@ -78,9 +81,7 @@ class IrArrayBuilder(val builder: JvmIrBuilder, val arrayType: IrType) {
         builder.irBlock {
             val result = irTemporary(newArray(elements.size))
 
-            val set = unwrappedArrayType.classOrNull!!.functions.single {
-                it.owner.name.asString() == "set"
-            }
+            val set = context.irBuiltIns.findBuiltInClassMemberFunctions(unwrappedArrayType.classOrNull!!, Name.identifier("set")).single()
 
             for ((index, element) in elements.withIndex()) {
                 +irCall(set).apply {
@@ -101,7 +102,7 @@ class IrArrayBuilder(val builder: JvmIrBuilder, val arrayType: IrType) {
 
         return builder.irBlock {
             val spreadVar = if (spread is IrGetValue) spread.symbol.owner else irTemporary(spread)
-            val size = unwrappedArrayType.classOrNull!!.getPropertyGetter("size")!!
+            val size = context.irBuiltIns.findBuiltInClassMemberProperties(unwrappedArrayType.classOrFail, Name.identifier("size")).single().owner.getter!!
             val arrayCopyOf = builder.irSymbols.getArraysCopyOfFunction(unwrappedArrayType as IrSimpleType)
             // TODO consider using System.arraycopy if the requested array type is non-generic.
             +irCall(arrayCopyOf).apply {

@@ -36,12 +36,12 @@ internal abstract class IndicesHandler(protected val context: CommonBackendConte
                 // This affects loop code performance on JVM.
                 last = irCall(expression.symbol.owner.extensionReceiverParameter!!.type.sizePropertyGetter)
                     .apply { dispatchReceiver = expression.extensionReceiver!! }
-                lastInclusive = last.decrement()
+                lastInclusive = last.decrement(this@IndicesHandler.context)
                 isLastInclusive = false
             } else {
                 last = irCall(expression.symbol.owner.extensionReceiverParameter!!.type.sizePropertyGetter)
                     .apply { dispatchReceiver = expression.extensionReceiver!! }
-                    .decrement()
+                    .decrement(this@IndicesHandler.context)
                 lastInclusive = null
                 isLastInclusive = true
             }

@@ -17,9 +17,8 @@ import org.jetbrains.kotlin.fir.resolve.providers.FirSymbolProvider
 import org.jetbrains.kotlin.fir.resolve.providers.symbolProvider
 import org.jetbrains.kotlin.fir.scopes.getDeclaredConstructors
 import org.jetbrains.kotlin.fir.scopes.getFunctions
-import org.jetbrains.kotlin.fir.symbols.impl.FirNamedFunctionSymbol
-import org.jetbrains.kotlin.fir.symbols.impl.FirPropertySymbol
-import org.jetbrains.kotlin.fir.symbols.impl.FirRegularClassSymbol
+import org.jetbrains.kotlin.fir.scopes.getProperties
+import org.jetbrains.kotlin.fir.symbols.impl.*
 import org.jetbrains.kotlin.fir.symbols.lazyResolveToPhase
 import org.jetbrains.kotlin.fir.types.isBoolean
 import org.jetbrains.kotlin.ir.UNDEFINED_OFFSET
@@ -58,6 +57,20 @@ class Fir2IrBuiltinSymbolsContainer(
         val klass = symbolProvider.getClassLikeSymbolByClassId(classId) as FirRegularClassSymbol
         val scope = klass.unsubstitutedScope(c)
         return scope.getFunctions(name)
+    }
+
+    @Fir2IrBuiltInsInternals
+    internal fun findFirMemberProperties(classId: ClassId, name: Name): List<FirPropertySymbol> {
+        val klass = symbolProvider.getClassLikeSymbolByClassId(classId) as FirRegularClassSymbol
+        val scope = klass.unsubstitutedScope(c)
+        return scope.getProperties(name).filterIsInstance<FirPropertySymbol>()
+    }
+
+    @Fir2IrBuiltInsInternals
+    internal fun findFirMemberConstructors(classId: ClassId): List<FirConstructorSymbol> {
+        val klass = symbolProvider.getClassLikeSymbolByClassId(classId) as FirRegularClassSymbol
+        val scope = klass.unsubstitutedScope(c)
+        return scope.getDeclaredConstructors()
     }
 
     val anyClass: IrClassSymbol by lazy { loadClass(StandardClassIds.Any) }
@@ -305,5 +318,11 @@ class Fir2IrBuiltinSymbolsContainer(
     internal fun findProperty(propertySymbol: FirPropertySymbol): IrPropertySymbol {
         propertySymbol.lazyResolveToPhase(FirResolvePhase.IMPLICIT_TYPES_BODY_RESOLVE)
         return c.declarationStorage.getIrPropertySymbol(propertySymbol) as IrPropertySymbol
+    }
+
+    @Fir2IrBuiltInsInternals
+    internal fun findConstructor(constructorSymbol: FirConstructorSymbol): IrConstructorSymbol {
+        constructorSymbol.lazyResolveToPhase(FirResolvePhase.IMPLICIT_TYPES_BODY_RESOLVE)
+        return c.declarationStorage.getIrConstructorSymbol(constructorSymbol) as IrConstructorSymbol
     }
 }

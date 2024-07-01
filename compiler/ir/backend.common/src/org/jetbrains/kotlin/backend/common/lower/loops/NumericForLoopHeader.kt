@@ -102,11 +102,7 @@ abstract class NumericForLoopHeader<T : NumericHeaderInfo>(
             // NOTE: We cannot use `stepExpression.type` to match the value parameter type because it may be of type `Nothing`.
             // This happens in the case of an illegal step where the "step" is actually a `throw IllegalArgumentException(...)`.
             val stepType = stepClass.defaultType
-            val plusFun = elementClass.defaultType.getClass()!!.functions.single {
-                it.name == OperatorNameConventions.PLUS &&
-                        it.valueParameters.size == 1 &&
-                        it.valueParameters[0].type == stepType
-            }
+            val plusFun = context.irBuiltIns.getBinaryOperator(OperatorNameConventions.PLUS, elementClass.defaultType, stepType).owner
             irSet(
                 inductionVariable.symbol, irCallOp(
                     plusFun.symbol, plusFun.returnType,

@@ -16,10 +16,7 @@ import org.jetbrains.kotlin.ir.declarations.IrClass
 import org.jetbrains.kotlin.ir.declarations.IrDeclarationOriginImpl
 import org.jetbrains.kotlin.ir.declarations.IrExternalPackageFragment
 import org.jetbrains.kotlin.ir.declarations.IrFactory
-import org.jetbrains.kotlin.ir.symbols.IrClassSymbol
-import org.jetbrains.kotlin.ir.symbols.IrClassifierSymbol
-import org.jetbrains.kotlin.ir.symbols.IrPropertySymbol
-import org.jetbrains.kotlin.ir.symbols.IrSimpleFunctionSymbol
+import org.jetbrains.kotlin.ir.symbols.*
 import org.jetbrains.kotlin.ir.types.IrType
 import org.jetbrains.kotlin.ir.types.IrTypeSystemContextImpl
 import org.jetbrains.kotlin.ir.util.addFakeOverrides
@@ -185,6 +182,8 @@ abstract class IrBuiltIns {
     abstract fun getKPropertyClass(mutable: Boolean, n: Int): IrClassSymbol
 
     abstract fun findBuiltInClassMemberFunctions(builtInClass: IrClassSymbol, name: Name): Iterable<IrSimpleFunctionSymbol>
+    open fun findBuiltInClassMemberProperties(builtInClass: IrClassSymbol, name: Name): Iterable<IrPropertySymbol> = TODO("Not implemented")
+    open fun findBuiltInClassConstructors(builtInClass: IrClassSymbol): Iterable<IrConstructorSymbol> = TODO("Not implemented")
 
     abstract fun getNonBuiltInFunctionsByExtensionReceiver(
         name: Name, vararg packageNameSegments: String

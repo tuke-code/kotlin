@@ -17,6 +17,7 @@ import org.jetbrains.kotlin.fir.languageVersionSettings
 import org.jetbrains.kotlin.fir.resolve.providers.FirSymbolProvider
 import org.jetbrains.kotlin.fir.resolve.providers.getRegularClassSymbolByClassId
 import org.jetbrains.kotlin.fir.resolve.providers.symbolProvider
+import org.jetbrains.kotlin.fir.scopes.impl.hasTypeOf
 import org.jetbrains.kotlin.fir.types.*
 import org.jetbrains.kotlin.ir.BuiltInOperatorNames
 import org.jetbrains.kotlin.ir.IrBuiltIns
@@ -30,8 +31,8 @@ import org.jetbrains.kotlin.ir.symbols.impl.IrSimpleFunctionSymbolImpl
 import org.jetbrains.kotlin.ir.symbols.impl.IrTypeParameterSymbolImpl
 import org.jetbrains.kotlin.ir.types.*
 import org.jetbrains.kotlin.ir.types.impl.IrSimpleTypeImpl
+import org.jetbrains.kotlin.ir.util.classIdOrFail
 import org.jetbrains.kotlin.ir.util.constructors
-import org.jetbrains.kotlin.ir.util.functions
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.name.Name
@@ -224,22 +225,28 @@ class IrBuiltInsOverFir(
     override val enumClass: IrClassSymbol by lazy { fir2irBuiltins.loadClass(StandardClassIds.Enum) }
 
     @OptIn(UnsafeDuringIrConstructionAPI::class)
-    override val intPlusSymbol: IrSimpleFunctionSymbol
-        get() = intClass.functions.single {
-            it.owner.name == OperatorNameConventions.PLUS && it.owner.valueParameters[0].type == intType
+    override val intPlusSymbol: IrSimpleFunctionSymbol by lazy {
+        val firFunction = fir2irBuiltins.findFirMemberFunctions(StandardClassIds.Int, OperatorNameConventions.PLUS).single {
+            it.fir.valueParameters[0].hasTypeOf(StandardClassIds.Int, false)
         }
+        fir2irBuiltins.findFunction(firFunction)
+    }
 
     @OptIn(UnsafeDuringIrConstructionAPI::class)
-    override val intTimesSymbol: IrSimpleFunctionSymbol
-        get() = intClass.functions.single {
-            it.owner.name == OperatorNameConventions.TIMES && it.owner.valueParameters[0].type == intType
+    override val intTimesSymbol: IrSimpleFunctionSymbol by lazy {
+        val firFunction = fir2irBuiltins.findFirMemberFunctions(StandardClassIds.Int, OperatorNameConventions.TIMES).single {
+            it.fir.valueParameters[0].hasTypeOf(StandardClassIds.Int, false)
         }
+        fir2irBuiltins.findFunction(firFunction)
+    }
 
     @OptIn(UnsafeDuringIrConstructionAPI::class)
-    override val intXorSymbol: IrSimpleFunctionSymbol
-        get() = intClass.functions.single {
-            it.owner.name == OperatorNameConventions.XOR && it.owner.valueParameters[0].type == intType
+    override val intXorSymbol: IrSimpleFunctionSymbol by lazy {
+        val firFunction = fir2irBuiltins.findFirMemberFunctions(StandardClassIds.Int, OperatorNameConventions.XOR).single {
+            it.fir.valueParameters[0].hasTypeOf(StandardClassIds.Int, false)
         }
+        fir2irBuiltins.findFunction(firFunction)
+    }
 
     override val extensionToString: IrSimpleFunctionSymbol by lazy {
         val firFunctionSymbol = symbolProvider.getTopLevelFunctionSymbols(kotlinPackage, OperatorNameConventions.TO_STRING).single {
@@ -343,16 +350,14 @@ class IrBuiltInsOverFir(
          */
         val firClassSymbol = session.getRegularClassSymbolByClassId(StandardClassIds.Annotations.IntrinsicConstEvaluation)
 
-        val classSymbol = if (firClassSymbol == null) {
+        val (classSymbol, constructorSymbol) = if (firClassSymbol == null) {
             val irClass = createIntrinsicConstEvaluationClass()
-            irClass.symbol
+            @OptIn(UnsafeDuringIrConstructionAPI::class)
+            irClass.symbol to irClass.constructors.single().symbol
         } else {
-            fir2irBuiltins.loadClass(StandardClassIds.Annotations.IntrinsicConstEvaluation)
+            val irClass = fir2irBuiltins.loadClass(StandardClassIds.Annotations.IntrinsicConstEvaluation)
+            irClass to findBuiltInClassConstructors(irClass).single()
         }
-
-        @OptIn(UnsafeDuringIrConstructionAPI::class)
-        val constructor = classSymbol.owner.constructors.single()
-        val constructorSymbol = constructor.symbol
 
         val annotationCall = IrConstructorCallImpl(
             startOffset = UNDEFINED_OFFSET,
@@ -540,25 +545,40 @@ class IrBuiltInsOverFir(
 
     @OptIn(UnsafeDuringIrConstructionAPI::class)
     override fun findBuiltInClassMemberFunctions(builtInClass: IrClassSymbol, name: Name): Iterable<IrSimpleFunctionSymbol> {
-        return builtInClass.functions.filter { it.owner.name == name }.asIterable()
+        val firFunctions = fir2irBuiltins.findFirMemberFunctions(builtInClass.owner.classIdOrFail, name)
+        return firFunctions.map { fir2irBuiltins.findFunction(it) }
+    }
+
+    @OptIn(UnsafeDuringIrConstructionAPI::class)
+    override fun findBuiltInClassMemberProperties(builtInClass: IrClassSymbol, name: Name): Iterable<IrPropertySymbol> {
+        val firProperties = fir2irBuiltins.findFirMemberProperties(builtInClass.owner.classIdOrFail, name)
+        return firProperties.map { fir2irBuiltins.findProperty(it) }
+    }
+
+    @OptIn(UnsafeDuringIrConstructionAPI::class)
+    override fun findBuiltInClassConstructors(builtInClass: IrClassSymbol): Iterable<IrConstructorSymbol> {
+        val firFunctions = fir2irBuiltins.findFirMemberConstructors(builtInClass.owner.classIdOrFail)
+        return firFunctions.map { fir2irBuiltins.findConstructor(it) }
     }
 
     // This function should not be called from fir2ir code
     @UnsafeDuringIrConstructionAPI
     override fun getBinaryOperator(name: Name, lhsType: IrType, rhsType: IrType): IrSimpleFunctionSymbol {
         val definingClass = lhsType.getMaybeBuiltinClass() ?: error("Defining class not found: $lhsType")
-        return definingClass.functions.single { function ->
-            function.name == name && function.valueParameters.size == 1 && function.valueParameters[0].type == rhsType
-        }.symbol
+        val firFunction = fir2irBuiltins.findFirMemberFunctions(definingClass.classIdOrFail, name).single { function ->
+            function.fir.valueParameters.size == 1 && function.fir.valueParameters[0].returnTypeRef.toIrType(c) == rhsType
+        }
+        return fir2irBuiltins.findFunction(firFunction)
     }
 
     // This function should not be called from fir2ir code
     @UnsafeDuringIrConstructionAPI
     override fun getUnaryOperator(name: Name, receiverType: IrType): IrSimpleFunctionSymbol {
         val definingClass = receiverType.getMaybeBuiltinClass() ?: error("Defining class not found: $receiverType")
-        return definingClass.functions.single { function ->
-            function.name == name && function.valueParameters.isEmpty()
-        }.symbol
+        val firFunction = fir2irBuiltins.findFirMemberFunctions(definingClass.classIdOrFail, name).single { function ->
+            function.fir.valueParameters.isEmpty()
+        }
+        return fir2irBuiltins.findFunction(firFunction)
     }
 
     // ------------------------------------- private utilities -------------------------------------

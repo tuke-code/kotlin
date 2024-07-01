@@ -84,7 +84,7 @@ internal class ArrayIterationHandler(context: CommonBackendContext) : IndexedGet
     }
 
     override val IrType.sizePropertyGetter
-        get() = getClass()!!.getPropertyGetter("size")!!.owner
+        get() = context.irBuiltIns.findBuiltInClassMemberProperties(getClass()!!.symbol, Name.identifier("size")).single().owner.getter!!
 
     private fun IrType.isArrayType() =
         isArray() || isPrimitiveArray() || (supportsUnsignedArrays && isUnsignedArray())
@@ -98,10 +98,9 @@ internal class ArrayIterationHandler(context: CommonBackendContext) : IndexedGet
             }
         }
 
-    override val IrType.getFunction
-        get() = getClass()!!.functions.single {
-            it.name == getFunctionName &&
-                    it.valueParameters.size == 1 &&
+    override val IrType.getFunction: IrSimpleFunction
+        get() = context.irBuiltIns.findBuiltInClassMemberFunctions(getClass()!!.symbol, getFunctionName).map { it.owner }.single {
+            it.valueParameters.size == 1 &&
                     it.valueParameters[0].type.isInt()
         }
 }
@@ -130,10 +129,10 @@ internal open class CharSequenceIterationHandler(
     }
 
     override val IrType.sizePropertyGetter: IrSimpleFunction
-        get() = context.ir.symbols.charSequence.getPropertyGetter("length")!!.owner
+        get() = context.irBuiltIns.findBuiltInClassMemberProperties(context.ir.symbols.charSequence, Name.identifier("length")).single().owner.getter!!
 
     override val IrType.getFunction: IrSimpleFunction
-        get() = context.ir.symbols.charSequence.getSimpleFunction(OperatorNameConventions.GET.asString())!!.owner
+        get() = context.irBuiltIns.findBuiltInClassMemberFunctions(context.ir.symbols.charSequence, OperatorNameConventions.GET).single().owner
 }
 
 /**
@@ -146,8 +145,8 @@ internal class StringIterationHandler(context: CommonBackendContext) : CharSeque
         expression.type.isString()
 
     override val IrType.sizePropertyGetter: IrSimpleFunction
-        get() = context.ir.symbols.string.getPropertyGetter("length")!!.owner
+        get() = context.irBuiltIns.findBuiltInClassMemberProperties(context.ir.symbols.string, Name.identifier("length")).single().owner.getter!!
 
     override val IrType.getFunction: IrSimpleFunction
-        get() = context.ir.symbols.string.getSimpleFunction(OperatorNameConventions.GET.asString())!!.owner
+        get() = context.irBuiltIns.findBuiltInClassMemberFunctions(context.ir.symbols.string, OperatorNameConventions.GET).single().owner
 }

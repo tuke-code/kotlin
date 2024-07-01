@@ -5,6 +5,7 @@
 
 package org.jetbrains.kotlin.backend.common.lower.loops
 
+import org.jetbrains.kotlin.backend.common.CommonBackendContext
 import org.jetbrains.kotlin.backend.common.lower.DeclarationIrBuilder
 import org.jetbrains.kotlin.builtins.PrimitiveType
 import org.jetbrains.kotlin.ir.builders.createTmpVariable
@@ -48,19 +49,16 @@ internal fun IrExpression.negate(): IrExpression {
 }
 
 /** Return `this - 1` if the expression is const, otherwise call dec(). */
-internal fun IrExpression.decrement(): IrExpression {
+internal fun IrExpression.decrement(context: CommonBackendContext): IrExpression {
     return when (val thisValue = (this as? IrConst<*>)?.value) {
         is Int -> IrConstImpl(startOffset, endOffset, type, IrConstKind.Int, thisValue - 1)
         is Long -> IrConstImpl(startOffset, endOffset, type, IrConstKind.Long, thisValue - 1)
         is Char -> IrConstImpl(startOffset, endOffset, type, IrConstKind.Char, thisValue - 1)
         else -> {
-            val decFun = type.getClass()!!.functions.single {
-                it.name == OperatorNameConventions.DEC &&
-                        it.valueParameters.isEmpty()
-            }
+            val decFun = context.irBuiltIns.findBuiltInClassMemberFunctions(type.classOrFail, OperatorNameConventions.DEC).single()
             IrCallImpl(
                 startOffset, endOffset, type,
-                decFun.symbol,
+                decFun,
                 valueArgumentsCount = 0,
                 typeArgumentsCount = 0
             ).apply {

@@ -25,6 +25,7 @@ import org.jetbrains.kotlin.fir.symbols.ConeClassLikeLookupTag
 import org.jetbrains.kotlin.fir.symbols.impl.*
 import org.jetbrains.kotlin.ir.UNDEFINED_OFFSET
 import org.jetbrains.kotlin.ir.declarations.*
+import org.jetbrains.kotlin.ir.expressions.IrSyntheticBodyKind
 import org.jetbrains.kotlin.ir.symbols.*
 import org.jetbrains.kotlin.ir.symbols.impl.*
 import org.jetbrains.kotlin.ir.util.getPackageFragment
@@ -32,6 +33,7 @@ import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.name.SpecialNames
 import org.jetbrains.kotlin.name.StandardClassIds
+import org.jetbrains.kotlin.utils.addIfNotNull
 import org.jetbrains.kotlin.utils.addToStdlib.runIf
 import java.util.concurrent.ConcurrentHashMap
 
@@ -234,32 +236,38 @@ class Fir2IrClassifierStorage(
 
     @OptIn(UnsafeDuringIrConstructionAPI::class)
     private fun initializeLazyIrClassDeclarations(classId: ClassId, irClass: Fir2IrLazyClass) {
-        if (classId.packageFqName == StandardNames.BUILT_INS_PACKAGE_FQ_NAME) {
-            irClass.computeAllDeclarations()
-        } else {
+        /* if (classId.packageFqName == StandardNames.BUILT_INS_PACKAGE_FQ_NAME) {
+             irClass.computeAllDeclarations()
+         } else*/
+        run {
             val lookupTag = irClass.fir.symbol.toLookupTag()
 
-            val callableNames = when (irClass.kind) {
-                ClassKind.ENUM_CLASS ->
-                    Fir2IrDeclarationStorage.ENUM_SYNTHETIC_NAMES.keys
-                ClassKind.INTERFACE -> {
-                    val functions = irClass.fir.declarations.filterIsInstance<FirSimpleFunction>()
-                    val sam = functions.singleOrNull { it.isAbstract }
-                    setOfNotNull(sam?.name)
-                }
-                else -> emptySet()
+            val functionNames = mutableSetOf<Name>()
+            val propertyNames = mutableSetOf<Name>()
+            if (irClass.kind == ClassKind.ENUM_CLASS || classId == StandardClassIds.Enum) {
+                propertyNames += listOf("name", "ordinal", "entries")
+                    .map { Name.identifier(it) }
+                functionNames += listOf("values", "valueOf")
+                    .map { Name.identifier(it) }
+            }
+            if (irClass.kind == ClassKind.INTERFACE) {
+                val functions = irClass.fir.declarations.filterIsInstance<FirSimpleFunction>()
+                val sam = functions.singleOrNull { it.isAbstract }
+                functionNames.addIfNotNull(sam?.name)
             }
 
-            if (callableNames.isNotEmpty()) {
+            if (functionNames.isNotEmpty() || propertyNames.isNotEmpty()) {
                 listOfNotNull(
                     irClass.fir.unsubstitutedScope(c),
                     irClass.fir.staticScopeForBackend(session, scopeSession),
                 ).forEach { scope ->
-                    for (name in callableNames) {
+                    for (name in functionNames) {
                         scope.processFunctionsByName(name) { symbol ->
                             declarationStorage.getIrFunctionSymbol(symbol, lookupTag)
                         }
+                    }
 
+                    for (name in propertyNames) {
                         scope.processPropertiesByName(name) { property ->
                             if (property is FirPropertySymbol) {
                                 declarationStorage.getIrPropertySymbol(property, lookupTag)

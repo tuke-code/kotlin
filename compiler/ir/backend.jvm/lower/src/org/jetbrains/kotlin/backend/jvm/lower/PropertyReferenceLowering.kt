@@ -66,7 +66,7 @@ internal class PropertyReferenceLowering(val context: JvmBackendContext) : IrEle
         get() = (this as? IrPropertyReference)?.field
 
     private val arrayItemGetter =
-        context.ir.symbols.array.owner.functions.single { it.name.asString() == "get" }
+        context.irBuiltIns.findBuiltInClassMemberFunctions(context.ir.symbols.array, Name.identifier("get")).single()
 
     private val signatureStringIntrinsic = context.ir.symbols.signatureStringIntrinsic
 

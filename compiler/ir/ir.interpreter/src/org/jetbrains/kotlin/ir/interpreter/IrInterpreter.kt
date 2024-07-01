@@ -298,7 +298,7 @@ class IrInterpreter(internal val environment: IrInterpreterEnvironment, internal
         val signedType = getSignedType(expression.type)
         if (signedType != null) {
             val unsignedClass = expression.type.classOrNull!!
-            val constructor = unsignedClass.constructors.single().owner
+            val constructor = irBuiltIns.findBuiltInClassConstructors(unsignedClass).single().owner
             val constructorCall = IrConstructorCallImpl.fromSymbolOwner(constructor.returnType, constructor.symbol)
             constructorCall.putValueArgument(0, expression.value.toIrConst(signedType))
 
