@@ -333,6 +333,7 @@ enum class LanguageFeature(
     ImprovedVarianceInCst(KOTLIN_2_1, kind = OTHER), // KT-68970
     InferMoreImplicationsFromBooleanExpressions(KOTLIN_2_1, kind = OTHER), // KT-64193
     ExhaustivenessChecksOnTypeParameterBounds(KOTLIN_2_1, kind = OTHER), // KT-21908
+    JavaTypeParameterDefaultRepresentationWithDNN(KOTLIN_2_1, kind = OTHER), // KT-59138
 
     // 2.2
 
@@ -402,7 +403,6 @@ enum class LanguageFeature(
     DisableCheckingChangedProgressionsResolve(sinceVersion = null, kind = OTHER), // KT-49276
     ContextSensitiveEnumResolutionInWhen(sinceVersion = null, kind = UNSTABLE_FEATURE), // KT-52774
     ForbidSyntheticPropertiesWithoutBaseJavaGetter(sinceVersion = null, kind = OTHER), // KT-64358
-    JavaTypeParameterDefaultRepresentationWithDNN(sinceVersion = null, kind = OTHER), // KT-59138
     ProperFieldAccessGenerationForFieldAccessShadowedByKotlinProperty(sinceVersion = null, kind = OTHER), // KT-56386
     WhenGuards(sinceVersion = null, kind = OTHER), // KT-13626
     MultiDollarInterpolation(sinceVersion = null, kind = OTHER), // KT-2425
