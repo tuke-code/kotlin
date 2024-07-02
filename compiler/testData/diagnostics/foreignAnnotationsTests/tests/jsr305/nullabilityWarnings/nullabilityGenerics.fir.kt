@@ -27,8 +27,8 @@ class X<T>(t: T?) {
         val a = A<T>()
         a.foo(<!NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS!>t<!>)
 
-        val x: T = <!NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS!>a.bam()<!>
-        val y: T = <!NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS!>a.baz<T>()<!>
+        val x: T = a.bam()
+        val y: T = a.baz<T>()
     }
 }
 

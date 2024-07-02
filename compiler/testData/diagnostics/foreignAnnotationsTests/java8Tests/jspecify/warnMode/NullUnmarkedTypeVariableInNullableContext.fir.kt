@@ -38,8 +38,7 @@ fun test() {
     accept<String>(<!NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS!>NullMarkedType.TargetType.TYPE_ARGUMENT().produce()<!>)
     accept<Any>(NullMarkedType.TargetType.UNBOUNDED_WILDCARD().produce())
     accept<String>(NullMarkedType.TargetType.UPPER_BOUNDED_WILDCARD().produce())
-    // jspecify_nullness_mismatch
-    accept<Any>(<!NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS!>NullMarkedType.TargetType.LOWER_BOUNDED_WILDCARD().produce()<!>)
+    accept<Any>(NullMarkedType.TargetType.LOWER_BOUNDED_WILDCARD().produce())
     // jspecify_nullness_mismatch
     accept<Any>(<!NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS!>NullMarkedType.TargetType.RAW().produce()<!>)
 }
