@@ -961,7 +961,7 @@ internal class CodeGeneratorVisitor(
             is IrBreak               -> return evaluateBreak                  (value)
             is IrContinue            -> return evaluateContinue               (value)
             is IrGetObjectValue      -> return evaluateGetObjectValue         (value)
-            is IrFunctionReference   -> return evaluateFunctionReference      (value)
+            is IrRawFunctionReference -> return evaluateFunctionReference      (value)
             is IrSuspendableExpression ->
                                         return evaluateSuspendableExpression  (value, resultSlot)
             is IrSuspensionPoint     -> return evaluateSuspensionPoint        (value)
@@ -2324,14 +2324,11 @@ internal class CodeGeneratorVisitor(
 
     //-------------------------------------------------------------------------//
 
-    private fun evaluateFunctionReference(expression: IrFunctionReference): LLVMValueRef {
+    private fun evaluateFunctionReference(expression: IrRawFunctionReference): LLVMValueRef {
         // TODO: consider creating separate IR element for pointer to function.
         assert (expression.type.getClass()?.symbol?.hasEqualFqName(InteropFqNames.cPointer.toSafe()) == true) {
             "assert: should be ${InteropFqNames.cPointer}, ${expression.type.render()} found"
         }
-
-        assert (expression.getArgumentsWithIr().isEmpty())
-
         val function = expression.symbol.owner
         require(function is IrSimpleFunction) { "References to constructors should've been lowered: ${expression.render()}" }
         assert (function.dispatchReceiverParameter == null)
