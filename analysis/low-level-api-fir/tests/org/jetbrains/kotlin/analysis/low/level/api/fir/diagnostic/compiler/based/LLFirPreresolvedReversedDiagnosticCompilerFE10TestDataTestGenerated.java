@@ -48463,6 +48463,12 @@ public class LLFirPreresolvedReversedDiagnosticCompilerFE10TestDataTestGenerated
       }
 
       @Test
+      @TestMetadata("floatingNullabilityProblem.kt")
+      public void testFloatingNullabilityProblem() {
+        runTest("compiler/testData/diagnostics/testsWithStdLib/java/floatingNullabilityProblem.kt");
+      }
+
+      @Test
       @TestMetadata("functionN.kt")
       public void testFunctionN() {
         runTest("compiler/testData/diagnostics/testsWithStdLib/java/functionN.kt");
