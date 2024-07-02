@@ -1,2 +1,2 @@
 PsiType: T
-KaType: T!
+KaType: (T & kotlin.Any..T?)

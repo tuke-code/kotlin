@@ -165,7 +165,7 @@ FILE fqName:<root> fileName:/1.kt
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun test2 (): @[FlexibleNullability] kotlin.Int? declared in <root>.B'
           CALL 'public open fun bar <T> (): @[FlexibleNullability] T of <root>.Java1.bar? declared in <root>.Java1' type=@[FlexibleNullability] kotlin.Int? origin=null
-            <T>: @[FlexibleNullability] kotlin.Int?
+            <T>: kotlin.Int
     FUN name:test3 visibility:public modality:FINAL <> ($this:<root>.B) returnType:@[FlexibleNullability] kotlin.Number?
       $this: VALUE_PARAMETER name:<this> type:<root>.B
       BLOCK_BODY
