@@ -6,7 +6,7 @@ KtNameReferenceExpression(18,28): 'Comparator'
           name = function
           receiverType = null
           returnType = kotlin.Function2<kotlin.Int!, kotlin.Int!, kotlin.Int>
-          symbol = function: kotlin.Function2<T!, T!, kotlin.Int>
+          symbol = function: kotlin.Function2<ft<T & Any, T?>, ft<T & Any, T?>, kotlin.Int>
           callableId = null)
       }
       isImplicitInvoke = false
@@ -16,13 +16,13 @@ KtNameReferenceExpression(18,28): 'Comparator'
         signature = KaFunctionSignature:
           receiverType = null
           returnType = java.util.Comparator<kotlin.Int!>
-          symbol = java/util/Comparator(function: kotlin.Function2<T!, T!, kotlin.Int>): java.util.Comparator<T>
+          symbol = java/util/Comparator(function: kotlin.Function2<ft<T & Any, T?>, ft<T & Any, T?>, kotlin.Int>): java.util.Comparator<T>
           valueParameters = [
             KaVariableSignature:
               name = function
               receiverType = null
               returnType = kotlin.Function2<kotlin.Int!, kotlin.Int!, kotlin.Int>
-              symbol = function: kotlin.Function2<T!, T!, kotlin.Int>
+              symbol = function: kotlin.Function2<ft<T & Any, T?>, ft<T & Any, T?>, kotlin.Int>
               callableId = null
           ]
           callableId = java/util/Comparator

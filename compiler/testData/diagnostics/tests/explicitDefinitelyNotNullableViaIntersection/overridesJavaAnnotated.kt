@@ -1,4 +1,3 @@
-// FIR_IDENTICAL
 // LANGUAGE: +DefinitelyNonNullableTypes +ProhibitUsingNullableTypeParameterAgainstNotNullAnnotated
 
 // FILE: A.java
@@ -18,7 +17,7 @@ interface B<T1> : A<T1> {
 }
 
 interface C<T2> : A<T2> {
-    override fun foo(x: T2 & Any): T2 & Any
+    <!NOTHING_TO_OVERRIDE!>override<!> fun foo(x: T2 & Any): T2 & Any
     <!NOTHING_TO_OVERRIDE!>override<!> fun bar(x: T2): T2
 }
 
@@ -33,7 +32,7 @@ interface E : A<String> {
 }
 
 interface F : A<String?> {
-    override fun foo(x: String): String
+    <!NOTHING_TO_OVERRIDE!>override<!> fun foo(x: String): String
     <!NOTHING_TO_OVERRIDE!>override<!> fun bar(x: String?): String?
 }
 
