@@ -1122,8 +1122,9 @@ private class InteropTransformer(
                 IntrinsicType.INTEROP_STATIC_C_FUNCTION -> {
                     val irCallableReference = unwrapStaticFunctionArgument(expression.getValueArgument(0)!!)
 
-                    require(irCallableReference != null && irCallableReference.getArguments().isEmpty()
-                            && irCallableReference.symbol is IrSimpleFunctionSymbol) { renderCompilerError(expression) }
+                    require(irCallableReference != null && irCallableReference.symbol is IrSimpleFunctionSymbol) {
+                        renderCompilerError(expression)
+                    }
 
                     val targetSymbol = irCallableReference.symbol
                     val target = targetSymbol.owner
@@ -1205,16 +1206,13 @@ private class InteropTransformer(
                 IntrinsicType.WORKER_EXECUTE -> {
                     val irCallableReference = unwrapStaticFunctionArgument(expression.getValueArgument(2)!!)
 
-                    require(irCallableReference != null
-                            && irCallableReference.getArguments().isEmpty()) { renderCompilerError(expression) }
+                    require(irCallableReference != null) { renderCompilerError(expression) }
 
                     val targetSymbol = irCallableReference.symbol
-                    val jobPointer = IrFunctionReferenceImpl.fromSymbolDescriptor(
+                    val jobPointer = IrRawFunctionReferenceImpl(
                             builder.startOffset, builder.endOffset,
                             symbols.executeImpl.owner.valueParameters[3].type,
-                            targetSymbol,
-                            typeArgumentsCount = 0,
-                            reflectionTarget = null)
+                            targetSymbol)
 
                     builder.irCall(symbols.executeImpl).apply {
                         putValueArgument(0, expression.dispatchReceiver)
@@ -1401,8 +1399,8 @@ private class InteropTransformer(
         }
     }
 
-    private fun unwrapStaticFunctionArgument(argument: IrExpression): IrFunctionReference? {
-        if (argument is IrFunctionReference) {
+    private fun unwrapStaticFunctionArgument(argument: IrExpression): IrRawFunctionReference? {
+        if (argument is IrRawFunctionReference) {
             return argument
         }
 
@@ -1427,7 +1425,7 @@ private class InteropTransformer(
 
         // 3. Second statement is IrCallableReference:
 
-        return argument.statements.last() as? IrFunctionReference
+        return argument.statements.last() as? IrRawFunctionReference
     }
 
     val IrValueParameter.isDispatchReceiver: Boolean
