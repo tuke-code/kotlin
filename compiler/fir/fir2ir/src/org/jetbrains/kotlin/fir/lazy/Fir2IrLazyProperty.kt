@@ -242,15 +242,7 @@ class Fir2IrLazyProperty(
         }
     }
 
-    override var overriddenSymbols: List<IrPropertySymbol> by symbolsMappingForLazyClasses.lazyMappedPropertyListVar(lock) lazy@{
-        if (containingClass == null || parent !is Fir2IrLazyClass) return@lazy emptyList()
-
-        val baseFunctionWithDispatchReceiverTag =
-            lazyFakeOverrideGenerator.computeFakeOverrideKeys(containingClass, fir.symbol)
-        baseFunctionWithDispatchReceiverTag.map { (symbol, dispatchReceiverLookupTag) ->
-            declarationStorage.getIrPropertySymbol(symbol, dispatchReceiverLookupTag) as IrPropertySymbol
-        }
-    }
+    override var overriddenSymbols: List<IrPropertySymbol> = emptyList()
 
     override var metadata: MetadataSource?
         get() = null
