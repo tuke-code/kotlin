@@ -40,6 +40,8 @@ class IrPropertyWithLateBindingImpl @IrImplementationDetail constructor(
 ) : IrPropertyWithLateBinding() {
     override var annotations: List<IrConstructorCall> = emptyList()
 
+    override lateinit var parent: IrDeclarationParent
+
     override var metadata: MetadataSource? = null
 
     override var attributeOwnerId: IrAttributeContainer = this

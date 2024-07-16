@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2024 JetBrains s.r.o. and Kotlin Programming Language contributors.
+ * Copyright 2010-2022 JetBrains s.r.o. and Kotlin Programming Language contributors.
  * Use of this source code is governed by the Apache 2.0 license that can be found in the license/LICENSE.txt file.
  */
 
@@ -12,9 +12,7 @@ import org.jetbrains.kotlin.fir.backend.Fir2IrComponents
 import org.jetbrains.kotlin.fir.backend.utils.declareThisReceiverParameter
 import org.jetbrains.kotlin.fir.declarations.FirCallableDeclaration
 import org.jetbrains.kotlin.fir.declarations.FirReceiverParameter
-import org.jetbrains.kotlin.fir.declarations.FirResolvePhase
 import org.jetbrains.kotlin.fir.declarations.utils.*
-import org.jetbrains.kotlin.fir.symbols.lazyResolveToPhase
 import org.jetbrains.kotlin.ir.ObsoleteDescriptorBasedAPI
 import org.jetbrains.kotlin.ir.declarations.*
 import org.jetbrains.kotlin.ir.declarations.lazy.AbstractIrLazyFunction
@@ -36,8 +34,8 @@ abstract class AbstractFir2IrLazyFunction<F : FirCallableDeclaration>(
     endOffset: Int,
     override var origin: IrDeclarationOrigin,
     override val symbol: IrSimpleFunctionSymbol,
-    parent: IrDeclarationParent,
-    override var isFakeOverride: Boolean,
+    override var parent: IrDeclarationParent,
+    override var isFakeOverride: Boolean
 ) : AbstractIrLazyFunction(), AbstractFir2IrLazyDeclaration<F>, Fir2IrTypeParametersContainer, IrLazyFunctionBase,
     Fir2IrComponents by c {
 
@@ -45,10 +43,6 @@ abstract class AbstractFir2IrLazyFunction<F : FirCallableDeclaration>(
         set(_) = shouldNotBeCalled()
     final override var endOffset: Int = endOffset
         set(_) = shouldNotBeCalled()
-
-    init {
-        this.parent = parent
-    }
 
     override lateinit var typeParameters: List<IrTypeParameter>
 

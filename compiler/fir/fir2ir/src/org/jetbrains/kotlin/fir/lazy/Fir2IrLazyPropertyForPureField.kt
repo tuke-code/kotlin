@@ -23,10 +23,9 @@ class Fir2IrLazyPropertyForPureField(
     private val c: Fir2IrComponents,
     private val field: Fir2IrLazyField,
     override val symbol: IrPropertySymbol,
-    parent: IrDeclarationParent
+    override var parent: IrDeclarationParent,
 ) : IrProperty(), Fir2IrComponents by c {
     init {
-        this.parent = parent
         symbol.bind(this)
     }
 

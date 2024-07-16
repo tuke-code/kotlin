@@ -41,6 +41,8 @@ class IrPropertyImpl @IrImplementationDetail constructor(
 ) : IrProperty() {
     override var annotations: List<IrConstructorCall> = emptyList()
 
+    override lateinit var parent: IrDeclarationParent
+
     override var metadata: MetadataSource? = null
 
     override var attributeOwnerId: IrAttributeContainer = this

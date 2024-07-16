@@ -117,12 +117,7 @@ object IrTree : AbstractTreeBuilder() {
         +descriptor("DeclarationDescriptor")
         +field("origin", type(Packages.declarations, "IrDeclarationOrigin"))
         +factory
-
-        generationCallback = {
-            println()
-            printPropertyDeclaration("parent", declarationParent, VariableKind.VAR)
-            println()
-        }
+        +field("parent", declarationParent, isChild = false)
     }
     val declarationBase: Element by element(Declaration) {
         // This class is defined manually, but the entry here needs to be kept actual as well,
@@ -458,7 +453,7 @@ object IrTree : AbstractTreeBuilder() {
     val moduleFragment: Element by element(Declaration) {
         needTransformMethod()
         transformByChildren = true
-        
+
         +descriptor("ModuleDescriptor").apply {
             optInAnnotation = null
         }
@@ -560,7 +555,7 @@ object IrTree : AbstractTreeBuilder() {
     }
     val externalPackageFragment: Element by element(Declaration) {
         transformByChildren = true
-        
+
         kDoc = """
             This is a root parent element for external declarations (meaning those that come from
             another compilation unit/module, not to be confused with [IrPossiblyExternalDeclaration.isExternal]). 
@@ -586,7 +581,7 @@ object IrTree : AbstractTreeBuilder() {
     val file: Element by element(Declaration) {
         needTransformMethod()
         transformByChildren = true
-        
+
         parent(packageFragment)
         parent(mutableAnnotationContainer)
         parent(metadataSourceOwner)

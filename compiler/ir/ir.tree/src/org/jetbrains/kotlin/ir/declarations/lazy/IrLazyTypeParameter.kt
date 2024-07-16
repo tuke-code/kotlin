@@ -34,6 +34,8 @@ class IrLazyTypeParameter(
         symbol.bind(this)
     }
 
+    override lateinit var parent: IrDeclarationParent
+
     override var annotations: List<IrConstructorCall> by createLazyAnnotations()
 
     override var superTypes: List<IrType> by lazyVar(stubGenerator.lock) {

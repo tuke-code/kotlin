@@ -33,6 +33,8 @@ class IrLazyTypeAlias(
         symbol.bind(this)
     }
 
+    override lateinit var parent: IrDeclarationParent
+
     override var annotations: List<IrConstructorCall> by createLazyAnnotations()
 
     override var typeParameters: List<IrTypeParameter> by lazyVar(stubGenerator.lock) {

@@ -44,6 +44,8 @@ class IrFunctionWithLateBindingImpl @IrImplementationDetail constructor(
 ) : IrFunctionWithLateBinding() {
     override var annotations: List<IrConstructorCall> = emptyList()
 
+    override lateinit var parent: IrDeclarationParent
+
     override var typeParameters: List<IrTypeParameter> = emptyList()
 
     override val containerSource: DeserializedContainerSource?
