@@ -34,7 +34,7 @@ class IrLazyTypeParameter(
         symbol.bind(this)
     }
 
-    override lateinit var parent: IrDeclarationParent
+    override var parent: IrDeclarationParent by createLazyParent()
 
     override var annotations: List<IrConstructorCall> by createLazyAnnotations()
 

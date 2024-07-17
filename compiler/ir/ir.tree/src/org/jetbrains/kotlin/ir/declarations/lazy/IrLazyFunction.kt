@@ -45,7 +45,7 @@ class IrLazyFunction(
     override val stubGenerator: DeclarationStubGenerator,
     override val typeTranslator: TypeTranslator,
 ) : AbstractIrLazyFunction(), IrLazyFunctionBase {
-    override lateinit var parent: IrDeclarationParent
+    override var parent: IrDeclarationParent by createLazyParent()
 
     override var startOffset: Int = startOffset
         set(_) = shouldNotBeCalled()
