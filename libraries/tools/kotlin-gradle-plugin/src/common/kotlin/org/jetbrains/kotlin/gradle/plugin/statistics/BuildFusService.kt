@@ -19,6 +19,8 @@ import org.gradle.tooling.events.OperationCompletionListener
 import org.gradle.tooling.events.task.TaskFailureResult
 import org.gradle.tooling.events.task.TaskFinishEvent
 import org.gradle.util.GradleVersion
+import org.jetbrains.kotlin.gradle.fus.BuildUidService
+import org.jetbrains.kotlin.gradle.fus.Metric
 import org.jetbrains.kotlin.gradle.logging.kotlinDebug
 import org.jetbrains.kotlin.gradle.plugin.BuildEventsListenerRegistryHolder
 import org.jetbrains.kotlin.gradle.plugin.PropertiesProvider
@@ -37,7 +39,6 @@ import org.jetbrains.kotlin.statistics.metrics.StatisticsValuesConsumer
 import org.jetbrains.kotlin.statistics.metrics.NumericalMetrics
 import org.jetbrains.kotlin.statistics.metrics.StringMetrics
 import java.io.Serializable
-import java.util.UUID.*
 
 
 internal interface UsesBuildFusService : Task {
@@ -48,7 +49,7 @@ internal interface UsesBuildFusService : Task {
 abstract class BuildFusService : BuildService<BuildFusService.Parameters>, AutoCloseable, OperationCompletionListener {
     private var buildFailed: Boolean = false
     private val log = Logging.getLogger(this.javaClass)
-    private val buildId = randomUUID().toString()
+    private val buildId = parameters.buildUuidService.get().buildId
 
     init {
         log.kotlinDebug("Initialize ${this.javaClass.simpleName}")
@@ -60,6 +61,7 @@ abstract class BuildFusService : BuildService<BuildFusService.Parameters>, AutoC
         val configurationMetrics: ListProperty<MetricContainer>
         val useBuildFinishFlowAction: Property<Boolean>
         val buildStatisticsConfiguration: Property<KotlinBuildStatsConfiguration>
+        val buildUuidService: Property<BuildUidService>
     }
 
     private val fusMetricsConsumer = NonSynchronizedMetricsContainer()
@@ -76,8 +78,8 @@ abstract class BuildFusService : BuildService<BuildFusService.Parameters>, AutoC
         internal val serviceName = "${BuildFusService::class.simpleName}_${BuildFusService::class.java.classLoader.hashCode()}"
         private var buildStartTime: Long = System.currentTimeMillis()
 
-        fun registerIfAbsent(project: Project, pluginVersion: String) =
-            registerIfAbsentImpl(project, pluginVersion).also { serviceProvider ->
+        fun registerIfAbsent(project: Project, pluginVersion: String, buildUidService: Provider<BuildUidService>) =
+            registerIfAbsentImpl(project, pluginVersion, buildUidService).also { serviceProvider ->
                 SingleActionPerProject.run(project, UsesBuildFusService::class.java.name) {
                     project.tasks.withType<UsesBuildFusService>().configureEach { task ->
                         task.buildFusService.value(serviceProvider).disallowChanges()
@@ -89,6 +91,7 @@ abstract class BuildFusService : BuildService<BuildFusService.Parameters>, AutoC
         private fun registerIfAbsentImpl(
             project: Project,
             pluginVersion: String,
+            buildUidService: Provider<BuildUidService>,
         ): Provider<BuildFusService> {
 
             val isProjectIsolationEnabled = project.isProjectIsolationEnabled
@@ -130,6 +133,7 @@ abstract class BuildFusService : BuildService<BuildFusService.Parameters>, AutoC
                 spec.parameters.buildStatisticsConfiguration.set(KotlinBuildStatsConfiguration(project))
                 //init value to avoid `java.lang.IllegalStateException: GradleScopeServices has been closed` exception on close
                 spec.parameters.configurationMetrics.add(MetricContainer())
+                spec.parameters.buildUuidService.set(buildUidService)
             }.also { buildService ->
                 //DO NOT call buildService.get() before all parameters.configurationMetrics are set.
                 // buildService.get() call will cause parameters calculation and configuration cache storage.
@@ -165,20 +169,20 @@ abstract class BuildFusService : BuildService<BuildFusService.Parameters>, AutoC
 
     override fun close() {
         if (!parameters.useBuildFinishFlowAction.get()) {
-            recordBuildFinished(buildFailed)
+            recordBuildFinished(buildFailed, buildId)
         }
         KotlinBuildStatsBeanService.closeServices()
         log.kotlinDebug("Close ${this.javaClass.simpleName}")
     }
 
-    internal fun recordBuildFinished(buildFailed: Boolean) {
+    internal fun recordBuildFinished(buildFailed: Boolean, buildId: String, customMetrics: List<Metric> = emptyList()) {
         BuildFinishMetrics.collectMetrics(log, buildFailed, buildStartTime, projectEvaluatedTime, fusMetricsConsumer)
         parameters.configurationMetrics.orElse(emptyList()).get().forEach { it.addToConsumer(fusMetricsConsumer) }
         parameters.generalConfigurationMetrics.orNull?.addToConsumer(fusMetricsConsumer)
         parameters.buildStatisticsConfiguration.orNull?.also {
             val loggerService = KotlinBuildStatsLoggerService(it)
             loggerService.initSessionLogger(buildId)
-            loggerService.reportBuildFinished(fusMetricsConsumer)
+            loggerService.reportBuildFinished(fusMetricsConsumer, customMetrics)
         }
     }
 }
