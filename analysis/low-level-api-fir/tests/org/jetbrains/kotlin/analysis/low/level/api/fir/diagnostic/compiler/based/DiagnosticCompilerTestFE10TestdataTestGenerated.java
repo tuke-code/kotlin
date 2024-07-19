@@ -16877,6 +16877,18 @@ public class DiagnosticCompilerTestFE10TestdataTestGenerated extends AbstractDia
       }
 
       @Test
+      @TestMetadata("nullableVsDnnConstructor.kt")
+      public void testNullableVsDnnConstructor() {
+        runTest("compiler/testData/diagnostics/tests/inference/nullableVsDnnConstructor.kt");
+      }
+
+      @Test
+      @TestMetadata("nullableVsDnnFunction.kt")
+      public void testNullableVsDnnFunction() {
+        runTest("compiler/testData/diagnostics/tests/inference/nullableVsDnnFunction.kt");
+      }
+
+      @Test
       @TestMetadata("onlyInputTypesWithMultilevelIncorporation.kt")
       public void testOnlyInputTypesWithMultilevelIncorporation() {
         runTest("compiler/testData/diagnostics/tests/inference/onlyInputTypesWithMultilevelIncorporation.kt");
