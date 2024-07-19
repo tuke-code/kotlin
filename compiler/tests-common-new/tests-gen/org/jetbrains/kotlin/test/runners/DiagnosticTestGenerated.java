@@ -16313,6 +16313,12 @@ public class DiagnosticTestGenerated extends AbstractDiagnosticTest {
       }
 
       @Test
+      @TestMetadata("dnnArgumentInferred.kt")
+      public void testDnnArgumentInferred() {
+        runTest("compiler/testData/diagnostics/tests/inference/dnnArgumentInferred.kt");
+      }
+
+      @Test
       @TestMetadata("dontThrowEmptyIntersectionException.kt")
       public void testDontThrowEmptyIntersectionException() {
         runTest("compiler/testData/diagnostics/tests/inference/dontThrowEmptyIntersectionException.kt");
