@@ -245,6 +245,8 @@ abstract class TypeCheckerStateForConstraintSystem(
 
                         val resultType = if (needToMakeDefNotNull) {
                             subType.makeDefinitelyNotNullOrNotNull()
+                        } else if (isK2 && subTypeConstructor.isTypeParameterTypeConstructor() && subType is SimpleTypeMarker) {
+                            createFlexibleType(subType.makeDefinitelyNotNullOrNotNull() as SimpleTypeMarker, subType.withNullability(false))
                         } else {
                             if (!isInferenceCompatibilityEnabled && subType is CapturedTypeMarker) {
                                 subType.withNotNullProjection()
