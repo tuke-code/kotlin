@@ -471,8 +471,24 @@ class BasicIncrementalJavaInteropIT : KGPBaseTest() {
 
     @DisplayName("Basic scenario: Kotlin constant tracks a Java constant")
     @GradleTest
-    fun testKotlinConstantTrackingJavaConstant(gradleVersion: GradleVersion) {
-        project("kt-69042-basic-java-interop", gradleVersion) {
+    fun testKotlinConstantTrackingJavaConstant_VfsOn(gradleVersion: GradleVersion) {
+        project("kt-69042-basic-java-interop", gradleVersion, buildOptions = defaultBuildOptions.copy(fileSystemWatchEnabled = true)) {
+            build("assemble")
+
+            val javaSource = projectPath.resolve("src/main/java/JavaConstants.java")
+            javaSource.replaceWithVersion("newValue")
+
+            build("assemble", buildOptions = defaultBuildOptions.copy(logLevel = LogLevel.DEBUG)) {
+                assertTasksExecuted(":compileJava", ":compileKotlin")
+                assertIncrementalCompilation(listOf(kotlinSourcesDir().resolve("usage.kt")).relativizeTo(projectPath))
+            }
+        }
+    }
+
+    @DisplayName("Basic scenario: Kotlin constant tracks a Java constant")
+    @GradleTest
+    fun testKotlinConstantTrackingJavaConstant_VfsOff(gradleVersion: GradleVersion) {
+        project("kt-69042-basic-java-interop", gradleVersion, buildOptions = defaultBuildOptions.copy(fileSystemWatchEnabled = false)) {
             build("assemble")
 
             val javaSource = projectPath.resolve("src/main/java/JavaConstants.java")
