@@ -1,4 +1,3 @@
-// FIR_IDENTICAL
 // LANGUAGE: -JavaTypeParameterDefaultRepresentationWithDNN
 // ISSUE: KT-67999
 

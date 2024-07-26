@@ -13,6 +13,6 @@ public class J<T> {
 // FILE: main.kt
 fun main() {
     J<String?> { x ->
-        x.length // Should not be unsafe call
+        x<!UNSAFE_CALL!>.<!>length // Should not be unsafe call
     }
 }

@@ -166,7 +166,7 @@ internal object CreateFreshTypeVariableSubstitutorStage : ResolutionStage() {
     }
 
     private fun FirTypeParameterRef.shouldBeFlexible(context: ConeTypeContext): Boolean {
-        if (context.session.languageVersionSettings.supportsFeature(LanguageFeature.JavaTypeParameterDefaultRepresentationWithDNN)) {
+        if (true || context.session.languageVersionSettings.supportsFeature(LanguageFeature.JavaTypeParameterDefaultRepresentationWithDNN)) {
             return false
         }
         return symbol.resolvedBounds.any {

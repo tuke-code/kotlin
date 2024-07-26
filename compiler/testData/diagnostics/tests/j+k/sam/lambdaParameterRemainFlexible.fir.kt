@@ -2,17 +2,14 @@
 // ISSUE: KT-67999
 
 // FILE: J.java
-public class J<T> {
-    J(F<T> f) {}
-
-    public interface F<E> {
-        void foo(E e);
-    }
+public interface J<X> {
+    void foo(X x);
 }
 
 // FILE: main.kt
+
 fun main() {
     J<String?> { x ->
-        x.length // Should not be unsafe call
+        x<!UNSAFE_CALL!>.<!>length // Should not be unsafe call
     }
 }
