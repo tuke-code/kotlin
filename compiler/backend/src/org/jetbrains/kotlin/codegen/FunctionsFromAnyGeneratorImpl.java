@@ -71,7 +71,7 @@ public class FunctionsFromAnyGeneratorImpl extends FunctionsFromAnyGenerator {
         this.typeMapper = state.getTypeMapper();
         this.underlyingType = new JvmKotlinType(
                 typeMapper.mapType(descriptor),
-                InlineClassesUtilsKt.substitutedUnderlyingType(descriptor.getDefaultType())
+                InlineClassesUtilsKt.unsubstitutedUnderlyingType(descriptor)
         );
         this.isInErasedInlineClass = fieldOwnerContext.getContextKind() == OwnerKind.ERASED_INLINE_CLASS;
     }
