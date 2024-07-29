@@ -204,6 +204,7 @@ abstract class DeclarationStubGenerator(
             ).generateParentDeclaration().also {
                 it.dispatchReceiverParameter = it.createReceiverParameter(descriptor.dispatchReceiverParameter, true)
                 it.extensionReceiverParameter = it.createReceiverParameter(descriptor.extensionReceiverParameter, true)
+                it.valueParameters = it.createValueParameters()
             }
         }
     }
@@ -227,6 +228,7 @@ abstract class DeclarationStubGenerator(
             ).generateParentDeclaration().also {
                 it.dispatchReceiverParameter = it.createReceiverParameter(descriptor.dispatchReceiverParameter, true)
                 it.extensionReceiverParameter = it.createReceiverParameter(descriptor.extensionReceiverParameter, true)
+                it.valueParameters = it.createValueParameters()
             }
         }
     }

@@ -33,7 +33,7 @@ sealed class IrFunction : IrDeclarationBase(), IrPossiblyExternalDeclaration, Ir
 
     var extensionReceiverParameter: IrValueParameter? = null
 
-    abstract var valueParameters: List<IrValueParameter>
+    var valueParameters: List<IrValueParameter> = emptyList()
 
     abstract var contextReceiverParametersCount: Int
 

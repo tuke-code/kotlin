@@ -85,31 +85,6 @@ class Fir2IrLazyConstructor(
 
     override var contextReceiverParametersCount: Int = fir.contextReceivers.size
 
-    override var valueParameters: List<IrValueParameter> by lazyVar(lock) {
-        declarationStorage.enterScope(this.symbol)
-
-        buildList {
-            callablesGenerator.addContextReceiverParametersTo(
-                fir.contextReceivers,
-                this@Fir2IrLazyConstructor,
-                this@buildList
-            )
-
-            fir.valueParameters.mapIndexedTo(this) { index, valueParameter ->
-                val parentClass = parent as? IrClass
-                callablesGenerator.createIrParameter(
-                    valueParameter, index + contextReceiverParametersCount,
-                    useStubForDefaultValueStub = parentClass?.classId != StandardClassIds.Enum,
-                    forcedDefaultValueConversion = parentClass?.isAnnotationClass == true
-                ).apply {
-                    this.parent = this@Fir2IrLazyConstructor
-                }
-            }
-        }.apply {
-            declarationStorage.leaveScope(this@Fir2IrLazyConstructor.symbol)
-        }
-    }
-
     override var metadata: MetadataSource?
         get() = null
         set(_) = error("We should never need to store metadata of external declarations.")

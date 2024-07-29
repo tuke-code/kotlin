@@ -53,8 +53,6 @@ class IrFunctionWithLateBindingImpl @IrImplementationDetail constructor(
 
     override lateinit var returnType: IrType
 
-    override var valueParameters: List<IrValueParameter> = emptyList()
-
     override var contextReceiverParametersCount: Int = 0
 
     override var body: IrBody? = null

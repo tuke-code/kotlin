@@ -394,7 +394,6 @@ object IrTree : AbstractTreeBuilder() {
         +field("isInline", boolean)
         +field("isExpect", boolean)
         +field("returnType", irTypeType)
-        +listField("valueParameters", valueParameter, mutability = Var)
         // The first `contextReceiverParametersCount` value parameters are context receivers.
         +field("contextReceiverParametersCount", int)
         +field("body", body, nullable = true)
