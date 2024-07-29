@@ -201,7 +201,10 @@ abstract class DeclarationStubGenerator(
                 isFakeOverride = (origin == IrDeclarationOrigin.FAKE_OVERRIDE),
                 isOperator = descriptor.isOperator, isInfix = descriptor.isInfix,
                 stubGenerator = this, typeTranslator = typeTranslator
-            ).generateParentDeclaration()
+            ).generateParentDeclaration().also {
+                it.dispatchReceiverParameter = it.createReceiverParameter(descriptor.dispatchReceiverParameter, true)
+                it.extensionReceiverParameter = it.createReceiverParameter(descriptor.extensionReceiverParameter, true)
+            }
         }
     }
 
@@ -221,7 +224,10 @@ abstract class DeclarationStubGenerator(
                 descriptor.name, descriptor.visibility,
                 descriptor.isInline, descriptor.isEffectivelyExternal(), descriptor.isPrimary, descriptor.isExpect,
                 this, typeTranslator
-            ).generateParentDeclaration()
+            ).generateParentDeclaration().also {
+                it.dispatchReceiverParameter = it.createReceiverParameter(descriptor.dispatchReceiverParameter, true)
+                it.extensionReceiverParameter = it.createReceiverParameter(descriptor.extensionReceiverParameter, true)
+            }
         }
     }
 

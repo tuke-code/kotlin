@@ -44,14 +44,6 @@ class IrLazyConstructor(
 
     override val initialSignatureFunction: IrFunction? by createInitialSignatureFunction()
 
-    override var dispatchReceiverParameter: IrValueParameter? by lazyVar(stubGenerator.lock) {
-        createReceiverParameter(descriptor.dispatchReceiverParameter)
-    }
-
-    override var extensionReceiverParameter: IrValueParameter? by lazyVar(stubGenerator.lock) {
-        createReceiverParameter(descriptor.extensionReceiverParameter)
-    }
-
     override var valueParameters: List<IrValueParameter> by lazyVar(stubGenerator.lock) { createValueParameters() }
 
     override var contextReceiverParametersCount: Int = descriptor.contextReceiverParameters.size

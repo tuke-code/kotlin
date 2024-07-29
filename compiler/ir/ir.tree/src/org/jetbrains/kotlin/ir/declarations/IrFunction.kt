@@ -29,9 +29,9 @@ sealed class IrFunction : IrDeclarationBase(), IrPossiblyExternalDeclaration, Ir
 
     abstract var returnType: IrType
 
-    abstract var dispatchReceiverParameter: IrValueParameter?
+    var dispatchReceiverParameter: IrValueParameter? = null
 
-    abstract var extensionReceiverParameter: IrValueParameter?
+    var extensionReceiverParameter: IrValueParameter? = null
 
     abstract var valueParameters: List<IrValueParameter>
 
