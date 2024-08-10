@@ -18,6 +18,8 @@ import org.jetbrains.kotlin.ir.symbols.*
 import org.jetbrains.kotlin.ir.symbols.impl.IrFunctionFakeOverrideSymbol
 import org.jetbrains.kotlin.ir.types.IrType
 import org.jetbrains.kotlin.ir.util.*
+import java.util.concurrent.ConcurrentHashMap
+import java.util.stream.Collectors
 
 fun IrBlockImpl(
     startOffset: Int,
@@ -785,6 +787,92 @@ fun IrWhileLoopImpl(
     origin = origin,
 )
 
+private object ProfilingToolkit {
+    init {
+        registerHook()
+    }
+
+    private fun registerHook() {
+        Runtime.getRuntime().addShutdownHook(Thread {
+            mapOf(
+                "Unbound symbols" to __irCallsCreationsWithUnboundSymbol,
+                "Incorrect valueArgumentsCount" to __irCallsCreationsWithIncorrectValueArgumentsCount,
+                "Incorrect typeArgumentsCount" to __irCallsCreationsWithIncorrectTypeArgumentsCount,
+            ).forEach { (name, set) ->
+                println()
+                println("!!! $name")
+                set.forEach { stack ->
+                    stack.firstOrNull()?.let { println(it) }
+                    println(stack.drop(1).joinToString("\n") { "  $it" })
+                    println()
+                }
+                println()
+            }
+        })
+    }
+
+    fun initialize() {}
+}
+
+private val __irCallsCreationsWithUnboundSymbol = ConcurrentHashMap.newKeySet<List<StackTraceElement>>()
+private val __irCallsCreationsWithIncorrectValueArgumentsCount = ConcurrentHashMap.newKeySet<List<StackTraceElement>>()
+private val __irCallsCreationsWithIncorrectTypeArgumentsCount = ConcurrentHashMap.newKeySet<List<StackTraceElement>>()
+
+private fun profileFunctionCreation(symbol: IrFunctionSymbol, valueArgumentsCount: Int, typeArgumentsCount: Int) {
+    ProfilingToolkit.initialize()
+
+    var actualSymbol = symbol
+    if (actualSymbol is IrFunctionFakeOverrideSymbol) {
+        actualSymbol = actualSymbol.originalSymbol
+    }
+
+    var traces: List<ConcurrentHashMap.KeySetView<List<StackTraceElement>, Boolean>> = emptyList()
+    if (!actualSymbol.isBound) {
+        traces = traces.plusElement(__irCallsCreationsWithUnboundSymbol)
+    } else {
+        if (valueArgumentsCount != -1 && valueArgumentsCount != actualSymbol.owner.valueParameters.size) {
+            traces = traces.plusElement(__irCallsCreationsWithIncorrectValueArgumentsCount)
+        }
+        if (typeArgumentsCount != -1 && typeArgumentsCount != actualSymbol.owner.typeParameters.size) {
+            traces = traces.plusElement(__irCallsCreationsWithIncorrectTypeArgumentsCount)
+        }
+    }
+
+
+    lateinit var stack: List<StackTraceElement>
+    if (traces.isNotEmpty()) {
+        stack = StackWalker.getInstance().walk<List<StackTraceElement>> { stack ->
+            var countAbove = 0
+            stack
+                .skip(1)
+                //.limit(20)
+                .takeWhile { frame ->
+                    countAbove == 0 && (
+                        frame.className.startsWith("org.jetbrains.kotlin.ir")
+                        && !frame.className.startsWith("org.jetbrains.kotlin.ir.backend")
+                    ) || countAbove++ < 1
+                }
+                .map { it.toStackTraceElement() }
+                .distinct()
+                .collect(Collectors.toList())
+        }
+    }
+
+    for (trace in traces) {
+        if (trace === __irCallsCreationsWithUnboundSymbol) {
+            val calling = stack[0].methodName
+            if (calling.endsWith("WithSignature")) {
+                if (stack.getOrNull(1)?.methodName != calling.removeSuffix("WithSignature")) {
+                    break
+                }
+            }
+        }
+
+        trace += stack
+    }
+}
+
+
 private fun IrFunctionSymbol.getRealOwner(): IrFunction {
     var symbol = this
     if (this is IrFunctionFakeOverrideSymbol) {
@@ -822,17 +910,20 @@ fun IrCallImplWithSignature(
     valueArgumentsCount: Int,
     origin: IrStatementOrigin? = null,
     superQualifierSymbol: IrClassSymbol? = null,
-): IrCallImpl = IrCallImpl(
-    constructorIndicator = null,
-    startOffset = startOffset,
-    endOffset = endOffset,
-    type = type,
-    symbol = symbol,
-    typeArguments = initializeTypeArguments(typeArgumentsCount),
-    valueArguments = initializeParameterArguments(valueArgumentsCount),
-    origin = origin,
-    superQualifierSymbol = superQualifierSymbol,
-)
+): IrCallImpl {
+    profileFunctionCreation(symbol, valueArgumentsCount, -1)
+    return IrCallImpl(
+        constructorIndicator = null,
+        startOffset = startOffset,
+        endOffset = endOffset,
+        type = type,
+        symbol = symbol,
+        typeArguments = initializeTypeArguments(typeArgumentsCount),
+        valueArguments = initializeParameterArguments(valueArgumentsCount),
+        origin = origin,
+        superQualifierSymbol = superQualifierSymbol,
+    )
+}
 
 fun IrConstructorCallImpl(
     startOffset: Int,
@@ -866,18 +957,21 @@ fun IrConstructorCallImplWithSignature(
     valueArgumentsCount: Int,
     origin: IrStatementOrigin? = null,
     source: SourceElement = SourceElement.NO_SOURCE,
-): IrConstructorCallImpl = IrConstructorCallImpl(
-    constructorIndicator = null,
-    startOffset = startOffset,
-    endOffset = endOffset,
-    type = type,
-    symbol = symbol,
-    origin = origin,
-    typeArguments = initializeTypeArguments(typeArgumentsCount),
-    valueArguments = initializeParameterArguments(valueArgumentsCount),
-    constructorTypeArgumentsCount = constructorTypeArgumentsCount,
-    source = source,
-)
+): IrConstructorCallImpl {
+    profileFunctionCreation(symbol, valueArgumentsCount, -1)
+    return IrConstructorCallImpl(
+        constructorIndicator = null,
+        startOffset = startOffset,
+        endOffset = endOffset,
+        type = type,
+        symbol = symbol,
+        origin = origin,
+        typeArguments = initializeTypeArguments(typeArgumentsCount),
+        valueArguments = initializeParameterArguments(valueArgumentsCount),
+        constructorTypeArgumentsCount = constructorTypeArgumentsCount,
+        source = source,
+    )
+}
 
 fun IrDelegatingConstructorCallImpl(
     startOffset: Int,
@@ -902,16 +996,19 @@ fun IrDelegatingConstructorCallImplWithSignature(
     symbol: IrConstructorSymbol,
     typeArgumentsCount: Int,
     valueArgumentsCount: Int,
-): IrDelegatingConstructorCallImpl = IrDelegatingConstructorCallImpl(
-    constructorIndicator = null,
-    startOffset = startOffset,
-    endOffset = endOffset,
-    type = type,
-    symbol = symbol,
-    origin = null,
-    typeArguments = initializeTypeArguments(typeArgumentsCount),
-    valueArguments = initializeParameterArguments(valueArgumentsCount),
-)
+): IrDelegatingConstructorCallImpl {
+    profileFunctionCreation(symbol, valueArgumentsCount, -1)
+    return IrDelegatingConstructorCallImpl(
+        constructorIndicator = null,
+        startOffset = startOffset,
+        endOffset = endOffset,
+        type = type,
+        symbol = symbol,
+        origin = null,
+        typeArguments = initializeTypeArguments(typeArgumentsCount),
+        valueArguments = initializeParameterArguments(valueArgumentsCount),
+    )
+}
 
 fun IrEnumConstructorCallImpl(
     startOffset: Int,
@@ -936,16 +1033,19 @@ fun IrEnumConstructorCallImplWithSignature(
     symbol: IrConstructorSymbol,
     typeArgumentsCount: Int,
     valueArgumentsCount: Int,
-): IrEnumConstructorCallImpl = IrEnumConstructorCallImpl(
-    constructorIndicator = null,
-    startOffset = startOffset,
-    endOffset = endOffset,
-    type = type,
-    symbol = symbol,
-    origin = null,
-    typeArguments = initializeTypeArguments(typeArgumentsCount),
-    valueArguments = initializeParameterArguments(valueArgumentsCount),
-)
+): IrEnumConstructorCallImpl {
+    profileFunctionCreation(symbol, valueArgumentsCount, -1)
+    return IrEnumConstructorCallImpl(
+        constructorIndicator = null,
+        startOffset = startOffset,
+        endOffset = endOffset,
+        type = type,
+        symbol = symbol,
+        origin = null,
+        typeArguments = initializeTypeArguments(typeArgumentsCount),
+        valueArguments = initializeParameterArguments(valueArgumentsCount),
+    )
+}
 
 fun IrFunctionReferenceImpl(
     startOffset: Int,
@@ -976,17 +1076,20 @@ fun IrFunctionReferenceImplWithSignature(
     valueArgumentsCount: Int,
     reflectionTarget: IrFunctionSymbol? = symbol,
     origin: IrStatementOrigin? = null,
-): IrFunctionReferenceImpl = IrFunctionReferenceImpl(
-    constructorIndicator = null,
-    startOffset = startOffset,
-    endOffset = endOffset,
-    type = type,
-    origin = origin,
-    symbol = symbol,
-    reflectionTarget = reflectionTarget,
-    typeArguments = initializeTypeArguments(typeArgumentsCount),
-    valueArguments = initializeParameterArguments(valueArgumentsCount),
-)
+): IrFunctionReferenceImpl {
+    profileFunctionCreation(symbol, valueArgumentsCount, -1)
+    return IrFunctionReferenceImpl(
+        constructorIndicator = null,
+        startOffset = startOffset,
+        endOffset = endOffset,
+        type = type,
+        origin = origin,
+        symbol = symbol,
+        reflectionTarget = reflectionTarget,
+        typeArguments = initializeTypeArguments(typeArgumentsCount),
+        valueArguments = initializeParameterArguments(valueArgumentsCount),
+    )
+}
 
 fun IrLocalDelegatedPropertyReferenceImpl(
     startOffset: Int,
