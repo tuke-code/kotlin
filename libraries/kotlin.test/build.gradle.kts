@@ -347,6 +347,13 @@ tasks {
             patchedFile.copyTo(resultFile, overwrite = true)
         }
     }
+    clean.configure {
+        delete(
+            "common/build",
+            "testng/build",
+            "wasm/js/build",
+        )
+    }
 }
 
 configurations {

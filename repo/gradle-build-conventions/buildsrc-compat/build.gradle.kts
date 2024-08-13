@@ -99,6 +99,7 @@ dependencies {
     implementation(libs.gradle.pluginPublish.gradlePlugin)
     implementation(libs.dokka.gradlePlugin)
     implementation(libs.spdx.gradlePlugin)
+    compileOnly(libs.node.gradlePlugin)
     implementation(libs.dexMemberList)
 
     // Keep in mind https://github.com/johnrengelman/shadow/issues/807 issue as shadow plugin brings transitively "org.ow2.asm" dependency,

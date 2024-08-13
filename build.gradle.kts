@@ -1143,33 +1143,14 @@ gradle.taskGraph.whenReady(checkYarnAndNPMSuppressed)
 
 plugins.withType(org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootPlugin::class) {
     extensions.configure(org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootExtension::class.java) {
-        if (kotlinBuildProperties.isCacheRedirectorEnabled) {
-            downloadBaseUrl = "https://cache-redirector.jetbrains.com/nodejs.org/dist"
-        }
-
         npmInstallTaskProvider.configure {
             args += listOf("--network-concurrency", "1", "--mutex", "network")
         }
     }
 }
 
-plugins.withType(com.github.gradle.node.NodePlugin::class) {
-    extensions.configure(com.github.gradle.node.NodeExtension::class) {
-        if (kotlinBuildProperties.isCacheRedirectorEnabled) {
-            distBaseUrl = "https://cache-redirector.jetbrains.com/nodejs.org/dist"
-        }
-    }
-}
-
-afterEvaluate {
-    if (kotlinBuildProperties.isCacheRedirectorEnabled) {
-        rootProject.plugins.withType(org.jetbrains.kotlin.gradle.targets.js.yarn.YarnPlugin::class.java) {
-            rootProject.the<org.jetbrains.kotlin.gradle.targets.js.yarn.YarnRootExtension>().downloadBaseUrl =
-                "https://cache-redirector.jetbrains.com/github.com/yarnpkg/yarn/releases/download"
-            rootProject.the<org.jetbrains.kotlin.gradle.targets.js.yarn.YarnRootExtension>().yarnLockMismatchReport =
-                YarnLockMismatchReport.WARNING
-        }
-    }
+if (kotlinBuildProperties.isCacheRedirectorEnabled){
+    configureJsCacheRedirector()
 }
 
 afterEvaluate {
