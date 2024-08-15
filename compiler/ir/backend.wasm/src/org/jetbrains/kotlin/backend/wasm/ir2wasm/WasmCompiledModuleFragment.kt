@@ -36,10 +36,6 @@ class WasmCompiledModuleFragment(
         ReferencableAndDefinable<IrClassSymbol, WasmTypeDeclaration>()
     val vTableGcTypes =
         ReferencableAndDefinable<IrClassSymbol, WasmTypeDeclaration>()
-    val classITableGcType =
-        ReferencableAndDefinable<IrClassSymbol, WasmTypeDeclaration>()
-    val classITableInterfaceSlot =
-        ReferencableAndDefinable<IrClassSymbol, Int>()
     val typeIds =
         ReferencableElements<IrClassSymbol, Int>()
     val stringLiteralAddress =
@@ -49,7 +45,17 @@ class WasmCompiledModuleFragment(
     val constantArrayDataSegmentId =
         ReferencableElements<Pair<List<Long>, WasmType>, Int>()
 
+    val wasmAnyArrayType: WasmSymbol<WasmArrayDeclaration> =
+        WasmSymbol()
+
     internal val throwableTagFuncType = WasmFunctionType(
+        listOf(
+            WasmRefNullType(WasmHeapType.Type(gcTypes.reference(irBuiltIns.throwableClass)))
+        ),
+        emptyList()
+    )
+
+    private val tagFuncType = WasmFunctionType(
         listOf(
             WasmRefNullType(WasmHeapType.Type(gcTypes.reference(irBuiltIns.throwableClass)))
         ),
@@ -121,8 +127,6 @@ class WasmCompiledModuleFragment(
         bind(globalVTables.unbound, globalVTables.defined)
         bind(gcTypes.unbound, gcTypes.defined)
         bind(vTableGcTypes.unbound, vTableGcTypes.defined)
-        bind(classITableGcType.unbound, classITableGcType.defined)
-        bind(classITableInterfaceSlot.unbound, classITableInterfaceSlot.defined)
         bind(globalClassITables.unbound, globalClassITables.defined)
 
         // Associate function types to a single canonical function type
@@ -139,7 +143,7 @@ class WasmCompiledModuleFragment(
             tag.type.bind(canonicalFunctionTypes.getOrPut(tag.type.owner) { tag.type.owner })
         }
 
-        var currentDataSectionAddress = 0
+        var currentDataSectionAddress = INT_SIZE_BYTES //Prevent getting a type with TypeId 0 - needed for inline caching
         var interfaceId = 0
         typeIds.unbound.forEach { (klassSymbol, wasmSymbol) ->
             if (klassSymbol.owner.isInterface) {
@@ -229,20 +233,27 @@ class WasmCompiledModuleFragment(
         }
         definedFunctions.add(masterInitFunction)
 
+        wasmAnyArrayType.bind(
+            WasmArrayDeclaration(
+                name = "itable",
+                field = WasmStructFieldDeclaration("", WasmRefType(WasmHeapType.Simple.Any), false)
+            )
+        )
+
         val (importedTags, definedTags) = tags.partition { it.importPair != null }
         val importsInOrder = importedFunctions + importedTags
 
         val recGroupTypes = sequence {
             yieldAll(vTableGcTypes.elements)
             yieldAll(gcTypes.elements)
-            yieldAll(classITableGcType.elements)
             yieldAll(canonicalFunctionTypes.values)
+            yield(wasmAnyArrayType.owner)
         }
         val recursiveGroups = createRecursiveTypeGroups(recGroupTypes)
 
         val mixInIndexesForGroups = mutableMapOf<Hash128Bits, Int>()
         val groupsWithMixIns = recursiveGroups.map { group ->
-            if (group.all { it !in gcTypes.elements && it !in classITableGcType.elements }) {
+            if (group.all { it !in gcTypes.elements }) {
                 group
             } else {
                 addMixInGroup(group, mixInIndexesForGroups)

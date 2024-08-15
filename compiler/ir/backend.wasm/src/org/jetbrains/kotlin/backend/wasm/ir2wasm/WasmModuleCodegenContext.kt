@@ -10,8 +10,6 @@ import org.jetbrains.kotlin.ir.declarations.IrField
 import org.jetbrains.kotlin.ir.declarations.IrValueParameter
 import org.jetbrains.kotlin.ir.symbols.*
 import org.jetbrains.kotlin.ir.types.IrType
-import org.jetbrains.kotlin.ir.types.defaultType
-import org.jetbrains.kotlin.ir.types.isNothing
 import org.jetbrains.kotlin.ir.util.parentAsClass
 import org.jetbrains.kotlin.wasm.ir.*
 
@@ -99,8 +97,8 @@ class WasmModuleCodegenContext(
         wasmFragment.globalVTables.define(irClass, wasmGlobal)
     }
 
-    fun defineGlobalClassITable(irClass: IrClassSymbol, wasmGlobal: WasmGlobal) {
-        wasmFragment.globalClassITables.define(irClass, wasmGlobal)
+    fun defineGlobalClassITable(irClass: IrClassSymbol, table: WasmGlobal) {
+        wasmFragment.globalClassITables.define(irClass, table)
     }
 
     fun defineGcType(irClass: IrClassSymbol, wasmType: WasmTypeDeclaration) {
@@ -141,36 +139,17 @@ class WasmModuleCodegenContext(
     fun referenceGlobalVTable(irClass: IrClassSymbol): WasmSymbol<WasmGlobal> =
         wasmFragment.globalVTables.reference(irClass)
 
-    fun referenceGlobalClassITable(irClass: IrClassSymbol): WasmSymbol<WasmGlobal> =
+    fun referenceGlobalClassITables(irClass: IrClassSymbol): WasmSymbol<WasmGlobal> =
         wasmFragment.globalClassITables.reference(irClass)
 
     fun referenceGcType(irClass: IrClassSymbol): WasmSymbol<WasmTypeDeclaration> =
         wasmFragment.gcTypes.reference(irClass)
 
+    val wasmAnyArrayType: WasmSymbol<WasmArrayDeclaration> =
+        wasmFragment.wasmAnyArrayType
+
     fun referenceVTableGcType(irClass: IrClassSymbol): WasmSymbol<WasmTypeDeclaration> =
         wasmFragment.vTableGcTypes.reference(irClass)
-
-    fun referenceClassITableGcType(irClass: IrClassSymbol): WasmSymbol<WasmTypeDeclaration> =
-        wasmFragment.classITableGcType.reference(irClass)
-
-    fun defineClassITableGcType(irClass: IrClassSymbol, wasmType: WasmTypeDeclaration) {
-        wasmFragment.classITableGcType.define(irClass, wasmType)
-    }
-
-    fun isAlreadyDefinedClassITableGcType(irClass: IrClassSymbol): Boolean =
-        wasmFragment.classITableGcType.defined.keys.contains(irClass)
-
-    fun referenceClassITableInterfaceSlot(irClass: IrClassSymbol): WasmSymbol<Int> {
-        val type = irClass.defaultType
-        require(!type.isNothing()) {
-            "Can't reference Nothing type"
-        }
-        return wasmFragment.classITableInterfaceSlot.reference(irClass)
-    }
-
-    fun defineClassITableInterfaceSlot(irClass: IrClassSymbol, slot: Int) {
-        wasmFragment.classITableInterfaceSlot.define(irClass, slot)
-    }
 
     fun referenceFunctionType(irFunction: IrFunctionSymbol): WasmSymbol<WasmFunctionType> =
         wasmFragment.functionTypes.reference(irFunction)
@@ -181,7 +160,7 @@ class WasmModuleCodegenContext(
     fun getStructFieldRef(field: IrField): WasmSymbol<Int> {
         val klass = field.parentAsClass
         val metadata = getClassMetadata(klass.symbol)
-        val fieldId = metadata.fields.indexOf(field) + 2 //Implicit vtable and vtable field
+        val fieldId = metadata.fields.indexOf(field) + 2 //Implicit vtable and itable fields
         return WasmSymbol(fieldId)
     }
 

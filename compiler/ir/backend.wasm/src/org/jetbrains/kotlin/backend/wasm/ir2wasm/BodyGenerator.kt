@@ -565,9 +565,9 @@ class BodyGenerator(
         body.commentGroupStart { "Any parameters" }
         body.buildGetGlobal(context.referenceGlobalVTable(klassSymbol), location)
         if (klassSymbol.owner.hasInterfaceSuperClass()) {
-            body.buildGetGlobal(context.referenceGlobalClassITable(klassSymbol), location)
+            body.buildGetGlobal(context.referenceGlobalClassITables(klassSymbol), location)
         } else {
-            body.buildRefNull(WasmHeapType.Simple.Struct, location)
+            body.buildRefNull(WasmHeapType.Simple.None, location)
         }
 
         body.buildConstI32Symbol(context.referenceTypeId(klassSymbol), location)
@@ -619,6 +619,35 @@ class BodyGenerator(
         generateExpression(expression)
         body.buildStructNew(context.referenceGcType(klassSymbol), location)
         body.commentPreviousInstr { "box" }
+    }
+
+    private fun generateInterfaceSlotLookup(interfaceId: WasmSymbol<Int>, location: SourceLocation) {
+        val interfaceSlotCache = functionContext.createNewLocalVariable(SyntheticLocalType.IFACE_LOOKUP_SLOT_CACHE)
+        val interfaceTypeIdCache = functionContext.createNewLocalVariable(SyntheticLocalType.IFACE_LOOKUP_TYPEID_CACHE)
+
+        body.buildBlock("itable", WasmI32) { itableSlotGet ->
+            body.buildGetLocal(interfaceSlotCache, location)
+            body.buildGetLocal(interfaceTypeIdCache, location)
+            body.buildGetLocal(functionContext.referenceLocal(SyntheticLocalType.IS_INTERFACE_PARAMETER), location)
+            body.buildStructGet(context.referenceGcType(irBuiltIns.anyClass), WasmSymbol(2), location)
+            body.buildInstr(
+                WasmOp.LOCAL_TEE,
+                location,
+                WasmImmediate.LocalIdx(interfaceTypeIdCache)
+            )
+            body.buildInstr(WasmOp.I32_EQ, location)
+            body.buildBrIf(itableSlotGet, location)
+            body.buildDrop(location)
+
+            body.buildGetLocal(functionContext.referenceLocal(SyntheticLocalType.IS_INTERFACE_PARAMETER), location)
+            body.buildConstI32Symbol(interfaceId, location)
+            body.buildCall(context.referenceFunction(wasmSymbols.reflectionSymbols.getInterfaceSlot), location)
+            body.buildInstr(
+                WasmOp.LOCAL_TEE,
+                location,
+                WasmImmediate.LocalIdx(interfaceSlotCache)
+            )
+        }
     }
 
     private fun generateCall(call: IrFunctionAccessExpression) {
@@ -695,30 +724,30 @@ class BodyGenerator(
                 body.commentGroupEnd()
             } else {
                 val symbol = klass.symbol
-                if (symbol in hierarchyDisjointUnions) {
-                    generateExpression(call.dispatchReceiver!!)
 
-                    body.commentGroupStart { "interface call: ${function.fqNameWhenAvailable}" }
-                    body.buildStructGet(context.referenceGcType(irBuiltIns.anyClass), WasmSymbol(1), location)
+                generateExpression(call.dispatchReceiver!!)
 
-                    val classITableReference = context.referenceClassITableGcType(symbol)
-                    body.buildRefCastStatic(classITableReference, location)
-                    body.buildStructGet(classITableReference, context.referenceClassITableInterfaceSlot(symbol), location)
+                body.commentGroupStart { "interface call: ${function.fqNameWhenAvailable}" }
 
-                    val vfSlot = context.getInterfaceMetadata(symbol).methods
-                        .indexOfFirst { it.function == function }
+                body.buildInstr(
+                    WasmOp.LOCAL_TEE,
+                    location,
+                    WasmImmediate.LocalIdx(functionContext.referenceLocal(SyntheticLocalType.IS_INTERFACE_PARAMETER))
+                )
+                body.buildStructGet(context.referenceGcType(irBuiltIns.anyClass), WasmSymbol(1), location)
 
-                    body.buildStructGet(context.referenceVTableGcType(symbol), WasmSymbol(vfSlot), location)
-                    body.buildInstr(WasmOp.CALL_REF, location, WasmImmediate.TypeIdx(context.referenceFunctionType(function.symbol)))
-                    body.commentGroupEnd()
-                } else {
-                    // We came here for a call to an interface method which interface is not implemented anywhere, 
-                    // so we don't have a slot in the itable and can't generate a correct call, 
-                    // and, anyway, the call effectively is unreachable.
-                    body.buildUnreachableForVerifier()
-                }
+                generateInterfaceSlotLookup(context.referenceTypeId(klass.symbol), location)
+
+                body.buildInstr(WasmOp.ARRAY_GET, location, WasmImmediate.TypeIdx(context.wasmAnyArrayType))
+                body.buildRefCastStatic(context.referenceVTableGcType(klass.symbol), location)
+
+                val vfSlot = context.getInterfaceMetadata(symbol).methods
+                    .indexOfFirst { it.function == function }
+
+                body.buildStructGet(context.referenceVTableGcType(symbol), WasmSymbol(vfSlot), location)
+                body.buildInstr(WasmOp.CALL_REF, location, WasmImmediate.TypeIdx(context.referenceFunctionType(function.symbol)))
+                body.commentGroupEnd()
             }
-
         } else {
             // Static function call
             body.buildCall(context.referenceFunction(function.symbol), location)
@@ -791,37 +820,11 @@ class BodyGenerator(
                 val irInterface = call.getTypeArgument(0)!!.getClass()
                     ?: error("No interface given for wasmIsInterface intrinsic")
                 assert(irInterface.isInterface)
-                if (irInterface.symbol in hierarchyDisjointUnions) {
-                    val classITable = context.referenceClassITableGcType(irInterface.symbol)
-                    val parameterLocal = functionContext.referenceLocal(SyntheticLocalType.IS_INTERFACE_PARAMETER)
-                    body.buildSetLocal(parameterLocal, location)
-                    body.buildBlock("isInterface", WasmI32) { outerLabel ->
-                        body.buildBlock("isInterface", WasmRefNullType(WasmHeapType.Simple.Struct)) { innerLabel ->
-                            body.buildGetLocal(parameterLocal, location)
-                            body.buildStructGet(context.referenceGcType(irBuiltIns.anyClass), WasmSymbol(1), location)
 
-                            body.buildBrOnCastInstr(
-                                WasmOp.BR_ON_CAST_FAIL,
-                                innerLabel,
-                                fromIsNullable = true,
-                                toIsNullable = false,
-                                from = WasmHeapType.Simple.Struct,
-                                to = WasmHeapType.Type(classITable),
-                                location,
-                            )
-
-                            body.buildStructGet(classITable, context.referenceClassITableInterfaceSlot(irInterface.symbol), location)
-                            body.buildInstr(WasmOp.REF_IS_NULL, location)
-                            body.buildInstr(WasmOp.I32_EQZ, location)
-                            body.buildBr(outerLabel, location)
-                        }
-                        body.buildDrop(location)
-                        body.buildConstI32(0, location)
-                    }
-                } else {
-                    body.buildDrop(location)
-                    body.buildConstI32(0, location)
-                }
+                body.buildSetLocal(functionContext.referenceLocal(SyntheticLocalType.IS_INTERFACE_PARAMETER), location)
+                generateInterfaceSlotLookup(context.referenceTypeId(irInterface.symbol), location)
+                body.buildConstI32(-1, location)
+                body.buildInstr(WasmOp.I32_NE, location)
             }
 
             wasmSymbols.refCastNull -> {

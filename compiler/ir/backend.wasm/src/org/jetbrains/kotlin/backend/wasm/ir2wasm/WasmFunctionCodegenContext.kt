@@ -16,7 +16,7 @@ import org.jetbrains.kotlin.wasm.ir.*
 import java.util.LinkedList
 
 enum class LoopLabelType { BREAK, CONTINUE }
-enum class SyntheticLocalType { IS_INTERFACE_PARAMETER, TABLE_SWITCH_SELECTOR }
+enum class SyntheticLocalType { IS_INTERFACE_PARAMETER, TABLE_SWITCH_SELECTOR, IFACE_LOOKUP_SLOT_CACHE, IFACE_LOOKUP_TYPEID_CACHE }
 
 class WasmFunctionCodegenContext(
     val irFunction: IrFunction,
@@ -67,6 +67,8 @@ class WasmFunctionCodegenContext(
             SyntheticLocalType.IS_INTERFACE_PARAMETER ->
                 WasmRefNullType(WasmHeapType.Type(context.referenceGcType(backendContext.irBuiltIns.anyClass)))
             SyntheticLocalType.TABLE_SWITCH_SELECTOR -> WasmI32
+            SyntheticLocalType.IFACE_LOOKUP_SLOT_CACHE -> WasmI32
+            SyntheticLocalType.IFACE_LOOKUP_TYPEID_CACHE -> WasmI32
         }
 
     fun referenceLocal(type: SyntheticLocalType): WasmLocal = wasmSyntheticLocals.getOrPut(type) {
@@ -79,6 +81,16 @@ class WasmFunctionCodegenContext(
             wasmFunction.locals += it
         }
     }
+
+    fun createNewLocalVariable(type: SyntheticLocalType): WasmLocal =
+        WasmLocal(
+            wasmFunction.locals.size,
+            type.name,
+            type.wasmType,
+            isParameter = false
+        ).also {
+            wasmFunction.locals += it
+        }
 
     fun defineNonLocalReturnLevel(block: IrReturnableBlockSymbol, level: Int) {
         nonLocalReturnLevels[block] = level

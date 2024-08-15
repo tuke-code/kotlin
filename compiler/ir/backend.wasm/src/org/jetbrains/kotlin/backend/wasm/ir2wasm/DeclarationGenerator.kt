@@ -200,33 +200,6 @@ class DeclarationGenerator(
         }
     }
 
-    private fun createDeclarationByInterface(iFace: IrClassSymbol) {
-        if (context.isAlreadyDefinedClassITableGcType(iFace)) return
-        if (iFace !in hierarchyDisjointUnions) return
-
-        val iFacesUnion = hierarchyDisjointUnions[iFace]
-
-        val fields = iFacesUnion.mapIndexed { index, unionIFace ->
-            context.defineClassITableInterfaceSlot(unionIFace, index)
-            WasmStructFieldDeclaration(
-                name = "${unionIFace.owner.fqNameWhenAvailable.toString()}.itable",
-                type = WasmRefNullType(WasmHeapType.Type(context.referenceVTableGcType(unionIFace))),
-                isMutable = false
-            )
-        }
-
-        val struct = WasmStructDeclaration(
-            name = "classITable",
-            fields = fields,
-            superType = null,
-            isFinal = true,
-        )
-
-        iFacesUnion.forEach {
-            context.defineClassITableGcType(it, struct)
-        }
-    }
-
     private fun createVirtualTableStruct(
         methods: List<VirtualMethodMetadata>,
         name: String,
@@ -290,24 +263,13 @@ class DeclarationGenerator(
         val location = SourceLocation.NoLocation("Create instance of itable struct")
         val klass = metadata.klass
         if (klass.isAbstractOrSealed) return
-        val supportedInterface = metadata.interfaces.firstOrNull()?.symbol ?: return
-
-        createDeclarationByInterface(supportedInterface)
-
-        val classInterfaceType = context.referenceClassITableGcType(supportedInterface)
-        val interfaceList = hierarchyDisjointUnions[supportedInterface]
+        if (!klass.hasInterfaceSuperClass()) return
 
         val initITableGlobal = buildWasmExpression {
-            for (iFace in interfaceList) {
-                val iFaceVTableGcType = context.referenceVTableGcType(iFace)
-                val iFaceVTableGcNullHeapType = WasmHeapType.Type(iFaceVTableGcType)
+            for (iFace in metadata.interfaces) {
+                val iFaceVTableGcType = context.referenceVTableGcType(iFace.symbol)
 
-                if (!metadata.interfaces.contains(iFace.owner)) {
-                    buildRefNull(iFaceVTableGcNullHeapType, location)
-                    continue
-                }
-
-                for (method in context.getInterfaceMetadata(iFace).methods) {
+                for (method in context.getInterfaceMetadata(iFace.symbol).methods) {
                     val classMethod: VirtualMethodMetadata? = metadata.virtualMethods
                         .find { it.signature == method.signature && it.function.modality != Modality.ABSTRACT }  // TODO: Use map
 
@@ -325,12 +287,16 @@ class DeclarationGenerator(
                 }
                 buildStructNew(iFaceVTableGcType, location)
             }
-            buildStructNew(classInterfaceType, location)
+            buildInstr(
+                WasmOp.ARRAY_NEW_FIXED,
+                location,
+                WasmImmediate.GcType(context.wasmAnyArrayType),
+                WasmImmediate.ConstI32(metadata.interfaces.size)
+            )
         }
-
         val wasmClassIFaceGlobal = WasmGlobal(
             name = "<classITable>",
-            type = WasmRefType(WasmHeapType.Type(classInterfaceType)),
+            type = WasmRefType(WasmHeapType.Type(context.wasmAnyArrayType)),
             isMutable = false,
             init = initITableGlobal
         )
@@ -360,14 +326,12 @@ class DeclarationGenerator(
         val nameStr = declaration.fqNameWhenAvailable.toString()
 
         if (declaration.isInterface) {
-            if (symbol in hierarchyDisjointUnions) {
-                val vtableStruct = createVirtualTableStruct(
-                    methods = context.getInterfaceMetadata(symbol).methods,
-                    name = "<itable>",
-                    isFinal = true,
-                )
-                context.defineVTableGcType(symbol, vtableStruct)
-            }
+            val vtableStruct = createVirtualTableStruct(
+                methods = context.getInterfaceMetadata(symbol).methods,
+                name = "<itable>",
+                isFinal = true,
+            )
+            context.defineVTableGcType(symbol, vtableStruct)
         } else {
             val metadata = context.getClassMetadata(symbol)
 
@@ -375,10 +339,9 @@ class DeclarationGenerator(
             createClassITable(metadata)
 
             val vtableRefGcType = WasmRefType(WasmHeapType.Type(context.referenceVTableGcType(symbol)))
-            val classITableRefGcType = WasmRefNullType(WasmHeapType.Simple.Struct)
             val fields = mutableListOf<WasmStructFieldDeclaration>()
             fields.add(WasmStructFieldDeclaration("vtable", vtableRefGcType, false))
-            fields.add(WasmStructFieldDeclaration("itable", classITableRefGcType, false))
+            fields.add(WasmStructFieldDeclaration("itable", WasmRefNullType(WasmHeapType.Type(context.wasmAnyArrayType)), false))
             declaration.allFields(irBuiltIns).mapTo(fields) {
                 WasmStructFieldDeclaration(
                     name = it.name.toString(),

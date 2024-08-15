@@ -66,6 +66,7 @@ class WasmSymbols(
         val getTypeInfoTypeDataByPtr: IrSimpleFunctionSymbol = getInternalFunction("getTypeInfoTypeDataByPtr")
         val wasmTypeInfoData: IrClassSymbol = getInternalClass("TypeInfoData")
         val kClassImpl: IrClassSymbol = getInternalClass("KClassImpl")
+        val getInterfaceSlot = getInternalFunction("getInterfaceSlot")
     }
 
     internal val reflectionSymbols: WasmReflectionSymbols = WasmReflectionSymbols()

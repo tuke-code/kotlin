@@ -69,6 +69,23 @@ internal fun isInterfaceById(obj: Any, interfaceId: Int): Boolean {
     return false
 }
 
+internal fun getInterfaceSlot(obj: Any, interfaceId: Int): Int {
+    val interfaceListSize = wasm_i32_load(obj.typeInfo + TYPE_INFO_ITABLE_SIZE_OFFSET)
+    val interfaceListPtr = obj.typeInfo + TYPE_INFO_ITABLE_OFFSET
+
+    var interfaceSlot = 0
+    var currentPtr = interfaceListPtr
+    while (interfaceSlot < interfaceListSize) {
+        val supportedInterface = wasm_i32_load(currentPtr)
+        if (supportedInterface == interfaceId) {
+            return interfaceSlot
+        }
+        interfaceSlot++
+        currentPtr += TYPE_INFO_ELEMENT_SIZE
+    }
+    return -1
+}
+
 @Suppress("UNUSED_PARAMETER")
 @ExcludedFromCodegen
 internal fun <T> wasmIsInterface(obj: Any): Boolean =
