@@ -475,7 +475,7 @@ private fun StatementGenerator.createFunctionForSuspendConversion(
     val invokeSymbol = context.symbolTable.descriptorExtension.referenceSimpleFunction(invokeDescriptor.original)
 
     irAdapterFun.body = irBlockBody(startOffset, endOffset) {
-        val irAdapteeCall = IrCallImpl(
+        val irAdapteeCall = IrCallImplWithSignature(
             startOffset, endOffset, irFunReturnType,
             invokeSymbol,
             typeArgumentsCount = 0,

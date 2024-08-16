@@ -567,7 +567,7 @@ class CallAndReferenceGenerator(
                     val constructor = firSymbol.unwrapCallRepresentative(c).fir as FirConstructor
                     val totalTypeParametersCount = constructor.typeParameters.size
                     val constructorTypeParametersCount = constructor.typeParameters.count { it is FirTypeParameter }
-                    IrConstructorCallImpl(
+                    IrConstructorCallImplWithSignature(
                         startOffset,
                         endOffset,
                         irType,
@@ -592,7 +592,7 @@ class CallAndReferenceGenerator(
                     ) {
                         explicitReceiverExpression.updateStatementOrigin(callOrigin)
                     }
-                    IrCallImpl(
+                    IrCallImplWithSignature(
                         startOffset, endOffset, irType, irSymbol,
                         typeArgumentsCount = firSymbol.typeParameterSymbols.size,
                         valueArgumentsCount = firSymbol.valueParametersSize(),
@@ -933,7 +933,7 @@ class CallAndReferenceGenerator(
             }
             val irConstructor = declarationStorage.getIrConstructorSymbol(fullyExpandedConstructorSymbol)
 
-            IrConstructorCallImpl(
+            IrConstructorCallImplWithSignature(
                 startOffset, endOffset, type, irConstructor,
                 // Get the number of value arguments from FIR because of a possible cycle where an annotation constructor
                 // parameter is annotated with the same annotation.

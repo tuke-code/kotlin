@@ -80,7 +80,7 @@ fun Fir2IrComponents.createSafeCallConstruction(
     return IrBlockImpl(startOffset, endOffset, resultType, IrStatementOrigin.SAFE_CALL).apply {
         statements += receiverVariable
         statements += IrWhenImpl(startOffset, endOffset, resultType).apply {
-            val condition = IrCallImpl(
+            val condition = IrCallImplWithSignature(
                 startOffset, endOffset, builtins.booleanType,
                 builtins.eqeqSymbol,
                 valueArgumentsCount = 2,

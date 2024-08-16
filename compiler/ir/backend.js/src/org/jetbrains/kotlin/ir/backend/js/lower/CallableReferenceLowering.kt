@@ -63,7 +63,7 @@ class CallableReferenceLowering(private val context: JsCommonBackendContext) : B
             return expression.run {
                 val vpCount = if (function.isSuspend) 1 else 0
                 val ctorCall =
-                    IrConstructorCallImpl(
+                    IrConstructorCallImplWithSignature(
                         startOffset, endOffset, type, ctor.symbol, 0 /*TODO: properly set type arguments*/, 0, vpCount,
                         JsStatementOrigins.CALLABLE_REFERENCE_CREATE
                     ).apply {
