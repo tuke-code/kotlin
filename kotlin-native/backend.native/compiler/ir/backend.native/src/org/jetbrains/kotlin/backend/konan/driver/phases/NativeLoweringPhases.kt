@@ -341,11 +341,24 @@ private val testProcessorPhase = createFileLoweringPhase(
         description = "Unit test processor"
 )
 
+private val upgradeCallableReferences = createFileLoweringPhase(
+        ::UpgradeCallableReferences,
+        name = "UpgradeCallableReferences",
+        description = "Transform callable references to new Ir representation",
+)
+
+private val downgradeCallableReferences = createFileLoweringPhase(
+        ::DowngradeCallableReferences,
+        name = "DowngradeCallableReferences",
+        description = "Transform callable references to old Ir representation",
+        prerequisite = setOf(upgradeCallableReferences)
+)
+
 private val delegationPhase = createFileLoweringPhase(
         lowering = ::PropertyDelegationLowering,
         name = "Delegation",
         description = "Delegation lowering",
-        prerequisite = setOf(volatilePhase)
+        prerequisite = setOf(volatilePhase, downgradeCallableReferences)
 )
 
 private val functionReferencePhase = createFileLoweringPhase(
@@ -609,6 +622,8 @@ private val constEvaluationPhase = createFileLoweringPhase(
 )
 
 internal fun PhaseEngine<NativeGenerationState>.getLoweringsUpToAndIncludingSyntheticAccessors(): LoweringList = listOfNotNull(
+        upgradeCallableReferences,
+        downgradeCallableReferences,
         assertionWrapperPhase,
         lateinitPhase,
         sharedVariablesPhase,
