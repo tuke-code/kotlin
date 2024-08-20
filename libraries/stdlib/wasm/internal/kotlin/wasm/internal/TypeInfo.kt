@@ -78,7 +78,7 @@ internal fun getInterfaceSlot(obj: Any, interfaceId: Int): Int {
     while (interfaceSlot < interfaceListSize) {
         val supportedInterface = wasm_i32_load(currentPtr)
         if (supportedInterface == interfaceId) {
-            return interfaceSlot
+            return interfaceSlot + 2 // STABLE SLOTS FOR FUNCTIONS
         }
         interfaceSlot++
         currentPtr += TYPE_INFO_ELEMENT_SIZE

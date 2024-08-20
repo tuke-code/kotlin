@@ -236,7 +236,7 @@ class WasmCompiledModuleFragment(
         wasmAnyArrayType.bind(
             WasmArrayDeclaration(
                 name = "itable",
-                field = WasmStructFieldDeclaration("", WasmRefType(WasmHeapType.Simple.Any), false)
+                field = WasmStructFieldDeclaration("", WasmRefNullType(WasmHeapType.Simple.Any), false)
             )
         )
 

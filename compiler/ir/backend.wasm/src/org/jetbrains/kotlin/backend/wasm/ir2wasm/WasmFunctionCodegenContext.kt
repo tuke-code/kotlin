@@ -92,6 +92,16 @@ class WasmFunctionCodegenContext(
             wasmFunction.locals += it
         }
 
+    fun createNewLocalVariable(type: WasmType): WasmLocal =
+        WasmLocal(
+            wasmFunction.locals.size,
+            type.name,
+            type,
+            isParameter = false
+        ).also {
+            wasmFunction.locals += it
+        }
+
     fun defineNonLocalReturnLevel(block: IrReturnableBlockSymbol, level: Int) {
         nonLocalReturnLevels[block] = level
     }
