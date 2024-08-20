@@ -745,9 +745,17 @@ class BodyGenerator(
 
                 body.commentGroupStart { "interface call: ${function.fqNameWhenAvailable}" }
 
-                if (symbol == context.backendContext.irBuiltIns.listClass) {
+                val slots = listOf(
+                    context.backendContext.irBuiltIns.listClass,
+                    context.backendContext.irBuiltIns.iterableClass,
+                    context.backendContext.irBuiltIns.iteratorClass
+                )
+
+                val slotIndex = slots.indexOf(symbol)
+
+                if (slotIndex != -1) {
                     body.buildStructGet(context.referenceGcType(irBuiltIns.anyClass), WasmSymbol(1), location)
-                    body.buildConstI32(0, location)
+                    body.buildConstI32(slotIndex, location)
                     body.buildInstr(WasmOp.ARRAY_GET, location, WasmImmediate.TypeIdx(context.wasmAnyArrayType))
                     body.buildRefCastStatic(context.referenceVTableGcType(klass.symbol), location)
                     val vfSlot = context.getInterfaceMetadata(symbol).methods
@@ -760,7 +768,7 @@ class BodyGenerator(
                             body.buildBlock("FunctionFastTrack", WasmAnyRef) { fastTrack ->
                                 body.buildGetLocal(functionContext.referenceLocal(SyntheticLocalType.IS_INTERFACE_PARAMETER), location)
                                 body.buildStructGet(context.referenceGcType(irBuiltIns.anyClass), WasmSymbol(1), location)
-                                body.buildConstI32(1, location)
+                                body.buildConstI32(3, location)
                                 body.buildInstr(WasmOp.ARRAY_GET, location, WasmImmediate.TypeIdx(context.wasmAnyArrayType))
                                 body.buildBrInstr(WasmOp.BR_ON_NON_NULL, fastTrack, location)
 
@@ -857,9 +865,17 @@ class BodyGenerator(
 
                 if (irInterface.symbol in hierarchyDisjointUnions) {
 
-                    if (irInterface == context.backendContext.irBuiltIns.listClass.owner) {
+                    val slots = listOf(
+                        context.backendContext.irBuiltIns.listClass,
+                        context.backendContext.irBuiltIns.iterableClass,
+                        context.backendContext.irBuiltIns.iteratorClass
+                    )
+
+                    val slotIndex = slots.indexOf(irInterface.symbol)
+
+                    if (slotIndex != -1) {
                         body.buildStructGet(context.referenceGcType(irBuiltIns.anyClass), WasmSymbol(1), location)
-                        body.buildConstI32(0, location)
+                        body.buildConstI32(slotIndex, location)
                         body.buildInstr(WasmOp.ARRAY_GET, location, WasmImmediate.TypeIdx(context.wasmAnyArrayType))
                         body.buildInstr(WasmOp.REF_IS_NULL, location)
                         body.buildConstI32(0, location)
@@ -872,7 +888,7 @@ class BodyGenerator(
                                     body.buildConstI32(1, location)
                                     body.buildGetLocal(functionContext.referenceLocal(SyntheticLocalType.IS_INTERFACE_PARAMETER), location)
                                     body.buildStructGet(context.referenceGcType(irBuiltIns.anyClass), WasmSymbol(1), location)
-                                    body.buildConstI32(1, location)
+                                    body.buildConstI32(slots.size, location)
                                     body.buildInstr(WasmOp.ARRAY_GET, location, WasmImmediate.TypeIdx(context.wasmAnyArrayType))
                                     body.buildRefTestStatic(context.referenceVTableGcType(irInterface.symbol), location)
                                     body.buildConstI32(1, location)
