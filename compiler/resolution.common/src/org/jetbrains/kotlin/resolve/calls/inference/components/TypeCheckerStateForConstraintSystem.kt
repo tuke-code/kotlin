@@ -5,6 +5,9 @@
 
 package org.jetbrains.kotlin.resolve.calls.inference.components
 
+import org.jetbrains.kotlin.resolve.calls.inference.components.TypeCheckerStateForConstraintSystem.DefinitelyNotNullNeed.MAYBE
+import org.jetbrains.kotlin.resolve.calls.inference.components.TypeCheckerStateForConstraintSystem.DefinitelyNotNullNeed.NO
+import org.jetbrains.kotlin.resolve.calls.inference.components.TypeCheckerStateForConstraintSystem.DefinitelyNotNullNeed.YES
 import org.jetbrains.kotlin.types.*
 import org.jetbrains.kotlin.types.model.*
 
@@ -239,20 +242,43 @@ abstract class TypeCheckerStateForConstraintSystem(
                     */
                     typeVariable.isMarkedNullable() -> {
                         val typeVariableTypeConstructor = typeVariable.typeConstructor()
-                        val needToMakeDefNotNull = subTypeConstructor.isTypeVariable() ||
-                                typeVariableTypeConstructor !is TypeVariableTypeConstructorMarker ||
-                                !typeVariableTypeConstructor.isContainedInInvariantOrContravariantPositions()
+                        val defNotNullNeed = when {
+                            subTypeConstructor.isTypeVariable() -> YES
+                            typeVariableTypeConstructor !is TypeVariableTypeConstructorMarker -> YES
+                            typeVariableTypeConstructor.isContainedInInvariantOrContravariantPositions() -> NO
+                            else -> MAYBE
+                        }
 
-                        val resultType = if (needToMakeDefNotNull) {
+                        fun KotlinTypeMarker.withCapturedNonNullProjection(): KotlinTypeMarker =
+                            if (isInferenceCompatibilityEnabled && this is CapturedTypeMarker) {
+                                withNotNullProjection()
+                            } else {
+                                this
+                            }
+
+                        val resultType = if (defNotNullNeed == YES || !isK2 && defNotNullNeed == MAYBE) {
                             subType.makeDefinitelyNotNullOrNotNull()
                         } else {
-                            if (!isInferenceCompatibilityEnabled && subType is CapturedTypeMarker) {
+                            val notNullType = if (!isInferenceCompatibilityEnabled && subType is CapturedTypeMarker) {
                                 subType.withNotNullProjection()
                             } else {
                                 subType.withNullability(false)
                             }
+                            if (isK2) {
+                                val variantTypes = listOf(notNullType, subType.makeDefinitelyNotNullOrNotNull()).distinct()
+                                variantTypes.singleOrNull() ?: run {
+                                    addLowerConstraintForks(
+                                        typeVariableTypeConstructor,
+                                        variantTypes.map { it.withCapturedNonNullProjection() },
+                                        isFromNullabilityConstraint
+                                    )
+                                    return true
+                                }
+                            } else {
+                                notNullType
+                            }
                         }
-                        if (isInferenceCompatibilityEnabled && resultType is CapturedTypeMarker) resultType.withNotNullProjection() else resultType
+                        resultType.withCapturedNonNullProjection()
                     }
                     // Foo <: T => Foo <: T
                     else -> subType
@@ -301,6 +327,25 @@ abstract class TypeCheckerStateForConstraintSystem(
         addLowerConstraint(typeVariable.typeConstructor(), lowerConstraint, isFromNullabilityConstraint)
 
         return true
+    }
+
+    private fun addLowerConstraintForks(
+        typeVariableConstructorMarker: TypeConstructorMarker,
+        variantTypes: List<KotlinTypeMarker>,
+        isFromNullabilityConstraint: Boolean
+    ) {
+        runForkingPoint {
+            for (variant in variantTypes) {
+                fork {
+                    addLowerConstraint(typeVariableConstructorMarker, variant, isFromNullabilityConstraint)
+                    true
+                }
+            }
+        }
+    }
+
+    private enum class DefinitelyNotNullNeed {
+        YES, MAYBE, NO
     }
 
     private fun assertFlexibleTypeVariable(typeVariable: FlexibleTypeMarker) = with(typeSystemContext) {

@@ -18,7 +18,7 @@ fun <A> fooA(arg: A?): A {
     return null!!
 }
 fun <B> fooB(arg: B): B {
-    <!DEBUG_INFO_EXPRESSION_TYPE("B!!")!>fooA(arg)<!>
+    <!DEBUG_INFO_EXPRESSION_TYPE("B")!>fooA(arg)<!>
     <!CANNOT_INFER_PARAMETER_TYPE!>fooC<!>(<!ARGUMENT_TYPE_MISMATCH("C & Any; B")!>arg<!>)
     return null!!
 }

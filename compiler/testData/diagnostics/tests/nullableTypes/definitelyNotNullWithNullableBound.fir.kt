@@ -3,14 +3,14 @@
 fun <D> makeDefinitelyNotNull(arg: D?): D = TODO()
 
 fun <N : Number?> test(arg: N) {
-    makeDefinitelyNotNull(arg) <!USELESS_ELVIS!>?: 1<!>
+    <!NEW_INFERENCE_ERROR!>makeDefinitelyNotNull(arg) ?: 1<!>
 
-    makeDefinitelyNotNull(arg)<!UNNECESSARY_NOT_NULL_ASSERTION!>!!<!>
+    makeDefinitelyNotNull(arg)!!
 
-    makeDefinitelyNotNull(arg)<!UNNECESSARY_SAFE_CALL!>?.<!>toInt()
+    makeDefinitelyNotNull(arg)?.toInt()
 
     val nullImposible = when (val dnn = makeDefinitelyNotNull(arg)) {
-        <!SENSELESS_NULL_IN_WHEN!>null<!> -> false
+        null -> false
         else -> true
     }
 }

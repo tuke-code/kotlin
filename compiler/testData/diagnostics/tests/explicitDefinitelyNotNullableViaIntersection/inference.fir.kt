@@ -21,7 +21,7 @@ fun <F> main(x: F, y: F, z: F, w: F, m: F) {
 
     y1.foo()
     y2.foo()
-    x1.foo()
+    x1<!UNSAFE_CALL!>.<!>foo()
     x2.foo()
     z1.foo()
     z2.foo()
