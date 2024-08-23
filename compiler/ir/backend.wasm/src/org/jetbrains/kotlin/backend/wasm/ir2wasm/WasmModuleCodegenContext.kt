@@ -148,6 +148,9 @@ class WasmModuleCodegenContext(
     val wasmAnyArrayType: WasmSymbol<WasmArrayDeclaration> =
         wasmFragment.wasmAnyArrayType
 
+    val specialSlotITableType: WasmSymbol<WasmTypeDeclaration> =
+        wasmFragment.specialSlotITableType
+
     fun referenceVTableGcType(irClass: IrClassSymbol): WasmSymbol<WasmTypeDeclaration> =
         wasmFragment.vTableGcTypes.reference(irClass)
 

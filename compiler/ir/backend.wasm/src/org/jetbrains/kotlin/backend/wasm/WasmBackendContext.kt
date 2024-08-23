@@ -204,4 +204,33 @@ class WasmBackendContext(
         irBuiltIns,
         configuration.messageCollector
     )
+
+
+    companion object {
+        fun getSpecialITableTypes(irBuiltIns: IrBuiltIns) = listOf(
+            irBuiltIns.collectionClass,
+            irBuiltIns.setClass,
+            irBuiltIns.listClass,
+            irBuiltIns.mapClass,
+            irBuiltIns.mapEntryClass,
+            irBuiltIns.iterableClass,
+            irBuiltIns.iteratorClass,
+            irBuiltIns.listIteratorClass,
+            irBuiltIns.mutableCollectionClass,
+            irBuiltIns.mutableSetClass,
+            irBuiltIns.mutableListClass,
+            irBuiltIns.mutableMapClass,
+            irBuiltIns.mutableMapEntryClass,
+            irBuiltIns.mutableIterableClass,
+            irBuiltIns.mutableIteratorClass,
+            irBuiltIns.mutableListIteratorClass,
+            irBuiltIns.comparableClass,
+            irBuiltIns.charSequenceClass,
+            //FUNCTION_INTERFACE_CLASS
+        )
+    }
+
+    val specialSlotITableTypes by lazy(LazyThreadSafetyMode.NONE) {
+        getSpecialITableTypes(irBuiltIns)
+    }
 }

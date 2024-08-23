@@ -634,6 +634,14 @@ class BodyGenerator(
         body.buildInstr(WasmOp.ARRAY_GET, location, WasmImmediate.TypeIdx(context.wasmAnyArrayType))
     }
 
+    private fun generateFallback(klassSymbol: IrClassSymbol, function: IrFunction, location: SourceLocation) {
+        generateInterfaceLookup(context.referenceTypeId(klassSymbol), location)
+        body.buildRefCastStatic(context.referenceVTableGcType(klassSymbol), location)
+        val vfSlot = context.getInterfaceMetadata(klassSymbol).methods
+            .indexOfFirst { it.function == function }
+        body.buildStructGet(context.referenceVTableGcType(klassSymbol), WasmSymbol(vfSlot), location)
+    }
+
     private fun generateInlineCache(type: WasmType, location: SourceLocation, content: () -> Unit) {
         val interfaceTypeIdCache = functionContext.createNewLocalVariable(SyntheticLocalType.IFACE_LOOKUP_TYPEID_CACHE)
         val resultCache = functionContext.createNewLocalVariable(type)
@@ -745,45 +753,59 @@ class BodyGenerator(
 
                 body.commentGroupStart { "interface call: ${function.fqNameWhenAvailable}" }
 
-                val slots = listOf(
-                    context.backendContext.irBuiltIns.listClass,
-                    context.backendContext.irBuiltIns.iterableClass,
-                    context.backendContext.irBuiltIns.iteratorClass
-                )
-
-                val slotIndex = slots.indexOf(symbol)
-
-                if (slotIndex != -1) {
+                val specialITableSlot = backendContext.specialSlotITableTypes.indexOf(symbol)
+                if (specialITableSlot != -1) {
                     body.buildStructGet(context.referenceGcType(irBuiltIns.anyClass), WasmSymbol(1), location)
-                    body.buildConstI32(slotIndex, location)
+                    body.buildConstI32(0, location)
                     body.buildInstr(WasmOp.ARRAY_GET, location, WasmImmediate.TypeIdx(context.wasmAnyArrayType))
-                    body.buildRefCastStatic(context.referenceVTableGcType(klass.symbol), location)
+                    body.buildRefCastStatic(context.specialSlotITableType, location)
+                    body.buildStructGet(context.specialSlotITableType, WasmSymbol(specialITableSlot), location)
                     val vfSlot = context.getInterfaceMetadata(symbol).methods
                         .indexOfFirst { it.function == function }
                     body.buildStructGet(context.referenceVTableGcType(symbol), WasmSymbol(vfSlot), location)
                 } else {
                     body.buildSetLocal(functionContext.referenceLocal(SyntheticLocalType.IS_INTERFACE_PARAMETER), location)
                     generateInlineCache(WasmRefNullType(WasmHeapType.Type(context.referenceFunctionType(function.symbol))), location) {
-                        if (klass.origin.name == "FUNCTION_INTERFACE_CLASS" && klass != irBuiltIns.functionClass.owner) {
-                            body.buildBlock("FunctionFastTrack", WasmAnyRef) { fastTrack ->
-                                body.buildGetLocal(functionContext.referenceLocal(SyntheticLocalType.IS_INTERFACE_PARAMETER), location)
-                                body.buildStructGet(context.referenceGcType(irBuiltIns.anyClass), WasmSymbol(1), location)
-                                body.buildConstI32(3, location)
-                                body.buildInstr(WasmOp.ARRAY_GET, location, WasmImmediate.TypeIdx(context.wasmAnyArrayType))
-                                body.buildBrInstr(WasmOp.BR_ON_NON_NULL, fastTrack, location)
-
-                                generateInterfaceLookup(context.referenceTypeId(klass.symbol), location)
+                        val isSamInterface = klass.declarations.singleOrNull { it !is IrSimpleFunction || it.overriddenSymbols.isEmpty() } != null
+                        if (isSamInterface) {
+                            body.buildBlock("SAMFastTrack", WasmRefNullType(WasmHeapType.Type(context.referenceFunctionType(function.symbol)))) { samFastTrack ->
+                                body.buildBlock("SAMFunction", WasmRefNullType(WasmHeapType.Simple.Any)) { samFunction ->
+                                    body.buildGetLocal(functionContext.referenceLocal(SyntheticLocalType.IS_INTERFACE_PARAMETER), location)
+                                    body.buildStructGet(context.referenceGcType(irBuiltIns.anyClass), WasmSymbol(1), location)
+                                    body.buildConstI32(0, location)
+                                    body.buildInstr(WasmOp.ARRAY_GET, location, WasmImmediate.TypeIdx(context.wasmAnyArrayType))
+                                    body.buildBrOnCastInstr(
+                                        WasmOp.BR_ON_CAST_FAIL,
+                                        samFunction,
+                                        fromIsNullable = true,
+                                        toIsNullable = false,
+                                        from = WasmHeapType.Simple.Any,
+                                        to = WasmHeapType.Type(context.specialSlotITableType),
+                                        location,
+                                    )
+                                    body.buildStructGet(
+                                        context.specialSlotITableType,
+                                        WasmSymbol(backendContext.specialSlotITableTypes.size),
+                                        location
+                                    )
+                                    body.buildBrOnCastInstr(
+                                        WasmOp.BR_ON_CAST,
+                                        samFastTrack,
+                                        fromIsNullable = true,
+                                        toIsNullable = false,
+                                        from = WasmHeapType.Simple.Func,
+                                        to = WasmHeapType.Type(context.referenceFunctionType(function.symbol)),
+                                        location,
+                                    )
+                                    body.buildDrop(location)
+                                    body.buildRefNull(WasmHeapType.Simple.Any, location)
+                                }
+                                body.buildDrop(location)
+                                generateFallback(klass.symbol, function, location)
                             }
                         } else {
-                            generateInterfaceLookup(context.referenceTypeId(klass.symbol), location)
+                            generateFallback(klass.symbol, function, location)
                         }
-
-                        body.buildRefCastStatic(context.referenceVTableGcType(klass.symbol), location)
-
-                        val vfSlot = context.getInterfaceMetadata(symbol).methods
-                            .indexOfFirst { it.function == function }
-
-                        body.buildStructGet(context.referenceVTableGcType(symbol), WasmSymbol(vfSlot), location)
                     }
                 }
 
@@ -865,18 +887,25 @@ class BodyGenerator(
 
                 if (irInterface.symbol in hierarchyDisjointUnions) {
 
-                    val slots = listOf(
-                        context.backendContext.irBuiltIns.listClass,
-                        context.backendContext.irBuiltIns.iterableClass,
-                        context.backendContext.irBuiltIns.iteratorClass
-                    )
-
-                    val slotIndex = slots.indexOf(irInterface.symbol)
-
-                    if (slotIndex != -1) {
-                        body.buildStructGet(context.referenceGcType(irBuiltIns.anyClass), WasmSymbol(1), location)
-                        body.buildConstI32(slotIndex, location)
-                        body.buildInstr(WasmOp.ARRAY_GET, location, WasmImmediate.TypeIdx(context.wasmAnyArrayType))
+                    val specialSlotIndex = backendContext.specialSlotITableTypes.indexOf(irInterface.symbol)
+                    if (specialSlotIndex != -1) {
+                        body.buildSetLocal(functionContext.referenceLocal(SyntheticLocalType.IS_INTERFACE_PARAMETER), location)
+                        body.buildBlock("SpecialSlotCheck", WasmRefNullType(WasmHeapType.Simple.Any)) { specialCheck ->
+                            body.buildGetLocal(functionContext.referenceLocal(SyntheticLocalType.IS_INTERFACE_PARAMETER), location)
+                            body.buildStructGet(context.referenceGcType(irBuiltIns.anyClass), WasmSymbol(1), location)
+                            body.buildConstI32(0, location)
+                            body.buildInstr(WasmOp.ARRAY_GET, location, WasmImmediate.TypeIdx(context.wasmAnyArrayType))
+                            body.buildBrOnCastInstr(
+                                WasmOp.BR_ON_CAST_FAIL,
+                                specialCheck,
+                                fromIsNullable = true,
+                                toIsNullable = false,
+                                from = WasmHeapType.Simple.Any,
+                                to = WasmHeapType.Type(context.specialSlotITableType),
+                                location,
+                            )
+                            body.buildStructGet(context.specialSlotITableType, WasmSymbol(specialSlotIndex), location)
+                        }
                         body.buildInstr(WasmOp.REF_IS_NULL, location)
                         body.buildConstI32(0, location)
                         body.buildInstr(WasmOp.I32_EQ, location)
@@ -888,7 +917,7 @@ class BodyGenerator(
                                     body.buildConstI32(1, location)
                                     body.buildGetLocal(functionContext.referenceLocal(SyntheticLocalType.IS_INTERFACE_PARAMETER), location)
                                     body.buildStructGet(context.referenceGcType(irBuiltIns.anyClass), WasmSymbol(1), location)
-                                    body.buildConstI32(slots.size, location)
+                                    body.buildConstI32(1, location)
                                     body.buildInstr(WasmOp.ARRAY_GET, location, WasmImmediate.TypeIdx(context.wasmAnyArrayType))
                                     body.buildRefTestStatic(context.referenceVTableGcType(irInterface.symbol), location)
                                     body.buildConstI32(1, location)

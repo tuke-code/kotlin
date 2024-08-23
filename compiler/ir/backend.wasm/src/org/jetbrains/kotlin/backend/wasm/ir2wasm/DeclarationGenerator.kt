@@ -259,14 +259,30 @@ class DeclarationGenerator(
         )
     }
 
+    private fun getSamMethod(supportedIFaces: Set<IrClass>): Pair<IrClass, IrFunction>? {
+        var result: Pair<IrClass, IrFunction>? = null
+        for (iFace in supportedIFaces) {
+            val iFaceSamMethod = iFace.declarations.singleOrNull { declaration ->
+                declaration is IrSimpleFunction && declaration.overriddenSymbols.isEmpty()
+            }
+            if (iFaceSamMethod != null) {
+                if (result != null) return null
+                result = iFace to iFaceSamMethod as IrFunction
+            }
+        }
+        return result
+    }
+
     private fun createClassITable(metadata: ClassMetadata) {
         val location = SourceLocation.NoLocation("Create instance of itable struct")
         val klass = metadata.klass
         if (klass.isAbstractOrSealed) return
         if (!klass.hasInterfaceSuperClass()) return
 
-        fun addInterface(builder: WasmExpressionBuilder, iFace: IrClass) = with(builder) {
+        fun addInterfaceMethods(builder: WasmExpressionBuilder, iFace: IrClass, onlyFunction: IrFunction?) = with(builder) {
             for (method in context.getInterfaceMetadata(iFace.symbol).methods) {
+                if (onlyFunction != null && method.function != onlyFunction) continue
+
                 val classMethod: VirtualMethodMetadata? = metadata.virtualMethods
                     .find { it.signature == method.signature && it.function.modality != Modality.ABSTRACT }  // TODO: Use map
 
@@ -281,50 +297,50 @@ class DeclarationGenerator(
                     //This erased by DCE so abstract version appeared in non-abstract class
                     buildRefNull(WasmHeapType.Type(context.referenceFunctionType(method.function.symbol)), location)
                 }
+
             }
         }
 
         val initITableGlobal = buildWasmExpression {
-            val slots = listOf(
-                context.backendContext.irBuiltIns.listClass,
-                context.backendContext.irBuiltIns.iterableClass,
-                context.backendContext.irBuiltIns.iteratorClass
-            )
+            val supportedIFaces = metadata.interfaces
 
-            for (slotSymbol in slots) {
-                val containsSlotInterface = metadata.interfaces.any {
-                    slotSymbol == it.symbol
+            //SPECIAL ITABLE
+            val specialSlotITableTypes = backendContext.specialSlotITableTypes
+            val samFunction = getSamMethod(supportedIFaces)
+            if (samFunction != null || specialSlotITableTypes.any { it.owner in supportedIFaces }) {
+                for (specialSlot in specialSlotITableTypes) {
+                    if (specialSlot.owner in supportedIFaces) {
+                        addInterfaceMethods(this, specialSlot.owner, onlyFunction = null)
+                        buildStructNew(context.referenceVTableGcType(specialSlot), location)
+                    } else {
+                        buildRefNull(WasmHeapType.Simple.None, location)
+                    }
                 }
-                if (containsSlotInterface) {
-                    addInterface(this, slotSymbol.owner)
-                    buildStructNew(context.referenceVTableGcType(slotSymbol), location)
+                //SAM
+                if (samFunction != null) {
+                    addInterfaceMethods(this, samFunction.first, onlyFunction = samFunction.second)
                 } else {
-                    buildRefNull(WasmHeapType.Simple.None, location)
+                    buildRefNull(WasmHeapType.Simple.Func, location)
                 }
-            }
-
-
-            val functionInterface = metadata.interfaces.singleOrNull {
-                it.origin.name == "FUNCTION_INTERFACE_CLASS" && it != irBuiltIns.functionClass.owner
-            }
-            if (functionInterface != null) {
-                addInterface(this, functionInterface)
-                buildStructNew(context.referenceVTableGcType(functionInterface.symbol), location)
+                buildStructNew(context.specialSlotITableType, location)
             } else {
                 buildRefNull(WasmHeapType.Simple.None, location)
             }
 
-            for (iFace in metadata.interfaces) {
-                addInterface(this, iFace)
+            //REGULAR
+            val regularITableIFaces = supportedIFaces.filterNot { it.symbol in backendContext.specialSlotITableTypes }
+            for (iFace in regularITableIFaces) {
+                addInterfaceMethods(this, iFace, onlyFunction = null)
                 buildStructNew(context.referenceVTableGcType(iFace.symbol), location)
             }
             buildInstr(
                 WasmOp.ARRAY_NEW_FIXED,
                 location,
                 WasmImmediate.GcType(context.wasmAnyArrayType),
-                WasmImmediate.ConstI32(metadata.interfaces.size + slots.size + 1)
+                WasmImmediate.ConstI32(regularITableIFaces.size + 1) //special + ifaces
             )
         }
+
         val wasmClassIFaceGlobal = WasmGlobal(
             name = "<classITable>",
             type = WasmRefType(WasmHeapType.Type(context.wasmAnyArrayType)),
@@ -435,11 +451,18 @@ class DeclarationGenerator(
     }
 
     private fun interfaceTable(classMetadata: ClassMetadata): ConstantDataStruct {
-        val interfaces = classMetadata.interfaces
-        val size = ConstantDataIntField("size", interfaces.size)
+        val supportedInterfaces = classMetadata.interfaces
+
+        val specialSlotIFaces = backendContext.specialSlotITableTypes
+
+        val supportedPushedBack =
+            supportedInterfaces.filterNot { it.symbol in specialSlotIFaces } +
+                    supportedInterfaces.filter { it.symbol in specialSlotIFaces }
+
+        val size = ConstantDataIntField("size", supportedPushedBack.size)
         val interfaceIds = ConstantDataIntArray(
             "interfaceIds",
-            interfaces.map { context.referenceTypeId(it.symbol) },
+            supportedPushedBack.map { context.referenceTypeId(it.symbol) },
         )
 
         return ConstantDataStruct(

@@ -107,7 +107,7 @@ class ClassMetadata(
         superClass?.fields.orEmpty() + klass.declarations.filterIsInstance<IrField>()
 
     // Implemented interfaces in no particular order
-    val interfaces: List<IrClass> = klass.allSuperInterfaces()
+    val interfaces: Set<IrClass> = klass.allSuperInterfaces()
 
     // Virtual methods in Wasm order
     // TODO: Collect interface methods separately
@@ -153,15 +153,15 @@ class InterfaceMetadata(val iFace: IrClass, irBuiltIns: IrBuiltIns) {
         .mapTo(mutableListOf()) { VirtualMethodMetadata(it, it.wasmSignature(irBuiltIns)) }
 }
 
-fun IrClass.allSuperInterfaces(): List<IrClass> {
-    fun allSuperInterfacesImpl(currentClass: IrClass, result: MutableList<IrClass>) {
+fun IrClass.allSuperInterfaces(): Set<IrClass> {
+    fun allSuperInterfacesImpl(currentClass: IrClass, result: MutableSet<IrClass>) {
         for (superType in currentClass.superTypes) {
             allSuperInterfacesImpl(superType.classifierOrFail.owner as IrClass, result)
         }
         if (currentClass.isInterface) result.add(currentClass)
     }
 
-    return mutableListOf<IrClass>().also {
+    return mutableSetOf<IrClass>().also {
         allSuperInterfacesImpl(this, it)
     }
 }

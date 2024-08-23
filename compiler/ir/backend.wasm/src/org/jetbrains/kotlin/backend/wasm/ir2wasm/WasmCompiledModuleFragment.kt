@@ -6,6 +6,7 @@
 package org.jetbrains.kotlin.backend.wasm.ir2wasm
 
 import org.jetbrains.kotlin.backend.common.serialization.Hash128Bits
+import org.jetbrains.kotlin.backend.wasm.WasmBackendContext
 import org.jetbrains.kotlin.ir.IrBuiltIns
 import org.jetbrains.kotlin.ir.declarations.IrDeclarationWithName
 import org.jetbrains.kotlin.ir.declarations.IrExternalPackageFragment
@@ -46,6 +47,9 @@ class WasmCompiledModuleFragment(
         ReferencableElements<Pair<List<Long>, WasmType>, Int>()
 
     val wasmAnyArrayType: WasmSymbol<WasmArrayDeclaration> =
+        WasmSymbol()
+
+    val specialSlotITableType: WasmSymbol<WasmTypeDeclaration> =
         WasmSymbol()
 
     internal val throwableTagFuncType = WasmFunctionType(
@@ -240,6 +244,24 @@ class WasmCompiledModuleFragment(
             )
         )
 
+
+        val slotGcTypes = WasmBackendContext.getSpecialITableTypes(irBuiltIns).map { type ->
+            vTableGcTypes.defined[type]?.let { wasmTypeDeclaration ->
+                WasmRefNullType(WasmHeapType.Type(WasmSymbol(wasmTypeDeclaration)))
+            } ?: WasmRefNullType(WasmHeapType.Simple.None)
+        }
+
+        specialSlotITableType.bind(
+            WasmStructDeclaration(
+                name = "special_itable",
+                fields = slotGcTypes.map {
+                    WasmStructFieldDeclaration(it.name, it, false)
+                } + WasmStructFieldDeclaration("SAM_method", WasmRefNullType(WasmHeapType.Simple.Func), false),
+                superType = null,
+                isFinal = true
+            )
+        )
+
         val (importedTags, definedTags) = tags.partition { it.importPair != null }
         val importsInOrder = importedFunctions + importedTags
 
@@ -248,6 +270,7 @@ class WasmCompiledModuleFragment(
             yieldAll(gcTypes.elements)
             yieldAll(canonicalFunctionTypes.values)
             yield(wasmAnyArrayType.owner)
+            yield(specialSlotITableType.owner)
         }
         val recursiveGroups = createRecursiveTypeGroups(recGroupTypes)
 
