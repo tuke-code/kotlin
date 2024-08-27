@@ -82,8 +82,11 @@ object FirOptInAnnotationCallChecker : FirAnnotationCallChecker(MppCheckerKind.C
                     return
                 }
             }
-            val classSymbol = expression.findArgumentByName(OPT_IN_ANNOTATION_CLASS)?.extractClassFromArgument(context.session) ?: return
-            checkOptInArgumentIsMarker(classSymbol, classId, expression.source, reporter, context)
+            val classesSymbol =
+                expression.findArgumentByName(OPT_IN_ANNOTATION_CLASS)?.extractClassesFromArgument(context.session) ?: return
+            classesSymbol.forEach { classSymbol ->
+                checkOptInArgumentIsMarker(classSymbol, classId, expression.source, reporter, context)
+            }
         }
     }
 
@@ -112,7 +115,7 @@ object FirOptInAnnotationCallChecker : FirAnnotationCallChecker(MppCheckerKind.C
         annotationClassId: ClassId,
         source: KtSourceElement?,
         reporter: DiagnosticReporter,
-        context: CheckerContext
+        context: CheckerContext,
     ) {
         with(FirOptInUsageBaseChecker) {
             if (classSymbol.loadExperimentalityForMarkerAnnotation(context.session) == null) {

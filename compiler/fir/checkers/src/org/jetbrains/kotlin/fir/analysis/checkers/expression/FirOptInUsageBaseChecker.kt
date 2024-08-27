@@ -37,6 +37,7 @@ import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.resolve.DataClassResolver
 import org.jetbrains.kotlin.resolve.checkers.OptInNames
+import org.jetbrains.kotlin.resolve.checkers.OptInNames.OPT_IN_ANNOTATION_CLASS
 import org.jetbrains.kotlin.utils.SmartSet
 import org.jetbrains.kotlin.utils.addIfNotNull
 
@@ -107,11 +108,13 @@ object FirOptInUsageBaseChecker {
             )
             if (fromSupertype) {
                 if (annotationType.lookupTag.classId == OptInNames.SUBCLASS_OPT_IN_REQUIRED_CLASS_ID) {
-                    val annotationClass = annotation.findArgumentByName(OptInNames.OPT_IN_ANNOTATION_CLASS) ?: continue
-                    result.addIfNotNull(
-                        annotationClass.extractClassFromArgument(session)
-                            ?.loadExperimentalityForMarkerAnnotation(session)?.copy(fromSupertype = true)
-                    )
+                    val annotationClasses =
+                        annotation.findArgumentByName(OPT_IN_ANNOTATION_CLASS)?.extractClassesFromArgument(session) ?: continue
+                    annotationClasses.forEach { annotationClass ->
+                        result.addIfNotNull(
+                            annotationClass.loadExperimentalityForMarkerAnnotation(session)?.copy(fromSupertype = true)
+                        )
+                    }
                 }
             }
         }
@@ -405,8 +408,10 @@ object FirOptInUsageBaseChecker {
             if (coneType?.lookupTag?.classId != OptInNames.SUBCLASS_OPT_IN_REQUIRED_CLASS_ID) {
                 continue
             }
-            val annotationClass = annotation.findArgumentByName(OptInNames.OPT_IN_ANNOTATION_CLASS) ?: continue
-            if (annotationClass.extractClassFromArgument(session)?.classId == annotationClassId) {
+            val annotationClasses =
+                annotation.findArgumentByName(OptInNames.OPT_IN_ANNOTATION_CLASS)?.extractClassesFromArgument(session)?.map { it.classId }
+                    ?: continue
+            if (annotationClasses.contains(annotationClassId)) {
                 return true
             }
         }

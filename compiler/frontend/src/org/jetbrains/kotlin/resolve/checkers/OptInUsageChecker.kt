@@ -40,10 +40,7 @@ import org.jetbrains.kotlin.resolve.checkers.OptInNames.REQUIRES_OPT_IN_FQ_NAME
 import org.jetbrains.kotlin.resolve.checkers.OptInNames.SUBCLASS_OPT_IN_REQUIRED_FQ_NAME
 import org.jetbrains.kotlin.resolve.checkers.OptInNames.OPT_IN_ANNOTATION_CLASS
 import org.jetbrains.kotlin.resolve.checkers.OptInNames.WAS_EXPERIMENTAL_FQ_NAME
-import org.jetbrains.kotlin.resolve.constants.ArrayValue
-import org.jetbrains.kotlin.resolve.constants.EnumValue
-import org.jetbrains.kotlin.resolve.constants.KClassValue
-import org.jetbrains.kotlin.resolve.constants.StringValue
+import org.jetbrains.kotlin.resolve.constants.*
 import org.jetbrains.kotlin.resolve.deprecation.DeprecationLevelValue
 import org.jetbrains.kotlin.resolve.deprecation.DeprecationResolver
 import org.jetbrains.kotlin.resolve.deprecation.DeprecationSettings
@@ -64,7 +61,7 @@ class OptInUsageChecker : CallChecker {
 
     class OptInFactoryBasedReporter(
         val factory: DiagnosticFactory2<PsiElement, FqName, String>,
-        val defaultMessage: (FqName) -> String
+        val defaultMessage: (FqName) -> String,
     ) : OptInDiagnosticReporter {
         override fun report(trace: BindingTrace, element: PsiElement, fqName: FqName, message: String?) {
             trace.reportDiagnosticOnce(factory.on(element, fqName, message?.takeIf { it.isNotBlank() } ?: defaultMessage(fqName)))
@@ -74,7 +71,7 @@ class OptInUsageChecker : CallChecker {
     data class OptInReporterMultiplexer(
         val warning: OptInDiagnosticReporter,
         val error: OptInDiagnosticReporter,
-        val futureError: OptInDiagnosticReporter
+        val futureError: OptInDiagnosticReporter,
     )
 
     override fun check(resolvedCall: ResolvedCall<*>, reportOn: PsiElement, context: CallCheckerContext) {
@@ -145,7 +142,7 @@ class OptInUsageChecker : CallChecker {
         )
 
         fun reportNotAllowedOptIns(
-            descriptions: Collection<OptInDescription>, element: PsiElement, context: CheckerContext
+            descriptions: Collection<OptInDescription>, element: PsiElement, context: CheckerContext,
         ) {
             reportNotAllowedOptIns(
                 descriptions, element, context.languageVersionSettings, context.trace, USAGE_DIAGNOSTICS
@@ -157,7 +154,7 @@ class OptInUsageChecker : CallChecker {
             element: PsiElement,
             languageVersionSettings: LanguageVersionSettings,
             trace: BindingTrace,
-            diagnostics: OptInReporterMultiplexer
+            diagnostics: OptInReporterMultiplexer,
         ) {
             for ((annotationFqName, severity, message, subclassesOnly) in descriptions) {
                 if (!element.isOptInAllowed(annotationFqName, languageVersionSettings, trace.bindingContext, subclassesOnly)) {
@@ -204,10 +201,12 @@ class OptInUsageChecker : CallChecker {
             }
 
             for (annotation in annotations) {
-                result.addIfNotNull(
-                    annotation.annotationClass?.loadOptInForMarkerAnnotation(useFutureError)
-                        ?: if (fromSupertype) annotation.loadSubclassOptInRequired(context) else null
-                )
+                val optInMarker = annotation.annotationClass?.loadOptInForMarkerAnnotation(useFutureError)
+                if (optInMarker != null) {
+                    result.addIfNotNull(optInMarker)
+                } else if (fromSupertype) {
+                    result.addAll(annotation.loadSubclassOptInRequired(context))
+                }
             }
 
             if (this is CallableDescriptor && this !is ClassConstructorDescriptor) {
@@ -254,7 +253,7 @@ class OptInUsageChecker : CallChecker {
             context: BindingContext,
             languageVersionSettings: LanguageVersionSettings,
             visitedClassifiers: MutableSet<DeclarationDescriptor>,
-            warningsOnly: Boolean = false
+            warningsOnly: Boolean = false,
         ): Set<OptInDescription> =
             when {
                 this?.isError != false -> emptySet()
@@ -275,7 +274,7 @@ class OptInUsageChecker : CallChecker {
 
         internal fun ClassDescriptor.loadOptInForMarkerAnnotation(
             useFutureError: Boolean = false,
-            subclassesOnly: Boolean = false
+            subclassesOnly: Boolean = false,
         ): OptInDescription? {
             val optInAnnotationDescriptor =
                 annotations.findAnnotation(REQUIRES_OPT_IN_FQ_NAME) ?: return null
@@ -296,14 +295,16 @@ class OptInUsageChecker : CallChecker {
             return OptInDescription(fqNameSafe, severity, message, subclassesOnly)
         }
 
-        private fun AnnotationDescriptor.loadSubclassOptInRequired(context: BindingContext?): OptInDescription? {
-            if (this.fqName != SUBCLASS_OPT_IN_REQUIRED_FQ_NAME) return null
+        private fun AnnotationDescriptor.loadSubclassOptInRequired(context: BindingContext?): List<OptInDescription> {
+            if (this.fqName != SUBCLASS_OPT_IN_REQUIRED_FQ_NAME) return emptyList()
             val markerClass = allValueArguments[OPT_IN_ANNOTATION_CLASS]
-            if (markerClass !is KClassValue) return null
-            val value = markerClass.value
-            if (value !is KClassValue.Value.NormalClass) return null
-            val markerDescriptor = context?.get(BindingContext.FQNAME_TO_CLASS_DESCRIPTOR, value.classId.asSingleFqName().toUnsafe())
-            return markerDescriptor?.loadOptInForMarkerAnnotation(subclassesOnly = true)
+            if (markerClass !is TypedArrayValue) return emptyList()
+            return markerClass.value.mapNotNull { arg ->
+                val value = arg.value
+                if (value !is KClassValue.Value.NormalClass) return emptyList()
+                val markerDescriptor = context?.get(BindingContext.FQNAME_TO_CLASS_DESCRIPTOR, value.classId.asSingleFqName().toUnsafe())
+                markerDescriptor?.loadOptInForMarkerAnnotation(subclassesOnly = true)
+            }
         }
 
         private fun PsiElement.isOptInAllowed(annotationFqName: FqName, context: CheckerContext, subclassesOnly: Boolean): Boolean =
@@ -319,14 +320,14 @@ class OptInUsageChecker : CallChecker {
         fun PsiElement.isOptInAllowed(
             annotationFqName: FqName,
             languageVersionSettings: LanguageVersionSettings,
-            bindingContext: BindingContext
+            bindingContext: BindingContext,
         ): Boolean = isOptInAllowed(annotationFqName, languageVersionSettings, bindingContext, subclassesOnly = false)
 
         private fun PsiElement.isOptInAllowed(
             annotationFqName: FqName,
             languageVersionSettings: LanguageVersionSettings,
             bindingContext: BindingContext,
-            subclassesOnly: Boolean
+            subclassesOnly: Boolean,
         ): Boolean {
             if (annotationFqName.asString() in languageVersionSettings.getFlag(AnalysisFlags.optIn)) return true
             val isSubclass = subclassesOnly && getParentOfType<KtSuperTypeListEntry>(strict = true) != null
@@ -361,13 +362,14 @@ class OptInUsageChecker : CallChecker {
 
         private fun PsiElement.isElementAnnotatedWithSubclassOptInRequired(
             annotationFqName: FqName,
-            bindingContext: BindingContext
+            bindingContext: BindingContext,
         ): Boolean {
             return this is KtAnnotated && annotationEntries.any { entry ->
                 val descriptor = bindingContext.get(BindingContext.ANNOTATION, entry)
                 if (descriptor != null && descriptor.fqName == SUBCLASS_OPT_IN_REQUIRED_FQ_NAME) {
-                    val annotationClass = descriptor.allValueArguments[OPT_IN_ANNOTATION_CLASS]
-                    annotationClass is KClassValue && annotationClass.value.let { value ->
+                    val annotationClasses =
+                        (descriptor.allValueArguments[OPT_IN_ANNOTATION_CLASS] as? ArrayValue)?.value.orEmpty().map { it.value }
+                    annotationClasses.any { value ->
                         value is KClassValue.Value.NormalClass &&
                                 value.classId.asSingleFqName() == annotationFqName && value.arrayDimensions == 0
                     }
@@ -387,7 +389,7 @@ class OptInUsageChecker : CallChecker {
             module: ModuleDescriptor,
             languageVersionSettings: LanguageVersionSettings,
             reportError: (String) -> Unit,
-            reportWarning: (String) -> Unit
+            reportWarning: (String) -> Unit,
         ) {
             // Ideally, we should run full resolution (with all classifier usage checkers) on classifiers used in
             // "-opt-in" arguments. However, it's not easy to do this. This should be solved in the future with the support of

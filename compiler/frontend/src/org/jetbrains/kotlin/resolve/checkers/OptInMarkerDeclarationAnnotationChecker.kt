@@ -48,8 +48,8 @@ class OptInMarkerDeclarationAnnotationChecker(private val module: ModuleDescript
                 }
                 OptInNames.SUBCLASS_OPT_IN_REQUIRED_FQ_NAME -> {
                     val annotationClass =
-                        annotation.allValueArguments[OptInNames.OPT_IN_ANNOTATION_CLASS]
-                    checkSubclassOptInUsage(annotated, listOfNotNull(annotationClass), trace, entry)
+                        (annotation.allValueArguments[OptInNames.OPT_IN_ANNOTATION_CLASS] as? ArrayValue)?.value.orEmpty()
+                    checkSubclassOptInUsage(annotated, annotationClass, trace, entry)
                 }
                 OptInNames.REQUIRES_OPT_IN_FQ_NAME -> {
                     hasOptIn = true
