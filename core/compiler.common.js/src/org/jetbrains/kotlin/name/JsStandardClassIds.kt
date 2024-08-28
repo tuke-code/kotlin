@@ -45,6 +45,9 @@ object JsStandardClassIds {
         val JsStatic = "JsStatic".jsId()
 
         @JvmField
+        val JsNoDispatchReceiver = "JsNoDispatchReceiver".jsId()
+
+        @JvmField
         val JsExternalInheritorsOnly = "JsExternalInheritorsOnly".jsId()
 
         @JvmField

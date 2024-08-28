@@ -204,7 +204,7 @@ fun transformFirToIr(
     firOutputs: List<ModuleCompilerAnalyzedOutput>,
     diagnosticsReporter: PendingDiagnosticsCollectorWithSuppress,
 ): Fir2IrActualizedResult {
-    val fir2IrExtensions = Fir2IrExtensions.Default
+    val fir2IrExtensions = JsFir2IrExtension
 
     var builtInsModule: KotlinBuiltIns? = null
     val dependencies = mutableListOf<ModuleDescriptorImpl>()

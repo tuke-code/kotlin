@@ -17,11 +17,15 @@ import org.jetbrains.kotlin.ir.declarations.lazy.AbstractIrLazyFunction
 import org.jetbrains.kotlin.ir.declarations.lazy.IrLazyFunctionBase
 import org.jetbrains.kotlin.ir.declarations.lazy.lazyVar
 import org.jetbrains.kotlin.ir.expressions.IrBody
+import org.jetbrains.kotlin.ir.expressions.IrCall
 import org.jetbrains.kotlin.ir.expressions.IrConstructorCall
+import org.jetbrains.kotlin.ir.expressions.IrMemberAccessExpression
 import org.jetbrains.kotlin.ir.symbols.IrPropertySymbol
 import org.jetbrains.kotlin.ir.symbols.IrSimpleFunctionSymbol
+import org.jetbrains.kotlin.ir.symbols.UnsafeDuringIrConstructionAPI
 import org.jetbrains.kotlin.ir.util.isFacadeClass
 import org.jetbrains.kotlin.ir.util.isObject
+import org.jetbrains.kotlin.ir.util.parentClassOrNull
 import org.jetbrains.kotlin.utils.addToStdlib.shouldNotBeCalled
 import kotlin.properties.ReadWriteProperty
 
@@ -105,7 +109,8 @@ abstract class AbstractFir2IrLazyFunction<F : FirCallableDeclaration>(
 
     internal fun shouldHaveDispatchReceiver(containingClass: IrClass): Boolean {
         return !fir.isStatic && !containingClass.isFacadeClass &&
-                (!containingClass.isObject || containingClass.isCompanion || !extensions.isTrueStatic(fir, session))
+                // This check of isExternal is affecting only Wasm and JS compiler and used by JsPlainObjects plugin
+                (!containingClass.isObject || (containingClass.isCompanion && !containingClass.isExternal) || !extensions.isTrueStatic(fir, session))
     }
 
     override val factory: IrFactory
@@ -117,4 +122,12 @@ abstract class AbstractFir2IrLazyFunction<F : FirCallableDeclaration>(
 
     override val isDeserializationEnabled: Boolean
         get() = extensions.irNeedsDeserialization
+}
+
+@OptIn(UnsafeDuringIrConstructionAPI::class)
+internal fun IrMemberAccessExpression<*>.shouldHaveDispatchReceiver(): Boolean {
+    if (this !is IrCall || !symbol.isBound) return true
+    val lazyFunction = symbol.owner as? AbstractFir2IrLazyFunction<*> ?: return true
+    val containingClass = lazyFunction.parentClassOrNull ?: return true
+    return lazyFunction.shouldHaveDispatchReceiver(containingClass)
 }

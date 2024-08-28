@@ -11,6 +11,7 @@ import org.jetbrains.kotlin.descriptors.Modality
 import org.jetbrains.kotlin.descriptors.Visibilities
 import org.jetbrains.kotlin.fir.*
 import org.jetbrains.kotlin.fir.analysis.checkers.getContainingClassSymbol
+import org.jetbrains.kotlin.fir.declarations.FirDeclarationOrigin
 import org.jetbrains.kotlin.fir.declarations.FirResolvePhase
 import org.jetbrains.kotlin.fir.declarations.FirSimpleFunction
 import org.jetbrains.kotlin.fir.declarations.builder.buildRegularClass
@@ -21,7 +22,9 @@ import org.jetbrains.kotlin.fir.declarations.impl.FirResolvedDeclarationStatusIm
 import org.jetbrains.kotlin.fir.declarations.origin
 import org.jetbrains.kotlin.fir.declarations.utils.isCompanion
 import org.jetbrains.kotlin.fir.expressions.FirExpression
+import org.jetbrains.kotlin.fir.expressions.builder.buildAnnotation
 import org.jetbrains.kotlin.fir.expressions.builder.buildPropertyAccessExpression
+import org.jetbrains.kotlin.fir.expressions.impl.FirEmptyAnnotationArgumentMapping
 import org.jetbrains.kotlin.fir.extensions.FirDeclarationGenerationExtension
 import org.jetbrains.kotlin.fir.extensions.MemberGenerationContext
 import org.jetbrains.kotlin.fir.extensions.NestedClassGenerationContext
@@ -35,10 +38,10 @@ import org.jetbrains.kotlin.fir.scopes.kotlinScopeProvider
 import org.jetbrains.kotlin.fir.symbols.SymbolInternals
 import org.jetbrains.kotlin.fir.symbols.impl.*
 import org.jetbrains.kotlin.fir.types.*
+import org.jetbrains.kotlin.fir.types.builder.buildResolvedTypeRef
 import org.jetbrains.kotlin.fir.types.impl.ConeTypeParameterTypeImpl
-import org.jetbrains.kotlin.name.CallableId
-import org.jetbrains.kotlin.name.Name
-import org.jetbrains.kotlin.name.SpecialNames
+import org.jetbrains.kotlin.name.*
+import org.jetbrains.kotlin.resolve.jvm.diagnostics.Synthetic
 import org.jetbrains.kotlin.util.OperatorNameConventions
 import org.jetbrains.kotlin.utils.addToStdlib.runIf
 import org.jetbrains.kotlinx.jspo.compiler.fir.services.jsPlainObjectPropertiesProvider
@@ -217,7 +220,6 @@ class JsPlainObjectsFunctionsGenerator(session: FirSession) : FirDeclarationGene
             val functionalSymbol = FirNamedFunctionSymbol(callableId)
 
             moduleData = jsPlainObjectInterface.moduleData
-            resolvePhase = FirResolvePhase.BODY_RESOLVE
             origin = JsPlainObjectsPluginKey.origin
             symbol = functionalSymbol
             name = callableId.callableName
@@ -227,6 +229,7 @@ class JsPlainObjectsFunctionsGenerator(session: FirSession) : FirDeclarationGene
                 Modality.FINAL,
                 Visibilities.Public.toEffectiveVisibility(parent, forClass = true)
             ).apply {
+                isExternal = true
                 isInline = true
                 isOperator = true
             }
@@ -266,7 +269,18 @@ class JsPlainObjectsFunctionsGenerator(session: FirSession) : FirDeclarationGene
 
             returnTypeRef = replacedJsPlainObjectType
             dispatchReceiverType =
-                if (parent.isCompanion) parent.defaultType() else replacedJsPlainObjectType.coneType as ConeSimpleKotlinType
+                if (parent.isCompanion) null else replacedJsPlainObjectType.coneType as ConeSimpleKotlinType
+
+            if (parent.isCompanion) {
+                annotations += buildAnnotation {
+                    annotationTypeRef = buildResolvedTypeRef {
+                        val annotationClassId = JsStandardClassIds.Annotations.JsNoDispatchReceiver
+                        coneType = annotationClassId.toLookupTag()
+                            .constructClassType(typeArguments = ConeTypeProjection.EMPTY_ARRAY, isNullable = false)
+                    }
+                    argumentMapping = FirEmptyAnnotationArgumentMapping
+                }
+            }
 
             jsPlainObjectProperties.mapTo(valueParameters) {
                 val typeRef = it.resolvedReturnTypeRef
@@ -286,6 +300,12 @@ class JsPlainObjectsFunctionsGenerator(session: FirSession) : FirDeclarationGene
                     defaultValue = it.getParameterDefaultValueFromProperty()
                 }
             }
-        }.also(functionTarget::bind)
+        }
+            .also {
+                if (parent.isCompanion) {
+                    it.containingClassForStaticMemberAttr = parent.toLookupTag()
+                }
+                functionTarget.bind(it)
+            }
     }
 }

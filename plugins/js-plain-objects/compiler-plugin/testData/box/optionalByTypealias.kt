@@ -10,7 +10,7 @@ external interface User {
 }
 
 fun box(): String {
-    val user = User()
+    val user = User.invoke()
 
     val json = js("JSON.stringify(user)")
     if (json != "{}") return "Fail: got the next json: $json"

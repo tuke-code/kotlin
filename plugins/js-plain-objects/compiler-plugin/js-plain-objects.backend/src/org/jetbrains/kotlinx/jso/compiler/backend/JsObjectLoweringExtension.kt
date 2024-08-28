@@ -39,6 +39,10 @@ private class MoveExternalInlineFunctionsWithBodiesOutsideLowering(private val c
 
         if (parent == null || declaration !is IrSimpleFunction || declaration.origin != EXPECTED_ORIGIN) return null
 
+        if (parent.isCompanion) {
+            declaration.dispatchReceiverParameter = null
+        }
+
         val proxyFunction = declaration.createFunctionContainingTheLogic(parent).also(file::addChild)
         declaration.body = declaration.generateBodyWithTheProxyFunctionCall(proxyFunction)
 

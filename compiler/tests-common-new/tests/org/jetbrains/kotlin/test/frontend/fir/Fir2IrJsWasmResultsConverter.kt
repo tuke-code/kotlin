@@ -10,6 +10,7 @@ import org.jetbrains.kotlin.backend.common.actualizer.IrExtraActualDeclarationEx
 import org.jetbrains.kotlin.backend.common.extensions.IrPluginContext
 import org.jetbrains.kotlin.backend.common.serialization.KotlinFileSerializedData
 import org.jetbrains.kotlin.backend.common.serialization.metadata.KlibSingleFileMetadataSerializer
+import org.jetbrains.kotlin.cli.js.klib.JsFir2IrExtension
 import org.jetbrains.kotlin.config.CompilerConfiguration
 import org.jetbrains.kotlin.diagnostics.impl.BaseDiagnosticsCollector
 import org.jetbrains.kotlin.fir.backend.Fir2IrComponents
@@ -85,6 +86,9 @@ internal class Fir2IrJsResultsConverter(testServices: TestServices) : Fir2IrJsWa
     override fun resolveLibraries(module: TestModule, compilerConfiguration: CompilerConfiguration): List<KotlinResolvedLibrary> {
         return resolveLibraries(compilerConfiguration, getAllJsDependenciesPaths(module, testServices))
     }
+
+    override fun createFir2IrExtensions(compilerConfiguration: CompilerConfiguration): Fir2IrExtensions =
+        JsFir2IrExtension
 }
 
 @InternalFir2IrConverterAPI

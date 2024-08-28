@@ -72,3 +72,9 @@ internal annotation class JsGenerator
  */
 @Target(AnnotationTarget.CLASS)
 internal annotation class JsImplicitExport(val couldBeConvertedToExplicitExport: Boolean)
+
+/**
+ * Annotation force to not add any dispatchReceiver to any function marked with the annotation
+ */
+@Target(AnnotationTarget.FUNCTION)
+internal annotation class JsNoDispatchReceiver

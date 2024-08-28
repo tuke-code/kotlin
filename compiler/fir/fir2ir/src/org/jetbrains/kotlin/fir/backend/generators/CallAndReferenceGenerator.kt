@@ -21,6 +21,7 @@ import org.jetbrains.kotlin.fir.diagnostics.ConeSimpleDiagnostic
 import org.jetbrains.kotlin.fir.expressions.*
 import org.jetbrains.kotlin.fir.expressions.builder.buildAnnotationCall
 import org.jetbrains.kotlin.fir.java.declarations.FirJavaField
+import org.jetbrains.kotlin.fir.lazy.shouldHaveDispatchReceiver
 import org.jetbrains.kotlin.fir.references.*
 import org.jetbrains.kotlin.fir.references.builder.buildResolvedNamedReference
 import org.jetbrains.kotlin.fir.resolve.*
@@ -1413,7 +1414,7 @@ class CallAndReferenceGenerator(
         when (this) {
             is IrMemberAccessExpression<*> -> {
                 val resolvedFirSymbol = qualifiedAccess.toResolvedCallableSymbol()
-                if (resolvedFirSymbol?.dispatchReceiverType != null) {
+                if (resolvedFirSymbol?.dispatchReceiverType != null && shouldHaveDispatchReceiver()) {
                     val baseDispatchReceiver = qualifiedAccess.findIrDispatchReceiver(explicitReceiverExpression)
                     var firDispatchReceiver = qualifiedAccess.dispatchReceiver
                     if (firDispatchReceiver is FirPropertyAccessExpression && firDispatchReceiver.calleeReference is FirSuperReference) {
