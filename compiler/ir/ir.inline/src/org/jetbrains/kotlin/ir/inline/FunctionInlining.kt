@@ -28,13 +28,16 @@ import org.jetbrains.kotlin.ir.declarations.*
 import org.jetbrains.kotlin.ir.expressions.*
 import org.jetbrains.kotlin.ir.expressions.impl.*
 import org.jetbrains.kotlin.ir.symbols.IrFunctionSymbol
+import org.jetbrains.kotlin.ir.symbols.IrSimpleFunctionSymbol
 import org.jetbrains.kotlin.ir.symbols.IrValueSymbol
 import org.jetbrains.kotlin.ir.symbols.impl.IrReturnableBlockSymbolImpl
 import org.jetbrains.kotlin.ir.types.*
 import org.jetbrains.kotlin.ir.util.*
 import org.jetbrains.kotlin.ir.visitors.*
 import org.jetbrains.kotlin.name.Name
+import org.jetbrains.kotlin.parsing.parseBoolean
 import org.jetbrains.kotlin.util.OperatorNameConventions
+import kotlin.math.exp
 
 interface CallInlinerStrategy {
     /**
@@ -302,19 +305,39 @@ open class FunctionInlining(
                 val functionArgument = substituteMap[dispatchReceiver.symbol.owner] ?: return super.visitCall(expression)
                 if ((dispatchReceiver.symbol.owner as? IrValueParameter)?.isNoinline == true) return super.visitCall(expression)
 
+                fun IrCall.asCallOf(function: IrFunctionExpression, boundArguments: List<IrExpression>): IrCall {
+                    return IrCallImpl.fromSymbolOwner(expression.startOffset, expression.endOffset, function.function.symbol).also {
+                        val parameters = function.function.explicitParameters
+                        val arguments = boundArguments + getAllArgumentsWithIr().map { it.second }.drop(1)
+                        require(parameters.size == arguments.size)
+                        for ((parameter, argument) in parameters.zip(arguments)) {
+                            if (argument != null) {
+                                it.putArgument(parameter, argument)
+                            }
+                        }
+                    }
+                }
+
                 return when {
                     functionArgument is IrCallableReference<*> ->
                         error("Can't inline given reference, it should've been lowered\n${functionArgument.render()}")
 
-                    functionArgument.isAdaptedFunctionReference() ->
+                    functionArgument.isAdaptedFunctionReference() -> {
                         inlineAdaptedFunctionReference(expression, functionArgument as IrBlock)
+                    }
 
                     functionArgument.isLambdaBlock() -> {
                         inlineAdaptedFunctionReference(expression, functionArgument as IrBlock).statements.last() as IrExpression
                     }
 
                     functionArgument is IrFunctionExpression ->
-                        inlineFunctionExpression(expression, functionArgument)
+                        inlineFunctionExpression(expression.asCallOf(functionArgument, emptyList()), functionArgument)
+
+                    functionArgument is IrAdaptedFunctionReference ->
+                        inlineFunctionExpression(expression.asCallOf(functionArgument.invokeFunction, functionArgument.capturedValues), functionArgument.invokeFunction)
+
+                    functionArgument is IrAdaptedPropertyReference ->
+                        inlineFunctionExpression(expression.asCallOf(functionArgument.getterFunction, functionArgument.capturedValues), functionArgument.getterFunction)
 
                     else ->
                         super.visitCall(expression)
@@ -329,6 +352,7 @@ open class FunctionInlining(
             }
 
             fun inlineAdaptedFunctionReference(irCall: IrCall, irBlock: IrBlock): IrBlock {
+                require(false)
                 val irFunction = irBlock.statements[0].let {
                     it.transformChildrenVoid(this)
                     (it as IrFunction).deepCopyWithSymbols(it.parent)
@@ -348,6 +372,7 @@ open class FunctionInlining(
                 irFunctionReference: IrFunctionReference,
                 inlinedFunction: IrFunction
             ): IrExpression {
+                require(false)
                 irFunctionReference.transformChildrenVoid(this)
 
                 val function = irFunctionReference.symbol.owner
@@ -681,6 +706,24 @@ open class FunctionInlining(
             return newVariable
         }
 
+        private fun evaluateCapturedValues(expressions: MutableList<IrExpression>): List<IrVariable> {
+            return buildList {
+                for (i in expressions.indices) {
+                    val irExpression = expressions[i].transform(ParameterSubstitutor(), data = null)
+
+                    val newVariable = currentScope.scope.createTemporaryVariable(
+                        startOffset = UNDEFINED_OFFSET,
+                        endOffset = UNDEFINED_OFFSET,
+                        irExpression = irExpression,
+                        nameHint = callee.symbol.owner.name.asStringStripSpecialMarkers() + "_this",
+                        isMutable = false
+                    )
+                    expressions[i] = irGetValueWithoutLocation(newVariable.symbol)
+                    add(newVariable)
+                }
+            }
+        }
+
         private fun evaluateArguments(callSite: IrFunctionAccessExpression, callee: IrFunction): List<IrStatement> {
             val arguments = buildParameterToArgument(callSite, callee)
             val evaluationStatements = mutableListOf<IrVariable>()
@@ -699,6 +742,8 @@ open class FunctionInlining(
                     val arg = argument.argumentExpression
                     when {
                         // This first branch is required to avoid assertion in `getArgumentsWithIr`
+                        arg is IrAdaptedPropertyReference -> container += evaluateCapturedValues(arg.capturedValues)
+                        arg is IrAdaptedFunctionReference -> container += evaluateCapturedValues(arg.capturedValues)
                         arg is IrPropertyReference && arg.field != null -> evaluateReceiverForPropertyWithField(arg)?.let { container += it }
                         arg is IrCallableReference<*> -> container += evaluateArguments(arg)
                         arg is IrBlock -> if (arg.origin == IrStatementOrigin.ADAPTED_FUNCTION_REFERENCE || arg.origin == IrStatementOrigin.LAMBDA) {

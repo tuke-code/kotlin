@@ -623,7 +623,6 @@ private val constEvaluationPhase = createFileLoweringPhase(
 
 internal fun PhaseEngine<NativeGenerationState>.getLoweringsUpToAndIncludingSyntheticAccessors(): LoweringList = listOfNotNull(
         upgradeCallableReferences,
-        downgradeCallableReferences,
         assertionWrapperPhase,
         lateinitPhase,
         sharedVariablesPhase,
@@ -631,12 +630,12 @@ internal fun PhaseEngine<NativeGenerationState>.getLoweringsUpToAndIncludingSynt
         extractLocalClassesFromInlineBodies,
         inlineCallableReferenceToLambdaPhase,
         arrayConstructorPhase,
-        wrapInlineDeclarationsWithReifiedTypeParametersLowering,
         inlineOnlyPrivateFunctionsPhase.takeIf { context.config.configuration.getBoolean(KlibConfigurationKeys.EXPERIMENTAL_DOUBLE_INLINING) },
         syntheticAccessorGenerationPhase.takeIf { context.config.configuration.getBoolean(KlibConfigurationKeys.EXPERIMENTAL_DOUBLE_INLINING) },
 )
 
 internal fun PhaseEngine<NativeGenerationState>.getLoweringsAfterInlining(): LoweringList = listOfNotNull(
+        downgradeCallableReferences,
         removeExpectDeclarationsPhase,
         stripTypeAliasDeclarationsPhase,
         assertionRemoverPhase,

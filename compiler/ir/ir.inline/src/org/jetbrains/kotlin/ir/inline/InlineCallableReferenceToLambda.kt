@@ -69,6 +69,7 @@ abstract class InlineCallableReferenceToLambdaPhase(
 
     protected fun IrExpression.transformToLambda(scope: IrDeclarationParent?) = when {
         this is IrBlock && origin.isInlinable -> apply {
+            require(false)
             // Already a lambda or similar, just mark it with an origin.
             val reference = statements.last() as IrFunctionReference
             reference.symbol.owner.origin = LoweredDeclarationOrigins.INLINE_LAMBDA
@@ -76,6 +77,7 @@ abstract class InlineCallableReferenceToLambdaPhase(
         }
 
         this is IrFunctionReference -> {
+            require(false)
             // ::function -> { args... -> function(args...) }
             wrapFunction(symbol.owner).toLambda(this, scope!!)
         }
