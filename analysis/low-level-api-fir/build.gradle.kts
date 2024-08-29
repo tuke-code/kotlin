@@ -39,6 +39,8 @@ dependencies {
     implementation(project(":kotlin-assignment-compiler-plugin.cli"))
     implementation(libs.caffeine)
 
+    implementation(libs.opentelemetry.api)
+
     api(intellijCore())
 
     testApi(projectTests(":compiler:test-infrastructure-utils"))
