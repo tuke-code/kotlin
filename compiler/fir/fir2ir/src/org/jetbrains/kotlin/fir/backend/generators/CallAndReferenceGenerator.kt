@@ -549,7 +549,10 @@ class CallAndReferenceGenerator(
                         irSymbol,
                         typeArgumentsCount = totalTypeParametersCount,
                         valueArgumentsCount = firSymbol.valueParametersSize(),
+                        contextReceiverCount = constructor.contextReceivers.size,
                         constructorTypeArgumentsCount = constructorTypeParametersCount,
+                        hasDispatchReceiver = firSymbol.dispatchReceiverType != null,
+                        hasExtensionReceiver = firSymbol.isExtension,
                     )
                 }
                 is IrSimpleFunctionSymbol -> {
@@ -938,6 +941,9 @@ class CallAndReferenceGenerator(
                 // `irConstructor.owner.valueParameters.size`.
                 // See KT-58294
                 valueArgumentsCount = firConstructorSymbol.valueParameterSymbols.size,
+                contextReceiverCount = firConstructorSymbol.resolvedContextReceivers.size,
+                hasDispatchReceiver = firConstructorSymbol.dispatchReceiverType != null,
+                hasExtensionReceiver = firConstructorSymbol.isExtension,
                 typeArgumentsCount = fullyExpandedConstructorSymbol.typeParameterSymbols.size,
                 constructorTypeArgumentsCount = 0,
                 source = FirAnnotationSourceElement(annotation),
