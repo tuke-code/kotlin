@@ -350,6 +350,9 @@ internal class DeepCopyIrTreeWithRemappedComposableTypes(
             newCallee,
             expression.typeArgumentsCount,
             expression.valueArgumentsCount,
+            expression.targetContextParameterCount,
+            expression.targetHasDispatchReceiver,
+            expression.targetHasExtensionReceiver,
             mapStatementOrigin(expression.origin),
             expression.superQualifierSymbol?.let(symbolRemapper::getReferencedClass),
         ).apply {

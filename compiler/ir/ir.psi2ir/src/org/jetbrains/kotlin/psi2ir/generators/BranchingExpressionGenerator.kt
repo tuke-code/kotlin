@@ -230,6 +230,9 @@ internal class BranchingExpressionGenerator(statementGenerator: StatementGenerat
                 origin = IrStatementOrigin.EXCL,
                 typeArgumentsCount = 0,
                 valueArgumentsCount = 0,
+                contextReceiverCount = 0,
+                hasDispatchReceiver = true,
+                hasExtensionReceiver = false,
             ).apply {
                 dispatchReceiver = irInstanceOf
             }
@@ -258,6 +261,9 @@ internal class BranchingExpressionGenerator(statementGenerator: StatementGenerat
                     origin = IrStatementOrigin.EXCL,
                     typeArgumentsCount = 0,
                     valueArgumentsCount = 0,
+                    contextReceiverCount = 0,
+                    hasDispatchReceiver = true,
+                    hasExtensionReceiver = false,
                 ).apply {
                     dispatchReceiver = irInCall
                 }
