@@ -465,7 +465,7 @@ internal class InsertImplicitCasts(
             typeArgumentsCount = 0, 
             valueArgumentsCount = 0,
             contextReceiverCount = 0,
-            hasDispatchReceiver = false,
+            hasDispatchReceiver = true,
             hasExtensionReceiver = false,
         ).also { irCall ->
             irCall.dispatchReceiver = this
