@@ -153,6 +153,9 @@ internal class AccessorPropertyLValue(
                 getter!!,
                 typeArgumentsCount = typeArgumentsCount,
                 valueArgumentsCount = contextReceiverValues.size,
+                contextReceiverCount = contextReceiverValues.size,
+                hasDispatchReceiver = dispatchReceiverValue != null,
+                hasExtensionReceiver = extensionReceiverValue != null,
                 origin = origin,
                 superQualifierSymbol = superQualifier
             ).apply {
@@ -180,6 +183,9 @@ internal class AccessorPropertyLValue(
                 setter!!,
                 typeArgumentsCount = typeArgumentsCount,
                 valueArgumentsCount = 1 + contextReceiverValues.size,
+                contextReceiverCount = contextReceiverValues.size,
+                hasDispatchReceiver = dispatchReceiverValue != null,
+                hasExtensionReceiver = extensionReceiverValue != null,
                 origin = origin,
                 superQualifierSymbol = superQualifier
             ).apply {
