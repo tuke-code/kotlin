@@ -281,6 +281,9 @@ class Fir2IrConverter(
                         irAnyConstructor,
                         typeArgumentsCount = 0,
                         valueArgumentsCount = 0,
+                        contextReceiverCount = 0,
+                        hasDispatchReceiver = false,
+                        hasExtensionReceiver = false,
                     )
                 }
             }
