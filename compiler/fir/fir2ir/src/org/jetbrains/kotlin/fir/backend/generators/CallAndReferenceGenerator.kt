@@ -195,7 +195,6 @@ class CallAndReferenceGenerator(
                     IrFunctionReferenceImpl(
                         startOffset, endOffset, type, irFunctionSymbol,
                         typeArgumentsCount = function.typeParameters.size,
-                        valueArgumentsCount = function.valueParameters.size + function.contextReceivers.size,
                         reflectionTarget = irFunctionSymbol
                     ).applyTypeArguments(callableReferenceAccess)
                         .applyReceivers(callableReferenceAccess, explicitReceiverExpression)

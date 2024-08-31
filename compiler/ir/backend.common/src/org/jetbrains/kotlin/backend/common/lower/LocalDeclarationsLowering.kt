@@ -515,7 +515,6 @@ open class LocalDeclarationsLowering(
                     expression.type, // TODO functional type for transformed descriptor
                     newCallee.symbol,
                     typeArgumentsCount = typeParameters.size,
-                    valueArgumentsCount = newCallee.valueParameters.size,
                     reflectionTarget = newReflectionTarget?.symbol,
                     origin = expression.origin
                 ).also {

@@ -217,7 +217,6 @@ private class SyntheticAccessorTransformer(
                 implFunRef.startOffset, implFunRef.endOffset, implFunRef.type,
                 accessor.symbol,
                 accessor.typeParameters.size,
-                accessor.valueParameters.size,
                 implFunRef.reflectionTarget, implFunRef.origin
             )
 
@@ -329,7 +328,7 @@ private class SyntheticAccessorTransformer(
             return IrFunctionReferenceImpl(
                 expression.startOffset, expression.endOffset, expression.type,
                 generatedAccessor.symbol, generatedAccessor.typeParameters.size,
-                generatedAccessor.valueParameters.size, generatedAccessor.symbol, expression.origin
+                generatedAccessor.symbol, expression.origin
             )
         }
 
