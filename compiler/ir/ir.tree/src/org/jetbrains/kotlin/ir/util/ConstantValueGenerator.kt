@@ -186,9 +186,10 @@ abstract class ConstantValueGenerator(
             startOffset, endOffset,
             annotationType.toIrType(),
             primaryConstructorSymbol,
-            valueArgumentsCount = primaryConstructorDescriptor.valueParameters.size,
             typeArgumentsCount = annotationClassDescriptor.declaredTypeParameters.size,
             constructorTypeArgumentsCount = 0,
+            valueArgumentsCount = primaryConstructorDescriptor.valueParameters.size,
+            contextReceiverCount = primaryConstructorDescriptor.contextReceiverParameters.size,
             source = annotationDescriptor.source
         )
 
