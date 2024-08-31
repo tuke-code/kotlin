@@ -6,7 +6,6 @@
 package org.jetbrains.kotlin.ir.expressions.impl
 
 import org.jetbrains.kotlin.descriptors.SourceElement
-import org.jetbrains.kotlin.ir.IrElement
 import org.jetbrains.kotlin.ir.IrStatement
 import org.jetbrains.kotlin.ir.ObsoleteDescriptorBasedAPI
 import org.jetbrains.kotlin.ir.UNDEFINED_OFFSET
@@ -949,9 +948,9 @@ fun IrFunctionReferenceImpl(
     type: IrType,
     symbol: IrFunctionSymbol,
     typeArgumentsCount: Int,
-    valueArgumentsCount: Int = symbol.getRealOwner().valueParameters.size,
     reflectionTarget: IrFunctionSymbol? = symbol,
     origin: IrStatementOrigin? = null,
+    valueArgumentsCount: Int = symbol.getRealOwner().valueParameters.size,
 ): IrFunctionReferenceImpl = IrFunctionReferenceImplWithShape(
     startOffset = startOffset,
     endOffset = endOffset,
@@ -1202,7 +1201,6 @@ fun IrFunctionReferenceImpl.Companion.fromSymbolOwner(
     type,
     symbol,
     typeArgumentsCount,
-    symbol.owner.valueParameters.size,
     reflectionTarget,
     origin
 )
