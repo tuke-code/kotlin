@@ -84,8 +84,9 @@ fun Fir2IrComponents.createSafeCallConstruction(
             val condition = IrCallImplWithShape(
                 startOffset, endOffset, builtins.booleanType,
                 builtins.eqeqSymbol,
-                valueArgumentsCount = 2,
                 typeArgumentsCount = 0,
+                valueArgumentsCount = 2,
+                contextReceiverCount = 0,
                 origin = IrStatementOrigin.EQEQ
             ).apply {
                 putValueArgument(0, IrGetValueImpl(startOffset, endOffset, receiverVariableSymbol))

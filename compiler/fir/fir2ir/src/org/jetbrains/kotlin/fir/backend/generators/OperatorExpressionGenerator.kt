@@ -77,6 +77,7 @@ internal class OperatorExpressionGenerator(
                 symbol = symbol!!,
                 typeArgumentsCount = 0,
                 valueArgumentsCount = 2,
+                contextReceiverCount = 0,
                 origin = origin,
             ).apply {
                 putValueArgument(0, irCompareToCall)
@@ -101,6 +102,7 @@ internal class OperatorExpressionGenerator(
             symbol = symbol!!,
             typeArgumentsCount = 0,
             valueArgumentsCount = 2,
+            contextReceiverCount = 0,
             origin = origin,
         ).apply {
             putValueArgument(0, comparisonExpression.left.convertToIrExpression(comparisonInfo, isLeftType = true))
@@ -202,6 +204,7 @@ internal class OperatorExpressionGenerator(
             symbol = eqeqSymbol,
             typeArgumentsCount = 0,
             valueArgumentsCount = 2,
+            contextReceiverCount = 0,
             origin = origin
         ).apply {
             putValueArgument(0, convertedLeft)
@@ -240,6 +243,7 @@ internal class OperatorExpressionGenerator(
             symbol = builtins.eqeqeqSymbol,
             typeArgumentsCount = 0,
             valueArgumentsCount = 2,
+            contextReceiverCount = 0,
             origin = origin,
         ).apply {
             putValueArgument(0, convertedLeft)

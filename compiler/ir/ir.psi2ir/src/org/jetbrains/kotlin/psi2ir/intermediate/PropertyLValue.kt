@@ -12,7 +12,6 @@ import org.jetbrains.kotlin.ir.expressions.IrExpression
 import org.jetbrains.kotlin.ir.expressions.IrMemberAccessExpression
 import org.jetbrains.kotlin.ir.expressions.IrStatementOrigin
 import org.jetbrains.kotlin.ir.expressions.impl.IrBlockImpl
-import org.jetbrains.kotlin.ir.expressions.impl.IrCallImpl
 import org.jetbrains.kotlin.ir.expressions.impl.IrCallImplWithShape
 import org.jetbrains.kotlin.ir.expressions.impl.IrGetFieldImpl
 import org.jetbrains.kotlin.ir.expressions.impl.IrSetFieldImpl
@@ -153,6 +152,7 @@ internal class AccessorPropertyLValue(
                 getter!!,
                 typeArgumentsCount = typeArgumentsCount,
                 valueArgumentsCount = contextReceiverValues.size,
+                contextReceiverCount = contextReceiverValues.size,
                 origin = origin,
                 superQualifierSymbol = superQualifier
             ).apply {
@@ -180,6 +180,7 @@ internal class AccessorPropertyLValue(
                 setter!!,
                 typeArgumentsCount = typeArgumentsCount,
                 valueArgumentsCount = 1 + contextReceiverValues.size,
+                contextReceiverCount = contextReceiverValues.size,
                 origin = origin,
                 superQualifierSymbol = superQualifier
             ).apply {

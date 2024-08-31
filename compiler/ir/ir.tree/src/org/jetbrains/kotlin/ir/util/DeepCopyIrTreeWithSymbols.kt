@@ -588,6 +588,7 @@ open class DeepCopyIrTreeWithSymbols(
             newCallee,
             expression.typeArgumentsCount,
             expression.valueArgumentsCount,
+            expression.contextArgumentCount,
             mapStatementOrigin(expression.origin),
             expression.superQualifierSymbol?.let(symbolRemapper::getReferencedClass)
         ).apply {
@@ -652,6 +653,7 @@ open class DeepCopyIrTreeWithSymbols(
             symbol,
             expression.typeArgumentsCount,
             expression.valueArgumentsCount,
+            expression.contextArgumentCount,
             reflectionTarget,
             mapStatementOrigin(expression.origin)
         ).apply {

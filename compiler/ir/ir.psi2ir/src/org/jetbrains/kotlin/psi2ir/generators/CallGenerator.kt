@@ -237,7 +237,8 @@ internal class CallGenerator(statementGenerator: StatementGenerator) : Statement
                             irType,
                             getterSymbol,
                             descriptor.typeParametersCount,
-                            descriptor.contextReceiverParameters.size,
+                            valueArgumentsCount = descriptor.contextReceiverParameters.size,
+                            contextReceiverCount = descriptor.contextReceiverParameters.size,
                             IrStatementOrigin.GET_PROPERTY,
                             superQualifierSymbol
                         ).apply {

@@ -19,7 +19,6 @@ package org.jetbrains.kotlin.psi2ir.generators
 import org.jetbrains.kotlin.ir.UNDEFINED_OFFSET
 import org.jetbrains.kotlin.ir.builders.buildStatement
 import org.jetbrains.kotlin.ir.builders.irIfThenMaybeElse
-import org.jetbrains.kotlin.ir.builders.primitiveOp1
 import org.jetbrains.kotlin.ir.builders.whenComma
 import org.jetbrains.kotlin.ir.declarations.IrVariable
 import org.jetbrains.kotlin.ir.expressions.*
@@ -225,11 +224,12 @@ internal class BranchingExpressionGenerator(statementGenerator: StatementGenerat
             IrCallImplWithShape(
                 startOffset = ktCondition.startOffsetSkippingComments,
                 endOffset = ktCondition.endOffset,
-                symbol = context.irBuiltIns.booleanNotSymbol,
                 type = context.irBuiltIns.booleanType,
-                origin = IrStatementOrigin.EXCL,
+                symbol = context.irBuiltIns.booleanNotSymbol,
                 typeArgumentsCount = 0,
                 valueArgumentsCount = 0,
+                contextReceiverCount = 0,
+                origin = IrStatementOrigin.EXCL,
             ).apply {
                 dispatchReceiver = irInstanceOf
             }
@@ -253,11 +253,12 @@ internal class BranchingExpressionGenerator(statementGenerator: StatementGenerat
                 IrCallImplWithShape(
                     startOffset = startOffset,
                     endOffset = endOffset,
-                    symbol = context.irBuiltIns.booleanNotSymbol,
                     type = context.irBuiltIns.booleanType,
-                    origin = IrStatementOrigin.EXCL,
+                    symbol = context.irBuiltIns.booleanNotSymbol,
                     typeArgumentsCount = 0,
                     valueArgumentsCount = 0,
+                    contextReceiverCount = 0,
+                    origin = IrStatementOrigin.EXCL,
                 ).apply {
                     dispatchReceiver = irInCall
                 }

@@ -25,6 +25,8 @@ abstract class IrMemberAccessExpression<S : IrSymbol> : IrDeclarationReference()
     protected abstract val valueArguments: Array<IrExpression?>
 
     protected abstract val typeArguments: Array<IrType?>
+    
+    val contextArgumentCount: Int get() = TODO()
 
     val valueArgumentsCount: Int
         get() = valueArguments.size

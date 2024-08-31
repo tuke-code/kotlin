@@ -250,11 +250,12 @@ internal class OperatorExpressionGenerator(statementGenerator: StatementGenerato
                 IrCallImplWithShape(
                     startOffset = expression.startOffsetSkippingComments,
                     endOffset = expression.endOffset,
-                    symbol = context.irBuiltIns.booleanNotSymbol,
                     type = context.irBuiltIns.booleanType,
-                    origin = IrStatementOrigin.NOT_IN,
+                    symbol = context.irBuiltIns.booleanNotSymbol,
                     typeArgumentsCount = 0,
                     valueArgumentsCount = 0,
+                    contextReceiverCount = 0,
+                    origin = IrStatementOrigin.NOT_IN,
                 ).apply {
                     dispatchReceiver = irContainsCall
                 }
@@ -285,11 +286,12 @@ internal class OperatorExpressionGenerator(statementGenerator: StatementGenerato
                 IrCallImplWithShape(
                     startOffset = expression.startOffsetSkippingComments,
                     endOffset = expression.endOffset,
-                    symbol = context.irBuiltIns.booleanNotSymbol,
                     type = context.irBuiltIns.booleanType,
-                    origin = IrStatementOrigin.EXCLEQEQ,
+                    symbol = context.irBuiltIns.booleanNotSymbol,
                     typeArgumentsCount = 0,
                     valueArgumentsCount = 0,
+                    contextReceiverCount = 0,
+                    origin = IrStatementOrigin.EXCLEQEQ,
                 ).apply {
                     dispatchReceiver = irIdentityEquals
                 }
@@ -336,6 +338,7 @@ internal class OperatorExpressionGenerator(statementGenerator: StatementGenerato
                     symbol = context.irBuiltIns.booleanNotSymbol,
                     typeArgumentsCount = 0,
                     valueArgumentsCount = 0,
+                    contextReceiverCount = 0,
                     origin = IrStatementOrigin.EXCLEQ,
                 ).apply {
                     dispatchReceiver = irEquals

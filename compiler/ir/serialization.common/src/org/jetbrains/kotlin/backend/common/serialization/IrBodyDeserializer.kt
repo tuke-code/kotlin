@@ -17,7 +17,6 @@ import org.jetbrains.kotlin.ir.IrBuiltIns
 import org.jetbrains.kotlin.ir.IrElement
 import org.jetbrains.kotlin.ir.IrStatement
 import org.jetbrains.kotlin.ir.declarations.*
-import org.jetbrains.kotlin.ir.descriptors.*
 import org.jetbrains.kotlin.ir.expressions.*
 import org.jetbrains.kotlin.ir.expressions.impl.*
 import org.jetbrains.kotlin.ir.symbols.*
@@ -261,6 +260,7 @@ class IrBodyDeserializer(
                 start, end, type,
                 symbol, proto.memberAccess.typeArgumentCount,
                 proto.memberAccess.valueArgumentList.size,
+                contextReceiverCount = TODO("Serialized call does not have context parameter count info"),
                 origin,
                 superSymbol
             )
@@ -378,6 +378,7 @@ class IrBodyDeserializer(
             symbol,
             proto.memberAccess.typeArgumentCount,
             proto.memberAccess.valueArgumentCount,
+            contextReceiverCount = null,
             reflectionTarget,
             origin
         )

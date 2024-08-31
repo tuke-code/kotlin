@@ -801,16 +801,20 @@ fun IrCallImpl(
     origin: IrStatementOrigin? = null,
     superQualifierSymbol: IrClassSymbol? = null,
     valueArgumentsCount: Int = symbol.getRealOwner().valueParameters.size,
-): IrCallImpl = IrCallImplWithShape(
-    startOffset = startOffset,
-    endOffset = endOffset,
-    type = type,
-    symbol = symbol,
-    typeArgumentsCount = typeArgumentsCount,
-    valueArgumentsCount = valueArgumentsCount,
-    origin = origin,
-    superQualifierSymbol = superQualifierSymbol,
-)
+): IrCallImpl {
+    val target = symbol.getRealOwner()
+    return IrCallImplWithShape(
+        startOffset = startOffset,
+        endOffset = endOffset,
+        type = type,
+        symbol = symbol,
+        typeArgumentsCount = typeArgumentsCount,
+        valueArgumentsCount = valueArgumentsCount,
+        contextReceiverCount = target.contextReceiverParametersCount,
+        origin = origin,
+        superQualifierSymbol = superQualifierSymbol,
+    )
+}
 
 fun IrCallImplWithShape(
     startOffset: Int,
@@ -819,6 +823,7 @@ fun IrCallImplWithShape(
     symbol: IrSimpleFunctionSymbol,
     typeArgumentsCount: Int,
     valueArgumentsCount: Int,
+    contextReceiverCount: Int,
     origin: IrStatementOrigin? = null,
     superQualifierSymbol: IrClassSymbol? = null,
 ): IrCallImpl = IrCallImpl(
@@ -955,16 +960,20 @@ fun IrFunctionReferenceImpl(
     reflectionTarget: IrFunctionSymbol? = symbol,
     origin: IrStatementOrigin? = null,
     valueArgumentsCount: Int = symbol.getRealOwner().valueParameters.size,
-): IrFunctionReferenceImpl = IrFunctionReferenceImplWithShape(
-    startOffset = startOffset,
-    endOffset = endOffset,
-    type = type,
-    symbol = symbol,
-    typeArgumentsCount = typeArgumentsCount,
-    valueArgumentsCount = valueArgumentsCount,
-    reflectionTarget = reflectionTarget,
-    origin = origin,
-)
+): IrFunctionReferenceImpl {
+    val target = symbol.getRealOwner()
+    return IrFunctionReferenceImplWithShape(
+        startOffset = startOffset,
+        endOffset = endOffset,
+        type = type,
+        symbol = symbol,
+        typeArgumentsCount = typeArgumentsCount,
+        valueArgumentsCount = valueArgumentsCount,
+        contextReceiverCount = target.contextReceiverParametersCount,
+        reflectionTarget = reflectionTarget,
+        origin = origin,
+    )
+}
 
 fun IrFunctionReferenceImplWithShape(
     startOffset: Int,
@@ -973,6 +982,7 @@ fun IrFunctionReferenceImplWithShape(
     symbol: IrFunctionSymbol,
     typeArgumentsCount: Int,
     valueArgumentsCount: Int,
+    contextReceiverCount: Int?,
     reflectionTarget: IrFunctionSymbol? = symbol,
     origin: IrStatementOrigin? = null,
 ): IrFunctionReferenceImpl = IrFunctionReferenceImpl(
@@ -1043,17 +1053,17 @@ fun IrCallImpl.Companion.fromSymbolDescriptor(
     symbol: IrSimpleFunctionSymbol,
     origin: IrStatementOrigin? = null,
     superQualifierSymbol: IrClassSymbol? = null,
-): IrCallImpl =
-    IrCallImplWithShape(
-        startOffset = startOffset,
-        endOffset = endOffset,
-        type = type,
-        symbol = symbol,
-        typeArgumentsCount = symbol.descriptor.typeParametersCount,
-        valueArgumentsCount = symbol.descriptor.valueParameters.size + symbol.descriptor.contextReceiverParameters.size,
+): IrCallImpl {
+    val descriptor = symbol.descriptor
+    return IrCallImplWithShape(
+        startOffset, endOffset, type, symbol,
+        typeArgumentsCount = descriptor.typeParametersCount,
+        valueArgumentsCount = descriptor.valueParameters.size + symbol.descriptor.contextReceiverParameters.size,
+        contextReceiverCount = descriptor.contextReceiverParameters.size,
         origin = origin,
-        superQualifierSymbol = superQualifierSymbol
+        superQualifierSymbol = superQualifierSymbol,
     )
+}
 
 fun IrCallImpl.Companion.fromSymbolOwner(
     startOffset: Int,
@@ -1199,6 +1209,7 @@ fun IrFunctionReferenceImpl.Companion.fromSymbolDescriptor(
     symbol = symbol,
     typeArgumentsCount = symbol.descriptor.typeParametersCount,
     valueArgumentsCount = symbol.descriptor.valueParameters.size + symbol.descriptor.contextReceiverParameters.size,
+    contextReceiverCount = symbol.descriptor.contextReceiverParameters.size,
     reflectionTarget = reflectionTarget,
     origin = origin
 )

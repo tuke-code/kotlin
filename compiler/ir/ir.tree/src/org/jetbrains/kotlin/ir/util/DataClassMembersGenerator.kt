@@ -160,6 +160,7 @@ abstract class DataClassMembersGenerator(
                         symbol = context.irBuiltIns.booleanNotSymbol,
                         typeArgumentsCount = 0,
                         valueArgumentsCount = 0,
+                        contextReceiverCount = 0,
                         origin = IrStatementOrigin.EXCLEQ,
                     ).apply<IrCallImpl> {
                         dispatchReceiver = this@MemberFunctionBuilder.irEquals(arg1, arg2, origin = IrStatementOrigin.EXCLEQ)
@@ -201,6 +202,7 @@ abstract class DataClassMembersGenerator(
                     symbol = context.irBuiltIns.intPlusSymbol,
                     typeArgumentsCount = 0,
                     valueArgumentsCount = 1,
+                    contextReceiverCount = 0,
                 ).apply {
                     dispatchReceiver = shiftedResult
                     putValueArgument(0, getHashCodeOfProperty(property))
@@ -261,10 +263,11 @@ abstract class DataClassMembersGenerator(
         IrCallImplWithShape(
             startOffset = startOffset,
             endOffset = endOffset,
-            symbol = context.irBuiltIns.intTimesSymbol,
             type = context.irBuiltIns.intType,
+            symbol = context.irBuiltIns.intTimesSymbol,
             typeArgumentsCount = 0,
             valueArgumentsCount = 1,
+            contextReceiverCount = 0,
         ).apply {
             dispatchReceiver = irGet(irResultVar)
             putValueArgument(0, irInt(31))
@@ -280,10 +283,11 @@ abstract class DataClassMembersGenerator(
         return IrCallImplWithShape(
             startOffset = startOffset,
             endOffset = endOffset,
-            symbol = hashCodeFunctionSymbol,
             type = context.irBuiltIns.intType,
-            valueArgumentsCount = if (hasDispatchReceiver) 0 else 1,
+            symbol = hashCodeFunctionSymbol,
             typeArgumentsCount = 0,
+            valueArgumentsCount = if (hasDispatchReceiver) 0 else 1,
+            contextReceiverCount = 0,
         ).apply {
             if (hasDispatchReceiver) {
                 dispatchReceiver = irValue

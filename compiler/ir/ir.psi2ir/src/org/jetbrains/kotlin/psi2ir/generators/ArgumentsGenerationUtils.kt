@@ -479,7 +479,8 @@ private fun StatementGenerator.createFunctionForSuspendConversion(
             startOffset, endOffset, irFunReturnType,
             invokeSymbol,
             typeArgumentsCount = 0,
-            valueArgumentsCount = valueArgumentsCount
+            valueArgumentsCount = valueArgumentsCount,
+            contextReceiverCount = 0,
         )
 
         irAdapteeCall.dispatchReceiver = irGet(irAdapterFun.extensionReceiverParameter!!)
