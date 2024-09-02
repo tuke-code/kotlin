@@ -675,7 +675,7 @@ open class DeepCopyIrTreeWithSymbols(
     }
 
     override fun visitPropertyReference(expression: IrPropertyReference): IrPropertyReference =
-        IrPropertyReferenceImpl(
+        IrPropertyReferenceImplWithShape(
             expression.startOffset, expression.endOffset,
             expression.type.remapType(),
             symbolRemapper.getReferencedProperty(expression.symbol),
@@ -690,7 +690,7 @@ open class DeepCopyIrTreeWithSymbols(
         }.processAttributes(expression)
 
     override fun visitLocalDelegatedPropertyReference(expression: IrLocalDelegatedPropertyReference): IrLocalDelegatedPropertyReference =
-        IrLocalDelegatedPropertyReferenceImpl(
+        IrLocalDelegatedPropertyReferenceImplWithShape(
             expression.startOffset, expression.endOffset,
             expression.type.remapType(),
             symbolRemapper.getReferencedLocalDelegatedProperty(expression.symbol),

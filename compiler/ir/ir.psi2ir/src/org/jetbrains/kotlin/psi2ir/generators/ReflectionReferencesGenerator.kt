@@ -547,7 +547,7 @@ internal class ReflectionReferencesGenerator(statementGenerator: StatementGenera
         val getterSymbol = context.symbolTable.descriptorExtension.referenceSimpleFunction(getterDescriptor)
         val setterSymbol = setterDescriptor?.let { context.symbolTable.descriptorExtension.referenceSimpleFunction(it) }
 
-        return IrLocalDelegatedPropertyReferenceImpl(
+        return IrLocalDelegatedPropertyReferenceImplWithShape(
             startOffset, endOffset, type.toIrType(),
             context.symbolTable.descriptorExtension.referenceLocalDelegatedProperty(variableDescriptor),
             irDelegateSymbol, getterSymbol, setterSymbol,
@@ -617,7 +617,7 @@ internal class ReflectionReferencesGenerator(statementGenerator: StatementGenera
         val originalProperty = propertyDescriptor.original
         val symbols = resolvePropertySymbol(originalProperty, mutable)
 
-        return IrPropertyReferenceImpl(
+        return IrPropertyReferenceImplWithShape(
             startOffset, endOffset, type.toIrType(),
             symbols.propertySymbol,
             if (typeArguments != null) propertyDescriptor.typeParametersCount else 0,
