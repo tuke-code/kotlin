@@ -1021,6 +1021,29 @@ fun IrLocalDelegatedPropertyReferenceImpl(
     getter: IrSimpleFunctionSymbol,
     setter: IrSimpleFunctionSymbol?,
     origin: IrStatementOrigin? = null,
+): IrLocalDelegatedPropertyReferenceImpl {
+    val accessor = getter.owner
+    return IrLocalDelegatedPropertyReferenceImplWithShape(
+        startOffset = startOffset,
+        endOffset = endOffset,
+        type = type,
+        symbol = symbol,
+        delegate = delegate,
+        getter = getter,
+        setter = setter,
+        origin = origin
+    )
+}
+
+fun IrLocalDelegatedPropertyReferenceImplWithShape(
+    startOffset: Int,
+    endOffset: Int,
+    type: IrType,
+    symbol: IrLocalDelegatedPropertySymbol,
+    delegate: IrVariableSymbol,
+    getter: IrSimpleFunctionSymbol,
+    setter: IrSimpleFunctionSymbol?,
+    origin: IrStatementOrigin? = null,
 ): IrLocalDelegatedPropertyReferenceImpl = IrLocalDelegatedPropertyReferenceImpl(
     constructorIndicator = null,
     startOffset = startOffset,
@@ -1036,6 +1059,31 @@ fun IrLocalDelegatedPropertyReferenceImpl(
 )
 
 fun IrPropertyReferenceImpl(
+    startOffset: Int,
+    endOffset: Int,
+    type: IrType,
+    symbol: IrPropertySymbol,
+    typeArgumentsCount: Int,
+    field: IrFieldSymbol?,
+    getter: IrSimpleFunctionSymbol?,
+    setter: IrSimpleFunctionSymbol?,
+    origin: IrStatementOrigin? = null,
+): IrPropertyReferenceImpl {
+    val accessor = (getter ?: setter)!!.owner
+    return IrPropertyReferenceImplWithShape(
+        startOffset = startOffset,
+        endOffset = endOffset,
+        type = type,
+        symbol = symbol,
+        typeArgumentsCount = typeArgumentsCount,
+        field = field,
+        getter = getter,
+        setter = setter,
+        origin = origin
+    )
+}
+
+fun IrPropertyReferenceImplWithShape(
     startOffset: Int,
     endOffset: Int,
     type: IrType,
