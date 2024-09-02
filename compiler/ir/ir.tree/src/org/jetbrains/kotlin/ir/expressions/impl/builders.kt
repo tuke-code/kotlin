@@ -1061,6 +1061,35 @@ fun IrPropertyReferenceImpl(
     getter: IrSimpleFunctionSymbol?,
     setter: IrSimpleFunctionSymbol?,
     origin: IrStatementOrigin? = null,
+): IrPropertyReferenceImpl {
+    val accessor = (getter ?: setter)!!.owner
+    return IrPropertyReferenceImplWithShape(
+        startOffset = startOffset,
+        endOffset = endOffset,
+        type = type,
+        symbol = symbol,
+        hasDispatchReceiver = accessor.dispatchReceiverParameter != null,
+        hasExtensionReceiver = accessor.extensionReceiverParameter != null,
+        field = field,
+        getter = getter,
+        setter = setter,
+        origin = origin,
+        typeArgumentsCount = typeArgumentsCount
+    )
+}
+
+fun IrPropertyReferenceImplWithShape(
+    startOffset: Int,
+    endOffset: Int,
+    type: IrType,
+    symbol: IrPropertySymbol,
+    hasDispatchReceiver: Boolean,
+    hasExtensionReceiver: Boolean,
+    typeArgumentsCount: Int,
+    field: IrFieldSymbol?,
+    getter: IrSimpleFunctionSymbol?,
+    setter: IrSimpleFunctionSymbol?,
+    origin: IrStatementOrigin? = null,
 ): IrPropertyReferenceImpl = IrPropertyReferenceImpl(
     constructorIndicator = null,
     startOffset = startOffset,
