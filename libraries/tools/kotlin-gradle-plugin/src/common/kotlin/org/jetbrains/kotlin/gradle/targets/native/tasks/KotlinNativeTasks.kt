@@ -114,7 +114,7 @@ internal fun MutableList<String>.addArgIfNotNull(parameter: String, value: Strin
 
 internal fun MutableList<String>.addFileArgs(parameter: String, values: FileCollection) {
     values.files.forEach {
-        addArg(parameter, it.canonicalPath)
+        addArg(parameter, it.normalize().absolutePath)
     }
 }
 
@@ -487,7 +487,7 @@ internal constructor(
             args.shortModuleName = shortModuleName
             args.multiPlatform = true
             args.noendorsedlibs = true
-            args.outputName = outputFile.get().absolutePath
+            args.outputName = outputFile.get().normalize().absolutePath
             args.optimization = optimized
             args.debug = debuggable
             args.enableAssertions = debuggable
@@ -1298,7 +1298,7 @@ abstract class CInteropProcess @Inject internal constructor(params: Params) :
 
             addArgIfNotNull("-target", konanTarget.visibleName)
             if (definitionFile.isPresent) {
-                addArgIfNotNull("-def", definitionFile.getFile().canonicalPath)
+                addArgIfNotNull("-def", definitionFile.getFile().absolutePath)
             }
             addArgIfNotNull("-pkg", packageName)
 

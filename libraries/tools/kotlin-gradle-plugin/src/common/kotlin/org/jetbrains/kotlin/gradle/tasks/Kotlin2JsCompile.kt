@@ -190,7 +190,7 @@ abstract class Kotlin2JsCompile @Inject constructor(
         }
 
         dependencyClasspath { args ->
-            args.friendModules = friendDependencies.files.joinToString(File.pathSeparator) { it.absolutePath }
+            args.friendModules = friendDependencies.files.joinToString(File.pathSeparator) { it.normalize().absolutePath }
 
             args.libraries = runSafe {
                 libraries
@@ -205,7 +205,7 @@ abstract class Kotlin2JsCompile @Inject constructor(
 
         sources { args ->
             if (!args.sourceMapPrefix.isNullOrEmpty()) {
-                args.sourceMapBaseDirs = sourceMapBaseDir.get().asFile.absolutePath
+                args.sourceMapBaseDirs = sourceMapBaseDir.get().asFile.normalize().absolutePath
             }
 
             if (multiPlatformEnabled.get()) {
@@ -216,7 +216,7 @@ abstract class Kotlin2JsCompile @Inject constructor(
                 }
             }
 
-            args.freeArgs += sources.asFileTree.files.map { it.absolutePath }
+            args.freeArgs += sources.asFileTree.files.map { it.normalize().absolutePath }
         }
 
         contributeAdditionalCompilerArguments(this)
@@ -312,7 +312,7 @@ abstract class Kotlin2JsCompile @Inject constructor(
                 null
         }
 
-        args.friendModules = friendDependencies.files.joinToString(File.pathSeparator) { it.absolutePath }
+        args.friendModules = friendDependencies.files.joinToString(File.pathSeparator) { it.normalize().absolutePath }
 
         logger.kotlinDebug("compiling with args ${ArgumentUtils.convertArgumentsToStringList(args)}")
 

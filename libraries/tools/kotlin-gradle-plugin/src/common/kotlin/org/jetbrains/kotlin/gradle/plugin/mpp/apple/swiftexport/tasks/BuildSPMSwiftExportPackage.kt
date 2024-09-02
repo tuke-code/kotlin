@@ -96,9 +96,9 @@ internal abstract class BuildSPMSwiftExportPackage @Inject constructor(
     private fun buildSyntheticPackage() {
         val intermediatesDestination = mapOf(
             // Thin/universal object files
-            "TARGET_BUILD_DIR" to objectFilesPath.getFile().canonicalPath,
+            "TARGET_BUILD_DIR" to objectFilesPath.getFile().normalize().absolutePath,
             // .swiftmodule interface
-            "BUILT_PRODUCTS_DIR" to interfacesPath.getFile().canonicalPath,
+            "BUILT_PRODUCTS_DIR" to interfacesPath.getFile().normalize().absolutePath,
         )
 
         val swiftModuleName = swiftApiModuleName.get()
