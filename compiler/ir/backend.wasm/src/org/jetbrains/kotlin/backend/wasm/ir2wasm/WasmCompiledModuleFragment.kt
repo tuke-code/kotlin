@@ -27,6 +27,8 @@ class WasmCompiledModuleFragment(
         ReferencableAndDefinable<IrFunctionSymbol, WasmFunction>()
     val globalFields =
         ReferencableAndDefinable<IrFieldSymbol, WasmGlobal>()
+    val inlineCacheGlobals =
+        mutableListOf<WasmGlobal>()
     val globalVTables =
         ReferencableAndDefinable<IrClassSymbol, WasmGlobal>()
     val globalClassITables =
@@ -226,6 +228,7 @@ class WasmCompiledModuleFragment(
         globals.addAll(globalFields.elements)
         globals.addAll(globalVTables.elements)
         globals.addAll(globalClassITables.elements)
+        globals.addAll(inlineCacheGlobals)
 
         val definedFunctions = mutableListOf<WasmFunction.Defined>()
         val importedFunctions = mutableListOf<WasmFunction.Imported>()

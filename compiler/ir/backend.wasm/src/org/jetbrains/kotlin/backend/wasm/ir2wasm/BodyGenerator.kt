@@ -646,17 +646,33 @@ class BodyGenerator(
         val interfaceTypeIdCache = functionContext.createNewLocalVariable(SyntheticLocalType.IFACE_LOOKUP_TYPEID_CACHE)
         val resultCache = functionContext.createNewLocalVariable(type)
 
+        val interfaceTypeIdCache1 = WasmGlobal("", WasmI32, true, listOf(WasmInstrWithoutLocation(WasmOp.I32_CONST, listOf(WasmImmediate.ConstI32(0)))))
+        context.defineInlineCacheGlobals(interfaceTypeIdCache1)
+
+        val resultCache1: WasmGlobal
+        if (type == WasmI32) {
+            resultCache1 = WasmGlobal("", type, true, listOf(WasmInstrWithoutLocation(WasmOp.I32_CONST, listOf(WasmImmediate.ConstI32(0)))))
+        } else {
+            resultCache1 = WasmGlobal("", type, true, listOf(WasmInstrWithoutLocation(WasmOp.REF_NULL, listOf( WasmImmediate.HeapType(type)))))
+        }
+        context.defineInlineCacheGlobals(resultCache1)
+
         body.commentGroupStart { "Inlined cache block start" }
         body.buildBlock("cachedBlock", type) { cachedBlock ->
-            body.buildGetLocal(resultCache, location)
-            body.buildGetLocal(interfaceTypeIdCache, location)
+            body.buildGetGlobal(WasmSymbol(resultCache1), location)
+            body.buildGetGlobal(WasmSymbol(interfaceTypeIdCache1), location)
+
             body.buildGetLocal(functionContext.referenceLocal(SyntheticLocalType.IS_INTERFACE_PARAMETER), location)
             body.buildStructGet(context.referenceGcType(irBuiltIns.anyClass), WasmSymbol(2), location)
+
             body.buildInstr(
                 WasmOp.LOCAL_TEE,
                 location,
                 WasmImmediate.LocalIdx(interfaceTypeIdCache)
             )
+            body.buildGetLocal(interfaceTypeIdCache, location)
+            body.buildSetGlobal(WasmSymbol(interfaceTypeIdCache1), location)
+
             body.buildInstr(WasmOp.I32_EQ, location)
             body.buildBrIf(cachedBlock, location)
             body.buildDrop(location)
@@ -670,6 +686,8 @@ class BodyGenerator(
                 location,
                 WasmImmediate.LocalIdx(resultCache)
             )
+            body.buildGetLocal(resultCache, location)
+            body.buildSetGlobal(WasmSymbol(resultCache1), location)
         }
         body.commentGroupEnd()
     }

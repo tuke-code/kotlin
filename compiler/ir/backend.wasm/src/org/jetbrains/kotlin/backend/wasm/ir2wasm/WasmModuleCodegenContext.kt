@@ -93,6 +93,10 @@ class WasmModuleCodegenContext(
         wasmFragment.globalFields.define(irField, wasmGlobal)
     }
 
+    fun defineInlineCacheGlobals(wasmGlobal: WasmGlobal) {
+        wasmFragment.inlineCacheGlobals.add(wasmGlobal)
+    }
+
     fun defineGlobalVTable(irClass: IrClassSymbol, wasmGlobal: WasmGlobal) {
         wasmFragment.globalVTables.define(irClass, wasmGlobal)
     }
