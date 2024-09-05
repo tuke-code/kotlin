@@ -1,0 +1,10 @@
+FILE: exclusions.kt
+    public final fun stringF(): R|kotlin/String| {
+        ^stringF String()
+    }
+    public final fun nsf(): R|kotlin/String?| {
+        ^nsf String(null)
+    }
+    public final fun coll(m: R|kotlin/collections/MutableCollection<kotlin/String>|): R|kotlin/Unit| {
+        R|<local>/m|.R|SubstitutionOverride<kotlin/collections/MutableCollection.add: R|kotlin/Boolean|>|(String())
+    }
