@@ -642,7 +642,7 @@ class BodyGenerator(
         body.buildStructGet(context.referenceVTableGcType(klassSymbol), WasmSymbol(vfSlot), location)
     }
 
-    private fun generateInlineCache(type: WasmType, location: SourceLocation, content: () -> Unit) {
+    private fun generateInlineCacheGlobal(type: WasmType, location: SourceLocation, content: () -> Unit) {
         val interfaceTypeIdCache = functionContext.createNewLocalVariable(SyntheticLocalType.IFACE_LOOKUP_TYPEID_CACHE)
         val resultCache = functionContext.createNewLocalVariable(type)
 
@@ -657,7 +657,7 @@ class BodyGenerator(
         }
         context.defineInlineCacheGlobals(resultCache1)
 
-        body.commentGroupStart { "Inlined cache block start" }
+        body.commentGroupStart { "Inlined cache block start (global)" }
         body.buildBlock("cachedBlock", type) { cachedBlock ->
             body.buildGetGlobal(WasmSymbol(resultCache1), location)
             body.buildGetGlobal(WasmSymbol(interfaceTypeIdCache1), location)
@@ -690,6 +690,46 @@ class BodyGenerator(
             body.buildSetGlobal(WasmSymbol(resultCache1), location)
         }
         body.commentGroupEnd()
+    }
+
+    private fun generateInlineCacheLocal(type: WasmType, location: SourceLocation, content: () -> Unit) {
+        val interfaceTypeIdCache = functionContext.createNewLocalVariable(SyntheticLocalType.IFACE_LOOKUP_TYPEID_CACHE)
+        val resultCache = functionContext.createNewLocalVariable(type)
+
+        body.commentGroupStart { "Inlined cache block start (local)" }
+        body.buildBlock("cachedBlock", type) { cachedBlock ->
+            body.buildGetLocal(resultCache, location)
+            body.buildGetLocal(interfaceTypeIdCache, location)
+            body.buildGetLocal(functionContext.referenceLocal(SyntheticLocalType.IS_INTERFACE_PARAMETER), location)
+            body.buildStructGet(context.referenceGcType(irBuiltIns.anyClass), WasmSymbol(2), location)
+            body.buildInstr(
+                WasmOp.LOCAL_TEE,
+                location,
+                WasmImmediate.LocalIdx(interfaceTypeIdCache)
+            )
+            body.buildInstr(WasmOp.I32_EQ, location)
+            body.buildBrIf(cachedBlock, location)
+            body.buildDrop(location)
+
+            body.commentGroupStart { "Inlined block payload" }
+            content()
+            body.commentGroupEnd()
+
+            body.buildInstr(
+                WasmOp.LOCAL_TEE,
+                location,
+                WasmImmediate.LocalIdx(resultCache)
+            )
+        }
+        body.commentGroupEnd()
+    }
+
+    private fun generateInlineCache(type: WasmType, location: SourceLocation, content: () -> Unit) {
+        if (isInLoop) {
+            generateInlineCacheLocal(type, location, content)
+        } else {
+            generateInlineCacheGlobal(type, location, content)
+        }
     }
 
     private fun generateCall(call: IrFunctionAccessExpression) {
@@ -1283,6 +1323,8 @@ class BodyGenerator(
         repeat(ifCount) { body.buildEnd() }
     }
 
+    private var isInLoop = false
+
     override fun visitDoWhileLoop(loop: IrDoWhileLoop) {
         // (loop $LABEL
         //     (block $BREAK_LABEL
@@ -1296,7 +1338,13 @@ class BodyGenerator(
                 body.buildBlock("CONTINUE_$label") { wasmContinueBlock ->
                     functionContext.defineLoopLevel(loop, LoopLabelType.BREAK, wasmBreakBlock)
                     functionContext.defineLoopLevel(loop, LoopLabelType.CONTINUE, wasmContinueBlock)
-                    loop.body?.let { generateAsStatement(it) }
+                    val isInLoopOld = isInLoop
+                    try {
+                        isInLoop = true
+                        loop.body?.let { generateAsStatement(it) }
+                    } finally {
+                        isInLoop = isInLoopOld
+                    }
                 }
                 generateExpression(loop.condition)
                 body.buildBrIf(wasmLoop, loop.condition.getSourceLocation())
@@ -1325,7 +1373,13 @@ class BodyGenerator(
                 body.buildInstr(WasmOp.I32_EQZ, location)
                 body.buildBrIf(wasmBreakBlock, location)
                 loop.body?.let {
-                    generateAsStatement(it)
+                    val isInLoopOld = isInLoop
+                    try {
+                        isInLoop = true
+                        generateAsStatement(it)
+                    } finally {
+                        isInLoop = isInLoopOld
+                    }
                 }
                 body.buildBr(wasmLoop, SourceLocation.NoLocation("Continue in the loop"))
             }
