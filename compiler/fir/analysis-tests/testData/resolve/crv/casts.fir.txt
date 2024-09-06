@@ -2,15 +2,26 @@ FILE: casts.kt
     public final fun getAny(): R|kotlin/Any| {
         ^getAny String()
     }
-    public final fun foo(a: R|kotlin/Any|): R|kotlin/Unit| {
+    public final fun R|kotlin/Any|.consume(): R|kotlin/Unit| {
+        ^consume Q|kotlin/Unit|
+    }
+    public final fun locals(a: R|kotlin/Any|): R|kotlin/Unit| {
+        R|<local>/a|
         (R|<local>/a| as R|kotlin/String|)
+        lval b: R|kotlin/Any| = String()
+        R|<local>/b|
+        (R|<local>/b| as R|kotlin/String|)
     }
-    public final fun bar(a: R|kotlin/Any|): R|kotlin/Unit| {
-        (R|<local>/a| is R|kotlin/String|)
+    public final val nonLocal: R|kotlin/Any|
+        public get(): R|kotlin/Any| {
+            ^ String()
+        }
+    public final fun consume(s: R|kotlin/String|): R|kotlin/Unit| {
     }
-    public final fun foo2(): R|kotlin/Unit| {
-        (R|/getAny|() as R|kotlin/String|)
-    }
-    public final fun bar2(): R|kotlin/Unit| {
-        (R|/getAny|() is R|kotlin/String|)
+    public final fun nonLocals(): R|kotlin/Unit| {
+        R|/nonLocal|
+        (R|/nonLocal| as R|kotlin/String|)
+        lval used: R|kotlin/String| = (R|/nonLocal| as R|kotlin/String|)
+        R|/consume|((R|/nonLocal| as R|kotlin/String|))
+        (R|/nonLocal| as R|kotlin/String|).R|/consume|()
     }

@@ -15,13 +15,14 @@ import org.jetbrains.kotlin.fir.analysis.checkers.isLhsOfAssignment
 import org.jetbrains.kotlin.fir.analysis.diagnostics.FirErrors
 import org.jetbrains.kotlin.fir.declarations.FirProperty
 import org.jetbrains.kotlin.fir.declarations.FirValueParameter
-import org.jetbrains.kotlin.fir.declarations.utils.memberDeclarationNameOrNull
 import org.jetbrains.kotlin.fir.expressions.*
 import org.jetbrains.kotlin.fir.references.resolved
 import org.jetbrains.kotlin.fir.references.symbol
 import org.jetbrains.kotlin.fir.references.toResolvedCallableSymbol
-import org.jetbrains.kotlin.fir.render
+import org.jetbrains.kotlin.fir.references.toResolvedPropertySymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirCallableSymbol
+import org.jetbrains.kotlin.fir.symbols.impl.FirPropertySymbol
+import org.jetbrains.kotlin.fir.symbols.impl.FirValueParameterSymbol
 import org.jetbrains.kotlin.fir.types.isNothing
 import org.jetbrains.kotlin.fir.types.isNullableNothing
 import org.jetbrains.kotlin.fir.types.isUnit
@@ -33,24 +34,37 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
         if (expression.isLhsOfAssignment(context)) return
         if (expression is FirAnnotation) return
 
+        if (expression.isLocalPropertyOrParameter()) return
+
         // 1. Check only resolved references
         val calleeReference = expression.toReference(context.session) ?: return
+
+        // Exclusions
         val resolvedReference = calleeReference.resolved ?: return
         if (resolvedReference.toResolvedCallableSymbol()?.isExcluded() == true) return
+
+        // Ignore Unit or Nothing?/Nothing
+        if (expression.resolvedType.run { isNothing || isNullableNothing || isUnit }) return
 
         // If not the outermost call, then it is used as an argument
         if (context.callsOrAssignments.lastOrNull { it != expression } != null) return
 
-        val outerExpression = context.containingElements.lastOrNull { it != expression }
+        fun CheckerContext.firstNonPropagatingOuterExpression(): FirElement? = containingElements.lastOrNull {
+            it != expression && when (it) {
+                is FirSmartCastExpression, is FirArgumentList, is FirTypeOperatorCall -> false
+                else -> true
+            }
+        }
+
+        val outerExpression = context.firstNonPropagatingOuterExpression()
 
         // Used directly in return expression, property or parameter declaration
-        if (outerExpression.isTerminal) return
+        if (outerExpression.isVarInitializationOrReturn) return
 
         // Safe calls for some reason are not part of context.callsOrAssignments, so have to be checked separately
         if (outerExpression is FirSafeCallExpression && outerExpression.receiver == expression) return
 
-        // Ignore Unit or Nothing?/Nothing
-        if (expression.resolvedType.run { isNothing || isNullableNothing || isUnit }) return
+
 
         reporter.reportOn(expression.source, FirErrors.RETURN_VALUE_NOT_USED, resolvedReference.name, context)
         if (resolvedReference.name.toString() == "stringF") {
@@ -60,6 +74,15 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
             //        val referencedSymbol = resolvedReference.resolvedSymbol
         }
 //        TODO("Not yet implemented")
+    }
+
+    fun FirExpression.isLocalPropertyOrParameter(): Boolean {
+        if (this !is FirPropertyAccessExpression) return false
+        return when (calleeReference.symbol) {
+            is FirValueParameterSymbol -> true
+            is FirPropertySymbol -> calleeReference.toResolvedPropertySymbol()?.isLocal == true
+            else -> false
+        }
     }
 
     private fun FirCallableSymbol<*>.isExcluded(): Boolean {
@@ -79,5 +102,5 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
 
 
     // FirSmartCastExpressionImpl????
-    private val FirElement?.isTerminal: Boolean get() = this is FirReturnExpression || this is FirProperty || this is FirValueParameter || this is FirArgumentList
+    private val FirElement?.isVarInitializationOrReturn: Boolean get() = this is FirReturnExpression || this is FirProperty || this is FirValueParameter //|| this is FirArgumentList
 }

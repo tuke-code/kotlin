@@ -1,0 +1,25 @@
+FILE: controlFlow.kt
+    public final fun stringF(): R|kotlin/String| {
+        ^stringF String()
+    }
+    public final fun unitF(): R|kotlin/Unit| {
+        ^unitF Q|kotlin/Unit|
+    }
+    public final fun nsf(): R|kotlin/String?| {
+        ^nsf String(null)
+    }
+    public final val a: R|kotlin/Int|
+        public get(): R|kotlin/Int| {
+            ^ Int(10)
+        }
+    public final fun ifTest(): R|kotlin/Unit| {
+        lval x: R|kotlin/String| = when () {
+            CMP(>, R|/a|.R|kotlin/Int.compareTo|(Int(0))) ->  {
+                R|/stringF|()
+            }
+            else ->  {
+                String()
+            }
+        }
+
+    }
