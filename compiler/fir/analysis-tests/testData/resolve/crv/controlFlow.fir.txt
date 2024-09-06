@@ -2,23 +2,60 @@ FILE: controlFlow.kt
     public final fun stringF(): R|kotlin/String| {
         ^stringF String()
     }
+    public final fun intF(): R|kotlin/Int| {
+        ^intF Int(10)
+    }
     public final fun unitF(): R|kotlin/Unit| {
         ^unitF Q|kotlin/Unit|
     }
     public final fun nsf(): R|kotlin/String?| {
         ^nsf String(null)
     }
-    public final val a: R|kotlin/Int|
-        public get(): R|kotlin/Int| {
-            ^ Int(10)
-        }
-    public final fun ifTest(): R|kotlin/Unit| {
+    public final fun ifCondition(): R|kotlin/Unit| {
+        CMP(>, R|/intF|().R|kotlin/Int.compareTo|(Int(0)))
+        lval y: R|kotlin/Boolean| = CMP(>, R|/intF|().R|kotlin/Int.compareTo|(Int(0)))
         lval x: R|kotlin/String| = when () {
-            CMP(>, R|/a|.R|kotlin/Int.compareTo|(Int(0))) ->  {
-                R|/stringF|()
+            CMP(>, R|/intF|().R|kotlin/Int.compareTo|(Int(0))) ->  {
+                String()
             }
             else ->  {
-                String()
+                String(x)
+            }
+        }
+
+        when () {
+            CMP(>, R|/intF|().R|kotlin/Int.compareTo|(Int(0))) ->  {
+                Q|kotlin/Unit|
+            }
+            else ->  {
+                Q|kotlin/Unit|
+            }
+        }
+
+        R|kotlin/io/println|(CMP(>, R|/intF|().R|kotlin/Int.compareTo|(Int(0))))
+    }
+    public final fun whenCondition(): R|kotlin/Unit| {
+        when (R|/intF|()) {
+            ==($subj$, Int(0)) ->  {
+                Q|kotlin/Unit|
+            }
+        }
+
+        when (lval x: R|kotlin/Int| = R|/intF|()) {
+            ==($subj$, Int(0)) ->  {
+                R|<local>/x|
+            }
+        }
+
+        when (R|/intF|()) {
+            ==($subj$, R|/intF|()) ->  {
+                Q|kotlin/Unit|
+            }
+        }
+
+        when (R|/intF|()) {
+            ==($subj$, R|/intF|()) ->  {
+                R|/intF|()
             }
         }
 

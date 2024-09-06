@@ -31,17 +31,20 @@ import org.jetbrains.kotlin.fir.types.resolvedType
 object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
     override fun check(expression: FirStatement, context: CheckerContext, reporter: DiagnosticReporter) {
         if (expression !is FirExpression) return // TODO: are we sure that these are all cases?
+
         if (expression.isLhsOfAssignment(context)) return
         if (expression is FirAnnotation) return
 
         if (expression.isLocalPropertyOrParameter()) return
 
-        // 1. Check only resolved references
-        val calleeReference = expression.toReference(context.session) ?: return
+        // 1. Check only resolvable references OR FirEquality/FirComparison
+        val calleeReference = expression.toReference(context.session)
+        val resolvedReference = calleeReference?.resolved
+
+        if (resolvedReference == null && expression !is FirEqualityOperatorCall && expression !is FirComparisonExpression) return
 
         // Exclusions
-        val resolvedReference = calleeReference.resolved ?: return
-        if (resolvedReference.toResolvedCallableSymbol()?.isExcluded() == true) return
+        if (resolvedReference?.toResolvedCallableSymbol()?.isExcluded() == true) return
 
         // Ignore Unit or Nothing?/Nothing
         if (expression.resolvedType.run { isNothing || isNullableNothing || isUnit }) return
@@ -49,34 +52,39 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
         // If not the outermost call, then it is used as an argument
         if (context.callsOrAssignments.lastOrNull { it != expression } != null) return
 
-        fun CheckerContext.firstNonPropagatingOuterExpression(): FirElement? = containingElements.lastOrNull {
-            it != expression && when (it) {
-                is FirSmartCastExpression, is FirArgumentList, is FirTypeOperatorCall -> false
-                else -> true
-            }
-        }
-
-        val outerExpression = context.firstNonPropagatingOuterExpression()
+        val outerExpression = context.firstNonPropagatingOuterElementOf(expression)
 
         // Used directly in return expression, property or parameter declaration
         if (outerExpression.isVarInitializationOrReturn) return
 
-        // Safe calls for some reason are not part of context.callsOrAssignments, so have to be checked separately
-        if (outerExpression is FirSafeCallExpression && outerExpression.receiver == expression) return
+        if (outerExpression.uses(expression)) return
 
-
-
-        reporter.reportOn(expression.source, FirErrors.RETURN_VALUE_NOT_USED, resolvedReference.name, context)
-        if (resolvedReference.name.toString() == "stringF") {
-            val outer = context.containingDeclarations.lastOrNull()
-//            println(outer?.render())
-//            println(context.callsOrAssignments.joinToString { it.render() })
-            //        val referencedSymbol = resolvedReference.resolvedSymbol
-        }
-//        TODO("Not yet implemented")
+        reporter.reportOn(expression.source, FirErrors.RETURN_VALUE_NOT_USED, (resolvedReference?.name?.toString() ?: "TODO"), context)
     }
 
-    fun FirExpression.isLocalPropertyOrParameter(): Boolean {
+    private fun FirElement?.uses(given: FirExpression): Boolean = when (this) {
+        // Safe calls for some reason are not part of context.callsOrAssignments, so have to be checked separately
+        is FirSafeCallExpression -> receiver == given
+        // in if(x) and when(x), x is always used
+        is FirWhenBranch -> condition == given || ((condition as? FirComparisonExpression)?.compareToCall == given)
+        is FirWhenExpression -> subject == given
+        is FirComparisonExpression -> compareToCall == given
+        is FirEqualityOperatorCall -> given in argumentList.arguments
+        else -> false
+    }
+
+    private fun CheckerContext.firstNonPropagatingOuterElementOf(thisExpression: FirExpression): FirElement? =
+        containingElements.lastOrNull {
+            it != thisExpression && when (it) {
+                is FirSmartCastExpression, is FirArgumentList, is FirTypeOperatorCall -> false
+//                is FirComparisonExpression, is FirEqualityOperatorCall -> false
+                else -> true
+            }
+        }
+
+    private val FirElement?.isVarInitializationOrReturn: Boolean get() = this is FirReturnExpression || this is FirProperty || this is FirValueParameter
+
+    private fun FirExpression.isLocalPropertyOrParameter(): Boolean {
         if (this !is FirPropertyAccessExpression) return false
         return when (calleeReference.symbol) {
             is FirValueParameterSymbol -> true
@@ -99,8 +107,22 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
         "kotlin/collections/MutableList.set",
         "kotlin/collections/MutableMap.put",
     )
-
-
-    // FirSmartCastExpressionImpl????
-    private val FirElement?.isVarInitializationOrReturn: Boolean get() = this is FirReturnExpression || this is FirProperty || this is FirValueParameter //|| this is FirArgumentList
 }
+
+fun intF(): Int = 10
+
+fun whenCondition() {
+    when (intF()) {
+        0 -> Unit
+    }
+
+    when (intF()) {
+        intF() -> Unit
+    }
+
+    when (intF()) {
+        intF() -> intF() // only part after -> should be reported unused
+    }
+}
+
+
