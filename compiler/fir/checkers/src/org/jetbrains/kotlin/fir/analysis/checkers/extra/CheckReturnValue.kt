@@ -23,31 +23,30 @@ import org.jetbrains.kotlin.fir.references.toResolvedPropertySymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirCallableSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirPropertySymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirValueParameterSymbol
-import org.jetbrains.kotlin.fir.types.isNothing
-import org.jetbrains.kotlin.fir.types.isNullableNothing
-import org.jetbrains.kotlin.fir.types.isUnit
-import org.jetbrains.kotlin.fir.types.resolvedType
+import org.jetbrains.kotlin.fir.types.*
 
 object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
     override fun check(expression: FirStatement, context: CheckerContext, reporter: DiagnosticReporter) {
         if (expression !is FirExpression) return // TODO: are we sure that these are all cases?
+        if (expression is FirBlock) return
 
         if (expression.isLhsOfAssignment(context)) return
         if (expression is FirAnnotation) return
 
         if (expression.isLocalPropertyOrParameter()) return
+        if (expression.isPropagating) return
 
-        // 1. Check only resolvable references OR FirEquality/FirComparison
+        // 1. Check NOT only resolvable references
         val calleeReference = expression.toReference(context.session)
         val resolvedReference = calleeReference?.resolved
 
-        if (resolvedReference == null && expression !is FirEqualityOperatorCall && expression !is FirComparisonExpression) return
+//        if (resolvedReference == null && expression !is FirEqualityOperatorCall && expression !is FirComparisonExpression) return
 
         // Exclusions
         if (resolvedReference?.toResolvedCallableSymbol()?.isExcluded() == true) return
 
-        // Ignore Unit or Nothing?/Nothing
-        if (expression.resolvedType.run { isNothing || isNullableNothing || isUnit }) return
+        // Ignore Unit or Nothing
+        if (expression.resolvedType.run { isNothingOrNullableNothing || isUnitOrNullableUnit }) return
 
         // If not the outermost call, then it is used as an argument
         if (context.callsOrAssignments.lastOrNull { it != expression } != null) return
@@ -64,23 +63,19 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
 
     private fun FirElement?.uses(given: FirExpression): Boolean = when (this) {
         // Safe calls for some reason are not part of context.callsOrAssignments, so have to be checked separately
-        is FirSafeCallExpression -> receiver == given
+        is FirSafeCallExpression -> true // receiver == given
         // in if(x) and when(x), x is always used
-        is FirWhenBranch -> condition == given || ((condition as? FirComparisonExpression)?.compareToCall == given)
+        is FirWhenBranch -> condition == given
         is FirWhenExpression -> subject == given
-        is FirComparisonExpression -> compareToCall == given
-        is FirEqualityOperatorCall -> given in argumentList.arguments
+        is FirComparisonExpression -> true // compareToCall == given
+        is FirEqualityOperatorCall -> true // given in argumentList.arguments
         else -> false
     }
 
     private fun CheckerContext.firstNonPropagatingOuterElementOf(thisExpression: FirExpression): FirElement? =
-        containingElements.lastOrNull {
-            it != thisExpression && when (it) {
-                is FirSmartCastExpression, is FirArgumentList, is FirTypeOperatorCall -> false
-//                is FirComparisonExpression, is FirEqualityOperatorCall -> false
-                else -> true
-            }
-        }
+        containingElements.lastOrNull { it != thisExpression && !it.isPropagating }
+
+    private val FirElement.isPropagating: Boolean get() = this is FirSmartCastExpression || this is FirArgumentList || this is FirTypeOperatorCall
 
     private val FirElement?.isVarInitializationOrReturn: Boolean get() = this is FirReturnExpression || this is FirProperty || this is FirValueParameter
 
@@ -108,21 +103,4 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
         "kotlin/collections/MutableMap.put",
     )
 }
-
-fun intF(): Int = 10
-
-fun whenCondition() {
-    when (intF()) {
-        0 -> Unit
-    }
-
-    when (intF()) {
-        intF() -> Unit
-    }
-
-    when (intF()) {
-        intF() -> intF() // only part after -> should be reported unused
-    }
-}
-
 
