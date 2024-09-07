@@ -17,6 +17,8 @@ import org.jetbrains.kotlin.fir.expressions.*
 import org.jetbrains.kotlin.fir.references.symbol
 import org.jetbrains.kotlin.fir.symbols.impl.*
 import org.jetbrains.kotlin.fir.types.*
+import org.jetbrains.kotlin.name.CallableId
+import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlinx.serialization.compiler.fir.*
@@ -29,8 +31,8 @@ import org.jetbrains.kotlinx.serialization.compiler.fir.services.*
  * in the IntelliJ IDEA repository.
  */
 internal object FirSerializationPluginCallChecker : FirFunctionCallChecker(MppCheckerKind.Common) {
-    private val jsonFqName: FqName = FqName("kotlinx.serialization.json.Json")
-    private val jsonDefaultFqName: FqName = FqName("kotlinx.serialization.json.Json.Default")
+    private val jsonCallableId: CallableId = CallableId(FqName("kotlinx.serialization.json"), callableName = Name.identifier("Json"))
+    private val jsonDefaultClassId: ClassId = ClassId(FqName("kotlinx.serialization.json"), FqName("Json.Default"), isLocal = false)
     private val parameterNameFrom: Name = Name.identifier("from")
     private val parameterNameBuilderAction: Name = Name.identifier("builderAction")
 
@@ -61,7 +63,7 @@ internal object FirSerializationPluginCallChecker : FirFunctionCallChecker(MppCh
     }
 
     private fun isJsonFormatCreation(function: FirNamedFunctionSymbol): Boolean {
-        return function.callableId.asSingleFqName() == jsonFqName
+        return function.callableId == jsonCallableId
     }
 
     private fun isDefaultFormat(functionCall: FirFunctionCall): Boolean {
@@ -84,7 +86,7 @@ internal object FirSerializationPluginCallChecker : FirFunctionCallChecker(MppCh
 
     private fun isDefaultFormatArgument(argumentExpression: FirExpression): Boolean {
         val typeRef = argumentExpression.resolvedType as? ConeClassLikeType ?: return false
-        return typeRef.lookupTag.classId.asSingleFqName() == jsonDefaultFqName
+        return typeRef.lookupTag.classId == jsonDefaultClassId
     }
 
     private fun isEmptyFunctionArgument(argument: FirExpression): Boolean {
