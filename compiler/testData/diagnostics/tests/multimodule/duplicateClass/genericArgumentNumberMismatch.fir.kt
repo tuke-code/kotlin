@@ -25,6 +25,6 @@ public fun foo(a: A<!WRONG_NUMBER_OF_TYPE_ARGUMENTS!><Int><!>) {
 import p.*
 
 fun test() {
-    foo(M1().a)
+    foo(<!OTHER_ERROR_WITH_REASON("Wrong number of type arguments")!>M1().a<!>)
     foo(1) // error type on the declaration site
 }

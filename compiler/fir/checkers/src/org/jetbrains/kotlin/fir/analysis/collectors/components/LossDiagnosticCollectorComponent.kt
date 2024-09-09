@@ -13,9 +13,12 @@ import org.jetbrains.kotlin.fir.FirSession
 import org.jetbrains.kotlin.fir.analysis.checkers.context.CheckerContext
 import org.jetbrains.kotlin.fir.analysis.diagnostics.FirErrors
 import org.jetbrains.kotlin.fir.diagnostics.FirDiagnosticHolder
+import org.jetbrains.kotlin.fir.expressions.FirExpression
 import org.jetbrains.kotlin.fir.resolve.calls.InferenceError
 import org.jetbrains.kotlin.fir.resolve.calls.InferredEmptyIntersectionDiagnostic
 import org.jetbrains.kotlin.fir.resolve.diagnostics.ConeDiagnosticWithSingleCandidate
+import org.jetbrains.kotlin.fir.types.ConeErrorType
+import org.jetbrains.kotlin.fir.types.resolvedType
 import org.jetbrains.kotlin.resolve.calls.inference.model.InferredEmptyIntersectionWarning
 
 class LossDiagnosticCollectorComponent(
@@ -23,15 +26,20 @@ class LossDiagnosticCollectorComponent(
     reporter: DiagnosticReporter,
 ) : AbstractDiagnosticCollectorComponent(session, reporter) {
     override fun visitElement(element: FirElement, data: CheckerContext) {
-        if (element !is FirDiagnosticHolder || data.suppressedDiagnostics.isNotEmpty()) {
-            return
-        }
-
-        if (reporter !is PendingDiagnosticsCollectorWithSuppress) {
-            return
-        }
-
+        if (data.suppressedDiagnostics.isNotEmpty() || reporter !is PendingDiagnosticsCollectorWithSuppress) return
         val source = element.source
+        if (element is FirExpression) {
+            val type = element.resolvedType
+            if (type is ConeErrorType) {
+                val diagnostic = type.diagnostic
+                reporter.reportOn(source, FirErrors.OTHER_ERROR_WITH_REASON, diagnostic.reason, data)
+                return
+            }
+        }
+        if (element !is FirDiagnosticHolder) {
+            return
+        }
+
         val diagnostic = element.diagnostic
         if (diagnostic is ConeDiagnosticWithSingleCandidate) {
             if (diagnostic.candidate.diagnostics.all {
