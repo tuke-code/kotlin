@@ -77,4 +77,5 @@ internal annotation class JsImplicitExport(val couldBeConvertedToExplicitExport:
  * Annotation force to not add any dispatchReceiver to any function marked with the annotation
  */
 @Target(AnnotationTarget.FUNCTION)
+@PublishedApi
 internal annotation class JsNoDispatchReceiver
