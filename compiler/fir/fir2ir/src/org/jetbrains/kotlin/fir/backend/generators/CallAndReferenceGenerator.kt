@@ -934,8 +934,8 @@ class CallAndReferenceGenerator(
                 // See KT-58294
                 valueArgumentsCount = firConstructorSymbol.valueParameterSymbols.size,
                 contextReceiverCount = firConstructorSymbol.resolvedContextReceivers.size,
-                hasDispatchReceiver = firConstructorSymbol.dispatchReceiverType != null,
-                hasExtensionReceiver = firConstructorSymbol.isExtension,
+                typeArgumentsCount = fullyExpandedConstructorSymbol.typeParameterSymbols.size,
+                constructorTypeArgumentsCount = 0,
                 source = FirAnnotationSourceElement(annotation),
             )
         }

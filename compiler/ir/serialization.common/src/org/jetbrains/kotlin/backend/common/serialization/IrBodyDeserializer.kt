@@ -243,7 +243,7 @@ class IrBodyDeserializer(
             symbol, typeArgumentsCount = proto.memberAccess.typeArgumentCount,
             constructorTypeArgumentsCount = proto.constructorTypeArgumentsCount,
             valueArgumentsCount = proto.memberAccess.valueArgumentCount,
-            contextReceiverCount = TODO("Serialized call does not have context parameter count info"),
+            contextReceiverCount = 0,
             origin = deserializeIrStatementOrigin(proto.hasOriginName()) { proto.originName }
         ).also {
             deserializeMemberAccessCommon(it, proto.memberAccess)
@@ -261,7 +261,7 @@ class IrBodyDeserializer(
                 start, end, type,
                 symbol, proto.memberAccess.typeArgumentCount,
                 proto.memberAccess.valueArgumentList.size,
-                contextReceiverCount = TODO("Serialized call does not have context parameter count info"),
+                contextReceiverCount = 0,
                 origin,
                 superSymbol
             )
@@ -293,7 +293,7 @@ class IrBodyDeserializer(
             symbol,
             proto.memberAccess.typeArgumentCount,
             proto.memberAccess.valueArgumentCount,
-            contextReceiverCount = TODO("Serialized call does not have context parameter count info"),
+            contextReceiverCount = 0,
         )
 
         deserializeMemberAccessCommon(call, proto.memberAccess)
@@ -314,7 +314,7 @@ class IrBodyDeserializer(
             symbol,
             proto.memberAccess.typeArgumentCount,
             proto.memberAccess.valueArgumentCount,
-            contextReceiverCount = TODO("Serialized call does not have context parameter count info"),
+            contextReceiverCount = 0,
         )
         deserializeMemberAccessCommon(call, proto.memberAccess)
         return call
@@ -381,7 +381,7 @@ class IrBodyDeserializer(
             symbol,
             proto.memberAccess.typeArgumentCount,
             proto.memberAccess.valueArgumentCount,
-            contextReceiverCount = null,
+            contextReceiverCount = 0,
             reflectionTarget,
             origin
         )
