@@ -36,7 +36,6 @@ class IrDelegatingConstructorCallImpl internal constructor(
 
     override var extensionReceiver: IrExpression? = null
 
-    override var contextReceiversCount: Int = 0
 
     companion object
 }
