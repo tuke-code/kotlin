@@ -394,7 +394,6 @@ internal class FunctionDFGBuilder(private val generationState: NativeGenerationS
     }
 
     private val symbols = context.ir.symbols
-    private val unitType = context.irBuiltIns.unitType
     private val arrayGetSymbols = symbols.arrayGet.values
     private val arraySetSymbols = symbols.arraySet.values
     private val createUninitializedInstanceSymbol = symbols.createUninitializedInstance
