@@ -275,7 +275,7 @@ class JsPlainObjectsFunctionsGenerator(session: FirSession) : FirDeclarationGene
                     annotationTypeRef = buildResolvedTypeRef {
                         val annotationClassId = JsStandardClassIds.Annotations.JsNoDispatchReceiver
                         coneType = annotationClassId.toLookupTag()
-                            .constructClassType(typeArguments = ConeTypeProjection.EMPTY_ARRAY, isNullable = false)
+                            .constructClassType(typeArguments = ConeTypeProjection.EMPTY_ARRAY, isMarkedNullable = false)
                     }
                     argumentMapping = FirEmptyAnnotationArgumentMapping
                 }

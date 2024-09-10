@@ -14024,7 +14024,8 @@ open annotation class kotlin.js/JsFileName : kotlin/Annotation { // kotlin.js/Js
     final val name // kotlin.js/JsFileName.name|{}name[0]
         final fun <get-name>(): kotlin/String // kotlin.js/JsFileName.name.<get-name>|<get-name>(){}[0]
 }
-    // Targets: [js]
+
+// Targets: [js]
 open annotation class kotlin.js/JsNoDispatchReceiver : kotlin/Annotation { // kotlin.js/JsNoDispatchReceiver|null[0]
     constructor <init>() // kotlin.js/JsNoDispatchReceiver.<init>|<init>(){}[0]
 }
