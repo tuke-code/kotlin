@@ -200,7 +200,7 @@ open class ExecutableWasm(
     mode
 ) {
     override fun syncInputConfigure(syncTask: DefaultIncrementalSyncTask) {
-        if (compilation.isMain() && mode == KotlinJsBinaryMode.PRODUCTION) {
+        if (mode == KotlinJsBinaryMode.PRODUCTION) {
             syncTask.from.from(optimizeTask.flatMap { it.outputFileProperty.map { it.asFile.parentFile } })
             syncTask.dependsOn(optimizeTask)
         } else {
