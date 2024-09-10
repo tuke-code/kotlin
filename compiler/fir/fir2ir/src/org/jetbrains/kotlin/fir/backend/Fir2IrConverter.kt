@@ -279,7 +279,6 @@ class Fir2IrConverter(
                         builtins.unitType,
                         irAnyConstructor,
                         typeArgumentsCount = 0,
-                        valueArgumentsCount = 0
                     )
                 }
             }
