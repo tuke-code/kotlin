@@ -262,6 +262,7 @@ class DeclarationGenerator(
     private fun getSamMethod(supportedIFaces: Set<IrClass>): Pair<IrClass, IrFunction>? {
         var result: Pair<IrClass, IrFunction>? = null
         for (iFace in supportedIFaces) {
+            if (iFace.symbol in backendContext.specialSlotITableTypes) continue
             val iFaceSamMethod = iFace.declarations.singleOrNull { declaration ->
                 declaration is IrSimpleFunction && declaration.overriddenSymbols.isEmpty()
             }

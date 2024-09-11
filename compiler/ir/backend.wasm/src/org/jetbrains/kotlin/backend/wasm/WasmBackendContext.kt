@@ -226,6 +226,7 @@ class WasmBackendContext(
             irBuiltIns.mutableListIteratorClass,
             irBuiltIns.comparableClass,
             irBuiltIns.charSequenceClass,
+            irBuiltIns.kCallableClass,
             //FUNCTION_INTERFACE_CLASS
         )
     }
