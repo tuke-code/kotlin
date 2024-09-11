@@ -963,7 +963,8 @@ internal class CodeGeneratorVisitor(
             is IrBreak               -> return evaluateBreak                  (value)
             is IrContinue            -> return evaluateContinue               (value)
             is IrGetObjectValue      -> return evaluateGetObjectValue         (value)
-            is IrRawFunctionReference -> return evaluateFunctionReference     (value)
+            is IrRawFunctionReference ->
+                                        return evaluateFunctionReference      (value)
             is IrSuspendableExpression ->
                                         return evaluateSuspendableExpression  (value, resultSlot)
             is IrSuspensionPoint     -> return evaluateSuspensionPoint        (value)
