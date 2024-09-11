@@ -70,8 +70,10 @@ abstract class TypeCheckerStateForConstraintSystem(
         isFromNullabilityConstraint: Boolean
     ): Boolean? {
         val hasNoInfer = subType.isTypeVariableWithNoInfer() || superType.isTypeVariableWithNoInfer()
-        if (extensionTypeContext.isK2 && hasNoInfer) {
-            noInferInvolved = true
+        if (hasNoInfer) {
+            if (extensionTypeContext.isK2) {
+                noInferInvolved = true
+            }
             return true
         }
 
