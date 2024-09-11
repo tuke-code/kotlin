@@ -85,10 +85,9 @@ class SingletonObjectJvmStaticTransformer(
         if (declaration.isNonCompanionObject) {
             for (function in declaration.simpleFunctions()) {
                 if (function.isJvmStaticDeclaration()) {
-                    // dispatch receiver parameter is already null for synthetic property annotation methods
                     function.dispatchReceiverParameter?.let { oldDispatchReceiverParameter ->
-                        function.dispatchReceiverParameter = null
-                        function.replaceThisByStaticReference(cachedFields, declaration, oldDispatchReceiverParameter)
+                        transformJvmStaticFunction(function)
+                        function.replaceThisByStaticReference(cachedFields, function.parentAsClass, oldDispatchReceiverParameter)
                     }
                 }
             }
@@ -96,11 +95,35 @@ class SingletonObjectJvmStaticTransformer(
         return super.visitClass(declaration)
     }
 
+    private fun transformJvmStaticFunction(function: IrFunction) {
+        // dispatch receiver parameter is already null for synthetic property annotation methods
+        function.dispatchReceiverParameter?.let { oldDispatchReceiverParameter ->
+            function.dispatchReceiverParameter = null
+        }
+    }
+
     // This lowering runs before functions references are handled, and should transform them too.
     override fun visitMemberAccess(expression: IrMemberAccessExpression<*>): IrExpression {
         expression.transformChildrenVoid(this)
         val callee = expression.symbol.owner
+
+        if (callee is IrProperty) {
+            callee.getter?.let {
+                if (it.isJvmStaticInObject()) {
+                    transformJvmStaticFunction(it)
+                }
+            }
+            callee.setter?.let {
+                if (it.isJvmStaticInObject()) {
+                    transformJvmStaticFunction(it)
+                }
+            }
+        }
+
         if (callee is IrDeclaration && callee.isJvmStaticInObject()) {
+            if (callee is IrFunction) {
+                transformJvmStaticFunction(callee)
+            }
             return expression.makeStatic(irBuiltIns, replaceCallee = null)
         }
         return expression
