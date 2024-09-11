@@ -56,6 +56,7 @@ import org.jetbrains.kotlin.fir.visitors.FirDefaultTransformer
 import org.jetbrains.kotlin.fir.visitors.FirTransformer
 import org.jetbrains.kotlin.fir.visitors.transformSingle
 import org.jetbrains.kotlin.resolve.calls.inference.model.InferredEmptyIntersection
+import org.jetbrains.kotlin.resolve.calls.inference.model.NoInferInvolvedWarning
 import org.jetbrains.kotlin.resolve.calls.tasks.ExplicitReceiverKind
 import org.jetbrains.kotlin.resolve.calls.tower.ApplicabilityDetail
 import org.jetbrains.kotlin.resolve.calls.tower.isSuccess
@@ -475,6 +476,10 @@ class FirCallCompletionResultsWriterTransformer(
 
         if (CallToDeprecatedOverrideOfHidden in calleeReference.candidate.diagnostics) {
             addNonFatalDiagnostic(ConeCallToDeprecatedOverrideOfHidden)
+        }
+
+        if (calleeReference.hasNoInferInvolvedWarnings()) {
+            addNonFatalDiagnostic(ConeNoInferInvolved)
         }
     }
 
@@ -1207,6 +1212,9 @@ class FirCallCompletionResultsWriterTransformer(
     // TODO: report warning with a checker and return true here only in case of errors, KT-59676
     private fun FirNamedReferenceWithCandidate.hasAdditionalResolutionErrors(): Boolean =
         candidate.system.errors.any { it is InferredEmptyIntersection }
+
+    private fun FirNamedReferenceWithCandidate.hasNoInferInvolvedWarnings(): Boolean =
+        candidate.system.errors.any { it is NoInferInvolvedWarning }
 
     private fun FirNamedReferenceWithCandidate.toResolvedReference(): FirNamedReference {
         val errorDiagnostic = when {

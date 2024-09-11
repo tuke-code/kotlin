@@ -404,3 +404,8 @@ object ConeCallToDeprecatedOverrideOfHidden : ConeDiagnostic {
     override val reason: String
         get() = "Call to deprecated override of hidden"
 }
+
+object ConeNoInferInvolved : ConeDiagnostic {
+    override val reason: String
+        get() = "Subtyping used @NoInfer"
+}

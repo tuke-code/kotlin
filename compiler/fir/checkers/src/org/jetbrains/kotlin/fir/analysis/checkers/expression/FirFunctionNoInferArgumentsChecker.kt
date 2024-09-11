@@ -14,6 +14,7 @@ import org.jetbrains.kotlin.fir.expressions.FirExpression
 import org.jetbrains.kotlin.fir.expressions.FirFunctionCall
 import org.jetbrains.kotlin.fir.expressions.impl.FirResolvedArgumentList
 import org.jetbrains.kotlin.fir.expressions.toResolvedCallableSymbol
+import org.jetbrains.kotlin.fir.resolve.diagnostics.ConeNoInferInvolved
 import org.jetbrains.kotlin.fir.resolve.substitution.substitutorByMap
 import org.jetbrains.kotlin.fir.types.*
 import org.jetbrains.kotlin.types.AbstractTypeChecker
@@ -22,7 +23,7 @@ import org.jetbrains.kotlin.types.AbstractTypeChecker
  * This checker is needed because of the nature of @NoInfer.
  * [org.jetbrains.kotlin.resolve.calls.inference.components.TypeCheckerStateForConstraintSystem.addSubtypeConstraint] returns `true`
  * if `subType` or `superType` contains `@NoInfer` annotation.
- * It implies that `addSubtypeConstraintIfCompatible` in [org.jetbrains.kotlin.fir.resolve.calls.checkApplicabilityForArgumentType]
+ * It implies that `addSubtypeConstraintIfCompatible` in [org.jetbrains.kotlin.fir.resolve.calls.stages.checkApplicabilityForArgumentType]
  * also returns `true` and `ArgumentTypeMismatch` diagnostics is not reported at the arguments resolving phase.
  * At the checkers phase all types are resolved, and it's possible to find missing mismatches using `isSubtypeOf` function and calculated substitution
  *
@@ -43,10 +44,7 @@ object FirFunctionNoInferArgumentsChecker : FirFunctionCallChecker(MppCheckerKin
 
         fun ConeKotlinType.containsNoInferAttribute(): Boolean = contains { it.attributes.contains(CompilerConeAttributes.NoInfer) }
 
-        if (mapping.none { (argument, valueParameter) ->
-                argument.resolvedType.containsNoInferAttribute() || valueParameter.returnTypeRef.coneType.containsNoInferAttribute()
-            }
-        ) {
+        if (ConeNoInferInvolved !in expression.nonFatalDiagnostics) {
             // Optimization: don't allocate anything if there is no `@NoInfer` type parameter (most common case)
             return
         }

@@ -129,6 +129,12 @@ class NewConstraintWarning(
     override val position: IncorporationConstraintPosition,
 ) : ConstraintSystemError(RESOLVED), NewConstraintMismatch
 
+class NoInferInvolvedWarning(
+    override val lowerType: KotlinTypeMarker,
+    override val upperType: KotlinTypeMarker,
+    override val position: IncorporationConstraintPosition,
+) : ConstraintSystemError(RESOLVED), NewConstraintMismatch
+
 class CapturedTypeFromSubtyping(
     val typeVariable: TypeVariableMarker,
     val constraintType: KotlinTypeMarker,

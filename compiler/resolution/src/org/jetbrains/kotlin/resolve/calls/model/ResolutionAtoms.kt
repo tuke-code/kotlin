@@ -16,10 +16,7 @@ import org.jetbrains.kotlin.resolve.calls.components.extractInputOutputTypesFrom
 import org.jetbrains.kotlin.resolve.calls.inference.NewConstraintSystem
 import org.jetbrains.kotlin.resolve.calls.inference.components.FreshVariableNewTypeSubstitutor
 import org.jetbrains.kotlin.resolve.calls.inference.components.NewTypeSubstitutor
-import org.jetbrains.kotlin.resolve.calls.inference.model.NewConstraintError
-import org.jetbrains.kotlin.resolve.calls.inference.model.NewConstraintMismatch
-import org.jetbrains.kotlin.resolve.calls.inference.model.NewConstraintWarning
-import org.jetbrains.kotlin.resolve.calls.inference.model.TypeVariableForLambdaReturnType
+import org.jetbrains.kotlin.resolve.calls.inference.model.*
 import org.jetbrains.kotlin.resolve.calls.tasks.ExplicitReceiverKind
 import org.jetbrains.kotlin.resolve.constants.IntegerValueTypeConstant
 import org.jetbrains.kotlin.types.KotlinType
@@ -285,6 +282,7 @@ sealed class CallResolutionResult(
             when (error) {
                 is NewConstraintError -> NewConstraintError(newLowerType, error.upperType, error.position).asDiagnostic()
                 is NewConstraintWarning -> NewConstraintWarning(newLowerType, error.upperType, error.position).asDiagnostic()
+                is NoInferInvolvedWarning -> it
             }
         }
     }

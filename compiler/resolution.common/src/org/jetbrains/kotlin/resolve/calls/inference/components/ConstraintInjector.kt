@@ -437,6 +437,8 @@ class ConstraintInjector(
                 } else {
                     c.addError(NewConstraintError(lowerType, upperType, position))
                 }
+            } else if (noInferInvolved) {
+                c.addError(NoInferInvolvedWarning(lowerType, upperType, position))
             }
         }
 

@@ -23,6 +23,9 @@ abstract class TypeCheckerStateForConstraintSystem(
     kotlinTypePreparator,
     kotlinTypeRefiner
 ) {
+    var noInferInvolved = false
+        private set
+
     abstract val languageVersionSettings: LanguageVersionSettings
 
     abstract fun isMyTypeVariable(type: RigidTypeMarker): Boolean
@@ -67,7 +70,10 @@ abstract class TypeCheckerStateForConstraintSystem(
         isFromNullabilityConstraint: Boolean
     ): Boolean? {
         val hasNoInfer = subType.isTypeVariableWithNoInfer() || superType.isTypeVariableWithNoInfer()
-        if (hasNoInfer) return true
+        if (extensionTypeContext.isK2 && hasNoInfer) {
+            noInferInvolved = true
+            return true
+        }
 
         val hasExact = subType.isTypeVariableWithExact() || superType.isTypeVariableWithExact()
 
