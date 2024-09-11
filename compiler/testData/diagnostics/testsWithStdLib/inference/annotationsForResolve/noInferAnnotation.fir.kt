@@ -69,3 +69,14 @@ fun <T> assertEquals1(e1: T, e2: @kotlin.internal.NoInfer T): Boolean = true
 fun test(s: String) {
     assertEquals1(s, <!ARGUMENT_TYPE_MISMATCH!>11<!>)
 }
+
+fun interface Predicate<in T> {
+    fun accept(i: T): Boolean
+}
+
+@Suppress("INVISIBLE_MEMBER", <!ERROR_SUPPRESSION!>"INVISIBLE_REFERENCE"<!>)
+fun <T> testSamParameterType(a: Predicate<@kotlin.internal.NoInfer T>, b: Predicate<T>): T = TODO()
+
+fun test() {
+    testSamParameterType({ x: String -> false }, { x: CharSequence -> true })
+}
