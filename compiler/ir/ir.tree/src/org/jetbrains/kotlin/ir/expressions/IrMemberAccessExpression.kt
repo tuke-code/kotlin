@@ -5,7 +5,6 @@
 
 package org.jetbrains.kotlin.ir.expressions
 
-import org.jetbrains.kotlin.builtins.StandardNames.FqNames.target
 import org.jetbrains.kotlin.ir.ObsoleteDescriptorBasedAPI
 import org.jetbrains.kotlin.ir.declarations.IrDeclarationOrigin
 import org.jetbrains.kotlin.ir.declarations.IrFunction
@@ -27,8 +26,13 @@ abstract class IrMemberAccessExpression<S : IrSymbol> : IrDeclarationReference()
 
     abstract var origin: IrStatementOrigin?
 
-
-    val allArguments: ArrayList<IrExpression?> = ArrayList()
+    /**
+     * A list of all value arguments.
+     *
+     * It corresponds 1 to 1 with [IrFunction.parameters], and therefore should have the same size.
+     * `null` value usually means that the default value of the corresponding parameter will be used.
+     */
+    val arguments: ArrayList<IrExpression?> = ArrayList()
 
     var targetContextParameterCount: Int = -1
         private set
@@ -46,10 +50,12 @@ abstract class IrMemberAccessExpression<S : IrSymbol> : IrDeclarationReference()
         isFromTargetUpdate: Boolean = false,
     ) {
         if (isFromTargetUpdate) {
-            require(hasDispatchReceiver == targetHasDispatchReceiver) { "New symbol has different shape w.r.t dispatch receiver" }
-            require(hasExtensionReceiver == targetHasExtensionReceiver) { "New symbol has different shape w.r.t extension receiver" }
+            require(hasDispatchReceiver == targetHasDispatchReceiver)
+            { "New symbol has different shape w.r.t. dispatch receiver" }
+            require(hasExtensionReceiver == targetHasExtensionReceiver)
+            { "New symbol has different shape w.r.t. extension receiver" }
             require(regularParameterCount + contextParameterCount == targetRegularParameterCount + targetContextParameterCount)
-            { "New symbol has different shape w.r.t value parameter count" }
+            { "New symbol has different shape w.r.t. value parameter count" }
         }
 
         targetHasDispatchReceiver = hasDispatchReceiver
@@ -63,9 +69,9 @@ abstract class IrMemberAccessExpression<S : IrSymbol> : IrDeclarationReference()
                     (if (targetHasExtensionReceiver) 1 else 0) +
                     targetRegularParameterCount
 
-        allArguments.ensureCapacity(allParametersCount)
-        repeat((allParametersCount - allArguments.size).coerceAtLeast(0)) {
-            allArguments += null
+        arguments.ensureCapacity(allParametersCount)
+        repeat((allParametersCount - arguments.size).coerceAtLeast(0)) {
+            arguments += null
         }
     }
 
@@ -131,13 +137,37 @@ abstract class IrMemberAccessExpression<S : IrSymbol> : IrDeclarationReference()
         return symbol.owner
     }
 
+    /**
+     * Number of those arguments that correspond to [IrParameterKind.ContextParameter] and [IrParameterKind.RegularParameter] parameters.
+     *
+     * ##### This is a deprecated API!
+     * Only use [arguments] instead. If you need to know the meaning of the arguments, reach out to the corresponding function's parameters.
+     * A drop-in replacement:
+     * ```
+     * symbol.owner.parameters.count { it.kind == IrParameterKind.RegularParameter || it.kind == IrParameterKind.ContextParameter }
+     * ```
+     *
+     * Details on the API migration: KT-68003
+     */
     val valueArgumentsCount: Int
         get() = targetRegularParameterCount + targetContextParameterCount
 
+    /**
+     * Argument corresponding to the [IrParameterKind.DispatchReceiver] parameter, if any.
+     *
+     * ##### This is a deprecated API!
+     * Only use [arguments] instead. If you need to know the meaning of the arguments, reach out to the corresponding function's parameters.
+     * A drop-in replacement:
+     * ```
+     * arguments[symbol.owner.parameters.indexOfFirst { it.kind == IrParameterKind.DispatchReceiver }]
+     * ```
+     *
+     * Details on the API migration: KT-68003
+     */
     var dispatchReceiver: IrExpression?
         get() {
             return if (targetHasDispatchReceiver) {
-                allArguments[0]
+                arguments[0]
             } else {
                 null
             }
@@ -146,11 +176,23 @@ abstract class IrMemberAccessExpression<S : IrSymbol> : IrDeclarationReference()
             targetHasDispatchReceiver = setReceiverArgument(0, value, targetHasDispatchReceiver)
         }
 
+    /**
+     * Argument corresponding to the [IrParameterKind.ExtensionReceiver] parameter, if any.
+     *
+     * ##### This is a deprecated API!
+     * Only use [arguments] instead. If you need to know the meaning of the arguments, reach out to the corresponding function's parameters.
+     * A drop-in replacement:
+     * ```
+     * arguments[symbol.owner.parameters.indexOfFirst { it.kind == IrParameterKind.ExtensionReceiver }]
+     * ```
+     *
+     * Details on the API migration: KT-68003
+     */
     var extensionReceiver: IrExpression?
         get() {
             return if (targetHasExtensionReceiver) {
                 val index = getExtensionReceiverIndex()
-                allArguments[index]
+                arguments[index]
             } else {
                 null
             }
@@ -166,11 +208,11 @@ abstract class IrMemberAccessExpression<S : IrSymbol> : IrDeclarationReference()
     private fun setReceiverArgument(index: Int, value: IrExpression?, targetHasThatReceiverParameter: Boolean): Boolean {
         if (targetHasThatReceiverParameter) {
             if (value != null) {
-                allArguments[index] = value
+                arguments[index] = value
                 return true
             } else {
-                if (allArguments[index] != null) {
-                    allArguments.removeAt(index)
+                if (arguments[index] != null) {
+                    arguments.removeAt(index)
                     return false
                 } else {
                     return true
@@ -178,7 +220,7 @@ abstract class IrMemberAccessExpression<S : IrSymbol> : IrDeclarationReference()
             }
         } else {
             if (value != null) {
-                allArguments.add(index, value)
+                arguments.add(index, value)
                 return true
             } else {
                 return false
@@ -186,16 +228,58 @@ abstract class IrMemberAccessExpression<S : IrSymbol> : IrDeclarationReference()
         }
     }
 
+    /**
+     * Gets one of arguments that correspond to [IrParameterKind.ContextParameter] or [IrParameterKind.RegularParameter] parameters.
+     * This is, the index corresponds to the deprecated [IrFunction.valueParameters] list, and not [IrFunction.parameters], which also includes
+     * receiver parameters.
+     *
+     * ##### This is a deprecated API!
+     * Only use [arguments] instead.
+     *
+     * E.g. for code
+     * ```
+     * call.getValueArgument(parameter.index)
+     * ```
+     *
+     * the replacement should be
+     * ```
+     * call.arguments[parameter.indexNew]
+     * ```
+     * If you need to know the meaning of the arguments, reach out to the corresponding function's parameters.
+     *
+     * Details on the API migration: KT-68003
+     */
     fun getValueArgument(index: Int): IrExpression? {
         val actualIndex = getRealValueArgumentIndex(index)
-        checkArgumentSlotAccess("value", actualIndex, this.allArguments.size)
-        return this.allArguments[actualIndex]
+        checkArgumentSlotAccess("value", actualIndex, this.arguments.size)
+        return this.arguments[actualIndex]
     }
 
+    /**
+     * Sets one of arguments that correspond to [IrParameterKind.ContextParameter] or [IrParameterKind.RegularParameter] parameters.
+     * This is, the index corresponds to the deprecated [IrFunction.valueParameters] list, and not [IrFunction.parameters], which also includes
+     * receiver parameters.
+     *
+     * ##### This is a deprecated API!
+     * Only use [arguments] instead.
+     *
+     * E.g. for code
+     * ```
+     * call.putValueArgument(parameter.index, ...)
+     * ```
+     *
+     * the replacement should be
+     * ```
+     * call.arguments[parameter.indexNew] = ...
+     * ```
+     * If you need to know the meaning of the arguments, reach out to the corresponding function's parameters.
+     *
+     * Details on the API migration: KT-68003
+     */
     fun putValueArgument(index: Int, valueArgument: IrExpression?) {
         val actualIndex = getRealValueArgumentIndex(index)
-        checkArgumentSlotAccess("value", actualIndex, this.allArguments.size)
-        this.allArguments[actualIndex] = valueArgument
+        checkArgumentSlotAccess("value", actualIndex, this.arguments.size)
+        this.arguments[actualIndex] = valueArgument
     }
 
     private fun getRealValueArgumentIndex(index: Int): Int =
@@ -221,10 +305,10 @@ abstract class IrMemberAccessExpression<S : IrSymbol> : IrDeclarationReference()
 
 
     override fun <D> acceptChildren(visitor: IrElementVisitor<Unit, D>, data: D) {
-        allArguments.forEach { it?.accept(visitor, data) }
+        arguments.forEach { it?.accept(visitor, data) }
     }
 
     override fun <D> transformChildren(transformer: IrElementTransformer<D>, data: D) {
-        allArguments.transformInPlace(transformer, data)
+        arguments.transformInPlace(transformer, data)
     }
 }
