@@ -26,9 +26,7 @@ abstract class InternalGradleBuildFusStatisticsService :
     interface Parameters : BuildServiceParameters {
         val fusStatisticsRootDirPath: Property<String>
         val configurationMetrics: ListProperty<Metric>
-        val fusStatisticIsEnabled: Property<Boolean>
-        val useBuildFinishFlowAction: Property<Boolean>
-        val buildUidService: Property<BuildUidService>
+        val buildId: Property<String>
     }
 
     private val metrics = ConcurrentLinkedQueue<Metric>()
@@ -37,7 +35,7 @@ abstract class InternalGradleBuildFusStatisticsService :
     //It is not possible to rely on BuildUidService in close() method,
     // so the buildId field is used for Gradle versions less than 8.2
     // for older versions [BuildFinishFlowAction] is used
-    private val buildId = parameters.buildUidService.get().buildId
+    private val buildId = parameters.buildId.get()
 
     init {
         log.debug("InternalGradleBuildFusStatisticsService is initialized for $buildId build")
@@ -47,10 +45,6 @@ abstract class InternalGradleBuildFusStatisticsService :
     override fun close() {
         log.debug("InternalGradleBuildFusStatisticsService is closed for $buildId build")
 
-        //since Gradle 8.1 flow action [BuildFinishFlowAction] is used to collect all metrics and write them down in a single file
-        if (parameters.useBuildFinishFlowAction.get()) {
-            return
-        }
         val reportDir = File(parameters.fusStatisticsRootDirPath.get(), STATISTICS_FOLDER_NAME)
         try {
             Files.createDirectories(reportDir.toPath())

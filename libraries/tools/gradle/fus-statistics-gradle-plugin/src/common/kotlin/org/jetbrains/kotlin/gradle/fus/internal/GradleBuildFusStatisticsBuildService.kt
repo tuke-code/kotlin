@@ -46,12 +46,10 @@ private fun registerIfAbsent(project: Project, uidService: Provider<BuildUidServ
         )
         project.gradle.sharedServices.registerIfAbsent(serviceName, NoConsentGradleBuildFusService::class.java) {}
     } else if (GradleVersion.current().baseVersion < GradleVersion.version("8.1")) {
-        project.gradle.sharedServices.registerIfAbsent(serviceName, InternalGradleBuildFusStatisticsService::class.java) {
-            it.parameters.fusStatisticsRootDirPath.value(customPath).disallowChanges()
-            it.parameters.fusStatisticIsEnabled.value(statisticsIsEnabled).disallowChanges()
-            it.parameters.configurationMetrics.empty()
-            it.parameters.useBuildFinishFlowAction.set(GradleVersion.current().baseVersion >= GradleVersion.version("8.1"))
-            it.parameters.buildUidService.value(uidService).disallowChanges()
+        project.gradle.sharedServices.registerIfAbsent(serviceName, InternalGradleBuildFusStatisticsService::class.java) { spec ->
+            spec.parameters.fusStatisticsRootDirPath.value(customPath).disallowChanges()
+            spec.parameters.configurationMetrics.empty()
+            spec.parameters.buildId.value(uidService.map { it.buildId }).disallowChanges()
         }
     } else {
         project.gradle.sharedServices.registerIfAbsent(serviceName, BuildFlowFusStatisticsBuildService::class.java) {}
