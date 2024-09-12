@@ -7,10 +7,7 @@ package org.jetbrains.kotlin.gradle.fus.internal
 
 
 import org.gradle.api.logging.Logging
-import org.gradle.api.provider.ListProperty
 import org.gradle.api.provider.Property
-import org.gradle.api.services.BuildServiceParameters
-import org.jetbrains.kotlin.gradle.fus.BuildUidService
 import org.jetbrains.kotlin.gradle.fus.GradleBuildFusStatisticsService
 import org.jetbrains.kotlin.gradle.fus.Metric
 import org.jetbrains.kotlin.gradle.fus.UniqueId
@@ -19,13 +16,11 @@ import java.io.FileOutputStream
 import java.nio.file.Files
 import java.util.UUID
 import java.util.concurrent.ConcurrentLinkedQueue
-import kotlin.collections.ArrayList
 
 abstract class InternalGradleBuildFusStatisticsService :
     GradleBuildFusStatisticsService<InternalGradleBuildFusStatisticsService.Parameters> {
-    interface Parameters : BuildServiceParameters {
+    internal interface Parameters : CommonFusServiceParameters {
         val fusStatisticsRootDirPath: Property<String>
-        val configurationMetrics: ListProperty<Metric>
         val buildId: Property<String>
     }
 

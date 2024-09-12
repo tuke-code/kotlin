@@ -5,6 +5,7 @@
 
 package org.jetbrains.kotlin.gradle.fus.internal
 
+import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.logging.Logging
 import org.gradle.api.provider.Provider
@@ -46,13 +47,39 @@ private fun registerIfAbsent(project: Project, uidService: Provider<BuildUidServ
         )
         project.gradle.sharedServices.registerIfAbsent(serviceName, NoConsentGradleBuildFusService::class.java) {}
     } else if (GradleVersion.current().baseVersion < GradleVersion.version("8.1")) {
-        project.gradle.sharedServices.registerIfAbsent(serviceName, InternalGradleBuildFusStatisticsService::class.java) { spec ->
+        val fusService = project.gradle.sharedServices.registerIfAbsent(
+            serviceName,
+            InternalGradleBuildFusStatisticsService::class.java
+        ) { spec ->
             spec.parameters.fusStatisticsRootDirPath.value(customPath).disallowChanges()
             spec.parameters.configurationMetrics.empty()
             spec.parameters.buildId.value(uidService.map { it.buildId }).disallowChanges()
         }
+        project.registerTaskCreatingFusService(fusService)
+        fusService
     } else {
         project.gradle.sharedServices.registerIfAbsent(serviceName, BuildFlowFusStatisticsBuildService::class.java) {}
+    }
+}
+
+private fun Project.registerTaskCreatingFusService(
+    fusService: Provider<InternalGradleBuildFusStatisticsService>
+) {
+    val writeFusTask = tasks.register("kotlinFus", DefaultTask::class.java) { task ->
+        task.doNotTrackState("Task is stateless")
+
+        task.usesService(fusService)
+        task.doLast {
+            // Triggering FUS service creation, so when only configuration metrics are added - they are still written
+            fusService.get()
+        }
+    }
+
+    val startTaskName = project.gradle.startParameter.taskNames.first()
+    project.tasks.configureEach { t ->
+        if (t.name == startTaskName) {
+            t.finalizedBy(writeFusTask)
+        }
     }
 }
 
