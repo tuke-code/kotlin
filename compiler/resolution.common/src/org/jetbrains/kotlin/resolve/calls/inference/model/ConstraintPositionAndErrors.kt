@@ -149,8 +149,6 @@ class ConstrainingTypeIsError(
     val position: IncorporationConstraintPosition
 ) : ConstraintSystemError(INAPPLICABLE)
 
-class NoSuccessfulFork(val position: IncorporationConstraintPosition) : ConstraintSystemError(INAPPLICABLE)
-
 sealed interface InferredEmptyIntersection {
     val incompatibleTypes: List<KotlinTypeMarker>
     val causingTypes: List<KotlinTypeMarker>

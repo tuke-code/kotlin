@@ -507,9 +507,7 @@ class NewConstraintSystemImpl(
         // 1. {Xv=Int} – is a one-element set (but potentially there might be more constraints in the set)
         // 2. {Xv=T} – second constraints set
         for ((position, forkPointData) in allForkPointsData) {
-            if (!applyConstraintsFromFirstSuccessfulBranchOfTheFork(forkPointData, position)) {
-                addError(NoSuccessfulFork(position))
-            }
+            applyTheBestBranchFromForkPoint(forkPointData, position)
         }
     }
 
@@ -518,22 +516,17 @@ class NewConstraintSystemImpl(
      *
      * That function is expected to be pure, i.e. it should leave the system in the same state it was found before the call.
      *
-     * @return null if for each fork we found a possible branch that doesn't contradict with all other constraints
-     * @return non-nullable error if there's a contradiction we didn't manage to resolve
      */
-    fun checkIfForksMightBeSuccessfullyResolved(): ConstraintSystemError? {
-        if (constraintsFromAllForkPoints.isEmpty()) return null
+    fun areThereContradictionsInForks(): Boolean {
+        if (constraintsFromAllForkPoints.isEmpty()) return false
 
         val allForkPointsData = constraintsFromAllForkPoints.toList()
         constraintsFromAllForkPoints.clear()
 
-        var result: ConstraintSystemError? = null
+        val isThereAnyUnsuccessful: Boolean
         runTransaction {
-            for ((position, forkPointData) in allForkPointsData) {
-                if (!applyConstraintsFromFirstSuccessfulBranchOfTheFork(forkPointData, position)) {
-                    result = NoSuccessfulFork(position)
-                    break
-                }
+            isThereAnyUnsuccessful = allForkPointsData.any { (position, forkPointData) ->
+                !applyTheBestBranchFromForkPoint(forkPointData, position)
             }
 
             false
@@ -541,31 +534,46 @@ class NewConstraintSystemImpl(
 
         constraintsFromAllForkPoints.addAll(allForkPointsData)
 
-        return result
+        return isThereAnyUnsuccessful
     }
 
     /**
+     * Applies the first successful branch if there's any.
+     * Otherwise, applies just the first branch (containing contradictions)
      * @return true if there is a successful constraints set for the fork
      */
-    private fun applyConstraintsFromFirstSuccessfulBranchOfTheFork(
+    private fun applyTheBestBranchFromForkPoint(
         forkPointData: ForkPointData,
         position: IncorporationConstraintPosition,
     ): Boolean {
-        return forkPointData.any { constraintSetForForkBranch ->
+        val isSuccessful = forkPointData.any { constraintSetForForkBranch ->
             runTransaction {
-                constraintInjector.processGivenForkPointBranchConstraints(
-                    this@NewConstraintSystemImpl.apply { checkState(State.BUILDING, State.COMPLETION, State.TRANSACTION) },
-                    constraintSetForForkBranch,
-                    position,
-                )
-
-                // Some new fork points constraints might be introduced, and we apply them immediately because we anyway at the
-                // completion state (as we already started resolving them)
-                resolveForkPointsConstraints()
+                applyForkPointBranch(constraintSetForForkBranch, position)
 
                 !hasContradiction
             }
         }
+
+        if (!isSuccessful) {
+            applyForkPointBranch(forkPointData.first(), position)
+        }
+
+        return isSuccessful
+    }
+
+    private fun applyForkPointBranch(
+        constraintSetForForkBranch: ForkPointBranchDescription,
+        position: IncorporationConstraintPosition,
+    ) {
+        constraintInjector.processGivenForkPointBranchConstraints(
+            this@NewConstraintSystemImpl.apply { checkState(State.BUILDING, State.COMPLETION, State.TRANSACTION) },
+            constraintSetForForkBranch,
+            position,
+        )
+
+        // Some new fork points constraints might be introduced, and we apply them immediately because we anyway at the
+        // completion state (as we already started resolving them)
+        resolveForkPointsConstraints()
     }
 
     // ConstraintInjector.Context, KotlinConstraintSystemCompleter.Context
