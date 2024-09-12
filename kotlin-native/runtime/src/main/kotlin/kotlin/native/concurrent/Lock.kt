@@ -31,7 +31,7 @@ internal class Lock {
                 }
                 0 -> {
                     // We just got the lock.
-                    assert(reenterCount_.value == 0)
+                    assert(reenterCount_.load() == 0)
                     break@loop
                 }
             }
@@ -39,7 +39,7 @@ internal class Lock {
     }
 
     fun unlock() {
-        if (reenterCount_.value > 0) {
+        if (reenterCount_.load() > 0) {
             reenterCount_.decrementAndFetch()
         } else {
             val lockData = CurrentThread.id.hashCode()
