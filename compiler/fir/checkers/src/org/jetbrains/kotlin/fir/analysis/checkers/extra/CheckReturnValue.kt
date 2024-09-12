@@ -16,6 +16,7 @@ import org.jetbrains.kotlin.fir.analysis.diagnostics.FirErrors
 import org.jetbrains.kotlin.fir.declarations.FirProperty
 import org.jetbrains.kotlin.fir.declarations.FirValueParameter
 import org.jetbrains.kotlin.fir.expressions.*
+import org.jetbrains.kotlin.fir.expressions.impl.FirSingleExpressionBlock
 import org.jetbrains.kotlin.fir.references.resolved
 import org.jetbrains.kotlin.fir.references.symbol
 import org.jetbrains.kotlin.fir.references.toResolvedCallableSymbol
@@ -75,7 +76,7 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
     private fun CheckerContext.firstNonPropagatingOuterElementOf(thisExpression: FirExpression): FirElement? =
         containingElements.lastOrNull { it != thisExpression && !it.isPropagating }
 
-    private val FirElement.isPropagating: Boolean get() = this is FirSmartCastExpression || this is FirArgumentList || this is FirTypeOperatorCall
+    private val FirElement.isPropagating: Boolean get() = this is FirSmartCastExpression || this is FirArgumentList || this is FirTypeOperatorCall || this is FirSingleExpressionBlock
 
     private val FirElement?.isVarInitializationOrReturn: Boolean get() = this is FirReturnExpression || this is FirProperty || this is FirValueParameter
 
