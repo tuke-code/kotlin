@@ -19,11 +19,11 @@ fun <T> bar(a: A<T>, w: T) {
         if (a is B) {
             baz(a, 1)
             baz(a, w)
-            baz(<!ARGUMENT_TYPE_MISMATCH, ARGUMENT_TYPE_MISMATCH!>a<!>, "")
+            baz(a, <!ARGUMENT_TYPE_MISMATCH!>""<!>)
         }
 
         if (a is B || a is C) {
-            <!ARGUMENT_TYPE_MISMATCH!><!CANNOT_INFER_PARAMETER_TYPE!>baz<!>(<!ARGUMENT_TYPE_MISMATCH!>a<!>, <!ARGUMENT_TYPE_MISMATCH!>w<!>)<!>
+            baz(a, w)
         }
     }
 }

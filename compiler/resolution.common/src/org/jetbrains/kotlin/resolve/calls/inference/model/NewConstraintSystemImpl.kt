@@ -296,14 +296,29 @@ class NewConstraintSystemImpl(
 
     // ConstraintSystemBuilder, KotlinConstraintSystemCompleter.Context
     override val hasContradiction: Boolean
-        get() = storage.hasContradiction.also {
+        get() {
             checkState(
                 State.FREEZED,
                 State.BUILDING,
                 State.COMPLETION,
                 State.TRANSACTION
             )
+
+            if (storage.hasContradiction) return true
+
+            if (!languageVersionSettings.supportsFeature(LanguageFeature.InferenceEnhancementsIn21)) return false
+
+            if (state == State.FREEZED) {
+                return false
+            }
+
+            // Since 2.1 at each hasContradiction check, we make sure that all forks might be successfully resolved, too
+            return areThereContradictionsInForks()
         }
+
+    @ConstraintSystemOperation.ForkProcessingDetails
+    override val hasContradictionIgnoringForkPoints: Boolean
+        get() = storage.hasContradiction
 
     fun addOuterSystem(outerSystem: ConstraintStorage) {
         require(!storage.usesOuterCs)
@@ -487,7 +502,7 @@ class NewConstraintSystemImpl(
 
     override val constraintsFromAllForkPoints: MutableList<Pair<IncorporationConstraintPosition, ForkPointData>>
         get() {
-            checkState(State.BUILDING, State.COMPLETION, State.TRANSACTION)
+            checkState(State.BUILDING, State.COMPLETION, State.TRANSACTION, State.FREEZED)
             return storage.constraintsFromAllForkPoints
         }
 

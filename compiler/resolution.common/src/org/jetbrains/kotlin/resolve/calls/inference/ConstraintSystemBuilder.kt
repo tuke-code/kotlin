@@ -19,6 +19,12 @@ import kotlin.contracts.contract
 
 interface ConstraintSystemOperation {
     val hasContradiction: Boolean
+
+    @RequiresOptIn
+    annotation class ForkProcessingDetails
+
+    @ForkProcessingDetails
+    val hasContradictionIgnoringForkPoints: Boolean
     fun registerVariable(variable: TypeVariableMarker)
     fun markPostponedVariable(variable: TypeVariableMarker)
     fun markCouldBeResolvedWithUnrestrictedBuilderInference()
