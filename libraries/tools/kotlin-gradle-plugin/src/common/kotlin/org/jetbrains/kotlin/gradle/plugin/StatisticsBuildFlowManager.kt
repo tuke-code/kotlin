@@ -11,7 +11,7 @@ import org.gradle.api.provider.Property
 import org.gradle.api.services.ServiceReference
 import org.gradle.api.tasks.Input
 import org.jetbrains.kotlin.gradle.fus.BuildUidService
-import org.jetbrains.kotlin.gradle.fus.internal.InternalGradleBuildFusStatisticsService
+import org.jetbrains.kotlin.gradle.fus.internal.BuildFlowFusStatisticsBuildService
 import org.jetbrains.kotlin.gradle.internal.report.BuildScanApi
 import org.jetbrains.kotlin.gradle.plugin.statistics.BuildFusService
 import org.jetbrains.kotlin.gradle.report.BuildMetricsService
@@ -66,7 +66,7 @@ internal class BuildFinishFlowAction : FlowAction<BuildFinishFlowAction.Paramete
         val buildUidServiceProperty: Property<BuildUidService?>
 
         @get:ServiceReference
-        val customFusServiceProperty: Property<InternalGradleBuildFusStatisticsService?>
+        val customFusServiceProperty: Property<BuildFlowFusStatisticsBuildService>
 
         @get:Input
         val buildFailed: Property<Boolean>

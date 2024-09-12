@@ -6,7 +6,7 @@
 package org.jetbrains.kotlin.gradle.fus
 
 import org.gradle.api.Project
-import org.jetbrains.kotlin.gradle.fus.internal.InternalGradleBuildFusStatisticsService
+import org.jetbrains.kotlin.gradle.fus.internal.CommonFusServiceParameters
 import org.jetbrains.kotlin.gradle.fus.internal.serviceName
 
 /**
@@ -16,12 +16,13 @@ import org.jetbrains.kotlin.gradle.fus.internal.serviceName
  * [GradleBuildFusStatisticsService.reportMetric] should be called for execution time metrics
  */
 fun Project.addGradleConfigurationPhaseMetric(reportAction: () -> Collection<Metric>) {
-    project.gradle.sharedServices.registrations.findByName(serviceName)?.also {
-        val parameters = it.parameters
-        if (parameters is InternalGradleBuildFusStatisticsService.Parameters) {
+    project.gradle.sharedServices.registrations.findByName(serviceName)?.also { fusService ->
+        val parameters = fusService.parameters
+        if (parameters is CommonFusServiceParameters) {
             parameters.configurationMetrics.addAll(project.provider {
                 reportAction()
             })
+            fusService.parameters
         }
     }
 }

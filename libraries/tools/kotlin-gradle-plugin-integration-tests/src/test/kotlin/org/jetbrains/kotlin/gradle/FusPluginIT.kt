@@ -174,7 +174,7 @@ class FusPluginIT : KGPBaseTest() {
         project(
             "multiClassloaderProject",
             gradleVersion,
-            defaultBuildOptions.copy(configurationCache = BuildOptions.ConfigurationCacheValue.ENABLED, logLevel = LogLevel.DEBUG),
+            defaultBuildOptions.copy(configurationCache = BuildOptions.ConfigurationCacheValue.ENABLED),
             forceOutput = true
         ) {
 
@@ -195,7 +195,6 @@ class FusPluginIT : KGPBaseTest() {
              build(
                 "assemble",
                 "-Pkotlin.session.logger.root.path=${projectPath.resolve(reportRelativePath).pathString}",
-                enableGradleDebug = true
             ) {
                 validateFusReportFileContains(
                     gradleVersion,
