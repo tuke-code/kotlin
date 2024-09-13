@@ -119,6 +119,10 @@ class DeclarationCheckersDiagnosticComponent(
         checkers.allBasicDeclarationCheckers.check(codeFragment, data)
     }
 
+    override fun visitReplSnippet(replSnippet: FirReplSnippet, data: CheckerContext) {
+        checkers.allReplSnippetCheckers.check(replSnippet, data)
+    }
+
     override fun visitField(field: FirField, data: CheckerContext) {
         checkers.allCallableDeclarationCheckers.check(field, data)
     }
