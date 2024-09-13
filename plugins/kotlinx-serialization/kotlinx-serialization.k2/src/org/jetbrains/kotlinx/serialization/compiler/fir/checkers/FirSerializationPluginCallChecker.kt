@@ -37,7 +37,7 @@ internal object FirSerializationPluginCallChecker : FirFunctionCallChecker(MppCh
     private val parameterNameBuilderAction: Name = Name.identifier("builderAction")
 
     override fun check(functionCall: FirFunctionCall, context: CheckerContext, reporter: DiagnosticReporter) {
-        val function = functionCall.calleeReference.symbol as? FirNamedFunctionSymbol ?: return
+/*        val function = functionCall.calleeReference.symbol as? FirNamedFunctionSymbol ?: return
         if (!isJsonFormatCreation(function)) return
 
         if (isDefaultFormat(functionCall)) {
@@ -54,7 +54,7 @@ internal object FirSerializationPluginCallChecker : FirFunctionCallChecker(MppCh
                 FirSerializationErrors.JSON_FORMAT_REDUNDANT,
                 context
             )
-        }
+        }*/
     }
 
     private fun isJsonFormatCreation(function: FirNamedFunctionSymbol): Boolean {
