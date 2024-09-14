@@ -40783,6 +40783,12 @@ public class FirLightTreeOldFrontendDiagnosticsTestGenerated extends AbstractFir
       }
 
       @Test
+      @TestMetadata("innerClassInsideParentWithGenericsVariance.kt")
+      public void testInnerClassInsideParentWithGenericsVariance() {
+        runTest("compiler/testData/diagnostics/tests/variance/innerClassInsideParentWithGenericsVariance.kt");
+      }
+
+      @Test
       @TestMetadata("InvariantPosition.kt")
       public void testInvariantPosition() {
         runTest("compiler/testData/diagnostics/tests/variance/InvariantPosition.kt");
