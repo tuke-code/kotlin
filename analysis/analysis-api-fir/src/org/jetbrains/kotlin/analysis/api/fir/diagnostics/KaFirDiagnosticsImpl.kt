@@ -2023,7 +2023,7 @@ internal class TypeArgumentsForOuterClassWhenNestedReferencedImpl(
 
 internal class WrongNumberOfTypeArgumentsImpl(
     override val expectedCount: Int,
-    override val classifier: KaClassLikeSymbol,
+    override val owner: KaSymbol,
     firDiagnostic: KtPsiDiagnostic,
     token: KaLifetimeToken,
 ) : KaAbstractFirDiagnostic<PsiElement>(firDiagnostic, token), KaFirDiagnostic.WrongNumberOfTypeArguments
