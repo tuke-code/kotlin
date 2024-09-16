@@ -270,12 +270,13 @@ interface ConeTypeContext : TypeSystemContext, TypeSystemOptimizationContext, Ty
         return when (this) {
             is ConeStubTypeConstructor -> listOf(session.builtinTypes.nullableAnyType.coneType)
             is ConeTypeVariableTypeConstructor -> emptyList()
+            is ConeTypeParameterLookupTag -> bounds().map { it.coneType } // handled here for optimization reasons
             is ConeClassifierLookupTag -> {
                 when (val symbol = toSymbol(session).also { it?.lazyResolveToPhase(FirResolvePhase.TYPES) }) {
-                    is FirTypeParameterSymbol -> symbol.resolvedBounds.map { it.coneType }
                     is FirClassSymbol<*> -> symbol.fir.superConeTypes
                     is FirTypeAliasSymbol -> listOfNotNull(symbol.fir.expandedConeType)
                     null -> listOf(session.builtinTypes.anyType.coneType)
+                    is FirTypeParameterSymbol -> error("Type parameters should be handled earlier")
                 }
             }
             is ConeCapturedTypeConstructor -> supertypes.orEmpty()
