@@ -6,23 +6,19 @@
 package kotlin.concurrent
 
 import kotlin.internal.ActualizeByJvmBuiltinProvider
-import kotlin.internal.RequireKotlin
-import kotlin.internal.RequireKotlinVersionKind
 
 /**
- * An [IntArray] in which elements are always updated atomically with guaranteed sequential consistent ordering.
+ * An array of ints in which elements may be updated atomically with guaranteed sequential consistent ordering.
  *
  * Platform-specific implementation details:
  *
- * For Native:
- * [AtomicIntArray] stores an [IntArray] and atomically updates it's elements.
+ * When targeting the Native backend, [AtomicIntArray] stores an [IntArray] and atomically updates it's elements.
  * For additional details about atomicity guarantees for reads and writes see [kotlin.concurrent.Volatile].
  *
- * For JVM:
  * When targeting the JVM, instances of [AtomicIntArray] are represented by [java.util.concurrent.atomic.AtomicIntegerArray].
+ * For details about guarantees of volatile accesses and updates of atomics refer to The Java Language Specification (17.4 Memory Model).
  *
- * For JS and Wasm:
- * [AtomicIntArray] is implemented trivially since these platforms do not support multi-threading.
+ * For JS and WASM [AtomicIntArray] is implemented trivially and is not thread-safe since these platforms do not support multi-threading.
  */
 @ActualizeByJvmBuiltinProvider
 public expect class AtomicIntArray {
@@ -150,7 +146,9 @@ public expect class AtomicIntArray {
     public fun decrementAndFetchAt(index: Int): Int
 
     /**
-     * Returns the string representation of the underlying [IntArray][array].
+     * Returns the string representation of the underlying array of ints.
+     *
+     * This operation does not provide any atomicity guarantees.
      */
     public override fun toString(): String
 }
@@ -163,8 +161,6 @@ public expect class AtomicIntArray {
  *
  * @throws RuntimeException if the specified [size] is negative.
  */
-@SinceKotlin("1.9")
-@RequireKotlin(version = "1.9.20", versionKind = RequireKotlinVersionKind.COMPILER_VERSION)
 @ExperimentalStdlibApi
 public inline fun AtomicIntArray(size: Int, init: (Int) -> Int): AtomicIntArray {
     val inner = IntArray(size)
@@ -175,7 +171,17 @@ public inline fun AtomicIntArray(size: Int, init: (Int) -> Int): AtomicIntArray 
 }
 
 /**
- * An [LongArray] in which elements are always updated atomically with guaranteed sequential consistent ordering.
+ * An array of longs in which elements may be updated atomically with guaranteed sequential consistent ordering.
+ *
+ * Platform-specific implementation details:
+ *
+ * When targeting the Native backend, [AtomicLongArray] stores a [LongArray] and atomically updates it's elements.
+ * For additional details about atomicity guarantees for reads and writes see [kotlin.concurrent.Volatile].
+ *
+ * When targeting the JVM, instances of [AtomicLongArray] are represented by [java.util.concurrent.atomic.AtomicLongArray].
+ * For details about guarantees of volatile accesses and updates of atomics refer to The Java Language Specification (17.4 Memory Model).
+ *
+ * For JS and WASM [AtomicLongArray] is implemented trivially and is not thread-safe since these platforms do not support multi-threading.
  */
 @ActualizeByJvmBuiltinProvider
 public expect class AtomicLongArray {
@@ -303,7 +309,9 @@ public expect class AtomicLongArray {
     public fun decrementAndFetchAt(index: Int): Long
 
     /**
-     * Returns the string representation of the underlying [IntArray][array].
+     * Returns the string representation of the underlying array of longs.
+     *
+     * This operation does not provide any atomicity guarantees.
      */
     public override fun toString(): String
 }
@@ -316,8 +324,6 @@ public expect class AtomicLongArray {
  *
  * @throws RuntimeException if the specified [size] is negative.
  */
-@SinceKotlin("1.9")
-@RequireKotlin(version = "1.9.20", versionKind = RequireKotlinVersionKind.COMPILER_VERSION)
 @ExperimentalStdlibApi
 public inline fun AtomicLongArray(size: Int, init: (Int) -> Long): AtomicLongArray {
     val inner = LongArray(size)
@@ -327,11 +333,24 @@ public inline fun AtomicLongArray(size: Int, init: (Int) -> Long): AtomicLongArr
     return AtomicLongArray(inner)
 }
 
+/**
+ * A generic array of objects in which elements may be updated atomically with guaranteed sequential consistent ordering.
+ *
+ * Platform-specific implementation details:
+ *
+ * When targeting the Native backend, [AtomicArray] stores an [Array] with elements of type [T] and atomically updates it's elements.
+ * For additional details about atomicity guarantees for reads and writes see [kotlin.concurrent.Volatile].
+ *
+ * When targeting the JVM, instances of [AtomicArray] are represented by [java.util.concurrent.atomic.AtomicReferenceArray].
+ * For details about guarantees of volatile accesses and updates of atomics refer to The Java Language Specification (17.4 Memory Model).
+ *
+ * For JS and WASM [AtomicArray] is implemented trivially and is not thread-safe since these platforms do not support multi-threading.
+ */
 @ActualizeByJvmBuiltinProvider
 public expect class AtomicArray<T> {
 
     /**
-     * Creates a new [AtomicArray] filled with elements of the given [array].
+     * Creates a new [AtomicArray]<T> filled with elements of the given [array].
      */
     public constructor(array: Array<T>)
 
@@ -394,7 +413,9 @@ public expect class AtomicArray<T> {
     public fun compareAndExchangeAt(index: Int, expectedValue: T, newValue: T): T
 
     /**
-     * Returns the string representation of the underlying [IntArray][array].
+     * Returns the string representation of the underlying array of objects.
+     *
+     * This operation does not provide any atomicity guarantees.
      */
     public override fun toString(): String
 }
@@ -407,8 +428,6 @@ public expect class AtomicArray<T> {
  *
  * @throws RuntimeException if the specified [size] is negative.
  */
-@SinceKotlin("1.9")
-@RequireKotlin(version = "1.9.20", versionKind = RequireKotlinVersionKind.COMPILER_VERSION)
 @ExperimentalStdlibApi
 @Suppress("UNCHECKED_CAST")
 public inline fun <reified T> AtomicArray(size: Int, init: (Int) -> T): AtomicArray<T> {

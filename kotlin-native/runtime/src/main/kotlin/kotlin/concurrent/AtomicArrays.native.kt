@@ -13,7 +13,8 @@ import kotlin.internal.RequireKotlin
 import kotlin.internal.RequireKotlinVersionKind
 
 /**
- * An [IntArray] in which elements are always updated atomically.
+ * An array of ints in which elements may be updated atomically with guaranteed sequential consistent ordering.
+ *
  * For additional details about atomicity guarantees for reads and writes see [kotlin.concurrent.Volatile].
  */
 @SinceKotlin("1.9")
@@ -38,6 +39,9 @@ public actual class AtomicIntArray {
         this.array = array.copyOf()
     }
 
+    /**
+     * Returns the number of elements in the array.
+     */
     public actual val size: Int get() = array.size
 
     /**
@@ -46,56 +50,141 @@ public actual class AtomicIntArray {
     @Deprecated("Use size instead.", ReplaceWith("this.size"))
     public val length: Int get() = array.size
 
+    /**
+     * Atomically gets the value of the element at the given [index].
+     *
+     * Provides sequential consistent ordering guarantees.
+     *
+     * @throws [IndexOutOfBoundsException] if the [index] is out of bounds of this array.
+     */
     public actual fun loadAt(index: Int): Int {
         checkBounds(index)
         return array.atomicGet(index)
     }
 
+    /**
+     * Atomically sets the value of the element at the given [index] to the [new value][newValue].
+     *
+     * Provides sequential consistent ordering guarantees.
+     *
+     * @throws [IndexOutOfBoundsException] if the [index] is out of bounds of this array.
+     */
     public actual fun storeAt(index: Int, newValue: Int): Unit {
         checkBounds(index)
         array.atomicSet(index, newValue)
     }
 
+    /**
+     * Atomically sets the value of the element at the given [index] to the [new value][newValue]
+     * and returns the old value of the element.
+     *
+     * Provides sequential consistent ordering guarantees.
+     *
+     * @throws [IndexOutOfBoundsException] if the [index] is out of bounds of this array.
+     */
     public actual fun exchangeAt(index: Int, newValue: Int): Int {
         checkBounds(index)
         return array.getAndSet(index, newValue)
     }
 
+    /**
+     * Atomically sets the value of the element at the given [index] to the [new value][newValue]
+     * if the current value equals the [expected value][expectedValue].
+     * Returns true if the operation was successful and false only if the current value of the element was not equal to the expected value.
+     *
+     * Provides sequential consistent ordering guarantees and never fails spuriously.
+     *
+     * Comparison of values is done by value.
+     *
+     * @throws [IndexOutOfBoundsException] if the [index] is out of bounds of this array.
+     */
     public actual fun compareAndSetAt(index: Int, expectedValue: Int, newValue: Int): Boolean {
         checkBounds(index)
         return array.compareAndSet(index, expectedValue, newValue)
     }
 
+    /**
+     * Atomically sets the value of the element at the given [index] to the [new value][newValue]
+     * if the current value equals the [expected value][expectedValue] and returns the old value of the element in any case.
+     *
+     * Provides sequential consistent ordering guarantees and never fails spuriously.
+     *
+     * Comparison of values is done by value.
+     *
+     * @throws [IndexOutOfBoundsException] if the [index] is out of bounds of this array.
+     */
     public actual fun compareAndExchangeAt(index: Int, expectedValue: Int, newValue: Int): Int {
         checkBounds(index)
         return array.compareAndExchange(index, expectedValue, newValue)
     }
 
+    /**
+     * Atomically adds the given [delta] to the element at the given [index] and returns the old value of the element.
+     *
+     * Provides sequential consistent ordering guarantees.
+     *
+     * @throws [IndexOutOfBoundsException] if the [index] is out of bounds of this array.
+     */
     public actual fun fetchAndAddAt(index: Int, delta: Int): Int {
         checkBounds(index)
         return array.getAndAdd(index, delta)
     }
 
+    /**
+     * Atomically adds the given [delta] to the element at the given [index] and returns the new value of the element.
+     *
+     * Provides sequential consistent ordering guarantees.
+     *
+     * @throws [IndexOutOfBoundsException] if the [index] is out of bounds of this array.
+     */
     public actual fun addAndFetchAt(index: Int, delta: Int): Int {
         checkBounds(index)
         return array.getAndAdd(index, delta) + delta
     }
 
+    /**
+     * Atomically increments the element at the given [index] by one and returns the old value of the element.
+     *
+     * Provides sequential consistent ordering guarantees.
+     *
+     * @throws [IndexOutOfBoundsException] if the [index] is out of bounds of this array.
+     */
     public actual fun fetchAndIncrementAt(index: Int): Int {
         checkBounds(index)
         return array.getAndAdd(index, 1)
     }
 
+    /**
+     * Atomically increments the element at the given [index] by one and returns the new value of the element.
+     *
+     * Provides sequential consistent ordering guarantees.
+     *
+     * @throws [IndexOutOfBoundsException] if the [index] is out of bounds of this array.
+     */
     public actual fun incrementAndFetchAt(index: Int): Int {
         checkBounds(index)
         return array.getAndAdd(index, 1) + 1
     }
 
+    /**
+     * Atomically decrements the element at the given [index] by one and returns the old value of the element.
+     *
+     * Provides sequential consistent ordering guarantees.
+     *
+     * @throws [IndexOutOfBoundsException] if the [index] is out of bounds of this array.
+     */
     public actual fun fetchAndDecrementAt(index: Int): Int {
         checkBounds(index)
         return array.getAndAdd(index, -1)
     }
 
+    /**
+     * Atomically decrements the element at the given [index] by one and returns the new value of the element.
+     *
+     * Provides sequential consistent ordering guarantees.
+     *
+     * @throws [IndexOutOfBoundsException] if the [index] is out of bounds of this array.
+     */
     public actual fun decrementAndFetchAt(index: Int): Int {
         checkBounds(index)
         return array.getAndAdd(index, -1) - 1
@@ -249,7 +338,9 @@ public actual class AtomicIntArray {
     }
 
     /**
-     * Returns the string representation of the underlying [IntArray][array].
+     * Returns the string representation of the underlying array of ints.
+     *
+     * This operation does not provide any atomicity guarantees.
      */
     public actual override fun toString(): String = array.toString()
 
@@ -259,7 +350,8 @@ public actual class AtomicIntArray {
 }
 
 /**
- * An [LongArray] in which elements are always updated atomically.
+ * An array of longs in which elements may be updated atomically with guaranteed sequential consistent ordering.
+ *
  * For additional details about atomicity guarantees for reads and writes see [kotlin.concurrent.Volatile].
  */
 @SinceKotlin("1.9")
@@ -269,8 +361,7 @@ public actual class AtomicLongArray {
     private val array: LongArray
 
     /**
-     * Creates a new [AtomicIntArray] of the given [size], with all elements initialized to zero.
-     *
+     * Creates a new [AtomicLongArray] of the specified [size], with all elements initialized to zero.
      * @throws RuntimeException if the specified [size] is negative.
      */
     public actual constructor(size: Int) {
@@ -278,64 +369,152 @@ public actual class AtomicLongArray {
     }
 
     /**
-     * Creates a new [AtomicIntArray] filled with elements of the given [array].
+     * Creates a new [AtomicLongArray] filled with elements of the given [array].
      */
     public actual constructor(array: LongArray) {
         this.array = array.copyOf()
     }
 
+    /**
+     * Returns the number of elements in the array.
+     */
     public actual val size: Int get() = array.size
 
+    /**
+     * Atomically gets the value of the element at the given [index].
+     *
+     * Provides sequential consistent ordering guarantees.
+     *
+     * @throws [IndexOutOfBoundsException] if the [index] is out of bounds of this array.
+     */
     public actual fun loadAt(index: Int): Long {
         checkBounds(index)
         return array.atomicGet(index)
     }
 
+    /**
+     * Atomically sets the value of the element at the given [index] to the [new value][newValue].
+     *
+     * Provides sequential consistent ordering guarantees.
+     *
+     * @throws [IndexOutOfBoundsException] if the [index] is out of bounds of this array.
+     */
     public actual fun storeAt(index: Int, newValue: Long): Unit {
         checkBounds(index)
         array.atomicSet(index, newValue)
     }
 
+    /**
+     * Atomically sets the value of the element at the given [index] to the [new value][newValue]
+     * and returns the old value of the element.
+     *
+     * Provides sequential consistent ordering guarantees.
+     *
+     * @throws [IndexOutOfBoundsException] if the [index] is out of bounds of this array.
+     */
     public actual fun exchangeAt(index: Int, newValue: Long): Long {
         checkBounds(index)
         return array.getAndSet(index, newValue)
     }
 
+    /**
+     * Atomically sets the value of the element at the given [index] to the [new value][newValue]
+     * if the current value equals the [expected value][expectedValue].
+     * Returns true if the operation was successful and false only if the current value of the element was not equal to the expected value.
+     *
+     * Provides sequential consistent ordering guarantees and never fails spuriously.
+     *
+     * Comparison of values is done by value.
+     *
+     * @throws [IndexOutOfBoundsException] if the [index] is out of bounds of this array.
+     */
     public actual fun compareAndSetAt(index: Int, expectedValue: Long, newValue: Long): Boolean {
         checkBounds(index)
         return array.compareAndSet(index, expectedValue, newValue)
     }
 
+    /**
+     * Atomically sets the value of the element at the given [index] to the [new value][newValue]
+     * if the current value equals the [expected value][expectedValue] and returns the old value of the element in any case.
+     *
+     * Provides sequential consistent ordering guarantees and never fails spuriously.
+     *
+     * Comparison of values is done by value.
+     *
+     * @throws [IndexOutOfBoundsException] if the [index] is out of bounds of this array.
+     */
     public actual fun compareAndExchangeAt(index: Int, expectedValue: Long, newValue: Long): Long {
         checkBounds(index)
         return array.compareAndExchange(index, expectedValue, newValue)
     }
 
+    /**
+     * Atomically adds the given [delta] to the element at the given [index] and returns the old value of the element.
+     *
+     * Provides sequential consistent ordering guarantees.
+     *
+     * @throws [IndexOutOfBoundsException] if the [index] is out of bounds of this array.
+     */
     public actual fun fetchAndAddAt(index: Int, delta: Long): Long {
         checkBounds(index)
         return array.getAndAdd(index, delta)
     }
 
+    /**
+     * Atomically adds the given [delta] to the element at the given [index] and returns the new value of the element.
+     *
+     * Provides sequential consistent ordering guarantees.
+     *
+     * @throws [IndexOutOfBoundsException] if the [index] is out of bounds of this array.
+     */
     public actual fun addAndFetchAt(index: Int, delta: Long): Long {
         checkBounds(index)
         return array.getAndAdd(index, delta) + delta
     }
 
+    /**
+     * Atomically increments the element at the given [index] by one and returns the old value of the element.
+     *
+     * Provides sequential consistent ordering guarantees.
+     *
+     * @throws [IndexOutOfBoundsException] if the [index] is out of bounds of this array.
+     */
     public actual fun fetchAndIncrementAt(index: Int): Long {
         checkBounds(index)
         return array.getAndAdd(index, 1)
     }
 
+    /**
+     * Atomically increments the element at the given [index] by one and returns the new value of the element.
+     *
+     * Provides sequential consistent ordering guarantees.
+     *
+     * @throws [IndexOutOfBoundsException] if the [index] is out of bounds of this array.
+     */
     public actual fun incrementAndFetchAt(index: Int): Long {
         checkBounds(index)
         return array.getAndAdd(index, 1) + 1
     }
 
+    /**
+     * Atomically decrements the element at the given [index] by one and returns the old value of the element.
+     *
+     * Provides sequential consistent ordering guarantees.
+     *
+     * @throws [IndexOutOfBoundsException] if the [index] is out of bounds of this array.
+     */
     public actual fun fetchAndDecrementAt(index: Int): Long {
         checkBounds(index)
         return array.getAndAdd(index, -1)
     }
 
+    /**
+     * Atomically decrements the element at the given [index] by one and returns the new value of the element.
+     *
+     * Provides sequential consistent ordering guarantees.
+     *
+     * @throws [IndexOutOfBoundsException] if the [index] is out of bounds of this array.
+     */
     public actual fun decrementAndFetchAt(index: Int): Long {
         checkBounds(index)
         return array.getAndAdd(index, -1) - 1
@@ -495,7 +674,9 @@ public actual class AtomicLongArray {
     }
 
     /**
-     * Returns the string representation of the underlying [IntArray][array].
+     * Returns the string representation of the underlying array of ints.
+     *
+     * This operation does not provide any atomicity guarantees.
      */
     public actual override fun toString(): String = array.toString()
 
@@ -504,10 +685,9 @@ public actual class AtomicLongArray {
     }
 }
 
-
-
 /**
- * An [Array]<T> in which elements are always updated atomically.
+ * A generic array of objects in which elements may be updated atomically with guaranteed sequential consistent ordering.
+ *
  * For additional details about atomicity guarantees for reads and writes see [kotlin.concurrent.Volatile].
  */
 @SinceKotlin("1.9")
@@ -523,28 +703,74 @@ public actual class AtomicArray<T> {
         this.array = array.copyOf()
     }
 
+    /**
+     * Returns the number of elements in the array.
+     */
     public actual val size: Int get() = array.size
 
+    /**
+     * Atomically gets the value of the element at the given [index].
+     *
+     * Provides sequential consistent ordering guarantees.
+     *
+     * @throws [IndexOutOfBoundsException] if the [index] is out of bounds of this array.
+     */
     public actual fun loadAt(index: Int): T {
         checkBounds(index)
         return array.atomicGet(index)
     }
 
+    /**
+     * Atomically sets the value of the element at the given [index] to the [new value][newValue].
+     *
+     * Provides sequential consistent ordering guarantees.
+     *
+     * @throws [IndexOutOfBoundsException] if the [index] is out of bounds of this array.
+     */
     public actual fun storeAt(index: Int, newValue: T): Unit {
         checkBounds(index)
         array.atomicSet(index, newValue)
     }
 
+    /**
+     * Atomically sets the value of the element at the given [index] to the [new value][newValue]
+     * and returns the old value of the element.
+     *
+     * Provides sequential consistent ordering guarantees.
+     *
+     * @throws [IndexOutOfBoundsException] if the [index] is out of bounds of this array.
+     */
     public actual fun exchangeAt(index: Int, newValue: T): T {
         checkBounds(index)
         return array.getAndSet(index, newValue)
     }
 
+    /**
+     * Atomically sets the value of the element at the given [index] to the [new value][newValue]
+     * if the current value equals the [expected value][expectedValue].
+     * Returns true if the operation was successful and false only if the current value of the element was not equal to the expected value.
+     *
+     * Provides sequential consistent ordering guarantees and never fails spuriously.
+     *
+     * Comparison of values is done by reference.
+     *
+     * @throws [IndexOutOfBoundsException] if the [index] is out of bounds of this array.
+     */
     public actual fun compareAndSetAt(index: Int, expectedValue: T, newValue: T): Boolean {
         checkBounds(index)
         return array.compareAndSet(index, expectedValue, newValue)
     }
 
+    /**
+     * Atomically sets the value of the element at the given [index] to the [new value][newValue]
+     * if the current value equals the [expected value][expectedValue] and returns the old value of the element in any case.
+     *
+     * Provides sequential consistent ordering guarantees and never fails spuriously.
+     *
+     * Comparison of values is done by reference.
+     *
+     * @throws [IndexOutOfBoundsException] if the [index] is out of bounds of this array.
+     */
     public actual fun compareAndExchangeAt(index: Int, expectedValue: T, newValue: T): T {
         checkBounds(index)
         return array.compareAndExchange(index, expectedValue, newValue)
@@ -626,7 +852,9 @@ public actual class AtomicArray<T> {
     }
 
     /**
-     * Returns the string representation of the underlying [IntArray][array].
+     * Returns the string representation of the underlying array of objects.
+     *
+     * This operation does not provide any atomicity guarantees.
      */
     public actual override fun toString(): String = array.toString()
 
