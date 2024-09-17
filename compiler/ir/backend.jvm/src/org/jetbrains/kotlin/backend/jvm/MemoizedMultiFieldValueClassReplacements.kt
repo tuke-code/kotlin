@@ -17,6 +17,7 @@ import org.jetbrains.kotlin.ir.builders.irComposite
 import org.jetbrains.kotlin.ir.builders.irExprBody
 import org.jetbrains.kotlin.ir.builders.irGet
 import org.jetbrains.kotlin.ir.declarations.*
+import org.jetbrains.kotlin.ir.declarations.IrParameterKind
 import org.jetbrains.kotlin.ir.expressions.IrComposite
 import org.jetbrains.kotlin.ir.expressions.IrExpression
 import org.jetbrains.kotlin.ir.expressions.IrStatementOriginImpl
@@ -276,7 +277,8 @@ class MemoizedMultiFieldValueClassReplacements(
 
                 function is IrSimpleFunction
                         && !(function.isFromJava() && function.overridesOnlyMethodsFromJava())
-                        && function.fullValueParameterList.any { it.type.needsMfvcFlattening() }
+                        && function.parameters
+                            .any { it.kind != IrParameterKind.DispatchReceiver && it.type.needsMfvcFlattening() }
                         && run {
                     if (!function.isFakeOverride) return@run true
                     val superDeclaration = findSuperDeclaration(function, false, context.config.jvmDefaultMode)
