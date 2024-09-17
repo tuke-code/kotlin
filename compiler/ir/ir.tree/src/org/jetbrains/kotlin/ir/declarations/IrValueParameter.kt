@@ -3,9 +3,6 @@
  * Use of this source code is governed by the Apache 2.0 license that can be found in the license/LICENSE.txt file.
  */
 
-// This file was generated automatically. See compiler/ir/ir.tree/tree-generator/ReadMe.md.
-// DO NOT MODIFY IT MANUALLY.
-
 package org.jetbrains.kotlin.ir.declarations
 
 import org.jetbrains.kotlin.descriptors.ParameterDescriptor
@@ -13,13 +10,9 @@ import org.jetbrains.kotlin.ir.ObsoleteDescriptorBasedAPI
 import org.jetbrains.kotlin.ir.expressions.IrExpressionBody
 import org.jetbrains.kotlin.ir.symbols.IrValueParameterSymbol
 import org.jetbrains.kotlin.ir.types.IrType
-import org.jetbrains.kotlin.ir.util.IdSignature
 import org.jetbrains.kotlin.ir.visitors.IrElementTransformer
 import org.jetbrains.kotlin.ir.visitors.IrElementVisitor
 
-/**
- * Generated from: [org.jetbrains.kotlin.ir.generator.IrTree.valueParameter]
- */
 abstract class IrValueParameter : IrDeclarationBase(), IrValueDeclaration {
     @ObsoleteDescriptorBasedAPI
     abstract override val descriptor: ParameterDescriptor
@@ -27,6 +20,21 @@ abstract class IrValueParameter : IrDeclarationBase(), IrValueDeclaration {
     abstract val isAssignable: Boolean
 
     abstract override val symbol: IrValueParameterSymbol
+
+    var index: Int = -1
+        @DelicateIrParameterIndexSetter
+        set
+    
+    var indexNew: Int = -1
+        @DelicateIrParameterIndexSetter
+        set
+
+    internal var _kind: IrParameterKind? = null
+    var kind: IrParameterKind
+        get() = _kind!!
+        set(value) {
+            _kind = value
+        }
 
     abstract var varargElementType: IrType?
 
@@ -64,10 +72,6 @@ abstract class IrValueParameter : IrDeclarationBase(), IrValueDeclaration {
     abstract var isHidden: Boolean
 
     abstract var defaultValue: IrExpressionBody?
-
-    var index: Int = -1
-        @DelicateIrParameterIndexSetter
-        set
 
     override fun <R, D> accept(visitor: IrElementVisitor<R, D>, data: D): R =
         visitor.visitValueParameter(this, data)

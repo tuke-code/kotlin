@@ -10,7 +10,9 @@ import org.jetbrains.kotlin.ir.ObsoleteDescriptorBasedAPI
 import org.jetbrains.kotlin.ir.expressions.IrBody
 import org.jetbrains.kotlin.ir.symbols.IrFunctionSymbol
 import org.jetbrains.kotlin.ir.types.IrType
+import org.jetbrains.kotlin.ir.util.render
 import org.jetbrains.kotlin.ir.util.transformIfNeeded
+import org.jetbrains.kotlin.ir.util.transformInPlace
 import org.jetbrains.kotlin.ir.visitors.IrElementTransformer
 import org.jetbrains.kotlin.ir.visitors.IrElementVisitor
 
@@ -29,40 +31,179 @@ sealed class IrFunction : IrDeclarationBase(), IrPossiblyExternalDeclaration, Ir
 
     abstract var returnType: IrType
 
-    var dispatchReceiverParameter: IrValueParameter? = null
 
-    var extensionReceiverParameter: IrValueParameter? = null
+    private val _parameters: MutableList<IrValueParameter> = ArrayList()
 
     @OptIn(DelicateIrParameterIndexSetter::class)
-    var valueParameters: List<IrValueParameter> = emptyList()
+    var parameters: List<IrValueParameter>
+        get() = _parameters
         set(value) {
-            for (parameter in field) {
+            val parameters = _parameters
+            for (parameter in parameters) {
                 parameter.index = -1
+                parameter.indexNew = -1
             }
+
+            var newContextParametersCount = 0
+            var oldIndex = 0
             for ((index, parameter) in value.withIndex()) {
-                parameter.index = index
+                parameter.indexNew = index
+                parameter.index = when (parameter._kind) {
+                    IrParameterKind.DispatchReceiver, IrParameterKind.ExtensionReceiver -> -1
+                    IrParameterKind.ContextParameter, IrParameterKind.RegularParameter -> oldIndex++
+                    null -> error("Kind must be set explicitly when adding a parameter")
+                }
+
+                if (parameter._kind == IrParameterKind.ExtensionReceiver) {
+                    newContextParametersCount++
+                }
             }
-            field = value
+
+            parameters.clear()
+            parameters.addAll(value)
+            _contextReceiverParametersCount = newContextParametersCount
         }
 
+    var dispatchReceiverParameter: IrValueParameter?
+        get() = _parameters.getOrNull(0)?.takeIf { it.kind == IrParameterKind.DispatchReceiver }
+        set(value) {
+            setReceiverParameter(IrParameterKind.DispatchReceiver, value)
+        }
+
+    var extensionReceiverParameter: IrValueParameter?
+        get() = _parameters.firstOrNull { it.kind == IrParameterKind.ExtensionReceiver }
+        set(value) {
+            setReceiverParameter(IrParameterKind.ExtensionReceiver, value)
+        }
+
+    @OptIn(DelicateIrParameterIndexSetter::class)
+    private fun setReceiverParameter(kind: IrParameterKind, value: IrValueParameter?) {
+        val parameters = _parameters
+        var index = parameters.indexOfFirst { it.kind == kind }
+        if (index >= 0) {
+            val old = parameters[index]
+            old.index = -1
+            old.indexNew = -1
+            old._kind = null
+
+            if (value != null) {
+                parameters[index] = value
+            } else {
+                parameters.removeAt(index)
+            }
+        } else {
+            if (value != null) {
+                index = parameters.indexOfLast { it.kind < kind } + 1
+                parameters.add(index, value)
+            } else {
+                // nothing
+            }
+        }
+
+        if (value != null) {
+            value.index = -1
+            value.indexNew = index
+            value.kind = kind
+        }
+    }
+
+    private var _contextReceiverParametersCount: Int = 0
+
     // The first `contextReceiverParametersCount` value parameters are context receivers.
-    var contextReceiverParametersCount: Int = 0
+    var contextReceiverParametersCount: Int
+        get() = _contextReceiverParametersCount
+        set(value) {
+            if (value == _contextReceiverParametersCount) {
+                return
+            }
+
+            replaceRegularAndExtensionParameters(null, value)
+            _contextReceiverParametersCount = value
+        }
+
+    var valueParameters: List<IrValueParameter>
+        get() = _parameters.filter { it.kind == IrParameterKind.RegularParameter || it.kind == IrParameterKind.ContextParameter }
+        set(value) {
+            replaceRegularAndExtensionParameters(value, _contextReceiverParametersCount)
+        }
+
+    @OptIn(DelicateIrParameterIndexSetter::class)
+    private fun replaceRegularAndExtensionParameters(newValueParameters: List<IrValueParameter>?, newContextParametersCount: Int) {
+        val parameters = _parameters
+
+        // Temporarily remove extension receiver, if present.
+        // It will be re-added later, after all context parameters.
+        var extensionReceiver = parameters
+            .indexOfFirst { it.kind == IrParameterKind.ExtensionReceiver }
+            .takeUnless { it == -1 }
+            ?.let { parameters.removeAt(it) }
+
+        var remainingContextParams = newContextParametersCount
+        var srcIndex = 0
+        var dstIndex = 0
+        while (dstIndex <= parameters.size || srcIndex < (newValueParameters?.size ?: 0)) {
+            val old = parameters.getOrNull(dstIndex)
+
+            if (old?._kind == IrParameterKind.DispatchReceiver) {
+                dstIndex++
+                continue
+            }
+
+            if (extensionReceiver != null && (remainingContextParams == 0 || dstIndex == parameters.size)) {
+                parameters.add(dstIndex++, extensionReceiver)
+                extensionReceiver = null
+                continue
+            }
+
+            if (old != null) {
+                old.index = -1
+                old.indexNew = -1
+                old._kind = null
+            }
+
+            val new = if (newValueParameters != null)
+                newValueParameters.getOrNull(srcIndex)
+            else old
+            if (new != null) {
+                require(!new._kind.let { it == IrParameterKind.DispatchReceiver || it == IrParameterKind.ExtensionReceiver }) {
+                    "Adding a value parameter ${new.render()} to function ${this.render()}, when it's already present as a receiver.\n" +
+                            "This operation is not supported by the old<->new parameter API bridge."
+                }
+
+                new.index = srcIndex
+                new.indexNew = dstIndex
+                new._kind = if (remainingContextParams-- > 0) IrParameterKind.ContextParameter else IrParameterKind.RegularParameter
+
+                if (old != null) {
+                    parameters[dstIndex] = new
+                } else {
+                    parameters.add(dstIndex, new)
+                }
+
+                srcIndex++
+            }
+
+            if (new == null && dstIndex < parameters.size) {
+                parameters.removeAt(dstIndex)
+            } else {
+                dstIndex++
+            }
+        }
+    }
+
 
     abstract var body: IrBody?
 
     override fun <D> acceptChildren(visitor: IrElementVisitor<Unit, D>, data: D) {
         typeParameters.forEach { it.accept(visitor, data) }
-        dispatchReceiverParameter?.accept(visitor, data)
-        extensionReceiverParameter?.accept(visitor, data)
-        valueParameters.forEach { it.accept(visitor, data) }
+        parameters.forEach { it.accept(visitor, data) }
         body?.accept(visitor, data)
     }
 
     override fun <D> transformChildren(transformer: IrElementTransformer<D>, data: D) {
         typeParameters = typeParameters.transformIfNeeded(transformer, data)
-        dispatchReceiverParameter = dispatchReceiverParameter?.transform(transformer, data)
-        extensionReceiverParameter = extensionReceiverParameter?.transform(transformer, data)
-        valueParameters = valueParameters.transformIfNeeded(transformer, data)
+        _parameters.transformInPlace(transformer, data)
         body = body?.transform(transformer, data)
     }
 }
+
