@@ -61,8 +61,7 @@ object ImplementationConfigurator : AbstractIrTreeImplementationConfigurator() {
         }
 
         allImplOf(function) {
-            defaultNull("dispatchReceiverParameter", "extensionReceiverParameter", "body")
-            default("contextReceiverParametersCount", "0")
+            defaultNull("body")
             isLateinit("returnType")
         }
 
