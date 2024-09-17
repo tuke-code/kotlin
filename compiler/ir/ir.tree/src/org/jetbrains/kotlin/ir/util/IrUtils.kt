@@ -903,7 +903,8 @@ fun IrValueParameter.copyTo(
     defaultValue: IrExpressionBody? = this.defaultValue,
     isCrossinline: Boolean = this.isCrossinline,
     isNoinline: Boolean = this.isNoinline,
-    isAssignable: Boolean = this.isAssignable
+    isAssignable: Boolean = this.isAssignable,
+    kind: IrParameterKind? = this._kind,
 ): IrValueParameter {
     val symbol = IrValueParameterSymbolImpl()
     val defaultValueCopy = defaultValue?.let { originalDefault ->
@@ -926,6 +927,7 @@ fun IrValueParameter.copyTo(
         isNoinline = isNoinline,
         isHidden = false,
     ).also {
+        it._kind = kind
         it.parent = irFunction
         it.defaultValue = defaultValueCopy
         it.copyAnnotationsFrom(this)

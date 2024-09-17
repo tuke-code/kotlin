@@ -403,6 +403,7 @@ open class IrFactory(
         isCrossinline: Boolean,
         isNoinline: Boolean,
         isHidden: Boolean,
+        kind: IrParameterKind? = null,
     ): IrValueParameter =
         IrValueParameterImpl(
             startOffset = startOffset,
@@ -417,7 +418,9 @@ open class IrFactory(
             isHidden = isHidden,
             isAssignable = isAssignable,
             factory = this
-        ).declarationCreated()
+        ).apply {
+            _kind = kind
+        }.declarationCreated()
 
     @Suppress("unused") // Deprecated, parameter [index] is ignored. Kept for backward compatibility only.
     fun createValueParameter(
