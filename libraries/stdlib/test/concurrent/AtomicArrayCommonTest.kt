@@ -20,6 +20,10 @@ class AtomicIntArrayTest {
 
         val emptyArr = AtomicIntArray(0)
         assertEquals(0, emptyArr.size)
+
+        assertFails {
+            val arrNegativeSize = AtomicIntArray(-5)
+        }
     }
 
     @Test fun getter() {
@@ -240,6 +244,10 @@ class AtomicLongArrayTest {
 
         val emptyArr = AtomicLongArray(0)
         assertEquals(emptyArr.size, 0)
+
+        assertFails {
+            val arrNegativeSize = AtomicLongArray(-5)
+        }
     }
 
     @Test fun getter() {
@@ -457,6 +465,10 @@ class AtomicArrayTest {
 
         val emptyArr = AtomicArray<Data?>(0) { Data(1) }
         assertEquals(emptyArr.size, 0)
+
+        assertFails {
+            val arrNegativeSize = AtomicArray<Data?>(-5) { Data(1) }
+        }
     }
 
     @Test fun getter() {
