@@ -95,19 +95,19 @@ open class LazyStorage<KEY, VALUE>(
 
 }
 
-/** [LazyStorage] where a map entry's value is a [Collection] of elements of type [E]. */
+/** [LazyStorage] where a map entry's value is a [Collection]. */
 @ThreadSafe
-class AppendableLazyStorage<KEY, E>(
+class AppendableLazyStorage<KEY, E, VALUE : Collection<E>>(
     storageFile: File,
     keyDescriptor: KeyDescriptor<KEY>,
     elementExternalizer: DataExternalizer<E>,
-) : LazyStorage<KEY, Collection<E>>(storageFile, keyDescriptor, AppendableCollectionExternalizer(elementExternalizer)),
-    AppendablePersistentStorage<KEY, E> {
+) : LazyStorage<KEY, VALUE>(storageFile, keyDescriptor, AppendableCollectionExternalizer(elementExternalizer)),
+    AppendablePersistentStorage<KEY, E, VALUE> {
 
     private val appendableCollectionExternalizer = AppendableCollectionExternalizer(elementExternalizer)
 
     @Synchronized
-    override fun append(key: KEY, elements: Collection<E>) {
+    override fun append(key: KEY, elements: VALUE) {
         getStorageOrCreateNew().appendData(
             key,
             AppendablePersistentMap.ValueDataAppender { appendableCollectionExternalizer.append(it, elements) }
@@ -116,25 +116,25 @@ class AppendableLazyStorage<KEY, E>(
 }
 
 /**
- * [DataExternalizer] for a [Collection] of elements of type [E].
+ * [DataExternalizer] for a [Collection] of type [E].
  *
  * IMPORTANT: It is a *private* class because it is meant to be used only with a [PersistentHashMap] (e.g., the [read] method reads until
  * the stream ends, [append] can be called multiple times and its implementation is identical to [save] -- these only work with a
  * [PersistentHashMap]).
  */
-private class AppendableCollectionExternalizer<E>(
+private class AppendableCollectionExternalizer<E, VALUE : Collection<E>>(
     private val elementExternalizer: DataExternalizer<E>,
-) : DataExternalizer<Collection<E>> {
+) : DataExternalizer<VALUE> {
 
-    fun append(output: DataOutput, elements: Collection<E>) {
+    fun append(output: DataOutput, elements: VALUE) {
         save(output, elements)
     }
 
-    override fun save(output: DataOutput, value: Collection<E>) {
+    override fun save(output: DataOutput, value: VALUE) {
         value.forEach { elementExternalizer.save(output, it) }
     }
 
-    override fun read(input: DataInput): Collection<E> {
+    override fun read(input: DataInput): VALUE {
         val result = ArrayList<E>()
         val stream = input as DataInputStream
 
@@ -142,7 +142,8 @@ private class AppendableCollectionExternalizer<E>(
             result.add(elementExternalizer.read(stream))
         }
 
-        return result
+        @Suppress("UNCHECKED_CAST")
+        return result as VALUE
     }
 }
 
@@ -163,13 +164,13 @@ fun <KEY, VALUE> createPersistentStorage(
     }
 }
 
-fun <KEY, E> createAppendablePersistentStorage(
+fun <KEY, E, VALUE : Collection<E>> createAppendablePersistentStorage(
     storageFile: File,
     keyDescriptor: KeyDescriptor<KEY>,
     elementExternalizer: DataExternalizer<E>,
     icContext: IncrementalCompilationContext,
-): AppendablePersistentStorage<KEY, E> {
-    return AppendableLazyStorage(storageFile, keyDescriptor, elementExternalizer).let { storage ->
+): AppendablePersistentStorage<KEY, E, VALUE> {
+    return AppendableLazyStorage<KEY, E, VALUE>(storageFile, keyDescriptor, elementExternalizer).let { storage ->
         if (icContext.icFeatures.keepIncrementalCompilationCachesInMemory) {
             AppendableInMemoryStorage(storage).also {
                 icContext.transaction.registerInMemoryStorageWrapper(it)

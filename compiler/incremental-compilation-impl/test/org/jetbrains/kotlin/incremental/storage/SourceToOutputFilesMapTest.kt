@@ -60,52 +60,48 @@ class SourceToOutputFilesMapTest {
 
     @Test
     fun testSetOneGetReturnsOne() {
-        stofMap[fooDotKt] = setOf(fooDotClass)
+        stofMap[fooDotKt] = listOf(fooDotClass)
 
-        assertEquals(setOf(fooDotClass), stofMap[fooDotKt])
+        assertEquals(listOf(fooDotClass), stofMap[fooDotKt])
     }
 
     @Test
     fun testSetDupeGetReturnsUnique() {
-        stofMap.append(fooDotKt, fooDotClass)
-        stofMap.append(fooDotKt, fooDotClass)
+        stofMap[fooDotKt] = listOf(fooDotClass, fooDotClass)
 
-        assertEquals(setOf(fooDotClass), stofMap[fooDotKt])
+        assertEquals(listOf(fooDotClass), stofMap[fooDotKt])
     }
 
     @Test
     fun testSetOverwriteGetReturnsNew() {
         val fooKtDotClass = classesDir.resolve("FooKt.class")
-        stofMap[fooDotKt] = setOf(fooDotClass)
-        stofMap[fooDotKt] = setOf(fooKtDotClass)
+        stofMap[fooDotKt] = listOf(fooDotClass)
+        stofMap[fooDotKt] = listOf(fooKtDotClass)
 
-        assertEquals(setOf(fooKtDotClass), stofMap[fooDotKt])
+        assertEquals(listOf(fooKtDotClass), stofMap[fooDotKt])
     }
 
     @Test
-    fun testSetRelativePathFails() {
-        assertFailsWith<IllegalStateException> {
-            stofMap[fooDotKt] = setOf(File("relativePath"))
-        }
-        assertFailsWith<IllegalStateException> {
-            stofMap[File("relativePath")] = setOf(fooDotClass)
+    fun testSetRelativeFails() {
+        assertFailsWith<IllegalArgumentException> {
+            stofMap[fooDotKt] = listOf(File("relativePath"))
         }
     }
 
     @Test
-    fun testGetRelativePathFails() {
-        stofMap[fooDotKt] = setOf(fooDotClass)
+    fun testGetRelativeFails() {
+        stofMap[fooDotKt] = listOf(fooDotClass)
 
-        assertFailsWith<IllegalStateException> {
-            stofMap[File("relativePath")]
+        assertFailsWith<IllegalArgumentException> {
+            stofMap[fooDotKt.relativeTo(srcDir)]
         }
     }
 
     @Test
     fun testGetAndRemove() {
-        stofMap[fooDotKt] = setOf(fooDotClass)
+        stofMap[fooDotKt] = listOf(fooDotClass)
 
-        assertEquals(setOf(fooDotClass), stofMap.getAndRemove(fooDotKt))
+        assertEquals(listOf(fooDotClass), stofMap.getAndRemove(fooDotKt))
         assertNull(stofMap[fooDotKt])
     }
 

@@ -52,7 +52,7 @@ class InputsCache(
     // generatedFiles can contain multiple entries with the same source file
     // for example Kapt3 IC will generate a .java stub and .class stub for each source file
     fun registerOutputForSourceFiles(generatedFiles: List<GeneratedFile>) {
-        val sourceToOutput = MultiMap.createLinked<File, File>()
+        val sourceToOutput = MultiMap<File, File>()
 
         for (generatedFile in generatedFiles) {
             for (source in generatedFile.sourceFiles) {
@@ -61,7 +61,7 @@ class InputsCache(
         }
 
         for ((source, outputs) in sourceToOutput.entrySet()) {
-            sourceToOutputMap[source] = outputs.toSet()
+            sourceToOutputMap[source] = outputs
         }
     }
 }

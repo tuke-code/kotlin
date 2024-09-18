@@ -20,11 +20,27 @@ import org.jetbrains.kotlin.incremental.IncrementalCompilationContext
 import java.io.File
 
 internal class FileToIdMap(
-    storageFile: File,
+    file: File,
     icContext: IncrementalCompilationContext,
-) : AbstractBasicMap<File, Int>(
-    storageFile,
-    icContext.fileDescriptorForSourceFiles,
-    IntExternalizer,
-    icContext
-)
+) : BasicStringMap<Int>(file, IntExternalizer, icContext) {
+    override fun dumpValue(value: Int): String = value.toString()
+
+    operator fun get(file: File): Int? = storage[pathConverter.toPath(file)]
+
+    operator fun set(file: File, id: Int) {
+        storage[pathConverter.toPath(file)] = id
+    }
+
+    fun remove(file: File) {
+        storage.remove(pathConverter.toPath(file))
+    }
+
+    fun toMap(): Map<File, Int> {
+        val result = HashMap<File, Int>()
+        for (key in storage.keys) {
+            val value = storage[key] ?: continue
+            result[pathConverter.toFile(key)] = value
+        }
+        return result
+    }
+}

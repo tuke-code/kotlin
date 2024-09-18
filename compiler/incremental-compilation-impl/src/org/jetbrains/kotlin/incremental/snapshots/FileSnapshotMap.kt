@@ -18,39 +18,41 @@ package org.jetbrains.kotlin.incremental.snapshots
 
 import org.jetbrains.kotlin.incremental.ChangedFiles
 import org.jetbrains.kotlin.incremental.IncrementalCompilationContext
-import org.jetbrains.kotlin.incremental.storage.AbstractBasicMap
+import org.jetbrains.kotlin.incremental.storage.BasicStringMap
+import org.jetbrains.kotlin.incremental.storage.PathStringDescriptor
 import java.io.File
+import java.util.*
 
 class FileSnapshotMap(
     storageFile: File,
     icContext: IncrementalCompilationContext,
-) : AbstractBasicMap<File, FileSnapshot>(
-    storageFile,
-    icContext.fileDescriptorForSourceFiles,
-    FileSnapshotExternalizer,
-    icContext
-) {
+) : BasicStringMap<FileSnapshot>(storageFile, PathStringDescriptor, FileSnapshotExternalizer, icContext) {
+
+    override fun dumpValue(value: FileSnapshot): String =
+        value.toString()
+
     @Synchronized
     fun compareAndUpdate(newFiles: Iterable<File>): ChangedFiles.Known {
         val snapshotProvider = SimpleFileSnapshotProviderImpl()
         val newOrModified = ArrayList<File>()
         val removed = ArrayList<File>()
 
-        val newFilesSet = newFiles.toSet()
-        for (oldFile in keys) {
-            if (oldFile !in newFilesSet) {
-                remove(oldFile)
-                removed.add(oldFile)
+        val newPaths = newFiles.mapTo(HashSet(), transform = pathConverter::toPath)
+        for (oldPath in storage.keys) {
+            if (oldPath !in newPaths) {
+                storage.remove(oldPath)
+                removed.add(pathConverter.toFile(oldPath))
             }
         }
 
-        for (file in newFilesSet) {
-            val oldSnapshot = this[file]
+        for (path in newPaths) {
+            val file = pathConverter.toFile(path)
+            val oldSnapshot = storage[path]
             val newSnapshot = snapshotProvider[file]
 
             if (oldSnapshot == null || oldSnapshot != newSnapshot) {
                 newOrModified.add(file)
-                this[file] = newSnapshot
+                storage[path] = newSnapshot
             }
         }
 

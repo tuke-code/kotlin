@@ -17,7 +17,10 @@
 package org.jetbrains.kotlin.incremental
 
 import com.intellij.openapi.util.io.FileUtil.toSystemIndependentName
+import com.intellij.util.containers.CollectionFactory
 import com.intellij.util.io.BooleanDataDescriptor
+import com.intellij.util.io.EnumeratorStringDescriptor
+import gnu.trove.THashSet
 import org.jetbrains.annotations.TestOnly
 import org.jetbrains.kotlin.build.GeneratedJvmClass
 import org.jetbrains.kotlin.incremental.storage.*
@@ -87,10 +90,13 @@ open class IncrementalJvmCache(
     // used in gradle
     @Suppress("unused")
     fun classesBySources(sources: Iterable<File>): Iterable<JvmClassName> =
-        sources.flatMap { sourceToClassesMap[it].orEmpty() }
+        sources.flatMap { sourceToClassesMap[it] }
+
+    fun sourceInCache(file: File): Boolean =
+        sourceToClassesMap.contains(file)
 
     fun sourcesByInternalName(internalName: String): Collection<File> =
-        internalNameToSource[internalName].orEmpty()
+        internalNameToSource.getFiles(internalName)
 
     fun getAllPartsOfMultifileFacade(facade: JvmClassName): Collection<String>? {
         return multifileFacadeToParts[facade]
@@ -112,7 +118,7 @@ open class IncrementalJvmCache(
         val jvmClassName = JvmClassName.byInternalName(MODULE_MAPPING_FILE_NAME)
         protoMap.storeModuleMapping(jvmClassName, file.readBytes())
         dirtyOutputClassesMap.notDirty(jvmClassName)
-        sourceFiles.forEach { sourceToClassesMap.append(it, jvmClassName) }
+        sourceFiles.forEach { sourceToClassesMap.add(it, jvmClassName) }
     }
 
     open fun saveFileToCache(generatedClass: GeneratedJvmClass, changesCollector: ChangesCollector) {
@@ -134,7 +140,7 @@ open class IncrementalJvmCache(
 
         if (sourceFiles != null) {
             sourceFiles.forEach {
-                sourceToClassesMap.append(it, className)
+                sourceToClassesMap.add(it, className)
             }
             if (!icContext.useCompilerMapsOnly) internalNameToSource[className.internalName] = sourceFiles
         }
@@ -182,7 +188,8 @@ open class IncrementalJvmCache(
                     assert(sourceFiles.size == 1) { "Multifile class part from several source files: $sourceFiles" }
                 }
                 packagePartMap.addPackagePart(className)
-                partToMultifileFacade[className] = kotlinClassInfo.multifileClassName!!
+                partToMultifileFacade.set(className.internalName, kotlinClassInfo.multifileClassName!!)
+
                 protoMap.process(kotlinClassInfo, changesCollector)
                 if (!icContext.useCompilerMapsOnly) {
                     constantsMap.process(kotlinClassInfo, changesCollector)
@@ -248,7 +255,7 @@ open class IncrementalJvmCache(
         if (!icContext.useCompilerMapsOnly) {
             javaSourcesProtoMap.process(jvmClassName, serializedJavaClass, collector)
         }
-        source?.let { sourceToClassesMap.append(source, jvmClassName) }
+        source?.let { sourceToClassesMap.add(source, jvmClassName) }
         addToClassStorage(serializedJavaClass.toProtoData(), source, icContext.useCompilerMapsOnly)
         dirtyOutputClassesMap.notDirty(jvmClassName)
     }
@@ -275,7 +282,7 @@ open class IncrementalJvmCache(
 
         val facadesWithRemovedParts = hashMapOf<JvmClassName, MutableSet<String>>()
         for (dirtyClass in dirtyClasses) {
-            val facade = partToMultifileFacade[dirtyClass] ?: continue
+            val facade = partToMultifileFacade.get(dirtyClass) ?: continue
             val facadeClassName = JvmClassName.byInternalName(facade)
             val removedParts = facadesWithRemovedParts.getOrPut(facadeClassName) { hashSetOf() }
             removedParts.add(dirtyClass.internalName)
@@ -326,7 +333,7 @@ open class IncrementalJvmCache(
     override fun getObsoleteMultifileClasses(): Collection<String> {
         val obsoleteMultifileClasses = linkedSetOf<String>()
         for (dirtyClass in dirtyOutputClassesMap.getDirtyOutputClasses()) {
-            val dirtyFacade = partToMultifileFacade[dirtyClass] ?: continue
+            val dirtyFacade = partToMultifileFacade.get(dirtyClass) ?: continue
             obsoleteMultifileClasses.add(dirtyFacade)
         }
         debugLog("Obsolete multifile class facades: $obsoleteMultifileClasses")
@@ -529,32 +536,59 @@ open class IncrementalJvmCache(
     private inner class MultifileClassFacadeMap(
         storageFile: File,
         icContext: IncrementalCompilationContext,
-    ) : AppendableBasicMap<JvmClassName, String>(
-        storageFile,
-        JvmClassNameExternalizer.toDescriptor(),
-        StringExternalizer,
-        icContext
-    )
+    ) :
+        BasicStringMap<Collection<String>>(storageFile, StringCollectionExternalizer, icContext) {
+
+        @Synchronized
+        operator fun set(className: JvmClassName, partNames: Collection<String>) {
+            storage[className.internalName] = partNames
+        }
+
+        operator fun get(className: JvmClassName): Collection<String>? =
+            storage[className.internalName]
+
+        operator fun contains(className: JvmClassName): Boolean =
+            className.internalName in storage
+
+        @Synchronized
+        fun remove(className: JvmClassName) {
+            storage.remove(className.internalName)
+        }
+
+        override fun dumpValue(value: Collection<String>): String = value.dumpCollection()
+    }
 
     private inner class MultifileClassPartMap(
         storageFile: File,
         icContext: IncrementalCompilationContext,
-    ) : AbstractBasicMap<JvmClassName, String>(
-        storageFile,
-        JvmClassNameExternalizer.toDescriptor(),
-        StringExternalizer,
-        icContext
-    )
+    ) :
+        BasicStringMap<String>(storageFile, EnumeratorStringDescriptor.INSTANCE, icContext) {
+
+        fun get(partName: JvmClassName): String? =
+            storage[partName.internalName]
+
+        @Synchronized
+        fun remove(className: JvmClassName) {
+            storage.remove(className.internalName)
+        }
+
+        override fun dumpValue(value: String): String = value
+    }
 
     inner class InternalNameToSourcesMap(
         storageFile: File,
         icContext: IncrementalCompilationContext,
-    ) : AppendableBasicMap<String, File>(
-        storageFile,
-        StringExternalizer.toDescriptor(),
-        icContext.fileDescriptorForSourceFiles,
-        icContext
-    )
+    ) : BasicStringMap<Collection<String>>(storageFile, EnumeratorStringDescriptor(), PathCollectionExternalizer, icContext) {
+        operator fun set(internalName: String, sourceFiles: Collection<File>) {
+            storage[internalName] = pathConverter.toPaths(sourceFiles)
+        }
+
+        fun getFiles(internalName: String): Collection<File> =
+            pathConverter.toFiles(storage[internalName] ?: emptyList())
+
+        override fun dumpValue(value: Collection<String>): String =
+            value.dumpCollection()
+    }
 
     private inner class InlineFunctionsMap(
         storageFile: File,
@@ -615,6 +649,9 @@ open class IncrementalJvmCache(
         else -> classId.packageFqName
     }
 }
+
+private object PathCollectionExternalizer :
+    CollectionExternalizerV2<String, Collection<String>>(PathStringDescriptor, { THashSet(CollectionFactory.createFilePathSet()) })
 
 sealed class ChangeInfo(val fqName: FqName) {
     open class MembersChanged(fqName: FqName, val names: Collection<String>) : ChangeInfo(fqName) {

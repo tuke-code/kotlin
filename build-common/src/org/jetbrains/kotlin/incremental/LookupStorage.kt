@@ -96,7 +96,7 @@ open class LookupStorage(
         val filtered = mutableSetOf<Int>()
 
         for (fileId in fileIds) {
-            val path = idToFile[fileId]?.path
+            val path = idToFile.getFile(fileId)?.path
 
             if (path != null) {
                 paths.add(path)
@@ -171,7 +171,7 @@ open class LookupStorage(
             lookupMap[hash] = lookupMap[hash]!!.filter { it in idToFile }.toSet()
         }
 
-        val oldFileToId = fileToId.keys.associateWith { fileToId[it]!! }
+        val oldFileToId = fileToId.toMap()
         val oldIdToNewId = HashMap<Int, Int>(oldFileToId.size)
         idToFile.clear()
         fileToId.clear()
@@ -302,17 +302,17 @@ private class TrackedLookupMap(private val lookupMap: LookupMap, private val tra
     val addedKeys = if (trackChanges) mutableSetOf<LookupSymbolKey>() else null
     val removedKeys = if (trackChanges) mutableSetOf<LookupSymbolKey>() else null
 
-    val keys: Set<LookupSymbolKey>
+    val keys: Collection<LookupSymbolKey>
         get() = lookupMap.keys
 
-    operator fun get(key: LookupSymbolKey): Set<Int>? = lookupMap[key]
+    operator fun get(key: LookupSymbolKey): Collection<Int>? = lookupMap[key]
 
     operator fun set(key: LookupSymbolKey, fileIds: Set<Int>) {
         recordSet(key)
         lookupMap[key] = fileIds
     }
 
-    fun append(key: LookupSymbolKey, fileIds: Set<Int>) {
+    fun append(key: LookupSymbolKey, fileIds: Collection<Int>) {
         recordSet(key)
         lookupMap.append(key, fileIds)
     }
@@ -324,19 +324,23 @@ private class TrackedLookupMap(private val lookupMap: LookupMap, private val tra
 
     private fun recordSet(key: LookupSymbolKey) {
         if (!trackChanges) return
-        when (key) {
-            in lookupMap -> Unit
-            in removedKeys!! -> removedKeys.remove(key)
-            else -> addedKeys!!.add(key)
+        if (lookupMap[key] == null) {
+            if (key in removedKeys!!) {
+                removedKeys.remove(key)
+            } else {
+                addedKeys!!.add(key)
+            }
         }
     }
 
     private fun recordRemove(key: LookupSymbolKey) {
         if (!trackChanges) return
-        when (key) {
-            !in lookupMap -> Unit
-            in addedKeys!! -> addedKeys.remove(key)
-            else -> removedKeys!!.add(key)
+        if (lookupMap[key] != null) {
+            if (key in addedKeys!!) {
+                addedKeys.remove(key)
+            } else {
+                removedKeys!!.add(key)
+            }
         }
     }
 }

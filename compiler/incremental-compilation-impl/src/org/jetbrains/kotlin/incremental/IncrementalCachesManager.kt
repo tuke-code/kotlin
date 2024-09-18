@@ -50,11 +50,18 @@ abstract class IncrementalCachesManager<PlatformCache : AbstractIncrementalCache
 
         val closer = Closer.create()
         caches.forEach {
-            closer.register(it)
+            closer.register(CacheCloser(it))
         }
         closer.close()
 
         isClosed = true
+    }
+
+    private class CacheCloser(private val cache: BasicMapsOwner) : Closeable {
+
+        override fun close() {
+            cache.close()
+        }
     }
 
 }
