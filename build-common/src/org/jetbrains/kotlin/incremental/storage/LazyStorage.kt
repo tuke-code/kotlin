@@ -84,11 +84,6 @@ open class LazyStorage<KEY, VALUE>(
     }
 
     @Synchronized
-    override fun flush() {
-        storage?.force()
-    }
-
-    @Synchronized
     override fun close() {
         storage?.close()
     }

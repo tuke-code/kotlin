@@ -48,11 +48,6 @@ abstract class PersistentStorageAdapter<KEY, VALUE, INTERNAL_KEY, INTERNAL_VALUE
     }
 
     @Synchronized
-    override fun flush() {
-        storage.close()
-    }
-
-    @Synchronized
     override fun close() {
         storage.close()
     }

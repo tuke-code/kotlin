@@ -77,7 +77,7 @@ class RelocatableCachesTest {
         val filesToAdd = if (reverseFiles) files.reversedSet() else files
         val lookupsToAdd = if (reverseLookups) lookups.reversedMultiMap() else lookups
         lookupStorage.addAll(lookupsToAdd, filesToAdd)
-        lookupStorage.flush()
+        lookupStorage.flush(memoryCachesOnly = false)
     }
 
     private val File.storageRoot: File

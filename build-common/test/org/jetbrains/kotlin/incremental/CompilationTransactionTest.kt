@@ -39,8 +39,6 @@ private class InMemoryStorageWrapperMock : InMemoryStorageInterface<Any, Any> {
 
     override val keys: Set<Any> = emptySet()
 
-    override fun flush() {}
-
     override fun close() {}
 
     override fun remove(key: Any) {}

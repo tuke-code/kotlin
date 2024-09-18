@@ -197,12 +197,12 @@ open class LookupStorage(
     @TestOnly
     fun forceGC() {
         removeGarbageForTests()
-        flush()
+        flush(false)
     }
 
     @TestOnly
     fun dump(lookupSymbols: Set<LookupSymbol>): String {
-        flush()
+        flush(false)
 
         val sb = StringBuilder()
         val p = Printer(sb)
