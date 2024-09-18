@@ -344,8 +344,13 @@ public actual class AtomicIntArray {
      */
     public actual override fun toString(): String = array.toString()
 
-    private fun checkBounds(index: Int) {
-        if (index < 0 || index >= array.size) throw IndexOutOfBoundsException("index $index")
+    // See KT-71459
+    private inline fun checkBounds(index: Int) {
+        if (index < 0 || index >= array.size) checkBoundsSlowPath(index)
+    }
+
+    private fun checkBoundsSlowPath(index: Int) {
+        throw IndexOutOfBoundsException("The index $index is out of the bounds of the AtomicIntArray with size ${array.size}.")
     }
 }
 
@@ -680,8 +685,13 @@ public actual class AtomicLongArray {
      */
     public actual override fun toString(): String = array.toString()
 
-    private fun checkBounds(index: Int) {
-        if (index < 0 || index >= array.size) throw IndexOutOfBoundsException("index $index")
+    // See KT-71459
+    private inline fun checkBounds(index: Int) {
+        if (index < 0 || index >= array.size) checkBoundsSlowPath(index)
+    }
+
+    private fun checkBoundsSlowPath(index: Int) {
+        throw IndexOutOfBoundsException("The index $index is out of the bounds of the AtomicIntArray with size ${array.size}.")
     }
 }
 
@@ -858,8 +868,13 @@ public actual class AtomicArray<T> {
      */
     public actual override fun toString(): String = array.toString()
 
-    private fun checkBounds(index: Int) {
-        if (index < 0 || index >= array.size) throw IndexOutOfBoundsException("index $index")
+    // See KT-71459
+    private inline fun checkBounds(index: Int) {
+        if (index < 0 || index >= array.size) checkBoundsSlowPath(index)
+    }
+
+    private fun checkBoundsSlowPath(index: Int) {
+        throw IndexOutOfBoundsException("The index $index is out of the bounds of the AtomicIntArray with size ${array.size}.")
     }
 }
 
