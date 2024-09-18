@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2023 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license
+ * Copyright 2010-2024 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license
  * that can be found in the LICENSE file.
  */
 
@@ -8,19 +8,17 @@ package kotlin.concurrent
 import kotlin.internal.ActualizeByJvmBuiltinProvider
 
 /**
- * An [Int] value that is always updated atomically with guaranteed sequential consistent ordering.
+ * An [Int] value that may be updated atomically with guaranteed sequential consistent ordering.
  *
  * Platform-specific implementation details:
  *
- * For Native:
- * [AtomicInt] stores a volatile variable to ensure visibility across threads.
+ * When targeting the Native backend, [AtomicInt] stores a volatile [Int] variable and atomically updates it.
  * For additional details about atomicity guarantees for reads and writes see [kotlin.concurrent.Volatile].
  *
- * For JVM:
  * When targeting the JVM, instances of [AtomicInt] are represented by [java.util.concurrent.atomic.AtomicInteger].
+ * For details about guarantees of volatile accesses and updates of atomics refer to The Java Language Specification (17.4 Memory Model).
  *
- * For JS and Wasm:
- * [AtomicInt] is implemented trivially since these platforms do not support multi-threading.
+ * For JS and Wasm [AtomicInt] is implemented trivially and is not thread-safe since these platforms do not support multi-threading.
  */
 @ActualizeByJvmBuiltinProvider
 @ExperimentalStdlibApi
@@ -95,7 +93,9 @@ public expect class AtomicInt public constructor(value: Int) {
     public fun fetchAndDecrement(): Int
 
     /**
-     * Returns the string representation of the current [value].
+     * Returns the string representation of the underlying [Int] value.
+     *
+     * This operation does not provide any atomicity guarantees.
      */
     public override fun toString(): String
 }
@@ -113,7 +113,17 @@ public operator fun AtomicInt.plusAssign(delta: Int): Unit { this.addAndFetch(de
 public operator fun AtomicInt.minusAssign(delta: Int): Unit { this.addAndFetch(-delta) }
 
 /**
- * A [Long] value that is always updated atomically.
+ * A [Long] value that may be updated atomically with guaranteed sequential consistent ordering.
+ *
+ * Platform-specific implementation details:
+ *
+ * When targeting the Native backend, [AtomicLong] stores a volatile [Long] variable and atomically updates it.
+ * For additional details about atomicity guarantees for reads and writes see [kotlin.concurrent.Volatile].
+ *
+ * When targeting the JVM, instances of [AtomicLong] are represented by [java.util.concurrent.atomic.AtomicLong].
+ * For details about guarantees of volatile accesses and updates of atomics refer to The Java Language Specification (17.4 Memory Model).
+ *
+ * For JS and Wasm [AtomicLong] is implemented trivially and is not thread-safe since these platforms do not support multi-threading.
  */
 @ActualizeByJvmBuiltinProvider
 @ExperimentalStdlibApi
@@ -188,7 +198,9 @@ public expect class AtomicLong public constructor(value: Long) {
     public fun fetchAndDecrement(): Long
 
     /**
-     * Returns the string representation of the current [value].
+     * Returns the string representation of the underlying [Long] value.
+     *
+     * This operation does not provide any atomicity guarantees.
      */
     public override fun toString(): String
 }
@@ -206,7 +218,17 @@ public operator fun AtomicLong.plusAssign(delta: Long): Unit { this.addAndFetch(
 public operator fun AtomicLong.minusAssign(delta: Long): Unit { this.addAndFetch(-delta) }
 
 /**
- * A [Boolean] value that is always updated atomically.
+ * A [Boolean] value that may be updated atomically with guaranteed sequential consistent ordering.
+ *
+ * Platform-specific implementation details:
+ *
+ * When targeting the Native backend, [AtomicBoolean] stores a volatile [Boolean] variable and atomically updates it.
+ * For additional details about atomicity guarantees for reads and writes see [kotlin.concurrent.Volatile].
+ *
+ * When targeting the JVM, instances of [AtomicBoolean] are represented by [java.util.concurrent.atomic.AtomicInteger].
+ * For details about guarantees of volatile accesses and updates of atomics refer to The Java Language Specification (17.4 Memory Model).
+ *
+ * For JS and Wasm [AtomicBoolean] is implemented trivially and is not thread-safe since these platforms do not support multi-threading.
  */
 @ActualizeByJvmBuiltinProvider
 @ExperimentalStdlibApi
@@ -251,13 +273,23 @@ public expect class AtomicBoolean public constructor(value: Boolean) {
     public fun compareAndExchange(expected: Boolean, newValue: Boolean): Boolean
 
     /**
-     * Returns the string representation of the current [value].
+     * Returns the string representation of the current [Boolean] value.
      */
     public override fun toString(): String
 }
 
 /**
- * An object reference that is always updated atomically.
+ * An object reference that may be updated atomically with guaranteed sequential consistent ordering.
+ *
+ * Platform-specific implementation details:
+ *
+ * When targeting the Native backend, [AtomicReference] stores a volatile variable of type [T] and atomically updates it.
+ * For additional details about atomicity guarantees for reads and writes see [kotlin.concurrent.Volatile].
+ *
+ * When targeting the JVM, instances of [AtomicReference] are represented by [java.util.concurrent.atomic.AtomicReference].
+ * For details about guarantees of volatile accesses and updates of atomics refer to The Java Language Specification (17.4 Memory Model).
+ *
+ * For JS and Wasm [AtomicReference] is implemented trivially and is not thread-safe since these platforms do not support multi-threading.
  */
 @ActualizeByJvmBuiltinProvider
 @ExperimentalStdlibApi
@@ -302,7 +334,9 @@ public expect class AtomicReference<T> public constructor(value: T) {
     public fun compareAndExchange(expected: T, newValue: T): T
 
     /**
-     * Returns the string representation of the current [value].
+     * Returns the string representation of the underlying object.
+     *
+     * This operation does not provide any atomicity guarantees.
      */
     public override fun toString(): String
 }
