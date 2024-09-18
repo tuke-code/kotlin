@@ -125,6 +125,7 @@ class CachingLazyStorage<K, V>(
         }
     }
 
+    @Suppress("DEPRECATION") // TODO why is it deprecated exactly
     private fun createMap(): PersistentHashMap<K, V> = PersistentHashMap(storageFile, keyDescriptor, valueExternalizer)
 }
 
@@ -134,7 +135,7 @@ private fun <K, V> createLazyStorageImpl(
     valueExternalizer: DataExternalizer<V>,
     icContext: IncrementalCompilationContext,
 ) = CachingLazyStorage(storageFile, keyDescriptor, valueExternalizer).let {
-    if (icContext.keepIncrementalCompilationCachesInMemory) {
+    if (icContext.icFeatures.keepIncrementalCompilationCachesInMemory) {
         DefaultInMemoryStorageWrapper(it, valueExternalizer).also { wrapper ->
             icContext.transaction.registerInMemoryStorageWrapper(wrapper)
         }
