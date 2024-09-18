@@ -11,7 +11,7 @@ import org.jetbrains.kotlin.build.report.metrics.GradleBuildPerformanceMetric
 import org.jetbrains.kotlin.build.report.metrics.GradleBuildTime
 import org.jetbrains.kotlin.build.report.metrics.measure
 import org.jetbrains.kotlin.compilerRunner.OutputItemsCollector
-import org.jetbrains.kotlin.incremental.storage.InMemoryStorageInterface
+import org.jetbrains.kotlin.incremental.storage.InMemoryStorageWrapper
 import org.jetbrains.kotlin.konan.file.use
 import java.io.Closeable
 import java.io.File
@@ -48,7 +48,7 @@ interface CompilationTransaction : Closeable {
      */
     var executionThrowable: Throwable?
 
-    fun registerInMemoryStorageWrapper(inMemoryStorageWrapper: InMemoryStorageInterface<*, *>)
+    fun registerInMemoryStorageWrapper(inMemoryStorageWrapper: InMemoryStorageWrapper<*, *>)
 }
 
 fun CompilationTransaction.write(file: Path, writeAction: () -> Unit) {
@@ -86,7 +86,7 @@ inline fun <R> CompilationTransaction.runWithin(
 }
 
 abstract class BaseCompilationTransaction : CompilationTransaction {
-    private val inMemoryStorageWrappers = hashSetOf<InMemoryStorageInterface<*, *>>()
+    private val inMemoryStorageWrappers = hashSetOf<InMemoryStorageWrapper<*, *>>()
 
     protected var isSuccessful: Boolean = false
 
@@ -94,7 +94,7 @@ abstract class BaseCompilationTransaction : CompilationTransaction {
         isSuccessful = true
     }
 
-    override fun registerInMemoryStorageWrapper(inMemoryStorageWrapper: InMemoryStorageInterface<*, *>) {
+    override fun registerInMemoryStorageWrapper(inMemoryStorageWrapper: InMemoryStorageWrapper<*, *>) {
         inMemoryStorageWrappers.add(inMemoryStorageWrapper)
     }
 
@@ -117,7 +117,7 @@ abstract class BaseCompilationTransaction : CompilationTransaction {
     protected fun closeCachesManager() = runCatching {
         if (!isSuccessful) {
             for (wrapper in inMemoryStorageWrappers) {
-                wrapper.clearChanges()
+                wrapper.resetInMemoryChanges()
             }
         }
         cachesManager?.close()

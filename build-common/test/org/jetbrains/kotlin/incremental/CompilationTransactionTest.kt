@@ -6,13 +6,14 @@
 package org.jetbrains.kotlin.incremental
 
 import org.jetbrains.kotlin.build.report.DoNothingBuildReporter
-import org.jetbrains.kotlin.incremental.storage.InMemoryStorageInterface
-import org.junit.jupiter.api.Assertions.*
+import org.jetbrains.kotlin.incremental.storage.InMemoryStorageWrapper
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.io.TempDir
 import java.io.Closeable
-import java.io.File
 import java.nio.file.Files
 import java.nio.file.Path
 
@@ -26,20 +27,22 @@ private class CacheMock(private val throwsException: Boolean = false) : Closeabl
     }
 }
 
-private class InMemoryStorageWrapperMock : InMemoryStorageInterface<Any, Any> {
+private class InMemoryStorageWrapperMock : InMemoryStorageWrapper<Any, Any> {
     var reset = false
 
-    override fun applyChanges() {}
-
-    override fun clearChanges() {
+    override fun resetInMemoryChanges() {
         reset = true
     }
 
-    override val storageFile = File("")
+    override val keys: Collection<Any> = emptyList()
 
-    override val keys: Set<Any> = emptySet()
+    override fun clean() {}
+
+    override fun flush(memoryCachesOnly: Boolean) {}
 
     override fun close() {}
+
+    override fun append(key: Any, value: Any) {}
 
     override fun remove(key: Any) {}
 

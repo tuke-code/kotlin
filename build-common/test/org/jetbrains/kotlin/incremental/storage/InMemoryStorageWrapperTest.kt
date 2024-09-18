@@ -16,7 +16,7 @@ import java.io.Closeable
 import java.nio.file.Files
 import java.nio.file.Path
 
-class InMemoryStorageTest {
+class InMemoryStorageWrapperTest {
     @TempDir
     private lateinit var workingDir: Path
 
@@ -84,7 +84,7 @@ class InMemoryStorageTest {
             assertEquals(setOf(5), it[key5])
         }
         withLookupMapInTransaction(storageRoot, useInMemoryWrapper = true, successful = true) {
-            it.clear()
+            it.clean()
             it.append(key1, setOf(4))
         }
         withLookupMapInTransaction(storageRoot, useInMemoryWrapper = false, successful = true) {
@@ -109,7 +109,7 @@ class InMemoryStorageTest {
         val savedState = workingDir.resolve("backup")
         storageRoot.toFile().copyRecursively(savedState.toFile())
         withLookupMapInTransaction(storageRoot, useInMemoryWrapper = true, successful = false) {
-            it.clear()
+            it.clean()
             it.append(key1, setOf(3))
             it.remove(key2)
             it[key3] = setOf(5)
@@ -134,6 +134,7 @@ class InMemoryStorageTest {
         icContext.transaction.runWithin { transaction ->
             val lookupMap = LookupMap(storageFile, icContext)
             transaction.cachesManager = Closeable {
+                lookupMap.flush(false)
                 lookupMap.close()
             }
             dataProvider(lookupMap)

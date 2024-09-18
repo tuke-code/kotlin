@@ -96,7 +96,7 @@ open class LookupStorage(
         val filtered = mutableSetOf<Int>()
 
         for (fileId in fileIds) {
-            val path = idToFile.getFile(fileId)?.path
+            val path = idToFile[fileId]?.path
 
             if (path != null) {
                 paths.add(path)
@@ -135,16 +135,16 @@ open class LookupStorage(
     }
 
     @Synchronized
-    override fun deleteStorageFiles() {
+    override fun clean() {
         icContext.transaction.deleteFile(countersFile.toPath())
 
         size = 0
 
-        super.deleteStorageFiles()
+        super.clean()
     }
 
     @Synchronized
-    override fun close() {
+    override fun flush(memoryCachesOnly: Boolean) {
         try {
             if (size != oldSize) {
                 if (size > 0) {
@@ -152,7 +152,7 @@ open class LookupStorage(
                 }
             }
         } finally {
-            super.close()
+            super.flush(memoryCachesOnly)
         }
     }
 
@@ -173,8 +173,8 @@ open class LookupStorage(
 
         val oldFileToId = fileToId.toMap()
         val oldIdToNewId = HashMap<Int, Int>(oldFileToId.size)
-        idToFile.clear()
-        fileToId.clear()
+        idToFile.clean()
+        fileToId.clean()
         size = 0
 
         for ((file, oldId) in oldFileToId.entries.sortedBy { it.key.path }) {

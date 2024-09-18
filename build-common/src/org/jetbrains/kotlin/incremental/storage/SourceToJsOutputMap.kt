@@ -5,7 +5,6 @@
 
 package org.jetbrains.kotlin.incremental.storage
 
-import com.intellij.util.io.EnumeratorStringDescriptor
 import org.jetbrains.kotlin.incremental.IncrementalCompilationContext
 import org.jetbrains.kotlin.incremental.dumpCollection
 import java.io.File
@@ -13,16 +12,16 @@ import java.io.File
 class SourceToJsOutputMap(
     storageFile: File,
     icContext: IncrementalCompilationContext,
-) : AppendableBasicStringMap<String, Collection<String>>(storageFile, EnumeratorStringDescriptor.INSTANCE, icContext) {
+) : AppendableBasicStringMap<Collection<String>>(storageFile, StringCollectionExternalizer, icContext) {
     override fun dumpValue(value: Collection<String>): String = value.dumpCollection()
 
     @Synchronized
     fun add(key: File, value: File) {
-        storage.append(pathConverter.toPath(key), pathConverter.toPath(value))
+        storage.append(pathConverter.toPath(key), listOf(pathConverter.toPath(value)))
     }
 
     operator fun get(sourceFile: File): Collection<File> =
-        storage[pathConverter.toPath(sourceFile)]?.mapTo(mutableSetOf()) { pathConverter.toFile(it) } ?: setOf()
+        storage[pathConverter.toPath(sourceFile)]?.map { pathConverter.toFile(it) } ?: setOf()
 
 
     @Synchronized
@@ -32,7 +31,7 @@ class SourceToJsOutputMap(
             return
         }
 
-        storage[pathConverter.toPath(key)] = values.toSet().map { pathConverter.toPath(it) }
+        storage[pathConverter.toPath(key)] = values.map { pathConverter.toPath(it) }
     }
 
     @Synchronized

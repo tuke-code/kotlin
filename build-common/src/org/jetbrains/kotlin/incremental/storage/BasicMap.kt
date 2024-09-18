@@ -18,127 +18,111 @@ package org.jetbrains.kotlin.incremental.storage
 
 import com.intellij.util.io.DataExternalizer
 import com.intellij.util.io.EnumeratorStringDescriptor
-import com.intellij.util.io.IOUtil
 import com.intellij.util.io.KeyDescriptor
 import org.jetbrains.annotations.TestOnly
 import org.jetbrains.kotlin.incremental.IncrementalCompilationContext
 import org.jetbrains.kotlin.utils.Printer
 import java.io.File
 
-/** [PersistentStorage] that provides a few extra utility methods. */
-interface BasicMap<KEY, VALUE> : PersistentStorage<KEY, VALUE> {
+abstract class BasicMap<K : Comparable<K>, V, StorageType : LazyStorage<K, V>>(
+    internal val storageFile: File,
+    protected val storage: StorageType,
+    protected val icContext: IncrementalCompilationContext,
+) {
+    protected val pathConverter
+        get() = icContext.pathConverter
 
-    /** Removes all entries. */
-    fun clear() {
-        keys.forEach { remove(it) }
-    }
-
-    /**
-     * DEPRECATED: This method should be removed because
-     *   - The `memoryCachesOnly` parameter is not used (it is always `false`).
-     *   - There is currently no good use case for flushing. In fact, the current implementation of this method does nothing.
-     */
-    fun flush(memoryCachesOnly: Boolean) {
-        check(!memoryCachesOnly) { "Expected memoryCachesOnly = false but it is `true`" }
-    }
-
-    /**
-     * Deletes [storageFile] or a group of files associated with [storageFile] (e.g., an implementation of [PersistentStorage] may use a
-     * [com.intellij.util.io.PersistentHashMap], which creates files such as "storageFile.tab", "storageFile.tab.len", etc.).
-     *
-     * Make sure the storage has been closed first before calling this method.
-     */
-    fun deleteStorageFiles() {
-        check(IOUtil.deleteAllFilesStartingWith(storageFile)) {
-            "Unable to delete storage file(s) with name prefix: ${storageFile.path}"
-        }
-    }
-
-    /**
-     * DEPRECATED: This method should be removed because:
-     *   - The method name is ambiguous (it may be confused with [clear], and it does not exactly describe the current implementation).
-     *   - The method currently calls close(). However, close() is often already called separately and automatically, so calling this method
-     *     means that close() will likely be called twice.
-     * Instead, just inline this method or call either close() or deleteStorageFiles() directly.
-     */
     fun clean() {
+        storage.clean()
+    }
+
+    fun flush(memoryCachesOnly: Boolean) {
+        storage.flush(memoryCachesOnly)
+    }
+
+    // avoid unsynchronized close
+    fun close() {
+        storage.close()
+    }
+
+    @TestOnly
+    fun closeForTest() {
         close()
-        deleteStorageFiles()
     }
 
     @TestOnly
     fun dump(): String {
-        return StringBuilder().apply {
-            Printer(this).apply {
+        return with(StringBuilder()) {
+            with(Printer(this)) {
                 println("${storageFile.name.substringBefore(".tab")} (${this@BasicMap::class.java.simpleName})")
                 pushIndent()
 
-                for (key in keys.sortedBy { dumpKey(it) }) {
-                    println("${dumpKey(key)} -> ${dumpValue(this@BasicMap[key]!!)}")
+                for (key in storage.keys.sorted()) {
+                    println("${dumpKey(key)} -> ${dumpValue(storage[key]!!)}")
                 }
 
                 popIndent()
             }
+
+            this
         }.toString()
     }
 
     @TestOnly
-    fun dumpKey(key: KEY): String = key.toString()
+    protected abstract fun dumpKey(key: K): String
 
     @TestOnly
-    fun dumpValue(value: VALUE): String = value.toString()
+    protected abstract fun dumpValue(value: V): String
 }
 
-abstract class BasicMapBase<KEY, VALUE>(
-    protected val storage: PersistentStorage<KEY, VALUE>,
-) : PersistentStorageWrapper<KEY, VALUE>(storage), BasicMap<KEY, VALUE>
-
-abstract class AppendableBasicMapBase<KEY, E, VALUE : Collection<E>>(
-    protected val storage: AppendablePersistentStorage<KEY, E, VALUE>,
-) : AppendablePersistentStorageWrapper<KEY, E, VALUE>(storage), BasicMap<KEY, VALUE>
-
-abstract class AbstractBasicMap<KEY, VALUE>(
+abstract class NonAppendableBasicMap<K : Comparable<K>, V>(
     storageFile: File,
-    keyDescriptor: KeyDescriptor<KEY>,
-    valueExternalizer: DataExternalizer<VALUE>,
-    protected val icContext: IncrementalCompilationContext,
-) : BasicMapBase<KEY, VALUE>(
-    createPersistentStorage(storageFile, keyDescriptor, valueExternalizer, icContext)
-) {
-    protected val pathConverter
-        get() = icContext.pathConverter
-}
+    keyDescriptor: KeyDescriptor<K>,
+    valueExternalizer: DataExternalizer<V>,
+    icContext: IncrementalCompilationContext,
+) : BasicMap<K, V, LazyStorage<K, V>>(
+    storageFile,
+    createLazyStorage(storageFile, keyDescriptor, valueExternalizer, icContext),
+    icContext
+)
 
-abstract class AppendableAbstractBasicMap<KEY, E, VALUE : Collection<E>>(
+abstract class AppendableBasicMap<K : Comparable<K>, V>(
     storageFile: File,
-    keyDescriptor: KeyDescriptor<KEY>,
-    elementExternalizer: DataExternalizer<E>,
-    protected val icContext: IncrementalCompilationContext,
-) : AppendableBasicMapBase<KEY, E, VALUE>(
-    createAppendablePersistentStorage(storageFile, keyDescriptor, elementExternalizer, icContext)
-) {
-    protected val pathConverter
-        get() = icContext.pathConverter
-}
+    keyDescriptor: KeyDescriptor<K>,
+    valueExternalizer: AppendableDataExternalizer<V>,
+    icContext: IncrementalCompilationContext,
+) : BasicMap<K, V, AppendableLazyStorage<K, V>>(
+    storageFile,
+    createLazyStorage(storageFile, keyDescriptor, valueExternalizer, icContext),
+    icContext
+)
 
-abstract class BasicStringMap<VALUE>(
+abstract class BasicStringMap<V>(
     storageFile: File,
     keyDescriptor: KeyDescriptor<String>,
-    valueExternalizer: DataExternalizer<VALUE>,
+    valueExternalizer: DataExternalizer<V>,
     icContext: IncrementalCompilationContext,
-) : AbstractBasicMap<String, VALUE>(storageFile, keyDescriptor, valueExternalizer, icContext) {
+) : NonAppendableBasicMap<String, V>(storageFile, keyDescriptor, valueExternalizer, icContext) {
+    constructor(
+        storageFile: File,
+        valueExternalizer: DataExternalizer<V>,
+        icContext: IncrementalCompilationContext,
+    ) : this(storageFile, EnumeratorStringDescriptor.INSTANCE, valueExternalizer, icContext)
 
-    constructor(storageFile: File, valueExternalizer: DataExternalizer<VALUE>, icContext: IncrementalCompilationContext) :
-            this(storageFile, EnumeratorStringDescriptor.INSTANCE, valueExternalizer, icContext)
+    override fun dumpKey(key: String): String = key
 }
 
-abstract class AppendableBasicStringMap<E, VALUE : Collection<E>>(
+abstract class AppendableBasicStringMap<V>(
     storageFile: File,
     keyDescriptor: KeyDescriptor<String>,
-    elementExternalizer: DataExternalizer<E>,
+    valueExternalizer: AppendableDataExternalizer<V>,
     icContext: IncrementalCompilationContext,
-) : AppendableAbstractBasicMap<String, E, VALUE>(storageFile, keyDescriptor, elementExternalizer, icContext) {
+) : AppendableBasicMap<String, V>(storageFile, keyDescriptor, valueExternalizer, icContext) {
+    constructor(
+        storageFile: File,
+        valueExternalizer: AppendableDataExternalizer<V>,
+        icContext: IncrementalCompilationContext,
+    ) : this(storageFile, EnumeratorStringDescriptor.INSTANCE, valueExternalizer, icContext)
 
-    constructor(storageFile: File, elementExternalizer: DataExternalizer<E>, icContext: IncrementalCompilationContext) :
-            this(storageFile, EnumeratorStringDescriptor.INSTANCE, elementExternalizer, icContext)
+    override fun dumpKey(key: String): String = key
 }

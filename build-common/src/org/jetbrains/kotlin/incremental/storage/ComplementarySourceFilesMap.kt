@@ -5,7 +5,6 @@
 
 package org.jetbrains.kotlin.incremental.storage
 
-import com.intellij.util.io.EnumeratorStringDescriptor
 import org.jetbrains.kotlin.incremental.IncrementalCompilationContext
 import org.jetbrains.kotlin.incremental.dumpCollection
 import java.io.File
@@ -13,12 +12,7 @@ import java.io.File
 class ComplementarySourceFilesMap(
     storageFile: File,
     icContext: IncrementalCompilationContext,
-) : AppendableBasicStringMap<String, Collection<String>>(
-    storageFile,
-    PathStringDescriptor,
-    EnumeratorStringDescriptor.INSTANCE,
-    icContext
-) {
+) : BasicStringMap<Collection<String>>(storageFile, PathStringDescriptor, StringCollectionExternalizer, icContext) {
 
     operator fun set(sourceFile: File, complementaryFiles: Collection<File>) {
         storage[pathConverter.toPath(sourceFile)] = pathConverter.toPaths(complementaryFiles)
@@ -26,7 +20,7 @@ class ComplementarySourceFilesMap(
 
     operator fun get(sourceFile: File): Collection<File> {
         val paths = storage[pathConverter.toPath(sourceFile)].orEmpty()
-        return pathConverter.toFiles(paths).toSet()
+        return pathConverter.toFiles(paths)
     }
 
     override fun dumpValue(value: Collection<String>) =

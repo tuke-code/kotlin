@@ -16,7 +16,6 @@
 
 package org.jetbrains.kotlin.incremental.storage
 
-import com.intellij.util.io.EnumeratorStringDescriptor
 import org.jetbrains.kotlin.incremental.IncrementalCompilationContext
 import org.jetbrains.kotlin.incremental.dumpCollection
 import org.jetbrains.kotlin.name.FqName
@@ -37,30 +36,28 @@ internal abstract class AbstractSourceToOutputMap<Name>(
     private val nameTransformer: NameTransformer<Name>,
     storageFile: File,
     icContext: IncrementalCompilationContext,
-) : AppendableBasicStringMap<String, Collection<String>>(
-    storageFile,
-    PathStringDescriptor,
-    EnumeratorStringDescriptor.INSTANCE,
-    icContext
-) {
+) : AppendableBasicStringMap<Collection<String>>(storageFile, PathStringDescriptor, StringCollectionExternalizer, icContext) {
     fun clearOutputsForSource(sourceFile: File) {
         remove(pathConverter.toPath(sourceFile))
     }
 
     fun add(sourceFile: File, className: Name) {
-        storage.append(pathConverter.toPath(sourceFile), nameTransformer.asString(className))
+        storage.append(pathConverter.toPath(sourceFile), listOf(nameTransformer.asString(className)))
     }
 
     fun contains(sourceFile: File): Boolean =
         pathConverter.toPath(sourceFile) in storage
 
     operator fun get(sourceFile: File): Collection<Name> =
-        storage[pathConverter.toPath(sourceFile)].orEmpty().toSet().map(nameTransformer::asName)
+        storage[pathConverter.toPath(sourceFile)].orEmpty().map(nameTransformer::asName)
 
     fun getFqNames(sourceFile: File): Collection<FqName> =
-        storage[pathConverter.toPath(sourceFile)].orEmpty().toSet().map(nameTransformer::asFqName)
+        storage[pathConverter.toPath(sourceFile)].orEmpty().map(nameTransformer::asFqName)
 
     override fun dumpValue(value: Collection<String>) =
         value.dumpCollection()
 
+    private fun remove(path: String) {
+        storage.remove(path)
+    }
 }

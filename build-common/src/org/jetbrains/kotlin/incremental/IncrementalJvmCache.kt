@@ -96,7 +96,7 @@ open class IncrementalJvmCache(
         sourceToClassesMap.contains(file)
 
     fun sourcesByInternalName(internalName: String): Collection<File> =
-        internalNameToSource.getFiles(internalName)
+        internalNameToSource[internalName]
 
     fun getAllPartsOfMultifileFacade(facade: JvmClassName): Collection<String>? {
         return multifileFacadeToParts[facade]
@@ -314,8 +314,7 @@ open class IncrementalJvmCache(
         }
 
         removeAllFromClassStorage(dirtyClasses.map { it.fqNameForClassNameWithoutDollars }, changesCollector, icContext.useCompilerMapsOnly)
-
-        dirtyOutputClassesMap.clear()
+        dirtyOutputClassesMap.clean()
     }
 
     override fun getObsoletePackageParts(): Collection<String> {
@@ -564,6 +563,11 @@ open class IncrementalJvmCache(
     ) :
         BasicStringMap<String>(storageFile, EnumeratorStringDescriptor.INSTANCE, icContext) {
 
+        @Synchronized
+        fun set(partName: String, facadeName: String) {
+            storage[partName] = facadeName
+        }
+
         fun get(partName: JvmClassName): String? =
             storage[partName.internalName]
 
@@ -583,8 +587,12 @@ open class IncrementalJvmCache(
             storage[internalName] = pathConverter.toPaths(sourceFiles)
         }
 
-        fun getFiles(internalName: String): Collection<File> =
+        operator fun get(internalName: String): Collection<File> =
             pathConverter.toFiles(storage[internalName] ?: emptyList())
+
+        fun remove(internalName: String) {
+            storage.remove(internalName)
+        }
 
         override fun dumpValue(value: Collection<String>): String =
             value.dumpCollection()
@@ -651,7 +659,7 @@ open class IncrementalJvmCache(
 }
 
 private object PathCollectionExternalizer :
-    CollectionExternalizerV2<String, Collection<String>>(PathStringDescriptor, { THashSet(CollectionFactory.createFilePathSet()) })
+    CollectionExternalizer<String>(PathStringDescriptor, { THashSet(CollectionFactory.createFilePathSet()) })
 
 sealed class ChangeInfo(val fqName: FqName) {
     open class MembersChanged(fqName: FqName, val names: Collection<String>) : ChangeInfo(fqName) {
