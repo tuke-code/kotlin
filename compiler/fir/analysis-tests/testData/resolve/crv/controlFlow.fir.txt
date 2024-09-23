@@ -14,15 +14,6 @@ FILE: controlFlow.kt
     public final fun ifCondition(): R|kotlin/Unit| {
         CMP(>, R|/intF|().R|kotlin/Int.compareTo|(Int(0)))
         lval y: R|kotlin/Boolean| = CMP(>, R|/intF|().R|kotlin/Int.compareTo|(Int(0)))
-        lval x: R|kotlin/String| = when () {
-            CMP(>, R|/intF|().R|kotlin/Int.compareTo|(Int(0))) ->  {
-                String()
-            }
-            else ->  {
-                String(x)
-            }
-        }
-
         when () {
             CMP(>, R|/intF|().R|kotlin/Int.compareTo|(Int(0))) ->  {
                 Q|kotlin/Unit|
@@ -56,6 +47,26 @@ FILE: controlFlow.kt
         when (R|/intF|()) {
             ==($subj$, R|/intF|()) ->  {
                 R|/intF|()
+            }
+        }
+
+    }
+    public final fun ifBranches(): R|kotlin/Unit| {
+        lval x: R|kotlin/Int| = when () {
+            CMP(>, R|/intF|().R|kotlin/Int.compareTo|(Int(0))) ->  {
+                R|/intF|()
+            }
+            else ->  {
+                Int(0)
+            }
+        }
+
+        when () {
+            CMP(>, R|/intF|().R|kotlin/Int.compareTo|(Int(0))) ->  {
+                R|/intF|()
+            }
+            else ->  {
+                Int(0)
             }
         }
 

@@ -5,7 +5,11 @@
 
 package org.jetbrains.kotlin.fir.analysis.checkers.extended
 
+import com.intellij.psi.PsiElement
 import org.jetbrains.kotlin.diagnostics.DiagnosticReporter
+import org.jetbrains.kotlin.diagnostics.KtDiagnosticFactory1
+import org.jetbrains.kotlin.diagnostics.Severity.ERROR
+import org.jetbrains.kotlin.diagnostics.SourceElementPositioningStrategies
 import org.jetbrains.kotlin.diagnostics.reportOn
 import org.jetbrains.kotlin.fir.FirElement
 import org.jetbrains.kotlin.fir.analysis.checkers.MppCheckerKind
@@ -25,6 +29,9 @@ import org.jetbrains.kotlin.fir.symbols.impl.FirCallableSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirPropertySymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirValueParameterSymbol
 import org.jetbrains.kotlin.fir.types.*
+
+// TODO: rewrite generator, since FirErrors.kt is auto generated.
+val RETURN_VALUE_NOT_USED: KtDiagnosticFactory1<String> = KtDiagnosticFactory1("RETURN_VALUE_NOT_USED", ERROR, SourceElementPositioningStrategies.DEFAULT, PsiElement::class)
 
 object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
     override fun check(expression: FirStatement, context: CheckerContext, reporter: DiagnosticReporter) {
@@ -47,6 +54,7 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
         if (resolvedReference?.toResolvedCallableSymbol()?.isExcluded() == true) return
 
         // Ignore Unit or Nothing
+        // TODO: FirWhenExpression has Unit type if it is not assigned anywhere, even if branches are non-Unit
         if (expression.resolvedType.run { isNothingOrNullableNothing || isUnitOrNullableUnit }) return
 
         // If not the outermost call, then it is used as an argument
@@ -59,14 +67,18 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
 
         if (outerExpression.uses(expression)) return
 
-        reporter.reportOn(expression.source, FirErrors.RETURN_VALUE_NOT_USED, (resolvedReference?.name?.toString() ?: "TODO"), context)
+        reporter.reportOn(expression.source, RETURN_VALUE_NOT_USED, (resolvedReference?.name?.toString() ?: "TODO"), context)
     }
 
     private fun FirElement?.uses(given: FirExpression): Boolean = when (this) {
         // Safe calls for some reason are not part of context.callsOrAssignments, so have to be checked separately
         is FirSafeCallExpression -> true // receiver == given
+
         // in if(x) and when(x), x is always used
-        is FirWhenBranch -> condition == given
+        // Lets consider that when/if always consumes everything, and just check if when is used itself?
+        // TODO: FirWhenExpression has Unit type if it is not assigned anywhere, even if branches are non-Unit. requires separate handling.
+        is FirWhenBranch -> true // condition == given
+
         is FirWhenExpression -> subject == given
         is FirComparisonExpression -> true // compareToCall == given
         is FirEqualityOperatorCall -> true // given in argumentList.arguments
