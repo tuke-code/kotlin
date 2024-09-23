@@ -20,6 +20,7 @@ class LoopTest {
                 assertEquals(777, a.value)
                 return a.value
             }
+            return a.value
         }
     }
 

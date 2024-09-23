@@ -49,7 +49,7 @@ class UncheckedCastTest {
     fun testAtomicRefUncheckedCastUpdate() {
         bs.lazySet(arrayOf(arrayOf(Box(1), Box(2)), arrayOf(Box(3))))
         (bs as AtomicRef<Array<Array<Box>>>).update { arrayOf(arrayOf(Box(4), Box(5)), arrayOf(Box(6))) }
-        assertEquals(5, bs.value[0][1]!!.b)
+        assertEquals(5, (bs as AtomicRef<Array<Array<Box>>>).value[0][1]!!.b)
     }
 
     @Suppress("UNCHECKED_CAST")
