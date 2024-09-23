@@ -27,7 +27,7 @@ object FirClassVarianceChecker : FirClassChecker(MppCheckerKind.Common) {
         checkTypeParameters(declaration.typeParameters, Variance.OUT_VARIANCE, context, reporter)
 
         for (superTypeRef in declaration.superTypeRefs) {
-            checkVarianceConflict(superTypeRef, Variance.OUT_VARIANCE, context, reporter)
+            checkVarianceConflict(superTypeRef, Variance.OUT_VARIANCE, context, reporter, superTypeRef.source)
         }
 
         for (member in declaration.declarations) {
@@ -56,7 +56,7 @@ object FirClassVarianceChecker : FirClassChecker(MppCheckerKind.Common) {
         if (member is FirSimpleFunction) {
             if (memberSource != null && memberSource.kind !is KtFakeSourceElementKind) {
                 for (param in member.valueParameters) {
-                    checkVarianceConflict(param.returnTypeRef, Variance.IN_VARIANCE, context, reporter)
+                    checkVarianceConflict(param.returnTypeRef, Variance.IN_VARIANCE, context, reporter, param.returnTypeRef.source)
                 }
             }
         }
@@ -77,7 +77,7 @@ object FirClassVarianceChecker : FirClassChecker(MppCheckerKind.Common) {
 
         val receiverTypeRef = member.receiverParameter?.typeRef
         if (receiverTypeRef != null) {
-            checkVarianceConflict(receiverTypeRef, Variance.IN_VARIANCE, context, reporter)
+            checkVarianceConflict(receiverTypeRef, Variance.IN_VARIANCE, context, reporter, receiverTypeRef.source)
         }
     }
 
@@ -88,16 +88,18 @@ object FirClassVarianceChecker : FirClassChecker(MppCheckerKind.Common) {
         for (typeParameter in typeParameters) {
             if (typeParameter is FirTypeParameter) {
                 for (bound in typeParameter.symbol.resolvedBounds) {
-                    checkVarianceConflict(bound, variance, context, reporter)
+                    checkVarianceConflict(bound, variance, context, reporter, bound.source)
                 }
             }
         }
     }
 
     private fun checkVarianceConflict(
-        typeRef: FirTypeRef, variance: Variance,
-        context: CheckerContext, reporter: DiagnosticReporter,
-        source: KtSourceElement? = null
+        typeRef: FirTypeRef,
+        variance: Variance,
+        context: CheckerContext,
+        reporter: DiagnosticReporter,
+        source: KtSourceElement?,
     ) {
         val expandedType = typeRef.coneType.fullyExpandedType(context.session)
         checkVarianceConflict(
@@ -107,7 +109,8 @@ object FirClassVarianceChecker : FirClassChecker(MppCheckerKind.Common) {
             containingType = expandedType,
             context = context,
             reporter = reporter,
-            source = source
+            source = source,
+            isInAbbreviation = false,
         )
     }
 
@@ -118,8 +121,8 @@ object FirClassVarianceChecker : FirClassChecker(MppCheckerKind.Common) {
         containingType: ConeKotlinType,
         context: CheckerContext,
         reporter: DiagnosticReporter,
-        source: KtSourceElement? = null,
-        isInAbbreviation: Boolean = false
+        source: KtSourceElement?,
+        isInAbbreviation: Boolean,
     ) {
         if (type is ConeTypeParameterType) {
             val fullyExpandedType = type.fullyExpandedType(context.session)
