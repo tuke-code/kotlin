@@ -10,6 +10,7 @@ import org.jetbrains.kotlin.gradle.testbase.*
 import org.junit.jupiter.api.DisplayName
 import java.nio.file.Files
 import kotlin.io.path.deleteRecursively
+import kotlin.io.path.listDirectoryEntries
 import kotlin.io.path.pathString
 import kotlin.streams.toList
 import kotlin.test.assertEquals
@@ -39,11 +40,11 @@ class FusPluginIT : KGPBaseTest() {
                 "test-fus",
                 "-Pkotlin.session.logger.root.path=${projectPath.resolve(reportRelativePath).pathString}",
             ) {
-//                assertFilesCombinedContains(
-//                    Files.list(projectPath.resolve("$reportRelativePath/kotlin-profile")).toList(),
-//                    "$metricName=$metricValue",
-//                    "BUILD FINISHED"
-//                )
+                assertFilesCombinedContains(
+                    Files.list(projectPath.resolve("$reportRelativePath/kotlin-profile")).use { it.toList() },
+                    "$metricName=$metricValue",
+                    "BUILD FINISHED"
+                )
             }
             projectPath.resolve(reportRelativePath).deleteRecursively()
         }
@@ -88,14 +89,16 @@ class FusPluginIT : KGPBaseTest() {
                 "-Pkotlin.session.logger.root.path=${projectPath.resolve(reportRelativePath).pathString}",
             ) {
                 assertConfigurationCacheStored()
-//                assertFilesCombinedContains(
-//                    Files.list(projectPath.resolve("$reportRelativePath/kotlin-profile")).toList(),
-//                    "app=$executionTimeValue",
-//                    "lib=$executionTimeValue",
-//                    "$configurationTimeMetricName=app",
-//                    "$configurationTimeMetricName=lib",
-//                    "BUILD FINISHED"
-//                )
+
+                assertFilesCombinedContains(
+                    projectPath.resolve("$reportRelativePath/kotlin-profile")
+                        .listDirectoryEntries(),
+                    "app=$executionTimeValue",
+                    "lib=$executionTimeValue",
+                    "$configurationTimeMetricName=app",
+                    "$configurationTimeMetricName=lib",
+                    "BUILD FINISHED"
+                )
             }
 
             val firstBuildId = checkBuildReportIdInFusReportAndReturn()
@@ -207,7 +210,7 @@ class FusPluginIT : KGPBaseTest() {
                 }
             }
 
-             build(
+            build(
                 "assemble",
                 "-Pkotlin.session.logger.root.path=${projectPath.resolve(reportRelativePath).pathString}",
             ) {

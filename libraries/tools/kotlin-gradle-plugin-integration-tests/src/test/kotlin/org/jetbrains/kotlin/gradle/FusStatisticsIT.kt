@@ -15,7 +15,7 @@ import org.junit.jupiter.api.condition.OS
 import java.nio.file.Files
 import java.nio.file.Path
 import kotlin.io.path.deleteIfExists
-import kotlin.streams.toList
+import kotlin.io.path.listDirectoryEntries
 import kotlin.test.assertTrue
 
 @DisplayName("FUS statistic")
@@ -126,7 +126,7 @@ class FusStatisticsIT : KGPBaseTest() {
     @GradleTest
     @OsCondition(
         supportedOn = [OS.LINUX, OS.MAC, OS.WINDOWS],
-        enabledOnCI = [OS.LINUX, OS.MAC], //Fails on windows KT-65227
+        //enabledOnCI = [OS.LINUX, OS.MAC], //Fails on windows KT-65227
     )
     @GradleTestVersions(
         additionalVersions = [TestVersions.Gradle.G_8_0]
@@ -139,7 +139,9 @@ class FusStatisticsIT : KGPBaseTest() {
         ) {
             build("compileKotlin", "-Pkotlin.session.logger.root.path=$projectPath") {
                 assertFilesCombinedContains(
-                    Files.list(projectPath.resolve("kotlin-profile")).toList(),
+                    projectPath.resolve("kotlin-profile")
+                        .listDirectoryEntries(),
+//                    Files.list(projectPath.resolve("kotlin-profile")).toList(),
                     *expectedMetrics,
                     "BUILD_SRC_EXISTS=true"
                 )
@@ -152,7 +154,7 @@ class FusStatisticsIT : KGPBaseTest() {
     @JvmGradlePluginTests
     @OsCondition(
         supportedOn = [OS.LINUX, OS.MAC, OS.WINDOWS],
-        enabledOnCI = [OS.LINUX, OS.MAC], //Fails on windows KT-65227
+        //enabledOnCI = [OS.LINUX, OS.MAC], //Fails on windows KT-65227
     )
     @GradleTestVersions(
         maxVersion = TestVersions.Gradle.G_8_0
@@ -167,9 +169,14 @@ class FusStatisticsIT : KGPBaseTest() {
             buildOptions = defaultBuildOptions.copy(configurationCache = BuildOptions.ConfigurationCacheValue.ENABLED)
         ) {
             build("compileKotlin", "-Pkotlin.session.logger.root.path=$projectPath") {
-                Files.list(projectPath.resolve("kotlin-profile")).forEach {
-                    assertFileContains(it, *expectedMetrics)
-                }
+                projectPath.resolve("kotlin-profile")
+                    .listDirectoryEntries()
+                    .forEach {
+                        assertFileContains(it, *expectedMetrics)
+                    }
+//                Files.list(projectPath.resolve("kotlin-profile")).forEach {
+//                    assertFileContains(it, *expectedMetrics)
+//                }
             }
             Files.list(projectPath.resolve("kotlin-profile")).forEach {
                 assertTrue(it.deleteIfExists())
