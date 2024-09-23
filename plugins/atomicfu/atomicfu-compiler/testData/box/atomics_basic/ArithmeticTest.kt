@@ -55,6 +55,13 @@ class IntArithmetic {
         assertEquals(7, _x.decrementAndGet())
         assertEquals(7, x)
         assertTrue(_x.compareAndSet(7, 10))
+        assertEquals(10, x)
+        for (i in 1 .. 1000) {
+            _x += 5
+        }
+        assertEquals(5010, x)
+        _x -= 10
+        assertEquals(5000, x)
     }
 
     fun test() {
@@ -89,6 +96,10 @@ class LongArithmetic {
         assertEquals(-198452011965886958, z.value)
         assertEquals(-198452011965886959, z.decrementAndGet())
         assertEquals(-198452011965886959, z.value)
+        z += 100000000000000000
+        assertEquals(-98452011965886959, z.value)
+        z -= 10000000000000000
+        assertEquals(-108452011965886959, z.value)
     }
 }
 

@@ -19,6 +19,14 @@ class AtomicArrayTest {
         assertEquals(2, A.intArr[2].value)
         assertTrue(A.intArr[2].compareAndSet(2, 34))
         assertEquals(34, A.intArr[2].value)
+        for (i in 1 .. 1000) {
+            A.intArr[2] += 5
+        }
+        assertEquals(5034, A.intArr[2].value)
+        for (i in 1 .. 1000) {
+            A.intArr[2] -= 5
+        }
+        assertEquals(34, A.intArr[2].value)
     }
 
     fun testLongArray() {
@@ -48,6 +56,10 @@ class AtomicArrayTest {
         assertEquals(-198452011965886958, A.longArr[1].value)
         assertEquals(-198452011965886959, A.longArr[1].decrementAndGet())
         assertEquals(-198452011965886959, A.longArr[1].value)
+        A.longArr[1] += 100000000000000000
+        assertEquals(-98452011965886959, A.longArr[1].value)
+        A.longArr[1] -= 10000000000000000
+        assertEquals(-108452011965886959, A.longArr[1].value)
     }
 
     fun testBooleanArray() {
