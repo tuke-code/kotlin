@@ -7,7 +7,6 @@ val nonLocal: Any get() = ""
 
 fun consume(s: String) {}
 
-
 fun locals(a: Any) {
     a
     a as String
@@ -31,4 +30,18 @@ fun classRefs(instance: Any) {
     val s = String::class
     val ss = instance::class
     val sss = nonLocal::class
+}
+
+fun whenInstance() {
+    val e = when (nonLocal) {
+        is String -> "a"
+        is Boolean -> "b"
+        else -> "c"
+    }
+
+    <!RETURN_VALUE_NOT_USED!>when (nonLocal) {
+        is String -> "a"
+        is Boolean -> "b"
+        else -> "c"
+    }<!>
 }

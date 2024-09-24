@@ -8,8 +8,7 @@ fun whileLoop() {
         cur--
     }
 
-    // TODO: handle propagation correctly
-    while (<!RETURN_VALUE_NOT_USED!>getAny()<!> as Boolean) {
+    while (getAny() as Boolean) {
         cur--
     }
 }

@@ -19,7 +19,6 @@ import org.jetbrains.kotlin.fir.analysis.checkers.isLhsOfAssignment
 import org.jetbrains.kotlin.fir.declarations.FirProperty
 import org.jetbrains.kotlin.fir.declarations.FirValueParameter
 import org.jetbrains.kotlin.fir.expressions.*
-import org.jetbrains.kotlin.fir.expressions.impl.FirSingleExpressionBlock
 import org.jetbrains.kotlin.fir.references.resolved
 import org.jetbrains.kotlin.fir.references.symbol
 import org.jetbrains.kotlin.fir.references.toResolvedCallableSymbol
@@ -60,12 +59,15 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
         // If not the outermost call, then it is used as an argument
         if (context.callsOrAssignments.lastOrNull { it != expression } != null) return
 
-        val outerExpression = context.firstNonPropagatingOuterElementOf(expression)
+        val (outerExpression, given) = context.propagate(expression)
+//        val outerExpression = context.firstNonPropagatingOuterElementOf(expression)
+//        val (a, b) = context.propagate(expression)
 
         // Used directly in return expression, property or parameter declaration
         if (outerExpression.isVarInitializationOrReturn) return
 
-        if (outerExpression.uses(expression)) return
+//        if (outerExpression.uses(given ?: expression)) return
+        if (outerExpression.uses(given ?: expression)) return
 
         reporter.reportOn(expression.source, RETURN_VALUE_NOT_USED, "Unused expression: " + (resolvedReference?.toResolvedCallableSymbol()?.callableId?.toString() ?: "<${expression.render()}>"), context)
     }
@@ -92,10 +94,10 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
         // in if(x) and when(x), x is always used
         // Most complex case, as we should check whether given is the last expression in a block.
         // TODO: FirWhenExpression has Unit type if it is not assigned anywhere, even if branches are non-Unit. requires separate handling.
-        is FirWhenBranch -> condition == given || result.statements.lastOrNull() == given // TODO: `given` should be not original, but last propagated (i.e. unwrap FirTypeOperatorCall/SmartCast)
+        is FirWhenBranch -> condition == given || result == given // TODO: `given` should be not original, but last propagated (i.e. unwrap FirTypeOperatorCall/SmartCast)
 
-        is FirTryExpression -> tryBlock.statements.lastOrNull() == given || finallyBlock?.statements?.lastOrNull() == given
-        is FirCatch -> block.statements.lastOrNull() == given
+        is FirTryExpression -> tryBlock == given || finallyBlock == given
+        is FirCatch -> block == given
 
         else -> false
     }
@@ -103,13 +105,30 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
     private fun CheckerContext.firstNonPropagatingOuterElementOf(thisExpression: FirExpression): FirElement? =
         containingElements.lastOrNull { it != thisExpression && !it.isPropagating }
 
+    private fun CheckerContext.propagate(thisExpression: FirExpression): Pair<FirElement?, FirExpression?> {
+        var lastPropagating: FirExpression? = null
+        for (e in containingElements.asReversed()) {
+            if (e == thisExpression) continue
+            if (e.isPropagating) {
+                lastPropagating = e as? FirExpression
+                continue
+            }
+            // FirBlock is propagating only if this is the last statement
+            if (e is FirBlock && e.statements.lastOrNull() == thisExpression) {
+                lastPropagating = e
+                continue
+            }
+            return e to lastPropagating
+        }
+        return null to null
+    }
+
     private val FirElement.isPropagating: Boolean
         get() = when (this) {
             is FirSmartCastExpression,
             is FirArgumentList,
             is FirTypeOperatorCall,
             is FirCheckNotNullCall,
-            is FirBlock,
                 -> true
             else -> false
         }

@@ -25,7 +25,7 @@ fun whenCondition() {
         intF() -> Unit
     }
 
-    // TODO: this should be reported
+    // TODO: when is automatically coerced to Unit when used as statement. This should be reported.
     when (intF()) {
         intF() -> intF() // only part after -> should be reported unused
     }

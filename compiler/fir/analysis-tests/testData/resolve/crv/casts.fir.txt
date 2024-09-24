@@ -33,3 +33,29 @@ FILE: casts.kt
         lval ss: R|kotlin/reflect/KClass<out kotlin/Any>| = <getClass>(R|<local>/instance|)
         lval sss: R|kotlin/reflect/KClass<out kotlin/Any>| = <getClass>(R|/nonLocal|)
     }
+    public final fun whenInstance(): R|kotlin/Unit| {
+        lval e: R|kotlin/String| = when (R|/nonLocal|) {
+            ($subj$ is R|kotlin/String|) ->  {
+                String(a)
+            }
+            ($subj$ is R|kotlin/Boolean|) ->  {
+                String(b)
+            }
+            else ->  {
+                String(c)
+            }
+        }
+
+        when (R|/nonLocal|) {
+            ($subj$ is R|kotlin/String|) ->  {
+                String(a)
+            }
+            ($subj$ is R|kotlin/Boolean|) ->  {
+                String(b)
+            }
+            else ->  {
+                String(c)
+            }
+        }
+
+    }
