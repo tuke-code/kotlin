@@ -93,3 +93,22 @@ FILE: controlFlow.kt
         }
 
     }
+    public final fun tryCatch(): R|kotlin/Unit| {
+        lval x: R|kotlin/String?| = try {
+            R|/nsf|()
+        }
+        catch (e: R|{kotlin/Exception=} java/lang/Exception|) {
+            String(x)
+        }
+        finally {
+            R|/stringF|()
+        }
+
+        try {
+            R|/stringF|()
+        }
+        catch (e: R|{kotlin/Exception=} java/lang/Exception|) {
+            R|/nsf|()
+        }
+
+    }

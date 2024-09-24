@@ -5,7 +5,6 @@ fun intF(): Int = 10
 fun unitF(): Unit = Unit
 fun nsf(): String? = "null"
 
-
 fun ifCondition() {
     <!RETURN_VALUE_NOT_USED!>intF() > 0<!> // not used
     val y = intF() > 0 // used
@@ -54,3 +53,19 @@ fun ifBranches2(cond: Boolean): String? {
     }<!>
 }
 
+fun tryCatch() {
+    val x = try {
+        nsf()
+    } catch (e: Exception) {
+        "x"
+    } finally {
+        stringF()
+    }
+
+    // Same as `if`: we probably want to report unused parts individually?
+    <!RETURN_VALUE_NOT_USED!>try {
+        stringF()
+    } catch (e: Exception) {
+        nsf()
+    }<!>
+}

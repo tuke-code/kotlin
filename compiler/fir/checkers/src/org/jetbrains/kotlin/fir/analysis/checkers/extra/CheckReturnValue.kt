@@ -94,6 +94,9 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
         // TODO: FirWhenExpression has Unit type if it is not assigned anywhere, even if branches are non-Unit. requires separate handling.
         is FirWhenBranch -> condition == given || result.statements.lastOrNull() == given // TODO: `given` should be not original, but last propagated (i.e. unwrap FirTypeOperatorCall/SmartCast)
 
+        is FirTryExpression -> tryBlock.statements.lastOrNull() == given || finallyBlock?.statements?.lastOrNull() == given
+        is FirCatch -> block.statements.lastOrNull() == given
+
         else -> false
     }
 
