@@ -79,7 +79,11 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
         // TODO: FirWhenExpression has Unit type if it is not assigned anywhere, even if branches are non-Unit. requires separate handling.
         is FirWhenBranch -> true // condition == given
 
-        is FirWhenExpression -> subject == given
+        is FirWhenExpression -> subject == given // TODO: probably given should be not original, but last propagated. this would also probably solve firWhenBranch issue.
+
+        // Includes FirWhileLoop, FirDoWhileLoop, and FirErrorLoop. I have no idea what FirErrorLoop is.
+        is FirLoop -> condition == given
+
         is FirComparisonExpression -> true // compareToCall == given
         is FirBooleanOperatorExpression -> true // leftOperand == given || rightOperand == given
         is FirEqualityOperatorCall -> true // given in argumentList.arguments
@@ -117,6 +121,14 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
         "kotlin/collections/MutableSet.add",
         "kotlin/collections/MutableList.set",
         "kotlin/collections/MutableMap.put",
+        "kotlin/text/StringBuilder.append",
+        "kotlin/text/StringBuilder.appendLine",
+        "kotlin/text/Appendable.append",
+        "kotlin/text/Appendable.appendLine",
+        "kotlin/test/assertFailsWith",
+//        "kotlin/Throwable.printStackTrace",
+//        "kotlin/Throwable.addSuppressed",
+//        "kotlin/Throwable.getSuppressed",
     )
 }
 
