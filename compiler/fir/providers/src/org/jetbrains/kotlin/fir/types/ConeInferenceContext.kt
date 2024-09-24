@@ -56,8 +56,8 @@ interface ConeInferenceContext : TypeSystemInferenceExtensionContext, ConeTypeCo
     }
 
     override fun createFlexibleType(lowerBound: RigidTypeMarker, upperBound: RigidTypeMarker): KotlinTypeMarker {
-        require(lowerBound is ConeRigidType)
-        require(upperBound is ConeRigidType)
+        require(lowerBound is ConeKotlinType)
+        require(upperBound is ConeKotlinType)
 
         return coneFlexibleOrSimpleType(this, lowerBound, upperBound)
     }
@@ -68,7 +68,7 @@ interface ConeInferenceContext : TypeSystemInferenceExtensionContext, ConeTypeCo
         nullable: Boolean,
         isExtensionFunction: Boolean,
         attributes: List<AnnotationMarker>?
-    ): SimpleTypeMarker {
+    ): RigidTypeMarker {
         val attributesList = attributes?.filterIsInstanceTo<ConeAttribute<*>, MutableList<ConeAttribute<*>>>(mutableListOf())
         val coneAttributes: ConeAttributes = if (isExtensionFunction) {
             require(constructor is ConeClassLikeLookupTag)
@@ -149,7 +149,7 @@ interface ConeInferenceContext : TypeSystemInferenceExtensionContext, ConeTypeCo
     }
 
     override fun RigidTypeMarker.isExtensionFunction(): Boolean {
-        require(this is ConeRigidType)
+        require(this is ConeKotlinType)
         return this.isExtensionFunctionType
     }
 
@@ -168,7 +168,7 @@ interface ConeInferenceContext : TypeSystemInferenceExtensionContext, ConeTypeCo
     }
 
     override fun RigidTypeMarker.typeDepth(): Int {
-        require(this is ConeRigidType)
+        require(this is ConeKotlinType)
 
         if (this is ConeClassLikeType) {
             val fullyExpanded = fullyExpandedType(session)
@@ -266,8 +266,8 @@ interface ConeInferenceContext : TypeSystemInferenceExtensionContext, ConeTypeCo
         return makeConeTypeDefinitelyNotNullOrNotNull(this@ConeInferenceContext, preserveAttributes = preserveAttributes)
     }
 
-    override fun RigidTypeMarker.makeDefinitelyNotNullOrNotNull(): RigidTypeMarker {
-        require(this is ConeRigidType)
+    override fun RigidTypeMarker.makeSimpleTypeDefinitelyNotNullOrNotNull(): RigidTypeMarker {
+        require(this is ConeKotlinType)
         return makeConeTypeDefinitelyNotNullOrNotNull(this@ConeInferenceContext) as RigidTypeMarker
     }
 
@@ -302,13 +302,13 @@ interface ConeInferenceContext : TypeSystemInferenceExtensionContext, ConeTypeCo
     }
 
     override fun RigidTypeMarker.replaceArguments(newArguments: List<TypeArgumentMarker>): RigidTypeMarker {
-        require(this is ConeRigidType)
+        require(this is ConeKotlinType)
         @Suppress("UNCHECKED_CAST")
         return this.withArguments((newArguments as List<ConeTypeProjection>).toTypedArray())
     }
 
     override fun RigidTypeMarker.replaceArguments(replacement: (TypeArgumentMarker) -> TypeArgumentMarker): RigidTypeMarker {
-        require(this is ConeRigidType)
+        require(this is ConeKotlinType)
         return this.withArguments { replacement(it) as ConeTypeProjection }
     }
 

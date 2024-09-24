@@ -25,7 +25,7 @@ class ClassicTypeSystemContextForCS(
     ClassicTypeSystemContext,
     BuiltInsProvider {
 
-    override fun TypeVariableMarker.defaultType(): SimpleTypeMarker {
+    override fun TypeVariableMarker.defaultType(): RigidTypeMarker {
         require(this is NewTypeVariable, this::errorMessage)
         return this.defaultType
     }

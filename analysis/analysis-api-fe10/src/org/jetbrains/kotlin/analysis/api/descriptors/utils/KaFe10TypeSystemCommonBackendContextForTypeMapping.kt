@@ -21,7 +21,6 @@ import org.jetbrains.kotlin.types.error.ErrorTypeKind
 import org.jetbrains.kotlin.types.error.ErrorUtils
 import org.jetbrains.kotlin.types.model.KotlinTypeMarker
 import org.jetbrains.kotlin.types.model.RigidTypeMarker
-import org.jetbrains.kotlin.types.model.SimpleTypeMarker
 import org.jetbrains.kotlin.types.model.TypeConstructorMarker
 import org.jetbrains.kotlin.types.model.TypeParameterMarker
 
@@ -78,7 +77,7 @@ internal class KaFe10TypeSystemCommonBackendContextForTypeMapping(
         }
     }
 
-    override fun TypeConstructorMarker.typeWithArguments(arguments: List<KotlinTypeMarker>): SimpleTypeMarker {
+    override fun TypeConstructorMarker.typeWithArguments(arguments: List<KotlinTypeMarker>): RigidTypeMarker {
         if (this is ErrorTypeConstructor) {
             return ErrorUtils.createErrorType(kind, this, *formatParams)
         }

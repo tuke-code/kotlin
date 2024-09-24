@@ -24,12 +24,11 @@ import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.protobuf.GeneratedMessageLite
 import org.jetbrains.kotlin.types.AbstractTypeApproximator
 import org.jetbrains.kotlin.types.model.RigidTypeMarker
-import org.jetbrains.kotlin.types.model.SimpleTypeMarker
 
 class TypeApproximatorForMetadataSerializer(session: FirSession) :
     AbstractTypeApproximator(session.typeContext, session.languageVersionSettings) {
 
-    override fun createErrorType(debugName: String, delegatedType: RigidTypeMarker?): SimpleTypeMarker {
+    override fun createErrorType(debugName: String, delegatedType: RigidTypeMarker?): RigidTypeMarker {
         return ConeErrorType(ConeIntermediateDiagnostic(debugName))
     }
 }

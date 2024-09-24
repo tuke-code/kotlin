@@ -25,7 +25,7 @@ import org.jetbrains.kotlin.psi.stubs.KotlinUserTypeStub
 import org.jetbrains.kotlin.psi.stubs.elements.KtStubElementTypes
 import org.jetbrains.kotlin.types.model.FlexibleTypeMarker
 import org.jetbrains.kotlin.types.model.KotlinTypeMarker
-import org.jetbrains.kotlin.types.model.SimpleTypeMarker
+import org.jetbrains.kotlin.types.model.RigidTypeMarker
 import org.jetbrains.kotlin.types.model.TypeArgumentMarker
 
 /**
@@ -95,7 +95,7 @@ data class KotlinClassTypeBean(
     val arguments: List<KotlinTypeArgumentBean>,
     override val nullable: Boolean,
     val abbreviatedType: KotlinClassTypeBean?,
-) : KotlinTypeBean, SimpleTypeMarker
+) : KotlinTypeBean, RigidTypeMarker
 
 data class KotlinTypeArgumentBean(val projectionKind: KtProjectionKind, val type: KotlinTypeBean?) : TypeArgumentMarker
 
@@ -103,4 +103,4 @@ data class KotlinTypeParameterTypeBean(
     val typeParameterName: String,
     override val nullable: Boolean,
     val definitelyNotNull: Boolean
-) : KotlinTypeBean, SimpleTypeMarker
+) : KotlinTypeBean, RigidTypeMarker

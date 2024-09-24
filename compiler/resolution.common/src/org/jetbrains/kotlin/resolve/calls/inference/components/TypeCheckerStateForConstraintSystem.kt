@@ -320,7 +320,7 @@ abstract class TypeCheckerStateForConstraintSystem(
                             useRefinedBoundsForTypeVariableInFlexiblePosition() ->
                                 // Foo <: T! -- (Foo!! .. Foo) <: T
                                 createFlexibleType(
-                                    subType.makeDefinitelyNotNullOrNotNull(),
+                                    subType.makeSimpleTypeDefinitelyNotNullOrNotNull(),
                                     subType.withNullability(true)
                                 )
                             // In K1 (FE1.0), there is an obsolete behavior
@@ -334,13 +334,13 @@ abstract class TypeCheckerStateForConstraintSystem(
                             useRefinedBoundsForTypeVariableInFlexiblePosition() ->
                                 // (Foo..Bar) <: T! -- (Foo!! .. Bar?) <: T
                                 createFlexibleType(
-                                    subType.lowerBound().makeDefinitelyNotNullOrNotNull(),
+                                    subType.lowerBound().makeSimpleTypeDefinitelyNotNullOrNotNull(),
                                     subType.upperBound().withNullability(true)
                                 )
                             else ->
                                 // (Foo..Bar) <: T! -- (Foo!! .. Bar) <: T
                                 createFlexibleType(
-                                    subType.lowerBound().makeDefinitelyNotNullOrNotNull(),
+                                    subType.lowerBound().makeSimpleTypeDefinitelyNotNullOrNotNull(),
                                     subType.upperBound()
                                 )
                         }
@@ -431,7 +431,7 @@ abstract class TypeCheckerStateForConstraintSystem(
         val simplifiedSuperType = when {
             typeVariable.isFlexible() && useRefinedBoundsForTypeVariableInFlexiblePosition() ->
                 createFlexibleType(
-                    superType.lowerBoundIfFlexible().makeDefinitelyNotNullOrNotNull(),
+                    superType.lowerBoundIfFlexible().makeSimpleTypeDefinitelyNotNullOrNotNull(),
                     superType.upperBoundIfFlexible().withNullability(true)
                 )
 

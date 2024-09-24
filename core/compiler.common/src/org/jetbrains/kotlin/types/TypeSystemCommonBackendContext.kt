@@ -12,8 +12,8 @@ import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.types.model.*
 
 interface TypeSystemCommonBackendContext : TypeSystemContext {
-    fun nullableAnyType(): SimpleTypeMarker
-    fun arrayType(componentType: KotlinTypeMarker): SimpleTypeMarker
+    fun nullableAnyType(): RigidTypeMarker
+    fun arrayType(componentType: KotlinTypeMarker): RigidTypeMarker
     fun KotlinTypeMarker.isArrayOrNullableArray(): Boolean
 
     fun TypeConstructorMarker.isFinalClassOrEnumEntryOrAnnotationClassConstructor(): Boolean
@@ -61,8 +61,8 @@ interface TypeSystemCommonBackendContextForTypeMapping : TypeSystemCommonBackend
     fun RigidTypeMarker.isSuspendFunction(): Boolean
     fun RigidTypeMarker.isKClass(): Boolean
 
-    fun TypeConstructorMarker.typeWithArguments(arguments: List<KotlinTypeMarker>): SimpleTypeMarker
-    fun TypeConstructorMarker.typeWithArguments(vararg arguments: KotlinTypeMarker): SimpleTypeMarker {
+    fun TypeConstructorMarker.typeWithArguments(arguments: List<KotlinTypeMarker>): RigidTypeMarker
+    fun TypeConstructorMarker.typeWithArguments(vararg arguments: KotlinTypeMarker): RigidTypeMarker {
         return typeWithArguments(arguments.toList())
     }
 

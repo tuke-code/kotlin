@@ -26,7 +26,7 @@ import org.jetbrains.kotlin.types.checker.StrictEqualityTypeChecker
 import org.jetbrains.kotlin.types.error.ErrorType
 import org.jetbrains.kotlin.types.model.FlexibleTypeMarker
 import org.jetbrains.kotlin.types.model.KotlinTypeMarker
-import org.jetbrains.kotlin.types.model.SimpleTypeMarker
+import org.jetbrains.kotlin.types.model.RigidTypeMarker
 import org.jetbrains.kotlin.types.model.TypeArgumentListMarker
 
 /**
@@ -177,7 +177,7 @@ sealed class UnwrappedType : KotlinType() {
  * then all your types are simple.
  * Or more precisely, all instances are subclasses of [SimpleType] or [WrappedType] (which contains [SimpleType] inside).
  */
-abstract class SimpleType : UnwrappedType(), SimpleTypeMarker, TypeArgumentListMarker {
+abstract class SimpleType : UnwrappedType(), RigidTypeMarker, TypeArgumentListMarker {
     abstract override fun replaceAttributes(newAttributes: TypeAttributes): SimpleType
     abstract override fun makeNullableAsSpecified(newNullability: Boolean): SimpleType
 

@@ -10,14 +10,13 @@ import org.jetbrains.kotlin.descriptors.ValueClassKind.MultiField
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.types.TypeSystemCommonBackendContext
 import org.jetbrains.kotlin.types.model.RigidTypeMarker
-import org.jetbrains.kotlin.types.model.SimpleTypeMarker
 
 sealed class ValueClassRepresentation<Type : RigidTypeMarker> {
     abstract val underlyingPropertyNamesToTypes: List<Pair<Name, Type>>
     abstract fun containsPropertyWithName(name: Name): Boolean
     abstract fun getPropertyTypeByName(name: Name): Type?
 
-    fun <Other : SimpleTypeMarker> mapUnderlyingType(transform: (Type) -> Other): ValueClassRepresentation<Other> = when (this) {
+    fun <Other : RigidTypeMarker> mapUnderlyingType(transform: (Type) -> Other): ValueClassRepresentation<Other> = when (this) {
         is InlineClassRepresentation -> InlineClassRepresentation(underlyingPropertyName, transform(underlyingType))
         is MultiFieldValueClassRepresentation ->
             MultiFieldValueClassRepresentation(underlyingPropertyNamesToTypes.map { (name, type) -> name to transform(type) })

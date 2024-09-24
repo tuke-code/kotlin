@@ -124,7 +124,7 @@ interface ConeTypeContext : TypeSystemContext, TypeSystemOptimizationContext, Ty
         return this.lowerBound
     }
 
-    override fun SimpleTypeMarker.asCapturedType(): CapturedTypeMarker? {
+    override fun RigidTypeMarker.asCapturedType(): CapturedTypeMarker? {
         return this as? ConeCapturedType
     }
 
@@ -133,7 +133,7 @@ interface ConeTypeContext : TypeSystemContext, TypeSystemOptimizationContext, Ty
         return this as? ConeDefinitelyNotNullType
     }
 
-    override fun SimpleTypeMarker.isMarkedNullable(): Boolean {
+    override fun RigidTypeMarker.isMarkedNullable(): Boolean {
         require(this is ConeKotlinType)
         return fullyExpandedType(session).isMarkedNullable
     }
@@ -368,7 +368,7 @@ interface ConeTypeContext : TypeSystemContext, TypeSystemOptimizationContext, Ty
     }
 
     override fun captureFromArguments(type: RigidTypeMarker, status: CaptureStatus): RigidTypeMarker? {
-        require(type is ConeRigidType)
+        require(type is ConeKotlinType)
         return captureFromArgumentsInternal(type, status) as RigidTypeMarker?
     }
 
@@ -378,8 +378,8 @@ interface ConeTypeContext : TypeSystemContext, TypeSystemOptimizationContext, Ty
     }
 
     override fun identicalArguments(a: RigidTypeMarker, b: RigidTypeMarker): Boolean {
-        require(a is ConeRigidType)
-        require(b is ConeRigidType)
+        require(a is ConeKotlinType)
+        require(b is ConeKotlinType)
         return a.typeArguments === b.typeArguments
     }
 
@@ -399,20 +399,21 @@ interface ConeTypeContext : TypeSystemContext, TypeSystemOptimizationContext, Ty
         if (isError()) return false
         require(this is ConeRigidType)
         return when (this) {
-            is ConeLookupTagBasedType -> {
-                val typeConstructor = this.typeConstructor()
-                typeConstructor is ConeClassifierLookupTag
-            }
             is ConeCapturedType -> true
             is ConeTypeVariableType -> false
             is ConeIntersectionType -> false
             is ConeIntegerLiteralType -> true
             is ConeStubType -> true
             is ConeDefinitelyNotNullType -> true
+            /* Important (?!) */
+            is ConeLookupTagBasedType -> {
+                val typeConstructor = this.typeConstructor()
+                return typeConstructor is ConeClassifierLookupTag
+            }
         }
     }
 
-    override fun SimpleTypeMarker.isPrimitiveType(): Boolean {
+    override fun RigidTypeMarker.isPrimitiveType(): Boolean {
         if (this is ConeClassLikeType) {
             return isPrimitive
         }
@@ -443,11 +444,9 @@ interface ConeTypeContext : TypeSystemContext, TypeSystemOptimizationContext, Ty
         return this.variable.typeConstructor
     }
 
-    override fun intersectTypes(types: Collection<SimpleTypeMarker>): SimpleTypeMarker {
+    override fun intersectTypes(types: Collection<RigidTypeMarker>): RigidTypeMarker {
         @Suppress("UNCHECKED_CAST")
-        return ConeTypeIntersector.intersectTypes(
-            this as ConeInferenceContext, types as Collection<ConeSimpleKotlinType>
-        ) as SimpleTypeMarker
+        return ConeTypeIntersector.intersectTypes(this as ConeInferenceContext, types as Collection<ConeKotlinType>) as RigidTypeMarker
     }
 
     override fun intersectTypes(types: Collection<KotlinTypeMarker>): ConeKotlinType {
@@ -616,7 +615,7 @@ interface ConeTypeContext : TypeSystemContext, TypeSystemOptimizationContext, Ty
         return object : DoCustomTransform() {
             override fun transformType(state: TypeCheckerState, type: KotlinTypeMarker): RigidTypeMarker {
                 val lowerBound = type.lowerBoundIfFlexible()
-                require(lowerBound is ConeRigidType)
+                require(lowerBound is ConeKotlinType)
                 return substitutor.substituteOrSelf(lowerBound) as RigidTypeMarker
             }
 

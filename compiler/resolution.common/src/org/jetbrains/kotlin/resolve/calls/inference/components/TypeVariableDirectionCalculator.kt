@@ -104,7 +104,7 @@ class TypeVariableDirectionCalculator(
                 upperBound().visitType(startDirection, action)
             }
         }
-        else -> error("sealed")
+        else -> error("?!")
     }
 
     private fun RigidTypeMarker.visitType(

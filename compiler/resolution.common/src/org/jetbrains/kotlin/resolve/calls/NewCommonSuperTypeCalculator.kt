@@ -191,7 +191,7 @@ object NewCommonSuperTypeCalculator {
 
         return uniquify(typesToUniquify, stateStubTypesNotEqual).singleOrNull()?.let {
             when {
-                areAllDefNotNull -> it.makeDefinitelyNotNullOrNotNull()
+                areAllDefNotNull -> it.makeSimpleTypeDefinitelyNotNullOrNotNull()
                 areThereAnyNullable -> it.withNullability(true)
                 else -> it
             }
@@ -257,7 +257,7 @@ object NewCommonSuperTypeCalculator {
     private fun TypeSystemCommonSuperTypesContext.findErrorTypeInSupertypes(
         types: List<RigidTypeMarker>,
         stateStubTypesEqualToAnything: TypeCheckerState
-    ): SimpleTypeMarker? {
+    ): RigidTypeMarker? {
         for (type in types) {
             collectAllSupertypes(type, stateStubTypesEqualToAnything).firstOrNull { it.isError() }?.let { return it.toErrorType() }
         }
@@ -312,7 +312,7 @@ object NewCommonSuperTypeCalculator {
         types: List<RigidTypeMarker>,
         constructor: TypeConstructorMarker,
         depth: Int
-    ): SimpleTypeMarker {
+    ): RigidTypeMarker {
         if (constructor.parametersCount() == 0) return createSimpleType(
             constructor,
             emptyList(),
@@ -439,7 +439,7 @@ object NewCommonSuperTypeCalculator {
         return true
     }
 
-    private fun TypeSystemCommonSuperTypesContext.typeConstructorsWithExpandedStarProjections(types: Set<SimpleTypeMarker>) = sequence {
+    private fun TypeSystemCommonSuperTypesContext.typeConstructorsWithExpandedStarProjections(types: Set<RigidTypeMarker>) = sequence {
         for (type in types) {
             if (isCapturedStarProjection(type)) {
                 for (supertype in supertypesIfCapturedStarProjection(type).orEmpty()) {
@@ -451,10 +451,10 @@ object NewCommonSuperTypeCalculator {
         }
     }
 
-    private fun TypeSystemCommonSuperTypesContext.isCapturedStarProjection(type: SimpleTypeMarker): Boolean =
+    private fun TypeSystemCommonSuperTypesContext.isCapturedStarProjection(type: RigidTypeMarker): Boolean =
         type.asCapturedType()?.typeConstructor()?.projection()?.isStarProjection() == true
 
-    private fun TypeSystemCommonSuperTypesContext.supertypesIfCapturedStarProjection(type: SimpleTypeMarker): Collection<KotlinTypeMarker>? {
+    private fun TypeSystemCommonSuperTypesContext.supertypesIfCapturedStarProjection(type: RigidTypeMarker): Collection<KotlinTypeMarker>? {
         val constructor = type.asCapturedType()?.typeConstructor() ?: return null
         return if (constructor.projection().isStarProjection())
             constructor.supertypes()

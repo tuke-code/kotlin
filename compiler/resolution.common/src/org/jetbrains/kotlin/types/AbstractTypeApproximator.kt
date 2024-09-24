@@ -496,7 +496,6 @@ abstract class AbstractTypeApproximator(
         }
 
         // DNN case is handled above
-        require(type is SimpleTypeMarker)
         val typeConstructor = type.typeConstructor()
 
         if (typeConstructor.isCapturedTypeConstructor()) {
@@ -810,7 +809,7 @@ abstract class AbstractTypeApproximator(
     }
 
     private fun KotlinTypeMarker.defaultResult(toSuper: Boolean) = if (toSuper) nullableAnyType() else {
-        if (this is SimpleTypeMarker && isMarkedNullable()) nullableNothingType() else nothingType()
+        if (this is RigidTypeMarker && isMarkedNullable()) nullableNothingType() else nothingType()
     }
 
     // Any? or Any!

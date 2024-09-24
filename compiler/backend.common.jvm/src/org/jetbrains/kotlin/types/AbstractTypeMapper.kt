@@ -95,7 +95,7 @@ object AbstractTypeMapper {
                 val typeParameter = typeConstructor.asTypeParameter()
                 val upperBound = typeParameter.representativeUpperBound()
                 val upperBoundIsPrimitiveOrInlineClass =
-                    upperBound.typeConstructor().isInlineClass() || upperBound is SimpleTypeMarker && upperBound.isPrimitiveType()
+                    upperBound.typeConstructor().isInlineClass() || upperBound is RigidTypeMarker && upperBound.isPrimitiveType()
                 val newType = if (upperBoundIsPrimitiveOrInlineClass && type.isNullableType())
                     upperBound.makeNullable()
                 else upperBound
@@ -216,6 +216,6 @@ object AbstractTypeMapper {
 
     private fun TypeSystemCommonBackendContext.isPrimitiveBacked(type: KotlinTypeMarker): Boolean =
         !type.isNullableType() &&
-                (type is SimpleTypeMarker && type.isPrimitiveType() ||
+                (type is RigidTypeMarker && type.isPrimitiveType() ||
                         type.typeConstructor().getValueClassProperties()?.singleOrNull()?.let { isPrimitiveBacked(it.second) } == true)
 }

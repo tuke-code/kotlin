@@ -381,7 +381,7 @@ fun FirDeclaration.visibilityForApproximation(container: FirDeclaration?): Visib
 }
 
 
-fun ConeTypeContext.captureFromArgumentsInternal(type: ConeRigidType, status: CaptureStatus): ConeRigidType? {
+fun ConeTypeContext.captureFromArgumentsInternal(type: ConeKotlinType, status: CaptureStatus): ConeKotlinType? {
     val capturedArguments = captureArguments(type, status) ?: return null
     return type.withArguments(capturedArguments)
 }
@@ -718,7 +718,7 @@ private fun FirTypeParameter.eraseToUpperBound(
     }
 }
 
-private fun SimpleTypeMarker.eraseArgumentsDeeply(
+private fun RigidTypeMarker.eraseArgumentsDeeply(
     typeContext: ConeInferenceContext,
     cache: MutableMap<FirTypeParameter, ConeKotlinType>,
     mode: EraseUpperBoundMode,

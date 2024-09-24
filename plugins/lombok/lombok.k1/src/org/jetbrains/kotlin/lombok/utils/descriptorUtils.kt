@@ -16,7 +16,7 @@ import org.jetbrains.kotlin.load.java.lazy.descriptors.isJavaField
 import org.jetbrains.kotlin.load.java.structure.impl.JavaClassImpl
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.types.KotlinType
-import org.jetbrains.kotlin.types.model.SimpleTypeMarker
+import org.jetbrains.kotlin.types.model.RigidTypeMarker
 import org.jetbrains.kotlin.types.typeUtil.isBoolean
 
 data class LombokValueParameter(val name: Name, val type: KotlinType)
@@ -100,7 +100,7 @@ fun ClassDescriptor.getJavaFields(): List<PropertyDescriptor> {
         .filter { it.isJavaField }
 }
 
-fun KotlinType.isPrimitiveBoolean(): Boolean = this is SimpleTypeMarker && isBoolean()
+fun KotlinType.isPrimitiveBoolean(): Boolean = this is RigidTypeMarker && isBoolean()
 
 //we process local java files only
 fun ClassDescriptor.getJavaClass(): JavaClassImpl? =

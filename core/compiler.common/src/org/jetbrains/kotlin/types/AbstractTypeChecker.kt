@@ -69,9 +69,9 @@ open class TypeCheckerState(
     //
     // But that might lead to the exponential size of CS, thus we use the following heuristics:
     // we accumulate forks data until the last stage of the candidate resolution and then try to apply back then
-    // until some of the constraints set has no contradiction.
+    // until some of the constrains set has no contradiction.
     //
-    // `atForkPoint` works trivially in non-inference context and for FE1.0: it just runs basic subtyping mechanism for each subTypeArguments
+    // `atForkPoint` works trivially in non-inference context and for FE1.0: it just run basic subtyping mechanism for each subTypeArguments
     // component until the first success
     open fun runForkingPoint(block: ForkPointContext.() -> Unit): Boolean = with(ForkPointContext.Default()) {
         block()
@@ -382,7 +382,7 @@ object AbstractTypeChecker {
 
         if (!AbstractNullabilityChecker.isPossibleSubtype(state, subType, superType)) return false
 
-        checkSubtypeForIntegerLiteralType(state, subType, superType)?.let {
+        checkSubtypeForIntegerLiteralType(state, subType.lowerBoundIfFlexible(), superType.upperBoundIfFlexible())?.let {
             state.addSubtypeConstraint(subType, superType)
             return it
         }
@@ -466,7 +466,7 @@ object AbstractTypeChecker {
         val superTypeConstructor = superType.typeConstructor()
 
         // Sometimes we can get two classes from different modules with different counts of type parameters
-        // So for such situations we assume that those types are not subtype of each other
+        // So for such situations we assume that those types are not sub type of each other
         val argumentsCount = capturedSubArguments.size()
         val parametersCount = superTypeConstructor.parametersCount()
         if (argumentsCount != parametersCount || argumentsCount != superType.argumentsCount()) {
@@ -780,7 +780,7 @@ object AbstractNullabilityChecker {
             // i.e. subType hasn't not-null supertype and isn't definitely not-null, but superType is definitely not-null
             if (superType.isDefinitelyNotNullType()) return false
 
-            // i.e. subType hasn't not-null supertype, but superType has
+            // i.e subType hasn't not-null supertype, but superType has
             if (state.hasNotNullSupertype(superType, SupertypesPolicy.UpperIfFlexible)) return false
 
             // both superType and subType hasn't not-null supertype and are not definitely not null.
@@ -791,10 +791,10 @@ object AbstractNullabilityChecker {
              * For captured types with lower bound this function can give to you false result. Example:
              *  class A<T>, A<in Number> => \exist Q : Number <: Q. A<Q>
              *      isPossibleSubtype(Number, Q) = false.
-             *      Such cases should be taken into account in [NewKotlinTypeChecker.isSubtypeOf] (same for intersection types)
+             *      Such cases should be taken in to account in [NewKotlinTypeChecker.isSubtypeOf] (same for intersection types)
              */
 
-            // classType cannot have special type in supertype list
+            // classType cannot has special type in supertype list
             if (subType.isClassType()) return false
 
             return hasPathByNotMarkedNullableNodes(state, subType, superType.typeConstructor())

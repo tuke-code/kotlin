@@ -37,7 +37,7 @@ sealed class IrType : IrTypeProjection, KotlinTypeMarker, TypeRefMarker, IrAnnot
 abstract class IrErrorType(
     private val errorClassStubSymbol: IrClassSymbol,
     val isMarkedNullable: Boolean = false
-) : IrType(), SimpleTypeMarker {
+) : IrType(), RigidTypeMarker {
     val symbol: IrClassSymbol
         get() = errorClassStubSymbol
 }
@@ -54,7 +54,7 @@ enum class SimpleTypeNullability {
     }
 }
 
-abstract class IrSimpleType : IrType(), SimpleTypeMarker, TypeArgumentListMarker {
+abstract class IrSimpleType : IrType(), RigidTypeMarker, TypeArgumentListMarker {
     abstract val classifier: IrClassifierSymbol
 
     /**

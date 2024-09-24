@@ -55,7 +55,7 @@ import org.jetbrains.kotlin.types.DefinitelyNotNullType
 import org.jetbrains.kotlin.types.FlexibleType
 import org.jetbrains.kotlin.types.KotlinType
 import org.jetbrains.kotlin.types.UnwrappedType
-import org.jetbrains.kotlin.types.model.SimpleTypeMarker
+import org.jetbrains.kotlin.types.model.RigidTypeMarker
 import org.jetbrains.kotlin.types.updateArgumentModeFromAnnotations
 import org.jetbrains.org.objectweb.asm.Type
 
@@ -141,7 +141,7 @@ internal class KaFe10JavaInteroperabilityComponent(
     }
 
     private fun asPsiTypeElement(type: KotlinType, useSitePosition: PsiElement, mode: TypeMappingMode): PsiTypeElement? {
-        if (type !is SimpleTypeMarker) return null
+        if (type !is RigidTypeMarker) return null
 
         val signatureWriter = BothSignatureWriter(BothSignatureWriter.Mode.SKIP_CHECKS)
         typeMapper.mapType(type, mode, signatureWriter)

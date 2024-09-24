@@ -41,7 +41,7 @@ interface IrTypeSystemContext : TypeSystemContext, TypeSystemCommonSuperTypesCon
 
     val irBuiltIns: IrBuiltIns
 
-    override fun KotlinTypeMarker.asRigidType() = this as? SimpleTypeMarker
+    override fun KotlinTypeMarker.asRigidType() = this as? RigidTypeMarker
 
     override fun KotlinTypeMarker.asFlexibleType(): FlexibleTypeMarker? = this as? FlexibleTypeMarker
 
@@ -73,11 +73,11 @@ interface IrTypeSystemContext : TypeSystemContext, TypeSystemCommonSuperTypesCon
         }
     }
 
-    override fun SimpleTypeMarker.asCapturedType(): CapturedTypeMarker? = this as? IrCapturedType
+    override fun RigidTypeMarker.asCapturedType(): CapturedTypeMarker? = this as? IrCapturedType
 
     override fun RigidTypeMarker.asDefinitelyNotNullType(): DefinitelyNotNullTypeMarker? = null
 
-    override fun SimpleTypeMarker.isMarkedNullable(): Boolean = this is IrSimpleType && this.irIsMarkedNullable()
+    override fun RigidTypeMarker.isMarkedNullable(): Boolean = this is IrSimpleType && this.irIsMarkedNullable()
 
     override fun KotlinTypeMarker.isMarkedNullable(): Boolean = this is IrSimpleType && this.irIsMarkedNullable()
 
@@ -380,7 +380,7 @@ interface IrTypeSystemContext : TypeSystemContext, TypeSystemCommonSuperTypesCon
         return maxInArguments + 1
     }
 
-    override fun TypeConstructorMarker.toErrorType(): SimpleTypeMarker {
+    override fun TypeConstructorMarker.toErrorType(): RigidTypeMarker {
         throw IllegalStateException("Should not be called")
     }
 
@@ -388,7 +388,7 @@ interface IrTypeSystemContext : TypeSystemContext, TypeSystemCommonSuperTypesCon
         throw IllegalStateException("Should not be called")
     }
 
-    override fun findCommonIntegerLiteralTypesSuperType(explicitSupertypes: List<RigidTypeMarker>): IrSimpleType =
+    override fun findCommonIntegerLiteralTypesSuperType(explicitSupertypes: List<RigidTypeMarker>): IrSimpleType? =
         irBuiltIns.intType as IrSimpleType
 
     override fun KotlinTypeMarker.replaceCustomAttributes(newAttributes: List<AnnotationMarker>): KotlinTypeMarker = this
@@ -399,14 +399,14 @@ interface IrTypeSystemContext : TypeSystemContext, TypeSystemCommonSuperTypesCon
         this is IrType && isNullable()
 
     @Suppress("UNCHECKED_CAST")
-    override fun intersectTypes(types: Collection<SimpleTypeMarker>): SimpleTypeMarker =
-        makeTypeIntersection(types as Collection<IrType>) as SimpleTypeMarker
+    override fun intersectTypes(types: Collection<RigidTypeMarker>): RigidTypeMarker =
+        makeTypeIntersection(types as Collection<IrType>) as RigidTypeMarker
 
     @Suppress("UNCHECKED_CAST")
     override fun intersectTypes(types: Collection<KotlinTypeMarker>): KotlinTypeMarker =
         makeTypeIntersection(types as Collection<IrType>)
 
-    override fun SimpleTypeMarker.isPrimitiveType(): Boolean =
+    override fun RigidTypeMarker.isPrimitiveType(): Boolean =
         this is IrSimpleType && irTypePredicates_isPrimitiveType()
 
     override fun KotlinTypeMarker.getAttributes(): List<AnnotationMarker> {
@@ -414,7 +414,7 @@ interface IrTypeSystemContext : TypeSystemContext, TypeSystemCommonSuperTypesCon
         return this.annotations
     }
 
-    override fun createErrorType(debugName: String, delegatedType: RigidTypeMarker?): SimpleTypeMarker {
+    override fun createErrorType(debugName: String, delegatedType: RigidTypeMarker?): RigidTypeMarker {
         TODO("IrTypeSystemContext doesn't support constraint system resolution")
     }
 
@@ -461,7 +461,7 @@ interface IrTypeSystemContext : TypeSystemContext, TypeSystemCommonSuperTypesCon
     override fun TypeConstructorMarker.isMultiFieldValueClass(): Boolean =
         (this as? IrClassSymbol)?.owner?.isMultiFieldValueClass == true
 
-    override fun TypeConstructorMarker.getValueClassProperties(): List<Pair<Name, SimpleTypeMarker>>? =
+    override fun TypeConstructorMarker.getValueClassProperties(): List<Pair<Name, RigidTypeMarker>>? =
         (this as? IrClassSymbol)?.owner?.valueClassRepresentation?.underlyingPropertyNamesToTypes
 
     override fun TypeConstructorMarker.isInnerClass(): Boolean =
@@ -550,15 +550,15 @@ interface IrTypeSystemContext : TypeSystemContext, TypeSystemCommonSuperTypesCon
     override fun captureFromExpression(type: KotlinTypeMarker): KotlinTypeMarker? =
         error("Captured type is unsupported in IR")
 
-    override fun DefinitelyNotNullTypeMarker.original(): SimpleTypeMarker =
+    override fun DefinitelyNotNullTypeMarker.original(): RigidTypeMarker =
         error("DefinitelyNotNullTypeMarker.original() type is unsupported in IR")
 
     override fun KotlinTypeMarker.makeDefinitelyNotNullOrNotNull(preserveAttributes: Boolean): KotlinTypeMarker {
         error("makeDefinitelyNotNullOrNotNull is not supported in IR")
     }
 
-    override fun RigidTypeMarker.makeDefinitelyNotNullOrNotNull(): SimpleTypeMarker {
-        error("makeDefinitelyNotNullOrNotNull is not yet supported in IR")
+    override fun RigidTypeMarker.makeSimpleTypeDefinitelyNotNullOrNotNull(): RigidTypeMarker {
+        error("makeSimpleTypeDefinitelyNotNullOrNotNull is not yet supported in IR")
     }
 
     override fun substitutionSupertypePolicy(type: RigidTypeMarker): TypeCheckerState.SupertypesPolicy {

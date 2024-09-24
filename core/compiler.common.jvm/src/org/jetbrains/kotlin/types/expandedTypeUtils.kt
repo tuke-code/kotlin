@@ -6,7 +6,7 @@
 package org.jetbrains.kotlin.types
 
 import org.jetbrains.kotlin.types.model.KotlinTypeMarker
-import org.jetbrains.kotlin.types.model.SimpleTypeMarker
+import org.jetbrains.kotlin.types.model.RigidTypeMarker
 import org.jetbrains.kotlin.types.model.TypeConstructorMarker
 
 fun TypeSystemCommonBackendContext.computeExpandedTypeForInlineClass(inlineClassType: KotlinTypeMarker): KotlinTypeMarker? =
@@ -26,9 +26,9 @@ private fun TypeSystemCommonBackendContext.computeExpandedTypeInner(
             computeExpandedTypeInner(upperBound, visitedClassifiers)
                 ?.let { expandedUpperBound ->
                     val upperBoundIsPrimitiveOrInlineClass =
-                        upperBound.typeConstructor().isInlineClass() || upperBound is SimpleTypeMarker && upperBound.isPrimitiveType()
+                        upperBound.typeConstructor().isInlineClass() || upperBound is RigidTypeMarker && upperBound.isPrimitiveType()
                     when {
-                        expandedUpperBound is SimpleTypeMarker && expandedUpperBound.isPrimitiveType() &&
+                        expandedUpperBound is RigidTypeMarker && expandedUpperBound.isPrimitiveType() &&
                                 kotlinType.isNullableType() && upperBoundIsPrimitiveOrInlineClass -> upperBound.makeNullable()
                         expandedUpperBound.isNullableType() || !kotlinType.isMarkedNullable() -> expandedUpperBound
                         else -> expandedUpperBound.makeNullable()
@@ -50,7 +50,7 @@ private fun TypeSystemCommonBackendContext.computeExpandedTypeInner(
                 expandedUnderlyingType.isNullableType() -> kotlinType
 
                 // Primitives become inline class boxes
-                expandedUnderlyingType is SimpleTypeMarker && expandedUnderlyingType.isPrimitiveType() -> kotlinType
+                expandedUnderlyingType is RigidTypeMarker && expandedUnderlyingType.isPrimitiveType() -> kotlinType
 
                 // Non-null reference types become nullable reference types
                 else -> expandedUnderlyingType.makeNullable()

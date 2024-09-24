@@ -7,7 +7,7 @@ package org.jetbrains.kotlin.load.kotlin
 
 import org.jetbrains.kotlin.types.TypeSystemCommonBackendContext
 import org.jetbrains.kotlin.types.model.KotlinTypeMarker
-import org.jetbrains.kotlin.types.model.SimpleTypeMarker
+import org.jetbrains.kotlin.types.model.RigidTypeMarker
 
 internal fun TypeSystemCommonBackendContext.computeUnderlyingType(inlineClassType: KotlinTypeMarker): KotlinTypeMarker? {
     if (!shouldUseUnderlyingType(inlineClassType)) return null
@@ -21,5 +21,5 @@ internal fun TypeSystemCommonBackendContext.shouldUseUnderlyingType(inlineClassT
     val underlyingType = inlineClassType.getUnsubstitutedUnderlyingType() ?: return false
 
     return !inlineClassType.isMarkedNullable() ||
-            !underlyingType.isNullableType() && !(underlyingType is SimpleTypeMarker && underlyingType.isPrimitiveType())
+            !underlyingType.isNullableType() && !(underlyingType is RigidTypeMarker && underlyingType.isPrimitiveType())
 }
