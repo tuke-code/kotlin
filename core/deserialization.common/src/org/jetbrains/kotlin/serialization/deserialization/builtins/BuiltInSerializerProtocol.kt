@@ -9,6 +9,8 @@ import org.jetbrains.kotlin.metadata.builtins.BuiltInsProtoBuf
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.protobuf.ExtensionRegistryLite
 import org.jetbrains.kotlin.serialization.SerializerExtensionProtocol
+import java.io.InputStream
+import java.net.URL
 
 object BuiltInSerializerProtocol : SerializerExtensionProtocol(
     ExtensionRegistryLite.newInstance().apply(BuiltInsProtoBuf::registerAllExtensions),
@@ -36,6 +38,25 @@ object BuiltInSerializerProtocol : SerializerExtensionProtocol(
         fqName.asString().replace('.', '/') + "/" + getBuiltInsFileName(
             fqName
         )
+
+    // Do not throw an exception in case concurrent.kotlin_builtins file is not found,
+    // It is only present in kotlin-stdlib starting from 2.1.0.
+    private fun checkConcurrentBuiltInPackage(builtInFileName: String) =
+        if (builtInFileName == "kotlin/concurrent/concurrent.kotlin_builtins") {
+            null
+        } else {
+            error("Resource for builtin $builtInFileName not found")
+        }
+
+    fun loadBuiltInResource(builtInPackageFqName: FqName, classLoader: ClassLoader): URL? {
+        val resourcePath = getBuiltInsFilePath(builtInPackageFqName)
+        return classLoader.getResource(resourcePath) ?: checkConcurrentBuiltInPackage(resourcePath)
+    }
+
+    fun getBuiltInFileInputStream(builtInPackageFqName: FqName, inputStreamProvider: (String) -> InputStream?): InputStream? {
+        val resourcePath = getBuiltInsFilePath(builtInPackageFqName)
+        return inputStreamProvider(resourcePath) ?: checkConcurrentBuiltInPackage(resourcePath)
+    }
 
     fun getBuiltInsFileName(fqName: FqName): String =
         shortName(fqName) + DOT_DEFAULT_EXTENSION

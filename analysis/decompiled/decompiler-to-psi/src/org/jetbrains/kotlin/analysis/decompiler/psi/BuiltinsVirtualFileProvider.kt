@@ -32,15 +32,7 @@ abstract class BuiltinsVirtualFileProviderBaseImpl : BuiltinsVirtualFileProvider
     private val builtInUrls: Set<URL> by lazy {
         val classLoader = this::class.java.classLoader
         StandardClassIds.builtInsPackages.mapNotNullTo(mutableSetOf()) { builtInPackageFqName ->
-            val resourcePath = BuiltInSerializerProtocol.getBuiltInsFilePath(builtInPackageFqName)
-            classLoader.getResource(resourcePath) ?: run {
-                // Do not throw an exception in case concurrent.kotlin_builtins file is not found,
-                // It is only present in kotlin-stdlib starting from 2.1.0.
-                if (resourcePath == "kotlin/concurrent/concurrent.kotlin_builtins") null
-                else errorWithAttachment("Resource for builtin $builtInPackageFqName not found") {
-                    withEntry("resourcePath", resourcePath)
-                }
-            }
+            BuiltInSerializerProtocol.loadBuiltInResource(builtInPackageFqName, classLoader)
         }
     }
 

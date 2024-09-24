@@ -3,7 +3,7 @@
 
 package kotlin.concurrent
 
-public final class AtomicArray<T> {
+@kotlin.SinceKotlin public final class AtomicArray<T> {
     public constructor(array: kotlin.Array<T>) { /* compiled code */ }
 
     public final val size: kotlin.Int /* compiled code */
@@ -21,7 +21,7 @@ public final class AtomicArray<T> {
     public open fun toString(): kotlin.String { /* compiled code */ }
 }
 
-public final class AtomicBoolean public constructor(value: kotlin.Boolean) {
+@kotlin.SinceKotlin public final class AtomicBoolean public constructor(value: kotlin.Boolean) {
     public final fun load(): kotlin.Boolean { /* compiled code */ }
 
     public final fun store(newValue: kotlin.Boolean): kotlin.Unit { /* compiled code */ }
@@ -35,7 +35,7 @@ public final class AtomicBoolean public constructor(value: kotlin.Boolean) {
     public open fun toString(): kotlin.String { /* compiled code */ }
 }
 
-public final class AtomicInt public constructor(value: kotlin.Int) {
+@kotlin.SinceKotlin public final class AtomicInt public constructor(value: kotlin.Int) {
     public final fun load(): kotlin.Int { /* compiled code */ }
 
     public final fun store(value: kotlin.Int): kotlin.Unit { /* compiled code */ }
@@ -50,21 +50,16 @@ public final class AtomicInt public constructor(value: kotlin.Int) {
 
     public final fun addAndFetch(delta: kotlin.Int): kotlin.Int { /* compiled code */ }
 
-    public final fun fetchAndIncrement(): kotlin.Int { /* compiled code */ }
-
-    public final fun incrementAndFetch(): kotlin.Int { /* compiled code */ }
-
-    public final fun decrementAndFetch(): kotlin.Int { /* compiled code */ }
-
-    public final fun fetchAndDecrement(): kotlin.Int { /* compiled code */ }
-
     public open fun toString(): kotlin.String { /* compiled code */ }
 }
 
-public final class AtomicIntArray public constructor(size: kotlin.Int) {
+@kotlin.SinceKotlin public final class AtomicIntArray {
+    public constructor(size: kotlin.Int) { /* compiled code */ }
+
     public constructor(array: kotlin.IntArray) { /* compiled code */ }
 
     public final val size: kotlin.Int /* compiled code */
+        public final get
 
     public final fun loadAt(index: kotlin.Int): kotlin.Int { /* compiled code */ }
 
@@ -80,18 +75,10 @@ public final class AtomicIntArray public constructor(size: kotlin.Int) {
 
     public final fun addAndFetchAt(index: kotlin.Int, delta: kotlin.Int): kotlin.Int { /* compiled code */ }
 
-    public final fun fetchAndIncrementAt(index: kotlin.Int): kotlin.Int { /* compiled code */ }
-
-    public final fun incrementAndFetchAt(index: kotlin.Int): kotlin.Int { /* compiled code */ }
-
-    public final fun fetchAndDecrementAt(index: kotlin.Int): kotlin.Int { /* compiled code */ }
-
-    public final fun decrementAndFetchAt(index: kotlin.Int): kotlin.Int { /* compiled code */ }
-
     public open fun toString(): kotlin.String { /* compiled code */ }
 }
 
-public final class AtomicLong public constructor(value: kotlin.Long) {
+@kotlin.SinceKotlin public final class AtomicLong public constructor(value: kotlin.Long) {
     public final fun load(): kotlin.Long { /* compiled code */ }
 
     public final fun store(value: kotlin.Long): kotlin.Unit { /* compiled code */ }
@@ -106,21 +93,16 @@ public final class AtomicLong public constructor(value: kotlin.Long) {
 
     public final fun addAndFetch(delta: kotlin.Long): kotlin.Long { /* compiled code */ }
 
-    public final fun fetchAndIncrement(): kotlin.Long { /* compiled code */ }
-
-    public final fun incrementAndFetch(): kotlin.Long { /* compiled code */ }
-
-    public final fun decrementAndFetch(): kotlin.Long { /* compiled code */ }
-
-    public final fun fetchAndDecrement(): kotlin.Long { /* compiled code */ }
-
     public open fun toString(): kotlin.String { /* compiled code */ }
 }
 
-public final class AtomicLongArray public constructor(size: kotlin.Int) {
+@kotlin.SinceKotlin public final class AtomicLongArray {
+    public constructor(size: kotlin.Int) { /* compiled code */ }
+
     public constructor(array: kotlin.LongArray) { /* compiled code */ }
 
     public final val size: kotlin.Int /* compiled code */
+        public final get
 
     public final fun loadAt(index: kotlin.Int): kotlin.Long { /* compiled code */ }
 
@@ -136,18 +118,10 @@ public final class AtomicLongArray public constructor(size: kotlin.Int) {
 
     public final fun addAndFetchAt(index: kotlin.Int, delta: kotlin.Long): kotlin.Long { /* compiled code */ }
 
-    public final fun fetchAndIncrementAt(index: kotlin.Int): kotlin.Long { /* compiled code */ }
-
-    public final fun incrementAndFetchAt(index: kotlin.Int): kotlin.Long { /* compiled code */ }
-
-    public final fun fetchAndDecrementAt(index: kotlin.Int): kotlin.Long { /* compiled code */ }
-
-    public final fun decrementAndFetchAt(index: kotlin.Int): kotlin.Long { /* compiled code */ }
-
     public open fun toString(): kotlin.String { /* compiled code */ }
 }
 
-public final class AtomicReference<T> public constructor(value: T) {
+@kotlin.SinceKotlin public final class AtomicReference<T> public constructor(value: T) {
     public final fun load(): T { /* compiled code */ }
 
     public final fun store(newValue: T): kotlin.Unit { /* compiled code */ }
@@ -160,3 +134,4 @@ public final class AtomicReference<T> public constructor(value: T) {
 
     public open fun toString(): kotlin.String { /* compiled code */ }
 }
+

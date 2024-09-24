@@ -54,10 +54,10 @@ class BuiltInsLoaderImpl : BuiltInsLoader {
         isFallback: Boolean,
         loadResource: (String) -> InputStream?
     ): PackageFragmentProvider {
-        val packageFragments = packageFqNames.map { fqName ->
-            val resourcePath = BuiltInSerializerProtocol.getBuiltInsFilePath(fqName)
-            val inputStream = loadResource(resourcePath) ?: throw IllegalStateException("Resource not found in classpath: $resourcePath")
-            BuiltInsPackageFragmentImpl.create(fqName, storageManager, module, inputStream, isFallback)
+        val packageFragments = packageFqNames.mapNotNull { fqName ->
+            BuiltInSerializerProtocol.getBuiltInFileInputStream(fqName, loadResource)?.let { inputStream ->
+                BuiltInsPackageFragmentImpl.create(fqName, storageManager, module, inputStream, isFallback)
+            }
         }
         val provider = PackageFragmentProviderImpl(packageFragments)
 

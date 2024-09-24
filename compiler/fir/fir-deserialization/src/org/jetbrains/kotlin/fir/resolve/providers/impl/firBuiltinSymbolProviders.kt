@@ -206,13 +206,11 @@ class FirFallbackBuiltinSymbolProvider(
             val classLoader = FirFallbackBuiltinSymbolProvider::class.java.classLoader
             val streamProvider = { path: String -> classLoader?.getResourceAsStream(path) ?: ClassLoader.getSystemResourceAsStream(path) }
             val packageFqNames = StandardClassIds.builtInsPackages
-
-            packageFqNames.associateWith { fqName ->
-                val resourcePath = BuiltInSerializerProtocol.getBuiltInsFilePath(fqName)
-                val inputStream =
-                    streamProvider(resourcePath) ?: throw IllegalStateException("Resource not found in classpath: $resourcePath")
-                BuiltInsPackageFragment(inputStream)
-            }
+            packageFqNames.mapNotNull { fqName ->
+                BuiltInSerializerProtocol.getBuiltInFileInputStream(fqName, streamProvider)?.let { inputStream ->
+                    fqName to BuiltInsPackageFragment(inputStream)
+                }
+            }.toMap()
         }
     }
 }
