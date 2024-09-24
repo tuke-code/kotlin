@@ -1818,6 +1818,12 @@ public class FirPsiDiagnosticTestGenerated extends AbstractFirPsiDiagnosticTest 
       }
 
       @Test
+      @TestMetadata("classesAndThis.kt")
+      public void testClassesAndThis() {
+        runTest("compiler/fir/analysis-tests/testData/resolve/crv/classesAndThis.kt");
+      }
+
+      @Test
       @TestMetadata("controlFlow.kt")
       public void testControlFlow() {
         runTest("compiler/fir/analysis-tests/testData/resolve/crv/controlFlow.kt");

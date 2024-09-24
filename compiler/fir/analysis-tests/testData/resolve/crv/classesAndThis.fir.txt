@@ -1,0 +1,40 @@
+FILE: classesAndThis.kt
+    public final class A : R|kotlin/Any| {
+        public constructor(x: R|kotlin/String| = String(x)): R|A| {
+            super<R|kotlin/Any|>()
+        }
+
+        public final val x: R|kotlin/String| = R|<local>/x|
+            public get(): R|kotlin/String|
+
+        public final fun foo(y: R|kotlin/String|): R|A| {
+            R|<local>/y|
+            this@R|/A|.R|/A.x|
+            this@R|/A|
+            ^foo this@R|/A|
+        }
+
+        public open override operator fun equals(other: R|kotlin/Any?|): R|kotlin/Boolean| {
+            when () {
+                ===(this@R|/A|, R|<local>/other|) ->  {
+                    ^equals Boolean(true)
+                }
+            }
+
+            when () {
+                ==(R|<local>/other|, Null(null)) || !=(<getClass>(this@R|/A|), <getClass>(R|<local>/other|)) ->  {
+                    ^equals Boolean(false)
+                }
+            }
+
+            (R|<local>/other| as R|A|)
+            when () {
+                !=(this@R|/A|.R|/A.x|, R|<local>/other|.R|/A.x|) ->  {
+                    ^equals Boolean(false)
+                }
+            }
+
+            ^equals Boolean(true)
+        }
+
+    }

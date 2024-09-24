@@ -16,7 +16,6 @@ import org.jetbrains.kotlin.fir.analysis.checkers.MppCheckerKind
 import org.jetbrains.kotlin.fir.analysis.checkers.context.CheckerContext
 import org.jetbrains.kotlin.fir.analysis.checkers.expression.FirBasicExpressionChecker
 import org.jetbrains.kotlin.fir.analysis.checkers.isLhsOfAssignment
-import org.jetbrains.kotlin.fir.analysis.diagnostics.FirErrors
 import org.jetbrains.kotlin.fir.declarations.FirProperty
 import org.jetbrains.kotlin.fir.declarations.FirValueParameter
 import org.jetbrains.kotlin.fir.expressions.*
@@ -25,6 +24,7 @@ import org.jetbrains.kotlin.fir.references.resolved
 import org.jetbrains.kotlin.fir.references.symbol
 import org.jetbrains.kotlin.fir.references.toResolvedCallableSymbol
 import org.jetbrains.kotlin.fir.references.toResolvedPropertySymbol
+import org.jetbrains.kotlin.fir.render
 import org.jetbrains.kotlin.fir.symbols.impl.FirCallableSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirPropertySymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirValueParameterSymbol
@@ -41,7 +41,7 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
         if (expression.isLhsOfAssignment(context)) return
         if (expression is FirAnnotation) return
 
-        if (expression.isLocalPropertyOrParameter()) return
+        if (expression.isLocalPropertyOrParameterOrThis()) return
         if (expression.isPropagating) return
 
         // 1. Check NOT only resolvable references
@@ -67,7 +67,7 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
 
         if (outerExpression.uses(expression)) return
 
-        reporter.reportOn(expression.source, RETURN_VALUE_NOT_USED, "Unused expression: " + (resolvedReference?.name?.toString() ?: "<unresolved>"), context)
+        reporter.reportOn(expression.source, RETURN_VALUE_NOT_USED, "Unused expression: " + (resolvedReference?.name?.toString() ?: "<${expression.render()}>"), context)
     }
 
     private fun FirElement?.uses(given: FirExpression): Boolean = when (this) {
@@ -81,6 +81,7 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
 
         is FirWhenExpression -> subject == given
         is FirComparisonExpression -> true // compareToCall == given
+        is FirBooleanOperatorExpression -> true // leftOperand == given || rightOperand == given
         is FirEqualityOperatorCall -> true // given in argumentList.arguments
         is FirStringConcatenationCall -> true // given in argumentList.arguments
         else -> false
@@ -93,7 +94,8 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
 
     private val FirElement?.isVarInitializationOrReturn: Boolean get() = this is FirReturnExpression || this is FirProperty || this is FirValueParameter
 
-    private fun FirExpression.isLocalPropertyOrParameter(): Boolean {
+    private fun FirExpression.isLocalPropertyOrParameterOrThis(): Boolean {
+        if (this is FirThisReceiverExpression) return true
         if (this !is FirPropertyAccessExpression) return false
         return when (calleeReference.symbol) {
             is FirValueParameterSymbol -> true
