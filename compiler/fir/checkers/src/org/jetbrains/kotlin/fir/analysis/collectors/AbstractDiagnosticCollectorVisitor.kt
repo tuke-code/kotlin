@@ -267,7 +267,24 @@ abstract class AbstractDiagnosticCollectorVisitor(
     }
 
     override fun visitDelegatedConstructorCall(delegatedConstructorCall: FirDelegatedConstructorCall, data: Nothing?) {
-        visitWithCallOrAssignment(delegatedConstructorCall)
+        val containingDeclarations = context.containingDeclarations
+        // Workaround for KT-71710:
+        // Currently, `implicitReceiverStack` value is initialized for the entire anonymous object being created,
+        // But it's incorrect to have this receiver in the `delegatedConstructorCall`,
+        // because it's called before the constructor invocation, and the receiver should be inaccessible.
+        if (containingDeclarations.elementAtOrNull(containingDeclarations.size - 2) is FirAnonymousObject &&
+            containingDeclarations.elementAtOrNull(containingDeclarations.size - 1) is FirPrimaryConstructor
+        ) {
+            val lastImplicitReceiver = context.implicitReceiverStack.last()
+            context.dropImplicitReceiver()
+            try {
+                visitWithCallOrAssignment(delegatedConstructorCall)
+            } finally {
+                context.addImplicitReceiver(lastImplicitReceiver)
+            }
+        } else {
+            visitWithCallOrAssignment(delegatedConstructorCall)
+        }
     }
 
     override fun visitGetClassCall(getClassCall: FirGetClassCall, data: Nothing?) {
