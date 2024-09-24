@@ -1,0 +1,21 @@
+FILE: nullability.kt
+    public final fun stringF(): R|kotlin/String| {
+        ^stringF String()
+    }
+    public final fun nsf(): R|kotlin/String?| {
+        ^nsf String(null)
+    }
+    public final fun R|kotlin/Any|.consume(): R|kotlin/Unit| {
+        ^consume Q|kotlin/Unit|
+    }
+    public final fun elvis(e: R|kotlin/String?|): R|kotlin/String| {
+        lval c: R|kotlin/String| = R|/nsf|() ?: R|/stringF|()
+        R|/nsf|() ?: R|/stringF|()
+        ^elvis R|<local>/e| ?: R|/nsf|() ?: R|/stringF|()
+    }
+    public final fun safeCalls(): R|kotlin/Unit| {
+        R|/stringF|().R|/consume|()
+        R|/stringF|().R|kotlin/String.toString|()
+        R|/nsf|()?.{ $subj$.R|/consume|() }
+        R|/nsf|()?.{ $subj$.R|kotlin/String.toString|() }
+    }

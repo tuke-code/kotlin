@@ -1,5 +1,4 @@
 // WITH_STDLIB
-// SKIP_TXT
 
 fun getAny(): Any = ""
 fun Any.consume(): Unit = Unit

@@ -67,7 +67,7 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
 
         if (outerExpression.uses(expression)) return
 
-        reporter.reportOn(expression.source, RETURN_VALUE_NOT_USED, "Unused expression: " + (resolvedReference?.name?.toString() ?: "<${expression.render()}>"), context)
+        reporter.reportOn(expression.source, RETURN_VALUE_NOT_USED, "Unused expression: " + (resolvedReference?.toResolvedCallableSymbol()?.callableId?.toString() ?: "<${expression.render()}>"), context)
     }
 
     private fun FirElement?.uses(given: FirExpression): Boolean = when (this) {
@@ -84,6 +84,7 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
         // Includes FirWhileLoop, FirDoWhileLoop, and FirErrorLoop. I have no idea what FirErrorLoop is.
         is FirLoop -> condition == given
 
+        is FirElvisExpression -> true // lhs == given || rhs == given
         is FirComparisonExpression -> true // compareToCall == given
         is FirBooleanOperatorExpression -> true // leftOperand == given || rightOperand == given
         is FirEqualityOperatorCall -> true // given in argumentList.arguments
@@ -122,6 +123,8 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
         "kotlin/collections/MutableList.set",
         "kotlin/collections/MutableMap.put",
         "kotlin/text/StringBuilder.append",
+        "java/lang/StringBuilder.append",
+        "java/lang/StringBuilder.appendLine",
         "kotlin/text/StringBuilder.appendLine",
         "kotlin/text/Appendable.append",
         "kotlin/text/Appendable.appendLine",

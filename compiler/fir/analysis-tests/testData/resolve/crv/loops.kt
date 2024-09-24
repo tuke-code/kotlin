@@ -1,7 +1,4 @@
-// WITH_TXT
 // WITH_STDLIB
-
-// ^ stdlib is needed for .contains
 
 fun getAny(): Any = true
 

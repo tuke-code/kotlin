@@ -1,8 +1,5 @@
 // WITH_STDLIB
 
-//fun stringF(): String = ""
-//fun nsf(): String? = "null"
-
 class A(val x: String = "x") {
     fun foo(y: String): A {
         y // local, should not report
