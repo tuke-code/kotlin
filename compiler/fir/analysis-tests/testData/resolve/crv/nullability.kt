@@ -16,3 +16,13 @@ fun safeCalls() {
     nsf()?.consume() // used
     <!RETURN_VALUE_NOT_USED!>nsf()?.toString()<!> // unused
 }
+
+fun notNullCall(s: String?) {
+    s!! // locals are discardable, we propagate
+    <!RETURN_VALUE_NOT_USED!>nsf()<!>!!
+}
+
+fun notNullCall2(s: String?) {
+    val x = s!!
+    val y = nsf()!!
+}

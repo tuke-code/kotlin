@@ -100,7 +100,16 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
     private fun CheckerContext.firstNonPropagatingOuterElementOf(thisExpression: FirExpression): FirElement? =
         containingElements.lastOrNull { it != thisExpression && !it.isPropagating }
 
-    private val FirElement.isPropagating: Boolean get() = this is FirSmartCastExpression || this is FirArgumentList || this is FirTypeOperatorCall || this is FirBlock
+    private val FirElement.isPropagating: Boolean
+        get() = when (this) {
+            is FirSmartCastExpression,
+            is FirArgumentList,
+            is FirTypeOperatorCall,
+            is FirCheckNotNullCall,
+            is FirBlock,
+                -> true
+            else -> false
+        }
 
     private val FirElement?.isVarInitializationOrReturn: Boolean get() = this is FirReturnExpression || this is FirProperty || this is FirValueParameter
 
