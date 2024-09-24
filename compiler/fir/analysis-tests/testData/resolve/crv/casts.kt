@@ -3,6 +3,8 @@
 fun getAny(): Any = ""
 fun Any.consume(): Unit = Unit
 
+fun intF(): Int = 42
+
 val nonLocal: Any get() = ""
 
 fun consume(s: String) {}
@@ -44,4 +46,14 @@ fun whenInstance() {
         is Boolean -> "b"
         else -> "c"
     }<!>
+}
+
+fun castsInIf() {
+    val x = if (intF() > 10) getAny() as String else ""
+    val y = if (intF() > 10) {
+        <!RETURN_VALUE_NOT_USED!>getAny()<!> // unused
+        getAny() as String // used
+    } else {
+        ""
+    }
 }

@@ -5,6 +5,9 @@ FILE: casts.kt
     public final fun R|kotlin/Any|.consume(): R|kotlin/Unit| {
         ^consume Q|kotlin/Unit|
     }
+    public final fun intF(): R|kotlin/Int| {
+        ^intF Int(42)
+    }
     public final val nonLocal: R|kotlin/Any|
         public get(): R|kotlin/Any| {
             ^ String()
@@ -55,6 +58,27 @@ FILE: casts.kt
             }
             else ->  {
                 String(c)
+            }
+        }
+
+    }
+    public final fun castsInIf(): R|kotlin/Unit| {
+        lval x: R|kotlin/String| = when () {
+            CMP(>, R|/intF|().R|kotlin/Int.compareTo|(Int(10))) ->  {
+                (R|/getAny|() as R|kotlin/String|)
+            }
+            else ->  {
+                String()
+            }
+        }
+
+        lval y: R|kotlin/String| = when () {
+            CMP(>, R|/intF|().R|kotlin/Int.compareTo|(Int(10))) ->  {
+                R|/getAny|()
+                (R|/getAny|() as R|kotlin/String|)
+            }
+            else ->  {
+                String()
             }
         }
 

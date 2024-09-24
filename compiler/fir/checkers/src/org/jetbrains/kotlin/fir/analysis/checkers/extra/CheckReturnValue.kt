@@ -114,7 +114,7 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
                 continue
             }
             // FirBlock is propagating only if this is the last statement
-            if (e is FirBlock && e.statements.lastOrNull() == thisExpression) {
+            if (e is FirBlock && e.statements.lastOrNull() == (lastPropagating ?: thisExpression)) {
                 lastPropagating = e
                 continue
             }
@@ -170,6 +170,7 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
         "java/util/TreeSet.add",
         "java/util/SortedSet.add",
         "java/util/ArrayList.add",
+        "java/util/ArrayList.addAll",
         "java/util/HashMap.put",
         "java/util/TreeMap.put",
         "java/util/LinkedHashMap.put",
