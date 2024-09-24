@@ -172,11 +172,15 @@ public actual class AtomicBoolean (value: Boolean) {
 public actual class AtomicReference<T> (value: T) {
     /**
      * Atomically gets the value of the atomic.
+     *
+     * Behaves like volatile read.
      */
     public actual fun load(): T
 
     /**
      * Atomically sets the value of the atomic to the [new value][newValue].
+     *
+     * Behaves like volatile write.
      */
     public actual fun store(newValue: T)
 

@@ -32,12 +32,16 @@ public actual class AtomicIntArray {
     /**
      * Atomically gets the value of the element at the given [index].
      *
+     * Behaves like volatile read.
+     *
      * @throws [IndexOutOfBoundsException] if the [index] is out of bounds of this array.
      */
     public actual fun loadAt(index: Int): Int
 
     /**
      * Atomically sets the value of the element at the given [index] to the [new value][newValue].
+     *
+     * Behaves like volatile write.
      *
      * @throws [IndexOutOfBoundsException] if the [index] is out of bounds of this array.
      */
