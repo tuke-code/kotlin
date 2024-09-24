@@ -84,6 +84,7 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
         // Includes FirWhileLoop, FirDoWhileLoop, and FirErrorLoop. I have no idea what FirErrorLoop is.
         is FirLoop -> condition == given
 
+        is FirThrowExpression -> true // exception == given
         is FirElvisExpression -> true // lhs == given || rhs == given
         is FirComparisonExpression -> true // compareToCall == given
         is FirBooleanOperatorExpression -> true // leftOperand == given || rightOperand == given

@@ -51,3 +51,17 @@ FILE: basic.kt
         lval y: R|kotlin/String| = <strcat>(String(answer is ), R|<local>/x|)
         ^stringConcat <strcat>(String(answer is ), R|<local>/y|)
     }
+    public final fun throws(): R|kotlin/Nothing| {
+        R|java/lang/IllegalStateException.IllegalStateException|()
+        throw R|java/lang/IllegalStateException.IllegalStateException|()
+    }
+    public final fun createE(): R|{kotlin/IllegalStateException=} java/lang/IllegalStateException| {
+        ^createE R|java/lang/IllegalStateException.IllegalStateException|()
+    }
+    public final fun throws2(): R|kotlin/Unit| {
+        R|/createE|()
+        throw R|/createE|()
+    }
+    public final fun usesNothing(): R|kotlin/Unit| {
+        R|/throws|()
+    }

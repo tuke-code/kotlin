@@ -45,3 +45,19 @@ fun stringConcat(): String {
     val y = "answer is $x" // used
     return "answer is $y" // used
 }
+
+fun throws(): Nothing {
+    <!RETURN_VALUE_NOT_USED!>IllegalStateException()<!> // unused
+    throw IllegalStateException()
+}
+
+fun createE() = IllegalStateException() // used
+
+fun throws2() {
+    <!RETURN_VALUE_NOT_USED!>createE()<!> // unused
+    throw createE() // used
+}
+
+fun usesNothing() {
+    throws() // should not be reported as unused
+}
