@@ -7,6 +7,7 @@ package org.jetbrains.kotlin.fir.types
 
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.Name
+import org.jetbrains.kotlin.types.model.TypeConstructorMarker
 
 /**
  * The main purpose of the lookup tag is to provide a reference to concrete classifier that
@@ -18,7 +19,7 @@ import org.jetbrains.kotlin.name.Name
  *
  * See `/docs/fir/k2_kmp.md`
  */
-abstract class ConeClassifierLookupTag : ConeTypeConstructorMarker {
+abstract class ConeClassifierLookupTag : TypeConstructorMarker {
     abstract val name: Name
 
     override fun toString(): String {

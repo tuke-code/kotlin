@@ -224,7 +224,6 @@ interface ConeTypeContext : TypeSystemContext, TypeSystemOptimizationContext, Ty
     }
 
     override fun TypeConstructorMarker.parametersCount(): Int {
-        require(this is ConeTypeConstructorMarker)
         return when (this) {
             is ConeTypeParameterLookupTag, // handled here for optimization reasons
             is ConeCapturedTypeConstructor,
@@ -242,6 +241,7 @@ interface ConeTypeContext : TypeSystemContext, TypeSystemOptimizationContext, Ty
             }
             is ConeIntegerLiteralType -> 0
             is ConeStubTypeConstructor -> 0
+            else -> 0
         }
     }
 
@@ -268,7 +268,6 @@ interface ConeTypeContext : TypeSystemContext, TypeSystemOptimizationContext, Ty
     fun TypeConstructorMarker.toClassLikeSymbol(): FirClassLikeSymbol<*>? = (this as? ConeClassLikeLookupTag)?.toSymbol(session)
 
     override fun TypeConstructorMarker.supertypes(): Collection<ConeKotlinType> {
-        require(this is ConeTypeConstructorMarker)
         return when (this) {
             is ConeStubTypeConstructor -> listOf(session.builtinTypes.nullableAnyType.coneType)
             is ConeTypeVariableTypeConstructor -> emptyList()
@@ -284,6 +283,7 @@ interface ConeTypeContext : TypeSystemContext, TypeSystemOptimizationContext, Ty
             is ConeCapturedTypeConstructor -> supertypes.orEmpty()
             is ConeIntersectionType -> intersectedTypes
             is ConeIntegerLiteralType -> supertypes
+            else -> emptyList()
         }
     }
 
@@ -339,7 +339,6 @@ interface ConeTypeContext : TypeSystemContext, TypeSystemOptimizationContext, Ty
     }
 
     override fun TypeConstructorMarker.isDenotable(): Boolean {
-        require(this is ConeTypeConstructorMarker)
         return when (this) {
             is ConeClassifierLookupTag -> true
 
@@ -349,6 +348,7 @@ interface ConeTypeContext : TypeSystemContext, TypeSystemOptimizationContext, Ty
             is ConeIntegerLiteralType,
             is ConeIntersectionType,
                 -> false
+            else -> false
         }
     }
 

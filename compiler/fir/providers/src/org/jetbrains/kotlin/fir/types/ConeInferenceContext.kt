@@ -69,7 +69,6 @@ interface ConeInferenceContext : TypeSystemInferenceExtensionContext, ConeTypeCo
         isExtensionFunction: Boolean,
         attributes: List<AnnotationMarker>?
     ): SimpleTypeMarker {
-        require(constructor is ConeTypeConstructorMarker)
         val attributesList = attributes?.filterIsInstanceTo<ConeAttribute<*>, MutableList<ConeAttribute<*>>>(mutableListOf())
         val coneAttributes: ConeAttributes = if (isExtensionFunction) {
             require(constructor is ConeClassLikeLookupTag)
@@ -110,9 +109,11 @@ interface ConeInferenceContext : TypeSystemInferenceExtensionContext, ConeTypeCo
             is ConeIntegerLiteralType,
             is ConeStubTypeConstructor,
             is ConeTypeVariableTypeConstructor,
-                -> error("Unsupported type constructor: ${constructor::class}")
-            is ConeClassifierLookupTag
-                -> error("Unexpected /* sealed */ ConeClassifierLookupTag inheritor: ${constructor::class}")
+            -> error("Unsupported type constructor: ${constructor::class}")
+            is ConeClassifierLookupTag,
+            -> error("Unexpected /* sealed */ ConeClassifierLookupTag inheritor: ${constructor::class}")
+            else
+            -> error("Unsupported type constructor: ${constructor::class}")
         }
     }
 

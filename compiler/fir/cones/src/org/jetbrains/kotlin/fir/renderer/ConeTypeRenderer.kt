@@ -110,7 +110,6 @@ open class ConeTypeRenderer(
     }
 
     open fun renderConstructor(constructor: TypeConstructorMarker) {
-        require(constructor is ConeTypeConstructorMarker)
         when (constructor) {
             is ConeTypeVariableTypeConstructor -> {
                 builder.append("TypeVariable(")

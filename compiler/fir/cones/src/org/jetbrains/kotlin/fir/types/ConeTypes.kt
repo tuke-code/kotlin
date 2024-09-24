@@ -139,13 +139,11 @@ fun ConeKotlinType.unwrapToSimpleTypeUsingLowerBound(): ConeSimpleKotlinType {
     return lowerBoundIfFlexible().unwrapDefinitelyNotNull()
 }
 
-sealed interface ConeTypeConstructorMarker : TypeConstructorMarker
-
 class ConeCapturedTypeConstructor(
     val projection: ConeTypeProjection,
     var supertypes: List<ConeKotlinType>? = null,
     val typeParameterMarker: TypeParameterMarker? = null
-) : CapturedTypeConstructorMarker, ConeTypeConstructorMarker
+) : CapturedTypeConstructorMarker
 
 data class ConeCapturedType(
     val captureStatus: CaptureStatus,
@@ -260,7 +258,7 @@ class ConeRawType private constructor(
 class ConeIntersectionType(
     val intersectedTypes: Collection<ConeKotlinType>,
     val upperBoundForApproximation: ConeKotlinType? = null,
-) : ConeSimpleKotlinType(), IntersectionTypeConstructorMarker, ConeTypeConstructorMarker {
+) : ConeSimpleKotlinType(), IntersectionTypeConstructorMarker {
     // TODO: consider inheriting directly from ConeKotlinType (KT-70049)
     override val typeArguments: Array<out ConeTypeProjection>
         get() = EMPTY_ARRAY
