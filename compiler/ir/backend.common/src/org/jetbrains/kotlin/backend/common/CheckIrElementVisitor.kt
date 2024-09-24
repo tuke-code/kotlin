@@ -21,7 +21,7 @@ typealias ReportError = (element: IrElement, message: String) -> Unit
 internal class CheckIrElementVisitor(
     val irBuiltIns: IrBuiltIns,
     val reportError: ReportError,
-    val config: IrValidatorConfig,
+    val config: IrValidatorConfig
 ) : IrElementVisitorVoid {
     private val visitedElements = hashSetOf<IrElement>()
 
@@ -204,8 +204,7 @@ internal class CheckIrElementVisitor(
             IrTypeOperator.IMPLICIT_INTEGER_COERCION,
             IrTypeOperator.SAM_CONVERSION,
             IrTypeOperator.IMPLICIT_DYNAMIC_CAST,
-            IrTypeOperator.REINTERPRET_CAST,
-                ->
+            IrTypeOperator.REINTERPRET_CAST ->
                 typeOperand
 
             IrTypeOperator.SAFE_CAST ->
