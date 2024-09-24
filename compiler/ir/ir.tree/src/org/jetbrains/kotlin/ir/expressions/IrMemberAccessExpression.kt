@@ -8,6 +8,7 @@ package org.jetbrains.kotlin.ir.expressions
 import org.jetbrains.kotlin.ir.ObsoleteDescriptorBasedAPI
 import org.jetbrains.kotlin.ir.declarations.IrDeclarationOrigin
 import org.jetbrains.kotlin.ir.declarations.IrFunction
+import org.jetbrains.kotlin.ir.declarations.IrParameterKind
 import org.jetbrains.kotlin.ir.declarations.IrProperty
 import org.jetbrains.kotlin.ir.declarations.IrSymbolOwner
 import org.jetbrains.kotlin.ir.symbols.IrBindableSymbol
@@ -81,11 +82,24 @@ abstract class IrMemberAccessExpression<S : IrSymbol> : IrDeclarationReference()
         val target = (symbol as IrBindableSymbol<*, IrSymbolOwner>).getRealOwner()
         when (target) {
             is IrFunction -> {
+                var hasDispatchReceiver = false
+                var hasExtensionReceiver = false
+                var contextParameterCount = 0
+                var regularParameterCount = 0
+                for (param in target.parameters) {
+                    when (param.kind) {
+                        IrParameterKind.DispatchReceiver -> hasDispatchReceiver = true
+                        IrParameterKind.ExtensionReceiver -> hasExtensionReceiver = true
+                        IrParameterKind.ContextParameter -> contextParameterCount++
+                        IrParameterKind.RegularParameter -> regularParameterCount++
+                    }
+                }
+
                 initializeTargetShapeExplicitly(
-                    target.dispatchReceiverParameter != null,
-                    target.extensionReceiverParameter != null,
-                    target.contextReceiverParametersCount,
-                    target.valueParameters.size - target.contextReceiverParametersCount,
+                    hasDispatchReceiver,
+                    hasExtensionReceiver,
+                    contextParameterCount,
+                    regularParameterCount,
                     isFromTargetUpdate = isFromTargetUpdate,
                 )
             }
@@ -130,9 +144,9 @@ abstract class IrMemberAccessExpression<S : IrSymbol> : IrDeclarationReference()
 
     private fun <S : IrBindableSymbol<*, D>, D : IrSymbolOwner> S.getRealOwner(): D {
         var symbol = this
-        if (this is IrFakeOverrideSymbolBase<*, *, *>) {
+        while (symbol is IrFakeOverrideSymbolBase<*, *, *>) {
             @Suppress("UNCHECKED_CAST")
-            symbol = originalSymbol as S
+            symbol = symbol.originalSymbol as S
         }
         return symbol.owner
     }
