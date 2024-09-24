@@ -6,25 +6,21 @@
 package org.jetbrains.kotlin.fir.analysis.checkers.context
 
 import kotlinx.collections.immutable.PersistentSet
-import kotlinx.collections.immutable.persistentSetOf
 import org.jetbrains.kotlin.fir.FirAnnotationContainer
 import org.jetbrains.kotlin.fir.FirElement
 import org.jetbrains.kotlin.fir.analysis.checkers.declaration.FirInlineDeclarationChecker
-import org.jetbrains.kotlin.fir.analysis.checkers.declaration.createInlineFunctionBodyContext
 import org.jetbrains.kotlin.fir.analysis.checkers.extra.FirAnonymousUnusedParamChecker
 import org.jetbrains.kotlin.fir.declarations.FirDeclaration
 import org.jetbrains.kotlin.fir.declarations.FirFile
-import org.jetbrains.kotlin.fir.declarations.FirFunction
 import org.jetbrains.kotlin.fir.expressions.FirGetClassCall
 import org.jetbrains.kotlin.fir.expressions.FirStatement
-import org.jetbrains.kotlin.fir.resolve.PersistentImplicitReceiverStack
 import org.jetbrains.kotlin.fir.resolve.SessionHolder
 import org.jetbrains.kotlin.fir.resolve.calls.ImplicitReceiverValue
 import org.jetbrains.kotlin.fir.resolve.transformers.ReturnTypeCalculator
 import org.jetbrains.kotlin.name.Name
 
 class MutableCheckerContext private constructor(
-    override val implicitReceiverStack: PersistentImplicitReceiverStack,
+    override val implicitReceiverStack: MutableList<ImplicitReceiverValue<*>>,
     override val containingDeclarations: MutableList<FirDeclaration>,
     override val callsOrAssignments: MutableList<FirStatement>,
     override val getClassCalls: MutableList<FirGetClassCall>,
@@ -42,7 +38,7 @@ class MutableCheckerContext private constructor(
     allErrorsSuppressed: Boolean
 ) : CheckerContextForProvider(sessionHolder, returnTypeCalculator, allInfosSuppressed, allWarningsSuppressed, allErrorsSuppressed) {
     constructor(sessionHolder: SessionHolder, returnTypeCalculator: ReturnTypeCalculator) : this(
-        PersistentImplicitReceiverStack(),
+        implicitReceiverStack = mutableListOf(),
         containingDeclarations = mutableListOf(),
         callsOrAssignments = mutableListOf(),
         getClassCalls = mutableListOf(),
@@ -60,25 +56,13 @@ class MutableCheckerContext private constructor(
         allErrorsSuppressed = false
     )
 
-    override fun addImplicitReceiver(name: Name?, value: ImplicitReceiverValue<*>): MutableCheckerContext {
-        return MutableCheckerContext(
-            implicitReceiverStack.add(name, value),
-            containingDeclarations,
-            callsOrAssignments,
-            getClassCalls,
-            annotationContainers,
-            containingElements,
-            isContractBody,
-            inlineFunctionBodyContext,
-            lambdaBodyContext,
-            containingFile,
-            sessionHolder,
-            returnTypeCalculator,
-            suppressedDiagnostics,
-            allInfosSuppressed,
-            allWarningsSuppressed,
-            allErrorsSuppressed
-        )
+    override fun addImplicitReceiver(value: ImplicitReceiverValue<*>): MutableCheckerContext {
+        implicitReceiverStack.add(value)
+        return this
+    }
+
+    override fun dropImplicitReceiver() {
+        implicitReceiverStack.removeLast()
     }
 
     override fun addDeclaration(declaration: FirDeclaration): MutableCheckerContext {

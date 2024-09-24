@@ -49,11 +49,13 @@ abstract class CheckerContextForProvider(
         allErrorsSuppressed: Boolean
     ): CheckerContextForProvider
 
-    abstract fun addImplicitReceiver(name: Name?, value: ImplicitReceiverValue<*>): CheckerContextForProvider
+    abstract fun addImplicitReceiver(value: ImplicitReceiverValue<*>): CheckerContextForProvider
 
     abstract fun addDeclaration(declaration: FirDeclaration): CheckerContextForProvider
 
     abstract fun dropDeclaration()
+
+    abstract fun dropImplicitReceiver()
 
     fun <T> withDeclaration(declaration: FirDeclaration, f: (CheckerContextForProvider) -> T): T {
         val newContext = addDeclaration(declaration)
