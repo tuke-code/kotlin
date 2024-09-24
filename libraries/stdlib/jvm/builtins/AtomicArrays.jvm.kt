@@ -2,16 +2,15 @@
  * Copyright 2010-2024 JetBrains s.r.o. and Kotlin Programming Language contributors.
  * Use of this source code is governed by the Apache 2.0 license that can be found in the license/LICENSE.txt file.
  */
-
+@file:Suppress("NEWER_VERSION_IN_SINCE_KOTLIN")
 package kotlin.concurrent
 
 /**
- * An array of ints in which elements may be updated atomically with guaranteed sequential consistent ordering.
+ * An array of ints in which elements may be updated atomically.
  *
- * Instances of [AtomicIntArray] are represented by [java.util.concurrent.atomic.AtomicIntegerArray].
- * For details about guarantees of volatile accesses and updates of atomics refer to The Java Language Specification (17.4 Memory Model).
+ * Instances of [AtomicIntArray] are represented by [java.util.concurrent.atomic.AtomicIntegerArray] and provide the the same atomicity guarantees.
  */
-@SinceKotlin("2.0") // TODO: SinceKotlin version should be updated to 2.1, when the API version is updated to 2.1
+@SinceKotlin("2.1")
 public actual class AtomicIntArray {
     /**
      * Creates a new [AtomicIntArray] of the given [size], with all elements initialized to zero.
@@ -33,16 +32,12 @@ public actual class AtomicIntArray {
     /**
      * Atomically gets the value of the element at the given [index].
      *
-     * Provides sequential consistent ordering guarantees.
-     *
      * @throws [IndexOutOfBoundsException] if the [index] is out of bounds of this array.
      */
     public actual fun loadAt(index: Int): Int
 
     /**
      * Atomically sets the value of the element at the given [index] to the [new value][newValue].
-     *
-     * Provides sequential consistent ordering guarantees.
      *
      * @throws [IndexOutOfBoundsException] if the [index] is out of bounds of this array.
      */
@@ -52,8 +47,6 @@ public actual class AtomicIntArray {
      * Atomically sets the value of the element at the given [index] to the [new value][newValue]
      * and returns the old value of the element.
      *
-     * Provides sequential consistent ordering guarantees.
-     *
      * @throws [IndexOutOfBoundsException] if the [index] is out of bounds of this array.
      */
     public actual fun exchangeAt(index: Int, newValue: Int): Int
@@ -62,8 +55,6 @@ public actual class AtomicIntArray {
      * Atomically sets the value of the element at the given [index] to the [new value][newValue]
      * if the current value equals the [expected value][expectedValue].
      * Returns true if the operation was successful and false only if the current value of the element was not equal to the expected value.
-     *
-     * Provides sequential consistent ordering guarantees and never fails spuriously.
      *
      * Comparison of values is done by value.
      *
@@ -75,8 +66,6 @@ public actual class AtomicIntArray {
      * Atomically sets the value of the element at the given [index] to the [new value][newValue]
      * if the current value equals the [expected value][expectedValue] and returns the old value of the element in any case.
      *
-     * Provides sequential consistent ordering guarantees and never fails spuriously.
-     *
      * Comparison of values is done by value.
      *
      * @throws [IndexOutOfBoundsException] if the [index] is out of bounds of this array.
@@ -86,16 +75,12 @@ public actual class AtomicIntArray {
     /**
      * Atomically adds the given [delta] to the element at the given [index] and returns the old value of the element.
      *
-     * Provides sequential consistent ordering guarantees.
-     *
      * @throws [IndexOutOfBoundsException] if the [index] is out of bounds of this array.
      */
     public actual fun fetchAndAddAt(index: Int, delta: Int): Int
 
     /**
      * Atomically adds the given [delta] to the element at the given [index] and returns the new value of the element.
-     *
-     * Provides sequential consistent ordering guarantees.
      *
      * @throws [IndexOutOfBoundsException] if the [index] is out of bounds of this array.
      */
@@ -110,12 +95,11 @@ public actual class AtomicIntArray {
 }
 
 /**
- * An array of longs in which elements may be updated atomically with guaranteed sequential consistent ordering.
+ * An array of longs in which elements may be updated atomically.
  *
- * Instances of [AtomicLongArray] are represented by [java.util.concurrent.atomic.AtomicLongArray].
- * For details about guarantees of volatile accesses and updates of atomics refer to The Java Language Specification (17.4 Memory Model).
+ * Instances of [AtomicLongArray] are represented by [java.util.concurrent.atomic.AtomicLongArray] and provide the the same atomicity guarantees.
  */
-@SinceKotlin("2.0") // TODO: SinceKotlin version should be updated to 2.1, when the API version is updated to 2.1
+@SinceKotlin("2.1")
 public actual class AtomicLongArray {
     /**
      * Creates a new [AtomicLongArray] of the given [size], with all elements initialized to zero.
@@ -137,16 +121,12 @@ public actual class AtomicLongArray {
     /**
      * Atomically gets the value of the element at the given [index].
      *
-     * Provides sequential consistent ordering guarantees.
-     *
      * @throws [IndexOutOfBoundsException] if the [index] is out of bounds of this array.
      */
     public actual fun loadAt(index: Int): Long
 
     /**
      * Atomically sets the value of the element at the given [index] to the [new value][newValue].
-     *
-     * Provides sequential consistent ordering guarantees.
      *
      * @throws [IndexOutOfBoundsException] if the [index] is out of bounds of this array.
      */
@@ -156,8 +136,6 @@ public actual class AtomicLongArray {
      * Atomically sets the value of the element at the given [index] to the [new value][newValue]
      * and returns the old value of the element.
      *
-     * Provides sequential consistent ordering guarantees.
-     *
      * @throws [IndexOutOfBoundsException] if the [index] is out of bounds of this array.
      */
     public actual fun exchangeAt(index: Int, newValue: Long): Long
@@ -166,8 +144,6 @@ public actual class AtomicLongArray {
      * Atomically sets the value of the element at the given [index] to the [new value][newValue]
      * if the current value equals the [expected value][expectedValue].
      * Returns true if the operation was successful and false only if the current value of the element was not equal to the expected value.
-     *
-     * Provides sequential consistent ordering guarantees and never fails spuriously.
      *
      * Comparison of values is done by value.
      *
@@ -179,8 +155,6 @@ public actual class AtomicLongArray {
      * Atomically sets the value of the element at the given [index] to the [new value][newValue]
      * if the current value equals the [expected value][expectedValue] and returns the old value of the element in any case.
      *
-     * Provides sequential consistent ordering guarantees and never fails spuriously.
-     *
      * Comparison of values is done by value.
      *
      * @throws [IndexOutOfBoundsException] if the [index] is out of bounds of this array.
@@ -190,16 +164,12 @@ public actual class AtomicLongArray {
     /**
      * Atomically adds the given [delta] to the element at the given [index] and returns the old value of the element.
      *
-     * Provides sequential consistent ordering guarantees.
-     *
      * @throws [IndexOutOfBoundsException] if the [index] is out of bounds of this array.
      */
     public actual fun fetchAndAddAt(index: Int, delta: Long): Long
 
     /**
      * Atomically adds the given [delta] to the element at the given [index] and returns the new value of the element.
-     *
-     * Provides sequential consistent ordering guarantees.
      *
      * @throws [IndexOutOfBoundsException] if the [index] is out of bounds of this array.
      */
@@ -214,12 +184,11 @@ public actual class AtomicLongArray {
 }
 
 /**
- * A generic array of objects in which elements may be updated atomically with guaranteed sequential consistent ordering.
+ * A generic array of objects in which elements may be updated atomically.
  *
- * Instances of [AtomicArray] are represented by [java.util.concurrent.atomic.AtomicReferenceArray].
- * For details about guarantees of volatile accesses and updates of atomics refer to The Java Language Specification (17.4 Memory Model).
+ * Instances of [AtomicArray] are represented by [java.util.concurrent.atomic.AtomicReferenceArray] and provide the the same atomicity guarantees.
  */
-@SinceKotlin("2.0") // TODO: SinceKotlin version should be updated to 2.1, when the API version is updated to 2.1
+@SinceKotlin("2.1")
 public actual class AtomicArray<T> {
     /**
      * Creates a new [AtomicArray]<T> filled with elements of the given [array].
@@ -234,16 +203,12 @@ public actual class AtomicArray<T> {
     /**
      * Atomically gets the value of the element at the given [index].
      *
-     * Provides sequential consistent ordering guarantees.
-     *
      * @throws [IndexOutOfBoundsException] if the [index] is out of bounds of this array.
      */
     public actual fun loadAt(index: Int): T
 
     /**
      * Atomically sets the value of the element at the given [index] to the [new value][newValue].
-     *
-     * Provides sequential consistent ordering guarantees.
      *
      * @throws [IndexOutOfBoundsException] if the [index] is out of bounds of this array.
      */
@@ -252,8 +217,6 @@ public actual class AtomicArray<T> {
     /**
      * Atomically sets the value of the element at the given [index] to the [new value][newValue]
      * and returns the old value of the element.
-     *
-     * Provides sequential consistent ordering guarantees.
      *
      * @throws [IndexOutOfBoundsException] if the [index] is out of bounds of this array.
      */
@@ -264,8 +227,6 @@ public actual class AtomicArray<T> {
      * if the current value equals the [expected value][expectedValue].
      * Returns true if the operation was successful and false only if the current value of the element was not equal to the expected value.
      *
-     * Provides sequential consistent ordering guarantees and never fails spuriously.
-     *
      * Comparison of values is done by value.
      *
      * @throws [IndexOutOfBoundsException] if the [index] is out of bounds of this array.
@@ -275,8 +236,6 @@ public actual class AtomicArray<T> {
     /**
      * Atomically sets the value of the element at the given [index] to the [new value][newValue]
      * if the current value equals the [expected value][expectedValue] and returns the old value of the element in any case.
-     *
-     * Provides sequential consistent ordering guarantees and never fails spuriously.
      *
      * Comparison of values is done by value.
      *
