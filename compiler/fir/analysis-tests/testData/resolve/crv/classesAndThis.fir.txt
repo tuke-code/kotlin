@@ -38,3 +38,26 @@ FILE: classesAndThis.kt
         }
 
     }
+    public abstract interface I : R|kotlin/Any| {
+        public abstract fun foo(): R|kotlin/Unit|
+
+    }
+    public final object Impl : R|I| {
+        private constructor(): R|Impl| {
+            super<R|kotlin/Any|>()
+        }
+
+        public open override fun foo(): R|kotlin/Unit| {
+            Q|Impl|
+            R|kotlin/TODO|(String(Not yet implemented))
+        }
+
+    }
+    public final class Impl2 : R|I| {
+        public constructor(): R|Impl2| {
+            super<R|kotlin/Any|>()
+        }
+
+        private final field $$delegate_0: R|I| = Q|Impl|
+
+    }

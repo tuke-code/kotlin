@@ -16,6 +16,7 @@ import org.jetbrains.kotlin.fir.analysis.checkers.MppCheckerKind
 import org.jetbrains.kotlin.fir.analysis.checkers.context.CheckerContext
 import org.jetbrains.kotlin.fir.analysis.checkers.expression.FirBasicExpressionChecker
 import org.jetbrains.kotlin.fir.analysis.checkers.isLhsOfAssignment
+import org.jetbrains.kotlin.fir.declarations.FirField
 import org.jetbrains.kotlin.fir.declarations.FirProperty
 import org.jetbrains.kotlin.fir.declarations.FirValueParameter
 import org.jetbrains.kotlin.fir.expressions.*
@@ -63,8 +64,8 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
 //        val outerExpression = context.firstNonPropagatingOuterElementOf(expression)
 //        val (a, b) = context.propagate(expression)
 
-        // Used directly in return expression, property or parameter declaration
-        if (outerExpression.isVarInitializationOrReturn) return
+        // Used directly in property or parameter declaration
+        if (outerExpression.isVarInitialization) return
 
 //        if (outerExpression.uses(given ?: expression)) return
         if (outerExpression.uses(given ?: expression)) return
@@ -81,6 +82,7 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
         // Includes FirWhileLoop, FirDoWhileLoop, and FirErrorLoop. I have no idea what FirErrorLoop is.
         is FirLoop -> condition == given // TODO: `given` should be not original, but last propagated (i.e. unwrap FirTypeOperatorCall/SmartCast)
 
+        is FirReturnExpression -> true
         is FirThrowExpression -> true // exception == given
         is FirElvisExpression -> true // lhs == given || rhs == given
         is FirComparisonExpression -> true // compareToCall == given
@@ -133,7 +135,8 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
             else -> false
         }
 
-    private val FirElement?.isVarInitializationOrReturn: Boolean get() = this is FirReturnExpression || this is FirProperty || this is FirValueParameter
+    // FirField can occur in `by` interface delegation
+    private val FirElement?.isVarInitialization: Boolean get() = this is FirProperty || this is FirValueParameter || this is FirField
 
     private fun FirExpression.isLocalPropertyOrParameterOrThis(): Boolean {
         if (this is FirThisReceiverExpression) return true
@@ -164,7 +167,6 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
         "kotlin/text/StringBuilder.appendLine",
         "kotlin/text/Appendable.append",
         "kotlin/text/Appendable.appendLine",
-        "kotlin/test/assertFailsWith",
         "java/util/LinkedHashSet.add",
         "java/util/HashSet.add",
         "java/util/TreeSet.add",
@@ -176,6 +178,12 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
         "java/util/LinkedHashMap.put",
         "java/util/HashSet.remove",
         "java/util/TreeSet.remove",
+
+        "kotlin/test/assertFailsWith",
+        "kotlin/test/assertFails",
+        "kotlin/test/assertNotNull",
+        "kotlin/test/assertIs",
+
 //        "kotlin/Throwable.printStackTrace",
 //        "kotlin/Throwable.addSuppressed",
 //        "kotlin/Throwable.getSuppressed",

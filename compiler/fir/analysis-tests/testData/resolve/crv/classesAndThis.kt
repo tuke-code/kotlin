@@ -20,3 +20,15 @@ class A(val x: String = "x") {
     }
 }
 
+interface I {
+    fun foo()
+}
+
+object Impl: I {
+    override fun foo() {
+        <!RETURN_VALUE_NOT_USED!>Impl<!>
+        TODO("Not yet implemented")
+    }
+}
+
+class Impl2(): I by Impl
