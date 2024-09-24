@@ -83,8 +83,11 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
         is FirElvisExpression -> true // lhs == given || rhs == given
         is FirComparisonExpression -> true // compareToCall == given
         is FirBooleanOperatorExpression -> true // leftOperand == given || rightOperand == given
+
+        // I think MAYBE we can just include FirCall in general here, although FirTypeOperator is propagating.
         is FirEqualityOperatorCall -> true // given in argumentList.arguments
         is FirStringConcatenationCall -> true // given in argumentList.arguments
+        is FirGetClassCall -> true // given in argumentList.arguments
 
         // in if(x) and when(x), x is always used
         // Most complex case, as we should check whether given is the last expression in a block.

@@ -3,6 +3,11 @@
 fun getAny(): Any = ""
 fun Any.consume(): Unit = Unit
 
+val nonLocal: Any get() = ""
+
+fun consume(s: String) {}
+
+
 fun locals(a: Any) {
     a
     a as String
@@ -10,10 +15,6 @@ fun locals(a: Any) {
     b
     b as String
 }
-
-val nonLocal: Any get() = ""
-
-fun consume(s: String) {}
 
 fun nonLocals() {
     <!RETURN_VALUE_NOT_USED!>nonLocal<!>
@@ -23,15 +24,11 @@ fun nonLocals() {
     (nonLocal as String).consume()
 }
 
-
-//fun bar(a: Any) {
-//    a is String
-//}
-//
-//fun foo2() {
-//    getAny() as String
-//}
-//
-//fun bar2() {
-//    getAny() is String
-//}
+fun classRefs(instance: Any) {
+    <!RETURN_VALUE_NOT_USED!>instance::class<!>
+    <!RETURN_VALUE_NOT_USED!>String::class<!>
+    <!RETURN_VALUE_NOT_USED!>nonLocal::class<!>
+    val s = String::class
+    val ss = instance::class
+    val sss = nonLocal::class
+}
