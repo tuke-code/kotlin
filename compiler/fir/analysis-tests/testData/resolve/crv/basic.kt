@@ -45,3 +45,11 @@ fun basic() {
     println(stringF()) // used
     <!RETURN_VALUE_NOT_USED!>stringF()<!> // unused
 }
+
+fun stringConcat(): String {
+    <!RETURN_VALUE_NOT_USED!>"42"<!> // unsued
+    val x = "42"
+    <!RETURN_VALUE_NOT_USED!>"answer is $x"<!> // unused
+    val y = "answer is $x" // used
+    return "answer is $y" // used
+}

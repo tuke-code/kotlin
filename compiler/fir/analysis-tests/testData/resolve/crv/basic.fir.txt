@@ -53,3 +53,10 @@ FILE: basic.kt
         R|kotlin/io/println|(R|/stringF|())
         R|/stringF|()
     }
+    public final fun stringConcat(): R|kotlin/String| {
+        String(42)
+        lval x: R|kotlin/String| = String(42)
+        <strcat>(String(answer is ), R|<local>/x|)
+        lval y: R|kotlin/String| = <strcat>(String(answer is ), R|<local>/x|)
+        ^stringConcat <strcat>(String(answer is ), R|<local>/y|)
+    }

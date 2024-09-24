@@ -67,7 +67,7 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
 
         if (outerExpression.uses(expression)) return
 
-        reporter.reportOn(expression.source, RETURN_VALUE_NOT_USED, (resolvedReference?.name?.toString() ?: "TODO"), context)
+        reporter.reportOn(expression.source, RETURN_VALUE_NOT_USED, "Unused expression: " + (resolvedReference?.name?.toString() ?: "<unresolved>"), context)
     }
 
     private fun FirElement?.uses(given: FirExpression): Boolean = when (this) {
@@ -82,6 +82,7 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
         is FirWhenExpression -> subject == given
         is FirComparisonExpression -> true // compareToCall == given
         is FirEqualityOperatorCall -> true // given in argumentList.arguments
+        is FirStringConcatenationCall -> true // given in argumentList.arguments
         else -> false
     }
 
