@@ -74,15 +74,10 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
         // Safe calls for some reason are not part of context.callsOrAssignments, so have to be checked separately
         is FirSafeCallExpression -> true // receiver == given
 
-        // in if(x) and when(x), x is always used
-        // Lets consider that when/if always consumes everything, and just check if when is used itself?
-        // TODO: FirWhenExpression has Unit type if it is not assigned anywhere, even if branches are non-Unit. requires separate handling.
-        is FirWhenBranch -> true // condition == given
-
-        is FirWhenExpression -> subject == given // TODO: probably given should be not original, but last propagated. this would also probably solve firWhenBranch issue.
+        is FirWhenExpression -> subject == given
 
         // Includes FirWhileLoop, FirDoWhileLoop, and FirErrorLoop. I have no idea what FirErrorLoop is.
-        is FirLoop -> condition == given
+        is FirLoop -> condition == given // TODO: `given` should be not original, but last propagated (i.e. unwrap FirTypeOperatorCall/SmartCast)
 
         is FirThrowExpression -> true // exception == given
         is FirElvisExpression -> true // lhs == given || rhs == given
@@ -90,13 +85,19 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
         is FirBooleanOperatorExpression -> true // leftOperand == given || rightOperand == given
         is FirEqualityOperatorCall -> true // given in argumentList.arguments
         is FirStringConcatenationCall -> true // given in argumentList.arguments
+
+        // in if(x) and when(x), x is always used
+        // Most complex case, as we should check whether given is the last expression in a block.
+        // TODO: FirWhenExpression has Unit type if it is not assigned anywhere, even if branches are non-Unit. requires separate handling.
+        is FirWhenBranch -> condition == given || result.statements.lastOrNull() == given // TODO: `given` should be not original, but last propagated (i.e. unwrap FirTypeOperatorCall/SmartCast)
+
         else -> false
     }
 
     private fun CheckerContext.firstNonPropagatingOuterElementOf(thisExpression: FirExpression): FirElement? =
         containingElements.lastOrNull { it != thisExpression && !it.isPropagating }
 
-    private val FirElement.isPropagating: Boolean get() = this is FirSmartCastExpression || this is FirArgumentList || this is FirTypeOperatorCall || this is FirSingleExpressionBlock
+    private val FirElement.isPropagating: Boolean get() = this is FirSmartCastExpression || this is FirArgumentList || this is FirTypeOperatorCall || this is FirBlock
 
     private val FirElement?.isVarInitializationOrReturn: Boolean get() = this is FirReturnExpression || this is FirProperty || this is FirValueParameter
 

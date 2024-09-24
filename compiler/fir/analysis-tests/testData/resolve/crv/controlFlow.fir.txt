@@ -71,3 +71,25 @@ FILE: controlFlow.kt
         }
 
     }
+    public final fun ifBranches2(cond: R|kotlin/Boolean|): R|kotlin/String?| {
+        ^ifBranches2 when () {
+            R|<local>/cond| ->  {
+                lval x: R|kotlin/Int| = R|/intF|()
+                R|/stringF|()
+            }
+            else ->  {
+                R|/intF|()
+                R|/nsf|()
+            }
+        }
+
+        when () {
+            R|<local>/cond| ->  {
+                R|/stringF|()
+            }
+            else ->  {
+                R|/nsf|()
+            }
+        }
+
+    }

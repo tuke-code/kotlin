@@ -37,3 +37,20 @@ fun ifBranches() {
     <!RETURN_VALUE_NOT_USED!>if (intF() > 0) intF() else 0<!> // unused
 }
 
+fun ifBranches2(cond: Boolean): String? {
+    return if (cond) {
+        val x = intF() // unrelated
+        stringF()
+    } else {
+        <!RETURN_VALUE_NOT_USED!>intF()<!> // unused
+        nsf()
+    }
+
+    // TODO: do we want to report this on whole `if`?
+    <!RETURN_VALUE_NOT_USED!>if (cond) {
+        stringF()
+    } else {
+        nsf()
+    }<!>
+}
+
