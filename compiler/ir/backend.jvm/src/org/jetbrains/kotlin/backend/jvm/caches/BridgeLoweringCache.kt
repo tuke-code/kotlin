@@ -11,6 +11,7 @@ import org.jetbrains.kotlin.backend.jvm.SpecialBridge
 import org.jetbrains.kotlin.ir.builders.declarations.buildFun
 import org.jetbrains.kotlin.ir.declarations.IrDeclarationOrigin
 import org.jetbrains.kotlin.ir.declarations.IrFunction
+import org.jetbrains.kotlin.ir.declarations.IrParameterKind
 import org.jetbrains.kotlin.ir.declarations.IrSimpleFunction
 import org.jetbrains.kotlin.ir.symbols.IrFunctionSymbol
 import org.jetbrains.kotlin.ir.util.copyTo
@@ -78,10 +79,13 @@ class BridgeLoweringCache(private val context: JvmBackendContext) {
             if (!specialBridge.needsGenericSignature) return specialBridge
 
             // Compute the substituted signature.
-            val erasedParameterCount = specialBridge.methodInfo?.argumentsToCheck ?: 0
-            val substitutedParameterTypes = function.valueParameters.mapIndexed { index, param ->
-                if (index < erasedParameterCount) context.irBuiltIns.anyNType else param.type
-            }
+            var remainingErasedParameterCount = specialBridge.methodInfo?.argumentsToCheck ?: 0
+            val substitutedParameterTypes = function.parameters
+                .map { param ->
+                    if (param.kind != IrParameterKind.DispatchReceiver && remainingErasedParameterCount-- > 0)
+                        context.irBuiltIns.anyNType
+                    else param.type
+                }
 
             val substitutedOverride = context.irFactory.buildFun {
                 updateFrom(specialBridge.overridden)
@@ -89,7 +93,7 @@ class BridgeLoweringCache(private val context: JvmBackendContext) {
                 returnType = function.returnType
             }.apply {
                 // All existing special bridges only have value parameter types.
-                valueParameters = function.valueParameters.zip(substitutedParameterTypes).map { (param, type) ->
+                parameters = function.parameters.zip(substitutedParameterTypes).map { (param, type) ->
                     param.copyTo(this, IrDeclarationOrigin.BRIDGE, type = type)
                 }
                 overriddenSymbols = listOf(specialBridge.overridden.symbol)

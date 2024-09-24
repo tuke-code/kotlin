@@ -164,21 +164,23 @@ class JvmCachedDeclarations(
             copyAttributes(target)
             copyTypeParametersFrom(target)
             copyAnnotationsFrom(target)
+            parameters = target.parameters
+                .filter { it.kind != IrParameterKind.DispatchReceiver }
+                .map { it.copyTo(this) }
             if (!isStatic) {
-                dispatchReceiverParameter = thisReceiver?.copyTo(this, type = defaultType)
+                parameters = listOfNotNull(thisReceiver?.copyTo(this, type = defaultType)) + parameters
             }
-            extensionReceiverParameter = target.extensionReceiverParameter?.copyTo(this)
-            valueParameters = target.valueParameters.map { it.copyTo(this) }
 
             body = context.createIrBuilder(symbol).run {
                 irExprBody(irCall(target).apply {
                     passTypeArgumentsFrom(this@proxy)
-                    if (target.dispatchReceiverParameter != null) {
-                        dispatchReceiver = irGetField(null, getFieldForObjectInstance(target.parentAsClass))
+                    for (param in parameters) {
+                        if (param.kind != IrParameterKind.DispatchReceiver) {
+                            arguments[param.indexNew] = irGet(param)
+                        }
                     }
-                    extensionReceiverParameter?.let { extensionReceiver = irGet(it) }
-                    for ((i, valueParameter) in valueParameters.withIndex()) {
-                        putValueArgument(i, irGet(valueParameter))
+                    if (target.dispatchReceiverParameter != null) {
+                        arguments[0] = irGetField(null, getFieldForObjectInstance(target.parentAsClass))
                     }
                 })
             }

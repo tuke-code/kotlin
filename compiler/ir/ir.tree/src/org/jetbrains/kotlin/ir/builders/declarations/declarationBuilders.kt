@@ -331,7 +331,8 @@ fun IrFactory.buildValueParameter(builder: IrValueParameterBuilder, parent: IrDe
             varargElementType = varargElementType,
             isCrossinline = isCrossInline,
             isNoinline = isNoinline,
-            isHidden = isHidden
+            isHidden = isHidden,
+            kind = kind,
         ).also {
             it.parent = parent
         }
