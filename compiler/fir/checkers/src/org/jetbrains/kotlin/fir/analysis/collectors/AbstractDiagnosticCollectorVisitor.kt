@@ -14,6 +14,7 @@ import org.jetbrains.kotlin.fir.analysis.checkers.extra.createLambdaBodyContext
 import org.jetbrains.kotlin.fir.contracts.FirContractDescription
 import org.jetbrains.kotlin.fir.declarations.*
 import org.jetbrains.kotlin.fir.declarations.builder.buildReceiverParameter
+import org.jetbrains.kotlin.fir.declarations.impl.FirPrimaryConstructor
 import org.jetbrains.kotlin.fir.declarations.utils.correspondingValueParameterFromPrimaryConstructor
 import org.jetbrains.kotlin.fir.declarations.utils.isInline
 import org.jetbrains.kotlin.fir.expressions.*
@@ -25,7 +26,6 @@ import org.jetbrains.kotlin.fir.types.*
 import org.jetbrains.kotlin.fir.types.builder.buildResolvedTypeRef
 import org.jetbrains.kotlin.fir.visitors.FirDefaultVisitor
 import org.jetbrains.kotlin.fir.whileAnalysing
-import org.jetbrains.kotlin.name.Name
 
 abstract class AbstractDiagnosticCollectorVisitor(
     @set:PrivateForInline var context: CheckerContextForProvider,
@@ -84,7 +84,7 @@ abstract class AbstractDiagnosticCollectorVisitor(
             }
         }
 
-        visitWithDeclarationAndReceiver(klass, (klass as? FirRegularClass)?.name, receiverParameter)
+        visitWithDeclarationAndReceiver(klass, receiverParameter)
     }
 
     override fun visitRegularClass(regularClass: FirRegularClass, data: Nothing?) {
@@ -115,7 +115,7 @@ abstract class AbstractDiagnosticCollectorVisitor(
     override fun visitSimpleFunction(simpleFunction: FirSimpleFunction, data: Nothing?) {
         withAnnotationContainer(simpleFunction) {
             withInlineFunctionBodyIfApplicable(simpleFunction, simpleFunction.isInline) {
-                visitWithDeclarationAndReceiver(simpleFunction, simpleFunction.name, simpleFunction.receiverParameter)
+                visitWithDeclarationAndReceiver(simpleFunction, simpleFunction.receiverParameter)
             }
         }
     }
@@ -137,12 +137,7 @@ abstract class AbstractDiagnosticCollectorVisitor(
     override fun visitAnonymousFunction(anonymousFunction: FirAnonymousFunction, data: Nothing?) {
         withAnnotationContainer(anonymousFunction) {
             withLambdaBodyIfApplicable(anonymousFunction) {
-                val labelName = anonymousFunction.label?.name?.let { Name.identifier(it) }
-                visitWithDeclarationAndReceiver(
-                    anonymousFunction,
-                    labelName,
-                    anonymousFunction.receiverParameter
-                )
+                visitWithDeclarationAndReceiver(anonymousFunction, anonymousFunction.receiverParameter)
             }
         }
     }
@@ -165,7 +160,7 @@ abstract class AbstractDiagnosticCollectorVisitor(
         val property = context.containingDeclarations.last() as FirProperty
         withAnnotationContainer(propertyAccessor) {
             withInlineFunctionBodyIfApplicable(propertyAccessor, propertyAccessor.isInline || property.isInline) {
-                visitWithDeclarationAndReceiver(propertyAccessor, property.name, property.receiverParameter)
+                visitWithDeclarationAndReceiver(propertyAccessor, property.receiverParameter)
             }
         }
     }
@@ -301,13 +296,9 @@ abstract class AbstractDiagnosticCollectorVisitor(
         }
     }
 
-    private fun visitWithDeclarationAndReceiver(declaration: FirDeclaration, labelName: Name?, receiverParameter: FirReceiverParameter?) {
+    private fun visitWithDeclarationAndReceiver(declaration: FirDeclaration, receiverParameter: FirReceiverParameter?) {
         visitWithDeclaration(declaration) {
-            withLabelAndReceiverType(
-                labelName,
-                declaration,
-                receiverParameter?.typeRef?.coneType
-            ) {
+            withReceiverType(declaration, receiverParameter?.typeRef?.coneType) {
                 visitNestedElements(declaration)
             }
         }
@@ -423,23 +414,28 @@ abstract class AbstractDiagnosticCollectorVisitor(
     }
 
     @OptIn(PrivateForInline::class)
-    inline fun <R> withLabelAndReceiverType(
-        labelName: Name?,
+    inline fun <R> withReceiverType(
         owner: FirDeclaration,
         type: ConeKotlinType?,
         block: () -> R
     ): R {
         val (implicitReceiverValue, implicitCompanionValues) = context.sessionHolder.collectImplicitReceivers(type, owner)
         val existingContext = context
+        var implicitReceiversCount = 0
         implicitCompanionValues.forEach { value ->
-            context = context.addImplicitReceiver(null, value)
+            context = context.addImplicitReceiver(value)
+            implicitReceiversCount++
         }
         implicitReceiverValue?.let {
-            context = context.addImplicitReceiver(labelName, it)
+            context = context.addImplicitReceiver(it)
+            implicitReceiversCount++
         }
         try {
             return block()
         } finally {
+            repeat(implicitReceiversCount) {
+                context.dropImplicitReceiver()
+            }
             context = existingContext
         }
     }

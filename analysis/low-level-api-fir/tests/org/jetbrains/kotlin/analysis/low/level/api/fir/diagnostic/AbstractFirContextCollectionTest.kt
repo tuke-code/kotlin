@@ -28,8 +28,8 @@ import org.jetbrains.kotlin.fir.SessionConfiguration
 import org.jetbrains.kotlin.fir.analysis.checkers.context.CheckerContext
 import org.jetbrains.kotlin.fir.declarations.FirDeclaration
 import org.jetbrains.kotlin.fir.declarations.FirFile
-import org.jetbrains.kotlin.fir.resolve.ImplicitReceiverStack
 import org.jetbrains.kotlin.fir.resolve.SessionHolderImpl
+import org.jetbrains.kotlin.fir.resolve.calls.ImplicitReceiverValue
 import org.jetbrains.kotlin.psi.KtFile
 import org.jetbrains.kotlin.test.builders.TestConfigurationBuilder
 import org.jetbrains.kotlin.test.services.*
@@ -90,14 +90,14 @@ abstract class AbstractFirContextCollectionTest : AbstractAnalysisApiBasedTest()
         }
 
         private fun compareStructurally(expected: CheckerContext, actual: CheckerContext) {
-            assertions.assertEquals(expected.implicitReceiverStack.asString(), actual.implicitReceiverStack.asString())
-            assertions.assertEquals(expected.containingDeclarations.asString(), actual.containingDeclarations.asString())
+            assertions.assertEquals(expected.implicitReceiverStack.asSymbolsString(), actual.implicitReceiverStack.asSymbolsString())
+            assertions.assertEquals(expected.containingDeclarations.asNamesString(), actual.containingDeclarations.asNamesString())
         }
 
-        private fun ImplicitReceiverStack.asString() =
+        private fun List<ImplicitReceiverValue<*>>.asSymbolsString() =
             joinToString { it.boundSymbol.name() }
 
-        private fun List<FirDeclaration>.asString() =
+        private fun List<FirDeclaration>.asNamesString() =
             joinToString(transform = FirDeclaration::name)
     }
 }

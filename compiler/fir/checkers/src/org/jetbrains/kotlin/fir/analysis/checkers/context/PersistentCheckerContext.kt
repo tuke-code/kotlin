@@ -8,24 +8,20 @@ package org.jetbrains.kotlin.fir.analysis.checkers.context
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.PersistentSet
 import kotlinx.collections.immutable.persistentListOf
-import kotlinx.collections.immutable.persistentSetOf
 import org.jetbrains.kotlin.fir.FirAnnotationContainer
 import org.jetbrains.kotlin.fir.FirElement
 import org.jetbrains.kotlin.fir.analysis.checkers.declaration.FirInlineDeclarationChecker
 import org.jetbrains.kotlin.fir.analysis.checkers.extra.FirAnonymousUnusedParamChecker
 import org.jetbrains.kotlin.fir.declarations.FirDeclaration
 import org.jetbrains.kotlin.fir.declarations.FirFile
-import org.jetbrains.kotlin.fir.declarations.FirFunction
 import org.jetbrains.kotlin.fir.expressions.FirGetClassCall
 import org.jetbrains.kotlin.fir.expressions.FirStatement
-import org.jetbrains.kotlin.fir.resolve.PersistentImplicitReceiverStack
 import org.jetbrains.kotlin.fir.resolve.SessionHolder
 import org.jetbrains.kotlin.fir.resolve.calls.ImplicitReceiverValue
 import org.jetbrains.kotlin.fir.resolve.transformers.ReturnTypeCalculator
-import org.jetbrains.kotlin.name.Name
 
 class PersistentCheckerContext private constructor(
-    override val implicitReceiverStack: PersistentImplicitReceiverStack,
+    override val implicitReceiverStack: PersistentList<ImplicitReceiverValue<*>>,
     override val containingDeclarations: PersistentList<FirDeclaration>,
     override val callsOrAssignments: PersistentList<FirStatement>,
     override val getClassCalls: PersistentList<FirGetClassCall>,
@@ -43,7 +39,7 @@ class PersistentCheckerContext private constructor(
     override val containingFile: FirFile?,
 ) : CheckerContextForProvider(sessionHolder, returnTypeCalculator, allInfosSuppressed, allWarningsSuppressed, allErrorsSuppressed) {
     constructor(sessionHolder: SessionHolder, returnTypeCalculator: ReturnTypeCalculator) : this(
-        PersistentImplicitReceiverStack(),
+        implicitReceiverStack = persistentListOf(),
         containingDeclarations = persistentListOf(),
         callsOrAssignments = persistentListOf(),
         getClassCalls = persistentListOf(),
@@ -61,8 +57,10 @@ class PersistentCheckerContext private constructor(
         containingFile = null,
     )
 
-    override fun addImplicitReceiver(name: Name?, value: ImplicitReceiverValue<*>): PersistentCheckerContext =
-        copy(implicitReceiverStack = implicitReceiverStack.add(name, value))
+    override fun addImplicitReceiver(value: ImplicitReceiverValue<*>): PersistentCheckerContext =
+        copy(implicitReceiverStack = implicitReceiverStack.add(value))
+
+    override fun dropImplicitReceiver() {}
 
     override fun addDeclaration(declaration: FirDeclaration): PersistentCheckerContext =
         copy(containingDeclarations = containingDeclarations.add(declaration))
@@ -108,7 +106,7 @@ class PersistentCheckerContext private constructor(
     }
 
     private fun copy(
-        implicitReceiverStack: PersistentImplicitReceiverStack = this.implicitReceiverStack,
+        implicitReceiverStack: PersistentList<ImplicitReceiverValue<*>> = this.implicitReceiverStack,
         qualifiedAccessOrAssignmentsOrAnnotationCalls: PersistentList<FirStatement> = this.callsOrAssignments,
         getClassCalls: PersistentList<FirGetClassCall> = this.getClassCalls,
         annotationContainers: PersistentList<FirAnnotationContainer> = this.annotationContainers,
