@@ -9,6 +9,12 @@ fun nsf(): String? = "null"
 
 fun coll(m: MutableCollection<String>) {
     m.add("")
+    <!RETURN_VALUE_NOT_USED!>m.last()<!>
+}
+
+fun nullable(m: MutableList<String>?) {
+    m?.add("x")
+    <!RETURN_VALUE_NOT_USED!>m?.last()<!>
 }
 
 fun exlusionPropagation(cond: Boolean, m: MutableList<String>) {

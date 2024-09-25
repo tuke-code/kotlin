@@ -13,6 +13,11 @@ FILE: exclusions.kt
     }
     public final fun coll(m: R|kotlin/collections/MutableCollection<kotlin/String>|): R|kotlin/Unit| {
         R|<local>/m|.R|SubstitutionOverride<kotlin/collections/MutableCollection.add: R|kotlin/Boolean|>|(String())
+        R|<local>/m|.R|kotlin/collections/last|<R|kotlin/String|>()
+    }
+    public final fun nullable(m: R|kotlin/collections/MutableList<kotlin/String>?|): R|kotlin/Unit| {
+        R|<local>/m|?.{ $subj$.R|SubstitutionOverride<kotlin/collections/MutableList.add: R|kotlin/Boolean|>|(String(x)) }
+        R|<local>/m|?.{ $subj$.R|kotlin/collections/last|<R|kotlin/String|>() }
     }
     public final fun exlusionPropagation(cond: R|kotlin/Boolean|, m: R|kotlin/collections/MutableList<kotlin/String>|): R|kotlin/Unit| {
         when () {

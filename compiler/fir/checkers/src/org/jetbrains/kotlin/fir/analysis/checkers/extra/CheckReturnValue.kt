@@ -52,7 +52,8 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
             is FirTypeOperatorCall,
             is FirCheckNotNullCall,
             is FirTryExpression,
-            is FirWhenExpression
+            is FirWhenExpression,
+            is FirSafeCallExpression,
                 -> return
         }
 
@@ -119,9 +120,16 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
                     continue
                 }
 
+                is FirSafeCallExpression -> {
+                    // Receiver is always used, selector is propagating:
+                    if (e.receiver == lastPropagating) return true
+                    lastPropagating = e
+                    continue
+                }
+
                 // Expressions that always use what's down the stack:
 
-                is FirSafeCallExpression -> return true // receiver == given
+                // receiver == given
                 is FirReturnExpression -> return true
                 is FirThrowExpression -> return true // exception == given
                 is FirElvisExpression -> return true // lhs == given || rhs == given
