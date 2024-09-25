@@ -87,7 +87,7 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
         reporter.reportOn(
             expression.source,
             RETURN_VALUE_NOT_USED,
-            "Unused expression: " + (resolvedReference?.toResolvedCallableSymbol()?.callableId?.toString() ?: "<${expression.render()}>"),
+            "Unused value: " + (resolvedReference?.toResolvedCallableSymbol()?.callableId?.toString() ?: "<${expression.render()}>"),
             context
         )
     }
@@ -259,6 +259,7 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
         "kotlin/collections/MutableSet.add",
         "kotlin/collections/MutableList.set",
         "kotlin/collections/MutableMap.put",
+        "kotlin/collections/MutableMap.remove",
         "kotlin/text/StringBuilder.append",
         "java/lang/StringBuilder.append",
         "java/lang/StringBuilder.appendLine",
