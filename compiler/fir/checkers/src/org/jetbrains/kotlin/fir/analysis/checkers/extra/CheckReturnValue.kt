@@ -13,6 +13,7 @@ import org.jetbrains.kotlin.diagnostics.Severity.ERROR
 import org.jetbrains.kotlin.diagnostics.SourceElementPositioningStrategies
 import org.jetbrains.kotlin.diagnostics.reportOn
 import org.jetbrains.kotlin.fir.FirElement
+import org.jetbrains.kotlin.fir.FirSession
 import org.jetbrains.kotlin.fir.analysis.checkers.MppCheckerKind
 import org.jetbrains.kotlin.fir.analysis.checkers.context.CheckerContext
 import org.jetbrains.kotlin.fir.analysis.checkers.expression.FirBasicExpressionChecker
@@ -20,6 +21,7 @@ import org.jetbrains.kotlin.fir.analysis.checkers.isLhsOfAssignment
 import org.jetbrains.kotlin.fir.declarations.FirField
 import org.jetbrains.kotlin.fir.declarations.FirProperty
 import org.jetbrains.kotlin.fir.declarations.FirValueParameter
+import org.jetbrains.kotlin.fir.declarations.toAnnotationClassId
 import org.jetbrains.kotlin.fir.expressions.*
 import org.jetbrains.kotlin.fir.references.resolved
 import org.jetbrains.kotlin.fir.references.symbol
@@ -59,7 +61,7 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
         val resolvedReference = calleeReference?.resolved
 
         // Exclusions
-        if (resolvedReference?.toResolvedCallableSymbol()?.isExcluded() == true) return
+        if (resolvedReference?.toResolvedCallableSymbol()?.isExcluded(context.session) == true) return
 
         // Ignore Unit or Nothing
         if (expression.resolvedType.run { isNothingOrNullableNothing || isUnitOrNullableUnit }) return
@@ -167,9 +169,12 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
         }
     }
 
-    private fun FirCallableSymbol<*>.isExcluded(): Boolean {
-        val id = callableId
+    private fun FirCallableSymbol<*>.isExcluded(session: FirSession): Boolean {
+        // For simplicity, lets check any annotation with the given name, as it is hard to add smth to stdlib:
+        if (annotations.any { it.toAnnotationClassId(session)?.relativeClassName.toString() == "_Discardable" }) return true
+
         // TODO: write normal checker w.r.t overloads
+        val id = callableId
         val s = id.toString()
         return s in exclusionList
     }
@@ -184,6 +189,7 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
         "kotlin/collections/MutableMap.remove",
 
         "kotlin/collections/removeLast",
+        "kotlin/collections/removeAll",
 
         "java/util/LinkedHashSet.add",
         "java/util/HashSet.add",

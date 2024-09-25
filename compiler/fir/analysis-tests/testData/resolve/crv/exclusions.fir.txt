@@ -1,4 +1,10 @@
 FILE: exclusions.kt
+    @R|kotlin/annotation/Target|(allowedTargets = vararg(Q|kotlin/annotation/AnnotationTarget|.R|kotlin/annotation/AnnotationTarget.CLASS|, Q|kotlin/annotation/AnnotationTarget|.R|kotlin/annotation/AnnotationTarget.PROPERTY|, Q|kotlin/annotation/AnnotationTarget|.R|kotlin/annotation/AnnotationTarget.FUNCTION|)) @R|kotlin/Suppress|(names = vararg(String(ClassName))) public final annotation class _Discardable : R|kotlin/Annotation| {
+        public constructor(): R|_Discardable| {
+            super<R|kotlin/Any|>()
+        }
+
+    }
     public final fun stringF(): R|kotlin/String| {
         ^stringF String()
     }
@@ -27,4 +33,32 @@ FILE: exclusions.kt
             }
         }
 
+    }
+    @R|_Discardable|() public final fun discardable(): R|kotlin/String| {
+        ^discardable String()
+    }
+    public final fun unused(cond: R|kotlin/Boolean|): R|kotlin/Unit| {
+        R|/stringF|()
+        R|/discardable|()
+        when () {
+            R|<local>/cond| ->  {
+                R|/discardable|()
+            }
+            else ->  {
+                R|/stringF|()
+            }
+        }
+
+        when () {
+            R|<local>/cond| ->  {
+                R|/discardable|()
+            }
+            else ->  {
+                Q|kotlin/Unit|
+            }
+        }
+
+    }
+    public final fun underscore(): R|kotlin/Unit| {
+        lval _: R|kotlin/String| = R|/stringF|()
     }

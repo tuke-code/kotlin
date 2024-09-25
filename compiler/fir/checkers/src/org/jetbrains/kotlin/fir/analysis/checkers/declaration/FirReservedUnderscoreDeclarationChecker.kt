@@ -39,7 +39,6 @@ object FirReservedUnderscoreDeclarationChecker : FirBasicDeclarationChecker(MppC
                     parameter,
                     context,
                     reporter,
-                    isSingleUnderscoreAllowed = isSingleUnderscoreAllowed
                 )
             }
         } else if (declaration is FirFile) {
@@ -53,7 +52,7 @@ object FirReservedUnderscoreDeclarationChecker : FirBasicDeclarationChecker(MppC
         declaration: FirDeclaration,
         context: CheckerContext,
         reporter: DiagnosticReporter,
-        isSingleUnderscoreAllowed: Boolean = false
+        isSingleUnderscoreAllowed: Boolean = true
     ) {
         val declarationSource = declaration.source
         if (declarationSource != null &&
