@@ -154,6 +154,7 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
                     // Special case: ++x is desugared to FirBlock, we consider result of pre/post increment as discardable.
                     if (e.source?.kind is KtFakeSourceElementKind.DesugaredIncrementOrDecrement) return true
 
+                    // FirBlock result is the last statement, other statements are not used
                     if (e.statements.lastOrNull() == lastPropagating) {
                         lastPropagating = e
                         continue
@@ -200,9 +201,6 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
         else -> false
     }
 
-    private fun CheckerContext.firstNonPropagatingOuterElementOf(thisExpression: FirExpression): FirElement? =
-        containingElements.lastOrNull { it != thisExpression && !it.isPropagating }
-
     private fun CheckerContext.propagate(thisExpression: FirExpression): Pair<FirElement?, FirExpression?> {
         var lastPropagating: FirExpression? = null
         for (e in containingElements.asReversed()) {
@@ -248,24 +246,22 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
 
     private fun FirCallableSymbol<*>.isExcluded(): Boolean {
         val id = callableId
-        // TODO: write normal checker
+        // TODO: write normal checker w.r.t overloads
         val s = id.toString()
         return s in exclusionList
     }
 
     private val exclusionList = listOf(
+        // Collection operations:
         "kotlin/collections/MutableCollection.add",
         "kotlin/collections/MutableList.add",
         "kotlin/collections/MutableSet.add",
         "kotlin/collections/MutableList.set",
         "kotlin/collections/MutableMap.put",
         "kotlin/collections/MutableMap.remove",
-        "kotlin/text/StringBuilder.append",
-        "java/lang/StringBuilder.append",
-        "java/lang/StringBuilder.appendLine",
-        "kotlin/text/StringBuilder.appendLine",
-        "kotlin/text/Appendable.append",
-        "kotlin/text/Appendable.appendLine",
+
+        "kotlin/collections/removeLast",
+
         "java/util/LinkedHashSet.add",
         "java/util/HashSet.add",
         "java/util/TreeSet.add",
@@ -278,14 +274,36 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
         "java/util/HashSet.remove",
         "java/util/TreeSet.remove",
 
+        // StringBuilder operations that return `this`:
+        "kotlin/text/StringBuilder.append",
+        "java/lang/StringBuilder.append",
+        "java/lang/StringBuilder.appendLine",
+        "kotlin/text/StringBuilder.appendLine",
+        "kotlin/text/Appendable.append",
+        "kotlin/text/Appendable.appendLine",
+        "kotlin/text/appendRange",
+
+        // Array operations that return `destination`:
+        "kotlin/collections/copyInto",
+        "kotlin/text/toCharArray", // TODO: only one overload of toCharArray is discardable
+
+        // Buffer operations that return `this`:
+        "java/nio/Buffer.flip",
+        "java/nio/charset/CharsetDecoder.reset",
+        "java/nio/ByteBuffer.compact",
+        "java/nio/Buffer.position",
+        "java/nio/Buffer.flip",
+
+        // General utilities
+
+        "kotlin/requireNotNull",
+
+        // Test utilities
+
         "kotlin/test/assertFailsWith",
         "kotlin/test/assertFails",
         "kotlin/test/assertNotNull",
         "kotlin/test/assertIs",
-
-//        "kotlin/Throwable.printStackTrace",
-//        "kotlin/Throwable.addSuppressed",
-//        "kotlin/Throwable.getSuppressed",
     )
 }
 
