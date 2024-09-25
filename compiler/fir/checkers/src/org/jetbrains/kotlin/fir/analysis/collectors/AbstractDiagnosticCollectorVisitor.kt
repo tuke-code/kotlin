@@ -14,6 +14,7 @@ import org.jetbrains.kotlin.fir.analysis.checkers.extra.createLambdaBodyContext
 import org.jetbrains.kotlin.fir.contracts.FirContractDescription
 import org.jetbrains.kotlin.fir.declarations.*
 import org.jetbrains.kotlin.fir.declarations.builder.buildReceiverParameter
+import org.jetbrains.kotlin.fir.declarations.impl.FirPrimaryConstructor
 import org.jetbrains.kotlin.fir.declarations.utils.correspondingValueParameterFromPrimaryConstructor
 import org.jetbrains.kotlin.fir.declarations.utils.isInline
 import org.jetbrains.kotlin.fir.expressions.*
@@ -301,15 +302,53 @@ abstract class AbstractDiagnosticCollectorVisitor(
         }
     }
 
+    @OptIn(PrivateForInline::class)
     private fun visitWithDeclarationAndReceiver(declaration: FirDeclaration, labelName: Name?, receiverParameter: FirReceiverParameter?) {
         visitWithDeclaration(declaration) {
-            withLabelAndReceiverType(
-                labelName,
-                declaration,
-                receiverParameter?.typeRef?.coneType
-            ) {
-                visitNestedElements(declaration)
+            val (implicitReceiverValue, implicitCompanionValues) = context.sessionHolder.collectImplicitReceivers(
+                receiverParameter?.typeRef?.coneType,
+                declaration
+            )
+            val existingContext = context
+            implicitCompanionValues.forEach { value ->
+                context = context.addImplicitReceiver(null, value)
             }
+            implicitReceiverValue?.let {
+                context = context.addImplicitReceiver(labelName, it)
+            }
+            var anonymousObjectConstructor: FirPrimaryConstructor? = null
+            try {
+                if (declaration is FirAnonymousObject) {
+                    // The case with anonymous object expression is special (KT-71710)
+                    // because its constructor children should not have access to `this` receiver,
+                    // expect maybe the constructor's body that actually is `null`
+                    declaration.typeParameters.forEach { it.accept(this, null) }
+                    declaration.status.accept(this, null)
+                    declaration.controlFlowGraphReference?.accept(this, null)
+                    declaration.superTypeRefs.forEach { it.accept(this, null) }
+                    declaration.declarations.forEach {
+                        if (it is FirPrimaryConstructor) {
+                            // Anonymous object always has a single primary constructor.
+                            // Otherwise, the traversing logic becomes incorrect, but it's a little problem since the code is incorrect.
+                            anonymousObjectConstructor = it
+                        } else {
+                            it.accept(this, null)
+                        }
+                    }
+                    declaration.annotations.forEach { it.accept(this, null) }
+                } else {
+                    visitNestedElements(declaration)
+                }
+            } finally {
+                context = existingContext
+            }
+
+            // Traverse constructor of anonymous object without previously created `implicitReceiverValue`
+            // Although the body of constructor actually has `this` receiver,
+            // it doesn't matter for anonymous object constructor: it has a single primary constructor with `null` body in correct code
+            // It looks like the `implicitReceiverValue` is only relevant for `FirDelegatedConstructorCall`
+            // However, the code is written in such a way to avoid duplicating `FirPrimaryConstructor` visitor's code.
+            anonymousObjectConstructor?.accept(this, null)
         }
     }
 
@@ -421,29 +460,6 @@ abstract class AbstractDiagnosticCollectorVisitor(
             context = existingContext
         }
     }
-
-    @OptIn(PrivateForInline::class)
-    inline fun <R> withLabelAndReceiverType(
-        labelName: Name?,
-        owner: FirDeclaration,
-        type: ConeKotlinType?,
-        block: () -> R
-    ): R {
-        val (implicitReceiverValue, implicitCompanionValues) = context.sessionHolder.collectImplicitReceivers(type, owner)
-        val existingContext = context
-        implicitCompanionValues.forEach { value ->
-            context = context.addImplicitReceiver(null, value)
-        }
-        implicitReceiverValue?.let {
-            context = context.addImplicitReceiver(labelName, it)
-        }
-        try {
-            return block()
-        } finally {
-            context = existingContext
-        }
-    }
-
 
     @OptIn(PrivateForInline::class)
     inline fun <R> withAnnotationContainer(annotationContainer: FirAnnotationContainer, block: () -> R): R {
