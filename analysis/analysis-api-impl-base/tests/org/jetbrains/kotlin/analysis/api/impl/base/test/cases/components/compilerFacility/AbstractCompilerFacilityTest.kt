@@ -26,7 +26,6 @@ import org.jetbrains.kotlin.codegen.ClassBuilderFactories
 import org.jetbrains.kotlin.codegen.forTestCompile.ForTestCompileRuntime
 import org.jetbrains.kotlin.config.CommonConfigurationKeys
 import org.jetbrains.kotlin.config.CompilerConfiguration
-import org.jetbrains.kotlin.config.JVMConfigurationKeys
 import org.jetbrains.kotlin.fir.analysis.diagnostics.FirErrors
 import org.jetbrains.kotlin.plugin.sandbox.PluginRuntimeAnnotationsProvider
 import org.jetbrains.kotlin.ir.IrElement
@@ -103,7 +102,6 @@ abstract class AbstractCompilerFacilityTest : AbstractAnalysisApiBasedTest() {
         val compilerConfiguration = CompilerConfiguration().apply {
             put(CommonConfigurationKeys.MODULE_NAME, mainModule.testModule.name)
             put(CommonConfigurationKeys.LANGUAGE_VERSION_SETTINGS, mainModule.testModule.languageVersionSettings)
-            put(JVMConfigurationKeys.IR, true)
 
             testFile.directives[Directives.CODE_FRAGMENT_CLASS_NAME].singleOrNull()
                 ?.let { put(KaCompilerFacility.CODE_FRAGMENT_CLASS_NAME, it) }
