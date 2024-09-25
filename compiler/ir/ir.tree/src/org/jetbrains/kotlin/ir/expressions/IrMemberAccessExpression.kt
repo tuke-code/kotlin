@@ -35,6 +35,23 @@ abstract class IrMemberAccessExpression<S : IrSymbol> : IrDeclarationReference()
      */
     val arguments: ArrayList<IrExpression?> = ArrayList()
 
+    // Those properties indicate the shape of `this.symbol.owner`. They are filled
+    // when the element is created, and whenever `symbol` changes. They are used
+    // to enable usage of old argument API, which embeds partial information of
+    // target's shape, on top of new API, which doesn't.
+    // There are two exceptions:
+    // - If `symbol` is unbound, they represent the expected shape of the target.
+    //   It should become actual when the symbol is bound.
+    // - When one assigns `dispatchReceiver` or `extensionReceiver`, then
+    //   `targetHas*Receiver` is overridden, i.e. `targetHas*Receiver = *Receiver != null`.
+    //   In that case, we assume the call knows better than the declarations itself on whether
+    //   it has a particular receiver parameter or not. This is usually because the receiver
+    //   has been added/removed to the declaration after the call to it has been created.
+    //   In that situation it would not be possible to signal back to all calls that the shape
+    //   was changed. Even more, it is possible that a receiver argument is added to a call
+    //   slightly before the corresponding receiver parameter is added to a declaration.
+    //   In order not to break such code, we assume the shape specified on call is,
+    //   or will eventually be right.
     var targetContextParameterCount: Int = -1
         private set
     var targetHasDispatchReceiver: Boolean = false
