@@ -35,7 +35,7 @@ struct StringHeader {
      * bit number: | 15 .. 12 |          |           1 |                0 |
      */
     uint16_t flags_;
-    char data_[];
+    alignas(KChar) char data_[];
 
     enum {
         IGNORE_LAST_BYTE = 1 << 0,
@@ -57,9 +57,6 @@ struct StringHeader {
     }
 };
 
-static_assert(offsetof(StringHeader, data_) >= sizeof(ArrayHeader));
-static_assert((offsetof(StringHeader, data_) - sizeof(ArrayHeader)) % 2 == 0);
-
 template <StringEncoding encoding>
 struct StringData;
 
@@ -72,8 +69,8 @@ struct FixedLengthUnitStringData {
     struct Iterator {
         using difference_type = size_t;
         using value_type = KChar;
-        using pointer = const KChar*;
-        using reference = const KChar&;
+        using pointer = void;
+        using reference = void;
         using iterator_category = std::bidirectional_iterator_tag;
 
         const unit* p_;
