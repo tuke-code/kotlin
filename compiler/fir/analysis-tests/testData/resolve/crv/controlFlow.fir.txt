@@ -112,3 +112,15 @@ FILE: controlFlow.kt
         }
 
     }
+    public final fun typicalError(cond: R|kotlin/Boolean|): R|kotlin/String| {
+        when () {
+            R|<local>/cond| ->  {
+                R|/nsf|()
+            }
+            else ->  {
+                ^typicalError R|/stringF|()
+            }
+        }
+
+        ^typicalError String(default)
+    }

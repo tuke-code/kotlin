@@ -69,3 +69,12 @@ fun tryCatch() {
         nsf()
     }<!>
 }
+
+fun typicalError(cond: Boolean): String {
+    <!RETURN_VALUE_NOT_USED!>if (cond) {
+        nsf() // value unused
+    } else {
+        return stringF()
+    }<!>
+    return "default"
+}
