@@ -403,7 +403,35 @@ open class IrFactory(
         isCrossinline: Boolean,
         isNoinline: Boolean,
         isHidden: Boolean,
-        kind: IrParameterKind? = null,
+    ): IrValueParameter =
+        IrValueParameterImpl(
+            startOffset = startOffset,
+            endOffset = endOffset,
+            origin = origin,
+            symbol = symbol,
+            name = name,
+            type = type,
+            varargElementType = varargElementType,
+            isCrossinline = isCrossinline,
+            isNoinline = isNoinline,
+            isHidden = isHidden,
+            isAssignable = isAssignable,
+            factory = this
+        ).declarationCreated()
+
+    fun createValueParameter(
+        startOffset: Int,
+        endOffset: Int,
+        origin: IrDeclarationOrigin,
+        kind: IrParameterKind?,
+        name: Name,
+        type: IrType,
+        isAssignable: Boolean,
+        symbol: IrValueParameterSymbol,
+        varargElementType: IrType?,
+        isCrossinline: Boolean,
+        isNoinline: Boolean,
+        isHidden: Boolean,
     ): IrValueParameter =
         IrValueParameterImpl(
             startOffset = startOffset,
