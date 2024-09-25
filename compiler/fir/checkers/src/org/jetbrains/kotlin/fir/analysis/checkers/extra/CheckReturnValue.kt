@@ -187,6 +187,8 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
         "kotlin/collections/MutableList.set",
         "kotlin/collections/MutableMap.put",
         "kotlin/collections/MutableMap.remove",
+        "kotlin/collections/MutableList.removeAt",
+        "kotlin/collections/ArrayDeque.addAll",
 
         "kotlin/collections/removeLast",
         "kotlin/collections/removeAll",
@@ -210,6 +212,7 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
         "kotlin/text/StringBuilder.appendLine",
         "kotlin/text/Appendable.append",
         "kotlin/text/Appendable.appendLine",
+        "kotlin/text/appendLine",
         "kotlin/text/appendRange",
 
         // Array operations that return `destination`:
