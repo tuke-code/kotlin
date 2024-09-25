@@ -31,3 +31,12 @@ fun forLoop() {
         <!RETURN_VALUE_NOT_USED!>i + 1<!>
     }
 }
+
+var nonLocal: Int = 0
+
+fun operators() {
+    nonLocal++ // unused, but discardable
+    --nonLocal // unused, but discardable
+    <!RETURN_VALUE_NOT_USED!>-nonLocal<!> // unary minus — unused, should be reported
+    <!RETURN_VALUE_NOT_USED!>nonLocal + nonLocal<!> // unused, should be reported
+}

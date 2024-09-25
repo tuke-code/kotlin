@@ -64,3 +64,21 @@ FILE: loops.kt
         }
 
     }
+    public final var nonLocal: R|kotlin/Int| = Int(0)
+        public get(): R|kotlin/Int|
+        public set(value: R|kotlin/Int|): R|kotlin/Unit|
+    public final fun operators(): R|kotlin/Unit| {
+         {
+            lval <unary>: R|kotlin/Int| = R|/nonLocal|
+            R|/nonLocal| = R|<local>/<unary>|.R|kotlin/Int.inc|()
+            R|<local>/<unary>|
+        }
+
+         {
+            R|/nonLocal| = R|/nonLocal|.R|kotlin/Int.dec|()
+            R|/nonLocal|
+        }
+
+        R|/nonLocal|.R|kotlin/Int.unaryMinus|()
+        R|/nonLocal|.R|kotlin/Int.plus|(R|/nonLocal|)
+    }

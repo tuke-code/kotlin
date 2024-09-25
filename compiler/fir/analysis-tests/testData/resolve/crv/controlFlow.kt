@@ -25,15 +25,14 @@ fun whenCondition() {
         intF() -> Unit
     }
 
-    // TODO: when is automatically coerced to Unit when used as statement. This should be reported.
     when (intF()) {
-        intF() -> intF() // only part after -> should be reported unused
+        intF() -> <!RETURN_VALUE_NOT_USED!>intF()<!> // only part after -> should be reported unused
     }
 }
 
 fun ifBranches() {
     val x = if (intF() > 0) intF() else 0 // used
-    <!RETURN_VALUE_NOT_USED!>if (intF() > 0) intF() else 0<!> // unused
+    if (intF() > 0) <!RETURN_VALUE_NOT_USED!>intF()<!> else <!RETURN_VALUE_NOT_USED!>0<!> // unused
 }
 
 fun ifBranches2(cond: Boolean): String? {
@@ -45,12 +44,11 @@ fun ifBranches2(cond: Boolean): String? {
         nsf()
     }
 
-    // TODO: do we want to report this on whole `if`?
-    <!RETURN_VALUE_NOT_USED!>if (cond) {
-        stringF()
+    if (cond) {
+        <!RETURN_VALUE_NOT_USED!>stringF()<!>
     } else {
-        nsf()
-    }<!>
+        <!RETURN_VALUE_NOT_USED!>nsf()<!>
+    }
 }
 
 fun tryCatch() {
@@ -62,19 +60,26 @@ fun tryCatch() {
         stringF()
     }
 
-    // Same as `if`: we probably want to report unused parts individually?
-    <!RETURN_VALUE_NOT_USED!>try {
-        stringF()
+    try {
+        <!RETURN_VALUE_NOT_USED!>stringF()<!>
     } catch (e: Exception) {
-        nsf()
-    }<!>
+        <!RETURN_VALUE_NOT_USED!>nsf()<!>
+    }
+
+    try {
+        val used = stringF()
+    } catch (e: Exception) {
+        <!RETURN_VALUE_NOT_USED!>nsf()<!>
+    } finally {
+        unitF() // Unit, OK to discard
+    }
 }
 
 fun typicalError(cond: Boolean): String {
-    <!RETURN_VALUE_NOT_USED!>if (cond) {
-        nsf() // value unused
+    if (cond) {
+        <!RETURN_VALUE_NOT_USED!>nsf()<!> // value unused
     } else {
         return stringF()
-    }<!>
+    }
     return "default"
 }

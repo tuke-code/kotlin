@@ -41,11 +41,11 @@ fun whenInstance() {
         else -> "c"
     }
 
-    <!RETURN_VALUE_NOT_USED!>when (nonLocal) {
-        is String -> "a"
-        is Boolean -> "b"
-        else -> "c"
-    }<!>
+    when (nonLocal) {
+        is String -> <!RETURN_VALUE_NOT_USED!>"a"<!>
+        is Boolean -> <!RETURN_VALUE_NOT_USED!>"b"<!>
+        else -> <!RETURN_VALUE_NOT_USED!>"c"<!>
+    }
 }
 
 fun castsInIf() {

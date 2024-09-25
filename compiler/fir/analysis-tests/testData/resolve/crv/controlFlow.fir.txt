@@ -111,6 +111,16 @@ FILE: controlFlow.kt
             R|/nsf|()
         }
 
+        try {
+            lval used: R|kotlin/String| = R|/stringF|()
+        }
+        catch (e: R|{kotlin/Exception=} java/lang/Exception|) {
+            R|/nsf|()
+        }
+        finally {
+            R|/unitF|()
+        }
+
     }
     public final fun typicalError(cond: R|kotlin/Boolean|): R|kotlin/String| {
         when () {

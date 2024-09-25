@@ -6,6 +6,7 @@
 package org.jetbrains.kotlin.fir.analysis.checkers.extended
 
 import com.intellij.psi.PsiElement
+import org.jetbrains.kotlin.KtFakeSourceElementKind
 import org.jetbrains.kotlin.diagnostics.DiagnosticReporter
 import org.jetbrains.kotlin.diagnostics.KtDiagnosticFactory1
 import org.jetbrains.kotlin.diagnostics.Severity.ERROR
@@ -42,7 +43,18 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
         if (expression is FirAnnotation) return
 
         if (expression.isLocalPropertyOrParameterOrThis()) return
-        if (expression.isPropagating) return
+
+        // Do not check everything that is marked as 'propagating' in walkUp:
+        if (when (expression) {
+                is FirSmartCastExpression,
+                is FirTypeOperatorCall,
+                is FirCheckNotNullCall,
+                is FirTryExpression,
+                is FirWhenExpression
+                    -> true
+                else -> false
+            }
+        ) return
 
         // 1. Check NOT only resolvable references
         val calleeReference = expression.toReference(context.session)
@@ -60,17 +72,101 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
         // If not the outermost call, then it is used as an argument
         if (context.callsOrAssignments.lastOrNull { it != expression } != null) return
 
-        val (outerExpression, given) = context.propagate(expression)
+//        val (outerExpression, given) = context.propagate(expression)
 //        val outerExpression = context.firstNonPropagatingOuterElementOf(expression)
 //        val (a, b) = context.propagate(expression)
 
         // Used directly in property or parameter declaration
-        if (outerExpression.isVarInitialization) return
+//        if (outerExpression.isVarInitialization) return
 
 //        if (outerExpression.uses(given ?: expression)) return
-        if (outerExpression.uses(given ?: expression)) return
+//        if (outerExpression.uses(given ?: expression)) return
 
-        reporter.reportOn(expression.source, RETURN_VALUE_NOT_USED, "Unused expression: " + (resolvedReference?.toResolvedCallableSymbol()?.callableId?.toString() ?: "<${expression.render()}>"), context)
+        if (walkUp(context, expression)) return
+
+        reporter.reportOn(
+            expression.source,
+            RETURN_VALUE_NOT_USED,
+            "Unused expression: " + (resolvedReference?.toResolvedCallableSymbol()?.callableId?.toString() ?: "<${expression.render()}>"),
+            context
+        )
+    }
+
+    private fun walkUp(context: CheckerContext, thisExpression: FirExpression): Boolean {
+        val stack = context.containingElements.asReversed()
+        var lastPropagating: FirElement = thisExpression
+
+        for (e in stack) {
+            if (e == thisExpression) continue
+            when (e) {
+                // Propagate further:
+                is FirSmartCastExpression,
+                is FirArgumentList,
+                is FirTypeOperatorCall,
+                is FirCheckNotNullCall,
+                    -> {
+                    lastPropagating = e
+                    continue
+                }
+
+                // Conditional (?) propagation:
+
+                is FirTryExpression,
+                is FirCatch,
+                    -> {
+                    lastPropagating = e
+                    continue
+                }
+
+                is FirWhenBranch -> {
+                    // If it is condition, it is used, otherwise it is result and we propagate up:
+                    if (e.condition == lastPropagating) return true
+                    lastPropagating = e
+                    continue
+                }
+
+                is FirWhenExpression -> {
+                    // If it is subject, it is used, otherwise it is branch and we propagate up:
+                    if (e.subject == lastPropagating) return true
+                    lastPropagating = e
+                    continue
+                }
+
+                // Expressions that always use what's down the stack:
+
+                is FirSafeCallExpression -> return true // receiver == given
+                is FirReturnExpression -> return true
+                is FirThrowExpression -> return true // exception == given
+                is FirElvisExpression -> return true // lhs == given || rhs == given
+                is FirComparisonExpression -> return true // compareToCall == given
+                is FirBooleanOperatorExpression -> return true // leftOperand == given || rightOperand == given
+
+                is FirEqualityOperatorCall -> return true // given in argumentList.arguments
+                is FirStringConcatenationCall -> return true // given in argumentList.arguments
+                is FirGetClassCall -> return true // given in argumentList.arguments
+
+                // Initializers
+                is FirProperty, is FirValueParameter, is FirField -> return true
+
+                // Conditional usage:
+
+                is FirBlock -> {
+                    // Special case: ++x is desugared to FirBlock, we consider result of pre/post increment as discardable.
+                    if (e.source?.kind is KtFakeSourceElementKind.DesugaredIncrementOrDecrement) return true
+
+                    if (e.statements.lastOrNull() == lastPropagating) {
+                        lastPropagating = e
+                        continue
+                    }
+                    return false
+                }
+
+                is FirLoop -> return e.condition == lastPropagating
+
+                else -> return false
+            }
+        }
+        return false
     }
 
     private fun FirElement?.uses(given: FirExpression): Boolean = when (this) {
@@ -116,7 +212,9 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
                 continue
             }
             // FirBlock is propagating only if this is the last statement
-            if (e is FirBlock && e.statements.lastOrNull() == (lastPropagating ?: thisExpression)) {
+            if (e is FirBlock && (e.statements.lastOrNull() == (lastPropagating
+                    ?: thisExpression) || e.source?.kind is KtFakeSourceElementKind.DesugaredIncrementOrDecrement)
+            ) {
                 lastPropagating = e
                 continue
             }
