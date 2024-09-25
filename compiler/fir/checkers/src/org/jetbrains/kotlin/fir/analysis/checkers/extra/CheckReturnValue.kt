@@ -44,45 +44,30 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
 
         if (expression.isLocalPropertyOrParameterOrThis()) return
 
-        // Do not check everything that is marked as 'propagating' in walkUp:
-        if (when (expression) {
-                is FirSmartCastExpression,
-                is FirTypeOperatorCall,
-                is FirCheckNotNullCall,
-                is FirTryExpression,
-                is FirWhenExpression
-                    -> true
-                else -> false
-            }
-        ) return
+        // Do not check everything marked as 'propagating' in walkUp and still `is FirExpression`:
+        when (expression) {
+            is FirSmartCastExpression,
+            is FirTypeOperatorCall,
+            is FirCheckNotNullCall,
+            is FirTryExpression,
+            is FirWhenExpression
+                -> return
+        }
 
-        // 1. Check NOT only resolvable references
+        // Try resolve reference to see if it is excluded
         val calleeReference = expression.toReference(context.session)
         val resolvedReference = calleeReference?.resolved
-
-//        if (resolvedReference == null && expression !is FirEqualityOperatorCall && expression !is FirComparisonExpression) return
 
         // Exclusions
         if (resolvedReference?.toResolvedCallableSymbol()?.isExcluded() == true) return
 
         // Ignore Unit or Nothing
-        // TODO: FirWhenExpression has Unit type if it is not assigned anywhere, even if branches are non-Unit
         if (expression.resolvedType.run { isNothingOrNullableNothing || isUnitOrNullableUnit }) return
 
         // If not the outermost call, then it is used as an argument
         if (context.callsOrAssignments.lastOrNull { it != expression } != null) return
 
-//        val (outerExpression, given) = context.propagate(expression)
-//        val outerExpression = context.firstNonPropagatingOuterElementOf(expression)
-//        val (a, b) = context.propagate(expression)
-
-        // Used directly in property or parameter declaration
-//        if (outerExpression.isVarInitialization) return
-
-//        if (outerExpression.uses(given ?: expression)) return
-//        if (outerExpression.uses(given ?: expression)) return
-
-        if (walkUp(context, expression)) return
+        if (hasUsages(context, expression)) return
 
         reporter.reportOn(
             expression.source,
@@ -92,7 +77,7 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
         )
     }
 
-    private fun walkUp(context: CheckerContext, thisExpression: FirExpression): Boolean {
+    private fun hasUsages(context: CheckerContext, thisExpression: FirExpression): Boolean {
         val stack = context.containingElements.asReversed()
         var lastPropagating: FirElement = thisExpression
 
@@ -146,6 +131,7 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
                 is FirGetClassCall -> return true // given in argumentList.arguments
 
                 // Initializers
+                // FirField can occur in `by` interface delegation
                 is FirProperty, is FirValueParameter, is FirField -> return true
 
                 // Conditional usage:
@@ -170,69 +156,6 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
         return false
     }
 
-    private fun FirElement?.uses(given: FirExpression): Boolean = when (this) {
-        // Safe calls for some reason are not part of context.callsOrAssignments, so have to be checked separately
-        is FirSafeCallExpression -> true // receiver == given
-
-        is FirWhenExpression -> subject == given
-
-        // Includes FirWhileLoop, FirDoWhileLoop, and FirErrorLoop. I have no idea what FirErrorLoop is.
-        is FirLoop -> condition == given // TODO: `given` should be not original, but last propagated (i.e. unwrap FirTypeOperatorCall/SmartCast)
-
-        is FirReturnExpression -> true
-        is FirThrowExpression -> true // exception == given
-        is FirElvisExpression -> true // lhs == given || rhs == given
-        is FirComparisonExpression -> true // compareToCall == given
-        is FirBooleanOperatorExpression -> true // leftOperand == given || rightOperand == given
-
-        // I think MAYBE we can just include FirCall in general here, although FirTypeOperator is propagating.
-        is FirEqualityOperatorCall -> true // given in argumentList.arguments
-        is FirStringConcatenationCall -> true // given in argumentList.arguments
-        is FirGetClassCall -> true // given in argumentList.arguments
-
-        // in if(x) and when(x), x is always used
-        // Most complex case, as we should check whether given is the last expression in a block.
-        // TODO: FirWhenExpression has Unit type if it is not assigned anywhere, even if branches are non-Unit. requires separate handling.
-        is FirWhenBranch -> condition == given || result == given // TODO: `given` should be not original, but last propagated (i.e. unwrap FirTypeOperatorCall/SmartCast)
-
-        is FirTryExpression -> tryBlock == given || finallyBlock == given
-        is FirCatch -> block == given
-
-        else -> false
-    }
-
-    private fun CheckerContext.propagate(thisExpression: FirExpression): Pair<FirElement?, FirExpression?> {
-        var lastPropagating: FirExpression? = null
-        for (e in containingElements.asReversed()) {
-            if (e == thisExpression) continue
-            if (e.isPropagating) {
-                lastPropagating = e as? FirExpression
-                continue
-            }
-            // FirBlock is propagating only if this is the last statement
-            if (e is FirBlock && (e.statements.lastOrNull() == (lastPropagating
-                    ?: thisExpression) || e.source?.kind is KtFakeSourceElementKind.DesugaredIncrementOrDecrement)
-            ) {
-                lastPropagating = e
-                continue
-            }
-            return e to lastPropagating
-        }
-        return null to null
-    }
-
-    private val FirElement.isPropagating: Boolean
-        get() = when (this) {
-            is FirSmartCastExpression,
-            is FirArgumentList,
-            is FirTypeOperatorCall,
-            is FirCheckNotNullCall,
-                -> true
-            else -> false
-        }
-
-    // FirField can occur in `by` interface delegation
-    private val FirElement?.isVarInitialization: Boolean get() = this is FirProperty || this is FirValueParameter || this is FirField
 
     private fun FirExpression.isLocalPropertyOrParameterOrThis(): Boolean {
         if (this is FirThisReceiverExpression) return true
