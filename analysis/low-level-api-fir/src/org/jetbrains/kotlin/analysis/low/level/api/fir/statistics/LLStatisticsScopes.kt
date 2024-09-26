@@ -5,6 +5,9 @@
 
 package org.jetbrains.kotlin.analysis.low.level.api.fir.statistics
 
+import io.opentelemetry.api.OpenTelemetry
+import io.opentelemetry.api.metrics.Meter
+
 internal abstract class LLStatisticsScope(val name: String) {
     override fun toString(): String = name
 }
@@ -18,6 +21,10 @@ internal interface LLCaffeineStatisticsScope {
 }
 
 internal object LLStatisticsScopes : LLStatisticsScope("kotlin.analysis") {
+    object AnalysisSessions : LLStatisticsScope("$name.analysisSessions") {
+        object AnalyzeCalls : LLStatisticsScope("$name.analyzeCalls")
+    }
+
     object SymbolProviders : LLStatisticsScope("$name.symbolProviders") {
         object Combined : LLStatisticsScope("$name.combined"), LLCaffeineStatisticsScope {
             object Hits : LLStatisticsScope("$name.hits")

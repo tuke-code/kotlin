@@ -11,6 +11,7 @@ import com.intellij.openapi.project.Project
 import io.opentelemetry.api.OpenTelemetry
 import org.jetbrains.kotlin.analysis.api.platform.statistics.KaStatisticsService
 import org.jetbrains.kotlin.analysis.api.platform.statistics.KotlinOpenTelemetryProvider
+import org.jetbrains.kotlin.analysis.low.level.api.fir.statistics.domains.LLAnalysisSessionStatistics
 import org.jetbrains.kotlin.analysis.low.level.api.fir.statistics.domains.LLSessionStatistics
 import org.jetbrains.kotlin.analysis.low.level.api.fir.statistics.domains.LLStatisticsDomain
 import org.jetbrains.kotlin.analysis.low.level.api.fir.statistics.domains.LLSymbolProviderStatistics
@@ -28,11 +29,13 @@ import org.jetbrains.kotlin.analysis.low.level.api.fir.statistics.domains.LLSymb
 class LLStatisticsService(internal val project: Project) : Disposable {
     internal val scheduler: LLStatisticsScheduler = LLStatisticsScheduler(this)
 
+    val analysisSessions: LLAnalysisSessionStatistics = LLAnalysisSessionStatistics(this)
+
     internal val sessions: LLSessionStatistics = LLSessionStatistics(this)
 
     internal val symbolProviders: LLSymbolProviderStatistics = LLSymbolProviderStatistics(this)
 
-    internal val domains: List<LLStatisticsDomain> = listOf(sessions, symbolProviders)
+    internal val domains: List<LLStatisticsDomain> = listOf(analysisSessions, sessions, symbolProviders)
 
     internal val openTelemetry: OpenTelemetry
         get() = KotlinOpenTelemetryProvider.getInstance(project)?.openTelemetry
@@ -66,6 +69,10 @@ class LLStatisticsService(internal val project: Project) : Disposable {
     }
 
     companion object {
+        /**
+         * Returns an instance of [LLStatisticsService] *if* statistics are [enabled][KaStatisticsService.areStatisticsEnabled] and an
+         * [OpenTelemetry] instance is available via [KotlinOpenTelemetryProvider].
+         */
         fun getInstance(project: Project): LLStatisticsService? {
             if (!KaStatisticsService.areStatisticsEnabled) {
                 return null

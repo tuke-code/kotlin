@@ -17,9 +17,10 @@ import org.jetbrains.kotlin.analysis.api.KaSession
 import org.jetbrains.kotlin.analysis.api.fir.utils.KaFirCacheCleaner
 import org.jetbrains.kotlin.analysis.api.fir.utils.KaFirNoOpCacheCleaner
 import org.jetbrains.kotlin.analysis.api.fir.utils.KaFirStopWorldCacheCleaner
-import org.jetbrains.kotlin.analysis.api.lifetime.KaLifetimeToken
 import org.jetbrains.kotlin.analysis.api.impl.base.sessions.KaBaseSessionProvider
+import org.jetbrains.kotlin.analysis.api.lifetime.KaLifetimeToken
 import org.jetbrains.kotlin.analysis.api.permissions.KaAnalysisPermissionRegistry
+import org.jetbrains.kotlin.analysis.api.platform.KaCachedService
 import org.jetbrains.kotlin.analysis.api.platform.lifetime.KotlinReadActionConfinementLifetimeToken
 import org.jetbrains.kotlin.analysis.api.platform.projectStructure.KotlinProjectStructureProvider
 import org.jetbrains.kotlin.analysis.api.projectStructure.KaDanglingFileModule
@@ -28,10 +29,12 @@ import org.jetbrains.kotlin.analysis.api.projectStructure.isStable
 import org.jetbrains.kotlin.analysis.low.level.api.fir.LLFirInternals
 import org.jetbrains.kotlin.analysis.low.level.api.fir.api.getFirResolveSession
 import org.jetbrains.kotlin.analysis.low.level.api.fir.file.structure.LLFirDeclarationModificationService
-import org.jetbrains.kotlin.analysis.low.level.api.fir.sessions.LLFirSessionInvalidationListener
 import org.jetbrains.kotlin.analysis.low.level.api.fir.sessions.LLFirSession
 import org.jetbrains.kotlin.analysis.low.level.api.fir.sessions.LLFirSessionCache
+import org.jetbrains.kotlin.analysis.low.level.api.fir.sessions.LLFirSessionInvalidationListener
 import org.jetbrains.kotlin.analysis.low.level.api.fir.sessions.LLFirSessionInvalidationTopics
+import org.jetbrains.kotlin.analysis.low.level.api.fir.statistics.LLStatisticsService
+import org.jetbrains.kotlin.analysis.low.level.api.fir.statistics.domains.LLAnalysisSessionStatistics
 import org.jetbrains.kotlin.psi.KtElement
 import java.util.concurrent.Future
 import java.util.concurrent.TimeUnit
@@ -60,6 +63,11 @@ internal class KaFirSessionProvider(project: Project) : KaBaseSessionProvider(pr
         } else {
             KaFirNoOpCacheCleaner
         }
+    }
+
+    @KaCachedService
+    private val analysisSessionStatistics: LLAnalysisSessionStatistics? by lazy(LazyThreadSafetyMode.PUBLICATION) {
+        LLStatisticsService.getInstance(project)?.analysisSessions
     }
 
     init {
@@ -113,6 +121,8 @@ internal class KaFirSessionProvider(project: Project) : KaBaseSessionProvider(pr
 
     override fun beforeEnteringAnalysis(session: KaSession, useSiteElement: KtElement) {
         try {
+            analysisSessionStatistics?.analyzeCallCounter?.add(1)
+
             super.beforeEnteringAnalysis(session, useSiteElement)
         } catch (e: Throwable) {
             cacheCleaner.exitAnalysis()
@@ -122,6 +132,8 @@ internal class KaFirSessionProvider(project: Project) : KaBaseSessionProvider(pr
 
     override fun beforeEnteringAnalysis(session: KaSession, useSiteModule: KaModule) {
         try {
+            analysisSessionStatistics?.analyzeCallCounter?.add(1)
+
             super.beforeEnteringAnalysis(session, useSiteModule)
         } catch (e: Throwable) {
             cacheCleaner.exitAnalysis()
