@@ -10,6 +10,7 @@ import org.jetbrains.kotlin.KtFakeSourceElementKind
 import org.jetbrains.kotlin.diagnostics.DiagnosticReporter
 import org.jetbrains.kotlin.diagnostics.KtDiagnosticFactory1
 import org.jetbrains.kotlin.diagnostics.Severity.ERROR
+import org.jetbrains.kotlin.diagnostics.Severity.WARNING
 import org.jetbrains.kotlin.diagnostics.SourceElementPositioningStrategies
 import org.jetbrains.kotlin.diagnostics.reportOn
 import org.jetbrains.kotlin.fir.FirElement
@@ -34,7 +35,7 @@ import org.jetbrains.kotlin.fir.symbols.impl.FirValueParameterSymbol
 import org.jetbrains.kotlin.fir.types.*
 
 // TODO: rewrite generator, since FirErrors.kt is auto generated.
-val RETURN_VALUE_NOT_USED: KtDiagnosticFactory1<String> = KtDiagnosticFactory1("RETURN_VALUE_NOT_USED", ERROR, SourceElementPositioningStrategies.DEFAULT, PsiElement::class)
+val RETURN_VALUE_NOT_USED: KtDiagnosticFactory1<String> = KtDiagnosticFactory1("RETURN_VALUE_NOT_USED", WARNING, SourceElementPositioningStrategies.DEFAULT, PsiElement::class)
 
 object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
     override fun check(expression: FirStatement, context: CheckerContext, reporter: DiagnosticReporter) {
@@ -191,6 +192,7 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
         // Collection operations:
         "kotlin/collections/MutableCollection.add",
         "kotlin/collections/MutableList.add",
+        "kotlin/collections/MutableList.remove",
         "kotlin/collections/MutableSet.add",
         "kotlin/collections/MutableList.set",
         "kotlin/collections/MutableMap.put",
@@ -207,11 +209,13 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
         "java/util/SortedSet.add",
         "java/util/ArrayList.add",
         "java/util/ArrayList.addAll",
+        "java/util/ArrayList.remove",
         "java/util/HashMap.put",
         "java/util/TreeMap.put",
         "java/util/LinkedHashMap.put",
         "java/util/HashSet.remove",
         "java/util/TreeSet.remove",
+        "java/util/ArrayDeque.removeLast",
 
         // StringBuilder operations that return `this`:
         "kotlin/text/StringBuilder.append",
@@ -222,6 +226,7 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
         "kotlin/text/Appendable.appendLine",
         "kotlin/text/appendLine",
         "kotlin/text/appendRange",
+        "kotlin/text/deleteAt",
 
         // Array operations that return `destination`:
         "kotlin/collections/copyInto",
@@ -237,6 +242,7 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
         // General utilities
 
         "kotlin/requireNotNull",
+        "kotlin/Throwable.initCause",
 
         // Test utilities
 
