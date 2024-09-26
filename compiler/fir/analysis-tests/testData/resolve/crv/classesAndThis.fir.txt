@@ -61,3 +61,15 @@ FILE: classesAndThis.kt
         private final field $$delegate_0: R|I| = Q|Impl|
 
     }
+    public final annotation class Bar : R|kotlin/Annotation| {
+        public constructor(a: R|kotlin/IntArray| = <implicitArrayOf>(Int(1), Int(2)), b: R|kotlin/IntArray| = <implicitArrayOf>(Int(1), Int(2))): R|Bar| {
+            super<R|kotlin/Any|>()
+        }
+
+        public final val a: R|kotlin/IntArray| = R|<local>/a|
+            public get(): R|kotlin/IntArray|
+
+        public final val b: R|kotlin/IntArray| = R|<local>/b|
+            public get(): R|kotlin/IntArray|
+
+    }

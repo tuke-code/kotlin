@@ -65,3 +65,7 @@ FILE: basic.kt
     public final fun usesNothing(): R|kotlin/Unit| {
         R|/throws|()
     }
+    public final fun arrays(): R|kotlin/Unit| {
+        lval a: R|kotlin/IntArray| = R|kotlin/intArrayOf|(vararg(Int(1), Int(2), Int(3)))
+        R|kotlin/arrayOf|<R|kotlin/Int|>(vararg(Int(1), Int(2)))
+    }

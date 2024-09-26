@@ -32,3 +32,8 @@ object Impl: I {
 }
 
 class Impl2(): I by Impl
+
+annotation class Bar(
+    val a: IntArray = [1, 2],
+    val b: IntArray = intArrayOf(1, 2)
+)

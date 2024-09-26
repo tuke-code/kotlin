@@ -129,8 +129,7 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
 
                 // Expressions that always use what's down the stack:
 
-                // receiver == given
-                is FirReturnExpression -> return true
+                is FirReturnExpression -> return true // result == given
                 is FirThrowExpression -> return true // exception == given
                 is FirElvisExpression -> return true // lhs == given || rhs == given
                 is FirComparisonExpression -> return true // compareToCall == given
@@ -139,6 +138,7 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
                 is FirEqualityOperatorCall -> return true // given in argumentList.arguments
                 is FirStringConcatenationCall -> return true // given in argumentList.arguments
                 is FirGetClassCall -> return true // given in argumentList.arguments
+                is FirArrayLiteral -> return true // given in argumentList.arguments
 
                 // Initializers
                 // FirField can occur in `by` interface delegation

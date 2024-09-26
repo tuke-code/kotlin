@@ -61,3 +61,8 @@ fun throws2() {
 fun usesNothing() {
     throws() // should not be reported as unused
 }
+
+fun arrays() {
+    val a = intArrayOf(1, 2, 3)
+    <!RETURN_VALUE_NOT_USED!>arrayOf(1, 2)<!>
+}
