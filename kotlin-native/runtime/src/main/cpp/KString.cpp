@@ -19,6 +19,7 @@
 #include <limits>
 #include <string.h>
 #include <string>
+#include <optional>
 
 #include "KAssert.h"
 #include "Exceptions.h"
@@ -66,8 +67,7 @@ auto encodingAware(KConstRef string1, KConstRef string2, F&& impl) {
 }
 
 bool utf8StringIsASCII(const char* utf8, size_t lengthBytes) {
-    // TODO: there are easy vectorized ways to do this check REALLY FAST, will std::all_of use them?..
-    return std::all_of(utf8, utf8 + lengthBytes, [](char c) { return c >= 0; });
+    return !std::any_of(utf8, utf8 + lengthBytes, [](char c) { return c & 0x80; });
 }
 
 template <typename String, typename It>
@@ -260,7 +260,6 @@ extern "C" OBJ_GETTER(Kotlin_String_plusImpl, KConstRef thiz, KConstRef other) {
 }
 
 static bool Kotlin_CharArray_isLatin1(KConstRef thiz, KInt start, KInt size) {
-    // TODO: vectorize?
     return std::all_of(
         CharArrayAddressOfElementAt(thiz->array(), start),
         CharArrayAddressOfElementAt(thiz->array(), start + size),
@@ -298,7 +297,7 @@ extern "C" OBJ_GETTER(Kotlin_String_toCharArray, KConstRef string, KRef destinat
 extern "C" OBJ_GETTER(Kotlin_String_subSequence, KConstRef thiz, KInt startIndex, KInt endIndex) {
     return encodingAware(thiz, [=](auto thiz) {
         if (startIndex < 0 || static_cast<uint32_t>(endIndex) > thiz.sizeInChars() || startIndex > endIndex) {
-            // TODO: is it correct exception?
+            // Kotlin/JVM uses StringIndexOutOfBounds, but Native doesn't have it and this is close enough.
             ThrowArrayIndexOutOfBoundsException();
         }
 
@@ -388,10 +387,29 @@ extern "C" KInt Kotlin_StringBuilder_insertInt(KRef builder, KInt position, KInt
     return from - cstring;
 }
 
+static std::optional<KInt> Kotlin_String_cachedHashCode(KConstRef thiz) {
+    auto header = StringHeader::of(thiz);
+    if (header->size() == 0) return 0;
+    if (kotlin::std_support::atomic_ref{header->flags_}.load(std::memory_order_acquire) & StringHeader::HASHCODE_COMPUTED) {
+        // The condition only enforces an ordering with the first thread to write the hash code,
+        // so if two thread concurrently computed the hash, an atomic read is needed to prevent a data race.
+        // The value is always the same, though, so which write is observed is irrelevant.
+        return kotlin::std_support::atomic_ref{header->hashCode_}.load(std::memory_order_relaxed);
+    }
+    return {};
+}
+
 extern "C" KBoolean Kotlin_String_equals(KConstRef thiz, KConstRef other) {
+    if (thiz == other) return true;
     if (other == nullptr || other->type_info() != theStringTypeInfo) return false;
-    // TODO: if hash code is computed and unequal, then strings are also unequal
-    return thiz == other || encodingAware(thiz, other, [=](auto thiz, auto other) {
+
+    if (auto thizHash = Kotlin_String_cachedHashCode(thiz)) {
+        if (auto otherHash = Kotlin_String_cachedHashCode(other)) {
+            if (*thizHash != *otherHash) return false;
+        }
+    }
+
+    return encodingAware(thiz, other, [=](auto thiz, auto other) {
         if constexpr (thiz.encoding == other.encoding) {
             return std::equal(thiz.begin().ptr(), thiz.end().ptr(), other.begin().ptr(), other.end().ptr());
         } else {
@@ -400,7 +418,7 @@ extern "C" KBoolean Kotlin_String_equals(KConstRef thiz, KConstRef other) {
     });
 }
 
-// Bounds checks is are performed on Kotlin side
+// Bounds checks are performed on Kotlin side
 extern "C" KBoolean Kotlin_String_unsafeRangeEquals(KConstRef thiz, KInt thizOffset, KConstRef other, KInt otherOffset, KInt length) {
     return length == 0 || encodingAware(thiz, other, [=](auto thiz, auto other) {
         auto begin1 = thiz.begin() + thizOffset;
@@ -503,53 +521,21 @@ extern "C" KInt Kotlin_String_indexOfString(KConstRef thiz, KConstRef other, KIn
     });
 }
 
-// TODO: this is basically equivalent to a pure Kotlin version...is there a faster way to implement this?
-extern "C" KInt Kotlin_String_lastIndexOfString(KConstRef thiz, KConstRef other, KInt fromIndex) {
-    KInt count = Kotlin_String_getStringLength(thiz);
-    KInt otherCount = Kotlin_String_getStringLength(other);
-
-    if (fromIndex < 0 || otherCount > count) {
-        return -1;
+extern "C" KInt Kotlin_String_hashCode(KRef thiz) {
+    if (auto cached = Kotlin_String_cachedHashCode(thiz)) {
+        return *cached;
     }
-    if (otherCount == 0) {
-        return fromIndex < count ? fromIndex : count;
-    }
-
-    KInt start = std::min(fromIndex, count - otherCount);
-    KChar firstChar = Kotlin_String_get(other, 0);
-    while (true) {
-        KInt candidate = Kotlin_String_lastIndexOfChar(thiz, firstChar, start);
-        if (candidate == -1) return -1;
-        if (Kotlin_String_unsafeRangeEquals(thiz, candidate, other, 0, otherCount)) return candidate;
-        start = candidate - 1;
-    }
-}
-
-extern "C" KInt Kotlin_String_hashCode(KConstRef thiz) {
-    auto header = StringHeader::of(thiz);
-    if (header->size() == 0) return 0;
-
-    auto flags = kotlin::std_support::atomic_ref{header->flags_}.load(std::memory_order_acquire);
-    if (flags & StringHeader::HASHCODE_COMPUTED) {
-        // The condition only enforces an ordering with the first thread to write the hash code,
-        // so if two thread concurrently computed the hash, an atomic read is needed to prevent a data race.
-        // The value is always the same, though, so which write is observed is irrelevant.
-        return kotlin::std_support::atomic_ref{header->hashCode_}.load(std::memory_order_relaxed);
-    }
-
     KInt result = encodingAware(thiz, [](auto thiz) {
         if constexpr (thiz.encoding == StringEncoding::kUTF16) {
             return polyHash(thiz.sizeInUnits(), thiz.begin().ptr());
         } else {
-            // TODO: faster specific implementations?..
+            // TODO: faster specific implementations
             return polyHash_naive(thiz.begin(), thiz.end());
         }
     });
-
-    auto nonConst = const_cast<StringHeader*>(header);
-    kotlin::std_support::atomic_ref{nonConst->hashCode_}.store(result, std::memory_order_relaxed);
-    // TODO: use fetch_or once atomic_ref has it; for now this is fine since this is the only mutable flag.
-    kotlin::std_support::atomic_ref{nonConst->flags_}.store(flags | StringHeader::HASHCODE_COMPUTED, std::memory_order_release);
+    auto header = StringHeader::of(thiz);
+    kotlin::std_support::atomic_ref{header->hashCode_}.store(result, std::memory_order_relaxed);
+    kotlin::std_support::atomic_ref{header->flags_}.fetch_or(StringHeader::HASHCODE_COMPUTED, std::memory_order_release);
     return result;
 }
 
@@ -594,11 +580,11 @@ static std::string to_string(KStringConversionMode mode, const KChar* begin, con
 
 static std::string to_string(KStringConversionMode mode, const uint8_t* begin, const uint8_t* end) {
     std::string result;
-    result.resize((end - begin) + std::count_if(begin, end, [](auto c) { return c >= 0x80; }));
+    result.resize((end - begin) + std::count_if(begin, end, [](auto c) { return c & 0x80; }));
     auto out = result.begin();
     while (begin != end) {
         auto latin1 = *begin++;
-        if (latin1 >= 0x80) {
+        if (latin1 & 0x80) {
             *out++ = 0xC0 | (latin1 >> 6);
             *out++ = latin1 & 0xBF;
         } else {
