@@ -117,7 +117,7 @@ int32_t Konan_DebugObjectToUtf8ArrayImpl(KRef obj, char* buffer, int32_t bufferS
   kotlin::CalledFromNativeGuard guard(/* reentrant */ true);
   ObjHolder stringHolder;
   // Kotlin call.
-  ArrayHeader* data = KonanObjectToUtf8Array(obj, stringHolder.slot())->array();
+  ArrayHeader* data = KonanObjectToUtf8Array(obj)->array();
   if (data == nullptr) return 0;
   if (bufferSize < 1) return 0;
   KInt toCopy = data->count_ > static_cast<uint32_t>(bufferSize - 1) ? bufferSize - 1 : data->count_;

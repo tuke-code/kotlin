@@ -91,7 +91,6 @@ internal class CAdapterCodegen(
                             Lifetime.GLOBAL,
                             ExceptionHandler.Caller,
                             false,
-                            returnSlot
                         )
                         ret(value)
                     }

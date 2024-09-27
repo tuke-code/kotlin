@@ -45,7 +45,7 @@ extern "C" OBJ_GETTER(Kotlin_toString, KRef obj);
   bool permanent;
 }
 
--(KRef)toKotlin:(KRef*)OBJ_RESULT {
+-(KRef)toKotlin {
   if (permanent) {
     RETURN_OBJ(refHolder.refPermanent());
   } else {
@@ -93,8 +93,7 @@ extern "C" OBJ_GETTER(Kotlin_toString, KRef obj);
           format:@"%s must be allocated and initialized with a factory method",
           class_getName(object_getClass(self))];
   }
-  ObjHolder holder;
-  AllocInstanceWithAssociatedObject(typeInfo, result, holder.slot());
+  ObjHolder holder(AllocInstanceWithAssociatedObject(typeInfo, result));
   result->refHolder.initAndAddRef(holder.obj());
   RuntimeAssert(!holder.obj()->permanent(), "dynamically allocated object is permanent");
   result->permanent = false;
@@ -236,14 +235,13 @@ extern "C" OBJ_GETTER(Kotlin_toString, KRef obj);
 - (NSString *)description {
     kotlin::ThreadStateGuard guard(kotlin::ThreadState::kRunnable);
     ObjHolder h1;
-    ObjHolder h2;
-    return Kotlin_Interop_CreateNSStringFromKString(Kotlin_toString([self toKotlin:h1.slot()], h2.slot()));
+    *h1.slot() = [self toKotlin];
+    return Kotlin_Interop_CreateNSStringFromKString(Kotlin_toString(h1.obj()));
 }
 
 - (NSUInteger)hash {
     kotlin::ThreadStateGuard guard(kotlin::ThreadState::kRunnable);
-    ObjHolder holder;
-    return (NSUInteger)Kotlin_hashCode([self toKotlin:holder.slot()]);
+    return (NSUInteger)Kotlin_hashCode([self toKotlin]);
 }
 
 - (BOOL)isEqual:(id)other {
@@ -265,9 +263,9 @@ extern "C" OBJ_GETTER(Kotlin_toString, KRef obj);
     kotlin::ThreadStateGuard guard(kotlin::ThreadState::kRunnable);
     ObjHolder lhsHolder;
     ObjHolder rhsHolder;
-    KRef lhs = [self toKotlin:lhsHolder.slot()];
-    KRef rhs = [other toKotlin:rhsHolder.slot()];
-    return Kotlin_equals(lhs, rhs);
+    *lhsHolder.slot() = [self toKotlin];
+    *rhsHolder.slot() = [other toKotlin];
+    return Kotlin_equals(lhsHolder.obj(), rhsHolder.obj());
 }
 
 @end
@@ -276,7 +274,7 @@ extern "C" OBJ_GETTER(Kotlin_toString, KRef obj);
 @end
 
 @implementation NSObject (NSObjectToKotlin)
--(ObjHeader*)toKotlin:(ObjHeader**)OBJ_RESULT {
+-(ObjHeader*)toKotlin {
   RETURN_RESULT_OF(Kotlin_ObjCExport_convertUnmappedObjCObject, self);
 }
 
@@ -289,7 +287,7 @@ extern "C" OBJ_GETTER(Kotlin_toString, KRef obj);
 @end
 
 @implementation NSString (NSStringToKotlin)
--(ObjHeader*)toKotlin:(ObjHeader**)OBJ_RESULT {
+-(ObjHeader*)toKotlin {
   RETURN_RESULT_OF(Kotlin_Interop_CreateKStringFromNSString, self);
 }
 @end
@@ -313,7 +311,7 @@ OBJ_GETTER(Kotlin_boxDouble, KDouble value);
 @end
 
 @implementation NSNumber (NSNumberToKotlin)
--(ObjHeader*)toKotlin:(ObjHeader**)OBJ_RESULT {
+-(ObjHeader*)toKotlin {
   const char* type = self.objCType;
 
   // TODO: the code below makes some assumption on char, short, int and long sizes.
@@ -340,7 +338,7 @@ OBJ_GETTER(Kotlin_boxDouble, KDouble value);
 
 @implementation NSDecimalNumber (NSDecimalNumberToKotlin)
 // Overrides [NSNumber toKotlin:] implementation.
--(ObjHeader*)toKotlin:(ObjHeader**)OBJ_RESULT {
+-(ObjHeader*)toKotlin {
   RETURN_RESULT_OF(Kotlin_ObjCExport_convertUnmappedObjCObject, self);
 }
 @end

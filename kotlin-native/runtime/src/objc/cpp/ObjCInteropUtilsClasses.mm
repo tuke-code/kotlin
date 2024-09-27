@@ -90,7 +90,7 @@ static OBJ_GETTER(Konan_ObjCInterop_getWeakReference, KRef ref) {
   id objcReferred = kotlin::CallWithThreadState<kotlin::ThreadState::kNative>(objc_loadWeakRetained, &objcRef->referred);
 
   // Kotlin_Interop_refFromObjC creates Kotlin objects, so it needs Runnable state:
-  KRef result = Kotlin_Interop_refFromObjC(objcReferred, OBJ_RESULT);
+  KRef result = Kotlin_Interop_refFromObjC(objcReferred);
 
   // objc_release can call arbitrary user code, so it needs Native state:
   kotlin::CallWithThreadState<kotlin::ThreadState::kNative>(objc_release, objcReferred);

@@ -47,9 +47,8 @@ test_support::TypeInfoHolder typeHolderWithFinalizer{test_support::TypeInfoHolde
 // TODO: Clean GlobalObjectHolder after it's gone.
 class GlobalObjectHolder : private Pinned {
 public:
-    explicit GlobalObjectHolder(mm::ThreadData& threadData) {
+    explicit GlobalObjectHolder(mm::ThreadData& threadData) : location_(mm::AllocateObject(&threadData, typeHolder.typeInfo())) {
         mm::GlobalsRegistry::Instance().RegisterStorageForGlobal(&threadData, &location_);
-        mm::AllocateObject(&threadData, typeHolder.typeInfo(), &location_);
     }
 
     GlobalObjectHolder(mm::ThreadData& threadData, ObjHeader* object) : location_(object) {
@@ -87,9 +86,8 @@ private:
 // TODO: Clean GlobalObjectArrayHolder after it's gone.
 class GlobalObjectArrayHolder : private Pinned {
 public:
-    explicit GlobalObjectArrayHolder(mm::ThreadData& threadData) {
+    explicit GlobalObjectArrayHolder(mm::ThreadData& threadData) : location_(mm::AllocateArray(&threadData, theArrayTypeInfo, 3)) {
         mm::GlobalsRegistry::Instance().RegisterStorageForGlobal(&threadData, &location_);
-        mm::AllocateArray(&threadData, theArrayTypeInfo, 3, &location_);
     }
 
     ObjHeader* header() { return location_; }
@@ -106,9 +104,8 @@ private:
 // TODO: Clean GlobalCharArrayHolder after it's gone.
 class GlobalCharArrayHolder : private Pinned {
 public:
-    explicit GlobalCharArrayHolder(mm::ThreadData& threadData) {
+    explicit GlobalCharArrayHolder(mm::ThreadData& threadData) : location_(mm::AllocateArray(&threadData, theCharArrayTypeInfo, 3)) {
         mm::GlobalsRegistry::Instance().RegisterStorageForGlobal(&threadData, &location_);
-        mm::AllocateArray(&threadData, theCharArrayTypeInfo, 3, &location_);
     }
 
     ObjHeader* header() { return location_; }
@@ -122,7 +119,7 @@ private:
 
 class StackObjectHolder : private Pinned {
 public:
-    explicit StackObjectHolder(mm::ThreadData& threadData) { mm::AllocateObject(&threadData, typeHolder.typeInfo(), holder_.slot()); }
+    explicit StackObjectHolder(mm::ThreadData& threadData) : holder_(mm::AllocateObject(&threadData, typeHolder.typeInfo())) {}
     explicit StackObjectHolder(test_support::Object<Payload>& object) : holder_(object.header()) {}
     explicit StackObjectHolder(ObjHeader* object) : holder_(object) {}
 
@@ -137,7 +134,7 @@ private:
 
 class StackObjectArrayHolder : private Pinned {
 public:
-    explicit StackObjectArrayHolder(mm::ThreadData& threadData) { mm::AllocateArray(&threadData, theArrayTypeInfo, 3, holder_.slot()); }
+    explicit StackObjectArrayHolder(mm::ThreadData& threadData) : holder_(mm::AllocateArray(&threadData, theArrayTypeInfo, 3)) {}
 
     ObjHeader* header() { return holder_.obj(); }
 
@@ -152,7 +149,7 @@ private:
 
 class StackCharArrayHolder : private Pinned {
 public:
-    explicit StackCharArrayHolder(mm::ThreadData& threadData) { mm::AllocateArray(&threadData, theCharArrayTypeInfo, 3, holder_.slot()); }
+    explicit StackCharArrayHolder(mm::ThreadData& threadData) : holder_(mm::AllocateArray(&threadData, theCharArrayTypeInfo, 3)) {}
 
     ObjHeader* header() { return holder_.obj(); }
 
@@ -164,14 +161,12 @@ private:
 };
 
 test_support::Object<Payload>& AllocateObject(mm::ThreadData& threadData) {
-    ObjHolder holder;
-    mm::AllocateObject(&threadData, typeHolder.typeInfo(), holder.slot());
+    ObjHolder holder(mm::AllocateObject(&threadData, typeHolder.typeInfo()));
     return test_support::Object<Payload>::FromObjHeader(holder.obj());
 }
 
 test_support::Object<Payload>& AllocateObjectWithFinalizer(mm::ThreadData& threadData) {
-    ObjHolder holder;
-    mm::AllocateObject(&threadData, typeHolderWithFinalizer.typeInfo(), holder.slot());
+    ObjHolder holder(mm::AllocateObject(&threadData, typeHolderWithFinalizer.typeInfo()));
     return test_support::Object<Payload>::FromObjHeader(holder.obj());
 }
 
@@ -312,8 +307,7 @@ TYPED_TEST_P(TracingGCTest, FreeObjectWithFreeWeak) {
     RunInNewThread([this](mm::ThreadData& threadData) {
         auto& object1 = AllocateObject(threadData);
         auto& weak1 = ([&threadData, &object1]() -> test_support::RegularWeakReferenceImpl& {
-            ObjHolder holder;
-            return test_support::InstallWeakReference(threadData, object1.header(), holder.slot());
+            return test_support::InstallWeakReference(threadData, object1.header());
         })();
 
         ASSERT_THAT(Alive(threadData), testing::UnorderedElementsAre(object1.header(), weak1.header()));
@@ -332,7 +326,8 @@ TYPED_TEST_P(TracingGCTest, FreeObjectWithHoldedWeak) {
     RunInNewThread([](mm::ThreadData& threadData) {
         auto& object1 = AllocateObject(threadData);
         StackObjectHolder stack{threadData};
-        auto& weak1 = test_support::InstallWeakReference(threadData, object1.header(), stack->field1.ptr());
+        auto& weak1 = test_support::InstallWeakReference(threadData, object1.header());
+        stack->field1 = weak1.header();
 
         ASSERT_THAT(Alive(threadData), testing::UnorderedElementsAre(object1.header(), weak1.header(), stack.header()));
         ASSERT_THAT(gc::isMarked(object1.header()), false);
@@ -1062,10 +1057,8 @@ TYPED_TEST_P(TracingGCTest, FreeObjectWithFreeWeakReversedOrder) {
     auto f1 = mutators[1].Execute([&](mm::ThreadData& threadData, Mutator&) {
         while (object1.load() == nullptr) {
         }
-        ObjHolder holder;
-        auto& weak_local = test_support::InstallWeakReference(threadData, object1.load()->header(), holder.slot());
+        auto& weak_local = test_support::InstallWeakReference(threadData, object1.load()->header());
         weak = &weak_local;
-        *holder.slot() = nullptr;
         while (!done) mm::safePoint(threadData);
     });
 
@@ -1193,8 +1186,7 @@ TYPED_TEST_P(TracingGCTest, WeakResurrectionInMark) {
 
             auto& weakReferee = AllocateObject(threadData);
             auto& weakRef = [&threadData, &weakReferee]() -> test_support::RegularWeakReferenceImpl& {
-                ObjHolder holder;
-                return test_support::InstallWeakReference(threadData, weakReferee.header(), holder.slot());
+                return test_support::InstallWeakReference(threadData, weakReferee.header());
             }();
             EXPECT_NE(weakRef.get(), nullptr);
             weaks[i] = &weakRef;
@@ -1276,8 +1268,7 @@ TYPED_TEST_P(STWMarkGCTest, MultipleMutatorsWeaks) {
 
                 auto& object = AllocateObject(threadData);
                 auto& objectWeak = ([&threadData, &object]() -> test_support::RegularWeakReferenceImpl& {
-                    ObjHolder holder;
-                    return test_support::InstallWeakReference(threadData, object.header(), holder.slot());
+                    return test_support::InstallWeakReference(threadData, object.header());
                 })();
                 global->field1 = objectWeak.header();
                 weak = &objectWeak;
@@ -1341,8 +1332,7 @@ TYPED_TEST_P(STWMarkGCTest, MultipleMutatorsWeakNewObj) {
 
             auto& object = AllocateObject(threadData);
             auto& objectWeak = ([&threadData, &object]() -> test_support::RegularWeakReferenceImpl& {
-                ObjHolder holder;
-                return test_support::InstallWeakReference(threadData, object.header(), holder.slot());
+                return test_support::InstallWeakReference(threadData, object.header());
             })();
             EXPECT_NE(objectWeak.get(), nullptr);
 

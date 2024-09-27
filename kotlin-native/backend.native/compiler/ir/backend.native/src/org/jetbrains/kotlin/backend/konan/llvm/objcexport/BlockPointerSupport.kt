@@ -109,7 +109,7 @@ internal fun ObjCExportCodeGeneratorBase.generateBlockToKotlinFunctionConverter(
         val retainedBlockPtr = callFromBridge(retainBlock, listOf(blockPtr))
 
         val result = if (useSeparateHolder) {
-            val result = allocInstance(typeInfo.llvm, Lifetime.RETURN_VALUE, null)
+            val result = allocInstance(typeInfo.llvm, Lifetime.RETURN_VALUE)
             val bodyPtr = bitcast(pointerType(bodyType), result)
             val holder = allocInstanceWithAssociatedObject(
                     symbols.interopForeignObjCObject.owner.typeInfoPtr,

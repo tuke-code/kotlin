@@ -508,7 +508,7 @@ extern "C" OBJ_GETTER(Kotlin_ObjCExport_refFromObjC, id obj) {
   kotlin::AssertThreadState(kotlin::ThreadState::kRunnable);
 
   if (obj == nullptr) RETURN_OBJ(nullptr);
-  auto msgSend = reinterpret_cast<ObjHeader* (*)(id self, SEL cmd, ObjHeader** slot)>(&objc_msgSend);
+  auto msgSend = reinterpret_cast<ObjHeader* (*)(id self, SEL cmd)>(&objc_msgSend);
   RETURN_RESULT_OF(msgSend, obj, Kotlin_ObjCExport_toKotlinSelector);
 }
 

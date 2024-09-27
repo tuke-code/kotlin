@@ -52,7 +52,7 @@ KStdStringInserter utf16toUtf8OrThrow(const KChar* start, const KChar* end, KStd
 template<utf8to16 conversion>
 OBJ_GETTER(utf8ToUtf16Impl, const char* rawString, const char* end, uint32_t charCount) {
   if (rawString == nullptr) RETURN_OBJ(nullptr);
-  ArrayHeader* result = AllocArrayInstance(theStringTypeInfo, charCount, OBJ_RESULT)->array();
+  ArrayHeader* result = AllocArrayInstance(theStringTypeInfo, charCount)->array();
   KChar* rawResult = CharArrayAddressOfElementAt(result, 0);
   conversion(rawString, end, rawResult);
   RETURN_OBJ(result->obj());
@@ -65,7 +65,7 @@ OBJ_GETTER(unsafeUtf16ToUtf8Impl, KString thiz, KInt start, KInt size) {
   std::string utf8;
   utf8.reserve(size);
   conversion(utf16, utf16 + size, back_inserter(utf8));
-  ArrayHeader* result = AllocArrayInstance(theByteArrayTypeInfo, utf8.size(), OBJ_RESULT)->array();
+  ArrayHeader* result = AllocArrayInstance(theByteArrayTypeInfo, utf8.size())->array();
   ::memcpy(ByteArrayAddressOfElementAt(result, 0), utf8.c_str(), utf8.size());
   RETURN_OBJ(result->obj());
 }
@@ -169,7 +169,7 @@ void FreePermanentStringForTests(ArrayHeader* header) {
 // String.kt
 OBJ_GETTER(Kotlin_String_replace, KString thiz, KChar oldChar, KChar newChar) {
   auto count = thiz->count_;
-  ArrayHeader* result = AllocArrayInstance(theStringTypeInfo, count, OBJ_RESULT)->array();
+  ArrayHeader* result = AllocArrayInstance(theStringTypeInfo, count)->array();
   const KChar* thizRaw = CharArrayAddressOfElementAt(thiz, 0);
   KChar* resultRaw = CharArrayAddressOfElementAt(result, 0);
   for (uint32_t index = 0; index < count; ++index) {
@@ -191,7 +191,7 @@ OBJ_GETTER(Kotlin_String_plusImpl, KString thiz, KString other) {
   if (result_length > static_cast<uint32_t>(std::numeric_limits<int32_t>::max())) {
     ThrowOutOfMemoryError();
   }
-  ArrayHeader* result = AllocArrayInstance(theStringTypeInfo, result_length, OBJ_RESULT)->array();
+  ArrayHeader* result = AllocArrayInstance(theStringTypeInfo, result_length)->array();
   memcpy(
       CharArrayAddressOfElementAt(result, 0),
       CharArrayAddressOfElementAt(thiz, 0),
@@ -211,7 +211,7 @@ OBJ_GETTER(Kotlin_String_unsafeStringFromCharArray, KConstRef thiz, KInt start, 
     RETURN_RESULT_OF0(TheEmptyString);
   }
 
-  ArrayHeader* result = AllocArrayInstance(theStringTypeInfo, size, OBJ_RESULT)->array();
+  ArrayHeader* result = AllocArrayInstance(theStringTypeInfo, size)->array();
   memcpy(CharArrayAddressOfElementAt(result, 0),
          CharArrayAddressOfElementAt(array, start),
          size * sizeof(KChar));
@@ -235,7 +235,7 @@ OBJ_GETTER(Kotlin_String_subSequence, KString thiz, KInt startIndex, KInt endInd
     RETURN_RESULT_OF0(TheEmptyString);
   }
   KInt length = endIndex - startIndex;
-  ArrayHeader* result = AllocArrayInstance(theStringTypeInfo, length, OBJ_RESULT)->array();
+  ArrayHeader* result = AllocArrayInstance(theStringTypeInfo, length)->array();
   memcpy(CharArrayAddressOfElementAt(result, 0),
          CharArrayAddressOfElementAt(thiz, startIndex),
          length * sizeof(KChar));

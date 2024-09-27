@@ -416,8 +416,8 @@ NO_INLINE void CallInitGlobalPossiblyLock(uintptr_t* state, void (*init)()) {
             CurrentFrameGuard guard;
             init();
         } catch (ExceptionObjHolder& e) {
-            ObjHolder holder;
-            auto *exception = Kotlin_getExceptionObject(&e, holder.slot());
+            ObjHolder holder(Kotlin_getExceptionObject(&e));
+            auto *exception = holder.obj();
             std_support::atomic_ref{*state}.store(FILE_FAILED_TO_INITIALIZE, std::memory_order_release);
             ThrowFileFailedToInitializeException(exception);
         }
@@ -435,8 +435,8 @@ void CallInitThreadLocal(uintptr_t volatile* globalState, uintptr_t* localState,
         CurrentFrameGuard guard;
         init();
     } catch(ExceptionObjHolder& e) {
-        ObjHolder holder;
-        auto *exception = Kotlin_getExceptionObject(&e, holder.slot());
+        ObjHolder holder(Kotlin_getExceptionObject(&e));
+        auto *exception = holder.obj();
         *localState = FILE_FAILED_TO_INITIALIZE;
         ThrowFileFailedToInitializeException(exception);
     }

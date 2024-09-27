@@ -62,7 +62,7 @@ OBJ_GETTER(Kotlin_Interop_CreateKStringFromNSString, NSString* str) {
 
   auto length = CFStringGetLength(immutableCopyOrSameStr);
   CFRange range = {0, length};
-  ArrayHeader* result = AllocArrayInstance(theStringTypeInfo, length, OBJ_RESULT)->array();
+  ArrayHeader* result = AllocArrayInstance(theStringTypeInfo, length)->array();
   KChar* rawResult = CharArrayAddressOfElementAt(result, 0);
 
   CFStringGetCharacters(immutableCopyOrSameStr, range, rawResult);
