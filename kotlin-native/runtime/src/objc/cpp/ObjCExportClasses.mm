@@ -253,7 +253,7 @@ extern "C" OBJ_GETTER(Kotlin_toString, KRef obj);
         return NO;
     }
 
-    // All `NSObject`'s, `__SwiftObject`'s and `NSProxy`-ies wrapping them should respond well to `toKotlin:`.
+    // All `NSObject`'s, `__SwiftObject`'s and `NSProxy`-ies wrapping them should respond well to `toKotlin`.
     // However, other system- or user- defined root classes may not.
     // But, at the very least, we expect them to conform to NSObject protocol. There's no test for that.
     if (![other respondsToSelector:Kotlin_ObjCExport_toKotlinSelector]) {
@@ -337,7 +337,7 @@ OBJ_GETTER(Kotlin_boxDouble, KDouble value);
 @end
 
 @implementation NSDecimalNumber (NSDecimalNumberToKotlin)
-// Overrides [NSNumber toKotlin:] implementation.
+// Overrides [NSNumber toKotlin] implementation.
 -(ObjHeader*)toKotlin {
   RETURN_RESULT_OF(Kotlin_ObjCExport_convertUnmappedObjCObject, self);
 }
@@ -348,7 +348,7 @@ static void injectToRuntimeImpl() {
   constexpr const char* errorMessage = "runtime injected twice; https://youtrack.jetbrains.com/issue/KT-42254 might be related";
 
   RuntimeCheck(Kotlin_ObjCExport_toKotlinSelector == nullptr, errorMessage);
-  Kotlin_ObjCExport_toKotlinSelector = @selector(toKotlin:);
+  Kotlin_ObjCExport_toKotlinSelector = @selector(toKotlin);
 
   RuntimeCheck(Kotlin_ObjCExport_releaseAsAssociatedObjectSelector == nullptr, errorMessage);
   Kotlin_ObjCExport_releaseAsAssociatedObjectSelector = @selector(releaseAsAssociatedObject);

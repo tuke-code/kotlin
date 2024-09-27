@@ -330,7 +330,7 @@ static void Kotlin_ObjCExport_initializeImpl() {
 
   // Note: can't add it with category, because it would be considered as private API usage.
   BOOL added = class_addMethod(nsBlockClass, toKotlinSelector, (IMP)blockToKotlinImp, toKotlinTypeEncoding);
-  RuntimeAssert(added, "Unable to add 'toKotlin:' method to NSBlock class");
+  RuntimeAssert(added, "Unable to add 'toKotlin' method to NSBlock class");
 
   // Note: the boolean class is not visible to linker, so this case can't be handled with a category too.
   // Referring it directly is also undesirable, because this is "private API" (see e.g. KT-62091).
@@ -340,7 +340,7 @@ static void Kotlin_ObjCExport_initializeImpl() {
 
   if (booleanClass != [[NSNumber numberWithInt:1] class]) {
     added = class_addMethod(booleanClass, toKotlinSelector, (IMP)boxedBooleanToKotlinImp, toKotlinTypeEncoding);
-    RuntimeAssert(added, "Unable to add 'toKotlin:' method to the NS boolean class");
+    RuntimeAssert(added, "Unable to add 'toKotlin' method to the NS boolean class");
   } else {
     // Shouldn't really happen unless something changed in the implementation.
     // Play safe in that case, don't botch the numbers case.
@@ -351,7 +351,7 @@ static void Kotlin_ObjCExport_initializeImpl() {
     Class swiftRootClass = objc_getClass(swiftRootClassName);
     if (swiftRootClass != nullptr) {
       added = class_addMethod(swiftRootClass, toKotlinSelector, (IMP)SwiftObject_toKotlinImp, toKotlinTypeEncoding);
-      RuntimeAssert(added, "Unable to add 'toKotlin:' method to SwiftObject class");
+      RuntimeAssert(added, "Unable to add 'toKotlin' method to SwiftObject class");
 
       added = class_addMethod(
         swiftRootClass, releaseAsAssociatedObjectSelector,
