@@ -53,6 +53,7 @@ object BuiltInSerializerProtocol : SerializerExtensionProtocol(
         return classLoader.getResource(resourcePath) ?: checkConcurrentBuiltInPackage(resourcePath)
     }
 
+    // Throws an IllegalStateException if a builtin file from the given builtInPackage cannot be loaded
     fun getBuiltInFileInputStream(builtInPackageFqName: FqName, inputStreamProvider: (String) -> InputStream?): InputStream? {
         val resourcePath = getBuiltInsFilePath(builtInPackageFqName)
         return inputStreamProvider(resourcePath) ?: checkConcurrentBuiltInPackage(resourcePath)

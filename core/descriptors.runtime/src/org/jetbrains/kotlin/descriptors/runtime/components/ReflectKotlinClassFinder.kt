@@ -53,7 +53,11 @@ class ReflectKotlinClassFinder(private val classLoader: ClassLoader) : KotlinCla
 
     override fun findBuiltInsData(packageFqName: FqName): InputStream? {
         if (!packageFqName.startsWith(StandardNames.BUILT_INS_PACKAGE_NAME)) return null
-        return BuiltInSerializerProtocol.getBuiltInFileInputStream(packageFqName, builtInsResourceLoader::loadResource)
+        return try {
+            BuiltInSerializerProtocol.getBuiltInFileInputStream(packageFqName, builtInsResourceLoader::loadResource)
+        } catch (e: IllegalStateException) {
+            null
+        }
     }
 }
 
