@@ -83,10 +83,6 @@ public class SirVisibilityCheckerImpl(
                     .report(this@isConsumableBySirBuilder, "${classKind.name.lowercase()} classifiers are not supported yet.")
                 return@with false
             }
-            if (isData && classKind != KaClassKind.OBJECT) {
-                unsupportedDeclarationReporter.report(this@isConsumableBySirBuilder, "data classes are not supported yet.")
-                return@with false
-            }
             if (isInner) {
                 unsupportedDeclarationReporter.report(this@isConsumableBySirBuilder, "inner classes are not supported yet.")
                 return@with false

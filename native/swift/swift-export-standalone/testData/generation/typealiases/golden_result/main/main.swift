@@ -5,6 +5,8 @@ import KotlinRuntime
 public typealias DefaultInteger = main.RegularInteger
 public typealias RegularInteger = Swift.Int32
 public typealias ShouldHaveNoAnnotation = Swift.Int32
+public typealias dataClass = main.DATA_CLASS
+public typealias dataClassWithRef = main.DATA_CLASS_WITH_REF
 public typealias dataObjectWithPackage = main.DATA_OBJECT_WITH_PACKAGE
 public typealias inheritanceSingleClass = main.INHERITANCE_SINGLE_CLASS
 public typealias never = Swift.Never
@@ -12,6 +14,66 @@ public typealias nullable_class = ExportedKotlinPackages.typealiases.Foo?
 public typealias nullable_primitive = Swift.Int32?
 public typealias objectWithClassInheritance = main.OBJECT_WITH_CLASS_INHERITANCE
 public typealias openClass = main.OPEN_CLASS
+public final class DATA_CLASS : KotlinRuntime.KotlinBase {
+    public var a: Swift.Int32 {
+        get {
+            return DATA_CLASS_a_get(self.__externalRCRef())
+        }
+    }
+    public override init(
+        __externalRCRef: Swift.UInt
+    ) {
+        super.init(__externalRCRef: __externalRCRef)
+    }
+    public init(
+        a: Swift.Int32
+    ) {
+        let __kt = __root___DATA_CLASS_init_allocate()
+        super.init(__externalRCRef: __kt)
+        __root___DATA_CLASS_init_initialize__TypesOfArguments__Swift_UInt_Swift_Int32__(__kt, a)
+    }
+    public func copy(
+        a: Swift.Int32
+    ) -> main.DATA_CLASS {
+        return main.DATA_CLASS(__externalRCRef: DATA_CLASS_copy__TypesOfArguments__Swift_Int32__(self.__externalRCRef(), a))
+    }
+    public func hashCode() -> Swift.Int32 {
+        return DATA_CLASS_hashCode(self.__externalRCRef())
+    }
+    public func toString() -> Swift.String {
+        return DATA_CLASS_toString(self.__externalRCRef())
+    }
+}
+public final class DATA_CLASS_WITH_REF : KotlinRuntime.KotlinBase {
+    public var o: KotlinRuntime.KotlinBase {
+        get {
+            return KotlinRuntime.KotlinBase(__externalRCRef: DATA_CLASS_WITH_REF_o_get(self.__externalRCRef()))
+        }
+    }
+    public override init(
+        __externalRCRef: Swift.UInt
+    ) {
+        super.init(__externalRCRef: __externalRCRef)
+    }
+    public init(
+        o: KotlinRuntime.KotlinBase
+    ) {
+        let __kt = __root___DATA_CLASS_WITH_REF_init_allocate()
+        super.init(__externalRCRef: __kt)
+        __root___DATA_CLASS_WITH_REF_init_initialize__TypesOfArguments__Swift_UInt_KotlinRuntime_KotlinBase__(__kt, o.__externalRCRef())
+    }
+    public func copy(
+        o: KotlinRuntime.KotlinBase
+    ) -> main.DATA_CLASS_WITH_REF {
+        return main.DATA_CLASS_WITH_REF(__externalRCRef: DATA_CLASS_WITH_REF_copy__TypesOfArguments__KotlinRuntime_KotlinBase__(self.__externalRCRef(), o.__externalRCRef()))
+    }
+    public func hashCode() -> Swift.Int32 {
+        return DATA_CLASS_WITH_REF_hashCode(self.__externalRCRef())
+    }
+    public func toString() -> Swift.String {
+        return DATA_CLASS_WITH_REF_toString(self.__externalRCRef())
+    }
+}
 public final class DATA_OBJECT_WITH_PACKAGE : KotlinRuntime.KotlinBase {
     public static var shared: main.DATA_OBJECT_WITH_PACKAGE {
         get {

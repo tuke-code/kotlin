@@ -465,11 +465,41 @@ public extension ExportedKotlinPackages.namespace.deeper {
     }
 }
 public extension ExportedKotlinPackages.ignored {
+    public final class DATA_CLASS : KotlinRuntime.KotlinBase {
+        public var a: Swift.Int32 {
+            get {
+                return ignored_DATA_CLASS_a_get(self.__externalRCRef())
+            }
+        }
+        public override init(
+            __externalRCRef: Swift.UInt
+        ) {
+            super.init(__externalRCRef: __externalRCRef)
+        }
+        public init(
+            a: Swift.Int32
+        ) {
+            let __kt = ignored_DATA_CLASS_init_allocate()
+            super.init(__externalRCRef: __kt)
+            ignored_DATA_CLASS_init_initialize__TypesOfArguments__Swift_UInt_Swift_Int32__(__kt, a)
+        }
+        public func copy(
+            a: Swift.Int32
+        ) -> ExportedKotlinPackages.ignored.DATA_CLASS {
+            return ExportedKotlinPackages.ignored.DATA_CLASS(__externalRCRef: ignored_DATA_CLASS_copy__TypesOfArguments__Swift_Int32__(self.__externalRCRef(), a))
+        }
+        public func hashCode() -> Swift.Int32 {
+            return ignored_DATA_CLASS_hashCode(self.__externalRCRef())
+        }
+        public func toString() -> Swift.String {
+            return ignored_DATA_CLASS_toString(self.__externalRCRef())
+        }
+    }
     public static func produce_ABSTRACT_CLASS() -> Swift.Never {
         fatalError()
     }
-    public static func produce_DATA_CLASS() -> Swift.Never {
-        fatalError()
+    public static func produce_DATA_CLASS() -> ExportedKotlinPackages.ignored.DATA_CLASS {
+        return ExportedKotlinPackages.ignored.DATA_CLASS(__externalRCRef: ignored_produce_DATA_CLASS())
     }
     public static func produce_ENUM() -> Swift.Never {
         fatalError()
@@ -486,9 +516,9 @@ public extension ExportedKotlinPackages.ignored {
         fatalError()
     }
     public static func receive_DATA_CLASS(
-        x: Swift.Never
+        x: ExportedKotlinPackages.ignored.DATA_CLASS
     ) -> Swift.Void {
-        fatalError()
+        return ignored_receive_DATA_CLASS__TypesOfArguments__ExportedKotlinPackages_ignored_DATA_CLASS__(x.__externalRCRef())
     }
     public static func receive_ENUM(
         x: Swift.Never
