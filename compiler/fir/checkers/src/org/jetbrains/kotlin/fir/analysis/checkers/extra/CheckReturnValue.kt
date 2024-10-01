@@ -212,11 +212,17 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
         "java/util/ArrayList.addAll",
         "java/util/ArrayList.remove",
         "java/util/HashMap.put",
+        "java/util/HashMap.remove",
         "java/util/TreeMap.put",
         "java/util/LinkedHashMap.put",
         "java/util/HashSet.remove",
         "java/util/TreeSet.remove",
         "java/util/ArrayDeque.removeLast",
+        "java/util/ArrayList.set",
+        "kotlin/collections/MutableSet.addAll",
+        "java/util/ArrayList.removeAt",
+        "kotlin/collections/MutableSet.removeAll",
+        "kotlin/collections/MutableList.removeAll",
 
         // StringBuilder operations that return `this`:
         "kotlin/text/StringBuilder.append",
@@ -233,6 +239,7 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
 
         // Array operations that return `destination`:
         "kotlin/collections/copyInto",
+        "kotlin/collections/flatMapTo",
         "kotlin/text/toCharArray", // TODO: only one overload of toCharArray is discardable
 
         // Buffer operations that return `this`:
@@ -245,6 +252,7 @@ object CheckReturnValue : FirBasicExpressionChecker(MppCheckerKind.Common) {
         // General utilities
 
         "kotlin/requireNotNull",
+        "kotlin/checkNotNull",
         "kotlin/Throwable.initCause",
 
         // Test utilities
