@@ -55,10 +55,10 @@ internal class LLFirCombinedKotlinSymbolProvider private constructor(
 ) : LLFirSelectingCombinedSymbolProvider<LLFirKotlinSymbolProvider>(session, project, providers) {
     override val symbolNamesProvider: FirSymbolNamesProvider = FirCompositeCachedSymbolNamesProvider.fromSymbolProviders(session, providers)
 
-    private val classifierCache = NullableCaffeineCache<ClassId, FirClassLikeSymbol<*>> { it.maximumSize(500) }
+    private val classifierCache = NullableCaffeineCache<ClassId, FirClassLikeSymbol<*>> { it.maximumSize(2500) }
 
     override fun getClassLikeSymbolByClassId(classId: ClassId): FirClassLikeSymbol<*>? {
-        if (!symbolNamesProvider.mayHaveTopLevelClassifier(classId)) return null
+//        if (!symbolNamesProvider.mayHaveTopLevelClassifier(classId)) return null
 
         return classifierCache.get(classId) { computeClassLikeSymbolByClassId(it) }
     }

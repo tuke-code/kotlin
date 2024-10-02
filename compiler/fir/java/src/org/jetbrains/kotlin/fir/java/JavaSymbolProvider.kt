@@ -21,6 +21,7 @@ import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.utils.mapToSetOrEmpty
+import java.util.concurrent.atomic.AtomicLong
 
 // This symbol provider only loads JVM classes *not* annotated with Kotlin `@Metadata` annotation.
 // Use it in application sessions for loading classes from Java files listed on the command line.
@@ -44,8 +45,24 @@ open class JavaSymbolProvider(
             symbol
         }
 
-    override fun getClassLikeSymbolByClassId(classId: ClassId): FirRegularClassSymbol? =
-        if (javaFacade.hasTopLevelClassOf(classId)) getClassLikeSymbolByClassId(classId, null) else null
+    override fun getClassLikeSymbolByClassId(classId: ClassId): FirRegularClassSymbol? {
+//        if (getPackage(classId.packageFqName) == null) {
+//            rejectedByPackageCounter.incrementAndGet()
+//            return null
+//        }
+//
+//        if (!javaFacade.hasTopLevelClassOf(classId)) {
+//            rejectedByClassNameCounter.incrementAndGet()
+//            return null
+//        }
+//
+//        acceptedCounter.incrementAndGet()
+
+        if (getPackage(classId.packageFqName) == null) {
+            return null
+        }
+        return getClassLikeSymbolByClassId(classId, null)
+    }
 
     fun getClassLikeSymbolByClassId(classId: ClassId, javaClass: JavaClass?): FirRegularClassSymbol? =
         classCache.getValue(
@@ -72,6 +89,12 @@ open class JavaSymbolProvider(
 
         override fun getTopLevelClassifierNamesInPackage(packageFqName: FqName): Set<Name>? =
             javaFacade.knownClassNamesInPackage(packageFqName)?.mapToSetOrEmpty { Name.identifier(it) }
+    }
+
+    companion object {
+//        private var rejectedByPackageCounter = AtomicLong()
+//        private var rejectedByClassNameCounter = AtomicLong()
+//        private var acceptedCounter = AtomicLong()
     }
 }
 
