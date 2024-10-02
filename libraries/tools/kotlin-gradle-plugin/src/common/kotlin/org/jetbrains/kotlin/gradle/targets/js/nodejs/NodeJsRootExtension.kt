@@ -24,6 +24,7 @@ import java.io.File
 open class NodeJsRootExtension(
     val project: Project,
     private val nodeJs: () -> NodeJsEnvSpec,
+    private val rootDir: String,
 ) {
 
     init {
@@ -110,7 +111,7 @@ open class NodeJsRootExtension(
 
     lateinit var resolver: KotlinRootNpmResolver
 
-    val rootPackageDirectory: Provider<Directory> = project.layout.buildDirectory.dir("js")
+    val rootPackageDirectory: Provider<Directory> = project.layout.buildDirectory.dir(rootDir)
 
     val projectPackagesDirectory: Provider<Directory>
         get() = rootPackageDirectory.map { it.dir("packages") }

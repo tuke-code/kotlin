@@ -27,8 +27,11 @@ import org.jetbrains.kotlin.gradle.targets.js.KotlinWasmTargetType
 import org.jetbrains.kotlin.gradle.targets.js.binaryen.BinaryenExec
 import org.jetbrains.kotlin.gradle.targets.js.dsl.*
 import org.jetbrains.kotlin.gradle.targets.js.ir.KotlinJsIrTargetConfigurator.Companion.configureJsDefaultOptions
+import org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsForWasmPlugin
 import org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsPlugin
+import org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootForWasmPlugin
 import org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootPlugin
+import org.jetbrains.kotlin.gradle.targets.js.npm.NpmResolverForWasmPlugin
 import org.jetbrains.kotlin.gradle.targets.js.npm.NpmResolverPlugin
 import org.jetbrains.kotlin.gradle.targets.js.typescript.TypeScriptValidationTask
 import org.jetbrains.kotlin.gradle.tasks.*
@@ -162,7 +165,11 @@ constructor(
     }
 
     private val commonLazyDelegate = lazy {
-        NpmResolverPlugin.apply(project)
+        if (wasmTargetType != null) {
+            NpmResolverForWasmPlugin.apply(project)
+        } else {
+            NpmResolverPlugin.apply(project)
+        }
         compilations.all { compilation ->
             compilation.binaries
                 .withType(JsIrBinary::class.java)
@@ -230,8 +237,8 @@ constructor(
         if (wasmTargetType != KotlinWasmTargetType.WASI) {
             commonLazy
         } else {
-            NodeJsPlugin.apply(project)
-            NodeJsRootPlugin.apply(project.rootProject)
+            NodeJsForWasmPlugin.apply(project)
+            NodeJsRootForWasmPlugin.apply(project.rootProject)
         }
 
         project.objects.newInstance(KotlinNodeJsIr::class.java, this).also {
