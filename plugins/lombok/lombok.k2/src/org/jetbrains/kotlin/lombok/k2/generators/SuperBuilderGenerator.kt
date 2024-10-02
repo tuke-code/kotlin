@@ -17,6 +17,7 @@ import org.jetbrains.kotlin.fir.java.declarations.FirJavaClassBuilder
 import org.jetbrains.kotlin.fir.java.declarations.FirJavaMethod
 import org.jetbrains.kotlin.fir.moduleData
 import org.jetbrains.kotlin.fir.resolve.defaultType
+import org.jetbrains.kotlin.fir.symbols.FirBasedSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirClassSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirRegularClassSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirTypeParameterSymbol
@@ -28,6 +29,7 @@ import org.jetbrains.kotlin.fir.types.builder.buildResolvedTypeRef
 import org.jetbrains.kotlin.fir.types.constructClassLikeType
 import org.jetbrains.kotlin.fir.types.constructType
 import org.jetbrains.kotlin.lombok.k2.config.ConeLombokAnnotations.SuperBuilder
+import org.jetbrains.kotlin.lombok.utils.LombokNames
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.types.Variance
@@ -38,10 +40,11 @@ class SuperBuilderGenerator(session: FirSession) : AbstractBuilderGenerator<Supe
         const val BUILDER_TYPE_PARAMETER_INDEX = 1
     }
 
-    override val builderModality: Modality
-        get() = Modality.ABSTRACT
+    override val builderModality: Modality = Modality.ABSTRACT
 
-    override fun getBuilder(classSymbol: FirClassSymbol<*>): SuperBuilder? {
+    override val annotationClassId: ClassId = LombokNames.SUPER_BUILDER_ID
+
+    override fun getBuilder(classSymbol: FirBasedSymbol<*>): SuperBuilder? {
         // There is also a build impl class, but it's private, and it's used only for internal purposes. Not relevant for API.
         return lombokService.getSuperBuilder(classSymbol)
     }
@@ -124,7 +127,8 @@ class SuperBuilderGenerator(session: FirSession) : AbstractBuilderGenerator<Supe
 
         val superBuilderClass = classSymbol.resolvedSuperTypeRefs.mapNotNull { superTypeRef ->
             val superTypeSymbol = superTypeRef.toRegularClassSymbol(session) ?: return@mapNotNull null
-            builderClassCache.getValue(superTypeSymbol)
+            val iterator = builderClassesCache.getValue(superTypeSymbol)?.iterator()
+            if (iterator?.hasNext() == true) iterator.next().component2() else null
         }.singleOrNull()
         val superBuilderTypeRef = superBuilderClass?.symbol?.constructType(
             typeArguments = arrayOf(
