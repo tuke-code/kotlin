@@ -54,29 +54,32 @@ class SuperBuilderGenerator(session: FirSession) : AbstractBuilderGenerator<Supe
         return builderClassSymbol.typeParameterSymbols[BUILDER_TYPE_PARAMETER_INDEX].defaultType
     }
 
-    override fun getBuilderMethods(
+    override fun MutableMap<Name, FirJavaMethod>.addBuilderMethodsIfNeeded(
         builder: SuperBuilder,
         classSymbol: FirClassSymbol<*>,
         builderClassSymbol: FirRegularClassSymbol,
-    ): List<FirJavaMethod> {
+        existingFunctionNames: Set<Name>,
+    ) {
         val builderTypeParameterSymbols = builderClassSymbol.typeParameterSymbols
 
-        return listOf(
+        addIfNeeded(Name.identifier("self"), existingFunctionNames) {
             builderClassSymbol.createJavaMethod(
-                Name.identifier("self"),
+                it,
                 valueParameters = emptyList(),
                 returnTypeRef = builderTypeParameterSymbols[BUILDER_TYPE_PARAMETER_INDEX].defaultType.toFirResolvedTypeRef(),
                 visibility = Visibilities.Protected,
                 modality = Modality.ABSTRACT
-            ),
+            )
+        }
+        addIfNeeded(Name.identifier(builder.buildMethodName), existingFunctionNames) {
             builderClassSymbol.createJavaMethod(
-                Name.identifier(builder.buildMethodName),
+                it,
                 valueParameters = emptyList(),
                 returnTypeRef = builderTypeParameterSymbols[CLASS_TYPE_PARAMETER_INDEX].defaultType.toFirResolvedTypeRef(),
                 visibility = Visibilities.Public,
                 modality = Modality.ABSTRACT
             )
-        )
+        }
     }
 
     override fun FirJavaClassBuilder.completeBuilder(
