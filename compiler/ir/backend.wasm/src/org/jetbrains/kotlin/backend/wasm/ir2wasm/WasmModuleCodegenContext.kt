@@ -154,8 +154,8 @@ class WasmFileCodegenContext(
         wasmFileFragment.mainFunctionWrappers.add(mainFunctionWrapper.getReferenceKey())
     }
 
-    fun defineTestFun(testFun: IrFunctionSymbol) {
-        wasmFileFragment.testFun.add(testFun.getReferenceKey())
+    fun addTestFunDeclarator(testFunctionDeclarator: IrFunctionSymbol) {
+        wasmFileFragment.testFunctionDeclarators.add(testFunctionDeclarator.getReferenceKey())
     }
 
     fun addEquivalentFunction(key: String, function: IrFunctionSymbol) {

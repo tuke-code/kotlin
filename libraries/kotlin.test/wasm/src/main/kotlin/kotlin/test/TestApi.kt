@@ -35,3 +35,18 @@ internal fun test(name: String, ignored: Boolean, testFn: () -> Any?) {
 internal fun startUnitTests() {
     // This will be filled with the corresponding code during lowering
 }
+
+internal val testRunners: MutableMap<String, MutableList<() -> Unit>> = mutableMapOf()
+
+internal fun addSuitedTestFun(suiteName: String, testFun: () -> Unit) {
+    testRunners.getOrPut(suiteName, ::mutableListOf).add(testFun)
+}
+
+internal fun executeTestRunners() {
+    testRunners.entries.forEach { (suiteName, runners) ->
+        suite(name = suiteName, ignored = false) {
+            runners.forEach { it() }
+        }
+    }
+    testRunners.clear()
+}

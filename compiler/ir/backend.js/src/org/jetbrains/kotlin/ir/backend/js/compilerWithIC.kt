@@ -87,7 +87,7 @@ class JsIrCompilerWithIC(
             moveBodilessDeclarationsToSeparatePlace(context, it)
         }
 
-        generateJsTests(context, mainModule, groupByPackage = false)
+        generateJsTests(context, mainModule)
 
         lowerPreservingTags(allModules, context, phaseConfig, context.irFactory.stageController as WholeWorldStageController)
 

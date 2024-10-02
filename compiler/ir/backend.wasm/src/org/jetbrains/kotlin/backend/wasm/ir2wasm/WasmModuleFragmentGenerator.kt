@@ -76,14 +76,12 @@ private fun compileIrFile(
         irDeclaration.acceptVoid(generator)
     }
 
-    val testFun = backendContext.testFunsPerFile[irFile]
-    if (testFun != null) {
-        wasmFileCodegenContext.defineTestFun(testFun.symbol)
-    }
-
     val fileContext = backendContext.getFileContext(irFile)
     fileContext.mainFunctionWrapper?.apply {
         wasmFileCodegenContext.addMainFunctionWrapper(symbol)
+    }
+    fileContext.testFunctionDeclarator?.apply {
+        wasmFileCodegenContext.addTestFunDeclarator(symbol)
     }
     fileContext.closureCallExports.forEach { (exportSignature, function) ->
         wasmFileCodegenContext.addEquivalentFunction("<1>_$exportSignature", function.symbol)

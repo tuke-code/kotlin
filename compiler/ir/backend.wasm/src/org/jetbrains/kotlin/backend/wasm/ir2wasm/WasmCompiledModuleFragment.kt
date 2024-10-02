@@ -48,7 +48,7 @@ class WasmCompiledFileFragment(
     var jsExceptionTagIndex: WasmSymbol<Int>? = null,
     val fieldInitializers: MutableList<FieldInitializer> = mutableListOf(),
     val mainFunctionWrappers: MutableList<IdSignature> = mutableListOf(),
-    var testFun: MutableList<IdSignature> = mutableListOf(),
+    var testFunctionDeclarators: MutableList<IdSignature> = mutableListOf(),
     val equivalentFunctions: MutableList<Pair<String, IdSignature>> = mutableListOf(),
     val jsModuleAndQualifierReferences: MutableSet<JsModuleAndQualifierReference> = mutableSetOf(),
     val classAssociatedObjectsInstanceGetters: MutableList<ClassAssociatedObjects> = mutableListOf(),
@@ -202,8 +202,10 @@ class WasmCompiledModuleFragment(
         definedFunctions.add(masterInitFunction)
 
         val startUnitTestsFunction = createStartUnitTestsFunction()
-        exports.add(WasmExport.Function("startUnitTests", startUnitTestsFunction))
-        definedFunctions.add(startUnitTestsFunction)
+        if (startUnitTestsFunction != null) {
+            exports.add(WasmExport.Function("startUnitTests", startUnitTestsFunction))
+            definedFunctions.add(startUnitTestsFunction)
+        }
     }
 
     fun linkWasmCompiledFragments(): WasmModule {
@@ -311,6 +313,13 @@ class WasmCompiledModuleFragment(
         return unitGetInstanceDeclaration
     }
 
+    private fun getExecuteTestRunners(): WasmFunction? {
+        val executeTestRunnersDeclaration = wasmCompiledFileFragments.firstNotNullOfOrNull { fragment ->
+            fragment.functions.defined.values.find { it.name == "kotlin.test.executeTestRunners" }
+        }
+        return executeTestRunnersDeclaration
+    }
+
     private fun getRecGroupTypesWithoutPotentiallyRecursiveFunctionTypes(): MutableList<WasmTypeDeclaration> {
         fun wasmTypeDeclarationOrderKey(declaration: WasmTypeDeclaration): Int {
             return when (declaration) {
@@ -407,16 +416,19 @@ class WasmCompiledModuleFragment(
         }
     }
 
-    private fun createStartUnitTestsFunction(): WasmFunction.Defined {
-        val startUnitTestsFunction = WasmFunction.Defined("kotlin.test.startUnitTests", WasmSymbol(parameterlessNoReturnFunctionType))
+    private fun createStartUnitTestsFunction(): WasmFunction.Defined? {
+        val executeTestRunners = getExecuteTestRunners() ?: return null
+
+        val startUnitTestsFunction = WasmFunction.Defined("startUnitTests", WasmSymbol(parameterlessNoReturnFunctionType))
         with(WasmExpressionBuilder(startUnitTestsFunction.instructions)) {
             wasmCompiledFileFragments.forEach { fragment ->
-                fragment.testFun.forEach { testFunc ->
-                    val testRunner = fragment.functions.defined[testFunc]
-                        ?: compilationException("Cannot find symbol for test runner", type = null)
-                    buildCall(WasmSymbol(testRunner), serviceCodeLocation)
+                fragment.testFunctionDeclarators.forEach{ declarator ->
+                    val declaratorFunction = fragment.functions.defined[declarator]
+                        ?: compilationException("Cannot find symbol for test declarator", type = null)
+                    buildCall(WasmSymbol(declaratorFunction), serviceCodeLocation)
                 }
             }
+            buildCall(WasmSymbol(executeTestRunners), serviceCodeLocation)
         }
         return startUnitTestsFunction
     }

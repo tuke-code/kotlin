@@ -654,7 +654,7 @@ class WasmSerializer(outputStream: OutputStream) {
             serializeNullable(jsExceptionTagIndex) { serializeWasmSymbolReadOnly(it, ::serializeInt) }
             serializeList(fieldInitializers, ::serializeFieldInitializer)
             serializeList(mainFunctionWrappers, ::serializeIdSignature)
-            serializeList(testFun, ::serializeIdSignature)
+            serializeList(testFunctionDeclarators, ::serializeIdSignature)
             serializeList(equivalentFunctions) { serializePair(it, ::serializeString, ::serializeIdSignature) }
             serializeSet(jsModuleAndQualifierReferences, ::serializeJsModuleAndQualifierReference)
             serializeList(classAssociatedObjectsInstanceGetters, ::serializeClassAssociatedObjects)

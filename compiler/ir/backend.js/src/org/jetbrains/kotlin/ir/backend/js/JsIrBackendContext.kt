@@ -123,7 +123,7 @@ class JsIrBackendContext(
     val packageLevelJsModules = hashSetOf<IrFile>()
     val declarationLevelJsModules = mutableListOf<IrDeclarationWithName>()
 
-    override val testFunsPerFile = hashMapOf<IrFile, IrSimpleFunction>()
+    val testFunsPerFile = hashMapOf<IrFile, IrSimpleFunction>()
 
     override val inlineClassesUtils = JsInlineClassesUtils(this)
 
