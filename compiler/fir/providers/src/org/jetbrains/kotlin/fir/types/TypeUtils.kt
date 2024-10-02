@@ -174,7 +174,7 @@ inline fun <T : ConeKotlinType> T.withArguments(replacement: (ConeTypeProjection
 }
 
 @OptIn(DynamicTypeConstructor::class)
-fun <T : ConeKotlinType> T.withAttributes(attributes: ConeAttributes): T {
+fun <T : ConeKotlinType> T.withAttributes(attributes: ConeAttributes, addAttributesToIntegerLiteralTypes: Boolean = false): T {
     if (this.attributes == attributes) {
         return this
     }
@@ -195,7 +195,7 @@ fun <T : ConeKotlinType> T.withAttributes(attributes: ConeAttributes): T {
         is ConeIntersectionType -> this
         // Attributes for stub types are not supported, and it's not obvious if it should
         is ConeStubType -> this
-        is ConeIntegerLiteralType -> this
+        is ConeIntegerLiteralType -> this.apply { if (addAttributesToIntegerLiteralTypes) this@apply.attributes.add(attributes) }
         else -> errorWithAttachment("Not supported: ${this::class}") {
             withConeTypeEntry("type", this@withAttributes)
         }

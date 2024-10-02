@@ -196,11 +196,16 @@ public abstract class KaFunctionType : KaClassType(), KaContextReceiversOwner {
     public abstract val receiverType: KaType?
     public abstract val hasReceiver: Boolean
     public abstract val parameterTypes: List<KaType>
+    public abstract val parameters: List<KaValueParameterType>
     public abstract val returnType: KaType
 
     @KaExperimentalApi
     public abstract override fun createPointer(): KaTypePointer<KaFunctionType>
 }
+
+@KaExperimentalApi
+public abstract class KaValueParameterType(public val name: Name?, public val type: KaType)
+
 
 @Deprecated("Use 'KaFunctionType' instead.", replaceWith = ReplaceWith("KaFunctionType"))
 public typealias KaFunctionalType = KaFunctionType

@@ -13,6 +13,9 @@ import org.jetbrains.kotlin.config.LanguageFeature
 import org.jetbrains.kotlin.fir.*
 import org.jetbrains.kotlin.fir.declarations.*
 import org.jetbrains.kotlin.fir.expressions.*
+import org.jetbrains.kotlin.fir.expressions.builder.FirAnnotationArgumentMappingBuilder
+import org.jetbrains.kotlin.fir.expressions.builder.FirAnnotationBuilder
+import org.jetbrains.kotlin.fir.expressions.builder.buildLiteralExpression
 import org.jetbrains.kotlin.fir.expressions.builder.buildNamedArgumentExpression
 import org.jetbrains.kotlin.fir.resolve.*
 import org.jetbrains.kotlin.fir.resolve.calls.*
@@ -23,14 +26,20 @@ import org.jetbrains.kotlin.fir.resolve.calls.candidate.yieldDiagnostic
 import org.jetbrains.kotlin.fir.resolve.diagnostics.ConeUnsupportedCallableReferenceTarget
 import org.jetbrains.kotlin.fir.resolve.inference.model.ConeArgumentConstraintPosition
 import org.jetbrains.kotlin.fir.scopes.CallableCopyTypeCalculator
+import org.jetbrains.kotlin.fir.symbols.impl.ConeClassLikeLookupTagImpl
 import org.jetbrains.kotlin.fir.symbols.impl.FirCallableSymbol
 import org.jetbrains.kotlin.fir.types.*
+import org.jetbrains.kotlin.fir.types.builder.FirResolvedTypeRefBuilder
+import org.jetbrains.kotlin.fir.types.impl.ConeClassLikeTypeImpl
 import org.jetbrains.kotlin.fir.utils.exceptions.withConeTypeEntry
 import org.jetbrains.kotlin.fir.utils.exceptions.withFirEntry
 import org.jetbrains.kotlin.fir.visitors.FirTransformer
 import org.jetbrains.kotlin.fir.visitors.FirVisitor
+import org.jetbrains.kotlin.name.ClassId
+import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.name.StandardClassIds
 import org.jetbrains.kotlin.resolve.calls.inference.runTransaction
+import org.jetbrains.kotlin.types.ConstantValueKind
 import org.jetbrains.kotlin.types.TypeApproximatorConfiguration
 import org.jetbrains.kotlin.types.expressions.CoercionStrategy
 import org.jetbrains.kotlin.utils.addToStdlib.shouldNotBeCalled
@@ -144,7 +153,27 @@ private fun buildResultingTypeAndAdaptation(
             val returnTypeWithoutCoercion = returnTypeRef.coneType
             val returnType = if (callableReferenceAdaptation == null) {
                 returnTypeWithoutCoercion.also {
-                    fir.valueParameters.mapTo(parameters) { it.returnTypeRef.coneType }
+                    fir.valueParameters.mapTo(parameters) { valueParameter ->
+                        val typeRefBuilder = FirResolvedTypeRefBuilder().apply {
+                            this.coneType = ConeClassLikeTypeImpl(
+                                lookupTag = ConeClassLikeLookupTagImpl(ClassId.fromString("kotlin/ParameterName")),
+                                typeArguments = emptyArray(),
+                                isMarkedNullable = false
+                            )
+                        }
+                        val annotationArgumentMappingBuilder = FirAnnotationArgumentMappingBuilder().apply {
+                            this.mapping[Name.identifier("name")] =
+                                buildLiteralExpression(null, ConstantValueKind.String, valueParameter.name.identifier, setType = true)
+                        }
+                        val annotationBuilder = FirAnnotationBuilder().apply {
+                            this.annotationTypeRef = typeRefBuilder.build()
+                            this.argumentMapping = annotationArgumentMappingBuilder.build()
+                        }
+                        val newType = valueParameter.returnTypeRef.coneType.withAttributes(
+                            ConeAttributes.create(listOf(CustomAnnotationTypeAttribute(listOf(annotationBuilder.build()))))
+                        )
+                        return@mapTo newType
+                    }
                 }
             } else {
                 parameters += callableReferenceAdaptation.argumentTypes

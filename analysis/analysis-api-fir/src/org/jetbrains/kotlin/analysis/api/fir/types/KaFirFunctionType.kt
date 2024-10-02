@@ -17,15 +17,18 @@ import org.jetbrains.kotlin.analysis.api.fir.types.qualifiers.UsualClassTypeQual
 import org.jetbrains.kotlin.analysis.api.fir.utils.buildAbbreviatedType
 import org.jetbrains.kotlin.analysis.api.fir.utils.createPointer
 import org.jetbrains.kotlin.analysis.api.impl.base.KaBaseContextReceiver
+import org.jetbrains.kotlin.analysis.api.impl.base.resolution.KaBaseValueParameterType
 import org.jetbrains.kotlin.analysis.api.lifetime.KaLifetimeToken
 import org.jetbrains.kotlin.analysis.api.lifetime.withValidityAssertion
 import org.jetbrains.kotlin.analysis.api.symbols.KaClassLikeSymbol
 import org.jetbrains.kotlin.analysis.api.types.*
 import org.jetbrains.kotlin.analysis.low.level.api.fir.util.errorWithFirSpecificEntries
 import org.jetbrains.kotlin.analysis.utils.errors.requireIsInstance
+import org.jetbrains.kotlin.fir.expressions.FirLiteralExpression
 import org.jetbrains.kotlin.fir.types.*
 import org.jetbrains.kotlin.fir.types.impl.ConeClassLikeTypeImpl
 import org.jetbrains.kotlin.name.ClassId
+import org.jetbrains.kotlin.name.Name
 
 internal class KaFirFunctionType(
     override val coneType: ConeClassLikeTypeImpl,
@@ -89,6 +92,21 @@ internal class KaFirFunctionType(
     override val parameterTypes: List<KaType>
         get() = withValidityAssertion {
             coneType.valueParameterTypesWithoutReceivers(builder.rootSession).map { it.buildKtType() }
+        }
+
+    override val parameters: List<KaValueParameterType>
+        get() = withValidityAssertion {
+            parameterTypes.map { parameterType ->
+                val identifier = Name.identifier("name")
+                val name = (parameterType as? KaFirType)?.coneType?.attributes?.firstNotNullOfOrNull { attribute ->
+                    (attribute as? CustomAnnotationTypeAttribute)?.annotations?.firstNotNullOfOrNull { annotation ->
+                        (annotation.argumentMapping.mapping[identifier] as? FirLiteralExpression)?.value as? String
+                    }
+                }?.let {
+                    Name.identifier(it)
+                }
+                KaBaseValueParameterType(name, parameterType)
+            }
         }
 
     override val returnType: KaType
