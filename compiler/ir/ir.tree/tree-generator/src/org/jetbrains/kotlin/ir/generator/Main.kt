@@ -33,7 +33,7 @@ fun main(args: Array<String>) {
             listOf(
                 elementVisitorType to ::VisitorPrinter,
                 elementVisitorVoidType to ::VisitorVoidPrinter,
-                elementTransformerType to ::TransformerPrinter.bind(model.rootElement),
+                irTransformerType to ::TransformerPrinter.bind(model.rootElement),
                 elementTransformerVoidType to ::TransformerVoidPrinter,
                 typeVisitorType to ::TypeVisitorPrinter.bind(model.rootElement),
                 typeVisitorVoidType to ::TypeVisitorVoidPrinter.bind(model.rootElement),

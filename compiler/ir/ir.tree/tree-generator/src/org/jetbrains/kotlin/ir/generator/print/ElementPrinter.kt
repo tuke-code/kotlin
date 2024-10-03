@@ -12,8 +12,8 @@ import org.jetbrains.kotlin.generators.tree.imports.ArbitraryImportable
 import org.jetbrains.kotlin.generators.tree.nullable
 import org.jetbrains.kotlin.generators.tree.printer.*
 import org.jetbrains.kotlin.ir.generator.BASE_PACKAGE
-import org.jetbrains.kotlin.ir.generator.elementTransformerType
 import org.jetbrains.kotlin.ir.generator.elementVisitorType
+import org.jetbrains.kotlin.ir.generator.irTransformerType
 import org.jetbrains.kotlin.ir.generator.model.Element
 import org.jetbrains.kotlin.ir.generator.model.Field
 import org.jetbrains.kotlin.ir.generator.model.ListField
@@ -49,7 +49,7 @@ internal class ElementPrinter(printer: ImportCollectingPrinter) : AbstractElemen
 
         printTransformMethod(
             element = element,
-            transformerClass = elementTransformerType,
+            transformerClass = irTransformerType,
             implementation = "accept(transformer, data)".takeIf { !element.isRootElement },
             returnType = element,
             treeName = "IR",
@@ -87,7 +87,7 @@ internal class ElementPrinter(printer: ImportCollectingPrinter) : AbstractElemen
         if (element.hasTransformChildrenMethod) {
             printTransformChildrenMethod(
                 element = element,
-                transformerClass = elementTransformerType,
+                transformerClass = irTransformerType,
                 returnType = StandardTypes.unit,
                 override = !element.isRootElement,
             )
