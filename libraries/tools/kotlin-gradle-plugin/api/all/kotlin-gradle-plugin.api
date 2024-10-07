@@ -4097,8 +4097,13 @@ public abstract interface class org/jetbrains/kotlin/gradle/targets/js/ir/SubTar
 }
 
 public abstract interface class org/jetbrains/kotlin/gradle/targets/js/ir/WasmBinary {
+	public abstract fun getCompilation ()Lorg/jetbrains/kotlin/gradle/targets/js/ir/KotlinJsIrCompilation;
+	public abstract fun getLinkTask ()Lorg/gradle/api/tasks/TaskProvider;
+	public abstract fun getMode ()Lorg/jetbrains/kotlin/gradle/targets/js/dsl/KotlinJsBinaryMode;
+	public abstract fun getName ()Ljava/lang/String;
 	public abstract fun getOptimizeTask ()Lorg/gradle/api/tasks/TaskProvider;
 	public abstract fun getOptimizeTaskName ()Ljava/lang/String;
+	public abstract fun getTarget ()Lorg/jetbrains/kotlin/gradle/targets/js/ir/KotlinJsIrTarget;
 }
 
 public final class org/jetbrains/kotlin/gradle/targets/js/ir/WebpackConfigurator : org/jetbrains/kotlin/gradle/targets/js/ir/SubTargetConfigurator {
