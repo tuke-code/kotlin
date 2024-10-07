@@ -313,6 +313,12 @@ val FirClassBuilder.ownerRegularOrAnonymousObjectSymbol: FirClassSymbol<FirClass
         is FirRegularClassBuilder -> symbol
     }
 
+/**
+ * @param explicitDeclarationSource In the Analysis API mode, this function is called at least twice – during [FirResolvePhase.RAW_FIR] in lazy mode,
+ * and the next time to calculate lazy body.
+ * This means that `fakeSource` will be different in these two situations after KT-64898.
+ * As declarations (such as property accessors and the setter parameter) cannot be changed after creation, so it has to be stable.
+ */
 fun <T> FirPropertyBuilder.generateAccessorsByDelegate(
     delegateBuilder: FirWrappedDelegateExpressionBuilder?,
     moduleData: FirModuleData,
@@ -322,6 +328,7 @@ fun <T> FirPropertyBuilder.generateAccessorsByDelegate(
     lazyDelegateExpression: FirLazyExpression? = null,
     lazyBodyForGeneratedAccessors: FirLazyBlock? = null,
     bindFunction: (target: FirFunctionTarget, function: FirFunction) -> Unit = FirFunctionTarget::bind,
+    explicitDeclarationSource: KtSourceElement? = null
 ) {
     if (delegateBuilder == null) return
     val delegateFieldSymbol = FirDelegateFieldSymbol(symbol.callableId).also {
@@ -330,6 +337,7 @@ fun <T> FirPropertyBuilder.generateAccessorsByDelegate(
 
     val isMember = ownerRegularOrAnonymousObjectSymbol != null
     val fakeSource = delegateBuilder.source?.fakeElement(KtFakeSourceElementKind.DelegatedPropertyAccessor)
+    val declarationFakeSource = explicitDeclarationSource?.fakeElement(KtFakeSourceElementKind.DelegatedPropertyAccessor) ?: fakeSource
 
     /*
      * If we have delegation with provide delegate then we generate call like
@@ -437,7 +445,7 @@ fun <T> FirPropertyBuilder.generateAccessorsByDelegate(
         val getterStatus = getter?.status
         val getterElement = getter?.source?.takeIf {
             it.kind == KtRealSourceElementKind
-        }?.fakeElement(KtFakeSourceElementKind.DelegatedPropertyAccessor) ?: fakeSource
+        }?.fakeElement(KtFakeSourceElementKind.DelegatedPropertyAccessor) ?: declarationFakeSource
         getter = buildPropertyAccessor {
             this.source = getterElement
             this.moduleData = moduleData
@@ -479,7 +487,7 @@ fun <T> FirPropertyBuilder.generateAccessorsByDelegate(
         val returnTarget = FirFunctionTarget(null, isLambda = false)
         val parameterAnnotations = setter?.valueParameters?.firstOrNull()?.annotations
         val setterStatus = setter?.status
-        val setterElement = setter?.source?.fakeElement(KtFakeSourceElementKind.DelegatedPropertyAccessor) ?: fakeSource
+        val setterElement = setter?.source?.fakeElement(KtFakeSourceElementKind.DelegatedPropertyAccessor) ?: declarationFakeSource
         setter = buildPropertyAccessor {
             this.source = setterElement
             this.moduleData = moduleData
@@ -491,7 +499,7 @@ fun <T> FirPropertyBuilder.generateAccessorsByDelegate(
             }
             symbol = FirPropertyAccessorSymbol()
             val parameter = buildValueParameter {
-                source = fakeSource
+                source = declarationFakeSource
                 containingFunctionSymbol = this@buildPropertyAccessor.symbol
                 this.moduleData = moduleData
                 origin = FirDeclarationOrigin.Source
