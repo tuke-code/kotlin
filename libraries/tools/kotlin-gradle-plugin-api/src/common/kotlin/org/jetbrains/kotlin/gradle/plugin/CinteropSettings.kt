@@ -42,39 +42,71 @@ import org.gradle.api.file.FileCollection
 interface CInteropSettings : Named {
 
     /**
-     * The collection of included headers and header filters.
+     *  Directories to look for headers.
      */
     interface IncludeDirectories {
         /**
-         * Adds the specified directories into the set of included headers.
-         * Equals passing `-compiler-options -I{firstIncludeDir}...-I{lastIncludeDir}` to the `cinterop` tool.
+         * Directories for header search (an equivalent of the -I<path> compiler option).
+         *
+         * #### Usage example
+         * The following example demonstrates how to add multiple directories containing header files in a `build.gradle.kts` file:
+         * ```kotlin
+         * //build.gradle.kts
+         * kotlin {
+         *     linuxX64() {
+         *         compilations.getByName("main") {
+         *             cinterops {
+         *                 val cinterop by creating {
+         *                     includeDirs {
+         *                         allHeaders(project.file("src/main/headersDir1"), project.file("src/main/headersDir2"))
+         *                     }
+         *                 }
+         *             }
+         *         }
+         *     }
+         * ```
+         * In the example above, the directories `src/main/headersDir1` and `src/main/headersDir2` in the project directory
+         * are specified as locations containing the header files required for the `cinterop` process.
          *
          * @param includeDirs The directories to be included.
          */
         fun allHeaders(vararg includeDirs: Any)
 
         /**
-         * Adds the specified directories into the set of included headers.
-         * Equals passing `-compiler-options -I{firstIncludeDir}...-I{lastIncludeDir}` to the `cinterop` tool.
-         *
          * @param includeDirs The collection of directories to be included
          * @see [allHeaders]
          */
         fun allHeaders(includeDirs: Collection<Any>)
 
         /**
-         * Adds given directories to the set of included header filters.
-         * Equals passing `-headerFilterAdditionalSearchPrefix` to the `cinterop` tool.
+         * Additional directories to search headers listed in the 'headerFilter' def-file option.
+         * `-headerFilterAdditionalSearchPrefix` command line option equivalent.
+
+         * #### Usage example
+         * The following example demonstrates how to add multiple directories containing header files in a `build.gradle.kts` file:
+         * ```kotlin
+         * //build.gradle.kts
+         * kotlin {
+         *     linuxX64() {
+         *         compilations.getByName("main") {
+         *             cinterops {
+         *                 val cinterop by creating {
+         *                     includeDirs {
+         *                         allHeaders(headerFilterOnly(project.file("include/libs"))
+         *                     }
+         *                 }
+         *             }
+         *         }
+         *     }
+         * ```
+         * In the example above, the directory `include/libs` will be specified as prefix for the listed in the 'headerFilter' def-file option.
          *
-         * @param includeDirs The directories to be included for the header filter.
+         * @param includeDirs The directories to be included as a prefixes for the header filters.
          */
         fun headerFilterOnly(vararg includeDirs: Any)
 
         /**
-         * Adds given directories to the set of included header filters.
-         * Equals passing `-headerFilterAdditionalSearchPrefix` to the `cinterop` tool.
-         *
-         * @param includeDirs The collection of directories to be included for the header filter.
+         * @param includeDirs The collection of directories to be included as a prefixes for the header filters.
          * @see [headerFilterOnly]
          */
         fun headerFilterOnly(includeDirs: Collection<Any>)
@@ -101,7 +133,7 @@ interface CInteropSettings : Named {
      *     }
      *}
      *```
-     * In the example above, the `custom.def` file located in the root project directory is set as the def file.
+     * In the example above, the `custom.def` file located in the project directory is set as the def file.
      *
      * @param file The path to the `.def` file to be used for C interoperability.
      * **Default value:** `src/nativeInterop/cinterop/{name_of_the_cinterop}.def`
