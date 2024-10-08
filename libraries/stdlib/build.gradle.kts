@@ -634,6 +634,9 @@ tasks {
         from(kotlin.jvm().compilations["mainJdk7"].output.allOutputs)
         from(kotlin.jvm().compilations["mainJdk8"].output.allOutputs)
         from(project.sourceSets["java9"].output)
+
+        // See ExternalStaticDebugProbes.kt
+        exclude("kotlinx/coroutines/external/*")
     }
 
     val jvmSourcesJar by existing(Jar::class) {
@@ -650,6 +653,9 @@ tasks {
                 into("jdk8")
             }
         }
+
+        // See ExternalStaticDebugProbes.kt
+        exclude("kotlinx/coroutines/external/*")
     }
 
     dexMethodCount {

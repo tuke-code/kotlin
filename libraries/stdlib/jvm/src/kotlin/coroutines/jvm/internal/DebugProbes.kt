@@ -5,8 +5,18 @@
 
 package kotlin.coroutines.jvm.internal
 
+import kotlinx.coroutines.external.ExternalStaticDebugProbes
 import kotlin.coroutines.Continuation
 import kotlin.coroutines.intrinsics.*
+
+/**
+ * See [ExternalStaticDebugProbes]
+ * This [ExternalStaticDebugProbes] are 'compileOnly' and won't be packaged into the stdlib-jar.
+ * Therefore, yielding room for an application to provide them statically at this location.
+ */
+private val isExternalStaticDebugProbesAvailable = runCatching {
+    Class.forName("kotlinx.coroutines.external.ExternalStaticDebugProbes")
+}.isSuccess
 
 /**
  * This probe is invoked when coroutine is being created and it can replace completion
@@ -43,6 +53,9 @@ import kotlin.coroutines.intrinsics.*
  */
 @SinceKotlin("1.3")
 internal fun <T> probeCoroutineCreated(completion: Continuation<T>): Continuation<T> {
+    if (isExternalStaticDebugProbesAvailable) {
+        return ExternalStaticDebugProbes.probeCoroutineCreated(completion)
+    }
     /** implementation of this function is replaced by debugger */
     return completion
 }
@@ -60,9 +73,11 @@ internal fun <T> probeCoroutineCreated(completion: Continuation<T>): Continuatio
  * parameter in this function is `Continuation<*>`. See [probeCoroutineCreated] for details.
  */
 @SinceKotlin("1.3")
-@Suppress("UNUSED_PARAMETER")
 internal fun probeCoroutineResumed(frame: Continuation<*>) {
     /** implementation of this function is replaced by debugger */
+    if (isExternalStaticDebugProbesAvailable) {
+        ExternalStaticDebugProbes.probeCoroutineResumed(frame)
+    }
 }
 
 /**
@@ -76,8 +91,10 @@ internal fun probeCoroutineResumed(frame: Continuation<*>) {
  * parameter in this function is `Continuation<*>`. See [probeCoroutineCreated] for details.
  */
 @SinceKotlin("1.3")
-@Suppress("UNUSED_PARAMETER")
 internal fun probeCoroutineSuspended(frame: Continuation<*>) {
     /** implementation of this function is replaced by debugger */
+    if (isExternalStaticDebugProbesAvailable) {
+        ExternalStaticDebugProbes.probeCoroutineSuspended(frame)
+    }
 }
 
