@@ -166,7 +166,7 @@ object FirJvmErrorsDefaultMessages : BaseDiagnosticRendererFactory() {
         )
         map.put(
             PROPERTY_HIDES_JAVA_FIELD,
-            "This property hides Java field ''{0}'' thus making it inaccessible",
+            "This property hides Java field ''{0}'' thus making it inaccessible.",
             SYMBOL,
         )
 
