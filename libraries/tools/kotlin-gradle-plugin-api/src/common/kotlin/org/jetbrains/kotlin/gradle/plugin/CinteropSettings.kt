@@ -222,6 +222,22 @@ interface CInteropSettings : Named {
      * Adds a header file to produce kotlin bindings.
      * `-header` command line options equivalent.
      *
+     * #### Usage example
+     * ```kotlin
+     * kotlin {
+     *     linuxX64() {
+     *         compilations.getByName("main") {
+     *             cinterops {
+     *                 val cinterop by creating {
+     *                     defFile(project.file("custom. def"))
+     *                     header(project.file("custom.h"))
+     *                 }
+     *             }
+     *         }
+     *     }
+     * }
+     * ```
+     *
      * @param file The header file to be included for interoperability with C.
      */
     fun header(file: Any) = headers(file)
@@ -229,6 +245,22 @@ interface CInteropSettings : Named {
     /**
      * Adds header files to produce kotlin bindings.
      * `-header` command line options equivalent.
+     *
+     * #### Usage example
+     * ```kotlin
+     * kotlin {
+     *     linuxX64() {
+     *         compilations.getByName("main") {
+     *             cinterops {
+     *                 val cinterop by creating {
+     *                     defFile(project.file("custom. def"))
+     *                     headers(project.file("custom.h"))
+     *                 }
+     *             }
+     *         }
+     *     }
+     * }
+     * ```
      *
      * @param files The header files to be included for interoperability with C.
      * @see [header]
@@ -238,6 +270,22 @@ interface CInteropSettings : Named {
     /**
      * Adds header files to produce kotlin bindings.
      * `-header` command line options equivalent.
+     *
+     * #### Usage example
+     * ```kotlin
+     * kotlin {
+     *     linuxX64() {
+     *         compilations.getByName("main") {
+     *             cinterops {
+     *                 val cinterop by creating {
+     *                     defFile(project.file("custom. def"))
+     *                     headers(listOf(project.file("custom.h")))
+     *                 }
+     *             }
+     *         }
+     *     }
+     * }
+     * ```
      *
      * @param files The collection of header files to be included for interoperability with C.
      * @see [headers]
@@ -379,6 +427,22 @@ interface CInteropSettings : Named {
      * Adds additional linker options.
      * `-linker-options` command line options equivalent.
      *
+     * #### Usage example
+     * ```kotlin
+     * kotlin {
+     *     linuxX64() {
+     *         compilations.getByName("main") {
+     *             cinterops {
+     *                 val cinterop by creating {
+     *                     defFile(project.file("custom. def"))
+     *                     linkerOpts("-lNativeBase64")
+     *                 }
+     *             }
+     *         }
+     *     }
+     * }
+     * ```
+     *
      * @param values linker options
      */
     fun linkerOpts(vararg values: String)
@@ -386,6 +450,22 @@ interface CInteropSettings : Named {
     /**
      * Adds additional linker options.
      * `-linker-options` command line options equivalent.
+     *
+     * #### Usage example
+     * ```kotlin
+     * kotlin {
+     *     linuxX64() {
+     *         compilations.getByName("main") {
+     *             cinterops {
+     *                 val cinterop by creating {
+     *                     defFile(project.file("custom. def"))
+     *                     linkerOpts(listOf("-lNativeBase64"))
+     *                 }
+     *             }
+     *         }
+     *     }
+     * }
+     * ```
      *
      * @param values List of linker options
      * @see [linkerOpts]
