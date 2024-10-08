@@ -12,8 +12,32 @@ import org.gradle.api.Named
 import org.gradle.api.file.FileCollection
 
 /**
- * This class provides base settings for interoperability with C.
- * In terms of Kotlin Native it provides a convenient way for setting options for [cinterop tool](https://kotlinlang.org/docs/native-c-interop.html).
+ * # C Interoperability Settings
+ * This interface represents the configuration settings for invoking the [cinterop tool](https://kotlinlang.org/docs/native-c-interop.html)
+ * in Kotlin/Native projects.
+ * The cinterop tool provides the ability to use C libraries inside Kotlin projects.
+ *
+ * **Important:** Use the [CInteropSettings] API instead of directly accessing tasks, configurations,
+ * and other related domain objects through the Gradle API.
+ *
+ * ## Example
+ * Here is an example of how to use a [CInteropSettings] to configure cinterop task for the linuxX64 target:
+ * ```kotlin
+ * //build.gradle.kts
+ * kotlin {
+ *     linuxX64() {
+ *         compilations.getByName("main") {
+ *             cinterops {
+ *                 val cinteropForLinuxX64 by creating {
+ *                      // Configure the CInteropSettings here
+ *                 }
+ *             }
+ *         }
+ *     }
+ * }
+ * ```
+ * In this example, we've added a `cinterop` setting named `cinteropForLinuxX64` to the `linuxX64` `main` [KotlinCompilation].
+ * These settings will be used to create and configure a `cinterop` task, along with the necessary dependencies for the compile task.
  */
 interface CInteropSettings : Named {
 
