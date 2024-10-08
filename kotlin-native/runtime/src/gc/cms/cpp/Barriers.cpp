@@ -164,7 +164,8 @@ PERFORMANCE_INLINE void gc::barriers::afterSpecialRefReleaseToZero(mm::DirectRef
     auto phase = currentPhase();
     BarriersLogDebug(phase, "Write *%p <- NULL (%p overwritten)", ref.location(), ref.load());
     if (__builtin_expect(phase == BarriersPhase::kMarkClosure, false)) {
-        CalledFromNativeGuard guard;
+        // Can be called both from native code and from Kotlin code.
+        CalledFromNativeGuard guard(/*reentrant=*/true);
         beforeHeapRefUpdateSlowPath(ref, nullptr, true);
     }
 }
