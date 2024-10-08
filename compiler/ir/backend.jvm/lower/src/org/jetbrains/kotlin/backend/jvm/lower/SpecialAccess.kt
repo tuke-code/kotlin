@@ -12,6 +12,7 @@ import org.jetbrains.kotlin.backend.jvm.JvmBackendContext
 import org.jetbrains.kotlin.backend.jvm.ir.*
 import org.jetbrains.kotlin.backend.jvm.lower.SyntheticAccessorLowering.Companion.isAccessible
 import org.jetbrains.kotlin.backend.jvm.unboxInlineClass
+import org.jetbrains.kotlin.descriptors.Modality
 import org.jetbrains.kotlin.ir.UNDEFINED_OFFSET
 import org.jetbrains.kotlin.ir.builders.*
 import org.jetbrains.kotlin.ir.declarations.IrDeclarationOrigin
@@ -449,7 +450,9 @@ internal class SpecialAccessLowering(
 
     private fun shouldUseAccessor(accessor: IrSimpleFunction): Boolean {
         return (context.generatorExtensions as StubGeneratorExtensions).isAccessorWithExplicitImplementation(accessor)
-                || accessor.correspondingPropertySymbol?.owner?.isDelegated == true
+                || accessor.correspondingPropertySymbol?.owner?.let {
+                    it.isDelegated || it.modality != Modality.FINAL || it.backingField == null
+                } == true
     }
 
     // Returns a pair of the _type_ containing the field and the _instance_ on
