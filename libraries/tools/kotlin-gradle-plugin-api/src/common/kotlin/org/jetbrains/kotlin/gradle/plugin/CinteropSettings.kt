@@ -54,9 +54,11 @@ interface CInteropSettings : Named {
         fun allHeaders(vararg includeDirs: Any)
 
         /**
-         * Same as [allHeaders]
+         * Adds the specified directories into the set of included headers.
+         * Equals passing `-compiler-options -I{firstIncludeDir}...-I{lastIncludeDir}` to the `cinterop` tool.
          *
          * @param includeDirs The collection of directories to be included
+         * @see [allHeaders]
          */
         fun allHeaders(includeDirs: Collection<Any>)
 
@@ -69,9 +71,11 @@ interface CInteropSettings : Named {
         fun headerFilterOnly(vararg includeDirs: Any)
 
         /**
-         * Same as [headerFilterOnly]
+         * Adds given directories to the set of included header filters.
+         * Equals passing `-headerFilterAdditionalSearchPrefix` to the `cinterop` tool.
          *
          * @param includeDirs The collection of directories to be included for the header filter.
+         * @see [headerFilterOnly]
          */
         fun headerFilterOnly(includeDirs: Collection<Any>)
     }
@@ -121,16 +125,20 @@ interface CInteropSettings : Named {
     fun header(file: Any) = headers(file)
 
     /**
-     * Same as [header], but for multiple files
+     * Adds header files to produce kotlin bindings
+     * Equals passing `-header` to the `cinterop` tool.
      *
      * @param files The header files to be included for interoperability with C.
+     * @see [header]
      */
     fun headers(vararg files: Any)
 
     /**
-     * Same as [header], but for collection of files
+     * Adds header files to produce kotlin bindings
+     * Equals passing `-header` to the `cinterop` tool.
      *
      * @param files The collection of header files to be included for interoperability with C.
+     * @see [headers]
      */
     fun headers(files: FileCollection)
 
@@ -143,12 +151,12 @@ interface CInteropSettings : Named {
     fun includeDirs(vararg values: Any)
 
     /**
-     * Same as [includeDirs]
+     * @see [includeDirs]
      */
     fun includeDirs(action: Action<IncludeDirectories>)
 
     /**
-     * Same as [includeDirs]
+     * @see [includeDirs]
      */
     fun includeDirs(configure: IncludeDirectories.() -> Unit)
 
@@ -161,7 +169,7 @@ interface CInteropSettings : Named {
     fun compilerOpts(vararg values: String)
 
     /**
-     * Same as [compilerOpts]
+     * @see [compilerOpts]
      */
     fun compilerOpts(values: List<String>)
 
@@ -174,7 +182,7 @@ interface CInteropSettings : Named {
     fun linkerOpts(vararg values: String)
 
     /**
-     * Same as [linkerOpts]
+     * @see [linkerOpts]
      */
     fun linkerOpts(values: List<String>)
 
@@ -184,7 +192,7 @@ interface CInteropSettings : Named {
     fun extraOpts(vararg values: Any)
 
     /**
-     * Same as [extraOpts]
+     * @see [extraOpts]
      */
     fun extraOpts(values: List<Any>)
 }
