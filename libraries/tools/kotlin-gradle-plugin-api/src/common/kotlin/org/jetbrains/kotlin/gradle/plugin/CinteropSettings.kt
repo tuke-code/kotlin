@@ -75,6 +75,30 @@ interface CInteropSettings : Named {
         fun allHeaders(vararg includeDirs: Any)
 
         /**
+         * Directories for header search (an equivalent of the `-I<path>` compiler option).
+         *
+         * #### Usage example
+         * The following example demonstrates how to add multiple directories containing header files in a `build.gradle.kts` file:
+         * ```kotlin
+         * //build.gradle.kts
+         * kotlin {
+         *     linuxX64() {
+         *         compilations.getByName("main") {
+         *             cinterops {
+         *                 val cinterop by creating {
+         *                     defFile(project.file("custom.def"))
+         *                     includeDirs {
+         *                         allHeaders(listOf(project.file("src/main/headersDir1"), project.file("src/main/headersDir2")))
+         *                     }
+         *                 }
+         *             }
+         *         }
+         *     }
+         * }
+         * ```
+         * In the example above, the directories `src/main/headersDir1` and `src/main/headersDir2` in the project directory
+         * are specified as locations containing the header files required for the `cinterop` process.
+         *
          * @param includeDirs The collection of directories to be included
          * @see [allHeaders]
          */
@@ -83,7 +107,7 @@ interface CInteropSettings : Named {
         /**
          * Additional directories to search headers listed in the `headerFilter` def-file option.
          * `-headerFilterAdditionalSearchPrefix` command line option equivalent.
-
+         *
          * #### Usage example
          * The following example demonstrates how to add multiple directories containing header files in a `build.gradle.kts` file:
          * ```kotlin
@@ -111,6 +135,31 @@ interface CInteropSettings : Named {
         fun headerFilterOnly(vararg includeDirs: Any)
 
         /**
+         * Additional directories to search headers listed in the `headerFilter` def-file option.
+         * `-headerFilterAdditionalSearchPrefix` command line option equivalent.
+         *
+         * #### Usage example
+         * The following example demonstrates how to add multiple directories containing header files in a `build.gradle.kts` file:
+         * ```kotlin
+         * //build.gradle.kts
+         * kotlin {
+         *     linuxX64() {
+         *         compilations.getByName("main") {
+         *             cinterops {
+         *                 val cinterop by creating {
+         *                     defFile(project.file("custom.def"))
+         *                     includeDirs {
+         *                         headerFilterOnly(listOf(project.file("include/libs")))
+         *                     }
+         *                 }
+         *             }
+         *         }
+         *     }
+         * }
+         * ```
+         * In the example above, the directory `include/libs` will be specified as prefix for the listed in the `headerFilter`
+         * declared in the `custom.def` option.
+         *
          * @param includeDirs The collection of directories to be included as a prefixes for the header filters.
          * @see [headerFilterOnly]
          */
@@ -196,7 +245,7 @@ interface CInteropSettings : Named {
     fun headers(files: FileCollection)
 
     /**
-     * Directories for header search (an equivalent of the `-I<path>` compiler option).
+     * Directories to look for headers
      *
      * #### Usage example
      * The following example demonstrates how to add multiple directories containing header files in a `build.gradle.kts` file:
@@ -218,17 +267,62 @@ interface CInteropSettings : Named {
      * In the example above, the directories `src/main/headersDir1` and `src/main/headersDir2` in the project directory
      * are specified as locations containing the header files required for the `cinterop` process.
      *
-     *
      * @param values The directories to be included.
      */
     fun includeDirs(vararg values: Any)
 
     /**
+     * Directories to look for headers
+     *
+     * #### Usage example
+     * The following example demonstrates how to add multiple directories containing header files in a `build.gradle.kts` file:
+     * ```kotlin
+     * //build.gradle.kts
+     * kotlin {
+     *     linuxX64() {
+     *         compilations.getByName("main") {
+     *             cinterops {
+     *                 val cinterop by creating {
+     *                     defFile(project.file("custom.def"))
+     *                     includeDirs(Action { allHeaders(project.file("include/libs")) })
+     *                 }
+     *             }
+     *         }
+     *     }
+     * }
+     * ```
+     * In the example above, the directories `src/main/headersDir1` and `src/main/headersDir2` in the project directory
+     * are specified as locations containing the header files required for the `cinterop` process.
+     *
+     * @param action Action to declare included directories
      * @see [includeDirs]
      */
     fun includeDirs(action: Action<IncludeDirectories>)
 
     /**
+     * Directories to look for headers
+     *
+     * #### Usage example
+     * The following example demonstrates how to add multiple directories containing header files in a `build.gradle.kts` file:
+     * ```kotlin
+     * //build.gradle.kts
+     * kotlin {
+     *     linuxX64() {
+     *         compilations.getByName("main") {
+     *             cinterops {
+     *                 val cinterop by creating {
+     *                     defFile(project.file("custom.def"))
+     *                     includeDirs { allHeaders(project.file("include/libs")) }
+     *                 }
+     *             }
+     *         }
+     *     }
+     * }
+     * ```
+     * In the example above, the directories `src/main/headersDir1` and `src/main/headersDir2` in the project directory
+     * are specified as locations containing the header files required for the `cinterop` process.
+     *
+     * @param configure [IncludeDirectories] configuration
      * @see [includeDirs]
      */
     fun includeDirs(configure: IncludeDirectories.() -> Unit)
@@ -258,6 +352,25 @@ interface CInteropSettings : Named {
     fun compilerOpts(vararg values: String)
 
     /**
+     * Options to be passed to compiler by cinterop tool.
+     *
+     * #### Usage example
+     * ```kotlin
+     * kotlin {
+     *     linuxX64() {
+     *         compilations.getByName("main") {
+     *             cinterops {
+     *                 val cinterop by creating {
+     *                     defFile(project.file("custom.def"))
+     *                     compilerOpts(listOf("-Ipath/to/headers"))
+     *                 }
+     *             }
+     *         }
+     *     }
+     * }
+     * ```
+     * In the example about `-compiler-option -Ipath/to/headers` will be passed to the cinterop tool.
+     *
      * @see [compilerOpts]
      */
     fun compilerOpts(values: List<String>)
@@ -271,6 +384,10 @@ interface CInteropSettings : Named {
     fun linkerOpts(vararg values: String)
 
     /**
+     * Adds additional linker options.
+     * `-linker-options` command line options equivalent.
+     *
+     * @param values List of linker options
      * @see [linkerOpts]
      */
     fun linkerOpts(values: List<String>)
@@ -293,11 +410,30 @@ interface CInteropSettings : Named {
      *     }
      * }
      * ```
+     *
      * @param values Addition cinterop tool options, which are not presented in [CInteropSettings]
      */
     fun extraOpts(vararg values: Any)
 
     /**
+     * Adds any additional options that can be passed to the `cinterop` tool.
+     *
+     * #### Usage example
+     * ```kotlin
+     * kotlin {
+     *     linuxX64() {
+     *         compilations.getByName("main") {
+     *             cinterops {
+     *                 val cinterop by creating {
+     *                     defFile(project.file("custom. def"))
+     *                     extraOpts(listOf("-nopack"))
+     *                 }
+     *             }
+     *         }
+     *     }
+     * }
+     * ```
+     * @param values List of extra options
      * @see [extraOpts]
      */
     fun extraOpts(values: List<Any>)
