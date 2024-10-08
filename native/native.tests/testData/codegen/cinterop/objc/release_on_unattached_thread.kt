@@ -62,9 +62,9 @@ const val REPEAT_COUNT = 5
 class C : NSObject()
 
 fun box(): String {
-    (0..REPEAT_COUNT).forEach {
+    repeat(REPEAT_COUNT) {
         startThreads()
-        (0..OBJECT_COUNT).forEach {
+        repeat(OBJECT_COUNT) {
             setObjectAt(it, C())
         }
         GC.schedule()
