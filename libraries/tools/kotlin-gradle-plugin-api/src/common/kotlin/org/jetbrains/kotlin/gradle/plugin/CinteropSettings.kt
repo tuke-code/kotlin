@@ -83,11 +83,24 @@ interface CInteropSettings : Named {
     var dependencyFiles: FileCollection
 
     /**
-     * Sets the `.def` file, in which all the settings for `cinterop` util could be passed.
-     * Equals passing `-def` to the `cinterop` tool.
+     * Sets the path to the `.def` file, which declares bindings for the C libraries.
+     * This function serves as a setter for the `.def` file path, equivalent to passing `-def` to the `cinterop` tool.
+     * #### Usage example
+     * The example below shows how to set a custom `.def` file path in a `build.gradle.kts` file:
+     * ```kotlin
+     * //build.gradle.kts
+     * kotlin {
+     *     linuxX64 {
+     *         compilations.getByName("main").cinterops.create("customCinterop") {
+     *             defFile(project.file("custom.def"))
+     *         }
+     *     }
+     *}
+     *```
+     * In the example above, the `custom.def` file located in the root project directory is set as the def file.
      *
-     *
-     * @param file path to the `.def` file to be used in the interoperability with C
+     * @param file The path to the `.def` file to be used for C interoperability.
+     * **Default value:** `src/nativeInterop/cinterop/{name_of_the_cinterop}.def`
      */
     fun defFile(file: Any)
 
