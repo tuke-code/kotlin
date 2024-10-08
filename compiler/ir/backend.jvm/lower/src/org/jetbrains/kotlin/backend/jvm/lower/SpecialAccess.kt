@@ -484,7 +484,7 @@ internal class SpecialAccessLowering(
 
         if (shouldUseAccessor(getter)) {
             return generateReflectiveMethodInvocation(
-                getter.parentAsClass.defaultType,
+                getDeclaredClassType(call),
                 context.defaultMethodSignatureMapper.mapSignatureSkipGeneric(getter),
                 call.dispatchReceiver,
                 listOfNotNull(call.extensionReceiver),
@@ -509,7 +509,7 @@ internal class SpecialAccessLowering(
 
         if (shouldUseAccessor(setter)) {
             return generateReflectiveMethodInvocation(
-                setter.parentAsClass.defaultType,
+                getDeclaredClassType(call),
                 context.defaultMethodSignatureMapper.mapSignatureSkipGeneric(setter),
                 call.dispatchReceiver,
                 mutableListOf<IrExpression>().apply {
