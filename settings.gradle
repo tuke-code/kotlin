@@ -689,6 +689,7 @@ if (!buildProperties.inJpsBuildIdeaSync) {
             ":kotlin-stdlib-jdk8",
             ":kotlin-stdlib:samples",
             ":kotlin-stdlib-jvm-minimal-for-test",
+            ":kotlin-stdlib-jvm-compileOnly",
             ":tools:binary-compatibility-validator",
             ":tools:jdk-api-validator",
             ":tools:kotlin-stdlib-gen",
@@ -704,6 +705,7 @@ if (!buildProperties.inJpsBuildIdeaSync) {
     project(':kotlin-stdlib').projectDir = "$rootDir/libraries/stdlib" as File
     project(':kotlin-dom-api-compat').projectDir = "$rootDir/libraries/kotlin-dom-api-compat" as File
     project(':kotlin-stdlib-js-ir-minimal-for-test').projectDir = "$rootDir/libraries/stdlib/js-ir-minimal-for-test" as File
+    project(':kotlin-stdlib-jvm-compileOnly').projectDir = "$rootDir/libraries/stdlib/jvm/compileOnly" as File
     project(':kotlin-stdlib-jdk7').projectDir = "$rootDir/libraries/stdlib/jdk7" as File
     project(':kotlin-stdlib-jdk8').projectDir = "$rootDir/libraries/stdlib/jdk8" as File
     project(':kotlin-stdlib:samples').projectDir = "$rootDir/libraries/stdlib/samples" as File

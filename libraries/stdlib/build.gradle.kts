@@ -105,20 +105,6 @@ kotlin {
     jvm {
         withJava()
         compilations {
-            val compileOnlyDeclarations by creating {
-                compileTaskProvider.configure {
-                    compilerOptions {
-                        freeCompilerArgs.set(
-                            listOfNotNull(
-                                "-Xallow-kotlin-package",
-                                "-Xsuppress-missing-builtins-error",
-                                diagnosticNamesArg
-                            )
-                        )
-                    }
-                }
-            }
-
             val main by getting {
                 compileTaskProvider.configure {
                     this as UsesKotlinJavaToolchain
@@ -143,7 +129,7 @@ kotlin {
                 }
                 defaultSourceSet {
                     dependencies {
-                        compileOnly(compileOnlyDeclarations.output.allOutputs)
+                        compileOnly(project(":kotlin-stdlib-jvm-compileOnly"))
                     }
                 }
             }
@@ -358,9 +344,6 @@ kotlin {
                 srcDir("common/test")
                 srcDir("test")
             }
-        }
-        val jvmCompileOnlyDeclarations by getting {
-            kotlin.srcDir("jvm/compileOnly")
         }
         val jvmMain by getting {
             project.configurations.getByName("jvmMainCompileOnly").extendsFrom(configurationBuiltins)
@@ -582,9 +565,6 @@ kotlin {
         all sourceSet@ {
             languageSettings {
                 // TODO: progressiveMode = use build property 'test.progressive.mode'
-                if (this@sourceSet == jvmCompileOnlyDeclarations) {
-                    return@languageSettings
-                }
                 commonOptIns.forEach { optIn(it) }
                 if (this@sourceSet.name.endsWith("Test")) {
                     commonTestOptIns.forEach { optIn(it) }
@@ -634,9 +614,6 @@ tasks {
         from(kotlin.jvm().compilations["mainJdk7"].output.allOutputs)
         from(kotlin.jvm().compilations["mainJdk8"].output.allOutputs)
         from(project.sourceSets["java9"].output)
-
-        // See ExternalStaticDebugProbes.kt
-        exclude("kotlinx/coroutines/external/*")
     }
 
     val jvmSourcesJar by existing(Jar::class) {
@@ -653,9 +630,6 @@ tasks {
                 into("jdk8")
             }
         }
-
-        // See ExternalStaticDebugProbes.kt
-        exclude("kotlinx/coroutines/external/*")
     }
 
     dexMethodCount {
