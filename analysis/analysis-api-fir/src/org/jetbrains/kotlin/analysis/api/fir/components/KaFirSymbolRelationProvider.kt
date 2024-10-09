@@ -17,6 +17,7 @@ import org.jetbrains.kotlin.analysis.api.fir.symbols.KaFirReceiverParameterSymbo
 import org.jetbrains.kotlin.analysis.api.fir.symbols.KaFirSymbol
 import org.jetbrains.kotlin.analysis.api.fir.symbols.pointers.getClassLikeSymbol
 import org.jetbrains.kotlin.analysis.api.fir.utils.firSymbol
+import org.jetbrains.kotlin.analysis.api.fir.utils.getContainingClassSymbolPsiAware
 import org.jetbrains.kotlin.analysis.api.fir.utils.getContainingKtModule
 import org.jetbrains.kotlin.analysis.api.fir.utils.withSymbolAttachment
 import org.jetbrains.kotlin.analysis.api.impl.base.components.KaSessionComponent
@@ -32,7 +33,6 @@ import org.jetbrains.kotlin.analysis.low.level.api.fir.util.originalDeclaration
 import org.jetbrains.kotlin.analysis.utils.printer.parentOfType
 import org.jetbrains.kotlin.fir.FirElementWithResolveState
 import org.jetbrains.kotlin.fir.FirSession
-import org.jetbrains.kotlin.fir.analysis.checkers.getContainingClassSymbol
 import org.jetbrains.kotlin.fir.analysis.checkers.getImplementationStatus
 import org.jetbrains.kotlin.fir.containingClassForLocalAttr
 import org.jetbrains.kotlin.fir.declarations.FirCallableDeclaration
@@ -46,7 +46,6 @@ import org.jetbrains.kotlin.fir.declarations.getSealedClassInheritors
 import org.jetbrains.kotlin.fir.diagnostics.ConeDestructuringDeclarationsOnTopLevel
 import org.jetbrains.kotlin.fir.resolve.FirSamResolver
 import org.jetbrains.kotlin.fir.resolve.SessionHolderImpl
-import org.jetbrains.kotlin.fir.resolve.providers.firProvider
 import org.jetbrains.kotlin.fir.resolve.toSymbol
 import org.jetbrains.kotlin.fir.symbols.FirBasedSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.*
@@ -106,7 +105,7 @@ internal class KaFirSymbolRelationProvider(
                 }
 
                 is KaClassInitializerSymbol -> {
-                    val outerFirClassifier = firSymbol.getContainingClassSymbol()
+                    val outerFirClassifier = firSymbol.getContainingClassSymbolPsiAware()
                     if (outerFirClassifier != null) {
                         return firSymbolBuilder.buildSymbol(outerFirClassifier) as? KaDeclarationSymbol
                     }
@@ -117,7 +116,7 @@ internal class KaFirSymbolRelationProvider(
                 }
 
                 is KaCallableSymbol -> {
-                    val outerFirClassifier = firSymbol.getContainingClassSymbol()
+                    val outerFirClassifier = firSymbol.getContainingClassSymbolPsiAware()
                     if (outerFirClassifier != null) {
                         return firSymbolBuilder.buildSymbol(outerFirClassifier) as? KaDeclarationSymbol
                     }
@@ -130,7 +129,7 @@ internal class KaFirSymbolRelationProvider(
                 }
 
                 is KaClassLikeSymbol -> {
-                    firSymbol.getContainingClassSymbol()?.let { outerFirClassifier ->
+                    firSymbol.getContainingClassSymbolPsiAware()?.let { outerFirClassifier ->
                         return firSymbolBuilder.buildSymbol(outerFirClassifier) as? KaDeclarationSymbol
                     }
                     getContainingDeclarationsForLocalClass(firSymbol, symbolFirSession)?.let { return it }

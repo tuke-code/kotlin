@@ -6,11 +6,11 @@
 package org.jetbrains.kotlin.analysis.api.fir.types.qualifiers
 
 import org.jetbrains.kotlin.analysis.api.fir.KaSymbolByFirBuilder
+import org.jetbrains.kotlin.analysis.api.fir.utils.getContainingClassSymbolPsiAware
 import org.jetbrains.kotlin.analysis.api.impl.base.types.KaBaseResolvedClassTypeQualifier
 import org.jetbrains.kotlin.analysis.api.impl.base.types.KaBaseUnresolvedClassTypeQualifier
 import org.jetbrains.kotlin.analysis.api.types.KaClassTypeQualifier
 import org.jetbrains.kotlin.analysis.api.types.KaResolvedClassTypeQualifier
-import org.jetbrains.kotlin.fir.analysis.checkers.getContainingClassSymbol
 import org.jetbrains.kotlin.fir.resolve.diagnostics.*
 import org.jetbrains.kotlin.fir.symbols.impl.FirClassLikeSymbol
 import org.jetbrains.kotlin.fir.types.toConeTypeProjection
@@ -56,7 +56,7 @@ internal object ErrorClassTypeQualifierBuilder {
         firSymbol: FirClassLikeSymbol<*>,
         builder: KaSymbolByFirBuilder
     ): List<KaResolvedClassTypeQualifier> {
-        return generateSequence(firSymbol) { it.getContainingClassSymbol() }.mapTo(mutableListOf()) { classSymbol ->
+        return generateSequence(firSymbol) { it.getContainingClassSymbolPsiAware() }.mapTo(mutableListOf()) { classSymbol ->
             KaBaseResolvedClassTypeQualifier(
                 builder.classifierBuilder.buildClassLikeSymbol(classSymbol),
                 emptyList(),

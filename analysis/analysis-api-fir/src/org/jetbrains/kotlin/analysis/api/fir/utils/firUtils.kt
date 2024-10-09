@@ -10,6 +10,8 @@ import org.jetbrains.kotlin.analysis.api.fir.KaFirSession
 import org.jetbrains.kotlin.analysis.api.fir.KaSymbolByFirBuilder
 import org.jetbrains.kotlin.analysis.api.fir.evaluate.FirAnnotationValueConverter
 import org.jetbrains.kotlin.analysis.api.fir.evaluate.FirCompileTimeConstantEvaluator
+import org.jetbrains.kotlin.analysis.low.level.api.fir.LLFirInternals
+import org.jetbrains.kotlin.analysis.low.level.api.fir.util.PsiBasedContainingClassCalculator
 import org.jetbrains.kotlin.descriptors.ClassKind
 import org.jetbrains.kotlin.fir.FirSession
 import org.jetbrains.kotlin.fir.analysis.checkers.classKind
@@ -24,11 +26,14 @@ import org.jetbrains.kotlin.fir.expressions.arguments
 import org.jetbrains.kotlin.fir.psi
 import org.jetbrains.kotlin.fir.resolve.scope
 import org.jetbrains.kotlin.fir.scopes.CallableCopyTypeCalculator
+import org.jetbrains.kotlin.fir.symbols.FirBasedSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirCallableSymbol
+import org.jetbrains.kotlin.fir.symbols.impl.FirClassLikeSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirConstructorSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirNamedFunctionSymbol
 import org.jetbrains.kotlin.fir.types.isNullableAny
 import org.jetbrains.kotlin.fir.types.resolvedType
+import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.psi.*
 import org.jetbrains.kotlin.util.OperatorNameConventions
@@ -50,6 +55,19 @@ internal fun KtExpression.unwrap(): KtExpression {
 }
 
 /**
+ * Returns a containing class symbol for the given symbol, or `null` if the symbol is not a class member.
+ *
+ * The function behaves like [getContainingClassSymbol], but tries to find the parent using the PSI source first.
+ * Not only the PSI-based search is faster (as it does not use indices), but it also supports cases when there are several classes with
+ * the same [ClassId].
+ */
+@OptIn(LLFirInternals::class)
+internal fun FirBasedSymbol<*>.getContainingClassSymbolPsiAware(): FirClassLikeSymbol<*>? {
+    return PsiBasedContainingClassCalculator.getContainingClassSymbol(this)
+        ?: getContainingClassSymbol()
+}
+
+/**
  * @receiver A symbol that needs to be imported
  * @return An [FqName] by which this symbol can be imported (if it is possible)
  */
@@ -63,7 +81,7 @@ internal fun FirCallableSymbol<*>.computeImportableName(): FqName? {
     val containingClassId = callableId.classId
         ?: return callableId.asSingleFqName()
 
-    val containingClass = getContainingClassSymbol() ?: return null
+    val containingClass = getContainingClassSymbolPsiAware() ?: return null
 
     if (this is FirConstructorSymbol) return if (!containingClass.isInner) containingClassId.asSingleFqName() else null
 

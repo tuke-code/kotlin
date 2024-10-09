@@ -13,6 +13,7 @@ import org.jetbrains.kotlin.analysis.api.fir.KaSymbolByFirBuilder
 import org.jetbrains.kotlin.analysis.api.fir.buildSymbol
 import org.jetbrains.kotlin.analysis.api.fir.getCandidateSymbols
 import org.jetbrains.kotlin.analysis.api.fir.unwrapSafeCall
+import org.jetbrains.kotlin.analysis.api.fir.utils.getContainingClassSymbolPsiAware
 import org.jetbrains.kotlin.analysis.api.fir.utils.processEqualsFunctions
 import org.jetbrains.kotlin.analysis.api.symbols.KaPackageSymbol
 import org.jetbrains.kotlin.analysis.api.symbols.KaSymbol
@@ -21,7 +22,6 @@ import org.jetbrains.kotlin.analysis.low.level.api.fir.api.throwUnexpectedFirEle
 import org.jetbrains.kotlin.analysis.utils.errors.unexpectedElementError
 import org.jetbrains.kotlin.fir.FirPackageDirective
 import org.jetbrains.kotlin.fir.FirSession
-import org.jetbrains.kotlin.fir.analysis.checkers.getContainingClassSymbol
 import org.jetbrains.kotlin.fir.declarations.*
 import org.jetbrains.kotlin.fir.declarations.builder.buildImport
 import org.jetbrains.kotlin.fir.declarations.utils.classId
@@ -525,7 +525,7 @@ internal object FirReferenceResolveHelper {
         val classifiersToSkip = expression.parents.takeWhile { it != ktTypeElementFromFirType }.count()
         var classifier: FirClassLikeSymbol<*>? = fir.coneType.toRegularClassSymbol(session)
         repeat(classifiersToSkip) {
-            classifier = classifier?.getContainingClassSymbol()
+            classifier = classifier?.getContainingClassSymbolPsiAware()
         }
 
         val firClassSymbol = classifier
