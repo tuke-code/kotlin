@@ -67,6 +67,8 @@ object DIAGNOSTICS_LIST : DiagnosticList("FirErrors") {
         val OTHER_ERROR_WITH_REASON by error<PsiElement> {
             parameter<String>("reason")
         }
+
+        val IMPOSSIBLE_EARLY_INITIALIZATION by warning<PsiElement>()
     }
 
     val GENERAL_SYNTAX by object : DiagnosticGroup("General syntax") {

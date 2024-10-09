@@ -113,6 +113,12 @@ internal val KT_DIAGNOSTIC_CONVERTER = KaDiagnosticConverterBuilder.buildConvert
             token,
         )
     }
+    add(FirErrors.IMPOSSIBLE_EARLY_INITIALIZATION) { firDiagnostic ->
+        ImpossibleEarlyInitializationImpl(
+            firDiagnostic as KtPsiDiagnostic,
+            token,
+        )
+    }
     add(FirErrors.ILLEGAL_CONST_EXPRESSION) { firDiagnostic ->
         IllegalConstExpressionImpl(
             firDiagnostic as KtPsiDiagnostic,

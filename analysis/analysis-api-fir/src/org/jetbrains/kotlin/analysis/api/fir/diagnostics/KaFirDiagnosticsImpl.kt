@@ -133,6 +133,11 @@ internal class OtherErrorWithReasonImpl(
     token: KaLifetimeToken,
 ) : KaAbstractFirDiagnostic<PsiElement>(firDiagnostic, token), KaFirDiagnostic.OtherErrorWithReason
 
+internal class ImpossibleEarlyInitializationImpl(
+    firDiagnostic: KtPsiDiagnostic,
+    token: KaLifetimeToken,
+) : KaAbstractFirDiagnostic<PsiElement>(firDiagnostic, token), KaFirDiagnostic.ImpossibleEarlyInitialization
+
 internal class IllegalConstExpressionImpl(
     firDiagnostic: KtPsiDiagnostic,
     token: KaLifetimeToken,

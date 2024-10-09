@@ -10,20 +10,25 @@ import kotlinx.collections.immutable.persistentSetOf
 import org.jetbrains.kotlin.contracts.description.canBeRevisited
 import org.jetbrains.kotlin.contracts.description.isDefinitelyVisited
 import org.jetbrains.kotlin.diagnostics.DiagnosticReporter
+import org.jetbrains.kotlin.diagnostics.reportOn
+import org.jetbrains.kotlin.fir.FirElement
 import org.jetbrains.kotlin.fir.analysis.cfa.util.VariableInitializationInfoData
 import org.jetbrains.kotlin.fir.analysis.cfa.util.previousCfgNodes
 import org.jetbrains.kotlin.fir.analysis.checkers.context.CheckerContext
 import org.jetbrains.kotlin.fir.analysis.checkers.getContainingSymbol
 import org.jetbrains.kotlin.fir.analysis.checkers.hasDiagnosticKind
+import org.jetbrains.kotlin.fir.analysis.diagnostics.FirErrors
 import org.jetbrains.kotlin.fir.declarations.*
 import org.jetbrains.kotlin.fir.declarations.utils.isConst
 import org.jetbrains.kotlin.fir.declarations.utils.isExternal
 import org.jetbrains.kotlin.fir.declarations.utils.isLateInit
 import org.jetbrains.kotlin.fir.diagnostics.DiagnosticKind
+import org.jetbrains.kotlin.fir.expressions.FirExpression
 import org.jetbrains.kotlin.fir.expressions.FirQualifiedAccessExpression
 import org.jetbrains.kotlin.fir.expressions.calleeReference
 import org.jetbrains.kotlin.fir.expressions.unwrapLValue
 import org.jetbrains.kotlin.fir.packageFqName
+import org.jetbrains.kotlin.fir.references.FirThisReference
 import org.jetbrains.kotlin.fir.references.toResolvedVariableSymbol
 import org.jetbrains.kotlin.fir.resolve.dfa.cfg.*
 import org.jetbrains.kotlin.fir.resolve.dfa.cfg.ControlFlowGraph.Kind
@@ -32,6 +37,7 @@ import org.jetbrains.kotlin.fir.symbols.SymbolInternals
 import org.jetbrains.kotlin.fir.symbols.impl.FirPropertySymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirVariableSymbol
 import org.jetbrains.kotlin.fir.types.resolvedType
+import org.jetbrains.kotlin.fir.visitors.FirVisitorVoid
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.name.Name
 
@@ -69,6 +75,24 @@ abstract class VariableInitializationCheckProcessor {
         for (node in graph.nodes) {
             if (node.isUnion) {
                 processUnionNode(node, properties, context, reporter)
+            }
+
+            if (isForInitialization) {
+                val hasThisInRhv = when (node) {
+                    is FieldInitializerEnterNode -> node.fir.initializer?.let { findThisInRhv(it) } ?: false
+                    is PropertyInitializerEnterNode -> node.fir.initializer?.let { findThisInRhv(it) } ?: false
+                    is VariableAssignmentNode -> node.fir.rValue.let { findThisInRhv(it) }
+                    is VariableDeclarationNode -> node.fir.initializer?.let { findThisInRhv(it) } ?: false
+                    else -> false
+                }
+
+                if (hasThisInRhv) {
+                    reporter.reportOn(
+                        node.fir.source,
+                        FirErrors.IMPOSSIBLE_EARLY_INITIALIZATION,
+                        context
+                    )
+                }
             }
 
             when (node) {
@@ -365,4 +389,23 @@ private fun FirBasedSymbol<*>.getDebugFqName(): FqName {
         is FirCodeFragment -> FqName.topLevel(Name.special("<fragment>"))
         is FirDanglingModifierList -> FqName.topLevel(Name.special("<dangling>"))
     }
+}
+
+private class FirThisReferenceFinderVisitor : FirVisitorVoid() {
+    var hasThisReference = false
+
+    override fun visitElement(element: FirElement) {
+        if (hasThisReference) return
+        element.acceptChildren(this)
+    }
+
+    override fun visitThisReference(thisReference: FirThisReference) {
+        hasThisReference = true
+    }
+}
+
+private fun findThisInRhv(node: FirExpression): Boolean {
+    var visitor = FirThisReferenceFinderVisitor()
+    node.accept(visitor)
+    return visitor.hasThisReference
 }
