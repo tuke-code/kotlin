@@ -34,7 +34,7 @@ interface IrType
 
 abstract class IrExpression : IrElementBase(), IrStatement, IrVarargElement, IrAttributeContainer {
     @Suppress("LeakingThis")
-    override var attributeOwnerId: IrAttributeContainer = this
+    override var attributeOwnerId: IrElement = this
 
     abstract var type: IrType
 
