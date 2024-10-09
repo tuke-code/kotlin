@@ -1,4 +1,3 @@
-// FIR_IDENTICAL
 // ISSUE: KT-71662
 
 fun testStandardNavigation() {

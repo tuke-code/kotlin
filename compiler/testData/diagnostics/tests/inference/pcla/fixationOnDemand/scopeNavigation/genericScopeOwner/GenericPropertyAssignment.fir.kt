@@ -4,7 +4,7 @@ fun testStandardNavigation() {
     val resultA = pcla { otvOwner ->
         otvOwner.constrain(ScopeOwner(Value))
         // should fix OTv := ScopeOwner<Value> for scope navigation
-        otvOwner.provide().memberFunction()
+        otvOwner.provide().accessorBackedProperty = Value
         // expected: Interloper </: ScopeOwner<Value>
         otvOwner.constrain(<!ARGUMENT_TYPE_MISMATCH("ScopeOwner<SOT>; Interloper")!>Interloper<!>)
     }
@@ -14,9 +14,9 @@ fun testStandardNavigation() {
     val resultB = pcla { otvOwner ->
         otvOwner.constrain(ScopeOwner(Value))
         // should fix OTv := ScopeOwner<Value> for scope navigation
-        otvOwner.provide().extensionFunction()
+        otvOwner.provide().delegatedProperty = Value
         // expected: Interloper </: ScopeOwner<Value>
-        otvOwner.constrain(<!ARGUMENT_TYPE_MISMATCH("it(ScopeOwner<SOT> & ScopeOwner<SOTA>); Interloper")!>Interloper<!>)
+        otvOwner.constrain(<!ARGUMENT_TYPE_MISMATCH("ScopeOwner<SOT>; Interloper")!>Interloper<!>)
     }
     // expected: ScopeOwner<Value>
     <!DEBUG_INFO_EXPRESSION_TYPE("ScopeOwner<Value>")!>resultB<!>
@@ -26,7 +26,7 @@ fun testSafeNavigation() {
     val resultA = pcla { otvOwner ->
         otvOwner.constrain(ScopeOwner.Nullable(Value))
         // should fix OTv := ScopeOwner<Value>? for scope navigation
-        otvOwner.provide()?.memberFunction()
+        otvOwner.provide()?.accessorBackedProperty = Value
         // expected: Interloper </: ScopeOwner<Value>?
         otvOwner.constrain(<!ARGUMENT_TYPE_MISMATCH("ScopeOwner<SOT>?; Interloper")!>Interloper<!>)
     }
@@ -36,9 +36,9 @@ fun testSafeNavigation() {
     val resultB = pcla { otvOwner ->
         otvOwner.constrain(ScopeOwner.Nullable(Value))
         // should fix OTv := ScopeOwner<Value>? for scope navigation
-        otvOwner.provide()?.extensionFunction()
+        otvOwner.provide()?.delegatedProperty = Value
         // expected: Interloper </: ScopeOwner<Value>?
-        otvOwner.constrain(<!ARGUMENT_TYPE_MISMATCH("kotlin.Nothing?; Interloper")!>Interloper<!>)
+        otvOwner.constrain(<!ARGUMENT_TYPE_MISMATCH("ScopeOwner<SOT>?; Interloper")!>Interloper<!>)
     }
     // expected: ScopeOwner<Value>?
     <!DEBUG_INFO_EXPRESSION_TYPE("ScopeOwner<Value>?")!>resultB<!>
@@ -57,12 +57,17 @@ interface BaseType
 object Value
 
 class ScopeOwner<SOT>(value: SOT): BaseType {
-    fun memberFunction() {}
     companion object {
         fun <SOT> Nullable(value: SOT): ScopeOwner<SOT>? = null
     }
 }
 
-fun <SOTA> ScopeOwner<SOTA>.extensionFunction() {}
+var <A> A.accessorBackedProperty: Value
+    get() = Value
+    set(value) {}
+
+operator fun <X> X.getValue(reference: X, property: Any?): Value = Value
+operator fun <Y> Y.setValue(reference: Y, property: Any?, value: Value) {}
+var <B> B.delegatedProperty: Value by Any()
 
 object Interloper: BaseType
