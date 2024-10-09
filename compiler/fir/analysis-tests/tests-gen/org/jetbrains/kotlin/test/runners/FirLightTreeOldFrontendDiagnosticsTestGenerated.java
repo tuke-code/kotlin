@@ -19853,6 +19853,12 @@ public class FirLightTreeOldFrontendDiagnosticsTestGenerated extends AbstractFir
               }
 
               @Test
+              @TestMetadata("GenericInnerClassConstructorCall.kt")
+              public void testGenericInnerClassConstructorCall() {
+                runTest("compiler/testData/diagnostics/tests/inference/pcla/fixationOnDemand/scopeNavigation/concreteScopeOwner/GenericInnerClassConstructorCall.kt");
+              }
+
+              @Test
               @TestMetadata("GenericPropertyAccess.kt")
               public void testGenericPropertyAccess() {
                 runTest("compiler/testData/diagnostics/tests/inference/pcla/fixationOnDemand/scopeNavigation/concreteScopeOwner/GenericPropertyAccess.kt");
@@ -19938,6 +19944,12 @@ public class FirLightTreeOldFrontendDiagnosticsTestGenerated extends AbstractFir
               @TestMetadata("GenericFunctionCall.kt")
               public void testGenericFunctionCall() {
                 runTest("compiler/testData/diagnostics/tests/inference/pcla/fixationOnDemand/scopeNavigation/genericScopeOwner/GenericFunctionCall.kt");
+              }
+
+              @Test
+              @TestMetadata("GenericInnerClassConstructorCall.kt")
+              public void testGenericInnerClassConstructorCall() {
+                runTest("compiler/testData/diagnostics/tests/inference/pcla/fixationOnDemand/scopeNavigation/genericScopeOwner/GenericInnerClassConstructorCall.kt");
               }
 
               @Test

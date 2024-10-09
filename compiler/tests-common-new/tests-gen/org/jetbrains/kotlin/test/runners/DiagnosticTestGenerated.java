@@ -19859,6 +19859,12 @@ public class DiagnosticTestGenerated extends AbstractDiagnosticTest {
               }
 
               @Test
+              @TestMetadata("GenericInnerClassConstructorCall.kt")
+              public void testGenericInnerClassConstructorCall() {
+                runTest("compiler/testData/diagnostics/tests/inference/pcla/fixationOnDemand/scopeNavigation/concreteScopeOwner/GenericInnerClassConstructorCall.kt");
+              }
+
+              @Test
               @TestMetadata("GenericPropertyAccess.kt")
               public void testGenericPropertyAccess() {
                 runTest("compiler/testData/diagnostics/tests/inference/pcla/fixationOnDemand/scopeNavigation/concreteScopeOwner/GenericPropertyAccess.kt");
@@ -19944,6 +19950,12 @@ public class DiagnosticTestGenerated extends AbstractDiagnosticTest {
               @TestMetadata("GenericFunctionCall.kt")
               public void testGenericFunctionCall() {
                 runTest("compiler/testData/diagnostics/tests/inference/pcla/fixationOnDemand/scopeNavigation/genericScopeOwner/GenericFunctionCall.kt");
+              }
+
+              @Test
+              @TestMetadata("GenericInnerClassConstructorCall.kt")
+              public void testGenericInnerClassConstructorCall() {
+                runTest("compiler/testData/diagnostics/tests/inference/pcla/fixationOnDemand/scopeNavigation/genericScopeOwner/GenericInnerClassConstructorCall.kt");
               }
 
               @Test
