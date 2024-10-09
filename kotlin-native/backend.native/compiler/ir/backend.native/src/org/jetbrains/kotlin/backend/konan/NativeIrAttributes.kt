@@ -5,7 +5,7 @@
 
 package org.jetbrains.kotlin.backend.konan
 
-import org.jetbrains.kotlin.ir.declarations.IrAttributeContainer
+import org.jetbrains.kotlin.ir.IrElement
 import org.jetbrains.kotlin.ir.irAttribute
 
-var IrAttributeContainer.localClassName: String? by irAttribute(followAttributeOwner = true)
+var IrElement.localClassName: String? by irAttribute(followAttributeOwner = true)

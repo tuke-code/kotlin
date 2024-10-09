@@ -18,7 +18,7 @@ package androidx.compose.compiler.plugins.kotlin
 
 import com.intellij.util.keyFMap.KeyFMap
 import org.jetbrains.kotlin.backend.common.extensions.IrPluginContext
-import org.jetbrains.kotlin.ir.declarations.IrAttributeContainer
+import org.jetbrains.kotlin.ir.IrElement
 import org.jetbrains.kotlin.util.slicedMap.ReadOnlySlice
 import org.jetbrains.kotlin.util.slicedMap.WritableSlice
 import java.util.*
@@ -32,7 +32,7 @@ import java.util.*
 class WeakBindingTrace {
     private val map = Collections.synchronizedMap(WeakHashMap<Any, KeyFMap>())
 
-    fun <K : IrAttributeContainer, V> record(slice: WritableSlice<K, V>, key: K, value: V) {
+    fun <K : IrElement, V> record(slice: WritableSlice<K, V>, key: K, value: V) {
         var holder = map[key.attributeOwnerId] ?: KeyFMap.EMPTY_MAP
         val prev = holder.get(slice.key)
         if (prev != null) {
@@ -42,7 +42,7 @@ class WeakBindingTrace {
         map[key.attributeOwnerId] = holder
     }
 
-    operator fun <K : IrAttributeContainer, V> get(slice: ReadOnlySlice<K, V>, key: K): V? {
+    operator fun <K : IrElement, V> get(slice: ReadOnlySlice<K, V>, key: K): V? {
         return map[key.attributeOwnerId]?.get(slice.key)
     }
 }

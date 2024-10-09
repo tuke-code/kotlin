@@ -58,7 +58,7 @@ open class DeepCopyIrTreeWithSymbols(
     protected fun mapDeclarationOrigin(origin: IrDeclarationOrigin) = origin
     protected fun mapStatementOrigin(origin: IrStatementOrigin?) = origin
 
-    protected open fun <D : IrAttributeContainer> D.processAttributes(other: IrAttributeContainer?): D =
+    protected open fun <D : IrElement> D.processAttributes(other: IrElement?): D =
         copyAttributes(other)
 
     protected inline fun <reified T : IrElement> T.transform() =
