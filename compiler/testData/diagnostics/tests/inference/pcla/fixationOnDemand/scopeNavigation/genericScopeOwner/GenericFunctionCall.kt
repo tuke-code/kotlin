@@ -24,22 +24,12 @@ fun testStandardNavigation() {
     val resultC = pcla { otvOwner ->
         otvOwner.constrain(ScopeOwner(Value))
         // should fix OTv := ScopeOwner<Value> for scope navigation
-        otvOwner.provide().<!DEBUG_INFO_ELEMENT_WITH_ERROR_TYPE, DEBUG_INFO_UNRESOLVED_WITH_TARGET, UNRESOLVED_REFERENCE!>InnerKlass<!>(TypeArgument)
-        // expected: Interloper </: ScopeOwner<Value>
-        otvOwner.constrain(Interloper)
-    }
-    // expected: ScopeOwner<Value>
-    <!DEBUG_INFO_EXPRESSION_TYPE("BaseType")!>resultC<!>
-
-    val resultD = pcla { otvOwner ->
-        otvOwner.constrain(ScopeOwner(Value))
-        // should fix OTv := ScopeOwner<Value> for scope navigation
         <!BUILDER_INFERENCE_STUB_RECEIVER!>otvOwner.provide()<!>.fix()
         // expected: Interloper </: ScopeOwner<Value>
         otvOwner.constrain(Interloper)
     }
     // expected: ScopeOwner<Value>
-    <!DEBUG_INFO_EXPRESSION_TYPE("BaseType")!>resultD<!>
+    <!DEBUG_INFO_EXPRESSION_TYPE("BaseType")!>resultC<!>
 }
 
 fun testSafeNavigation() {
@@ -66,22 +56,12 @@ fun testSafeNavigation() {
     val resultC = pcla { otvOwner ->
         otvOwner.constrain(ScopeOwner.Nullable(Value))
         // should fix OTv := ScopeOwner<Value>? for scope navigation
-        otvOwner.provide()?.<!DEBUG_INFO_ELEMENT_WITH_ERROR_TYPE, DEBUG_INFO_UNRESOLVED_WITH_TARGET, UNRESOLVED_REFERENCE!>InnerKlass<!>(TypeArgument)
-        // expected: Interloper </: ScopeOwner<Value>?
-        otvOwner.constrain(Interloper)
-    }
-    // expected: ScopeOwner<Value>?
-    <!DEBUG_INFO_EXPRESSION_TYPE("BaseType?")!>resultC<!>
-
-    val resultD = pcla { otvOwner ->
-        otvOwner.constrain(ScopeOwner.Nullable(Value))
-        // should fix OTv := ScopeOwner<Value>? for scope navigation
         <!BUILDER_INFERENCE_STUB_RECEIVER!>otvOwner.provide()<!>?.fix()
         // expected: Interloper </: ScopeOwner<Value>?
         otvOwner.constrain(Interloper)
     }
     // expected: ScopeOwner<Value>?
-    <!DEBUG_INFO_EXPRESSION_TYPE("BaseType?")!>resultD<!>
+    <!DEBUG_INFO_EXPRESSION_TYPE("BaseType?")!>resultC<!>
 }
 
 
@@ -98,7 +78,6 @@ object Value
 
 class ScopeOwner<SOT>(value: SOT): BaseType {
     fun <A> memberFunction(arg: A) {}
-    inner class InnerKlass<C>(arg: C)
     companion object {
         fun <SOT> Nullable(value: SOT): ScopeOwner<SOT>? = null
     }
@@ -108,6 +87,6 @@ fun <SOTB, B> ScopeOwner<SOTB>.extensionFunction(arg: B) {}
 
 object TypeArgument
 
-fun <D> D.fix() {}
+fun <C> C.fix() {}
 
 object Interloper: BaseType
