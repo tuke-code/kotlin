@@ -1,4 +1,5 @@
 // ISSUE: KT-71662
+// ISSUE: KT-72115
 
 fun testStandardNavigation() {
     val resultA = pcla { otvOwner ->
