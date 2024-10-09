@@ -105,6 +105,22 @@ object IrTree : AbstractTreeBuilder() {
         +offsetField("start")
         +offsetField("end")
 
+        +field("attributeOwnerId", rootElement, isChild = false) {
+            kDoc = """
+                original element before copying. Always satisfies the following
+                invariant: `this.attributeOwnerId == this.attributeOwnerId.attributeOwnerId`.
+            """.trimIndent()
+        }
+        +field("originalBeforeInline", rootElement, nullable = true, isChild = false) {
+            kDoc = """
+                original element before inlining. Useful only with IR
+                inliner. `null` if the element wasn't inlined. Unlike [attributeOwnerId], doesn't have the
+                idempotence invariant and can contain a chain of declarations.
+                
+                `null` <=> `this` element wasn't inlined.
+            """.trimIndent()
+        }
+
         kDoc = "The root interface of the IR tree. Each IR node implements this interface."
     }
     val statement: Element by element(Other)
@@ -309,21 +325,7 @@ object IrTree : AbstractTreeBuilder() {
             """.trimIndent()
         }
     }
-    val attributeContainer: Element by element(Declaration) {
-        kDoc = """
-            Represents an IR element that can be copied, but must remember its original element. It is
-            useful, for example, to keep track of generated names for anonymous declarations.
-            @property attributeOwnerId original element before copying. Always satisfies the following
-              invariant: `this.attributeOwnerId == this.attributeOwnerId.attributeOwnerId`.
-            @property originalBeforeInline original element before inlining. Useful only with IR
-              inliner. `null` if the element wasn't inlined. Unlike [attributeOwnerId], doesn't have the
-              idempotence invariant and can contain a chain of declarations.
-        """.trimIndent()
-
-        +field("attributeOwnerId", rootElement, isChild = false)
-        // null <=> this element wasn't inlined
-        +field("originalBeforeInline", rootElement, nullable = true, isChild = false)
-    }
+    val attributeContainer: Element by element(Declaration)
     val mutableAnnotationContainer: Element by element(Declaration) {
         parent(type(Packages.declarations, "IrAnnotationContainer"))
 

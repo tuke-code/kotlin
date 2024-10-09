@@ -44,6 +44,10 @@ class IrFunctionImpl @IrImplementationDetail constructor(
     override var isOperator: Boolean,
     override var isInfix: Boolean,
 ) : IrSimpleFunction() {
+    override var attributeOwnerId: IrElement = this
+
+    override var originalBeforeInline: IrElement? = null
+
     override var annotations: List<IrConstructorCall> = emptyList()
 
     override var typeParameters: List<IrTypeParameter> = emptyList()
@@ -59,10 +63,6 @@ class IrFunctionImpl @IrImplementationDetail constructor(
     override var contextReceiverParametersCount: Int = 0
 
     override var body: IrBody? = null
-
-    override var attributeOwnerId: IrElement = this
-
-    override var originalBeforeInline: IrElement? = null
 
     @ObsoleteDescriptorBasedAPI
     override val descriptor: FunctionDescriptor

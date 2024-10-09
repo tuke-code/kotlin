@@ -15,6 +15,7 @@ import org.jetbrains.kotlin.fir.declarations.utils.isExpect
 import org.jetbrains.kotlin.fir.declarations.utils.isExternal
 import org.jetbrains.kotlin.fir.declarations.utils.isInline
 import org.jetbrains.kotlin.fir.declarations.utils.visibility
+import org.jetbrains.kotlin.ir.IrElement
 import org.jetbrains.kotlin.ir.ObsoleteDescriptorBasedAPI
 import org.jetbrains.kotlin.ir.declarations.*
 import org.jetbrains.kotlin.ir.declarations.lazy.lazyVar
@@ -88,6 +89,16 @@ class Fir2IrLazyConstructor(
     override var extensionReceiverParameter: IrValueParameter? = null
 
     override var contextReceiverParametersCount: Int = fir.contextReceivers.size
+
+    override var attributeOwnerId: IrElement
+        get() = this
+        set(_) = mutationNotSupported()
+
+    override var originalBeforeInline: IrElement?
+        get() = null
+        set(_) {
+            error("Mutating Fir2Ir lazy elements is not possible")
+        }
 
     override var metadata: MetadataSource?
         get() = null
