@@ -207,6 +207,22 @@ abstract class IrMemberAccessExpression<S : IrSymbol> : IrDeclarationReference()
             targetHasDispatchReceiver = setReceiverArgument(0, value, targetHasDispatchReceiver)
         }
 
+    fun insertDispatchReceiver(value: IrExpression?) {
+        if (targetHasDispatchReceiver) {
+            arguments[0] = value
+        } else {
+            arguments.add(0, value)
+            targetHasDispatchReceiver = true
+        }
+    }
+
+    fun removeDispatchReceiver() {
+        if (targetHasDispatchReceiver) {
+            arguments.removeAt(0)
+            targetHasDispatchReceiver = false
+        }
+    }
+
     /**
      * Argument corresponding to the [IrParameterKind.ExtensionReceiver] parameter, if any.
      *
@@ -231,6 +247,23 @@ abstract class IrMemberAccessExpression<S : IrSymbol> : IrDeclarationReference()
         set(value) {
             targetHasExtensionReceiver = setReceiverArgument(getExtensionReceiverIndex(), value, targetHasExtensionReceiver)
         }
+
+    fun insertExtensionReceiver(value: IrExpression?) {
+        val index = getExtensionReceiverIndex()
+        if (targetHasExtensionReceiver) {
+            arguments[index] = value
+        } else {
+            arguments.add(index, value)
+            targetHasExtensionReceiver = true
+        }
+    }
+
+    fun removeExtensionReceiver() {
+        if (targetHasExtensionReceiver) {
+            arguments.removeAt(getExtensionReceiverIndex())
+            targetHasExtensionReceiver = false
+        }
+    }
 
     private fun getExtensionReceiverIndex(): Int {
         return (if (targetHasDispatchReceiver) 1 else 0) + targetContextParameterCount

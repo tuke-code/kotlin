@@ -73,6 +73,9 @@ fun IrFunction.moveBodyTo(target: IrFunction): IrBody? =
 fun IrFunction.moveBodyTo(target: IrFunction, arguments: Map<IrValueParameter, IrValueDeclaration>): IrBody? =
     body?.move(this, target, target.symbol, arguments)
 
+/*fun IrValueParameter.moveDefaultValueTo(target: IrValueParameter) =
+    move*/
+
 private fun IrBody.move(
     source: IrFunction,
     target: IrDeclarationParent,

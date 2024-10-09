@@ -17,6 +17,7 @@ import org.jetbrains.kotlin.ir.builders.IrBuilderWithScope
 import org.jetbrains.kotlin.ir.builders.declarations.*
 import org.jetbrains.kotlin.ir.builders.irImplicitCast
 import org.jetbrains.kotlin.ir.declarations.*
+import org.jetbrains.kotlin.ir.declarations.impl.IrFactoryImpl
 import org.jetbrains.kotlin.ir.expressions.*
 import org.jetbrains.kotlin.ir.expressions.impl.*
 import org.jetbrains.kotlin.ir.overrides.FakeOverrideBuilderStrategy
@@ -28,6 +29,7 @@ import org.jetbrains.kotlin.ir.types.*
 import org.jetbrains.kotlin.ir.types.impl.IrSimpleTypeImpl
 import org.jetbrains.kotlin.ir.types.impl.makeTypeProjection
 import org.jetbrains.kotlin.ir.visitors.IrElementVisitor
+import org.jetbrains.kotlin.ir.visitors.acceptVoid
 import org.jetbrains.kotlin.name.*
 import org.jetbrains.kotlin.util.OperatorNameConventions
 import org.jetbrains.kotlin.utils.*
@@ -940,6 +942,31 @@ fun IrTypeParameter.copyToWithoutSuperTypes(
     this.name = this@copyToWithoutSuperTypes.name
     this.origin = origin
     this.index = index
+}
+
+fun <T: IrFunction> T.copyWithoutBody(): T {
+    val symbolRemapper = DeepCopySymbolRemapper()
+    acceptVoid(symbolRemapper)
+
+    val copier = object : DeepCopyIrTreeWithSymbols(symbolRemapper) {
+        // visitBody cannot return null, so we create empty IrBlockBody, then set it to null short after.
+        override fun visitBody(body: IrBody): IrBody =
+            IrFactoryImpl.createBlockBody(UNDEFINED_OFFSET, UNDEFINED_OFFSET)
+
+        override fun visitFunction(declaration: IrFunction): IrStatement {
+            val newFunction = super.visitFunction(declaration) as IrFunction
+            newFunction.body = null
+            return newFunction
+        }
+
+        override fun visitValueParameter(declaration: IrValueParameter): IrValueParameter {
+            val newParameter = super.visitValueParameter(declaration)
+            newParameter.defaultValue = null
+            return newParameter
+        }
+    }
+    @Suppress("UNCHECKED_CAST")
+    return transform(copier, null) as T
 }
 
 fun IrFunction.copyReceiverParametersFrom(from: IrFunction, substitutionMap: Map<IrTypeParameterSymbol, IrType>) {

@@ -38,6 +38,16 @@ internal inline fun <T : IrElement> T.deepCopyImpl(createTypeRemapper: (SymbolRe
     return transform(DeepCopyIrTreeWithSymbols(symbolRemapper, typeRemapper), null)
 }
 
+inline fun <reified T : IrElement> T.deepCopyWithSymbols2(
+    initialParent: IrDeclarationParent? = null,
+    copier: DeepCopyIrTreeWithSymbols? = null,
+): T {
+    val copier = copier ?: DeepCopyIrTreeWithSymbols(DeepCopySymbolRemapper())
+    //acceptVoid(copier.symbolRemapper)
+    return transform(copier, null) as T
+}
+
+
 @OptIn(ObsoleteDescriptorBasedAPI::class)
 open class DeepCopyIrTreeWithSymbols(
     private val symbolRemapper: SymbolRemapper,
