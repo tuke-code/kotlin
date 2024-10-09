@@ -322,7 +322,7 @@ object IrTree : AbstractTreeBuilder() {
 
         +field("attributeOwnerId", attributeContainer, isChild = false)
         // null <=> this element wasn't inlined
-        +field("originalBeforeInline", attributeContainer, nullable = true, isChild = false)
+        +field("originalBeforeInline", rootElement, nullable = true, isChild = false)
     }
     val mutableAnnotationContainer: Element by element(Declaration) {
         parent(type(Packages.declarations, "IrAnnotationContainer"))
