@@ -491,7 +491,7 @@ interface CInteropSettings : Named {
      * }
      * ```
      *
-     * @param values Addition cinterop tool options, which are not presented in [CInteropSettings]
+     * @param values Additional cinterop tool options that are not present in [CInteropSettings]
      */
     fun extraOpts(vararg values: Any)
 
