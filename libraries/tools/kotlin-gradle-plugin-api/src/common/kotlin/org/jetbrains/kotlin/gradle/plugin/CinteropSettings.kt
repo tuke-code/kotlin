@@ -170,7 +170,7 @@ interface CInteropSettings : Named {
     }
 
     /**
-     * The collection of libraries, which will be used for building during the C interoperability process.
+     * The collection of libraries used for building during the C interoperability process.
      * `-library`/`-l` command line options equivalent.
      */
     var dependencyFiles: FileCollection
