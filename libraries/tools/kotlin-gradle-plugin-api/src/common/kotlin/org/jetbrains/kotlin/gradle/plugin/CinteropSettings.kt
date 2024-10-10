@@ -181,6 +181,7 @@ interface CInteropSettings : Named {
      * This function serves as a setter for the `.def` file path, equivalent to passing `-def` to the `cinterop` tool.
      * #### Usage example
      * The example below shows how to set a custom `.def` file path in a `build.gradle.kts` file:
+     *
      * ```kotlin
      * //build.gradle.kts
      * kotlin {
