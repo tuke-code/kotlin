@@ -21,7 +21,7 @@ import org.gradle.api.file.FileCollection
  * and other related domain objects through the Gradle API.
  *
  * ## Example
- * Here is an example of how to use a [CInteropSettings] to configure cinterop task for the linuxX64 target:
+ * Here is an example of how to use a [CInteropSettings] to configure a cinterop task for the `linuxX64` target:
  * ```kotlin
  * //build.gradle.kts
  * kotlin {
