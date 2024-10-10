@@ -7,7 +7,6 @@ package org.jetbrains.kotlin.ir.declarations
 
 import org.jetbrains.kotlin.descriptors.ParameterDescriptor
 import org.jetbrains.kotlin.ir.ObsoleteDescriptorBasedAPI
-import org.jetbrains.kotlin.ir.expressions.DeprecatedAPI
 import org.jetbrains.kotlin.ir.expressions.IrExpressionBody
 import org.jetbrains.kotlin.ir.symbols.IrValueParameterSymbol
 import org.jetbrains.kotlin.ir.types.IrType
@@ -37,7 +36,6 @@ abstract class IrValueParameter : IrDeclarationBase(), IrValueDeclaration {
      * Details on the API migration: KT-68003
      */
     var index: Int = -1
-        @DeprecatedAPI
         @DelicateIrParameterIndexSetter
         set
 

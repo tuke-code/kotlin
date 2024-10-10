@@ -7,7 +7,6 @@ package org.jetbrains.kotlin.ir.declarations
 
 import org.jetbrains.kotlin.descriptors.FunctionDescriptor
 import org.jetbrains.kotlin.ir.ObsoleteDescriptorBasedAPI
-import org.jetbrains.kotlin.ir.expressions.DeprecatedAPI
 import org.jetbrains.kotlin.ir.expressions.IrBody
 import org.jetbrains.kotlin.ir.symbols.IrFunctionSymbol
 import org.jetbrains.kotlin.ir.types.IrType
@@ -43,7 +42,7 @@ sealed class IrFunction : IrDeclarationBase(), IrPossiblyExternalDeclaration, Ir
      *
      * [[dispatch receiver, context parameters, extension receiver, regular parameters]].
      */
-    @OptIn(DelicateIrParameterIndexSetter::class, DeprecatedAPI::class)
+    @OptIn(DelicateIrParameterIndexSetter::class)
     var parameters: List<IrValueParameter>
         get() = _parameters
         set(value) {
@@ -87,7 +86,6 @@ sealed class IrFunction : IrDeclarationBase(), IrPossiblyExternalDeclaration, Ir
      */
     var dispatchReceiverParameter: IrValueParameter?
         get() = _parameters.getOrNull(0)?.takeIf { it.kind == IrParameterKind.DispatchReceiver }
-        @DeprecatedAPI
         set(value) {
             setReceiverParameter(IrParameterKind.DispatchReceiver, value)
         }
@@ -105,12 +103,11 @@ sealed class IrFunction : IrDeclarationBase(), IrPossiblyExternalDeclaration, Ir
      */
     var extensionReceiverParameter: IrValueParameter?
         get() = _parameters.firstOrNull { it.kind == IrParameterKind.ExtensionReceiver }
-        @DeprecatedAPI
         set(value) {
             setReceiverParameter(IrParameterKind.ExtensionReceiver, value)
         }
 
-    @OptIn(DelicateIrParameterIndexSetter::class, DeprecatedAPI::class)
+    @OptIn(DelicateIrParameterIndexSetter::class)
     private fun setReceiverParameter(kind: IrParameterKind, value: IrValueParameter?) {
         val parameters = _parameters
 
@@ -169,7 +166,6 @@ sealed class IrFunction : IrDeclarationBase(), IrPossiblyExternalDeclaration, Ir
      */
     var contextReceiverParametersCount: Int
         get() = _contextReceiverParametersCount
-        @DeprecatedAPI
         set(value) {
             if (value == _contextReceiverParametersCount) {
                 return
@@ -195,12 +191,11 @@ sealed class IrFunction : IrDeclarationBase(), IrPossiblyExternalDeclaration, Ir
      */
     var valueParameters: List<IrValueParameter>
         get() = _parameters.filter { it.kind == IrParameterKind.RegularParameter || it.kind == IrParameterKind.ContextParameter }
-        @DeprecatedAPI
         set(value) {
             replaceRegularAndExtensionParameters(value, _contextReceiverParametersCount)
         }
 
-    @OptIn(DelicateIrParameterIndexSetter::class, DeprecatedAPI::class)
+    @OptIn(DelicateIrParameterIndexSetter::class)
     private fun replaceRegularAndExtensionParameters(newValueParameters: List<IrValueParameter>?, newContextParametersCount: Int) {
         val parameters = _parameters
 
