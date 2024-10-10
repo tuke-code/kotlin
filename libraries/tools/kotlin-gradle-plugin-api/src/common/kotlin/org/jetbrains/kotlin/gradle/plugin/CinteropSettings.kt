@@ -499,6 +499,7 @@ interface CInteropSettings : Named {
      * Adds any additional options that can be passed to the `cinterop` tool.
      *
      * #### Usage example
+     *
      * ```kotlin
      * kotlin {
      *     linuxX64() {
