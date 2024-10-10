@@ -112,6 +112,7 @@ interface CInteropSettings : Named {
          *
          * #### Usage example
          * The following example demonstrates how to add multiple directories containing header files in a `build.gradle.kts` file:
+         *
          * ```kotlin
          * //build.gradle.kts
          * kotlin {
