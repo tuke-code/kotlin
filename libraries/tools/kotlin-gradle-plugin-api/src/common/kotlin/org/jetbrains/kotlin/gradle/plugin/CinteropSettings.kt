@@ -139,7 +139,7 @@ interface CInteropSettings : Named {
 
         /**
          * Additional directories to search headers listed in the `headerFilter` def-file option.
-         * `-headerFilterAdditionalSearchPrefix` command line option equivalent.
+         * It's equivalent to the `-headerFilterAdditionalSearchPrefix` compiler option.
          *
          * #### Usage example
          * The following example demonstrates how to add multiple directories containing header files in a `build.gradle.kts` file:
