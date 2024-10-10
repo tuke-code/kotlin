@@ -133,7 +133,7 @@ interface CInteropSettings : Named {
          * In the example, the directory `include/libs` is specified as the prefix for the directories listed in the `headerFilter`
          * declared in the `custom.def` option.
          *
-         * @param includeDirs The directories to be included as a prefixes for the header filters.
+         * @param includeDirs The directories to be included as prefixes for the header filters.
          */
         fun headerFilterOnly(vararg includeDirs: Any)
 
