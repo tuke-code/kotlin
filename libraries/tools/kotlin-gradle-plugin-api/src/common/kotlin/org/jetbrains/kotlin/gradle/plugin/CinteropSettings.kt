@@ -68,7 +68,7 @@ interface CInteropSettings : Named {
          *     }
          * }
          * ```
-         * In the example above, the directories `src/main/headersDir1` and `src/main/headersDir2` in the project directory
+         * In the example, the directories `src/main/headersDir1` and `src/main/headersDir2` in the project directory
          * are specified as locations containing the header files required for the `cinterop` process.
          *
          * @param includeDirs The directories to be included.
