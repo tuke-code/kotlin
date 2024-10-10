@@ -188,7 +188,7 @@ internal class DefaultCallInterceptor(override val interpreter: IrInterpreter) :
 
         val primitiveValueParameters = args.map { it as Primitive }
         primitiveValueParameters.forEachIndexed { index, primitive ->
-            constructorCall.putValueArgument(index, primitive.value.toIrConst(constructorValueParameters[index].owner.type))
+            constructorCall.arguments[index] = primitive.value.toIrConst(constructorValueParameters[index].owner.type)
         }
 
         callStack.pushCompoundInstruction(constructorCall)

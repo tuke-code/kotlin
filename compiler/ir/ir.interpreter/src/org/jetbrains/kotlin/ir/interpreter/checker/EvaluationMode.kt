@@ -128,7 +128,7 @@ sealed class EvaluationMode {
         private fun IrCall.hasUnsignedArgs(): Boolean {
             fun IrExpression?.hasUnsignedType() = this != null && type.isUnsigned()
             if (dispatchReceiver.hasUnsignedType() || extensionReceiver.hasUnsignedType()) return true
-            if ((0 until this.valueArgumentsCount).any { getValueArgument(it)?.type?.isUnsigned() == true }) return true
+            if (arguments.any { it?.type?.isUnsigned() == true }) return true
             return false
         }
     }

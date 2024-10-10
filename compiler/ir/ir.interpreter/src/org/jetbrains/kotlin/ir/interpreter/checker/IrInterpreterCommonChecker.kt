@@ -78,9 +78,7 @@ class IrInterpreterCommonChecker : IrInterpreterChecker {
     }
 
     private fun visitValueArguments(expression: IrFunctionAccessExpression, data: IrInterpreterCheckerData): Boolean {
-        return (0 until expression.valueArgumentsCount)
-            .map { expression.getValueArgument(it) }
-            .none { it?.accept(this, data) == false }
+        return expression.arguments.none { it?.accept(this, data) == false }
     }
 
     override fun visitBody(body: IrBody, data: IrInterpreterCheckerData): Boolean {

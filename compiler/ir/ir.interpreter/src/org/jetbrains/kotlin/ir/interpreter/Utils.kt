@@ -31,6 +31,7 @@ import org.jetbrains.kotlin.ir.visitors.IrElementTransformerVoid
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.types.Variance
 import org.jetbrains.kotlin.util.capitalizeDecapitalize.capitalizeAsciiOnly
+import org.jetbrains.kotlin.utils.indexOfFirst
 import org.jetbrains.kotlin.utils.keysToMap
 import java.lang.invoke.MethodType
 
@@ -71,7 +72,7 @@ fun IrAnnotationContainer.getAnnotation(annotation: FqName): IrConstructorCall {
 internal fun IrAnnotationContainer.getEvaluateIntrinsicValue(): String? {
     if (this is IrClass && this.fqName.startsWith("java")) return this.fqName
     if (!this.hasAnnotation(evaluateIntrinsicAnnotation)) return null
-    return (this.getAnnotation(evaluateIntrinsicAnnotation).getValueArgument(0) as IrConst).value.toString()
+    return (this.getAnnotation(evaluateIntrinsicAnnotation).arguments[0] as IrConst).value.toString()
 }
 
 internal fun getPrimitiveClass(irType: IrType, asObject: Boolean = false): Class<*>? =
@@ -240,8 +241,8 @@ internal fun IrFunctionAccessExpression.getFunctionThatContainsDefaults(): IrFun
                 ?.firstNotNullOfOrNull { it.lookup() }
     }
 
-    return (0 until this.valueArgumentsCount)
-        .first { this.getValueArgument(it) == null }
+    return arguments
+        .indexOfFirst { it == null }
         .let { irFunction.valueParameters[it].lookup() ?: irFunction }
 }
 

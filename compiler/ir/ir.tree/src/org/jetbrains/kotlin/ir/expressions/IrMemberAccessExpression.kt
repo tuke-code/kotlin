@@ -287,6 +287,7 @@ abstract class IrMemberAccessExpression<S : IrSymbol> : IrDeclarationReference()
      * Details on the API migration: KT-68003
      */
     @DeprecatedAPI
+    @Deprecated("", replaceWith = ReplaceWith("arguments[index]"))
     fun getValueArgument(index: Int): IrExpression? {
         val actualIndex = getRealValueArgumentIndex(index)
         checkArgumentSlotAccess("value", actualIndex, this.arguments.size)
@@ -315,6 +316,7 @@ abstract class IrMemberAccessExpression<S : IrSymbol> : IrDeclarationReference()
      * Details on the API migration: KT-68003
      */
     @DeprecatedAPI
+    @Deprecated(message = "", replaceWith = ReplaceWith("arguments.set(index, valueArgument)"))
     fun putValueArgument(index: Int, valueArgument: IrExpression?) {
         val actualIndex = getRealValueArgumentIndex(index)
         checkArgumentSlotAccess("value", actualIndex, this.arguments.size)
