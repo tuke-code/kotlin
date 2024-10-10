@@ -12,7 +12,7 @@ import org.gradle.api.Named
 import org.gradle.api.file.FileCollection
 
 /**
- * # C Interoperability Settings
+ * # C interoperability settings
  * This interface represents the configuration settings for invoking the [cinterop tool](https://kotlinlang.org/docs/native-c-interop.html)
  * in Kotlin/Native projects.
  * The cinterop tool provides the ability to use C libraries inside Kotlin projects.
