@@ -133,24 +133,20 @@ private fun unfoldValueParameters(expression: IrFunctionAccessExpression, enviro
         }
 
         // if some arguments are not defined, then it is necessary to create temp function where defaults will be evaluated
-        val actualParameters = MutableList<IrValueDeclaration?>(expression.valueArgumentsCount) { null }
+        val actualParameters = MutableList<IrValueDeclaration?>(expression.arguments.size) { null }
         val ownerWithDefaults = expression.getFunctionThatContainsDefaults()
         val visibility = when (expression) {
             is IrEnumConstructorCall, is IrDelegatingConstructorCall -> DescriptorVisibilities.LOCAL
             else -> ownerWithDefaults.visibility
         }
 
-        val defaultFun = createTempFunction(
-            Name.identifier(ownerWithDefaults.name.asString() + "\$default"), ownerWithDefaults.returnType,
-            origin = IrDeclarationOrigin.FUNCTION_FOR_DEFAULT_PARAMETER, visibility
-        ).apply {
-            this.parent = ownerWithDefaults.parent
-            this.dispatchReceiverParameter = ownerWithDefaults.dispatchReceiverParameter?.deepCopyWithSymbols(this)
-            this.extensionReceiverParameter = ownerWithDefaults.extensionReceiverParameter?.deepCopyWithSymbols(this)
-            (0 until expression.valueArgumentsCount).forEach { index ->
-                val originalParameter = ownerWithDefaults.valueParameters[index]
-                val copiedParameter = originalParameter.deepCopyWithSymbols(this)
-                this.valueParameters += copiedParameter
+        val defaultFun = ownerWithDefaults.deepCopyWithSymbols(ownerWithDefaults.parent).apply {
+            this.name = Name.identifier(ownerWithDefaults.name.asString() + "\$default")
+            this.origin = IrDeclarationOrigin.FUNCTION_FOR_DEFAULT_PARAMETER
+            this.visibility = visibility
+
+            this.parameters.forEachIndexed { index, copiedParameter ->
+                val originalParameter = ownerWithDefaults.parameters[index]
                 actualParameters[index] = if (copiedParameter.defaultValue != null || copiedParameter.isVararg) {
                     copiedParameter.type = copiedParameter.type.makeNullable() // make nullable type to keep consistency; parameter can be null if it is missing
                     val irGetParameter = copiedParameter.createGetValue()
@@ -168,9 +164,13 @@ private fun unfoldValueParameters(expression: IrFunctionAccessExpression, enviro
         }
 
         val callWithAllArgs = expression.shallowCopy() // just a copy of given call, but with all arguments in place
-        expression.dispatchReceiver?.let { callWithAllArgs.dispatchReceiver = defaultFun.dispatchReceiverParameter!!.createGetValue() }
-        expression.extensionReceiver?.let { callWithAllArgs.extensionReceiver = defaultFun.extensionReceiverParameter!!.createGetValue() }
-        (0 until expression.valueArgumentsCount).forEach { callWithAllArgs.putValueArgument(it, actualParameters[it]?.createGetValue()) }
+        expression.getAllArgumentsWithIr().forEach { (param, arg) ->
+            callWithAllArgs.arguments[param.index] = when (param.kind) {
+                IrParameterKind.DispatchReceiver -> defaultFun.dispatchReceiverParameter!!.createGetValue()
+                IrParameterKind.ExtensionReceiver -> defaultFun.extensionReceiverParameter!!.createGetValue()
+                else -> actualParameters[param.index]?.createGetValue()
+            }
+        }
         defaultFun.body = (actualParameters.filterIsInstance<IrVariable>() + defaultFun.createReturn(callWithAllArgs)).wrapWithBlockBody()
 
         val callToDefault = environment.setCachedFunction(
@@ -184,9 +184,7 @@ private fun unfoldValueParameters(expression: IrFunctionAccessExpression, enviro
             callStack.pushSimpleInstruction(this)
             callStack.pushCompoundInstruction(arg)
         }
-        (expression.valueArgumentsCount - 1 downTo 0).forEach { irFunction.valueParameters[it].schedule(expression.getValueArgument(it)) }
-        expression.extensionReceiver?.let { irFunction.extensionReceiverParameter!!.schedule(it) }
-        expression.dispatchReceiver?.let { irFunction.dispatchReceiverParameter!!.schedule(it) }
+        expression.getArgumentsWithIr().reversed().forEach { (parameter, arg) -> parameter.schedule(arg) }
     }
 }
 

@@ -130,12 +130,12 @@ internal fun IrFunctionAccessExpression.shallowCopy(copyTypeArguments: Boolean =
 }
 
 internal fun IrBuiltIns.copyArgs(from: IrFunctionAccessExpression, into: IrFunctionAccessExpression) {
-    into.dispatchReceiver = from.dispatchReceiver
-    into.extensionReceiver = from.extensionReceiver
-    from.arguments
-        .forEachIndexed { i, arg ->
-            into.arguments[i] = arg ?: IrConstImpl.constNull(SYNTHETIC_OFFSET, SYNTHETIC_OFFSET, this.anyNType)
+    into.copyValueArgumentsFrom(from, into.symbol.owner)
+    for ((i, argument) in into.arguments.withIndex()) {
+        if (argument == null) {
+            into.arguments[i] = IrConstImpl.constNull(SYNTHETIC_OFFSET, SYNTHETIC_OFFSET, this.anyNType)
         }
+    }
 }
 
 internal fun IrBuiltIns.irEquals(arg1: IrExpression, arg2: IrExpression): IrCall {

@@ -49,8 +49,7 @@ internal class KFunctionState(
             val samFunction = value.classOrNull!!.owner.getSingleAbstractMethod()
             if (samFunction.extensionReceiverParameter != null) {
                 // this change of parameter is needed because of difference in `invoke` and sam calls
-                invokeSymbol.owner.extensionReceiverParameter = invokeSymbol.owner.valueParameters[0]
-                invokeSymbol.owner.valueParameters = invokeSymbol.owner.valueParameters.drop(1)
+                invokeSymbol.owner.parameters = listOf(invokeSymbol.owner.valueParameters[0]) + invokeSymbol.owner.valueParameters.drop(1)
             }
         }
     private var _parameters: List<KParameter>? = null
@@ -84,7 +83,9 @@ internal class KFunctionState(
                 parent = functionClass
                 overriddenSymbols = listOf(invokeFunction.symbol)
 
-                dispatchReceiverParameter = invokeFunction.dispatchReceiverParameter?.deepCopyWithSymbols(initialParent = this)
+                invokeFunction.dispatchReceiverParameter?.deepCopyWithSymbols(initialParent = this)?.let {
+                    parameters = listOf(it)
+                }
 
                 val call = when (irFunction) {
                     is IrSimpleFunction -> irFunction.createCall()
@@ -94,19 +95,19 @@ internal class KFunctionState(
                     val extensionParameter = irFunction.extensionReceiverParameter
 
                     fun IrValueParameter.copy(): IrValueParameter =
-                        this.copyTo(this@impl).apply { valueParameters += this }
+                        this.copyTo(this@impl).apply { parameters += this }
 
                     if (dispatchParameter != null) {
                         val newParam = if (!hasDispatchReceiver) dispatchParameter.copy() else dispatchParameter
-                        dispatchReceiver = newParam.createGetValue()
+                        arguments[newParam.index] = newParam.createGetValue()
                     }
                     if (extensionParameter != null) {
                         val newParam = if (!hasExtensionReceiver) extensionParameter.copy() else extensionParameter
-                        extensionReceiver = newParam.createGetValue()
+                        arguments[newParam.index] = newParam.createGetValue()
                     }
                     irFunction.valueParameters.forEach { oldParam ->
                         val newParam = oldParam.copy()
-                        putArgument(oldParam, newParam.createGetValue())
+                        arguments[newParam.index] = newParam.createGetValue()
                     }
                 }
 

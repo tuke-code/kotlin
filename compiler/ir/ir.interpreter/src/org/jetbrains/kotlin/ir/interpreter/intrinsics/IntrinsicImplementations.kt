@@ -242,9 +242,9 @@ internal object ArrayConstructor : IntrinsicBase() {
         callStack.rewriteState(initSymbol, state)
 
         for (i in size - 1 downTo 0) {
-            val call = (state.invokeSymbol.owner as IrSimpleFunction).createCall()
-            call.dispatchReceiver = initSymbol.owner.createGetValue()
-            call.putValueArgument(0, i.toIrConst(environment.irBuiltIns.intType))
+            val call = state.invokeSymbol.owner.createCall()
+            call.arguments[0] = initSymbol.owner.createGetValue()
+            call.arguments[1] = i.toIrConst(environment.irBuiltIns.intType)
             instructions += CompoundInstruction(call)
         }
 
@@ -301,7 +301,7 @@ internal object AssertIntrinsic : IntrinsicBase() {
         val lambdaParameter = irFunction.valueParameters.last()
         val lambdaState = environment.callStack.loadState(lambdaParameter.symbol) as KFunctionState
         val call = (lambdaState.invokeSymbol.owner as IrSimpleFunction).createCall()
-        call.dispatchReceiver = lambdaParameter.createGetValue()
+        call.arguments[0] = lambdaParameter.createGetValue()
 
         return super.unwind(irFunction, environment) + CompoundInstruction(call)
     }

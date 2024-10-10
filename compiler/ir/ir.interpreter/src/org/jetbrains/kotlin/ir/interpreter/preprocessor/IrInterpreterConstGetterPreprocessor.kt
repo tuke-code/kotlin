@@ -11,6 +11,7 @@ import org.jetbrains.kotlin.ir.UNDEFINED_OFFSET
 import org.jetbrains.kotlin.ir.declarations.IrDeclarationOrigin
 import org.jetbrains.kotlin.ir.declarations.IrField
 import org.jetbrains.kotlin.ir.declarations.IrFunction
+import org.jetbrains.kotlin.ir.declarations.IrParameterKind
 import org.jetbrains.kotlin.ir.expressions.*
 import org.jetbrains.kotlin.ir.expressions.impl.IrCompositeImpl
 import org.jetbrains.kotlin.ir.expressions.impl.IrGetObjectValueImpl
@@ -50,7 +51,8 @@ class IrInterpreterConstGetterPreprocessor : IrInterpreterPreprocessor() {
         val fieldParent = field.parentAsClass
         val getObject = IrGetObjectValueImpl(UNDEFINED_OFFSET, UNDEFINED_OFFSET, fieldParent.defaultType, fieldParent.symbol)
         when (this) {
-            is IrCall -> this.dispatchReceiver = getObject
+            // TODO this is bad
+            is IrCall -> this.arguments[symbol.owner.parameters.indexOfFirst { it.kind == IrParameterKind.DispatchReceiver }] = getObject
             is IrGetField -> this.receiver = getObject
         }
 

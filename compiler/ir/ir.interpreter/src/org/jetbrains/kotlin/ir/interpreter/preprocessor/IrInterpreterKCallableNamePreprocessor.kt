@@ -46,8 +46,10 @@ class IrInterpreterKCallableNamePreprocessor : IrInterpreterPreprocessor() {
         // We want to change symbol to keep IR correct. If something goes wrong during interpretation, we still will have compilable code.
         expression.symbol = data.irBuiltIns.kCallableClass.owner.properties.single { it.name.asString() == "name" }.getter!!.symbol
 
-        callableReference.dispatchReceiver = null
-        callableReference.extensionReceiver = null
+        // This one is not completly correct. But how we can nullify only dispatch and extension?
+        for (i in callableReference.arguments.indices) {
+            callableReference.arguments[i] = null
+        }
         if (receiver is IrGetValue && receiver.symbol.owner.name == SpecialNames.THIS) return expression
 
         return IrCompositeImpl(
