@@ -183,7 +183,7 @@ abstract class IrMemberAccessExpression<S : IrSymbol> : IrDeclarationReference()
      *
      * Details on the API migration: KT-68003
      */
-    @DeprecatedAPI
+//    @DeprecatedAPI
     val valueArgumentsCount: Int
         get() = targetRegularParameterCount + targetContextParameterCount
 
@@ -199,7 +199,6 @@ abstract class IrMemberAccessExpression<S : IrSymbol> : IrDeclarationReference()
      *
      * Details on the API migration: KT-68003
      */
-    @DeprecatedAPI
     var dispatchReceiver: IrExpression?
         get() {
             return if (targetHasDispatchReceiver) {
@@ -208,6 +207,7 @@ abstract class IrMemberAccessExpression<S : IrSymbol> : IrDeclarationReference()
                 null
             }
         }
+        @DeprecatedAPI
         set(value) {
             targetHasDispatchReceiver = setReceiverArgument(0, value, targetHasDispatchReceiver)
         }
@@ -224,7 +224,6 @@ abstract class IrMemberAccessExpression<S : IrSymbol> : IrDeclarationReference()
      *
      * Details on the API migration: KT-68003
      */
-    @DeprecatedAPI
     var extensionReceiver: IrExpression?
         get() {
             return if (targetHasExtensionReceiver) {
@@ -234,6 +233,7 @@ abstract class IrMemberAccessExpression<S : IrSymbol> : IrDeclarationReference()
                 null
             }
         }
+        @DeprecatedAPI
         set(value) {
             targetHasExtensionReceiver = setReceiverArgument(getExtensionReceiverIndex(), value, targetHasExtensionReceiver)
         }

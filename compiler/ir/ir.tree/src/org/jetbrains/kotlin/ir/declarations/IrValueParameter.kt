@@ -36,8 +36,8 @@ abstract class IrValueParameter : IrDeclarationBase(), IrValueDeclaration {
      *
      * Details on the API migration: KT-68003
      */
-    @DeprecatedAPI
     var index: Int = -1
+        @DeprecatedAPI
         @DelicateIrParameterIndexSetter
         set
 

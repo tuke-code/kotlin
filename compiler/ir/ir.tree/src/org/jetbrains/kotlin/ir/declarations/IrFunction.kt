@@ -85,9 +85,9 @@ sealed class IrFunction : IrDeclarationBase(), IrPossiblyExternalDeclaration, Ir
      *
      * Details on the API migration: KT-68003
      */
-    @DeprecatedAPI
     var dispatchReceiverParameter: IrValueParameter?
         get() = _parameters.getOrNull(0)?.takeIf { it.kind == IrParameterKind.DispatchReceiver }
+        @DeprecatedAPI
         set(value) {
             setReceiverParameter(IrParameterKind.DispatchReceiver, value)
         }
@@ -103,9 +103,9 @@ sealed class IrFunction : IrDeclarationBase(), IrPossiblyExternalDeclaration, Ir
      *
      * Details on the API migration: KT-68003
      */
-    @DeprecatedAPI
     var extensionReceiverParameter: IrValueParameter?
         get() = _parameters.firstOrNull { it.kind == IrParameterKind.ExtensionReceiver }
+        @DeprecatedAPI
         set(value) {
             setReceiverParameter(IrParameterKind.ExtensionReceiver, value)
         }
@@ -167,9 +167,9 @@ sealed class IrFunction : IrDeclarationBase(), IrPossiblyExternalDeclaration, Ir
      *
      * Details on the API migration: KT-68003
      */
-    @DeprecatedAPI
     var contextReceiverParametersCount: Int
         get() = _contextReceiverParametersCount
+        @DeprecatedAPI
         set(value) {
             if (value == _contextReceiverParametersCount) {
                 return
@@ -193,9 +193,9 @@ sealed class IrFunction : IrDeclarationBase(), IrPossiblyExternalDeclaration, Ir
      *
      * Details on the API migration: KT-68003
      */
-    @DeprecatedAPI
     var valueParameters: List<IrValueParameter>
         get() = _parameters.filter { it.kind == IrParameterKind.RegularParameter || it.kind == IrParameterKind.ContextParameter }
+        @DeprecatedAPI
         set(value) {
             replaceRegularAndExtensionParameters(value, _contextReceiverParametersCount)
         }
