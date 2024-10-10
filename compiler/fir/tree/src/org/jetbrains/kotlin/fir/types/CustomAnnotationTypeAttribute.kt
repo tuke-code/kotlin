@@ -10,7 +10,9 @@ import org.jetbrains.kotlin.fir.render
 import org.jetbrains.kotlin.fir.renderer.FirRenderer
 import kotlin.reflect.KClass
 
-class CustomAnnotationTypeAttribute(val annotations: List<FirAnnotation>) : ConeAttribute<CustomAnnotationTypeAttribute>() {
+class CustomAnnotationTypeAttribute(
+    val annotations: List<FirAnnotation>
+) : ConeAttribute<CustomAnnotationTypeAttribute>() {
     override fun union(other: CustomAnnotationTypeAttribute?): CustomAnnotationTypeAttribute? = null
 
     override fun intersect(other: CustomAnnotationTypeAttribute?): CustomAnnotationTypeAttribute? = null
@@ -31,6 +33,9 @@ class CustomAnnotationTypeAttribute(val annotations: List<FirAnnotation>) : Cone
         get() = CustomAnnotationTypeAttribute::class
     override val keepInInferredDeclarationType: Boolean
         get() = true
+
+    override val implementsEquality: Boolean
+        get() = false
 }
 
 val ConeAttributes.custom: CustomAnnotationTypeAttribute? by ConeAttributes.attributeAccessor<CustomAnnotationTypeAttribute>()
@@ -38,3 +43,12 @@ val ConeAttributes.custom: CustomAnnotationTypeAttribute? by ConeAttributes.attr
 val ConeAttributes.customAnnotations: List<FirAnnotation> get() = custom?.annotations.orEmpty()
 
 val ConeKotlinType.customAnnotations: List<FirAnnotation> get() = attributes.customAnnotations
+
+val ConeKotlinType.typeAnnotations: List<FirAnnotation>
+    get() = buildList {
+        attributes.parameterNameAttribute?.let {
+            add(it.annotation)
+            addAll(it.others)
+        }
+        addAll(customAnnotations)
+    }
