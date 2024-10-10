@@ -12,7 +12,7 @@ expect open class AbstractMutableList {
 // FILE: jvm.kt
 actual open class AbstractMutableList : Jaba() {
     @Deprecated("", level = DeprecationLevel.HIDDEN)
-    actual var modCount: Int
+    actual var <!PROPERTY_HIDES_JAVA_FIELD!>modCount<!>: Int
         get() = 42
         set(value) { }
 
