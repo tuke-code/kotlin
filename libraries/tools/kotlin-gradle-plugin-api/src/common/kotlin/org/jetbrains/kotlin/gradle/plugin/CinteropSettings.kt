@@ -107,7 +107,7 @@ interface CInteropSettings : Named {
         fun allHeaders(includeDirs: Collection<Any>)
 
         /**
-         * Additional directories to search headers listed in the `headerFilter` def-file option.
+         * Additional directories to search for headers listed in the `headerFilter` def-file option.
          * `-headerFilterAdditionalSearchPrefix` command line option equivalent.
          *
          * #### Usage example
