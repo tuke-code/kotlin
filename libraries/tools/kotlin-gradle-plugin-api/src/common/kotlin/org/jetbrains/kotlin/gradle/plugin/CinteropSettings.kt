@@ -473,7 +473,7 @@ interface CInteropSettings : Named {
     fun linkerOpts(values: List<String>)
 
     /**
-     * Adds any additional options that can be passed to the `cinterop` tool.
+     * Adds additional options that are passed to the cinterop tool.
      *
      * #### Usage example
      * ```kotlin
