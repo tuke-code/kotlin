@@ -37,7 +37,7 @@ import org.gradle.api.file.FileCollection
  * }
  * ```
  * In this example, we've added a `cinterop` setting named `cinteropForLinuxX64` to the `linuxX64` `main` [KotlinCompilation].
- * These settings will be used to create and configure a `cinterop` task, along with the necessary dependencies for the compile task.
+ * These settings are used to create and configure a `cinterop` task, along with the necessary dependencies for the compile task.
  */
 interface CInteropSettings : Named {
 
