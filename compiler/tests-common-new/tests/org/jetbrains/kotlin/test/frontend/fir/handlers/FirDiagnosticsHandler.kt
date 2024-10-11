@@ -165,7 +165,9 @@ class FirDiagnosticsHandler(testServices: TestServices) : FirAnalysisHandler(tes
                 collectSyntaxDiagnostics(currentModule, file, firFile, lightTreeEnabled, lightTreeComparingModeEnabled, forceRenderArguments)
                 val session = info.partsForDependsOnModules.last().session
                 collectDebugInfoDiagnostics(currentModule, file, firFile, session, lightTreeEnabled, lightTreeComparingModeEnabled)
+                part.session.lazyDeclarationResolver.startResolvingPhase(FirResolvePhase.BODY_RESOLVE)
                 fullDiagnosticsRenderer.storeFullDiagnosticRender(module, diagnostics.map { it.diagnostic }, file)
+                part.session.lazyDeclarationResolver.finishResolvingPhase(FirResolvePhase.BODY_RESOLVE)
             }
         }
     }

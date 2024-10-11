@@ -181,7 +181,22 @@ object FirDiagnosticRenderers {
                 }
 
                 val simpleRepresentationsByConstructor: Map<TypeConstructorMarker, String> = constructors.associateWith {
-                    buildString { ConeTypeRendererForReadability(this) { ConeIdRendererForDiagnostics() }.renderConstructor(it) }
+                    buildString {
+                        val typeRenderer = ConeTypeRendererForReadability(this) {
+                            ConeIdRendererForDiagnostics()
+                        }
+                        typeRenderer.renderConstructor(it)
+                        if (it is ConeTypeParameterLookupTag) {
+                            @OptIn(UnexpandedTypeCheck::class)
+                            if (it.symbol.resolvedBounds.size > 1 || !it.symbol.resolvedBounds.single().isNullableAny) {
+                                append(" : ")
+                                for ((index, bound) in it.symbol.resolvedBounds.withIndex()) {
+                                    if (index > 0) append(", ")
+                                    typeRenderer.render(bound.coneType)
+                                }
+                            }
+                        }
+                    }
                 }
 
                 val constructorsByRepresentation: Map<String, List<TypeConstructorMarker>> =
