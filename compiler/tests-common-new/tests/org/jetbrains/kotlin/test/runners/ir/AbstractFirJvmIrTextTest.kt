@@ -13,6 +13,7 @@ import org.jetbrains.kotlin.test.directives.CodegenTestDirectives.DUMP_IR
 import org.jetbrains.kotlin.test.directives.CodegenTestDirectives.DUMP_KT_IR
 import org.jetbrains.kotlin.test.directives.CodegenTestDirectives.DUMP_SIGNATURES
 import org.jetbrains.kotlin.test.directives.ConfigurationDirectives.WITH_STDLIB
+import org.jetbrains.kotlin.test.directives.FirDiagnosticsDirectives.TEST_ALONGSIDE_K1_TESTDATA
 import org.jetbrains.kotlin.test.frontend.fir.Fir2IrResultsConverter
 import org.jetbrains.kotlin.test.frontend.fir.FirFrontendFacade
 import org.jetbrains.kotlin.test.frontend.fir.FirOutputArtifact
@@ -23,6 +24,7 @@ import org.jetbrains.kotlin.test.model.FrontendKinds
 import org.jetbrains.kotlin.test.runners.TestTierChecker
 import org.jetbrains.kotlin.test.runners.TestTiers
 import org.jetbrains.kotlin.test.runners.codegen.FirPsiCodegenTest
+import org.jetbrains.kotlin.test.services.fir.FirOldFrontendMetaConfigurator
 
 abstract class AbstractFirJvmIrTextTest(
     private val parser: FirParser,
@@ -61,10 +63,15 @@ abstract class AbstractTieredFir2IrJvmTest(parser: FirParser) : AbstractFirJvmIr
                 -DUMP_IR
                 -DUMP_KT_IR
                 -DUMP_SIGNATURES
+
+                +TEST_ALONGSIDE_K1_TESTDATA
             }
 
+            // Otherwise, GlobalMetadataInfoHandler may want to write differences to the K1 test data file, not K2
+            useMetaTestConfigurators(::FirOldFrontendMetaConfigurator)
+
             useAfterAnalysisCheckers(
-                { TestTierChecker(TestTiers.FIR2IR, it) },
+                { TestTierChecker(TestTiers.FIR2IR, targetBackend, it) },
             )
         }
     }
