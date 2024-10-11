@@ -306,6 +306,7 @@ fun <D> buildReceiverParameter(
         startOffset = startOffset,
         endOffset = endOffset,
         origin = origin,
+        kind = IrParameterKind.DispatchReceiver,
         name = SpecialNames.THIS,
         type = type,
         isAssignable = false,

@@ -243,7 +243,7 @@ internal fun IrFunctionAccessExpression.getFunctionThatContainsDefaults(): IrFun
 
     return arguments
         .indexOfFirst { it == null }
-        .let { irFunction.valueParameters[it].lookup() ?: irFunction }
+        .let { irFunction.parameters[it].lookup() ?: irFunction }
 }
 
 internal fun IrValueParameter.getDefaultWithActualParameters(

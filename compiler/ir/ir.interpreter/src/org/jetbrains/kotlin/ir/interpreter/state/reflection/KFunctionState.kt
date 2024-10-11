@@ -97,17 +97,18 @@ internal class KFunctionState(
                     fun IrValueParameter.copy(): IrValueParameter =
                         this.copyTo(this@impl).apply { parameters += this }
 
+                    var index = 0
                     if (dispatchParameter != null) {
                         val newParam = if (!hasDispatchReceiver) dispatchParameter.copy() else dispatchParameter
-                        arguments[newParam.index] = newParam.createGetValue()
+                        arguments[index++] = newParam.createGetValue()
                     }
                     if (extensionParameter != null) {
                         val newParam = if (!hasExtensionReceiver) extensionParameter.copy() else extensionParameter
-                        arguments[newParam.index] = newParam.createGetValue()
+                        arguments[index++] = newParam.createGetValue()
                     }
                     irFunction.valueParameters.forEach { oldParam ->
                         val newParam = oldParam.copy()
-                        arguments[newParam.index] = newParam.createGetValue()
+                        arguments[index++] = newParam.createGetValue()
                     }
                 }
 
