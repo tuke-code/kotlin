@@ -236,3 +236,8 @@ fun lib(name:String) = when {
     hostIsMingw -> "$name.lib"
     else -> "lib$name.a"
 }
+
+fun libname(file: File): String = when {
+    hostIsMingw -> file.nameWithoutExtension
+    else -> file.nameWithoutExtension.removePrefix("lib")
+}

@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.cpp.CppUsage
 import org.jetbrains.kotlin.konan.target.HostManager
 import org.jetbrains.kotlin.konan.target.TargetWithSanitizer
 import org.jetbrains.kotlin.tools.ToolExecutionTask
-import org.jetbrains.kotlin.tools.lib
+import org.jetbrains.kotlin.tools.libname
 import org.jetbrains.kotlin.tools.solib
 
 plugins {
@@ -15,11 +15,31 @@ plugins {
 
 val library = solib("clangstubs")
 
-val libclangextProject = project(":kotlin-native:libclangext")
-val libclangextTask = libclangextProject.path + ":build"
-val libclangextDir = libclangextProject.layout.buildDirectory.get().asFile
-val libclangextIsEnabled = libclangextProject.findProperty("isEnabled")!! as Boolean
+val cppImplementation by configurations.creating {
+    isCanBeConsumed = false
+    isCanBeResolved = true
+    attributes {
+        attribute(CppUsage.USAGE_ATTRIBUTE, objects.named(CppUsage.API))
+        attribute(ArtifactTypeDefinition.ARTIFACT_TYPE_ATTRIBUTE, ArtifactTypeDefinition.DIRECTORY_TYPE)
+    }
+}
 
+val cppLink by configurations.creating {
+    isCanBeConsumed = false
+    isCanBeResolved = true
+    attributes {
+        attribute(CppUsage.USAGE_ATTRIBUTE, objects.named(CppUsage.LIBRARY_LINK))
+        attribute(TargetWithSanitizer.TARGET_ATTRIBUTE, TargetWithSanitizer.host)
+    }
+}
+
+dependencies {
+    cppImplementation(project(":kotlin-native:libclangext"))
+    cppLink(project(":kotlin-native:libclangext"))
+}
+
+val libclangextProject = project(":kotlin-native:libclangext")
+val libclangextIsEnabled = libclangextProject.findProperty("isEnabled")!! as Boolean
 
 val libclang = if (HostManager.hostIsMingw) {
     "lib/libclang.lib"
@@ -27,15 +47,19 @@ val libclang = if (HostManager.hostIsMingw) {
     "lib/${System.mapLibraryName("clang")}"
 }
 
-val commonCompilerFlags = listOf(
-        "-I${nativeDependencies.llvmPath}/include",
-        "-I${project(":kotlin-native:libclangext").projectDir.absolutePath}/src/main/include",
-        *nativeDependencies.hostPlatform.clangForJni.hostCompilerArgsForJni
-)
+val commonCompilerFlags = buildList {
+    add("-I${nativeDependencies.llvmPath}/include")
+    addAll(cppImplementation.files.map { "-I${it.absolutePath}" })
+    addAll(nativeDependencies.hostPlatform.clangForJni.hostCompilerArgsForJni)
+}
 val cflags = listOf("-std=c99") + commonCompilerFlags
 val cxxflags = listOf("-std=c++11") + commonCompilerFlags
 
-val ldflags = mutableListOf("${nativeDependencies.llvmPath}/$libclang", "-L${libclangextDir.absolutePath}", "-lclangext")
+val ldflags = mutableListOf("${nativeDependencies.llvmPath}/$libclang")
+cppLink.files.forEach {
+    ldflags.add("-L${it.parentFile.absolutePath}")
+    ldflags.add("-l${libname(it)}")
+}
 
 if (libclangextIsEnabled) {
     assert(HostManager.hostIsMac)
@@ -122,20 +146,23 @@ native {
     }
 }
 
-tasks.named(library).configure {
-    dependsOn(":kotlin-native:libclangext:${lib("clangext")}")
-}
-
 kotlinNativeInterop {
     this.create("clang") {
         defFile("clang.def")
         compilerOpts(cflags)
         skipNatives()
         genTask.configure {
-            dependsOn(libclangextTask)
-            inputs.dir(libclangextDir)
+            cppImplementation.files.forEach { inputs.dir(it) }
         }
     }
+}
+
+native.sourceSets["main-c"]!!.implicitTasks()
+tasks.named(library).configure {
+    inputs.files(cppLink)
+}
+tasks.named("clangstubs.o").configure {
+    cppImplementation.files.forEach { inputs.dir(it) }
 }
 
 dependencies {
