@@ -17,6 +17,7 @@ import org.jetbrains.kotlin.test.FirParser
 import org.jetbrains.kotlin.test.HandlersStepBuilder
 import org.jetbrains.kotlin.test.builders.*
 import org.jetbrains.kotlin.test.directives.CodegenTestDirectives.DUMP_SIGNATURES
+import org.jetbrains.kotlin.test.directives.ConfigurationDirectives.WITH_STDLIB
 import org.jetbrains.kotlin.test.directives.DiagnosticsDirectives.DIAGNOSTICS
 import org.jetbrains.kotlin.test.directives.DiagnosticsDirectives.REPORT_ONLY_EXPLICITLY_DEFINED_DEBUG_INFO
 import org.jetbrains.kotlin.test.directives.LanguageSettingsDirectives
@@ -28,6 +29,8 @@ import org.jetbrains.kotlin.test.frontend.fir.handlers.FirDumpHandler
 import org.jetbrains.kotlin.test.frontend.fir.handlers.FirScopeDumpHandler
 import org.jetbrains.kotlin.test.model.*
 import org.jetbrains.kotlin.test.runners.AbstractKotlinCompilerWithTargetBackendTest
+import org.jetbrains.kotlin.test.runners.TestTierChecker
+import org.jetbrains.kotlin.test.runners.TestTiers
 import org.jetbrains.kotlin.test.services.sourceProviders.AdditionalDiagnosticsSourceFilesProvider
 import org.jetbrains.kotlin.test.services.sourceProviders.CodegenHelpersSourceFilesProvider
 import org.jetbrains.kotlin.test.services.sourceProviders.CoroutineHelpersSourceFilesProvider
@@ -40,6 +43,15 @@ abstract class AbstractIrTextTest<FrontendOutput : ResultingArtifact.FrontendOut
     abstract val frontend: FrontendKind<*>
     abstract val frontendFacade: Constructor<FrontendFacade<FrontendOutput>>
     abstract val converter: Constructor<Frontend2BackendConverter<FrontendOutput, IrBackendInput>>
+
+    /**
+     * Test runners of later [tiers][TestTiers] may be run for test data
+     * originally designed for lower tiers, but sometimes handlers interfere
+     * with one another.
+     * Until this is fixed, tiered runners need a workaround.
+     * See: KT-67281.
+     */
+    open val includeAllDumpHandlers: Boolean get() = true
 
     data class KlibFacades(
         val serializerFacade: Constructor<BackendFacade<IrBackendInput, BinaryArtifacts.KLib>>,
@@ -105,29 +117,34 @@ abstract class AbstractIrTextTest<FrontendOutput : ResultingArtifact.FrontendOut
 
         facadeStep(converter)
 
-        irHandlersStep { useIrTextHandlers(this@configuration, isDeserializedInput = false) }
+        irHandlersStep { useIrTextHandlers(this@configuration, isDeserializedInput = false, includeAllDumpHandlers) }
 
-        klibFacades?.let { klibSteps(it) }
+        klibFacades?.let { klibSteps(it, includeAllDumpHandlers) }
     }
 
-    private fun TestConfigurationBuilder.klibSteps(klibFacades: KlibFacades) = klibFacades.run {
+    private fun TestConfigurationBuilder.klibSteps(klibFacades: KlibFacades, includeAllDumpHandlers: Boolean) = klibFacades.run {
         facadeStep(serializerFacade)
         klibArtifactsHandlersStep()
         facadeStep(deserializerFacade)
-        deserializedIrHandlersStep { useIrTextHandlers(this@klibSteps, isDeserializedInput = true) }
+        deserializedIrHandlersStep { useIrTextHandlers(this@klibSteps, isDeserializedInput = true, includeAllDumpHandlers) }
     }
 
     private fun <InputArtifactKind> HandlersStepBuilder<IrBackendInput, InputArtifactKind>.useIrTextHandlers(
         testConfigurationBuilder: TestConfigurationBuilder,
         isDeserializedInput: Boolean,
+        includeAllDumpHandlers: Boolean = true,
     ) where InputArtifactKind : BackendKind<IrBackendInput> {
         useHandlers(
             ::IrTextDumpHandler.bind(isDeserializedInput),
             ::IrTreeVerifierHandler,
             ::IrPrettyKotlinDumpHandler,
-            ::IrSourceRangesDumpHandler,
             ::IrMangledNameAndSignatureDumpHandler,
         )
+        if (includeAllDumpHandlers) {
+            useHandlers(
+                ::IrSourceRangesDumpHandler,
+            )
+        }
         testConfigurationBuilder.useAfterAnalysisCheckers(
             ::FirIrDumpIdenticalChecker,
         )

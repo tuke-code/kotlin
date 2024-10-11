@@ -9,6 +9,10 @@ import org.jetbrains.kotlin.test.Constructor
 import org.jetbrains.kotlin.test.FirParser
 import org.jetbrains.kotlin.test.backend.ir.IrBackendInput
 import org.jetbrains.kotlin.test.builders.TestConfigurationBuilder
+import org.jetbrains.kotlin.test.directives.CodegenTestDirectives.DUMP_IR
+import org.jetbrains.kotlin.test.directives.CodegenTestDirectives.DUMP_KT_IR
+import org.jetbrains.kotlin.test.directives.CodegenTestDirectives.DUMP_SIGNATURES
+import org.jetbrains.kotlin.test.directives.ConfigurationDirectives.WITH_STDLIB
 import org.jetbrains.kotlin.test.frontend.fir.Fir2IrResultsConverter
 import org.jetbrains.kotlin.test.frontend.fir.FirFrontendFacade
 import org.jetbrains.kotlin.test.frontend.fir.FirOutputArtifact
@@ -16,6 +20,8 @@ import org.jetbrains.kotlin.test.model.Frontend2BackendConverter
 import org.jetbrains.kotlin.test.model.FrontendFacade
 import org.jetbrains.kotlin.test.model.FrontendKind
 import org.jetbrains.kotlin.test.model.FrontendKinds
+import org.jetbrains.kotlin.test.runners.TestTierChecker
+import org.jetbrains.kotlin.test.runners.TestTiers
 import org.jetbrains.kotlin.test.runners.codegen.FirPsiCodegenTest
 
 abstract class AbstractFirJvmIrTextTest(
@@ -38,3 +44,30 @@ open class AbstractFirLightTreeJvmIrTextTest : AbstractFirJvmIrTextTest(FirParse
 
 @FirPsiCodegenTest
 open class AbstractFirPsiJvmIrTextTest : AbstractFirJvmIrTextTest(FirParser.Psi)
+
+abstract class AbstractTieredFir2IrJvmTest(parser: FirParser) : AbstractFirJvmIrTextTest(parser) {
+    override val includeAllDumpHandlers get() = false
+
+    override fun configure(builder: TestConfigurationBuilder) {
+        super.configure(builder)
+
+        with(builder) {
+            defaultDirectives {
+                +WITH_STDLIB
+
+                // In the future we'll probably want to preserve all dumps from lower levels,
+                // but for now I'd like to avoid clashing test data files.
+//                +FIR_DUMP
+                -DUMP_IR
+                -DUMP_KT_IR
+                -DUMP_SIGNATURES
+            }
+
+            useAfterAnalysisCheckers(
+                { TestTierChecker(TestTiers.FIR2IR, it) },
+            )
+        }
+    }
+}
+
+open class AbstractTieredFir2IrJvmLightTreeTest : AbstractTieredFir2IrJvmTest(FirParser.LightTree)
