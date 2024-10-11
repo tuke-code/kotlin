@@ -75,7 +75,7 @@ class TestTierChecker(
 
     private fun analyzeFailures(failedAssertions: List<WrappedException>): List<WrappedException> {
         if (FirDiagnosticsDirectives.RUN_PIPELINE_TILL !in testServices.moduleStructure.allDirectives) {
-            return failedAssertions
+            return emptyList()
         }
 
         val declaredTier = testServices.moduleStructure.allDirectives[FirDiagnosticsDirectives.RUN_PIPELINE_TILL]
