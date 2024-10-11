@@ -6,8 +6,13 @@
 package org.jetbrains.kotlin.test.runners
 
 import org.jetbrains.kotlin.platform.isCommon
+import org.jetbrains.kotlin.test.TargetBackend
 import org.jetbrains.kotlin.test.WrappedException
 import org.jetbrains.kotlin.test.backend.handlers.JvmBoxRunner
+import org.jetbrains.kotlin.test.directives.CodegenTestDirectives.IGNORE_BACKEND
+import org.jetbrains.kotlin.test.directives.CodegenTestDirectives.IGNORE_BACKEND_K2
+import org.jetbrains.kotlin.test.directives.CodegenTestDirectives.IGNORE_BACKEND_K2_MULTI_MODULE
+import org.jetbrains.kotlin.test.directives.CodegenTestDirectives.IGNORE_BACKEND_MULTI_MODULE
 import org.jetbrains.kotlin.test.directives.FirDiagnosticsDirectives
 import org.jetbrains.kotlin.test.model.*
 import org.jetbrains.kotlin.test.services.TestServices
@@ -54,8 +59,16 @@ fun WrappedException.guessTierOfFailure(): TestTiers? {
     }
 }
 
+private val IGNORE_BACKEND_DIRECTIVES = listOf(
+    IGNORE_BACKEND,
+    IGNORE_BACKEND_K2,
+    IGNORE_BACKEND_MULTI_MODULE,
+    IGNORE_BACKEND_K2_MULTI_MODULE,
+)
+
 class TestTierChecker(
     private val lastTierCurrentPipelineExecutes: TestTiers,
+    private val targetBackend: TargetBackend,
     testServices: TestServices,
 ) : AfterAnalysisChecker(testServices) {
     override fun check(failedAssertions: List<WrappedException>) {}
@@ -71,6 +84,7 @@ class TestTierChecker(
         val latestMarkedTier = testServices.moduleStructure.modules.maxOf {
             when {
                 it.targetPlatform.isCommon() -> TestTiers.KLIB
+                IGNORE_BACKEND_DIRECTIVES.any { directive -> targetBackend in it.directives[directive] } -> TestTiers.KLIB
                 else -> TestTiers.BOX
             }
         }
