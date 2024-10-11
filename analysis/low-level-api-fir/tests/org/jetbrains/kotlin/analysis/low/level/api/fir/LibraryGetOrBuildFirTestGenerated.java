@@ -55,6 +55,12 @@ public class LibraryGetOrBuildFirTestGenerated extends AbstractLibraryGetOrBuild
   }
 
   @Test
+  @TestMetadata("nestedMultiFieldValueClass.kt")
+  public void testNestedMultiFieldValueClass() {
+    runTest("analysis/low-level-api-fir/testData/getOrBuildFirBinary/nestedMultiFieldValueClass.kt");
+  }
+
+  @Test
   @TestMetadata("parameter.kt")
   public void testParameter() {
     runTest("analysis/low-level-api-fir/testData/getOrBuildFirBinary/parameter.kt");
@@ -103,9 +109,21 @@ public class LibraryGetOrBuildFirTestGenerated extends AbstractLibraryGetOrBuild
   }
 
   @Test
+  @TestMetadata("valueClassWithMultiFieldValueClass.kt")
+  public void testValueClassWithMultiFieldValueClass() {
+    runTest("analysis/low-level-api-fir/testData/getOrBuildFirBinary/valueClassWithMultiFieldValueClass.kt");
+  }
+
+  @Test
   @TestMetadata("valueClassWithNestedClass.kt")
   public void testValueClassWithNestedClass() {
     runTest("analysis/low-level-api-fir/testData/getOrBuildFirBinary/valueClassWithNestedClass.kt");
+  }
+
+  @Test
+  @TestMetadata("valueClassWithNullableMultiFieldValueClass.kt")
+  public void testValueClassWithNullableMultiFieldValueClass() {
+    runTest("analysis/low-level-api-fir/testData/getOrBuildFirBinary/valueClassWithNullableMultiFieldValueClass.kt");
   }
 
   @Nested
