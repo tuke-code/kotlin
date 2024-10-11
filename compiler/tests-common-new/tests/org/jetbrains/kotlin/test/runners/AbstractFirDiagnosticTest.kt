@@ -100,7 +100,7 @@ abstract class AbstractTieredFirJvmTest(parser: FirParser) : AbstractFirDiagnost
         }
 
         useAfterAnalysisCheckers(
-            { TestTierChecker(TestTiers.FIR, it) },
+            { TestTierChecker(TestTiers.FIR, TargetBackend.JVM_IR, it) },
         )
     }
 }
