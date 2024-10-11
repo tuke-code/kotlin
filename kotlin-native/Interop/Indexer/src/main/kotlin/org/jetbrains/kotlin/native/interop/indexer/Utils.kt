@@ -406,14 +406,19 @@ internal fun List<String>.toNativeStringArray(scope: AutofreeScope): CArrayPoint
     }
 }
 
+private fun List<IncludeInfo>.asPreambleLines(withModules: Boolean): List<String> = map {
+    if (it.moduleName != null && it.moduleName != "" && withModules) {
+        "@import ${it.moduleName};"
+    } else {
+        "#include <${it.headerPath}>"
+    }
+}
+
+val CompilationWithPCH.originalPreambleLines: List<String>
+    get() = this.originalIncludes.asPreambleLines("-fmodules" in this.compilerArgs) + this.originalAdditionalPreambleLines
+
 val Compilation.preambleLines: List<String>
-    get() = this.includes.map {
-        if (it.moduleName != null && it.moduleName != "" && "-fmodules" in this.compilerArgs) {
-            "@import ${it.moduleName};"
-        } else {
-            "#include <${it.headerPath}>"
-        }
-    } + this.additionalPreambleLines
+    get() = this.includes.asPreambleLines("-fmodules" in this.compilerArgs) + this.additionalPreambleLines
 
 internal fun Appendable.appendPreamble(compilation: Compilation) = this.apply {
     compilation.preambleLines.forEach {
@@ -492,11 +497,7 @@ internal fun Compilation.withPrecompiledHeader(translationUnit: CXTranslationUni
         })
     }
 
-    return CompilationWithPCH(
-        this.compilerArgs,
-        precompiledHeader.absolutePath,
-        this.language
-    )
+    return CompilationWithPCH(this, precompiledHeader.absolutePath)
 }
 
 internal fun NativeLibrary.includesDeclaration(cursor: CValue<CXCursor>): Boolean {

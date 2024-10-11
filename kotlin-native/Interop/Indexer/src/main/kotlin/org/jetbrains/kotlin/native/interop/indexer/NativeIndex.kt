@@ -88,10 +88,16 @@ fun defaultCompilerArgs(language: Language): List<String> =
 
 data class CompilationWithPCH(
         override val compilerArgs: List<String>,
-        override val language: Language
+        override val language: Language,
+        val originalIncludes: List<IncludeInfo>,
+        val originalAdditionalPreambleLines: List<String>,
 ) : Compilation {
-    constructor(compilerArgs: List<String>, precompiledHeader: String, language: Language)
-            : this(compilerArgs + listOf("-include-pch", precompiledHeader), language)
+    constructor(compilation: Compilation, precompiledHeader: String) : this(
+            compilerArgs = compilation.compilerArgs + listOf("-include-pch", precompiledHeader),
+            language = compilation.language,
+            originalIncludes = if (compilation is CompilationWithPCH) compilation.originalIncludes else compilation.includes,
+            originalAdditionalPreambleLines = if (compilation is CompilationWithPCH) compilation.originalAdditionalPreambleLines else compilation.additionalPreambleLines,
+    )
 
     override val includes: List<IncludeInfo>
         get() = emptyList()

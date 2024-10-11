@@ -23,10 +23,11 @@ class StubIrContext(
         val platform: KotlinPlatform,
         val generationMode: GenerationMode,
         val libName: String,
-        val plugin: Plugin
+        val plugin: Plugin,
+        val prepareSourcesForExternalProcessing: Boolean,
 ) {
     val libraryForCStubs = configuration.library.copy(
-            includes = mutableListOf<IncludeInfo>().apply {
+            includes = buildList {
                 add(IncludeInfo("stdint.h", null))
                 add(IncludeInfo("string.h", null))
                 if (platform == KotlinPlatform.JVM) {
@@ -36,13 +37,21 @@ class StubIrContext(
                     add(IncludeInfo("new", null))
                 }
                 addAll(configuration.library.includes)
+                if (prepareSourcesForExternalProcessing) {
+                    addAll(configuration.library.originalIncludes)
+                }
             },
             compilerArgs = configuration.library.compilerArgs,
-            additionalPreambleLines = configuration.library.additionalPreambleLines +
-                    when (configuration.library.language) {
-                        Language.C, Language.CPP -> emptyList()
-                        Language.OBJECTIVE_C -> listOf("void objc_terminate();")
-                    }
+            additionalPreambleLines = buildList {
+                addAll(configuration.library.additionalPreambleLines)
+                when (configuration.library.language) {
+                    Language.C, Language.CPP -> {}
+                    Language.OBJECTIVE_C -> add("void objc_terminate();")
+                }
+                if (prepareSourcesForExternalProcessing) {
+                    addAll(configuration.library.originalAdditionalPreambleLines)
+                }
+            }
     ).precompileHeaders()
 
     // TODO: Used only for JVM.
@@ -138,7 +147,7 @@ class StubIrDriver(
             val moduleName: String,
             val outCFile: File,
             val outKtFileCreator: () -> File,
-            val dumpBridges: Boolean
+            val dumpBridges: Boolean,
     )
 
     sealed class Result {
@@ -188,7 +197,12 @@ class StubIrDriver(
     private fun emitCFile(context: StubIrContext, cFile: Appendable, entryPoint: String?, nativeBridges: NativeBridges) {
         val out = { it: String -> cFile.appendLine(it) }
 
-        context.libraryForCStubs.preambleLines.forEach {
+        val preambleLines = if (context.prepareSourcesForExternalProcessing)
+            context.libraryForCStubs.originalPreambleLines
+        else
+            context.libraryForCStubs.preambleLines
+
+        preambleLines.forEach {
             out(it)
         }
         out("")
