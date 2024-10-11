@@ -1006,6 +1006,18 @@ public class FirSourceLazyDeclarationResolveTestGenerated extends AbstractFirSou
     }
 
     @Test
+    @TestMetadata("recursiveValueClass.kt")
+    public void testRecursiveValueClass() {
+      runTest("analysis/low-level-api-fir/testData/lazyResolve/classes/recursiveValueClass.kt");
+    }
+
+    @Test
+    @TestMetadata("recursiveValueClass2.kt")
+    public void testRecursiveValueClass2() {
+      runTest("analysis/low-level-api-fir/testData/lazyResolve/classes/recursiveValueClass2.kt");
+    }
+
+    @Test
     @TestMetadata("simpleLoopInOverride.kt")
     public void testSimpleLoopInOverride() {
       runTest("analysis/low-level-api-fir/testData/lazyResolve/classes/simpleLoopInOverride.kt");
@@ -1045,6 +1057,12 @@ public class FirSourceLazyDeclarationResolveTestGenerated extends AbstractFirSou
     @TestMetadata("superTypeCallNestedNameClashImplicitConstructor.kt")
     public void testSuperTypeCallNestedNameClashImplicitConstructor() {
       runTest("analysis/low-level-api-fir/testData/lazyResolve/classes/superTypeCallNestedNameClashImplicitConstructor.kt");
+    }
+
+    @Test
+    @TestMetadata("valueClassWithNestedClass.kt")
+    public void testValueClassWithNestedClass() {
+      runTest("analysis/low-level-api-fir/testData/lazyResolve/classes/valueClassWithNestedClass.kt");
     }
 
     @Nested
