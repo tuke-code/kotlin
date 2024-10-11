@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+ #pragma once
+
 #include <clang-c/Index.h>
 
 // TODO: the API declared below should eventually be refined and contributed to libclang.

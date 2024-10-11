@@ -129,7 +129,7 @@ kotlinNativeInterop {
     this.create("clang") {
         defFile("clang.def")
         compilerOpts(cflags)
-        linkerOpts(ldflags)
+        skipNatives()
         genTask.configure {
             dependsOn(libclangextTask)
             inputs.dir(libclangextDir)
@@ -182,8 +182,6 @@ artifacts {
     add(cppRuntimeElements.name, tasks.named<ToolExecutionTask>(library).map { it.output })
 }
 
-// Please note that list of headers should be fixed manually.
-// See KT-46231 for details.
 val updatePrebuilt by tasks.registering(Sync::class) {
     dependsOn("genClangInteropStubs")
 
