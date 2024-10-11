@@ -610,7 +610,15 @@ class BodyResolveContext(
                     }
                 }
 
-                addLocalScope(FirLocalScope(holder.session))
+                val localScope = replSnippet.body.statements.fold(FirLocalScope(holder.session)) { scope, statement ->
+                    when (statement) {
+                        is FirProperty -> scope.storeVariable(statement, holder.session)
+                        is FirSimpleFunction -> scope.storeFunction(statement, holder.session)
+                        is FirRegularClass -> scope.storeClass(statement, holder.session)
+                        else -> scope
+                    }
+                }
+                addLocalScope(localScope)
 
                 replSnippet.receivers.mapIndexed { index, receiver ->
                     ImplicitReceiverValueForScriptOrSnippet(

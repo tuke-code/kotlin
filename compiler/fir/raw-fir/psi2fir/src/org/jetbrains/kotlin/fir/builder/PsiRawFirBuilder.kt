@@ -1436,6 +1436,7 @@ open class PsiRawFirBuilder(
                                     is KtProperty -> {
                                         withForcedLocalContext {
                                             val firProperty = convertProperty(declaration, null)
+                                            firProperty.replaceIsLocal(true)
                                             statements.add(firProperty)
                                         }
                                     }

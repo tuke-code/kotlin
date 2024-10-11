@@ -182,6 +182,10 @@ class FirSyntheticProperty @FirImplementationDetail internal constructor(
         notSupported()
     }
 
+    override fun replaceIsLocal(newIsLocal: Boolean) {
+        notSupported()
+    }
+
     override fun replaceAnnotations(newAnnotations: List<FirAnnotation>) {
         notSupported()
     }

@@ -83,6 +83,8 @@ abstract class FirProperty : FirVariable(), FirTypeParametersOwner, FirControlFl
 
     abstract override fun replaceContextReceivers(newContextReceivers: List<FirContextReceiver>)
 
+    abstract fun replaceIsLocal(newIsLocal: Boolean)
+
     abstract fun replaceBodyResolveState(newBodyResolveState: FirPropertyBodyResolveState)
 
     abstract override fun <D> transformStatus(transformer: FirTransformer<D>, data: D): FirProperty

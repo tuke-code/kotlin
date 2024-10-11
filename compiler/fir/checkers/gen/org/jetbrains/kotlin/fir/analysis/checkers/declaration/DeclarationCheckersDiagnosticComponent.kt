@@ -75,6 +75,10 @@ class DeclarationCheckersDiagnosticComponent(
         checkers.allScriptCheckers.check(script, data)
     }
 
+    override fun visitReplSnippet(replSnippet: FirReplSnippet, data: CheckerContext) {
+        checkers.allReplSnippetCheckers.check(replSnippet, data)
+    }
+
     override fun visitTypeParameter(typeParameter: FirTypeParameter, data: CheckerContext) {
         checkers.allTypeParameterCheckers.check(typeParameter, data)
     }
@@ -117,10 +121,6 @@ class DeclarationCheckersDiagnosticComponent(
 
     override fun visitCodeFragment(codeFragment: FirCodeFragment, data: CheckerContext) {
         checkers.allBasicDeclarationCheckers.check(codeFragment, data)
-    }
-
-    override fun visitReplSnippet(replSnippet: FirReplSnippet, data: CheckerContext) {
-        checkers.allReplSnippetCheckers.check(replSnippet, data)
     }
 
     override fun visitField(field: FirField, data: CheckerContext) {

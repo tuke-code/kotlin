@@ -534,7 +534,7 @@ object FirTree : AbstractFirTreeBuilder() {
         +listField(contextReceiver, useMutableOrEmpty = true, withReplace = true, withTransform = true)
         +declaredSymbol(propertySymbolType)
         +referencedSymbol("delegateFieldSymbol", delegateFieldSymbolType, nullable = true)
-        +field("isLocal", boolean)
+        +field("isLocal", boolean, withReplace = true)
         +field("bodyResolveState", propertyBodyResolveStateType, withReplace = true)
         +typeParameters
     }
