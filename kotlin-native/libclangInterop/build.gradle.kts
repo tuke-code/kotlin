@@ -1,4 +1,5 @@
 import org.gradle.kotlin.dsl.named
+import org.jetbrains.kotlin.PlatformInfo
 import org.jetbrains.kotlin.cpp.CppUsage
 import org.jetbrains.kotlin.konan.target.HostManager
 import org.jetbrains.kotlin.konan.target.TargetWithSanitizer
@@ -38,9 +39,6 @@ dependencies {
     cppLink(project(":kotlin-native:libclangext"))
 }
 
-val libclangextProject = project(":kotlin-native:libclangext")
-val libclangextIsEnabled = libclangextProject.findProperty("isEnabled")!! as Boolean
-
 val libclang = if (HostManager.hostIsMingw) {
     "lib/libclang.lib"
 } else {
@@ -61,8 +59,7 @@ cppLink.files.forEach {
     ldflags.add("-l${libname(it)}")
 }
 
-if (libclangextIsEnabled) {
-    assert(HostManager.hostIsMac)
+if (PlatformInfo.isMac()) {
     // Let some symbols be undefined to avoid linking unnecessary parts.
     val unnecessarySymbols = setOf(
             "__ZN4llvm7remarks11parseFormatENS_9StringRefE",
