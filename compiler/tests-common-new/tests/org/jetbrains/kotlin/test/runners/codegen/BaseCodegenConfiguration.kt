@@ -110,7 +110,7 @@ fun TestConfigurationBuilder.useInlineScopesNumbers() {
     }
 }
 
-fun TestConfigurationBuilder.configureDumpHandlersForCodegenTest() {
+fun TestConfigurationBuilder.configureDumpHandlersForCodegenTest(includeAllDumpHandlers: Boolean = true) {
     configureIrHandlersStep {
         useHandlers(
             ::IrTreeVerifierHandler,
@@ -119,14 +119,18 @@ fun TestConfigurationBuilder.configureDumpHandlersForCodegenTest() {
         )
     }
     configureJvmArtifactsHandlersStep {
-        useHandlers(::BytecodeListingHandler)
+        if (includeAllDumpHandlers) {
+            useHandlers(::BytecodeListingHandler)
+        }
     }
 }
 
-fun TestConfigurationBuilder.configureCommonHandlersForBoxTest() {
+fun TestConfigurationBuilder.configureCommonHandlersForBoxTest(enableBoxHandler: Boolean = true) {
     commonHandlersForCodegenTest()
     configureJvmArtifactsHandlersStep {
-        useHandlers(::JvmBoxRunner)
+        if (enableBoxHandler) {
+            useHandlers(::JvmBoxRunner)
+        }
     }
 }
 

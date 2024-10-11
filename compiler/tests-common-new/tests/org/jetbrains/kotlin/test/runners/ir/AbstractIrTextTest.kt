@@ -17,7 +17,6 @@ import org.jetbrains.kotlin.test.FirParser
 import org.jetbrains.kotlin.test.HandlersStepBuilder
 import org.jetbrains.kotlin.test.builders.*
 import org.jetbrains.kotlin.test.directives.CodegenTestDirectives.DUMP_SIGNATURES
-import org.jetbrains.kotlin.test.directives.ConfigurationDirectives.WITH_STDLIB
 import org.jetbrains.kotlin.test.directives.DiagnosticsDirectives.DIAGNOSTICS
 import org.jetbrains.kotlin.test.directives.DiagnosticsDirectives.REPORT_ONLY_EXPLICITLY_DEFINED_DEBUG_INFO
 import org.jetbrains.kotlin.test.directives.LanguageSettingsDirectives
@@ -29,8 +28,7 @@ import org.jetbrains.kotlin.test.frontend.fir.handlers.FirDumpHandler
 import org.jetbrains.kotlin.test.frontend.fir.handlers.FirScopeDumpHandler
 import org.jetbrains.kotlin.test.model.*
 import org.jetbrains.kotlin.test.runners.AbstractKotlinCompilerWithTargetBackendTest
-import org.jetbrains.kotlin.test.runners.TestTierChecker
-import org.jetbrains.kotlin.test.runners.TestTiers
+import org.jetbrains.kotlin.test.runners.SupportForTieredTestRunners
 import org.jetbrains.kotlin.test.services.sourceProviders.AdditionalDiagnosticsSourceFilesProvider
 import org.jetbrains.kotlin.test.services.sourceProviders.CodegenHelpersSourceFilesProvider
 import org.jetbrains.kotlin.test.services.sourceProviders.CoroutineHelpersSourceFilesProvider
@@ -39,19 +37,10 @@ import org.jetbrains.kotlin.utils.bind
 abstract class AbstractIrTextTest<FrontendOutput : ResultingArtifact.FrontendOutput<FrontendOutput>>(
     private val targetPlatform: TargetPlatform,
     targetBackend: TargetBackend
-) : AbstractKotlinCompilerWithTargetBackendTest(targetBackend) {
+) : AbstractKotlinCompilerWithTargetBackendTest(targetBackend), SupportForTieredTestRunners {
     abstract val frontend: FrontendKind<*>
     abstract val frontendFacade: Constructor<FrontendFacade<FrontendOutput>>
     abstract val converter: Constructor<Frontend2BackendConverter<FrontendOutput, IrBackendInput>>
-
-    /**
-     * Test runners of later [tiers][TestTiers] may be run for test data
-     * originally designed for lower tiers, but sometimes handlers interfere
-     * with one another.
-     * Until this is fixed, tiered runners need a workaround.
-     * See: KT-67281.
-     */
-    open val includeAllDumpHandlers: Boolean get() = true
 
     data class KlibFacades(
         val serializerFacade: Constructor<BackendFacade<IrBackendInput, BinaryArtifacts.KLib>>,

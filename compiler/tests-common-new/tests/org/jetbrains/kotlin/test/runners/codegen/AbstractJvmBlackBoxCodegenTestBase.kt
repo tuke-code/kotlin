@@ -28,12 +28,13 @@ import org.jetbrains.kotlin.test.frontend.classic.handlers.ClassicDiagnosticsHan
 import org.jetbrains.kotlin.test.frontend.fir.handlers.FirDiagnosticsHandler
 import org.jetbrains.kotlin.test.model.*
 import org.jetbrains.kotlin.test.runners.AbstractKotlinCompilerWithTargetBackendTest
+import org.jetbrains.kotlin.test.runners.SupportForTieredTestRunners
 import org.jetbrains.kotlin.test.services.configuration.JavaForeignAnnotationType
 import org.jetbrains.kotlin.utils.bind
 
 abstract class AbstractJvmBlackBoxCodegenTestBase<R : ResultingArtifact.FrontendOutput<R>>(
     val targetFrontend: FrontendKind<R>,
-) : AbstractKotlinCompilerWithTargetBackendTest(TargetBackend.JVM_IR) {
+) : AbstractKotlinCompilerWithTargetBackendTest(TargetBackend.JVM_IR), SupportForTieredTestRunners {
     abstract val frontendFacade: Constructor<FrontendFacade<R>>
     abstract val frontendToBackendConverter: Constructor<Frontend2BackendConverter<R, IrBackendInput>>
 
@@ -52,11 +53,16 @@ abstract class AbstractJvmBlackBoxCodegenTestBase<R : ResultingArtifact.Frontend
             )
         }
 
-        configureCommonHandlersForBoxTest()
+        configureCommonHandlersForBoxTest(enableBoxHandler)
 
         configureJvmArtifactsHandlersStep {
+            if (includeAllDumpHandlers) {
+                useHandlers(
+                    ::BytecodeListingHandler,
+                )
+            }
+
             useHandlers(
-                ::BytecodeListingHandler,
                 ::BytecodeTextHandler.bind(true)
             )
         }

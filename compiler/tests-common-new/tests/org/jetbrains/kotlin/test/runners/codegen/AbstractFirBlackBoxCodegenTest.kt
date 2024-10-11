@@ -7,7 +7,9 @@ package org.jetbrains.kotlin.test.runners.codegen
 
 import org.jetbrains.kotlin.test.Constructor
 import org.jetbrains.kotlin.test.FirParser
-import org.jetbrains.kotlin.test.backend.ir.*
+import org.jetbrains.kotlin.test.backend.ir.IrBackendInput
+import org.jetbrains.kotlin.test.backend.ir.IrConstCheckerHandler
+import org.jetbrains.kotlin.test.backend.ir.IrDiagnosticsHandler
 import org.jetbrains.kotlin.test.builders.TestConfigurationBuilder
 import org.jetbrains.kotlin.test.builders.configureFirHandlersStep
 import org.jetbrains.kotlin.test.builders.configureIrHandlersStep
@@ -23,7 +25,11 @@ import org.jetbrains.kotlin.test.frontend.fir.handlers.FirCfgDumpHandler
 import org.jetbrains.kotlin.test.frontend.fir.handlers.FirDumpHandler
 import org.jetbrains.kotlin.test.frontend.fir.handlers.FirResolvedTypesVerifier
 import org.jetbrains.kotlin.test.frontend.fir.handlers.FirScopeDumpHandler
-import org.jetbrains.kotlin.test.model.*
+import org.jetbrains.kotlin.test.model.Frontend2BackendConverter
+import org.jetbrains.kotlin.test.model.FrontendFacade
+import org.jetbrains.kotlin.test.model.FrontendKinds
+import org.jetbrains.kotlin.test.runners.TestTierChecker
+import org.jetbrains.kotlin.test.runners.TestTiers
 
 abstract class AbstractFirBlackBoxCodegenTestBase(
     val parser: FirParser
@@ -63,7 +69,7 @@ abstract class AbstractFirBlackBoxCodegenTestBase(
                 ::FirMetaInfoDiffSuppressor
             )
 
-            configureDumpHandlersForCodegenTest()
+            configureDumpHandlersForCodegenTest(includeAllDumpHandlers)
 
             baseFirBlackBoxCodegenTestDirectivesConfiguration()
         }
@@ -88,3 +94,27 @@ open class AbstractFirLightTreeBlackBoxCodegenTest : AbstractFirBlackBoxCodegenT
 
 @FirPsiCodegenTest
 open class AbstractFirPsiBlackBoxCodegenTest : AbstractFirBlackBoxCodegenTestBase(FirParser.Psi)
+
+abstract class AbstractTieredBackendJvmTest(
+    private val supportedTier: TestTiers,
+    parser: FirParser,
+) : AbstractFirBlackBoxCodegenTestBase(parser) {
+    override val includeAllDumpHandlers: Boolean get() = false
+    override val enableBoxHandler get() = false
+
+    override fun configure(builder: TestConfigurationBuilder) {
+        super.configure(builder)
+
+        with(builder) {
+            defaultDirectives {
+                +WITH_STDLIB
+            }
+
+            useAfterAnalysisCheckers(
+                { TestTierChecker(supportedTier, it) },
+            )
+        }
+    }
+}
+
+open class AbstractTieredBackendJvmLightTreeTest : AbstractTieredBackendJvmTest(TestTiers.BACKEND, FirParser.LightTree)

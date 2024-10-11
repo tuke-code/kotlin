@@ -47018,6 +47018,12 @@ public class FirLightTreeOldFrontendDiagnosticsTestGenerated extends AbstractFir
         }
 
         @Test
+        @TestMetadata("isFir2IrButBackendFails.kt")
+        public void testIsFir2IrButBackendFails() {
+          runTest("compiler/testData/diagnostics/testsWithStdLib/tieredFailures/fail/isFir2IrButBackendFails.kt");
+        }
+
+        @Test
         @TestMetadata("isFirButFir2IrPasses.kt")
         public void testIsFirButFir2IrPasses() {
           runTest("compiler/testData/diagnostics/testsWithStdLib/tieredFailures/fail/isFirButFir2IrPasses.kt");
@@ -47043,6 +47049,18 @@ public class FirLightTreeOldFrontendDiagnosticsTestGenerated extends AbstractFir
         @TestMetadata("isFirButFir2IrFails.kt")
         public void testIsFirButFir2IrFails() {
           runTest("compiler/testData/diagnostics/testsWithStdLib/tieredFailures/good/isFirButFir2IrFails.kt");
+        }
+
+        @Test
+        @TestMetadata("isKlibButBackendFails.kt")
+        public void testIsKlibButBackendFails() {
+          runTest("compiler/testData/diagnostics/testsWithStdLib/tieredFailures/good/isKlibButBackendFails.kt");
+        }
+
+        @Test
+        @TestMetadata("isKlibButLimitedToKlib.kt")
+        public void testIsKlibButLimitedToKlib() {
+          runTest("compiler/testData/diagnostics/testsWithStdLib/tieredFailures/good/isKlibButLimitedToKlib.kt");
         }
 
         @Test
