@@ -27,11 +27,13 @@ val libclang = if (HostManager.hostIsMingw) {
     "lib/${System.mapLibraryName("clang")}"
 }
 
-val cflags = mutableListOf(
-    "-I${nativeDependencies.llvmPath}/include",
-    "-I${project(":kotlin-native:libclangext").projectDir.absolutePath}/src/main/include",
-    *nativeDependencies.hostPlatform.clangForJni.hostCompilerArgsForJni
+val commonCompilerFlags = listOf(
+        "-I${nativeDependencies.llvmPath}/include",
+        "-I${project(":kotlin-native:libclangext").projectDir.absolutePath}/src/main/include",
+        *nativeDependencies.hostPlatform.clangForJni.hostCompilerArgsForJni
 )
+val cflags = listOf("-std=c99") + commonCompilerFlags
+val cxxflags = listOf("-std=c++11") + commonCompilerFlags
 
 val ldflags = mutableListOf("${nativeDependencies.llvmPath}/$libclang", "-L${libclangextDir.absolutePath}", "-lclangext")
 
@@ -88,7 +90,6 @@ val lib = if (HostManager.hostIsMingw) "lib" else "a"
 
 native {
     val obj = if (HostManager.hostIsMingw) "obj" else "o"
-    val cxxflags = listOf("-std=c++11", *cflags.toTypedArray())
     suffixes {
         (".c" to ".$obj") {
             tool(*hostPlatform.clangForJni.clangC("").toTypedArray())
