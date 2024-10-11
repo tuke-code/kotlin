@@ -14,11 +14,9 @@ import org.jetbrains.kotlin.fir.SessionConfiguration
 import org.jetbrains.kotlin.fir.symbols.FirLazyDeclarationResolver
 import org.jetbrains.kotlin.platform.jvm.JvmPlatforms
 import org.jetbrains.kotlin.test.*
+import org.jetbrains.kotlin.test.backend.handlers.NoFirCompilationErrorsHandler
 import org.jetbrains.kotlin.test.backend.ir.IrDiagnosticsHandler
-import org.jetbrains.kotlin.test.builders.TestConfigurationBuilder
-import org.jetbrains.kotlin.test.builders.configureFirHandlersStep
-import org.jetbrains.kotlin.test.builders.firHandlersStep
-import org.jetbrains.kotlin.test.builders.irHandlersStep
+import org.jetbrains.kotlin.test.builders.*
 import org.jetbrains.kotlin.test.directives.CodegenTestDirectives
 import org.jetbrains.kotlin.test.directives.ConfigurationDirectives.DISABLE_TYPEALIAS_EXPANSION
 import org.jetbrains.kotlin.test.directives.ConfigurationDirectives.WITH_STDLIB
@@ -40,10 +38,7 @@ import org.jetbrains.kotlin.test.directives.configureFirParser
 import org.jetbrains.kotlin.test.frontend.classic.handlers.FirTestDataConsistencyHandler
 import org.jetbrains.kotlin.test.frontend.fir.*
 import org.jetbrains.kotlin.test.frontend.fir.handlers.*
-import org.jetbrains.kotlin.test.model.AfterAnalysisChecker
-import org.jetbrains.kotlin.test.model.DependencyKind
-import org.jetbrains.kotlin.test.model.FrontendFacade
-import org.jetbrains.kotlin.test.model.FrontendKinds
+import org.jetbrains.kotlin.test.model.*
 import org.jetbrains.kotlin.test.services.*
 import org.jetbrains.kotlin.test.services.configuration.CommonEnvironmentConfigurator
 import org.jetbrains.kotlin.test.services.configuration.JvmEnvironmentConfigurator
@@ -90,6 +85,27 @@ abstract class AbstractFirLightTreeDiagnosticsWithoutAliasExpansionTest : Abstra
         }
     }
 }
+
+abstract class AbstractTieredFirJvmTest(parser: FirParser) : AbstractFirDiagnosticTestBase(parser) {
+    override fun TestConfigurationBuilder.configuration() {
+        baseFirDiagnosticTestConfiguration()
+        enableLazyResolvePhaseChecking()
+        configureFirParser(parser)
+
+        configureFirHandlersStep {
+            useHandlers(
+                // Makes the FIR tier fail if there are errors; otherwise, it would fail on meta-infos mismatch.
+                ::NoFirCompilationErrorsHandler,
+            )
+        }
+
+        useAfterAnalysisCheckers(
+            { TestTierChecker(TestTiers.FIR, it) },
+        )
+    }
+}
+
+open class AbstractTieredFirJvmLightTreeTest : AbstractTieredFirJvmTest(FirParser.LightTree)
 
 class LightTreeSyntaxDiagnosticsReporterHolder : TestService {
     val reporter = SimpleDiagnosticsCollector(BaseDiagnosticsCollector.RawReporter.DO_NOTHING)
