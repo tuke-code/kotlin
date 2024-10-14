@@ -74,10 +74,10 @@ val cppRuntimeElements by configurations.creating {
 
 artifacts {
     add(cppApiElements.name, layout.projectDirectory.dir("src/headers"))
-    add(cppLinkElements.name, layout.buildDirectory.dir("nativelibs/${TargetWithSanitizer.host}/$library")) {
+    add(cppLinkElements.name, layout.buildDirectory.file("nativelibs/${TargetWithSanitizer.host}/$library")) {
         builtBy(kotlinNativeInterop["env"].genTask)
     }
-    add(cppRuntimeElements.name, layout.buildDirectory.dir("nativelibs/${TargetWithSanitizer.host}/$library")) {
+    add(cppRuntimeElements.name, layout.buildDirectory.file("nativelibs/${TargetWithSanitizer.host}/$library")) {
         builtBy(kotlinNativeInterop["env"].genTask)
     }
 }
