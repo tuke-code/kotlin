@@ -2349,6 +2349,15 @@ open class PsiRawFirBuilder(
                         }
                     }
                 }
+                is KtDotUserType -> {
+                    val referenceExpression = unwrappedElement.referenceExpression
+                    FirUserDotTypeRefBuilder().apply {
+                        this.source = source
+                        isMarkedNullable = isNullable
+                        name = referenceExpression!!.getReferencedNameAsName()
+                        typeArguments.appendTypeArguments(unwrappedElement.typeArguments)
+                    }
+                }
                 is KtFunctionType -> {
                     FirFunctionTypeRefBuilder().apply {
                         this.source = source
@@ -2494,7 +2503,15 @@ open class PsiRawFirBuilder(
             }
         }
 
-        override fun visitSimpleNameExpression(expression: KtSimpleNameExpression, data: FirElement?): FirElement {
+        private fun <T: KtSimpleNameExpression> visitNameExpression(
+            expression: T,
+            generateExpression: (
+                qualifiedSource: KtSourceElement?,
+                calleeReferenceSource: KtSourceElement?,
+                name: Name,
+                diagnostic: ConeDiagnostic?
+            ) -> FirQualifiedAccessExpression
+        ): FirElement {
             val qualifiedSource = when {
                 expression.getQualifiedExpressionForSelector() != null -> expression.parent
                 else -> expression
@@ -2507,13 +2524,19 @@ open class PsiRawFirBuilder(
                 diagnostic = ConeUnderscoreUsageWithoutBackticks(expressionSource)
             }
 
-            return generateAccessExpression(
+            return generateExpression(
                 qualifiedSource,
                 expressionSource,
                 expression.getReferencedNameAsName(),
                 diagnostic
             )
         }
+
+        override fun visitSimpleNameExpression(expression: KtSimpleNameExpression, data: FirElement?): FirElement =
+            visitNameExpression(expression, ::generateAccessExpression)
+
+        override fun visitDotNameReferenceExpression(expression: KtDotNameReferenceExpression, data: FirElement?): FirElement =
+            visitNameExpression(expression, ::generateDotAccessExpression)
 
         override fun visitConstantExpression(expression: KtConstantExpression, data: FirElement?): FirElement =
             generateConstantExpressionByLiteral(expression)
@@ -3005,6 +3028,14 @@ open class PsiRawFirBuilder(
                 ?.toFirExpression("Incorrect invoke receiver")
 
             return when {
+                calleeExpression is KtDotNameReferenceExpression ->
+                    CalleeAndReceiver(
+                        buildDotNamedReference {
+                            source = calleeExpression.toFirSourceElement()
+                            name = calleeExpression.getReferencedNameAsName()
+                        }
+                    )
+
                 calleeExpression is KtSimpleNameExpression ->
                     CalleeAndReceiver(
                         buildSimpleNamedReference {
