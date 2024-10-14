@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2023 JetBrains s.r.o. and Kotlin Programming Language contributors.
+ * Copyright 2010-2024 JetBrains s.r.o. and Kotlin Programming Language contributors.
  * Use of this source code is governed by the Apache 2.0 license that can be found in the license/LICENSE.txt file.
  */
 
@@ -21,9 +21,12 @@ import org.jetbrains.kotlin.psi.psiUtil.KtPsiUtilKt;
 import org.jetbrains.kotlin.psi.stubs.KotlinClassStub;
 import org.jetbrains.kotlin.psi.stubs.StubUtils;
 import org.jetbrains.kotlin.psi.stubs.impl.KotlinClassStubImpl;
+import org.jetbrains.kotlin.psi.stubs.impl.KotlinTypeBean;
 import org.jetbrains.kotlin.psi.stubs.impl.Utils;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class KtClassElementType extends KtStubElementType<KotlinClassStub, KtClass> {
@@ -55,7 +58,8 @@ public class KtClassElementType extends KtStubElementType<KotlinClassStub, KtCla
                 StringRef.fromString(fqName != null ? fqName.asString() : null), classId,
                 StringRef.fromString(psi.getName()),
                 Utils.INSTANCE.wrapStrings(superNames),
-                psi.isInterface(), isEnumEntry, psi.isLocal(), psi.isTopLevel()
+                psi.isInterface(), isEnumEntry, psi.isLocal(), psi.isTopLevel(),
+                null
         );
     }
 
@@ -78,6 +82,22 @@ public class KtClassElementType extends KtStubElementType<KotlinClassStub, KtCla
         for (String name : superNames) {
             dataStream.writeName(name);
         }
+
+        if (stub instanceof KotlinClassStubImpl) {
+            KotlinClassStubImpl stubImpl = (KotlinClassStubImpl) stub;
+            KotlinValueClassRepresentation representation = stubImpl.getValueClassRepresentation();
+            if (representation == null) {
+                dataStream.writeVarInt(-1);
+            }else {
+                List<KotlinTypeBean> underlyingTypes = representation.getUnderlyingTypes();
+                dataStream.writeVarInt(underlyingTypes.size());
+                for (KotlinTypeBean typeBean : underlyingTypes) {
+                    TypeBeanSerializationKt.serializeTypeBean(dataStream, typeBean);
+                }
+
+                dataStream.writeBoolean(representation.isInline());
+            }
+        }
     }
 
     @NotNull
@@ -99,9 +119,30 @@ public class KtClassElementType extends KtStubElementType<KotlinClassStub, KtCla
             superNames[i] = dataStream.readName();
         }
 
+        int typeBeanCount = dataStream.readVarInt();
+        KotlinValueClassRepresentation representation = null;
+        if (typeBeanCount >= 0) {
+            List<KotlinTypeBean> typeBeans;
+            if (typeBeanCount == 0) {
+                typeBeans = Collections.emptyList();
+            } else if (typeBeanCount == 1) {
+                KotlinTypeBean value = TypeBeanSerializationKt.deserializeTypeBean(dataStream);
+                typeBeans = Collections.singletonList(value);
+            } else {
+                typeBeans = new ArrayList<>(typeBeanCount);
+                for (int i = 0; i < typeBeanCount; i++) {
+                    typeBeans.add(TypeBeanSerializationKt.deserializeTypeBean(dataStream));
+                }
+            }
+
+            boolean isInline = dataStream.readBoolean();
+            representation = new KotlinValueClassRepresentation(isInline, typeBeans);
+        }
+
         return new KotlinClassStubImpl(
                 getStubType(isEnumEntry), (StubElement<?>) parentStub, qualifiedName,classId, name, superNames,
-                isTrait, isEnumEntry, isLocal, isTopLevel
+                isTrait, isEnumEntry, isLocal, isTopLevel,
+                representation
         );
     }
 

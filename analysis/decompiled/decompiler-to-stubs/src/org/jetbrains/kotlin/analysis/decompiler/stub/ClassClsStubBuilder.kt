@@ -1,4 +1,7 @@
-// Copyright 2000-2021 JetBrains s.r.o. and contributors. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
+/*
+ * Copyright 2010-2024 JetBrains s.r.o. and Kotlin Programming Language contributors.
+ * Use of this source code is governed by the Apache 2.0 license that can be found in the license/LICENSE.txt file.
+ */
 
 package org.jetbrains.kotlin.analysis.decompiler.stub
 
@@ -17,6 +20,7 @@ import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.psi.KtClassBody
 import org.jetbrains.kotlin.psi.KtSuperTypeEntry
 import org.jetbrains.kotlin.psi.KtSuperTypeList
+import org.jetbrains.kotlin.psi.stubs.elements.KotlinValueClassRepresentation
 import org.jetbrains.kotlin.psi.stubs.elements.KtClassElementType
 import org.jetbrains.kotlin.psi.stubs.elements.KtStubElementTypes
 import org.jetbrains.kotlin.psi.stubs.impl.KotlinClassStubImpl
@@ -26,6 +30,7 @@ import org.jetbrains.kotlin.psi.stubs.impl.KotlinPlaceHolderStubImpl
 import org.jetbrains.kotlin.serialization.deserialization.ProtoContainer
 import org.jetbrains.kotlin.serialization.deserialization.getClassId
 import org.jetbrains.kotlin.serialization.deserialization.getName
+import org.jetbrains.kotlin.serialization.deserialization.loadMultiFieldValueClassRepresentation
 
 fun createClassStub(
     parent: StubElement<out PsiElement>,
@@ -33,7 +38,7 @@ fun createClassStub(
     nameResolver: NameResolver,
     classId: ClassId,
     source: SourceElement?,
-    context: ClsStubBuilderContext
+    context: ClsStubBuilderContext,
 ) {
     ClassClsStubBuilder(parent, classProto, nameResolver, classId, source, context).build()
 }
@@ -44,7 +49,7 @@ private class ClassClsStubBuilder(
     nameResolver: NameResolver,
     private val classId: ClassId,
     source: SourceElement?,
-    outerContext: ClsStubBuilderContext
+    outerContext: ClsStubBuilderContext,
 ) {
     private val thisAsProtoContainer = ProtoContainer.Class(
         classProto, nameResolver, TypeTable(classProto.typeTable), source, outerContext.protoContainer
@@ -147,9 +152,24 @@ private class ClassClsStubBuilder(
                     isEnumEntry = classKind == ProtoBuf.Class.Kind.ENUM_ENTRY,
                     isLocal = false,
                     isTopLevel = !this.classId.isNestedClass,
+                    valueClassRepresentation = valueClassRepresentation(),
                 )
             }
         }
+    }
+
+    private fun valueClassRepresentation(): KotlinValueClassRepresentation? = when {
+        classProto.multiFieldValueClassUnderlyingNameCount > 0 -> {
+            val (_, types) = classProto.loadMultiFieldValueClassRepresentation(c.nameResolver, c.typeTable)
+            KotlinValueClassRepresentation(isInline = false, types.mapNotNull(typeStubBuilder::createKotlinTypeBean))
+        }
+
+        classProto.hasInlineClassUnderlyingPropertyName() -> {
+            val type = classProto.inlineClassUnderlyingType(c.typeTable)?.let(typeStubBuilder::createKotlinTypeBean)
+            KotlinValueClassRepresentation(isInline = true, listOfNotNull(type))
+        }
+
+        else -> null
     }
 
     private fun createConstructorStub() {
@@ -208,8 +228,10 @@ private class ClassClsStubBuilder(
                 isInterface = false,
                 isEnumEntry = true,
                 isLocal = false,
-                isTopLevel = false
+                isTopLevel = false,
+                valueClassRepresentation = null,
             )
+
             if (annotations.isNotEmpty()) {
                 createAnnotationStubs(annotations, createEmptyModifierListStub(enumEntryStub))
             }
