@@ -38,6 +38,8 @@ import org.jetbrains.kotlin.fir.java.JavaSymbolProvider
 import org.jetbrains.kotlin.fir.languageVersionSettings
 import org.jetbrains.kotlin.fir.resolve.providers.*
 import org.jetbrains.kotlin.fir.resolve.providers.impl.FirExtensionSyntheticFunctionInterfaceProvider
+import org.jetbrains.kotlin.fir.resolve.providers.impl.FirStdlibBuiltinSyntheticFunctionInterfaceProvider
+import org.jetbrains.kotlin.fir.resolve.providers.impl.stdlibSyntheticFunctionInterfacesSymbolProvider
 import org.jetbrains.kotlin.fir.resolve.providers.symbolProvider
 import org.jetbrains.kotlin.fir.resolve.scopes.wrapScopeWithJvmMapped
 import org.jetbrains.kotlin.fir.resolve.transformers.FirDummyCompilerLazyDeclarationResolver
@@ -457,6 +459,13 @@ internal abstract class LLFirAbstractSessionFactory(protected val project: Proje
             register(LLFirFirClassByPsiClassProvider::class, LLFirFirClassByPsiClassProvider(this))
             register(FirProvider::class, LLFirLibrarySessionProvider(symbolProvider))
             register(FirSymbolProvider::class, symbolProvider)
+
+            if (builtinsSession.languageVersionSettings.getFlag(AnalysisFlags.stdlibCompilation)) {
+                register(
+                    FirStdlibBuiltinSyntheticFunctionInterfaceProvider::class,
+                    builtinsSession.stdlibSyntheticFunctionInterfacesSymbolProvider
+                )
+            }
 
             val context = BinaryLibrarySessionCreationContext()
             additionalSessionConfiguration(context)
