@@ -762,7 +762,7 @@ public fun String.replaceBeforeLast(delimiter: String, replacement: String, miss
  * This is a convenience function that is equivalent to `regex.replace(this, replacement)`.
  * For details about its behaviour and the substitution syntax of [replacement] expression, refer to [Regex.replace].
  *
- * @sample samples.text.Regexps.replaceWithExpression
+ * @sample samples.text.Strings.replaceWithExpression
  */
 @kotlin.internal.InlineOnly
 public inline fun CharSequence.replace(regex: Regex, replacement: String): String = regex.replace(this, replacement)
@@ -783,7 +783,7 @@ public inline fun CharSequence.replace(regex: Regex, noinline transform: (MatchR
  * This is a convenience function that is equivalent to `regex.replaceFirst(this, replacement)`.
  * For details about its behaviour and the substitution syntax of [replacement] expression, refer to [Regex.replaceFirst].
  *
- * @sample samples.text.Regexps.replaceWithExpression
+ * @sample samples.text.Strings.replaceFirstWithExpression
  */
 @kotlin.internal.InlineOnly
 public inline fun CharSequence.replaceFirst(regex: Regex, replacement: String): String = regex.replaceFirst(this, replacement)

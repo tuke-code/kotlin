@@ -238,7 +238,7 @@ public actual class Regex public actual constructor(pattern: String, options: Se
      * @return the result of replacing the first occurrence of this regular expression in [input] with the result of evaluating the [replacement] expression
      * @throws RuntimeException if [replacement] expression is malformed, or capturing group with specified `name` or `index` does not exist
      *
-     * @sample samples.text.Regexps.replaceWithExpression
+     * @sample samples.text.Regexps.replaceFirstWithExpression
      */
     public actual fun replaceFirst(input: CharSequence, replacement: String): String {
         if (!replacement.contains('\\') && !replacement.contains('$')) {
