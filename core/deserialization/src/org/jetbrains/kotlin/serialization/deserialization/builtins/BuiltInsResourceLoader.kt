@@ -15,6 +15,8 @@ class BuiltInsResourceLoader {
         // a globally cached JarFile instance, which is closed as soon as URLClassLoader is closed, which instantly invalidates all
         // input streams referring to that JarFile and breaks kotlin-reflect in case it's used from different class loaders.
         val resource = classLoader.getResource(path) ?: return null
+        println("!-!-!-! LOADING RESOURCE from")
+        println(resource)
         return resource.openConnection().apply { useCaches = false }.getInputStream()
     }
 }
