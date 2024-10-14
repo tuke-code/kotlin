@@ -7,6 +7,8 @@ public typealias deprecatedA = Swift.Void
 public typealias deprecatedImplicitlyA = Swift.Void
 @available(*, unavailable, message: "Obsoleted")
 public typealias obsoletedA = Swift.Void
+@available(*, deprecated, renamed: "renamed", message: "Deprecated")
+public typealias renamedA = Swift.Void
 @available(*, deprecated, message: "Foo deprecated")
 public final class deprecatedT : KotlinRuntime.KotlinBase {
     public final class deprecationInheritedT : KotlinRuntime.KotlinBase {
@@ -243,6 +245,19 @@ public final class obsoletedT : KotlinRuntime.KotlinBase {
         return obsoletedT_deprecationRestatedF(self.__externalRCRef())
     }
 }
+@available(*, deprecated, renamed: "renamed", message: "Deprecated")
+public final class renamedT : KotlinRuntime.KotlinBase {
+    public override init() {
+        let __kt = __root___renamedT_init_allocate()
+        super.init(__externalRCRef: __kt)
+        __root___renamedT_init_initialize__TypesOfArguments__Swift_UInt__(__kt)
+    }
+    package override init(
+        __externalRCRef: Swift.UInt
+    ) {
+        super.init(__externalRCRef: __externalRCRef)
+    }
+}
 @available(*, deprecated, message: "Deprecated")
 public var deprecationInheritedImplicitlyV: Swift.Void {
     get {
@@ -261,6 +276,12 @@ public var obsoletedV: Swift.Void {
         return __root___obsoletedV_get()
     }
 }
+@available(*, deprecated, renamed: "renamed", message: "Deprecated")
+public var renamedV: Swift.Void {
+    get {
+        return __root___renamedV_get()
+    }
+}
 @available(*, deprecated, message: "Deprecated")
 public func deprecatedF() -> Swift.Void {
     return __root___deprecatedF()
@@ -272,4 +293,8 @@ public func deprecatedImplicitlyF() -> Swift.Void {
 @available(*, unavailable, message: "Obsoleted")
 public func obsoletedF() -> Swift.Void {
     return __root___obsoletedF()
+}
+@available(*, deprecated, renamed: "renamed", message: "Deprecated")
+public func renamedF() -> Swift.Void {
+    return __root___renamedF()
 }

@@ -30,5 +30,14 @@ public val KaDeclarationSymbol.deprecatedAnnotation: Deprecated?
                 runCatching { kotlin.DeprecationLevel.valueOf(it.callableName.identifier) }.getOrNull()
             } ?: DeprecationLevel.WARNING
 
-        Deprecated(message, level = level)
+        val replaceWith = it.arguments.find { it.name.asString() == "replaceWith" }
+            ?.let { it.expression as KaAnnotationValue.NestedAnnotationValue }
+            ?.annotation?.let {
+                require(it.classId == ClassId.topLevel(StandardNames.FqNames.replaceWith))
+                it.arguments.find { it.name.asString() == "expression" }
+                    ?.let { it.expression as KaAnnotationValue.ConstantValue }
+                    ?.value.toString().removeSurrounding("\"")
+            } ?: ""
+
+        Deprecated(message, level = level, replaceWith = ReplaceWith(replaceWith))
     }

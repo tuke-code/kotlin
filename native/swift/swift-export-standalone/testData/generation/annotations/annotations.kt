@@ -43,6 +43,15 @@ val deprecationInheritedV: Unit get() = Unit
 @Deprecated("Deprecated", level = DeprecationLevel.WARNING)
 typealias deprecatedA = Unit
 
+@Deprecated("Deprecated", replaceWith = ReplaceWith("renamed"))
+fun renamedF() = Unit
+@Deprecated("Deprecated", replaceWith = ReplaceWith("renamed"))
+val renamedV: Unit get() = Unit
+@Deprecated("Deprecated", replaceWith = ReplaceWith("renamed"))
+typealias renamedA = Unit
+@Deprecated("Deprecated", replaceWith = ReplaceWith("renamed"))
+class renamedT
+
 @Deprecated("Foo deprecated")
 class deprecatedT {
     fun deprecationInheritedF() = Unit

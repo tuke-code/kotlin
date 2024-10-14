@@ -25,6 +25,14 @@ void __root___obsoletedT_init_initialize__TypesOfArguments__Swift_UInt__(uintptr
 
 void __root___obsoletedV_get();
 
+void __root___renamedF();
+
+uintptr_t __root___renamedT_init_allocate();
+
+void __root___renamedT_init_initialize__TypesOfArguments__Swift_UInt__(uintptr_t __kt);
+
+void __root___renamedV_get();
+
 void deprecatedT_deprecationInheritedF(uintptr_t self);
 
 uintptr_t deprecatedT_deprecationInheritedT_init_allocate();

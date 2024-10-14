@@ -19,6 +19,7 @@ public sealed interface SirAttribute {
         val deprecated: Boolean = false,
         val obsoleted: Boolean = false,
         val unavailable: Boolean = false,
+        val renamed: String = ""
     ) : SirAttribute {
         override val identifier: String get() = "available"
 
@@ -27,6 +28,7 @@ public sealed interface SirAttribute {
                 SirArgument("deprecated").takeIf { deprecated && !unavailable },
                 SirArgument("obsoleted", "1.0").takeIf { obsoleted && !unavailable },
                 SirArgument("unavailable").takeIf { unavailable },
+                renamed.takeIf { it.isNotEmpty() }?.let { SirArgument("renamed", "\"$renamed\"") },
                 message?.let { SirArgument("message", "\"$it\"") },
             )
     }

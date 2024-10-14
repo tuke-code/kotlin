@@ -18,6 +18,7 @@ internal inline val <reified S : KaDeclarationSymbol> SirFromKtSymbol<S>.transla
                 message = it.message,
                 deprecated = it.level == DeprecationLevel.WARNING,
                 unavailable = it.level == DeprecationLevel.ERROR,
+                renamed = it.replaceWith.expression,
             )
         }
 

@@ -11,6 +11,7 @@
 @file:kotlin.native.internal.objc.BindClassToObjCName(obsoletedT.deprecationInheritedT::class, "4main10obsoletedTC21deprecationInheritedTC")
 @file:kotlin.native.internal.objc.BindClassToObjCName(obsoletedT.deprecationRelaxedT::class, "4main10obsoletedTC19deprecationRelaxedTC")
 @file:kotlin.native.internal.objc.BindClassToObjCName(obsoletedT.deprecationRestatedT::class, "4main10obsoletedTC20deprecationRestatedTC")
+@file:kotlin.native.internal.objc.BindClassToObjCName(renamedT::class, "4main8renamedTC")
 
 import kotlin.native.internal.ExportedBridge
 import kotlinx.cinterop.*
@@ -79,6 +80,28 @@ public fun __root___obsoletedT_init_initialize__TypesOfArguments__Swift_UInt__(_
 @ExportedBridge("__root___obsoletedV_get")
 public fun __root___obsoletedV_get(): Unit {
     obsoletedV
+}
+
+@ExportedBridge("__root___renamedF")
+public fun __root___renamedF(): Unit {
+    renamedF()
+}
+
+@ExportedBridge("__root___renamedT_init_allocate")
+public fun __root___renamedT_init_allocate(): kotlin.native.internal.NativePtr {
+    val _result = kotlin.native.internal.createUninitializedInstance<renamedT>()
+    return kotlin.native.internal.ref.createRetainedExternalRCRef(_result)
+}
+
+@ExportedBridge("__root___renamedT_init_initialize__TypesOfArguments__Swift_UInt__")
+public fun __root___renamedT_init_initialize__TypesOfArguments__Swift_UInt__(__kt: kotlin.native.internal.NativePtr): Unit {
+    val ____kt = kotlin.native.internal.ref.dereferenceExternalRCRef(__kt)
+    kotlin.native.internal.initInstance(____kt, renamedT())
+}
+
+@ExportedBridge("__root___renamedV_get")
+public fun __root___renamedV_get(): Unit {
+    renamedV
 }
 
 @ExportedBridge("deprecatedT_deprecationInheritedF")
