@@ -42,6 +42,12 @@ public class AdditionalStubInfoKnmTestGenerated extends AbstractAdditionalStubIn
   }
 
   @Test
+  @TestMetadata("NestedMultiFieldValueClass")
+  public void testNestedMultiFieldValueClass() {
+    runTest("analysis/decompiled/decompiler-to-file-stubs/testData/additionalClsStubInfo/NestedMultiFieldValueClass/");
+  }
+
+  @Test
   @TestMetadata("OuterClassesWithFlexibleArgs")
   public void testOuterClassesWithFlexibleArgs() {
     runTest("analysis/decompiled/decompiler-to-file-stubs/testData/additionalClsStubInfo/OuterClassesWithFlexibleArgs/");
@@ -69,5 +75,23 @@ public class AdditionalStubInfoKnmTestGenerated extends AbstractAdditionalStubIn
   @TestMetadata("TypeParametersInFlexibleTypes")
   public void testTypeParametersInFlexibleTypes() {
     runTest("analysis/decompiled/decompiler-to-file-stubs/testData/additionalClsStubInfo/TypeParametersInFlexibleTypes/");
+  }
+
+  @Test
+  @TestMetadata("ValueClassWithMultiFieldValueClass")
+  public void testValueClassWithMultiFieldValueClass() {
+    runTest("analysis/decompiled/decompiler-to-file-stubs/testData/additionalClsStubInfo/ValueClassWithMultiFieldValueClass/");
+  }
+
+  @Test
+  @TestMetadata("ValueClassWithNestedClass")
+  public void testValueClassWithNestedClass() {
+    runTest("analysis/decompiled/decompiler-to-file-stubs/testData/additionalClsStubInfo/ValueClassWithNestedClass/");
+  }
+
+  @Test
+  @TestMetadata("ValueClassWithNullableMultiFieldValueClass")
+  public void testValueClassWithNullableMultiFieldValueClass() {
+    runTest("analysis/decompiled/decompiler-to-file-stubs/testData/additionalClsStubInfo/ValueClassWithNullableMultiFieldValueClass/");
   }
 }
