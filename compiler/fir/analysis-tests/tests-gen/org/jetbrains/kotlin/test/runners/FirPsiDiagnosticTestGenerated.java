@@ -5364,6 +5364,12 @@ public class FirPsiDiagnosticTestGenerated extends AbstractFirPsiDiagnosticTest 
       }
 
       @Test
+      @TestMetadata("arguments.kt")
+      public void testArguments() {
+        runTest("compiler/fir/analysis-tests/testData/resolve/unqualifiedEnum/arguments.kt");
+      }
+
+      @Test
       @TestMetadata("correctJava.kt")
       public void testCorrectJava() {
         runTest("compiler/fir/analysis-tests/testData/resolve/unqualifiedEnum/correctJava.kt");
