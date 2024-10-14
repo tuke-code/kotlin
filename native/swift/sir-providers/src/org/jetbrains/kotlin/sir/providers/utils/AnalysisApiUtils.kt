@@ -5,9 +5,30 @@
 
 package org.jetbrains.kotlin.sir.providers.utils
 
+import org.jetbrains.kotlin.analysis.api.annotations.KaAnnotationValue
+import org.jetbrains.kotlin.analysis.api.symbols.KaDeclarationSymbol
 import org.jetbrains.kotlin.analysis.api.symbols.KaSymbolModality
+import org.jetbrains.kotlin.builtins.StandardNames
+import org.jetbrains.kotlin.name.ClassId
+import org.jetbrains.kotlin.sir.SirAttribute
 
 public fun KaSymbolModality.isAbstract(): Boolean = when (this) {
     KaSymbolModality.FINAL, KaSymbolModality.OPEN -> false
     KaSymbolModality.SEALED, KaSymbolModality.ABSTRACT -> true
 }
+
+public val KaDeclarationSymbol.deprecatedAnnotation: Deprecated?
+    get() = this.annotations.find { it.classId == ClassId.topLevel(StandardNames.FqNames.deprecated) }?.let {
+        val message = it.arguments.find { it.name.asString() == "message" }!!
+            .let { it.expression as KaAnnotationValue.ConstantValue }
+            .value.toString().removeSurrounding("\"")
+
+        val level = it.arguments.find { it.name.asString() == "level" }
+            ?.let { it.expression as KaAnnotationValue.EnumEntryValue }
+            ?.callableId?.let {
+                require(it.classId == ClassId.topLevel(StandardNames.FqNames.deprecationLevel))
+                runCatching { kotlin.DeprecationLevel.valueOf(it.callableName.identifier) }.getOrNull()
+            } ?: DeprecationLevel.WARNING
+
+        Deprecated(message, level = level)
+    }

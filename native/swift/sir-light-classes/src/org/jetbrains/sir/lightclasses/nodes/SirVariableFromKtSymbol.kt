@@ -21,6 +21,7 @@ import org.jetbrains.sir.lightclasses.extensions.withSessions
 import org.jetbrains.sir.lightclasses.utils.isSubtypeOf
 import org.jetbrains.sir.lightclasses.utils.overridableCandidates
 import org.jetbrains.sir.lightclasses.utils.translateReturnType
+import org.jetbrains.sir.lightclasses.utils.translatedAttributes
 
 internal class SirVariableFromKtSymbol(
     override val ktSymbol: KaVariableSymbol,
@@ -63,7 +64,7 @@ internal class SirVariableFromKtSymbol(
         }
         set(_) = Unit
 
-    override val attributes: MutableList<SirAttribute> = mutableListOf()
+    override val attributes: MutableList<SirAttribute> = this.translatedAttributes.toMutableList()
 
     override val isOverride: Boolean
         get() = isInstance && overridableCandidates.any {
