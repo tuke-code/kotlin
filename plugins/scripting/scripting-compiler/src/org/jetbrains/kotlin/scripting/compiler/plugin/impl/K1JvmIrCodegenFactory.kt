@@ -11,7 +11,6 @@ import org.jetbrains.kotlin.backend.common.extensions.IrGenerationExtension
 import org.jetbrains.kotlin.backend.common.extensions.IrPluginContextImpl
 import org.jetbrains.kotlin.backend.common.linkage.issues.checkNoUnboundSymbols
 import org.jetbrains.kotlin.backend.common.serialization.DescriptorByIdSignatureFinderImpl
-import org.jetbrains.kotlin.backend.common.serialization.KotlinIrLinker
 import org.jetbrains.kotlin.backend.jvm.*
 import org.jetbrains.kotlin.backend.jvm.JvmIrCodegenFactory.BackendInput
 import org.jetbrains.kotlin.backend.jvm.JvmIrCodegenFactory.IdeCodegenSettings
@@ -41,8 +40,6 @@ import org.jetbrains.kotlin.ir.symbols.*
 import org.jetbrains.kotlin.ir.types.defaultType
 import org.jetbrains.kotlin.ir.util.*
 import org.jetbrains.kotlin.ir.visitors.IrVisitorVoid
-import org.jetbrains.kotlin.library.metadata.DeserializedKlibModuleOrigin
-import org.jetbrains.kotlin.library.metadata.KlibModuleOrigin
 import org.jetbrains.kotlin.load.java.DescriptorsJvmAbiUtil
 import org.jetbrains.kotlin.load.java.JvmAbi
 import org.jetbrains.kotlin.load.java.lazy.types.RawTypeImpl
@@ -116,14 +113,11 @@ class K1JvmIrCodegenFactory(
         languageVersionSettings: LanguageVersionSettings,
         skipBodies: Boolean,
     ): BackendInput {
-        val enableIdSignatures = false
         val [mangler, symbolTable] =
             if (externalSymbolTable != null) externalMangler!! to externalSymbolTable
             else {
                 val mangler = K1JvmDescriptorMangler(MainFunctionDetector(bindingContext, languageVersionSettings))
-                val signaturer =
-                    if (enableIdSignatures) K1JvmIdSignatureDescriptor(mangler)
-                    else DisabledIdSignatureDescriptor
+                val signaturer = DisabledIdSignatureDescriptor
                 val symbolTable = SymbolTable(signaturer, IrFactoryImpl)
                 mangler to symbolTable
             }
@@ -154,19 +148,6 @@ class K1JvmIrCodegenFactory(
                 jvmGeneratorExtensions
             )
 
-        val irProvider = if (enableIdSignatures) {
-            K1JvmIrLinker(
-                psi2irContext.moduleDescriptor,
-                configuration,
-                JvmIrTypeSystemContext(psi2irContext.irBuiltIns),
-                symbolTable,
-                stubGenerator,
-                mangler,
-            )
-        } else {
-            stubGenerator
-        }
-
         SourceDeclarationsPreprocessor(psi2irContext).run(files)
 
         // The plugin context contains unbound symbols right after construction and has to be
@@ -176,7 +157,7 @@ class K1JvmIrCodegenFactory(
             psi2irContext.languageVersionSettings,
             symbolTable,
             psi2irContext.irBuiltIns,
-            irProvider,
+            stubGenerator,
             diagnosticReporter
         )
         for (extension in configuration.filteredExtensions) {
@@ -195,33 +176,16 @@ class K1JvmIrCodegenFactory(
             }
         }
 
-        val dependencies = if (irProvider !is KotlinIrLinker) {
-            emptyList()
-        } else {
-            psi2irContext.moduleDescriptor.collectAllDependencyModulesTransitively().map {
-                val kotlinLibrary = (it.getCapability(KlibModuleOrigin.CAPABILITY) as? DeserializedKlibModuleOrigin)?.library
-                irProvider.deserializeIrModuleHeader(it, kotlinLibrary, _moduleName = it.name.asString())
-            }
-        }
-
         val irProviders = if (ideCodegenSettings.shouldStubAndNotLinkUnboundSymbols) {
             listOf(stubGenerator)
         } else {
             val stubGeneratorForMissingClasses = DeclarationStubGeneratorForNotFoundClasses(stubGenerator)
-            listOf(irProvider, stubGeneratorForMissingClasses)
+            listOf(stubGenerator, stubGeneratorForMissingClasses)
         }
 
         val irModuleFragment = psi2ir.generateModuleFragment(psi2irContext, files, irProviders)
 
-        if (irProvider is KotlinIrLinker) {
-            irProvider.postProcess(psi2irContext.irBuiltIns, inOrAfterLinkageStep = true)
-            irProvider.clear()
-        }
-
         stubGenerator.unboundSymbolGeneration = true
-
-        // We need to compile all files we reference in Klibs
-        irModuleFragment.files.addAll(dependencies.flatMap { it.files })
 
         if (!configuration.getBoolean(JVMConfigurationKeys.DO_NOT_CLEAR_BINDING_CONTEXT) && files.none { it.isScript() }) {
             if (bindingContext !is CleanableBindingContext) {
@@ -238,16 +202,6 @@ class K1JvmIrCodegenFactory(
             K1JvmBackendExtension(),
             pluginContext,
         )
-    }
-
-    private fun ModuleDescriptor.collectAllDependencyModulesTransitively(): List<ModuleDescriptor> {
-        val result = LinkedHashSet<ModuleDescriptor>()
-        fun collectImpl(descriptor: ModuleDescriptor) {
-            val dependencies = descriptor.allDependencyModules
-            dependencies.forEach { if (result.add(it)) collectImpl(it) }
-        }
-        collectImpl(this)
-        return result.toList()
     }
 
     private val CompilerConfiguration.filteredExtensions: List<IrGenerationExtension>
