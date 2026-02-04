@@ -71,13 +71,6 @@ abstract class JvmIrLinkageModeTest : CodegenTestCase() {
         generateAndCreateClassLoader()
     }
 
-    override fun updateConfiguration(configuration: CompilerConfiguration) {
-        super.updateConfiguration(configuration)
-        if (enableLinkageViaSignatures!!) {
-            configuration.put(JVMConfigurationKeys.LINK_VIA_SIGNATURES, true)
-        }
-    }
-
     override fun setupEnvironment(environment: KotlinCoreEnvironment) {
         val extensionStorage = CompilerPluginRegistrar.ExtensionStorage()
         with(extensionStorage) {

@@ -125,8 +125,4 @@ public interface KaCompilationOptionsBuilder : KaLifetimeOwner {
     /** Uses `invokedynamic` for lambdas instead of generating anonymous classes. */
     @KaIdeApi
     public fun jvmUseInvokeDynamicForLambdas(value: Boolean)
-
-    /** Links JVM IR symbols via signatures instead of by descriptors. */
-    @KaIdeApi
-    public fun jvmLinkViaSignatures(value: Boolean)
 }

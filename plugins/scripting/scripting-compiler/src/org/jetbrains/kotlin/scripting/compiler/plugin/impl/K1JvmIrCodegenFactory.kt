@@ -116,7 +116,7 @@ class K1JvmIrCodegenFactory(
         languageVersionSettings: LanguageVersionSettings,
         skipBodies: Boolean,
     ): BackendInput {
-        val enableIdSignatures = configuration.getBoolean(JVMConfigurationKeys.LINK_VIA_SIGNATURES)
+        val enableIdSignatures = false
         val [mangler, symbolTable] =
             if (externalSymbolTable != null) externalMangler!! to externalSymbolTable
             else {

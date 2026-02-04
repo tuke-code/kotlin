@@ -74,7 +74,6 @@ org.jetbrains.kotlin.analysis.api.components.KaCompilationOptionsBuilder.ignoreC
 org.jetbrains.kotlin.analysis.api.components.KaCompilationOptionsBuilder.jvmCompiledClassHandler(KaCompiledClassHandler)
 org.jetbrains.kotlin.analysis.api.components.KaCompilationOptionsBuilder.jvmExecutionStack(Sequence<PsiElement?>)
 org.jetbrains.kotlin.analysis.api.components.KaCompilationOptionsBuilder.jvmGenerateParameterMetadata(Boolean)
-org.jetbrains.kotlin.analysis.api.components.KaCompilationOptionsBuilder.jvmLinkViaSignatures(Boolean)
 org.jetbrains.kotlin.analysis.api.components.KaCompilationOptionsBuilder.jvmOutputAsmListing(Boolean)
 org.jetbrains.kotlin.analysis.api.components.KaCompilationOptionsBuilder.jvmTarget(KaJvmTarget)
 org.jetbrains.kotlin.analysis.api.components.KaCompilationOptionsBuilder.jvmUseInvokeDynamicForLambdas(Boolean)

@@ -137,10 +137,6 @@ object JVMConfigurationKeys {
     @JvmField
     val VALIDATE_BYTECODE = CompilerConfigurationKey.create<Boolean>("VALIDATE_BYTECODE")
 
-    // Link JVM IR symbols via signatures, instead of by descriptors on the K1 frontend.
-    @JvmField
-    val LINK_VIA_SIGNATURES = CompilerConfigurationKey.create<Boolean>("LINK_VIA_SIGNATURES")
-
     @JvmField
     val ENABLE_DEBUG_MODE = CompilerConfigurationKey.create<Boolean>("ENABLE_DEBUG_MODE")
 
@@ -337,10 +333,6 @@ var CompilerConfiguration.noReflect: Boolean
 var CompilerConfiguration.validateBytecode: Boolean
     get() = getBoolean(JVMConfigurationKeys.VALIDATE_BYTECODE)
     set(value) { put(JVMConfigurationKeys.VALIDATE_BYTECODE, value) }
-
-var CompilerConfiguration.linkViaSignatures: Boolean
-    get() = getBoolean(JVMConfigurationKeys.LINK_VIA_SIGNATURES)
-    set(value) { put(JVMConfigurationKeys.LINK_VIA_SIGNATURES, value) }
 
 var CompilerConfiguration.enableDebugMode: Boolean
     get() = getBoolean(JVMConfigurationKeys.ENABLE_DEBUG_MODE)

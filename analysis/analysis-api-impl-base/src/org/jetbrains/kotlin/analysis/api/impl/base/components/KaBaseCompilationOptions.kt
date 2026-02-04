@@ -218,11 +218,6 @@ class KaBaseCompilationOptionsBuilder(
         val scheme = if (value) JvmClosureGenerationScheme.INDY else JvmClosureGenerationScheme.CLASS
         configuration.put(JVMConfigurationKeys.LAMBDAS, scheme)
     }
-
-    @KaIdeApi
-    override fun jvmLinkViaSignatures(value: Boolean) = withValidityAssertion {
-        configuration.put(JVMConfigurationKeys.LINK_VIA_SIGNATURES, value)
-    }
 }
 
 internal fun KaLegacyCompilationTarget.toNewCompilationTarget(): KaCompilationTarget =

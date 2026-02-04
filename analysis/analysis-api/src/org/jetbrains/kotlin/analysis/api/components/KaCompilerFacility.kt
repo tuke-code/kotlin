@@ -196,10 +196,6 @@ public interface KaCompilationOptionsBuilder : org.jetbrains.kotlin.analysis.api
     /** Uses `invokedynamic` for lambdas instead of generating anonymous classes. */
     @KaIdeApi
     override fun jvmUseInvokeDynamicForLambdas(value: Boolean)
-
-    /** Links JVM IR symbols via signatures instead of by descriptors. */
-    @KaIdeApi
-    override fun jvmLinkViaSignatures(value: Boolean)
 }
 
 /**
