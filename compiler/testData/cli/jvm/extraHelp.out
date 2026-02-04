@@ -75,11 +75,6 @@ where advanced options include:
                                                              A lambda object created using 'LambdaMetafactory.metafactory' will have a different 'toString()'.
                              -Xlambdas=class                 Generate lambdas as explicit classes.
                              The default value is 'indy' if language version is 2.0+, and 'class' otherwise.
-  -Xlink-via-signatures      Link JVM IR symbols via signatures instead of descriptors.
-                             This mode is slower, but it can be useful for troubleshooting problems with the JVM IR backend.
-                             This option is deprecated and will be deleted in future versions.
-                             It has no effect when -language-version is 2.0 or higher.
-                             The option is deprecated since Kotlin 2.0.0. It will be removed in one of the future releases.
   -Xmodule-path=<path>       Paths to Java 9+ modules.
   -Xmultifile-parts-inherit  Compile multifile classes as a hierarchy of parts and a facade.
   -Xno-call-assertions       Don't generate not-null assertions for arguments of platform types.

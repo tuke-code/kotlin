@@ -447,10 +447,12 @@ public interface JvmCompilerArguments : CommonCompilerArguments {
      * WARNING: this option is EXPERIMENTAL and it may be changed in the future without notice or may be removed entirely.
      *
      * Deprecated in Kotlin version 2.0.0.
+     *
+     * Removed in Kotlin version 2.5.0.
      */
     @JvmField
     @ExperimentalCompilerArgument
-    @DeprecatedCompilerArgument
+    @RemovedCompilerArgument
     public val X_LINK_VIA_SIGNATURES: JvmCompilerArgument<Boolean> =
         JvmCompilerArgument("X_LINK_VIA_SIGNATURES", KotlinReleaseVersion(1, 7, 0))
 

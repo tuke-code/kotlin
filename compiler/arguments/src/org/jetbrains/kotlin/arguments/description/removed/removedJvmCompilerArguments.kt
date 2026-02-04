@@ -129,4 +129,19 @@ val removedJvmCompilerArguments by compilerArgumentsLevel(CompilerArgumentsLevel
             removedVersion = KotlinReleaseVersion.v2_5_0,
         )
     }
+
+    compilerArgument {
+        name = "Xlink-via-signatures"
+        description = """Link JVM IR symbols via signatures instead of descriptors.
+This mode is slower, but it can be useful for troubleshooting problems with the JVM IR backend.
+This option is deprecated and will be deleted in future versions.
+It has no effect when -language-version is 2.0 or higher.""".asReleaseDependent()
+        valueType = BooleanType.defaultFalse
+
+        lifecycle(
+            introducedVersion = KotlinReleaseVersion.v1_7_0,
+            deprecatedVersion = KotlinReleaseVersion.v2_0_0,
+            removedVersion = KotlinReleaseVersion.v2_5_0,
+        )
+    }
 }

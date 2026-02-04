@@ -144,6 +144,24 @@ class RemovedCompilerArguments {
         level = DeprecationLevel.ERROR,
     )
     @Argument(
+        value = "-Xlink-via-signatures",
+        description = """Link JVM IR symbols via signatures instead of descriptors.
+This mode is slower, but it can be useful for troubleshooting problems with the JVM IR backend.
+This option is deprecated and will be deleted in future versions.
+It has no effect when -language-version is 2.0 or higher.""",
+        deprecatedVersion = "2.0.0",
+        removedVersion = "2.5.0",
+    )
+    var linkViaSignatures: Boolean = false
+        set(value) {
+            field = value
+        }
+
+    @all:Deprecated(
+        message = "",
+        level = DeprecationLevel.ERROR,
+    )
+    @Argument(
         value = "-Xserialize-ir",
         valueDescription = "{none|inline|all}",
         description = "Save the IR to metadata (Experimental).",
