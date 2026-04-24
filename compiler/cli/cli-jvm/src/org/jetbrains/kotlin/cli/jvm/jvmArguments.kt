@@ -147,6 +147,8 @@ fun CompilerConfiguration.setupJvmSpecificArguments(arguments: K2JVMCompilerArgu
 
     put(JVMConfigurationKeys.IGNORED_ANNOTATIONS_FOR_BRIDGES, arguments.ignoredAnnotationsForBridges?.toList().orEmpty())
     arguments.commonFragmentsMetadataDestination?.let { commonFragmentsOutputDir = File(it) }
+
+    put(JVMConfigurationKeys.USE_JAVA_DIRECT, arguments.javaDirect)
 }
 
 private fun isCompatibleJvmTargetAndRelease(jvmTarget: String, release: String): Boolean {

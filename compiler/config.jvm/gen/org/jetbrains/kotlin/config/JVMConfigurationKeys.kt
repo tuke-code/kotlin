@@ -180,6 +180,10 @@ object JVMConfigurationKeys {
     @JvmField
     val IC_METADATA_TRACKER = CompilerConfigurationKey.create<ICJvmMetadataTracker>("IC_METADATA_TRACKER")
 
+    // Use java-direct as frontend Java facade
+    @JvmField
+    val USE_JAVA_DIRECT = CompilerConfigurationKey.create<Boolean>("USE_JAVA_DIRECT")
+
 }
 
 var CompilerConfiguration.outputDirectory: File?
@@ -373,4 +377,8 @@ var CompilerConfiguration.commonFragmentsOutputDir: File?
 var CompilerConfiguration.icMetadataTracker: ICJvmMetadataTracker?
     get() = get(JVMConfigurationKeys.IC_METADATA_TRACKER)
     set(value) { putIfNotNull(JVMConfigurationKeys.IC_METADATA_TRACKER, value) }
+
+var CompilerConfiguration.useJavaDirect: Boolean
+    get() = getBoolean(JVMConfigurationKeys.USE_JAVA_DIRECT)
+    set(value) { put(JVMConfigurationKeys.USE_JAVA_DIRECT, value) }
 
