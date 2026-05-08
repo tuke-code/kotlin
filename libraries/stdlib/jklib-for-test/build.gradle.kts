@@ -38,7 +38,7 @@ dependencies {
     substrateStdlibCompilerDependencies(commonDependency("com.fasterxml:aalto-xml"))
 }
 
-val outputKlib = layout.buildDirectory.file("libs/kotlin-stdlib-jvm-ir.klib")
+val outputKlib = layout.buildDirectory.file("libs/kotlin-stdlib-jklib-for-test.klib")
 
 val copyMinimalSources by tasks.registering(Sync::class) {
     dependsOn(":prepare:build.version:writeStdlibVersion")
@@ -165,6 +165,9 @@ fun JavaExec.configureJklibCompilation(
         include("**/*.kt")
     }
     inputs.files(sourceTree)
+    inputs.files(jklibCompilerClasspath)
+        .withNormalizer(ClasspathNormalizer::class)
+        .withPropertyName("jklibCompilerClasspath")
     outputs.file(klibOutput)
 
     doFirst {
