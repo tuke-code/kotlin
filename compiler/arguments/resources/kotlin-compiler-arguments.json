@@ -6235,7 +6235,7 @@
                         "releaseVersionsMetadata": {
                             "introducedVersion": "1.7.0",
                             "stabilizedVersion": null,
-                            "deprecatedVersion": null,
+                            "deprecatedVersion": "2.4.20",
                             "removedVersion": null
                         },
                         "argumentType": {
@@ -6249,7 +6249,7 @@
                                 "valueInVersions": []
                             }
                         },
-                        "deprecatedMessage": null
+                        "deprecatedMessage": "The light tree mode is enabled by default, and it will become the only available mode in one of the future releases."
                     },
                     {
                         "name": "Xuse-k2",
