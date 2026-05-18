@@ -54,6 +54,12 @@ sourceSets {
     }
 }
 
+kotlin {
+    compilerOptions {
+        freeCompilerArgs.add("-Xannotation-target-all")
+    }
+}
+
 projectTests {
     testTask(jUnitMode = JUnitMode.JUnit5)
 }
