@@ -45,9 +45,6 @@ Note: The prefixes are applied in the same order as they are passed in this CLI 
         description = "Normalize absolute paths in klibs.".asReleaseDependent()
         valueType = BooleanType.defaultFalse
 
-        additionalAnnotations(
-            Deprecated("This flag is deprecated")
-        )
         lifecycle(
             introducedVersion = KotlinReleaseVersion.v2_0_20,
             deprecatedVersion = KotlinReleaseVersion.v2_4_20,
@@ -89,9 +86,6 @@ Note: The prefixes are applied in the same order as they are passed in this CLI 
 
         valueDescription = "{enable|disable}".asReleaseDependent()
         argumentType = PartialLinkageModeType()
-        additionalAnnotations(
-            Deprecated("This flag is deprecated")
-        )
 
         lifecycle(
             introducedVersion = KotlinReleaseVersion.v2_0_20,

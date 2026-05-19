@@ -261,10 +261,6 @@ val actualCommonCompilerArguments by compilerArgumentsLevel(CompilerArgumentsLev
         valueDescription = "<path>".asReleaseDependent()
         valueType = StringType.defaultNull
 
-        additionalAnnotations(
-            Deprecated("This flag is deprecated")
-        )
-
         lifecycle(
             introducedVersion = KotlinReleaseVersion.v1_1_3,
             deprecatedVersion = KotlinReleaseVersion.v2_4_20,
@@ -597,10 +593,6 @@ val actualCommonCompilerArguments by compilerArgumentsLevel(CompilerArgumentsLev
         name = "Xuse-fir-experimental-checkers"
         description = "Enable experimental frontend IR checkers that are not yet ready for production.".asReleaseDependent()
         valueType = BooleanType.defaultFalse
-
-        additionalAnnotations(
-            Deprecated("This flag is deprecated")
-        )
 
         lifecycle(
             introducedVersion = KotlinReleaseVersion.v2_1_0,
