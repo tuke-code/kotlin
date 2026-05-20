@@ -200,6 +200,7 @@ private fun SmartPrinter.generateArgumentsClass(
                     argLevelName == level.name && argument.name == name
                 } && argument.releaseVersionsMetadata.removedVersion != null
             ) continue
+            validateLifetime(argument)
             validateLanguageFeaturesConsistency(argument)
             generateDeprecationAnnotation(argument)
             generateGradleAnnotations(argument)
@@ -288,6 +289,30 @@ private fun SmartPrinter.generateArgumentAnnotation(
 private enum class AnnotationKind {
     Gradle,
     LanguageFeature
+}
+
+private fun validateLifetime(argument: KotlinCompilerArgument) {
+    argument.releaseVersionsMetadata.apply {
+        var maxVersion = introducedVersion
+
+        stabilizedVersion?.let {
+            require(it >= introducedVersion) { "stabilized version must be >= introduced version for '${argument.name}'" }
+            maxVersion = it
+        }
+
+        // It also might be a `KotlinVersion(maxVersion.major, maxVersion.minor, maxVersion.patch) <= KotlinVersion.CURRENT` check
+        // But it makes more sense to check it in runtime, see KT-87096 (TODO)
+
+        deprecatedVersion?.let {
+            // Actually, it should be strictly `>`, but we have some arguments that became deprecated right after becoming introduced/stabilized
+            require(it >= maxVersion) { "deprecated version must be >= introduced and stabilized versions for '${argument.name}'" }
+            maxVersion = it
+        }
+
+        removedVersion?.let {
+            require(it > maxVersion) { "removed version must be > introduced, stabilized, and deprecated versions for '${argument.name}'" }
+        }
+    }
 }
 
 @OptIn(ExperimentalArgumentApi::class)
