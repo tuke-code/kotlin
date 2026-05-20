@@ -79,7 +79,7 @@ internal class CompilerArgumentCompatibilityTest : BaseCompilationTest() {
         }
 
         assertEquals(CompilationResult.COMPILATION_SUCCESS, result)
-        assertTrue(logger.warnings.any { it.contains("is deprecated and will be removed in a future release") }) {
+        assertTrue(logger.warnings.any { it == "The argument '-Xuse-fir-experimental-checkers' is deprecated since Kotlin 2.2.20. It will be removed in one of the future releases." }) {
             "Expected deprecation warning, but warnings were: ${logger.warnings}"
         }
     }
