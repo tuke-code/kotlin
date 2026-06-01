@@ -41,6 +41,7 @@ import org.jetbrains.kotlin.psi
 import org.jetbrains.kotlin.psi.*
 import org.jetbrains.kotlin.psi.psiUtil.getOutermostParenthesizerOrThis
 import org.jetbrains.kotlin.psi.psiUtil.inferClassIdByPsi
+import org.jetbrains.kotlin.psi.psiUtil.unwrapParenthesesLabelsAndAnnotations
 import org.jetbrains.kotlin.util.OperatorNameConventions
 import org.jetbrains.kotlin.utils.addToStdlib.applyIf
 import org.jetbrains.kotlin.utils.exceptions.rethrowExceptionWithDetails
@@ -52,6 +53,8 @@ internal class KaFirExpressionTypeProvider(
 
     override val KtExpression.expressionType: KaType?
         get() = withPsiValidityAssertion {
+            getExpressionTypeByPsiOrNull(noExpectedType = false)?.let { return it }
+
             // There are various cases where we have no corresponding fir due to invalid code
             // Some examples:
             // ```
@@ -221,7 +224,7 @@ internal class KaFirExpressionTypeProvider(
         fun KtDeclarationWithReturnType.hasDeclaredReturnType() = when (this) {
             is KtNamedFunction -> typeReference != null
             is KtProperty -> typeReference != null || getter?.typeReference != null
-            is KtPropertyAccessor -> typeReference != null
+            is KtPropertyAccessor -> typeReference != null || property.typeReference != null
             else -> false
         }
 
@@ -238,13 +241,49 @@ internal class KaFirExpressionTypeProvider(
             is KtPropertyAccessor -> bodyExpression
             else -> null
         }
-        return when (singleExpression) {
-            is KtStringTemplateExpression -> analysisSession.builtinTypes.string
-            is KtConstantExpression -> {
-                val classId = singleExpression.inferClassIdByPsi()
-                primitiveTypesMap[classId]?.value
+        return singleExpression?.getExpressionTypeByPsiOrNull(noExpectedType = true)
+    }
+
+    private fun KtExpression.getExpressionTypeByPsiOrNull(noExpectedType: Boolean): KaType? {
+        val unwrappedExpression = unwrapParenthesesLabelsAndAnnotations()
+        return with(analysisSession.builtinTypes) {
+            when (unwrappedExpression) {
+                is KtStringTemplateExpression -> string
+                is KtConstructorDelegationReferenceExpression, is KtLoopExpression -> unit
+                is KtBinaryExpression -> {
+                    when (unwrappedExpression.operationToken) {
+                        // Not overloadable, always boolean
+                        KtTokens.EQEQEQ, KtTokens.EXCLEQEQEQ, KtTokens.EQEQ, KtTokens.EXCLEQ,
+                        KtTokens.LT, KtTokens.GT, KtTokens.LTEQ, KtTokens.GTEQ
+                            -> boolean
+                        // Only used for boolean operations. Bitwise operations use infix functions
+                        KtTokens.ANDAND, KtTokens.OROR -> boolean
+                        else -> null
+                    }
+                }
+                is KtIsExpression -> boolean
+                is KtContinueExpression, is KtBreakExpression, is KtThrowExpression, is KtReturnExpression, is KtLabelReferenceExpression
+                    -> nothing
+                is KtConstantExpression -> {
+                    val classId = unwrappedExpression.inferClassIdByPsi()
+                    /**
+                     * Type of [int] literals is defined by their expected types:
+                     * ```kotlin
+                     * fun main() {
+                     *     val number: Byte = 1 // Byte, not Int
+                     *     val number2: Long = 1 // Long, not Int
+                     * }
+                     * ```
+                     *
+                     * Calculating the expected type might require building FIR.
+                     * If so, this PSI optimization doesn't make sense.
+                     * But if there is no any expected type ([noExpectedType] == `true`), then
+                     * it's safe to return just [int]
+                     */
+                    primitiveTypesMap[classId]?.value?.takeIf { noExpectedType || it != int }
+                }
+                else -> null
             }
-            else -> null
         }
     }
 
