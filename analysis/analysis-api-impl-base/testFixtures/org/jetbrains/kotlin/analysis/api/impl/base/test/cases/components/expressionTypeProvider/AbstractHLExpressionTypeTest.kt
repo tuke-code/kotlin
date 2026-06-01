@@ -30,6 +30,7 @@ abstract class AbstractHLExpressionTypeTest : AbstractAnalysisApiBasedTest() {
         val expression = when (selected) {
             is KtExpression -> selected
             is KtValueArgument -> selected.getArgumentExpression()
+            is KtContainerNode -> selected.children.singleOrNull() as? KtExpression
             else -> null
         } ?: error("expect an expression but got ${selected.text}, ${selected::class}")
 
