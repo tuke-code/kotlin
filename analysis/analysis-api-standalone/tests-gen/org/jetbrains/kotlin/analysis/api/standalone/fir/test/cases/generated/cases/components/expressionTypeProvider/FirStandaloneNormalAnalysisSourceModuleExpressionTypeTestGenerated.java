@@ -815,16 +815,16 @@ public class FirStandaloneNormalAnalysisSourceModuleExpressionTypeTestGenerated 
   }
 
   @Nested
-  @TestMetadata("analysis/analysis-api/testData/components/expressionTypeProvider/expressionType/assignment")
+  @TestMetadata("analysis/analysis-api/testData/components/expressionTypeProvider/expressionType/assignmentLhs")
   @TestDataPath("$PROJECT_ROOT")
-  public class Assignment {
+  public class AssignmentLhs {
     private void run(String fileName) {
-      runTest("analysis/analysis-api/testData/components/expressionTypeProvider/expressionType/assignment/" + fileName);
+      runTest("analysis/analysis-api/testData/components/expressionTypeProvider/expressionType/assignmentLhs/" + fileName);
     }
 
     @Test
-    public void testAllFilesPresentInAssignment() {
-      KtTestUtil.assertAllTestsPresentByMetadataWithExcluded(this.getClass(), new File("analysis/analysis-api/testData/components/expressionTypeProvider/expressionType/assignment"), Pattern.compile("^(.+)\\.(kt)$"), null, true);
+    public void testAllFilesPresentInAssignmentLhs() {
+      KtTestUtil.assertAllTestsPresentByMetadataWithExcluded(this.getClass(), new File("analysis/analysis-api/testData/components/expressionTypeProvider/expressionType/assignmentLhs"), Pattern.compile("^(.+)\\.(kt)$"), null, true);
     }
 
     @Test
@@ -855,6 +855,36 @@ public class FirStandaloneNormalAnalysisSourceModuleExpressionTypeTestGenerated 
     @TestMetadata("augmentedArrayAssigment.kt")
     public void testAugmentedArrayAssigment() {
       run("augmentedArrayAssigment.kt");
+    }
+
+    @Test
+    @TestMetadata("augmentedAssignment.kt")
+    public void testAugmentedAssignment() {
+      run("augmentedAssignment.kt");
+    }
+
+    @Test
+    @TestMetadata("augmentedAssignmentPlusAssign.kt")
+    public void testAugmentedAssignmentPlusAssign() {
+      run("augmentedAssignmentPlusAssign.kt");
+    }
+
+    @Test
+    @TestMetadata("augmentedQualifiedAssignment.kt")
+    public void testAugmentedQualifiedAssignment() {
+      run("augmentedQualifiedAssignment.kt");
+    }
+
+    @Test
+    @TestMetadata("qualifedAssignment.kt")
+    public void testQualifedAssignment() {
+      run("qualifedAssignment.kt");
+    }
+
+    @Test
+    @TestMetadata("qualifedAssignmentExtension.kt")
+    public void testQualifedAssignmentExtension() {
+      run("qualifedAssignmentExtension.kt");
     }
 
     @Test
