@@ -326,7 +326,7 @@ internal class PartiallyLinkedIrTreePatcher(
 
                 // Don't remove inline functions, this may harm linkage in K/N backend with enabled static caches.
                 if (!declaration.isInline) {
-                    if (declaration.isTopLevel) {
+                    if (partialLinkageCase is DeclarationWithUnusableClassifier && !declaration.isLocal) {
                         val property = declaration.correspondingPropertySymbol?.owner
                         if (property != null)
                             property.scheduleForRemoval()
