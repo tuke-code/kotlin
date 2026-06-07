@@ -432,6 +432,11 @@ fun Project.configureTests() {
             .map { it.toBoolean() }
             .orElse(false)
         inputs.property("kotlin.build.disable.verification.tasks", disableVerificationTasks)
+
+        val testInventoryListener = TestInventoryListener(name, project.layout.buildDirectory.asFile)
+        addTestListener(testInventoryListener)
+        outputs.file(testInventoryListener.inventoryFile)
+
         doFirst {
             if (disableVerificationTasks.get()) {
                 logger.warn("Task $path is disabled because `kotlin.build.disable.verification.tasks` is true")
