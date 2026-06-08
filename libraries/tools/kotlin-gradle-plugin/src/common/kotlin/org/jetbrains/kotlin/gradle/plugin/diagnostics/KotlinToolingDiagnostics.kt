@@ -2376,6 +2376,17 @@ internal object KotlinToolingDiagnostics {
                 .documentationLink(URI("https://kotl.in/new-js-browser-test-dsl"))
         }
     }
+
+    internal object SwiftPMLinkagePackageNotIntegratedInXcodeProject : ToolingDiagnosticFactory(
+        FATAL,
+        DiagnosticGroup.Kgp.Misconfiguration,
+    ) {
+        operator fun invoke(integrationName: String, command: String) = build {
+            title { "SwiftPM linkage package not integrated into Xcode project" }
+                .description { "You have SwiftPM dependencies with $integrationName integration." }
+                .solution { "Please integrate with synthetic import linkage project by running the following command: $command" }
+        }
+    }
 }
 
 private fun String.indentLines(nSpaces: Int = 4, skipFirstLine: Boolean = true): String {
