@@ -23,12 +23,6 @@ plugins {
     `java-test-fixtures`
 }
 
-repositories {
-    google()
-    mavenCentral()
-    gradlePluginPortal()
-}
-
 kotlin {
     compilerOptions {
         optIn.addAll(
@@ -790,6 +784,7 @@ kotlin.sourceSets.common {
 
 node {
     version = nodejsVersion
+    distBaseUrl = null
 }
 
 tasks.test {
