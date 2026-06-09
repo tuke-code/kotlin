@@ -91,6 +91,7 @@ class SingleModuleFirRunnerIncrementalTest : BaseCompilationTest() {
                 module(
                     moduleName = "basic-multimodule-project/module-1",
                     icOptionsConfigAction = {
+                        @Suppress("DEPRECATION_ERROR")
                         it[USE_FIR_RUNNER] = true
                     },
                 )

@@ -67,6 +67,7 @@ class ModuleNameCompilationTest : BaseCompilationTest() {
     fun incrementalWithFirRunner(strategyConfig: CompilerExecutionStrategyConfiguration) {
         jvmScenario(strategyConfig) {
             val module1 = module("basic-multimodule-project/module-1", icOptionsConfigAction = {
+                @Suppress("DEPRECATION_ERROR")
                 it[USE_FIR_RUNNER] = true
             }, compilationConfigAction = {
                 it.compilerArguments[CommonCompilerArguments.X_USE_FIR_IC] = true
