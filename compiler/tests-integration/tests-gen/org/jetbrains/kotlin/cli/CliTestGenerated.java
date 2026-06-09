@@ -2102,6 +2102,16 @@ public class CliTestGenerated extends AbstractCliTest {
       runTest("compiler/testData/cli/js/libraryDirNotFound.args");
     }
 
+    @TestMetadata("manifestPropertyNewCompanionInitialization.args")
+    public void testManifestPropertyNewCompanionInitialization() {
+      runTest("compiler/testData/cli/js/manifestPropertyNewCompanionInitialization.args");
+    }
+
+    @TestMetadata("noManifestPropertyNewCompanionInitialization.args")
+    public void testNoManifestPropertyNewCompanionInitialization() {
+      runTest("compiler/testData/cli/js/noManifestPropertyNewCompanionInitialization.args");
+    }
+
     @TestMetadata("noModuleName.args")
     public void testNoModuleName() {
       runTest("compiler/testData/cli/js/noModuleName.args");
@@ -2303,6 +2313,16 @@ public class CliTestGenerated extends AbstractCliTest {
     @TestMetadata("exportKDoc.args")
     public void testExportKDoc() {
       runTest("compiler/testData/cli/wasm/exportKDoc.args");
+    }
+
+    @TestMetadata("manifestPropertyNewCompanionInitialization.args")
+    public void testManifestPropertyNewCompanionInitialization() {
+      runTest("compiler/testData/cli/wasm/manifestPropertyNewCompanionInitialization.args");
+    }
+
+    @TestMetadata("noManifestPropertyNewCompanionInitialization.args")
+    public void testNoManifestPropertyNewCompanionInitialization() {
+      runTest("compiler/testData/cli/wasm/noManifestPropertyNewCompanionInitialization.args");
     }
 
     @TestMetadata("reportPerf2ndStage.args")
