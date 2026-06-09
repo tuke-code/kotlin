@@ -60,6 +60,7 @@ object AnalysisApiHeaderGenerator : HeaderGenerator {
                 KtObjCExportConfiguration(
                     frameworkName = configuration.frameworkName,
                     objcExportBlockExplicitParameterNames = configuration.objcExportBlockExplicitParameterNames,
+                    explicitMethodFamilyName = configuration.explicitMethodFamily
                 ),
                 moduleClassifier = { module ->
                     module == useSiteModule || module is KaLibraryModule && module in exportedLibraries
