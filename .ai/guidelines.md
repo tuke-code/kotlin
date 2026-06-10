@@ -73,15 +73,7 @@ Use `-q` (quiet) flag to reduce output noise. Example of commands for areas WITH
 
 ## Commit Guidelines
 
-**BEFORE creating any commit, you MUST read `docs/code_authoring_and_core_review.md`** — it contains essential rules for commit messages, code review process, and MR structure.
-
-Key points (not exhaustive):
-- Reference YouTrack issues (KT-XXXXX) in commit messages when applicable
-- Use `^KT-XXXXX Fixed` in body to auto-close issues
-- Keep subject line under 72 characters, imperative mood
-- Commit messages must explain not just WHAT but also WHY and HOW
-- Commit tests together with corresponding code changes
-- Non-functional changes (refactorings, reformats) should be in separate commits
+**When creating a commit, you MUST read [`commit-guidelines.md`](commit-guidelines.md) first** — do not author or amend a commit without following it. It holds the mandatory rules for commit messages, formatting, subsystem tag prefixes, and MR structure.
 
 ## JetBrains IDE MCP - MANDATORY for the project files and operations
 
