@@ -769,7 +769,7 @@ private fun KotlinTarget.supportsSwiftPMImport() = this is KotlinNativeTarget &&
 private fun KotlinMultiplatformExtension.swiftPMImportTargets() =
     targets.matching { it.supportsSwiftPMImport() }
 
-private fun KonanTarget.swiftPMPlatform(): SwiftPMDependency.Platform = when (this) {
+internal fun KonanTarget.swiftPMPlatform(): SwiftPMDependency.Platform = when (this) {
     KonanTarget.IOS_ARM64,
     KonanTarget.IOS_SIMULATOR_ARM64,
     KonanTarget.IOS_X64,
