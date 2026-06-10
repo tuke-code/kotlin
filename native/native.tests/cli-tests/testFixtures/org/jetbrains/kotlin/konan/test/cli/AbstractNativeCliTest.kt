@@ -28,4 +28,9 @@ abstract class AbstractNativeCliTest : AbstractCliTest() {
 
         return "targetFamily=${family}" in InTextDirectivesUtils.findListWithPrefixes(directivesFile.readText(), "// DISABLE_NATIVE: ")
     }
+
+    override fun readArgs(testArgsFilePath: String, tempDir: String) = buildList {
+        addAll(super.readArgs(testArgsFilePath, tempDir))
+        add("-no-default-libs")
+    }
 }
