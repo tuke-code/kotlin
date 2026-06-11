@@ -71,7 +71,6 @@ plugins {
     }
     `jvm-toolchains`
     alias(libs.plugins.gradle.node) apply false
-    id("nodejs-cache-redirector-configuration")
     id("gradle-plugins-documentation") apply false
     id("com.autonomousapps.dependency-analysis") version "3.6.1"
     id("project-tests-convention") apply false
@@ -868,12 +867,14 @@ tasks.withType<org.jetbrains.kotlin.gradle.targets.js.npm.tasks.KotlinNpmInstall
 plugins.withType<YarnPlugin> {
     extensions.configure<YarnRootEnvSpec> {
         version = libs.versions.yarn
+        downloadBaseUrl.set(null as String?)
     }
 }
 
 plugins.withType<WasmYarnPlugin> {
     extensions.configure<WasmYarnRootEnvSpec> {
         version = libs.versions.yarn
+        downloadBaseUrl.set(null as String?)
     }
 }
 
