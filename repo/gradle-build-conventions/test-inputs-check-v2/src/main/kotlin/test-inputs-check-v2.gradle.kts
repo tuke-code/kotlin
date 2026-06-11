@@ -44,6 +44,8 @@ fun registerCheckInputsFor(testTask: TaskProvider<Test>) {
         this.teamcityBuild.value(kotlinBuildProperties.isTeamcityBuild).finalizeValue()
     }
     testTask.configure {
-        finalizedBy(checkTestInputs)
+        if (enabled) {
+            finalizedBy(checkTestInputs)
+        }
     }
 }
