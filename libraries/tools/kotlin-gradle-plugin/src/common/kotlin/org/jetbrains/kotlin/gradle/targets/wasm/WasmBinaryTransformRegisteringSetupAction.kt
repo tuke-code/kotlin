@@ -30,7 +30,7 @@ internal val WasmBinaryTransformRegisteringSetupAction = KotlinCompilationSideEf
     if (!compilation.wasmTarget.supportsPerKlibCompilation()) return@KotlinCompilationSideEffect
 
     val propertiesProvider = project.kotlinPropertiesProvider
-    if (!propertiesProvider.wasmPerModule) return@KotlinCompilationSideEffect
+    if (!propertiesProvider.wasmCompilationMode.isOpenWorld()) return@KotlinCompilationSideEffect
 
     WasmBinaryAttribute.setupTransform(project)
 
