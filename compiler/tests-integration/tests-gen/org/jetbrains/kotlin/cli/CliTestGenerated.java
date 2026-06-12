@@ -2087,6 +2087,16 @@ public class CliTestGenerated extends AbstractCliTest {
       runTest("compiler/testData/cli/js/k2Psi.args");
     }
 
+    @TestMetadata("klibMetadataVersionLV2.4.args")
+    public void testKlibMetadataVersionLV2_4() {
+      runTest("compiler/testData/cli/js/klibMetadataVersionLV2.4.args");
+    }
+
+    @TestMetadata("klibMetadataVersionOverrideFlag.args")
+    public void testKlibMetadataVersionOverrideFlag() {
+      runTest("compiler/testData/cli/js/klibMetadataVersionOverrideFlag.args");
+    }
+
     @TestMetadata("kotlinPackage.args")
     public void testKotlinPackage() {
       runTest("compiler/testData/cli/js/kotlinPackage.args");
@@ -2315,6 +2325,16 @@ public class CliTestGenerated extends AbstractCliTest {
       runTest("compiler/testData/cli/wasm/exportKDoc.args");
     }
 
+    @TestMetadata("klibMetadataVersionLV2.4.args")
+    public void testKlibMetadataVersionLV2_4() {
+      runTest("compiler/testData/cli/wasm/klibMetadataVersionLV2.4.args");
+    }
+
+    @TestMetadata("klibMetadataVersionOverrideFlag.args")
+    public void testKlibMetadataVersionOverrideFlag() {
+      runTest("compiler/testData/cli/wasm/klibMetadataVersionOverrideFlag.args");
+    }
+
     @TestMetadata("manifestPropertyNewCompanionInitialization.args")
     public void testManifestPropertyNewCompanionInitialization() {
       runTest("compiler/testData/cli/wasm/manifestPropertyNewCompanionInitialization.args");
@@ -2421,11 +2441,6 @@ public class CliTestGenerated extends AbstractCliTest {
     @TestMetadata("inheritorOfExpectSealedClass.args")
     public void testInheritorOfExpectSealedClass() {
       runTest("compiler/testData/cli/metadata/inheritorOfExpectSealedClass.args");
-    }
-
-    @TestMetadata("klibMetadataVersionLV2.2.args")
-    public void testKlibMetadataVersionLV2_2() {
-      runTest("compiler/testData/cli/metadata/klibMetadataVersionLV2.2.args");
     }
 
     @TestMetadata("klibMetadataVersionLV2.4.args")

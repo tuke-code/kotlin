@@ -1,7 +1,9 @@
 $TESTDATA_DIR$/klibMetadataVersionSource.kt
--d
+-nopack
+-ir-output-dir
 $TEMP_DIR$
--Xtarget-platform=JVM,JS,WasmJs,WasmWasi,Native
--cp
-$STDLIB_COMMON_PATH$
+-ir-output-name
+out
+-libraries
+$STDLIB_JS$
 -Xmetadata-version=2.3.0
