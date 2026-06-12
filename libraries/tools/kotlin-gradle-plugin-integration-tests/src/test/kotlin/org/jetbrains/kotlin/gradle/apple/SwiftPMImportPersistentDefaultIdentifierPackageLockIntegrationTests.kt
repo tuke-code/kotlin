@@ -965,6 +965,7 @@ class SwiftPMImportPersistentDefaultIdentifierPackageLockIntegrationTests : KGPB
 
                     assertExactSwiftImportTasksInGraph(
                         ":right:iosSimulatorArm64ProcessResources",
+                        ":right:validateLocalSwiftPMDependencies",
                         ":right:computeLocalPackageDependencyInputFiles",
                         ":right:generateSyntheticLinkageSwiftPMImportProjectForCinteropsAndLdDump",
                         ":right:syncPersistedPackageResolvedToSynthetic",
@@ -981,6 +982,7 @@ class SwiftPMImportPersistentDefaultIdentifierPackageLockIntegrationTests : KGPB
                 dumpTaskGraph(":$leftProjectName:linkDebugTestIosSimulatorArm64") {
 
                     assertExactSwiftImportTasksInGraph(
+                        ":left:validateLocalSwiftPMDependencies",
                         ":left:computeLocalPackageDependencyInputFiles",
                         ":left:generateSyntheticLinkageSwiftPMImportProjectForCinteropsAndLdDump",
                         ":serializeSwiftPMDependenciesMetadataForLockFiles",
