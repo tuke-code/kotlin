@@ -219,7 +219,6 @@ val analysisApiModules = arrayOf(
     ":analysis:decompiled:decompiler-to-stubs",
     ":analysis:decompiled:light-classes-for-decompiled",
     ":analysis:light-classes-base",
-    ":analysis:light-classes-base",
     ":analysis:low-level-api-fir",
     ":analysis:stubs",
     ":analysis:symbol-light-classes",
