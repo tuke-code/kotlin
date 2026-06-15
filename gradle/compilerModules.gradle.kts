@@ -201,6 +201,10 @@ val cliCompilerModules = arrayOf(
     ":kotlin-build-common",
 ).also { extra["cliCompilerModules"] = it }
 
+/**
+ * The array of Analysis API modules that aren't part of [commonCompilerModules] (e.g., `:compiler:psi:psi-api`).
+ * It only covers production modules and is used only as a part of [projectsDependingOnStableStdlib].
+ */
 val analysisApiModules = arrayOf(
     ":analysis:analysis-api",
     ":analysis:analysis-api-fir",
@@ -210,7 +214,6 @@ val analysisApiModules = arrayOf(
     ":analysis:analysis-api-standalone:analysis-api-fir-standalone-base",
     ":analysis:analysis-api-standalone:analysis-api-standalone-base",
     ":analysis:analysis-internal-utils",
-    ":analysis:analysis-test-framework",
     ":analysis:decompiled",
     ":analysis:decompiled:decompiler-js",
     ":analysis:decompiled:decompiler-native",
