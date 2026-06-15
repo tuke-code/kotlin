@@ -5,7 +5,6 @@ plugins {
 val commonCompilerModules: Array<String> by rootProject.extra
 val descriptorsCompilerModules: Array<String> by rootProject.extra
 val analysisApiModules = listOf(
-    ":analysis:analysis-api",
     ":analysis:decompiled:decompiler-js",
     ":analysis:decompiled:decompiler-native",
     ":analysis:decompiled:decompiler-to-file-stubs",
