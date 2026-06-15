@@ -144,7 +144,10 @@ private fun RepositoryHandler.addBootstrapRepo(
         forRepositories(
             *(listOf(bootstrapRepo) + additionalBootstrapRepos)
                 .map {
-                    maven { url = uri(it) }
+                    maven {
+                        name = "Kotlin Bootstrap Repository"
+                        url = uri(it)
+                    }
                 }
                 .toTypedArray()
         )

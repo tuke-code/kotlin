@@ -2,10 +2,35 @@ pluginManagement {
     includeBuild("../gradle-settings-conventions")
 
     repositories {
-        maven(url = "https://redirector.kotlinlang.org/maven/kotlin-dependencies")
-        mavenCentral { setUrl("https://cache-redirector.jetbrains.com/maven-central") }
-        google { setUrl("https://cache-redirector.jetbrains.com/dl.google.com/dl/android/maven2") }
+        // duplicated from repositories.kt because pluginManagement block annot access to it.
+        exclusiveContent {
+            forRepository {
+                maven {
+                    name = "kotlin-dependencies"
+                    setUrl("https://redirector.kotlinlang.org/maven/kotlin-dependencies")
+                }
+            }
+            filter {
+                includeModule("org.jetbrains.dukat", "dukat")
+                includeModule("org.jetbrains.kotlin", "android-dx")
+                includeModule("org.jetbrains.kotlin", "jcabi-aether")
+                includeModule("org.jetbrains.kotlin", "protobuf-lite")
+                includeModule("org.jetbrains.kotlin", "protobuf-relocated")
+                includeModule("org.jetbrains.kotlinx", "kotlinx-metadata-klib")
+            }
+        }
+        exclusiveContent {
+            forRepository {
+                google()
+            }
+            filter {
+                includeGroupByRegex("""com\.android(\..*)?""")
+                includeGroupByRegex("""androidx(\..*)?""")
+                includeGroup("com.google.testing.platform")
+            }
+        }
         gradlePluginPortal()
+        mavenCentral()
     }
 }
 
@@ -24,17 +49,8 @@ dependencyResolutionManagement {
         }
     }
     repositories {
-        //maven(url = "https://redirector.kotlinlang.org/maven/kotlin-dependencies")
-        maven("https://packages.jetbrains.team/maven/p/ij/intellij-dependencies") {
-            name = "intellij-dependencies"
-            content {
-                includeGroupByRegex("org\\.jetbrains\\.intellij\\.deps(\\..+)?")
-                includeGroupByRegex("com.intellij.platform.*")
-                includeGroupByRegex("org.jetbrains.jps.*")
-            }
-        }
-
-        google() //{ setUrl("https://cache-redirector.jetbrains.com/dl.google.com/dl/android/maven2") }
+        intellijDependencies()
+        googleAndroidRepository()
         mavenCentral()
         gradlePluginPortal()
     }
