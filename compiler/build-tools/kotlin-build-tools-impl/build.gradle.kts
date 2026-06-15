@@ -6,7 +6,7 @@ plugins {
     id("test-federation-convention")
     kotlin("jvm")
     id("generated-sources")
-    id("test-inputs-check")
+    id("test-inputs-check-v2")
 }
 
 dependencies {
