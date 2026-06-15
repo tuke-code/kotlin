@@ -23,7 +23,7 @@ import org.jetbrains.kotlin.analysis.api.symbols.*
 import org.jetbrains.kotlin.analysis.api.symbols.pointers.KaSymbolPointer
 import org.jetbrains.kotlin.analysis.api.symbols.pointers.restoreSymbol
 import org.jetbrains.kotlin.analysis.api.types.*
-import org.jetbrains.kotlin.asJava.KotlinAsJavaSupportBase
+import org.jetbrains.kotlin.asJava.KotlinAsJavaSupport
 import org.jetbrains.kotlin.asJava.elements.KtLightElement
 import org.jetbrains.kotlin.asJava.elements.KtLightMember
 import org.jetbrains.kotlin.asJava.elements.psiType
@@ -343,7 +343,7 @@ internal inline fun <R : PsiElement, T> R.cachedValue(
     } else {
         CachedValueProvider.Result.createSingleDependency(
             value,
-            KotlinAsJavaSupportBase.getInstance(project).outOfBlockModificationTracker(this),
+            KotlinAsJavaSupport.getInstance(project).sourceModificationTracker(),
         )
     }
 }

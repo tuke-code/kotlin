@@ -21,7 +21,7 @@ import com.intellij.psi.scope.PsiScopeProcessor
 import com.intellij.psi.util.PsiUtil
 import org.jetbrains.annotations.NonNls
 import org.jetbrains.kotlin.analysis.api.projectStructure.KaModule
-import org.jetbrains.kotlin.asJava.KotlinAsJavaSupportBase
+import org.jetbrains.kotlin.asJava.KotlinAsJavaSupport
 import org.jetbrains.kotlin.asJava.classes.*
 import org.jetbrains.kotlin.asJava.toLightClass
 import org.jetbrains.kotlin.idea.KotlinLanguage
@@ -45,7 +45,7 @@ internal abstract class SymbolLightClassBase protected constructor(val ktModule:
     }
 
     open fun contentModificationTrackers(): List<ModificationTracker> = listOf(
-        KotlinAsJavaSupportBase.getInstance(project).outOfBlockModificationTracker(this)
+        KotlinAsJavaSupport.getInstance(project).sourceModificationTracker()
     )
 
     override fun getFields(): Array<PsiField> = ownFields.toArrayIfNotEmptyOrDefault(PsiField.EMPTY_ARRAY)
