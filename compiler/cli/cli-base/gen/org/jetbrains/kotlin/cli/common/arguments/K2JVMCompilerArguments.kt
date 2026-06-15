@@ -302,7 +302,7 @@ Modes:
             field = value
         }
 
-    @all:Deprecated("This flag is deprecated. Use `-jvm-default` instead")
+    @all:Deprecated("Use `-jvm-default` instead.")
     @Argument(
         value = "-Xjvm-default",
         valueDescription = "{all|all-compatibility|disable}",

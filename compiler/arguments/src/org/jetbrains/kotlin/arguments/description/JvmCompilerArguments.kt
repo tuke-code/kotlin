@@ -529,9 +529,7 @@ The default value is 'enable'.""".asReleaseDependent()
         valueType = StringType.defaultNull
         valueDescription = "{all|all-compatibility|disable}".asReleaseDependent()
 
-        additionalAnnotations(
-            Deprecated("This flag is deprecated. Use `-jvm-default` instead")
-        )
+        deprecatedMessage = "Use `-jvm-default` instead."
 
         lifecycle(
             introducedVersion = KotlinReleaseVersion.v1_2_50,
