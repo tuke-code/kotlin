@@ -44,6 +44,35 @@ import org.jetbrains.kotlinx.dataframe.plugin.impl.api.Under1
 import org.jetbrains.kotlinx.dataframe.plugin.impl.api.Under4
 import org.jetbrains.kotlinx.dataframe.plugin.impl.api.Ungroup0
 import org.jetbrains.kotlinx.dataframe.plugin.impl.api.With0
+import org.jetbrains.kotlinx.dataframe.plugin.impl.api.ColumnSetExceptSelector
+import org.jetbrains.kotlinx.dataframe.plugin.impl.api.ColumnSetExceptColumnsResolver
+import org.jetbrains.kotlinx.dataframe.plugin.impl.api.ColumnSetExceptColumnsResolvers
+import org.jetbrains.kotlinx.dataframe.plugin.impl.api.ColumnSetExceptString
+import org.jetbrains.kotlinx.dataframe.plugin.impl.api.ColumnSetExceptStrings
+import org.jetbrains.kotlinx.dataframe.plugin.impl.api.ColumnSetExceptColumnPath
+import org.jetbrains.kotlinx.dataframe.plugin.impl.api.ColumnSetExceptColumnPaths
+import org.jetbrains.kotlinx.dataframe.plugin.impl.api.CSDslAllExceptSelector
+import org.jetbrains.kotlinx.dataframe.plugin.impl.api.CSDslAllExceptColumnsResolvers
+import org.jetbrains.kotlinx.dataframe.plugin.impl.api.CSDslAllExceptStrings
+import org.jetbrains.kotlinx.dataframe.plugin.impl.api.CSDslAllExceptColumnPaths
+import org.jetbrains.kotlinx.dataframe.plugin.impl.api.ColumnGroupAllColsExceptSelector
+import org.jetbrains.kotlinx.dataframe.plugin.impl.api.ColumnGroupAllColsExceptStrings
+import org.jetbrains.kotlinx.dataframe.plugin.impl.api.ColumnGroupAllColsExceptColumnPaths
+import org.jetbrains.kotlinx.dataframe.plugin.impl.api.ColumnGroupExceptSelector
+import org.jetbrains.kotlinx.dataframe.plugin.impl.api.ColumnGroupExceptStrings
+import org.jetbrains.kotlinx.dataframe.plugin.impl.api.ColumnGroupExceptColumnPaths
+import org.jetbrains.kotlinx.dataframe.plugin.impl.api.StringExceptSelector
+import org.jetbrains.kotlinx.dataframe.plugin.impl.api.StringExceptStrings
+import org.jetbrains.kotlinx.dataframe.plugin.impl.api.StringExceptColumnPaths
+import org.jetbrains.kotlinx.dataframe.plugin.impl.api.ColumnPathExceptSelector
+import org.jetbrains.kotlinx.dataframe.plugin.impl.api.ColumnPathExceptStrings
+import org.jetbrains.kotlinx.dataframe.plugin.impl.api.ColumnPathExceptColumnPaths
+import org.jetbrains.kotlinx.dataframe.plugin.impl.api.StringAllColsExceptSelector
+import org.jetbrains.kotlinx.dataframe.plugin.impl.api.StringAllColsExceptStrings
+import org.jetbrains.kotlinx.dataframe.plugin.impl.api.StringAllColsExceptColumnPaths
+import org.jetbrains.kotlinx.dataframe.plugin.impl.api.ColumnPathAllColsExceptSelector
+import org.jetbrains.kotlinx.dataframe.plugin.impl.api.ColumnPathAllColsExceptStrings
+import org.jetbrains.kotlinx.dataframe.plugin.impl.api.ColumnPathAllColsExceptColumnPaths
 import org.jetbrains.kotlin.fir.declarations.findArgumentByName
 import org.jetbrains.kotlin.fir.declarations.getAnnotationWithResolvedArgumentsByClassId
 import org.jetbrains.kotlin.fir.declarations.getStringArgument
@@ -780,6 +809,35 @@ private fun String.loadImpl(isTest: Boolean): Interpreter<*>? {
         "ParseDefault" -> ParseDefault()
         "Require0" -> Require0()
         "FilterIsInstance" -> FilterIsInstance()
+        "ColumnSetExceptSelector" -> ColumnSetExceptSelector()
+        "ColumnSetExceptColumnsResolver" -> ColumnSetExceptColumnsResolver()
+        "ColumnSetExceptColumnsResolvers" -> ColumnSetExceptColumnsResolvers()
+        "ColumnSetExceptString" -> ColumnSetExceptString()
+        "ColumnSetExceptStrings" -> ColumnSetExceptStrings()
+        "ColumnSetExceptColumnPath" -> ColumnSetExceptColumnPath()
+        "ColumnSetExceptColumnPaths" -> ColumnSetExceptColumnPaths()
+        "CSDslAllExceptSelector" -> CSDslAllExceptSelector()
+        "CSDslAllExceptColumnsResolvers" -> CSDslAllExceptColumnsResolvers()
+        "CSDslAllExceptStrings" -> CSDslAllExceptStrings()
+        "CSDslAllExceptColumnPaths" -> CSDslAllExceptColumnPaths()
+        "ColumnGroupAllColsExceptSelector" -> ColumnGroupAllColsExceptSelector()
+        "ColumnGroupAllColsExceptStrings" -> ColumnGroupAllColsExceptStrings()
+        "ColumnGroupAllColsExceptColumnPaths" -> ColumnGroupAllColsExceptColumnPaths()
+        "ColumnGroupExceptSelector" -> ColumnGroupExceptSelector()
+        "ColumnGroupExceptStrings" -> ColumnGroupExceptStrings()
+        "ColumnGroupExceptColumnPaths" -> ColumnGroupExceptColumnPaths()
+        "StringExceptSelector" -> StringExceptSelector()
+        "StringExceptStrings" -> StringExceptStrings()
+        "StringExceptColumnPaths" -> StringExceptColumnPaths()
+        "ColumnPathExceptSelector" -> ColumnPathExceptSelector()
+        "ColumnPathExceptStrings" -> ColumnPathExceptStrings()
+        "ColumnPathExceptColumnPaths" -> ColumnPathExceptColumnPaths()
+        "StringAllColsExceptSelector" -> StringAllColsExceptSelector()
+        "StringAllColsExceptStrings" -> StringAllColsExceptStrings()
+        "StringAllColsExceptColumnPaths" -> StringAllColsExceptColumnPaths()
+        "ColumnPathAllColsExceptSelector" -> ColumnPathAllColsExceptSelector()
+        "ColumnPathAllColsExceptStrings" -> ColumnPathAllColsExceptStrings()
+        "ColumnPathAllColsExceptColumnPaths" -> ColumnPathAllColsExceptColumnPaths()
         else -> if (isTest) error(this) else null
     }
 }
