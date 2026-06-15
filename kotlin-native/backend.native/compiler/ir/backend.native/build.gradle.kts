@@ -2,7 +2,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 
 plugins {
     kotlin("jvm")
-    id("test-inputs-check")
+    id("project-tests-convention")
+    id("test-inputs-check-v2")
 }
 
 dependencies {
