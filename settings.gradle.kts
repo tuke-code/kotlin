@@ -318,7 +318,6 @@ include(
     ":kotlin-sam-with-receiver-compiler-plugin",
     ":kotlin-sam-with-receiver-compiler-plugin.embeddable",
     ":kotlin-sam-with-receiver-compiler-plugin.common",
-    ":kotlin-sam-with-receiver-compiler-plugin.k1",
     ":kotlin-sam-with-receiver-compiler-plugin.k2",
     ":kotlin-sam-with-receiver-compiler-plugin.cli"
 )
@@ -887,7 +886,6 @@ project(":kotlin-sam-with-receiver-compiler-plugin").projectDir = File("$rootDir
 project(":kotlin-sam-with-receiver-compiler-plugin.embeddable").projectDir =
     File("$rootDir/plugins/sam-with-receiver/sam-with-receiver.embeddable")
 project(":kotlin-sam-with-receiver-compiler-plugin.common").projectDir = File("$rootDir/plugins/sam-with-receiver/sam-with-receiver.common")
-project(":kotlin-sam-with-receiver-compiler-plugin.k1").projectDir = File("$rootDir/plugins/sam-with-receiver/sam-with-receiver.k1")
 project(":kotlin-sam-with-receiver-compiler-plugin.k2").projectDir = File("$rootDir/plugins/sam-with-receiver/sam-with-receiver.k2")
 project(":kotlin-sam-with-receiver-compiler-plugin.cli").projectDir = File("$rootDir/plugins/sam-with-receiver/sam-with-receiver.cli")
 
