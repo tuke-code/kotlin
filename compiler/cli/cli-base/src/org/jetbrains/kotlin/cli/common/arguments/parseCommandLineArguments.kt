@@ -163,10 +163,6 @@ fun getArgumentsInfo(klass: Class<*>): ArgumentsInfo {
     return argumentsCache.getOrPut(klass) {
         ArgumentsInfo(
             cliArgNameToArguments = buildMap {
-                val superclass = klass.superclass
-                if (CommonToolArguments::class.java.isAssignableFrom(superclass)) {
-                    putAll(getArgumentsInfo(superclass).cliArgNameToArguments)
-                }
                 for (field in klass.declaredFields) {
                     val argument = field.getAnnotation(Argument::class.java) ?: continue
                     val enablesAnnotations = field.getAnnotationsByType(Enables::class.java).toList()
@@ -180,6 +176,10 @@ fun getArgumentsInfo(klass: Class<*>): ArgumentsInfo {
                     for (key in listOf(argument.value, argument.shortName, argument.deprecatedName)) {
                         if (key.isNotEmpty()) put(key, argumentField)
                     }
+                }
+                val superclass = klass.superclass
+                if (CommonToolArguments::class.java.isAssignableFrom(superclass)) {
+                    putAll(getArgumentsInfo(superclass).cliArgNameToArguments)
                 }
             },
             defaultArgsConstructor = klass.constructors.find { it.parameters.isEmpty() },
