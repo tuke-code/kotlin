@@ -10,14 +10,10 @@ plugins {
 }
 
 val analysisApiSurfaceDependencies: List<String> by rootProject.extra
-
-val analysisApiSurfaceProjects = listOf(
-    ":analysis:analysis-api",
-    ":analysis:analysis-api-standalone",
-)
+val analysisApiSurfaceModules: Array<String> by rootProject.extra
 
 dependencies {
-    for (projectPath in analysisApiSurfaceDependencies + analysisApiSurfaceProjects) {
+    for (projectPath in analysisApiSurfaceDependencies + analysisApiSurfaceModules) {
         embedded(project(projectPath)) { isTransitive = false }
     }
 

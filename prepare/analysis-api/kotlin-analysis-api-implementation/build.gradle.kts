@@ -1,5 +1,3 @@
-import org.gradle.kotlin.dsl.project
-
 plugins {
     id("common-configuration")
     id("test-federation-convention")
@@ -10,16 +8,8 @@ plugins {
 
 val analysisApiSurfaceDependencies: List<String> by rootProject.extra
 val compilerModules: Array<String> by rootProject.extra
-
-val analysisApiImplementationProjects = listOf(
-    ":analysis:analysis-api-impl-base",
-    ":analysis:analysis-api-fir",
-    ":analysis:analysis-api-standalone:analysis-api-standalone-base",
-    ":analysis:analysis-api-standalone:analysis-api-fir-standalone-base",
-    ":analysis:analysis-internal-utils",
-    ":analysis:low-level-api-fir",
-    ":analysis:symbol-light-classes",
-)
+val analysisApiSurfaceModules: Array<String> by rootProject.extra
+val analysisApiModules: Array<String> by rootProject.extra
 
 val additionalCompilerProjects = listOf(
     ":kotlin-annotations-jvm",
@@ -52,9 +42,13 @@ dependencies {
     val embeddedProjects = buildSet {
         addAll(compilerModules)
         addAll(additionalCompilerProjects)
+        addAll(analysisApiModules)
+
         removeAll(excludedCompilerProjects)
-        removeAll(analysisApiSurfaceDependencies) // Avoid copying content of 'kotlin-analysis-api-surface'
-        addAll(analysisApiImplementationProjects)
+
+        // Avoid copying content of 'kotlin-analysis-api-surface'
+        removeAll(analysisApiSurfaceDependencies)
+        removeAll(analysisApiSurfaceModules)
     }
 
     for (projectPath in embeddedProjects) {

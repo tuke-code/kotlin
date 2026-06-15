@@ -5,9 +5,6 @@
 -dontprocesskotlinmetadata
 -dontpreverify
 
-# Sic! Remove after 'KT-84911' is fixed
--ignorewarnings
-
 # Keep everything — we only want the classpath completeness check
 -keep class ** { *; }
 
