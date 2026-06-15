@@ -32,7 +32,7 @@ plugins {
     id("git-clang-format")
     id("java-test-fixtures")
     id("project-tests-convention")
-    id("test-inputs-check")
+    id("test-inputs-check-v2")
 }
 
 val library = lib("llvmext")
@@ -201,10 +201,6 @@ projectTests {
                 llvmPlugin.fileProvider(tasks.named<ToolExecutionTask>(kotlinLlvmPlugin).map { it.output })
                 llvmDistribution.from(hostLlvmDistribution)
             })
-
-            testInputsCheck {
-                isNative.set(true) // uses ~/.konan
-            }
         }
     }
 }
