@@ -7,6 +7,7 @@ package org.jetbrains.kotlin.jvm.compiler
 
 import com.intellij.openapi.util.io.FileUtil
 import junit.framework.TestCase
+import org.jetbrains.kotlin.cli.AbstractCliTest
 import org.jetbrains.kotlin.cli.common.CLICompiler
 import org.jetbrains.kotlin.cli.common.ExitCode
 import org.jetbrains.kotlin.cli.common.arguments.*
@@ -316,6 +317,101 @@ abstract class AbstractCompileKotlinAgainstCustomBinariesTest : AbstractKotlinCo
 
     fun testWrongMetadataVersionSkipPrereleaseCheckHasNoEffect() {
         doTestKotlinLibraryWithWrongMetadataVersion("library", null, CommonCompilerArguments::skipPrereleaseCheck.cliArgument)
+    }
+
+    fun testKlibMetadataVersionSupportedDependency() {
+        val sourceSetDir = File(testDataPath, "klibMetadataVersionDependency")
+        val currentLanguageVersionIndex = LanguageVersion.entries.indexOf(LanguageVersion.LATEST_STABLE)
+        val supportedKlibDependencyMetadataVersions = listOf(
+            LanguageVersion.entries[currentLanguageVersionIndex - 2],
+            LanguageVersion.entries[currentLanguageVersionIndex - 1],
+            LanguageVersion.LATEST_STABLE,
+            LanguageVersion.entries[currentLanguageVersionIndex + 1],
+        ).map { it.toMetadataVersion().toString() }
+
+        val library = File(tmpdir, "lib1")
+        val usage = File(tmpdir, "lib2")
+        val commonStdlib = StandardLibrariesPathProviderForKotlinProject.commonStdlibForTests()
+        val metadataKlibOptions = listOf(
+            K2MetadataCompilerArguments::metadataKlib.cliArgument,
+            "-Xtarget-platform=JVM,JS,WasmJs,WasmWasi,Native",
+            CommonCompilerArguments::languageVersion.cliArgument,
+            languageVersion.versionString,
+            CommonCompilerArguments::suppressVersionWarnings.cliArgument,
+        )
+        for (metadataVersion in supportedKlibDependencyMetadataVersions) {
+            val libraryResult = AbstractCliTest.executeCompilerGrabOutput(
+                KotlinMetadataCompiler(),
+                listOf(
+                    sourceSetDir.resolve("lib1.kt").path,
+                    K2JVMCompilerArguments::classpath.cliArgument,
+                    commonStdlib.path,
+                    K2JVMCompilerArguments::destination.cliArgument,
+                    library.path,
+                    CommonCompilerArguments::metadataVersion.cliArgument(metadataVersion),
+                    CommonCompilerArguments::skipMetadataVersionCheck.cliArgument,
+                ) + metadataKlibOptions
+            )
+            assertEquals(ExitCode.OK, libraryResult.second)
+
+            val result = AbstractCliTest.executeCompilerGrabOutput(
+                KotlinMetadataCompiler(),
+                listOf(
+                    sourceSetDir.resolve("lib2.kt").path,
+                    K2JVMCompilerArguments::classpath.cliArgument,
+                    listOf(library, commonStdlib).joinToString(File.pathSeparator),
+                    K2JVMCompilerArguments::destination.cliArgument,
+                    usage.path,
+                ) + metadataKlibOptions
+            )
+            assertEquals(ExitCode.OK, result.second)
+        }
+    }
+
+    fun testKlibMetadataVersionUnsupportedDependency() {
+        val sourceSetDir = File(testDataPath, "klibMetadataVersionDependency")
+        val currentLanguageVersionIndex = LanguageVersion.entries.indexOf(LanguageVersion.LATEST_STABLE)
+        val unsupportedKlibDependencyMetadataVersion = LanguageVersion.entries[currentLanguageVersionIndex + 2].toMetadataVersion().toString()
+
+        val library = File(tmpdir, "lib1")
+        val usage = File(tmpdir, "lib2")
+        val commonStdlib = StandardLibrariesPathProviderForKotlinProject.commonStdlibForTests()
+        val metadataKlibOptions = listOf(
+            K2MetadataCompilerArguments::metadataKlib.cliArgument,
+            "-Xtarget-platform=JVM,JS,WasmJs,WasmWasi,Native",
+            CommonCompilerArguments::languageVersion.cliArgument,
+            languageVersion.versionString,
+            CommonCompilerArguments::suppressVersionWarnings.cliArgument,
+        )
+        val libraryResult = AbstractCliTest.executeCompilerGrabOutput(
+            KotlinMetadataCompiler(),
+            listOf(
+                sourceSetDir.resolve("lib1.kt").path,
+                K2JVMCompilerArguments::classpath.cliArgument,
+                commonStdlib.path,
+                K2JVMCompilerArguments::destination.cliArgument,
+                library.path,
+                CommonCompilerArguments::metadataVersion.cliArgument(unsupportedKlibDependencyMetadataVersion),
+                CommonCompilerArguments::skipMetadataVersionCheck.cliArgument,
+            ) + metadataKlibOptions
+        )
+        assertEquals(ExitCode.OK, libraryResult.second)
+
+        val result = AbstractCliTest.executeCompilerGrabOutput(
+            KotlinMetadataCompiler(),
+            listOf(
+                sourceSetDir.resolve("lib2.kt").path,
+                K2JVMCompilerArguments::classpath.cliArgument,
+                listOf(library, commonStdlib).joinToString(File.pathSeparator),
+                K2JVMCompilerArguments::destination.cliArgument,
+                usage.path,
+            ) + metadataKlibOptions
+        )
+        val output = result.first
+
+        assertEquals(ExitCode.COMPILATION_ERROR, result.second)
+        assertTrue(output.contains("compiled with an incompatible version of Kotlin"))
+        assertTrue(output.contains("The actual metadata version is $unsupportedKlibDependencyMetadataVersion"))
     }
 
     // KT-59901 K2: Disappeared API_NOT_AVAILABLE

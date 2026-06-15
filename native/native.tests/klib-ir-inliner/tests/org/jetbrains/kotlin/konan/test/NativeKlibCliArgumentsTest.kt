@@ -6,11 +6,13 @@
 package org.jetbrains.kotlin.konan.test
 
 import org.jetbrains.kotlin.K1Deprecation
+import org.jetbrains.kotlin.cli.common.arguments.CommonCompilerArguments
 import org.jetbrains.kotlin.cli.common.arguments.K2NativeCompilerArguments
 import org.jetbrains.kotlin.cli.common.arguments.cliArgument
 import org.jetbrains.kotlin.config.LanguageVersion
 import org.jetbrains.kotlin.incremental.createDirectory
 import org.jetbrains.kotlin.konan.test.blackbox.AbstractNativeSimpleTest
+import org.jetbrains.kotlin.konan.test.blackbox.asLibraryDependency
 import org.jetbrains.kotlin.konan.test.blackbox.buildDir
 import org.jetbrains.kotlin.konan.test.blackbox.compileToLibrary
 import org.jetbrains.kotlin.konan.test.blackbox.support.TestCompilerArgs
@@ -163,11 +165,11 @@ class NativeKlibCliArgumentsTest : AbstractNativeSimpleTest() {
             ),
         )
 
-        for (data in testData) {
+        for ([args, expectedVersion] in testData) {
             val klibDir = compileToLibrary(
                 sourcesDir = sourceFile,
                 outputDir = dir,
-                freeCompilerArgs = data.first,
+                freeCompilerArgs = args,
                 dependencies = emptyList(),
             ).guessKlibArtifactFile()
 
@@ -177,7 +179,102 @@ class NativeKlibCliArgumentsTest : AbstractNativeSimpleTest() {
                 ?.split("=")
                 ?.get(1)
 
-            assertEquals(data.second, metadataVersion)
+            assertEquals(expectedVersion, metadataVersion)
+        }
+    }
+
+    @Test
+    @DisplayName("Test compilation against dependencies with supported metadata versions (KT-55808)")
+    fun testCompileAgainstDependencyWithSupportedMetadataVersions() {
+        val currentLanguageVersionIndex = LanguageVersion.entries.indexOf(LanguageVersion.LATEST_STABLE)
+        val supportedDependencyMetadataVersions = listOf(
+            LanguageVersion.entries[currentLanguageVersionIndex - 2],
+            LanguageVersion.entries[currentLanguageVersionIndex - 1],
+            LanguageVersion.LATEST_STABLE,
+            LanguageVersion.entries[currentLanguageVersionIndex + 1],
+        ).map { it.toMetadataVersion().toString() }
+
+        val dependencySourceDir = buildDir.resolve("lib1").apply { createDirectory() }
+        dependencySourceDir.resolve("lib1.kt").writeText(
+            """
+            package lib1
+
+            fun foo() = "Hello"
+            """.trimIndent()
+        )
+        val usageSourceDir = buildDir.resolve("lib2").apply { createDirectory() }
+        usageSourceDir.resolve("lib2.kt").writeText(
+            """
+            package lib2
+
+            fun bar() = lib1.foo()
+            """.trimIndent()
+        )
+
+        for (metadataVersion in supportedDependencyMetadataVersions) {
+            val dependency = compileToLibrary(
+                sourcesDir = dependencySourceDir,
+                outputDir = buildDir,
+                freeCompilerArgs = TestCompilerArgs(
+                    K2NativeCompilerArguments::metadataVersion.cliArgument + "=" + metadataVersion,
+                    CommonCompilerArguments::skipMetadataVersionCheck.cliArgument,
+                ),
+                dependencies = emptyList(),
+            )
+
+            compileToLibrary(
+                sourcesDir = usageSourceDir,
+                outputDir = buildDir,
+                freeCompilerArgs = TestCompilerArgs.EMPTY,
+                dependencies = listOf(dependency.asLibraryDependency()),
+            )
+        }
+    }
+
+    @Test
+    @DisplayName("Test compilation against dependencies with unsupported metadata versions (KT-55808)")
+    fun testCompileAgainstDependencyWithUnsupportedMetadataVersions() {
+        val currentLanguageVersionIndex = LanguageVersion.entries.indexOf(LanguageVersion.LATEST_STABLE)
+        val metadataVersion = LanguageVersion.entries[currentLanguageVersionIndex + 2].toMetadataVersion().toString()
+
+        val dependencySourceDir = buildDir.resolve("lib1").apply { createDirectory() }
+        dependencySourceDir.resolve("lib1.kt").writeText(
+            """
+            package lib1
+
+            fun foo() = "Hello"
+            """.trimIndent()
+        )
+        val dependency = compileToLibrary(
+            sourcesDir = dependencySourceDir,
+            outputDir = buildDir,
+            freeCompilerArgs = TestCompilerArgs(
+                K2NativeCompilerArguments::metadataVersion.cliArgument + "=" + metadataVersion,
+                CommonCompilerArguments::skipMetadataVersionCheck.cliArgument,
+            ),
+            dependencies = emptyList(),
+        )
+
+        val usageSourceDir = buildDir.resolve("lib2").apply { createDirectory() }
+        usageSourceDir.resolve("lib2.kt").writeText(
+            """
+            package lib2
+
+            fun bar() = lib1.foo()
+            """.trimIndent()
+        )
+
+        try {
+            compileToLibrary(
+                sourcesDir = usageSourceDir,
+                outputDir = buildDir,
+                freeCompilerArgs = TestCompilerArgs.EMPTY,
+                dependencies = listOf(dependency.asLibraryDependency()),
+            )
+            fail { "Compilation should fail" }
+        } catch (cte: CompilationToolException) {
+            assertTrue(cte.reason.contains("compiled with an incompatible version of Kotlin"))
+            assertTrue(cte.reason.contains("The actual metadata version is $metadataVersion"))
         }
     }
 
