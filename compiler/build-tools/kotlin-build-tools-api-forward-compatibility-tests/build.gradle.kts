@@ -7,7 +7,7 @@ plugins {
     `jvm-test-suite`
     id("test-symlink-transformation")
     id("project-tests-convention")
-    id("test-inputs-check")
+    id("test-inputs-check-v2")
 }
 
 val buildToolsApiImpl = configurations.dependencyScope("buildToolsApiImpl")
@@ -73,22 +73,6 @@ testing {
                                 "kotlin.daemon.custom.run.files.path.for.tests",
                                 "build/daemon"
                             )
-                            testInputsCheck {
-                                extraPermissions.set(
-                                    listOfNotNull(
-                                        "permission java.net.SocketPermission \"localhost\", \"connect,resolve,accept\";",
-                                        "permission java.util.PropertyPermission \"java.rmi.server.hostname\", \"write\";",
-
-                                        // paths below are not expected to exist,
-                                        // these are here to pass implicit `exists()` checks in the Kotlin compiler
-                                        "permission java.io.FilePermission \"<no_path>/lib\", \"read\";",
-                                        "permission java.io.FilePermission \"./kotlin-scripting-compiler.jar\", \"read\";",
-                                        "permission java.io.FilePermission \"./kotlin-scripting-compiler-impl.jar\", \"read\";",
-                                        "permission java.io.FilePermission \"./kotlin-scripting-common.jar\", \"read\";",
-                                        "permission java.io.FilePermission \"./kotlin-scripting-jvm.jar\", \"read\";"
-                                    )
-                                )
-                            }
                         }
                     }
                 }
