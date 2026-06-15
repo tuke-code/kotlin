@@ -554,7 +554,6 @@ include(
     ":kotlin-lombok-compiler-plugin",
     ":kotlin-lombok-compiler-plugin.embeddable",
     ":kotlin-lombok-compiler-plugin.common",
-    ":kotlin-lombok-compiler-plugin.k1",
     ":kotlin-lombok-compiler-plugin.k2",
     ":kotlin-lombok-compiler-plugin.cli",
     ":kotlin-lombok"
@@ -853,7 +852,6 @@ project(":kotlin-allopen-compiler-plugin.cli").projectDir = File("$rootDir/plugi
 project(":kotlin-lombok-compiler-plugin").projectDir = File("$rootDir/plugins/lombok")
 project(":kotlin-lombok-compiler-plugin.embeddable").projectDir = File("$rootDir/plugins/lombok/lombok.embeddable")
 project(":kotlin-lombok-compiler-plugin.cli").projectDir = File("$rootDir/plugins/lombok/lombok.cli")
-project(":kotlin-lombok-compiler-plugin.k1").projectDir = File("$rootDir/plugins/lombok/lombok.k1")
 project(":kotlin-lombok-compiler-plugin.k2").projectDir = File("$rootDir/plugins/lombok/lombok.k2")
 project(":kotlin-lombok-compiler-plugin.common").projectDir = File("$rootDir/plugins/lombok/lombok.common")
 
