@@ -20,7 +20,6 @@ val analysisApiModules = listOf(
     ":analysis:decompiled:decompiler-to-psi",
     ":analysis:decompiled:decompiler-to-stubs",
     ":analysis:decompiled:light-classes-for-decompiled",
-    ":analysis:light-classes-base",
     ":analysis:low-level-api-fir",
     ":analysis:stubs",
 )

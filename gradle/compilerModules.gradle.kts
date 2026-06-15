@@ -6,6 +6,7 @@ val descriptorsCompilerModules = arrayOf(
  * Common modules, used by K1 frontend, K2 frontend, backends, AA and CLI
  */
 val commonCompilerModules = descriptorsCompilerModules + arrayOf(
+    ":analysis:light-classes-base",
     ":compiler:psi:psi-api",
     ":compiler:psi:psi-impl",
     ":compiler:psi:psi-utils",
@@ -221,7 +222,6 @@ val analysisApiModules = arrayOf(
     ":analysis:decompiled:decompiler-to-psi",
     ":analysis:decompiled:decompiler-to-stubs",
     ":analysis:decompiled:light-classes-for-decompiled",
-    ":analysis:light-classes-base",
     ":analysis:low-level-api-fir",
     ":analysis:stubs",
     ":analysis:symbol-light-classes",
@@ -236,8 +236,7 @@ extra["compilerModules"] =
     jsCompilerModules +
     wasmCompilerModules +
     nativeCompilerModules +
-    cliCompilerModules +
-    ":analysis:light-classes-base"
+    cliCompilerModules
 
 val analysisApiArtifacts by extra {
     listOf(
