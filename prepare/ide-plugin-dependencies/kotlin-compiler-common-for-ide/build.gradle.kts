@@ -23,7 +23,6 @@ val analysisApiModules = listOf(
     ":analysis:light-classes-base",
     ":analysis:low-level-api-fir",
     ":analysis:stubs",
-    ":analysis:symbol-light-classes",
 )
 
 val excludedAnalysisApiModules = listOf(
