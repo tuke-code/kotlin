@@ -54,7 +54,7 @@ fun configureCheckTestInputsTask(
     }
 
     test.configure {
-        if (enabled) {
+        if (enabled && !inputs.sourceFiles.isEmpty) {
             finalizedBy(checkTestInputs)
         }
     }
