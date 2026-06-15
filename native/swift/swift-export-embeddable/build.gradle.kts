@@ -6,7 +6,7 @@ plugins {
     kotlin("jvm")
     id("java-test-fixtures")
     id("project-tests-convention")
-    id("test-inputs-check")
+    id("test-inputs-check-v2")
 }
 
 description = "Runner for Swift Export (for embedding purpose)"
@@ -228,8 +228,5 @@ projectTests {
             configurations.testRuntimeClasspath, // Includes KotlinSecurityManager from test-inputs-check
         )
         testClassesDirs = testSourceSet.output.classesDirs
-        extensions.configure<TestInputsCheckExtension>("testInputsCheck") {
-            allowFlightRecorder.set(true)
-        }
     }
 }
