@@ -4,7 +4,27 @@ plugins {
 
 val commonCompilerModules: Array<String> by rootProject.extra
 val descriptorsCompilerModules: Array<String> by rootProject.extra
-val analysisApiModules: Array<String> by rootProject.extra
+val analysisApiModules = listOf(
+    ":analysis:analysis-api",
+    ":analysis:analysis-api-fir",
+    ":analysis:analysis-api-impl-base",
+    ":analysis:analysis-api-platform-interface",
+    ":analysis:analysis-api-standalone",
+    ":analysis:analysis-api-standalone:analysis-api-fir-standalone-base",
+    ":analysis:analysis-api-standalone:analysis-api-standalone-base",
+    ":analysis:analysis-internal-utils",
+    ":analysis:decompiled",
+    ":analysis:decompiled:decompiler-js",
+    ":analysis:decompiled:decompiler-native",
+    ":analysis:decompiled:decompiler-to-file-stubs",
+    ":analysis:decompiled:decompiler-to-psi",
+    ":analysis:decompiled:decompiler-to-stubs",
+    ":analysis:decompiled:light-classes-for-decompiled",
+    ":analysis:light-classes-base",
+    ":analysis:low-level-api-fir",
+    ":analysis:stubs",
+    ":analysis:symbol-light-classes",
+)
 
 val excludedAnalysisApiModules = listOf(
     ":analysis:decompiled",
