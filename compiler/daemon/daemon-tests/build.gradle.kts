@@ -6,7 +6,7 @@ plugins {
     id("com.autonomousapps.dependency-analysis")
     kotlin("jvm")
     id("project-tests-convention")
-    id("test-inputs-check")
+    id("test-inputs-check-v2")
 }
 
 dependencies {
@@ -30,21 +30,7 @@ sourceSets {
 projectTests {
     testTask(jUnitMode = JUnitMode.JUnit5) {
         addClasspathProperty(testSourceSet.output.classesDirs, "kotlin.test.script.classpath")
-
-        systemProperty(
-            "kotlin.daemon.custom.run.files.path.for.tests",
-            "build/daemon"
-        )
-
-        testInputsCheck {
-            with(extraPermissions) {
-                add("permission java.net.SocketPermission \"localhost\", \"listen,connect,resolve,accept\";",)
-                add("permission java.util.PropertyPermission \"java.rmi.server.hostname\", \"write\";")
-                add("permission java.util.PropertyPermission \"kotlin.daemon.environment.variables.for.tests\", \"write\";")
-                add("permission java.util.PropertyPermission \"kotlin.daemon.options\", \"write\";")
-                add("permission java.util.PropertyPermission \"kotlin.daemon.jvm.options\", \"write\";")
-            }
-        }
+        systemProperty("kotlin.daemon.custom.run.files.path.for.tests", "build/daemon")
     }
 
     @OptIn(KotlinCompilerDistUsage::class)
