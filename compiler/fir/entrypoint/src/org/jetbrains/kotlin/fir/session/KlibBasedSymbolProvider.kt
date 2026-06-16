@@ -22,6 +22,7 @@ import org.jetbrains.kotlin.metadata.deserialization.MetadataVersion
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.serialization.deserialization.IncompatibleVersionErrorData
 import org.jetbrains.kotlin.util.toMetadataVersion
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.utils.SmartList
 import java.nio.file.Paths
 
@@ -45,12 +46,16 @@ class KlibBasedSymbolProvider(
     private val KotlinLibrary.incompatibility: IncompatibleVersionErrorData<MetadataVersion>?
         get() {
             if (session.languageVersionSettings.getFlag(AnalysisFlags.skipMetadataVersionCheck)) return null
+            @OptIn(K1Deprecation::class)
             return getIncompatibility(ownMetadataVersion)
         }
 
 
     private val moduleHeaders by lazy {
-        resolvedLibraries.associateWith { parseModuleHeader(metadataProvider(it).moduleHeaderData) }
+        resolvedLibraries.associateWith {
+            @OptIn(K1Deprecation::class)
+            parseModuleHeader(metadataProvider(it).moduleHeaderData)
+        }
     }
 
     override val fragmentNamesInLibraries: Map<String, List<KotlinLibrary>> by lazy {
@@ -83,6 +88,7 @@ class KlibBasedSymbolProvider(
         return moduleDataProvider.getModuleData(libraryPath)
     }
 
+    @OptIn(K1Deprecation::class)
     override fun createDeserializedContainerSource(
         resolvedLibrary: KotlinLibrary,
         packageFqName: FqName

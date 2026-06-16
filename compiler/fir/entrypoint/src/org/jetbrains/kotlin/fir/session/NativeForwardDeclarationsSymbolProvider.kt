@@ -40,6 +40,7 @@ import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.name.NativeForwardDeclarationKind
 import org.jetbrains.kotlin.name.NativeStandardInteropNames
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.utils.mapToSetOrEmpty
 
 class NativeForwardDeclarationsSymbolProvider(
@@ -55,6 +56,7 @@ class NativeForwardDeclarationsSymbolProvider(
     private val includedForwardDeclarations: Set<ClassId> by lazy {
         buildSet {
             for (library in kotlinLibraries) {
+                @OptIn(K1Deprecation::class)
                 if (!library.isCInteropLibrary() && !library.isCommonizedCInteropLibrary()) continue
 
                 for (fqName in library.includedForwardDeclarations) {

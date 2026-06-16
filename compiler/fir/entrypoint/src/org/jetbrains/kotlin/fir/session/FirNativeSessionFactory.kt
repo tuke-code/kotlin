@@ -26,6 +26,7 @@ import org.jetbrains.kotlin.fir.scopes.FirPlatformClassMapper
 import org.jetbrains.kotlin.fir.scopes.impl.FirEnumEntriesSupport
 import org.jetbrains.kotlin.library.KotlinLibrary
 import org.jetbrains.kotlin.library.metadata.impl.KlibResolvedModuleDescriptorsFactoryImpl.Companion.FORWARD_DECLARATIONS_MODULE_NAME
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.resolve.konan.platform.NativeDefaultImportsProvider
 
 @OptIn(SessionConfiguration::class)
@@ -50,6 +51,7 @@ abstract class FirNativeSessionFactory : AbstractFirKlibSessionFactory<Nothing?>
         kotlinScopeProvider: FirKotlinScopeProvider,
         resolvedLibraries: List<KotlinLibrary>,
     ): List<FirSymbolProvider> {
+        @OptIn(K1Deprecation::class)
         val forwardDeclarationsModuleData =
             FirBinaryDependenciesModuleData(FORWARD_DECLARATIONS_MODULE_NAME).apply {
                 bindSession(session)
@@ -99,6 +101,7 @@ abstract class FirNativeSessionFactory : AbstractFirKlibSessionFactory<Nothing?>
         register(FirPlatformSpecificCastChecker::class, FirNativeCastChecker)
         register(PlatformConflictDeclarationsDiagnosticDispatcher::class, NativeConflictDeclarationsDiagnosticDispatcher)
         register(FirOverrideChecker::class, FirNativeOverrideChecker(this))
+        @OptIn(K1Deprecation::class)
         register(FirDefaultImportsProviderHolder.of(NativeDefaultImportsProvider))
     }
 }

@@ -5,6 +5,7 @@
 
 package org.jetbrains.kotlin.fir.session
 
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.incremental.js.IncrementalDataProvider
 import org.jetbrains.kotlin.library.components.KlibMetadataComponent
 import org.jetbrains.kotlin.library.metadata.KlibMetadataProtoBuf
@@ -20,6 +21,7 @@ class KlibIcData(incrementalData: IncrementalDataProvider) : KlibMetadataCompone
             .compiledPackageParts
             .toSortedMap() // This is so that IC is more deterministic
             .forEach { [file, translationResultValue] ->
+                @OptIn(K1Deprecation::class)
                 val proto = parsePackageFragment(translationResultValue.metadata)
                 val fqName = proto.getExtension(KlibMetadataProtoBuf.fqName)
                 val key = file.path
