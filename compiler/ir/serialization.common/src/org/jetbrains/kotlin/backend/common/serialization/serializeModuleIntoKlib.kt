@@ -6,17 +6,15 @@
 package org.jetbrains.kotlin.backend.common.serialization
 
 import com.intellij.openapi.vfs.VfsUtilCore
-import org.jetbrains.kotlin.KtIoFileSourceFile
-import org.jetbrains.kotlin.KtPsiSourceFile
-import org.jetbrains.kotlin.KtSourceFile
-import org.jetbrains.kotlin.KtVirtualFileSourceFile
+import org.jetbrains.kotlin.*
 import org.jetbrains.kotlin.backend.common.serialization.metadata.KlibSingleFileMetadataSerializer
-import org.jetbrains.kotlin.backend.common.serialization.metadata.serializeKlibHeader
 import org.jetbrains.kotlin.config.*
 import org.jetbrains.kotlin.ir.IrDiagnosticReporter
 import org.jetbrains.kotlin.ir.declarations.IrModuleFragment
 import org.jetbrains.kotlin.konan.properties.Properties
 import org.jetbrains.kotlin.library.*
+import org.jetbrains.kotlin.library.metadata.KlibMetadataHeaderFlags
+import org.jetbrains.kotlin.library.metadata.KlibMetadataProtoBuf
 import org.jetbrains.kotlin.util.toMetadataVersion
 import java.io.File
 
@@ -166,6 +164,31 @@ fun <SourceFile> serializeModuleIntoKlib(
         ),
         neededLibraries = dependencies,
     )
+}
+
+private fun serializeKlibHeader(
+    languageVersionSettings: LanguageVersionSettings,
+    moduleName: String,
+    fragmentNames: List<String>,
+    emptyPackages: List<String>
+): KlibMetadataProtoBuf.Header {
+    val header = KlibMetadataProtoBuf.Header.newBuilder()
+
+    header.moduleName = moduleName
+
+    if (languageVersionSettings.isPreRelease()) {
+        @OptIn(K1Deprecation::class)
+        header.flags = KlibMetadataHeaderFlags.PRE_RELEASE
+    }
+
+    fragmentNames.forEach {
+        header.addPackageFragmentName(it)
+    }
+    emptyPackages.forEach {
+        header.addEmptyPackage(it)
+    }
+
+    return header.build()
 }
 
 fun addLanguageFeaturesToManifest(manifestProperties: Properties, languageVersionSettings: LanguageVersionSettings) {

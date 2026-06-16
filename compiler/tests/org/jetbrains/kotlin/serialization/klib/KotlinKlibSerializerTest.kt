@@ -16,11 +16,17 @@
 
 package org.jetbrains.kotlin.serialization.klib
 
+import org.jetbrains.kotlin.builtins.DefaultBuiltIns
 import org.jetbrains.kotlin.cli.metadata.KotlinMetadataCompiler
 import org.jetbrains.kotlin.codegen.forTestCompile.ForTestCompileRuntime
+import org.jetbrains.kotlin.config.LanguageVersionSettingsImpl
+import org.jetbrains.kotlin.descriptors.impl.ModuleDescriptorImpl
 import org.jetbrains.kotlin.jvm.compiler.LoadDescriptorUtil.TEST_PACKAGE_FQNAME
+import org.jetbrains.kotlin.library.loader.KlibLoader
+import org.jetbrains.kotlin.library.metadata.KlibMetadataFactories
+import org.jetbrains.kotlin.library.metadata.NullFlexibleTypeDeserializer
+import org.jetbrains.kotlin.storage.LockBasedStorageManager
 import org.jetbrains.kotlin.test.CompilerTestUtil
-import org.jetbrains.kotlin.test.KlibTestUtil
 import org.jetbrains.kotlin.test.TestCaseWithTmpdir
 import org.jetbrains.kotlin.test.util.RecursiveDescriptorComparator
 import org.jetbrains.kotlin.test.util.RecursiveDescriptorComparatorAdaptor
@@ -70,7 +76,7 @@ class KotlinKlibSerializerTest : TestCaseWithTmpdir() {
     }
 
     private fun compareDumps(klibFile: File, source: String, goldenDataExtension: String) {
-        val module = KlibTestUtil.deserializeKlibToCommonModule(klibFile)
+        val module = deserializeKlibToCommonModule(klibFile)
 
         RecursiveDescriptorComparatorAdaptor.validateAndCompareDescriptorWithFile(
             module.getPackage(TEST_PACKAGE_FQNAME),
@@ -78,6 +84,23 @@ class KotlinKlibSerializerTest : TestCaseWithTmpdir() {
             File(source.replace(".kt", goldenDataExtension))
         )
     }
+
+    private fun deserializeKlibToCommonModule(klibFile: File): ModuleDescriptorImpl {
+        val library = KlibLoader { libraryPaths(klibFile) }.load().librariesStdlibFirst.single()
+
+        val metadataFactories = KlibMetadataFactories({ DefaultBuiltIns.Instance }, NullFlexibleTypeDeserializer)
+
+        val module = metadataFactories.DefaultDeserializedDescriptorFactory.createDescriptor(
+            library = library,
+            languageVersionSettings = LanguageVersionSettingsImpl.DEFAULT,
+            storageManager = LockBasedStorageManager.NO_LOCKS,
+            builtIns = DefaultBuiltIns.Instance,
+        )
+        module.setDependencies(listOf(DefaultBuiltIns.Instance.builtInsModule, module))
+
+        return module
+    }
+
 
     fun testSimple() {
         doTest("builtinsSerializer/simple.kt")
