@@ -9,5 +9,10 @@ fun box(): String {
         df.select { all() },
     )
 
+    compareSchemas(
+        df.select { cols(name) },
+        df.select { name },
+    )
+
     return "OK"
 }

@@ -496,7 +496,7 @@ internal class ColumnRange : AbstractInterpreter<ColumnsResolver>() {
 internal class Cols0 : AbstractInterpreter<ColumnsResolver>() {
     val Arguments.receiver by ignore()
     val Arguments.firstCol: SingleColumnApproximation by arg()
-    val Arguments.otherCols: List<Interpreter.Success<*>> by arg()
+    val Arguments.otherCols: List<Interpreter.Success<*>> by arg(defaultValue = Present(emptyList()))
     override fun Arguments.interpret(): ColumnsResolver {
         return columnsResolver { cols(firstCol, *otherCols.map { it.value as SingleColumnApproximation }.toTypedArray()) }
     }
