@@ -71,7 +71,7 @@ public class TestInputsChecker {
         if (!isAllowedInput(file) && !file.isDirectory()) {
             File canonicalFile = convertToCanonicalIfNecessary(file);
 
-            if (canonicalFile.equals(file) || isAllowedInput(canonicalFile)) {
+            if (canonicalFile.equals(file) || !isAllowedInput(canonicalFile)) {
                 if (failFast) {
                     throw new UndeclaredInputException(file.getPath());
                 } else {
