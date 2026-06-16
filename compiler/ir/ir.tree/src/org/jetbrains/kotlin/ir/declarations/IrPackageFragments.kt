@@ -13,6 +13,7 @@ import org.jetbrains.kotlin.ir.declarations.impl.IrExternalPackageFragmentImpl
 import org.jetbrains.kotlin.ir.declarations.impl.IrFileImpl
 import org.jetbrains.kotlin.ir.symbols.impl.IrExternalPackageFragmentSymbolImpl
 import org.jetbrains.kotlin.name.FqName
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.serialization.deserialization.descriptors.DeserializedContainerSource
 import org.jetbrains.kotlin.serialization.deserialization.descriptors.DeserializedMemberDescriptor
 
@@ -23,6 +24,7 @@ val IrPackageFragment.packageFragmentDescriptor: PackageFragmentDescriptor
 
 @OptIn(ObsoleteDescriptorBasedAPI::class)
 val IrExternalPackageFragment.containerSource: DeserializedContainerSource?
+    @OptIn(K1Deprecation::class)
     get() = (symbol.descriptor as? DeserializedMemberDescriptor)?.containerSource
 
 /**

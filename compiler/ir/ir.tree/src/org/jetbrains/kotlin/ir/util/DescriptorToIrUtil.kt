@@ -13,6 +13,7 @@ import org.jetbrains.kotlin.ir.symbols.IrClassSymbol
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.resolve.descriptorUtil.isEffectivelyExternal
 import org.jetbrains.kotlin.resolve.isValueClass
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.serialization.deserialization.descriptors.DeserializedClassDescriptor
 import org.jetbrains.kotlin.types.KotlinType
 
@@ -28,6 +29,7 @@ val ParameterDescriptor.isCrossinline: Boolean
 val ParameterDescriptor.isNoinline: Boolean
     get() = this is ValueParameterDescriptor && isNoinline
 
+@OptIn(K1Deprecation::class)
 fun IrFactory.createIrClassFromDescriptor(
         startOffset: Int,
         endOffset: Int,
