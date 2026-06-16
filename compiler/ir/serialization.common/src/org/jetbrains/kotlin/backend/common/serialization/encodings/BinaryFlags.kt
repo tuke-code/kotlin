@@ -5,6 +5,7 @@
 
 package org.jetbrains.kotlin.backend.common.serialization.encodings
 
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.backend.common.serialization.IrFlags
 import org.jetbrains.kotlin.config.LanguageFeature
 import org.jetbrains.kotlin.config.LanguageVersionSettings
@@ -25,6 +26,8 @@ import org.jetbrains.kotlin.types.Variance
 value class ClassFlags(val flags: Long) {
 
     val modality: Modality get() = ProtoEnumFlags.modality(IrFlags.MODALITY.get(flags.toInt()))
+
+    @OptIn(K1Deprecation::class)
     val visibility: DescriptorVisibility get() = ProtoEnumFlags.descriptorVisibility(IrFlags.VISIBILITY.get(flags.toInt()))
     val kind: ClassKind get() = ProtoEnumFlags.classKind(IrFlags.CLASS_KIND.get(flags.toInt()))
 
@@ -41,6 +44,8 @@ value class ClassFlags(val flags: Long) {
         fun encode(clazz: IrClass, languageVersionSettings: LanguageVersionSettings): Long {
             return clazz.run {
                 val hasAnnotation = annotations.isNotEmpty()
+
+                @OptIn(K1Deprecation::class)
                 val visibility = ProtoEnumFlags.descriptorVisibility(visibility.normalize())
                 val modality = ProtoEnumFlags.modality(modality)
                 val kind = ProtoEnumFlags.classKind(kind, isCompanion)
@@ -63,6 +68,8 @@ value class ClassFlags(val flags: Long) {
 value class FunctionFlags(val flags: Long) {
 
     val modality: Modality get() = ProtoEnumFlags.modality(IrFlags.MODALITY.get(flags.toInt()))
+
+    @OptIn(K1Deprecation::class)
     val visibility: DescriptorVisibility get() = ProtoEnumFlags.descriptorVisibility(IrFlags.VISIBILITY.get(flags.toInt()))
 
     val isOperator: Boolean get() = IrFlags.IS_OPERATOR.get(flags.toInt())
@@ -76,12 +83,15 @@ value class FunctionFlags(val flags: Long) {
 
     val isPrimary: Boolean get() = IrFlags.IS_PRIMARY.get(flags.toInt())
 
+    @OptIn(K1Deprecation::class)
     private fun kind(): CallableMemberDescriptor.Kind = ProtoEnumFlags.memberKind(IrFlags.MEMBER_KIND.get(flags.toInt()))
 
     companion object {
         fun encode(function: IrSimpleFunction): Long {
             function.run {
                 val hasAnnotation = annotations.isNotEmpty()
+
+                @OptIn(K1Deprecation::class)
                 val visibility = ProtoEnumFlags.descriptorVisibility(visibility.normalize())
                 val modality = ProtoEnumFlags.modality(modality)
                 val kind = if (isFakeOverride) ProtoBuf.MemberKind.FAKE_OVERRIDE else ProtoBuf.MemberKind.DECLARATION
@@ -102,6 +112,8 @@ value class FunctionFlags(val flags: Long) {
         fun encode(constructor: IrConstructor): Long {
             constructor.run {
                 val hasAnnotation = annotations.isNotEmpty()
+
+                @OptIn(K1Deprecation::class)
                 val visibility = ProtoEnumFlags.descriptorVisibility(visibility.normalize())
                 val flags = IrFlags.getConstructorFlags(hasAnnotation, visibility, isInline, isExternal, isExpect, isPrimary)
 
@@ -117,6 +129,8 @@ value class FunctionFlags(val flags: Long) {
 value class PropertyFlags(val flags: Long) {
 
     val modality: Modality get() = ProtoEnumFlags.modality(IrFlags.MODALITY.get(flags.toInt()))
+
+    @OptIn(K1Deprecation::class)
     val visibility: DescriptorVisibility get() = ProtoEnumFlags.descriptorVisibility(IrFlags.VISIBILITY.get(flags.toInt()))
 
     val isVar: Boolean get() = IrFlags.IS_VAR.get(flags.toInt())
@@ -127,12 +141,15 @@ value class PropertyFlags(val flags: Long) {
     val isExpect: Boolean get() = IrFlags.IS_EXPECT_PROPERTY.get(flags.toInt())
     val isFakeOverride: Boolean get() = kind() == CallableMemberDescriptor.Kind.FAKE_OVERRIDE
 
+    @OptIn(K1Deprecation::class)
     private fun kind(): CallableMemberDescriptor.Kind = ProtoEnumFlags.memberKind(IrFlags.MEMBER_KIND.get(flags.toInt()))
 
     companion object {
         fun encode(property: IrProperty): Long {
             return property.run {
                 val hasAnnotation = annotations.isNotEmpty()
+
+                @OptIn(K1Deprecation::class)
                 val visibility = ProtoEnumFlags.descriptorVisibility(visibility.normalize())
                 val modality = ProtoEnumFlags.modality(modality)
                 val kind = if (isFakeOverride) ProtoBuf.MemberKind.FAKE_OVERRIDE else ProtoBuf.MemberKind.DECLARATION
@@ -183,12 +200,14 @@ value class ValueParameterFlags(val flags: Long) {
 @JvmInline
 value class TypeAliasFlags(val flags: Long) {
 
+    @OptIn(K1Deprecation::class)
     val visibility: DescriptorVisibility get() = ProtoEnumFlags.descriptorVisibility(IrFlags.VISIBILITY.get(flags.toInt()))
     val isActual: Boolean get() = IrFlags.IS_ACTUAL.get(flags.toInt())
 
     companion object {
         fun encode(typeAlias: IrTypeAlias): Long {
             return typeAlias.run {
+                @OptIn(K1Deprecation::class)
                 val visibility = ProtoEnumFlags.descriptorVisibility(visibility.normalize())
                 IrFlags.getTypeAliasFlags(annotations.isNotEmpty(), visibility, isActual).toLong()
             }
@@ -219,6 +238,7 @@ value class TypeParameterFlags(val flags: Long) {
 @JvmInline
 value class FieldFlags(val flags: Long) {
 
+    @OptIn(K1Deprecation::class)
     val visibility: DescriptorVisibility get() = ProtoEnumFlags.descriptorVisibility(IrFlags.VISIBILITY.get(flags.toInt()))
     val isFinal: Boolean get() = IrFlags.IS_FINAL.get(flags.toInt())
     val isExternal: Boolean get() = IrFlags.IS_EXTERNAL_FIELD.get(flags.toInt())
@@ -227,6 +247,7 @@ value class FieldFlags(val flags: Long) {
     companion object {
         fun encode(field: IrField): Long {
             return field.run {
+                @OptIn(K1Deprecation::class)
                 val visibility = ProtoEnumFlags.descriptorVisibility(visibility.normalize())
                 IrFlags.getFieldFlags(annotations.isNotEmpty(), visibility, isFinal, isExternal, isStatic).toLong()
             }

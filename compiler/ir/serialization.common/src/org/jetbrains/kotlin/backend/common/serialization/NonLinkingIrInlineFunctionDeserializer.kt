@@ -23,6 +23,7 @@ import org.jetbrains.kotlin.ir.util.*
 import org.jetbrains.kotlin.library.KotlinLibrary
 import org.jetbrains.kotlin.library.components.KlibIrComponent
 import org.jetbrains.kotlin.library.components.inlinableFunctionsIr
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.library.metadata.KlibDeserializedContainerSource
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.protobuf.ExtensionRegistryLite
@@ -57,11 +58,13 @@ class NonLinkingIrInlineFunctionDeserializer(
         check(!function.isEffectivelyPrivate()) { "Deserialization of private inline functions is not supported: ${function.render()}" }
 
         val deserializedContainerSource = function.containerSource
+        @OptIn(K1Deprecation::class)
         check(deserializedContainerSource is KlibDeserializedContainerSource) {
             "Cannot deserialize inline function from a non-Kotlin library: ${function.render()}\nFunction source: " +
                     deserializedContainerSource?.let { "${it::class.java}, ${it.presentableString}" }
         }
 
+        @OptIn(K1Deprecation::class)
         val library = deserializedContainerSource.klib
         val moduleDeserializer = moduleDeserializers.getOrPut(library) {
             library.inlinableFunctionsIr?.let { inlinableFunctionsIr ->

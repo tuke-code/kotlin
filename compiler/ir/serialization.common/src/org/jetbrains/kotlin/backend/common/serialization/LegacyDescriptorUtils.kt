@@ -16,23 +16,27 @@ import org.jetbrains.kotlin.resolve.multiplatform.OptionalAnnotationUtil
 import org.jetbrains.kotlin.serialization.deserialization.descriptors.DeserializedClassConstructorDescriptor
 import org.jetbrains.kotlin.serialization.deserialization.descriptors.DeserializedClassDescriptor
 import org.jetbrains.kotlin.serialization.deserialization.descriptors.DeserializedPropertyDescriptor
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.serialization.deserialization.descriptors.DeserializedSimpleFunctionDescriptor
 
 internal val DeclarationDescriptor.isExpectMember: Boolean
     get() = this is MemberDescriptor && this.isExpect
 
 internal val DeclarationDescriptor.isSerializableExpectClass: Boolean
+    @OptIn(K1Deprecation::class)
     get() = this is ClassDescriptor && OptionalAnnotationUtil.shouldGenerateExpectClass(this)
 
 @Deprecated("Moved to the ':core:descriptors' module", level = DeprecationLevel.HIDDEN)
 fun DeclarationDescriptor.findPackage(): PackageFragmentDescriptor = findPackage()
 
+@OptIn(K1Deprecation::class)
 private fun sourceByIndex(descriptor: CallableMemberDescriptor, index: Int): SourceFile {
     val fragment = descriptor.findPackage() as KlibMetadataDeserializedPackageFragment
     val fileName = fragment.proto.strings.stringList[index]
     return DeserializedSourceFile(fileName, descriptor.module.kotlinLibrary)
 }
 
+@OptIn(K1Deprecation::class)
 fun CallableMemberDescriptor.findSourceFile(): SourceFile {
     val source = this.source.containingFile
     if (source != SourceFile.NO_SOURCE_FILE)
@@ -48,6 +52,7 @@ fun CallableMemberDescriptor.findSourceFile(): SourceFile {
     }
 }
 
+@OptIn(K1Deprecation::class)
 fun DeclarationDescriptor.extractSerializedKdocString(): String? = when (this) {
     is DeserializedClassDescriptor -> classProto.getExtension(KlibMetadataProtoBuf.classKdoc)
     is DeserializedSimpleFunctionDescriptor -> proto.getExtension(KlibMetadataProtoBuf.functionKdoc)

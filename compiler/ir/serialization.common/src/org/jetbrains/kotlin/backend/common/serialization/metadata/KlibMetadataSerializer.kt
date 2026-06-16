@@ -6,6 +6,7 @@
 package org.jetbrains.kotlin.backend.common.serialization.metadata
 
 import com.intellij.openapi.project.Project
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.backend.common.serialization.isExpectMember
 import org.jetbrains.kotlin.backend.common.serialization.isSerializableExpectClass
 import org.jetbrains.kotlin.config.LanguageVersionSettings
@@ -18,17 +19,15 @@ import org.jetbrains.kotlin.metadata.ProtoBuf
 import org.jetbrains.kotlin.metadata.deserialization.BinaryVersion
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.FqName
-import org.jetbrains.kotlin.resolve.descriptorUtil.*
+import org.jetbrains.kotlin.resolve.descriptorUtil.fqNameSafe
 import org.jetbrains.kotlin.resolve.scopes.DescriptorKindFilter
 import org.jetbrains.kotlin.serialization.ApproximatingStringTable
 import org.jetbrains.kotlin.serialization.DescriptorSerializer
-import org.jetbrains.kotlin.serialization.deserialization.descriptors.DeserializedClassDescriptor
-import org.jetbrains.kotlin.serialization.deserialization.descriptors.DeserializedPropertyDescriptor
-import org.jetbrains.kotlin.serialization.deserialization.descriptors.DeserializedSimpleFunctionDescriptor
 
 internal fun <T, R> Iterable<T>.maybeChunked(size: Int?, transform: (List<T>) -> R): List<R>
     = size?.let { this.chunked(size, transform) } ?: listOf(transform(this.toList()))
 
+@OptIn(K1Deprecation::class)
 abstract class KlibMetadataSerializer(
     val languageVersionSettings: LanguageVersionSettings,
     val metadataVersion: BinaryVersion,
@@ -277,6 +276,7 @@ fun serializeKlibHeader(
     header.moduleName = moduleName
 
     if (languageVersionSettings.isPreRelease()) {
+        @OptIn(K1Deprecation::class)
         header.flags = KlibMetadataHeaderFlags.PRE_RELEASE
     }
 
@@ -288,13 +288,6 @@ fun serializeKlibHeader(
     }
 
     return header.build()
-}
-
-fun DeclarationDescriptor.extractFileId(): Int? = when (this) {
-    is DeserializedClassDescriptor -> classProto.getExtension(KlibMetadataProtoBuf.classFile)
-    is DeserializedSimpleFunctionDescriptor -> proto.getExtension(KlibMetadataProtoBuf.functionFile)
-    is DeserializedPropertyDescriptor -> proto.getExtension(KlibMetadataProtoBuf.propertyFile)
-    else -> null
 }
 
 internal val ModuleDescriptor.packageFragmentProviderForModuleContentWithoutDependencies: PackageFragmentProvider

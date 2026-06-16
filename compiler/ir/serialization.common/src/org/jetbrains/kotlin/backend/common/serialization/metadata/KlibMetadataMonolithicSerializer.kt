@@ -17,6 +17,7 @@ import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.resolve.descriptorUtil.module
 import org.jetbrains.kotlin.resolve.scopes.DescriptorKindFilter
 import org.jetbrains.kotlin.resolve.scopes.getDescriptorsFiltered
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.serialization.DescriptorSerializer
 
 // TODO: need a refactoring between IncrementalSerializer and MonolithicSerializer.
@@ -40,12 +41,14 @@ class KlibMetadataMonolithicSerializer(
 
         if (fragments.isEmpty()) return emptyList()
 
+        @OptIn(K1Deprecation::class)
         val classifierDescriptors = DescriptorSerializer.sort(
             fragments.flatMap {
                 it.getMemberScope().getDescriptorsFiltered(DescriptorKindFilter.CLASSIFIERS)
             }
         )
 
+        @OptIn(K1Deprecation::class)
         val topLevelDescriptors = DescriptorSerializer.sort(
             fragments.flatMap { fragment ->
                 fragment.getMemberScope().getDescriptorsFiltered(DescriptorKindFilter.CALLABLES)
