@@ -14,6 +14,6 @@ class MyEntity(
     <!INAPPLICABLE_JVM_NAME!>@get:JvmName("getSuperC")<!>
     val c: String = "OK"
 
-    <!INAPPLICABLE_JVM_NAME!>@get:JvmName("getSuperD")<!>
+    @get:JvmName("getSuperD")
     final val d: String = "OK"
 }
