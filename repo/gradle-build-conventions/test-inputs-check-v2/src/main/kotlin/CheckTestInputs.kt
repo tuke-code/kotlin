@@ -19,7 +19,7 @@ import java.nio.file.Paths
 import kotlin.math.min
 
 @CacheableTask
-abstract class CheckUndeclaredInputs : DefaultTask() {
+abstract class CheckTestInputs : DefaultTask() {
 
     @get:InputFiles
     @get:PathSensitive(PathSensitivity.NONE)

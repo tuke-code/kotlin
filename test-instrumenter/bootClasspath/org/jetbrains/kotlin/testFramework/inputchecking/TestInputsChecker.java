@@ -13,9 +13,9 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class UndeclaredInputsGuard {
+public class TestInputsChecker {
 
-    private volatile static UndeclaredInputsGuard INSTANCE;
+    private volatile static TestInputsChecker INSTANCE;
 
     private final String rootDir;
     private final String buildDir;
@@ -23,17 +23,17 @@ public class UndeclaredInputsGuard {
     private final Set<String> undeclaredInputs;
 
     public static void initialize(String rootDir, String buildDir, Collection<String> declaredInputs) {
-        INSTANCE = new UndeclaredInputsGuard(rootDir, buildDir, declaredInputs);
+        INSTANCE = new TestInputsChecker(rootDir, buildDir, declaredInputs);
     }
 
-    public static UndeclaredInputsGuard getInstance() {
+    public static TestInputsChecker getInstance() {
         if (INSTANCE == null) {
-            throw new RuntimeException("The UndeclaredInputsGuard instance is not yet available!");
+            throw new IllegalStateException("The UndeclaredInputsGuard instance is not yet available!");
         }
         return INSTANCE;
     }
 
-    private UndeclaredInputsGuard(String rootDir, String buildDir, Collection<String> declaredInputs) {
+    private TestInputsChecker(String rootDir, String buildDir, Collection<String> declaredInputs) {
         this.rootDir = rootDir;
         this.buildDir = buildDir;
         this.declaredInputs = Collections.unmodifiableSet(new HashSet<>(declaredInputs));
@@ -49,36 +49,41 @@ public class UndeclaredInputsGuard {
         // Some paths from user code are relative, so we convert them to absolute paths (if not already)
         File file = new File(path).getAbsoluteFile();
 
-        if (isUndeclaredInput(file) && !file.isDirectory()) {
+        if (!isAllowedInput(file) && !file.isDirectory()) {
             File canonicalFile = convertToCanonicalIfNecessary(file);
 
-            if (canonicalFile.equals(file) || isUndeclaredInput(canonicalFile)) {
+            if (canonicalFile.equals(file) || isAllowedInput(canonicalFile)) {
                 UndeclaredInputEvent.emit(file.toString());
                 undeclaredInputs.add(path);
             }
         }
     }
 
-    private boolean isUndeclaredInput(File file) {
-        // The order of expressions matters here, the Set::contains is the most expensive operation
-        return insideRootProjectDir(file) &&
-               notInsideCurrentProjectBuildDir(file) &&
-               !declaredInputs.contains(file.getPath());
+    /**
+     * <p>The file is allowed to be read either because it's inside one
+     * of the whitelisted locations, or it's declared as Gradle input.</p>
+     *
+     * <p>The order of expressions matters here (from the fastest to the slowest).</p>
+     */
+    private boolean isAllowedInput(File file) {
+        return isOutsideRootDir(file) ||
+               isInsideBuildDir(file) ||
+               declaredInputs.contains(file.getPath());
     }
 
     /**
-     * Filter out files outside the root project directory (like Gradle caches)
+     * Allow reading files outside the root project directory (like Gradle caches).
      */
-    private boolean insideRootProjectDir(File file) {
-        return file.getPath().startsWith(rootDir);
+    private boolean isOutsideRootDir(File file) {
+        return !file.getPath().startsWith(rootDir);
     }
 
     /**
-     * Filter out files inside the current project's build directory
-     * (tests sometimes write files there and then read them back)
+     * Allow reading files inside the current project's build directory
+     * (tests sometimes write files there and then read them back).
      */
-    private boolean notInsideCurrentProjectBuildDir(File file) {
-        return !file.getPath().startsWith(buildDir);
+    private boolean isInsideBuildDir(File file) {
+        return file.getPath().startsWith(buildDir);
     }
 
     /**
@@ -95,9 +100,5 @@ public class UndeclaredInputsGuard {
             }
         }
         return file;
-    }
-
-    public Set<String> getUndeclaredInputs() {
-        return Collections.unmodifiableSet(undeclaredInputs);
     }
 }

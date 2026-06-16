@@ -11,7 +11,7 @@ if (!disableInputsCheck) {
     }
     afterEvaluate {
         tasks.withType<Test>().names.forEach { testTaskName ->
-            registerCheckUndeclaredInputsFor(tasks.named<Test>(testTaskName))
+            registerCheckInputsFor(tasks.named<Test>(testTaskName))
         }
     }
 }
@@ -33,17 +33,17 @@ fun Test.configureTestInstrumenter() {
     addAbsoluteDirectoryProperty(layout.buildDirectory, "test.instrumenter.build.dir")
 }
 
-fun registerCheckUndeclaredInputsFor(testTask: TaskProvider<Test>) {
+fun registerCheckInputsFor(testTask: TaskProvider<Test>) {
     val undeclaredInputsFile = layout.buildDirectory.file("$pluginBuildDir/undeclared-inputs-for-${testTask.name}.txt")
-    val taskName = "checkUndeclaredInputsFor${testTask.name.capitalize()}"
+    val taskName = "checkInputsFor${testTask.name.capitalize()}"
 
-    val checkUndeclaredInputs = tasks.register<CheckUndeclaredInputs>(taskName) {
+    val checkTestInputs = tasks.register<CheckTestInputs>(taskName) {
         this.jfrFile.from(testTask.map { it.javaFlightRecorder.jfrFile })
         this.undeclaredInputsFile.set(undeclaredInputsFile)
         this.verificationTasksDisabled.value(kotlinBuildProperties.verificationTasksDisabled).finalizeValue()
         this.teamcityBuild.value(kotlinBuildProperties.isTeamcityBuild).finalizeValue()
     }
     testTask.configure {
-        finalizedBy(checkUndeclaredInputs)
+        finalizedBy(checkTestInputs)
     }
 }

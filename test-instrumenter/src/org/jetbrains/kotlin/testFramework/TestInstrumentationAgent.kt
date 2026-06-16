@@ -15,7 +15,7 @@ import net.bytebuddy.matcher.ElementMatchers.named
 import net.bytebuddy.matcher.ElementMatchers.none
 import org.jetbrains.kotlin.testFramework.inputchecking.InputCheckingFileExistsAdvice
 import org.jetbrains.kotlin.testFramework.inputchecking.InputCheckingFileReadAdvice
-import org.jetbrains.kotlin.testFramework.inputchecking.UndeclaredInputsGuard
+import org.jetbrains.kotlin.testFramework.inputchecking.TestInputsChecker
 import java.io.File
 import java.lang.instrument.ClassFileTransformer
 import java.lang.instrument.Instrumentation
@@ -51,7 +51,7 @@ object TestInstrumentationAgent {
             .readLines()
             .filter(String::isNotEmpty)
 
-        UndeclaredInputsGuard.initialize(rootDir, buildDir, declaredInputs);
+        TestInputsChecker.initialize(rootDir, buildDir, declaredInputs);
     }
 
     /**
