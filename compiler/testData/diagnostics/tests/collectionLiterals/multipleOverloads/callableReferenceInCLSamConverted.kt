@@ -1,4 +1,3 @@
-// LATEST_LV_DIFFERENCE
 // RUN_PIPELINE_TILL: FRONTEND
 // LANGUAGE: +CollectionLiterals, +CompanionBlocksAndExtensions
 // WITH_STDLIB
@@ -61,11 +60,11 @@ fun test(t: Any) {
     val a8: Int = <!OVERLOAD_RESOLUTION_AMBIGUITY!>bc<!>(<!CANNOT_INFER_PARAMETER_TYPE!>[::<!CANNOT_INFER_PARAMETER_TYPE!>materialize<!>]<!>)
 
     val a9: Int = <!OVERLOAD_RESOLUTION_AMBIGUITY!>ac<!>([::makeString])
-    val a10: Int = <!NONE_APPLICABLE!>ac<!>(<!CANNOT_INFER_PARAMETER_TYPE!>[::<!CANNOT_INFER_PARAMETER_TYPE!>materializeNumber<!>]<!>)
+    val a10: Int = <!OVERLOAD_RESOLUTION_AMBIGUITY!>ac<!>(<!CANNOT_INFER_PARAMETER_TYPE!>[::<!CANNOT_INFER_PARAMETER_TYPE!>materializeNumber<!>]<!>)
     val a11: Int = <!OVERLOAD_RESOLUTION_AMBIGUITY!>ac<!>(<!CANNOT_INFER_PARAMETER_TYPE!>[::<!CANNOT_INFER_PARAMETER_TYPE!>materialize<!>]<!>)
 
     val a12: String = acList([::makeString])
-    val a13: String = <!NONE_APPLICABLE!>acList<!>(<!CANNOT_INFER_PARAMETER_TYPE!>[::<!CANNOT_INFER_PARAMETER_TYPE!>materializeNumber<!>]<!>)
+    val a13: String = acList([::<!INFERRED_TYPE_VARIABLE_INTO_EMPTY_INTERSECTION_WARNING!>materializeNumber<!>])
     val a14: String = acList([::materialize])
 }
 

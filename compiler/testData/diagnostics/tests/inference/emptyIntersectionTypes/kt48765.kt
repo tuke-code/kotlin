@@ -1,4 +1,3 @@
-// LATEST_LV_DIFFERENCE
 // RUN_PIPELINE_TILL: BACKEND
 // LANGUAGE: -ForbidInferringTypeVariablesIntoEmptyIntersection
 // RENDER_DIAGNOSTICS_FULL_TEXT
@@ -8,7 +7,7 @@ class B {
 }
 class C<T: D, T2>(val x: T, val y: T2) {
     fun test() {
-        B().<!INFERRED_TYPE_VARIABLE_INTO_EMPTY_INTERSECTION_WARNING!>foo<!>(x, foo())
+        B().foo(x, <!INFERRED_TYPE_VARIABLE_INTO_EMPTY_INTERSECTION_WARNING!>foo<!>())
     }
 }
 open class D: A<Float, Number>()
