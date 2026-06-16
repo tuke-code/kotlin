@@ -16,6 +16,5 @@ sourceSets {
     "test" {}
 }
 
-optInToK1Deprecation()
 
 generatedConfigurationKeys("FrontendConfigurationKeys")
