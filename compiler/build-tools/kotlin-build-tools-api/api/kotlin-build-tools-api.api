@@ -1978,6 +1978,7 @@ public final class org/jetbrains/kotlin/buildtools/api/wasm/WasmHistoryBasedIncr
 }
 
 public final class org/jetbrains/kotlin/buildtools/api/wasm/WasmHistoryBasedIncrementalCompilationConfiguration$Option : org/jetbrains/kotlin/buildtools/api/internal/BaseOption {
+	public final fun getAvailableSinceVersion ()Lorg/jetbrains/kotlin/buildtools/api/KotlinReleaseVersion;
 }
 
 public abstract interface class org/jetbrains/kotlin/buildtools/api/wasm/WasmIncrementalCompilationConfiguration {
@@ -2025,6 +2026,7 @@ public final class org/jetbrains/kotlin/buildtools/api/wasm/operations/WasmKlibC
 }
 
 public final class org/jetbrains/kotlin/buildtools/api/wasm/operations/WasmKlibCompilationOperation$Option : org/jetbrains/kotlin/buildtools/api/internal/BaseOption {
+	public final fun getAvailableSinceVersion ()Lorg/jetbrains/kotlin/buildtools/api/KotlinReleaseVersion;
 }
 
 public final class org/jetbrains/kotlin/buildtools/api/wasm/operations/WasmKlibCompilationOperationKt {
@@ -2050,5 +2052,6 @@ public abstract interface class org/jetbrains/kotlin/buildtools/api/wasm/operati
 }
 
 public final class org/jetbrains/kotlin/buildtools/api/wasm/operations/WasmLinkingOperation$Option : org/jetbrains/kotlin/buildtools/api/internal/BaseOption {
+	public final fun getAvailableSinceVersion ()Lorg/jetbrains/kotlin/buildtools/api/KotlinReleaseVersion;
 }
 
