@@ -22,15 +22,17 @@ public class TestInputsChecker {
     @Nullable private final String internalKlibStdlibCacheDir;
     private final Set<String> declaredInputs;
     private final Set<String> undeclaredInputs;
+    private final boolean failFast;
 
     public static void initialize(
             String rootDir,
             String buildDir,
             @Nullable String internalKlibCacheDir,
             @Nullable String internalKlibStdlibCacheDir,
-            Collection<String> declaredInputs
+            Collection<String> declaredInputs,
+            boolean failFast
     ) {
-        INSTANCE = new TestInputsChecker(rootDir, buildDir, internalKlibCacheDir, internalKlibStdlibCacheDir, declaredInputs);
+        INSTANCE = new TestInputsChecker(rootDir, buildDir, internalKlibCacheDir, internalKlibStdlibCacheDir, declaredInputs, failFast);
     }
 
     public static TestInputsChecker getInstance() {
@@ -45,7 +47,8 @@ public class TestInputsChecker {
             String buildDir,
             @Nullable String internalKlibCacheDir,
             @Nullable String internalKlibStdlibCacheDir,
-            Collection<String> declaredInputs
+            Collection<String> declaredInputs,
+            boolean failFast
     ) {
         this.rootDir = rootDir;
         this.buildDir = buildDir;
@@ -53,6 +56,7 @@ public class TestInputsChecker {
         this.internalKlibStdlibCacheDir = internalKlibStdlibCacheDir;
         this.declaredInputs = Collections.unmodifiableSet(new HashSet<>(declaredInputs));
         this.undeclaredInputs = ConcurrentHashMap.newKeySet();
+        this.failFast = failFast;
     }
 
     public void checkPath(String path) {
@@ -68,8 +72,12 @@ public class TestInputsChecker {
             File canonicalFile = convertToCanonicalIfNecessary(file);
 
             if (canonicalFile.equals(file) || isAllowedInput(canonicalFile)) {
-                UndeclaredInputEvent.emit(file.toString());
-                undeclaredInputs.add(path);
+                if (failFast) {
+                    throw new UndeclaredInputException(file.getPath());
+                } else {
+                    UndeclaredInputEvent.emit(file.toString());
+                    undeclaredInputs.add(path);
+                }
             }
         }
     }
