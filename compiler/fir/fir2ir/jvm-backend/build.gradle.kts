@@ -34,4 +34,3 @@ sourceSets {
     "main" { projectDefault() }
 }
 
-optInToK1Deprecation()

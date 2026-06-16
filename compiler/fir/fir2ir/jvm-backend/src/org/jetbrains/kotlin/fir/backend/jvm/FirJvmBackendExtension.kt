@@ -26,6 +26,7 @@ import org.jetbrains.kotlin.metadata.ProtoBuf
 import org.jetbrains.kotlin.metadata.serialization.MutableVersionRequirementTable
 import org.jetbrains.kotlin.serialization.StringTableImpl
 import org.jetbrains.kotlin.serialization.deserialization.builtins.BuiltInSerializerProtocol
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.org.objectweb.asm.Type
 
 class FirJvmBackendExtension(
@@ -51,6 +52,7 @@ class FirJvmBackendExtension(
     }
 
     override fun createModuleMetadataSerializer(context: JvmBackendContext): ModuleMetadataSerializer = object : ModuleMetadataSerializer {
+        @OptIn(K1Deprecation::class)
         override fun serializeOptionalAnnotationClass(metadata: MetadataSource.Class, stringTable: StringTableImpl): ProtoBuf.Class {
 
             require(metadata is FirMetadataSource.Class) { "Metadata is expected to be ${FirMetadataSource.Class::class.simpleName}" }
