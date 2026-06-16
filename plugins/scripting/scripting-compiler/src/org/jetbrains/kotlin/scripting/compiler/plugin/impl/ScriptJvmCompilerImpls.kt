@@ -353,7 +353,6 @@ private fun doCompileWithK2(
     val [librariesScope, incrementalCompilationContext] = prepareIncrementalCompilationContextAndLibrariesScope(
         configuration,
         projectEnvironment,
-        previousStepsSymbolProviders = emptyList(),
         incrementalExcludesScope = null
     )
 

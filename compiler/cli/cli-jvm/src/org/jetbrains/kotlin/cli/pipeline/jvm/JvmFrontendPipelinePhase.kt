@@ -138,7 +138,6 @@ object JvmFrontendPipelinePhase : PipelinePhase<ConfigurationPipelineArtifact, J
         val [librariesScope, incrementalCompilationContext] = prepareIncrementalCompilationContextAndLibrariesScope(
             configuration,
             environment,
-            previousStepsSymbolProviders = emptyList(),
             incrementalExcludesScope = sourceScope
         )
 

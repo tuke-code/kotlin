@@ -168,7 +168,6 @@ object FirJKlibSessionFactory : FirAbstractSessionFactory<FirJKlibSessionFactory
                 val providers = listOfNotNull(
                     symbolProvider,
                     generatedSymbolsProvider,
-                    *(incrementalCompilationSymbolProviders?.previousFirSessionsSymbolProviders?.toTypedArray() ?: emptyArray()),
                     incrementalCompilationSymbolProviders?.symbolProviderForBinariesFromIncrementalCompilation,
                     javaSymbolProvider,
                     initializeForStdlibIfNeeded(projectEnvironment, session, kotlinScopeProvider),
