@@ -12,16 +12,12 @@ plugins {
 }
 
 dependencies {
-    testImplementation(project(":core:descriptors"))
     testImplementation(project(":core:descriptors.jvm"))
     testImplementation(project(":compiler:util"))
     testImplementation(project(":compiler:cli"))
     testImplementation(project(":compiler:frontend"))
     testImplementation(project(":compiler:backend"))
-    testImplementation(project(":compiler:incremental-compilation-impl"))
-    testImplementation(project(":compiler:frontend.java"))
 
-    testImplementation(kotlinStdlib())
     testImplementation(testFixtures(project(":compiler:tests-common")))
     testImplementation(libs.junit4)
     testImplementation(libs.kotlinx.coroutines.core)
@@ -31,7 +27,6 @@ dependencies {
     testImplementation(testFixtures(project(":compiler:tests-compiler-utils")))
     testImplementation(testFixtures(project(":compiler:tests-common-new")))
 
-    testImplementation(jpsModel())
 
     testRuntimeOnly(intellijCore())
     testRuntimeOnly(commonDependency("org.jetbrains.intellij.deps.jna:jna"))

@@ -3,8 +3,6 @@ plugins {
 }
 
 dependencies {
-    api(project(":core:metadata.jvm"))
-    api(project(":core:deserialization.common"))
     api(project(":core:deserialization.common.jvm"))
     api(project(":compiler:psi:psi-api"))
     api(project(":core:compiler.common.jvm"))

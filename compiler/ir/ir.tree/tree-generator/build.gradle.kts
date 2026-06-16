@@ -9,7 +9,6 @@ runtimeOnly.extendsFrom(compileOnly)
 
 dependencies {
     implementation(project(":generators:tree-generator-common"))
-    implementation(project(":compiler:util"))
 
     compileOnly(intellijCore())
 

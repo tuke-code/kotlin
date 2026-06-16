@@ -11,7 +11,6 @@ dependencies {
     implementation(project(":core:deserialization"))
     api(project(":compiler:frontend.common"))
     implementation(project(":compiler:util"))
-    implementation(project(":compiler:config"))
     testFixturesImplementation(project(":core:descriptors"))
 
     if (kotlinBuildProperties.isInIdeaSync.get()) {

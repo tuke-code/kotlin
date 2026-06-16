@@ -21,6 +21,7 @@ dependencies {
     implementation(project(":compiler:fir:fir-deserialization"))
     implementation(project(":compiler:frontend.common.jvm"))
     implementation(project(":compiler:config.jvm"))
+    implementation(project(":compiler:fir:fir-jvm"))
     implementation(project(":compiler:frontend"))
     implementation(project(":core:compiler.common.web"))
 

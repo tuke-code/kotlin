@@ -44,8 +44,6 @@ dependencies {
     testRuntimeOnly(libs.junit.jupiter.engine)
     testRuntimeOnly(libs.junit.platform.launcher)
 
-    testImplementation(project(":compiler:util"))
-    testImplementation(testFixtures(project(":compiler:tests-common-new")))
     testImplementation(project(":compiler:cli-base"))
     testImplementation(libs.junit.jupiter.params)
 }

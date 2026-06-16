@@ -12,9 +12,7 @@ dependencies {
     testFixturesApi(testFixtures(project(":compiler:test-infrastructure")))
 
     testFixturesImplementation(commonDependency("com.google.code.gson:gson"))
-    testImplementation(commonDependency("com.google.code.gson:gson"))
     testFixturesImplementation(intellijJDom())
-    testImplementation(intellijJDom())
 
     api(libs.jsoup)
 

@@ -17,7 +17,6 @@ dependencies {
     implementation(project(":compiler:fir:diagnostic-renderers"))
     implementation(project(":compiler:fir:semantics"))
     implementation(project(":compiler:frontend.common-psi"))
-    implementation(project(":compiler:util"))
 
     implementation(project(":compiler:psi:psi-api"))
     implementation(project(":compiler:fir:fir-native"))

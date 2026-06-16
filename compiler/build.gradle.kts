@@ -10,10 +10,6 @@ val compilerModules: Array<String> by rootProject.extra
 val otherCompilerModules = compilerModules.filter { it != path }
 
 dependencies {
-    testImplementation(intellijCore()) // Should come before compiler, because of "progarded" stuff needed for tests
-
-    testImplementation(project(":kotlin-script-runtime"))
-
     testImplementation(kotlinStdlib())
 
     testImplementation(kotlinTest())

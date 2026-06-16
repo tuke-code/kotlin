@@ -13,7 +13,6 @@ plugins {
 dependencies {
     api(project(":compiler:fir:tree"))
 
-    implementation(kotlinxCollectionsImmutable())
     implementation(project(":compiler:frontend.common-psi"))
     implementation(project(":compiler:psi:psi-api"))
     implementation(project(":compiler:psi:parser"))

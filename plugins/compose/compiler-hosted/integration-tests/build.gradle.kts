@@ -79,6 +79,7 @@ dependencies {
     testImplementationArtifactOnly(composeRuntime())
     testImplementationArtifactOnly(composeRuntimeAnnotations())
     testImplementation(libs.androidx.collections)
+    testRuntimeOnly(project(":kotlin-script-runtime"))
 
     // other compose
     testImplementationArtifactOnly(compose("foundation", "foundation"))

@@ -15,15 +15,14 @@ dependencies {
     testRuntimeOnly(testFixtures(project(":compiler:fir:fir2ir")))
 
     testImplementation(libs.junit4)
+    testImplementation(libs.junit.platform.suite)
     testImplementation(kotlinStdlib())
     testImplementation(project(":libraries:tools:abi-comparator"))
 
     testImplementation(platform(libs.junit.bom))
-    testImplementation(libs.junit.platform.suite)
     testRuntimeOnly(libs.junit.jupiter.engine)
     testRuntimeOnly(libs.junit.vintage.engine)
 
-    testImplementation(intellijCore())
 }
 
 sourceSets {

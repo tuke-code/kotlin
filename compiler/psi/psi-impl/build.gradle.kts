@@ -10,7 +10,6 @@ dependencies {
     api(project(":core:compiler.common"))
     api(project(":compiler:util"))
     api(project(":compiler:frontend.common"))
-    api(project(":kotlin-script-runtime"))
 
     compileOnly(intellijCore())
     compileOnly(libs.guava)
@@ -28,7 +27,6 @@ dependencies {
     testRuntimeOnly(libs.junit.jupiter.engine)
     testRuntimeOnly(libs.junit.platform.launcher)
 
-    testImplementation(testFixtures(project(":compiler:psi:psi-api")))
     testFixturesCompileOnly(intellijCore())
     testCompileOnly(intellijCore())
 }

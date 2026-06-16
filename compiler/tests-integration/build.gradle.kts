@@ -15,7 +15,6 @@ val otherCompilerModules = compilerModules.filter { it != path }
 val antLauncherJar by configurations.creating
 
 dependencies {
-    testImplementation(intellijCore())
 
     testFixturesApi(project(":kotlin-script-runtime"))
 

@@ -9,13 +9,10 @@ projectTests {
 }
 
 dependencies {
-    implementation(project(":compiler:ir.psi2ir"))
-    api(project(":compiler:fir:fir2ir"))
+
     api(project(":compiler:ir.serialization.common"))
-    implementation(project(":js:js.frontend"))
 
     implementation(project(":compiler:ir.backend.common"))
-    implementation(project(":compiler:fir:fir-serialization"))
     implementation(project(":compiler:frontend"))
     implementation(project(":compiler:frontend.common-psi"))
     implementation(project(":compiler:psi:psi-api"))

@@ -17,7 +17,6 @@ dependencies {
     compileOnly(intellijCore())
 
     testImplementation(kotlinTest("junit"))
-    testImplementation(testFixtures(project(":compiler:tests-common-new")))
 
     testFixturesImplementation(kotlinTest("junit"))
 }

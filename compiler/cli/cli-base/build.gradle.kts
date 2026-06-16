@@ -10,9 +10,7 @@ dependencies {
     api(project(":core:util.runtime"))
     api(project(":compiler:arguments.common"))
     api(project(":compiler:plugin-api"))
-    api(project(":compiler:resolution.common"))
     implementation(project(":compiler:frontend"))
-    implementation(project(":compiler:frontend:cfg"))
     implementation(project(":compiler:frontend.java"))
     implementation(project(":compiler:serialization"))
     implementation(project(":compiler:resolution"))
@@ -26,7 +24,6 @@ dependencies {
     implementation(project(":compiler:frontend.common-psi"))
     implementation(project(":compiler:frontend.common.jvm"))
     implementation(project(":compiler:frontend.java"))
-    implementation(project(":compiler:resolution.common.jvm"))
     implementation(project(":compiler:util"))
     implementation(project(":core:compiler.common.jvm"))
 
@@ -35,7 +32,6 @@ dependencies {
     implementation(project(":wasm:wasm.config"))
     implementation(project(":native:native.config"))
     api(project(":compiler:plugin-api"))
-    implementation(project(":kotlin-util-klib-metadata"))
 
     compileOnly(intellijCore())
     compileOnly(libs.intellij.fastutil)

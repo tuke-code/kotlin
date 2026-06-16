@@ -14,7 +14,7 @@ dependencies {
 
     implementation(project(":compiler:cli-base"))
     implementation(project(":native:native.config"))
-    implementation(project(":native:frontend.native"))
+    runtimeOnly(project(":native:frontend.native"))
     implementation(project(":compiler:fir:fir2ir"))
     implementation(project(":compiler:fir:tree"))
     implementation(project(":compiler:ir.objcinterop"))

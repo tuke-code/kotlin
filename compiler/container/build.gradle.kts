@@ -14,7 +14,6 @@ dependencies {
     testImplementation(kotlinTest("junit5"))
     testCompileOnly(intellijCore())
 
-    testImplementation("org.junit.jupiter:junit-jupiter:${libs.versions.junit5.get()}")
     testRuntimeOnly(libs.junit.platform.launcher)
     testRuntimeOnly(intellijCore())
     testRuntimeOnly(libs.intellij.fastutil)

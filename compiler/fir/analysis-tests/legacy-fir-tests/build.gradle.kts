@@ -31,7 +31,6 @@ dependencies {
     testFixturesApi(commonDependency("org.jetbrains.kotlin:kotlin-reflect")) { isTransitive = false }
 
     testFixturesCompileOnly(intellijCore())
-    testImplementation(intellijCore())
 
     testRuntimeOnly(libs.junit.jupiter.engine)
     testRuntimeOnly(libs.junit.vintage.engine)

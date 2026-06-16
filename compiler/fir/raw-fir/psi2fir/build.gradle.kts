@@ -15,7 +15,6 @@ dependencies {
     implementation(project(":compiler:psi:psi-api"))
     implementation(project(":compiler:psi:psi-impl"))
     implementation(project(":compiler:psi:psi-frontend-utils"))
-    implementation(kotlinxCollectionsImmutable())
 
     compileOnly(intellijCore())
     compileOnly(libs.guava)
@@ -29,7 +28,6 @@ dependencies {
     testCompileOnly(kotlinTest("junit"))
 
     testFixturesCompileOnly(intellijCore())
-    testImplementation(intellijCore())
 }
 
 sourceSets {

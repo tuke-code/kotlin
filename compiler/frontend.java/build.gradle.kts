@@ -10,7 +10,7 @@ dependencies {
     implementation(project(":compiler:resolution"))
     api(project(":compiler:util"))
     api(project(":compiler:config.jvm"))
-    api("javax.annotation:jsr250-api:1.0")
+    compileOnly("javax.annotation:jsr250-api:1.0")
     implementation(project(":compiler:frontend"))
     api(project(":compiler:resolution.common.jvm"))
     api(project(":compiler:frontend.common.jvm"))

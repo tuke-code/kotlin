@@ -8,7 +8,6 @@ plugins {
 dependencies {
     testFixturesImplementation(kotlinStdlib())
     testFixturesImplementation(commonDependency("org.jetbrains.kotlin:kotlin-reflect")) { isTransitive = false }
-    testImplementation(kotlin("test"))
 }
 
 sourceSets {

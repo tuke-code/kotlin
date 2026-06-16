@@ -4,8 +4,7 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":js:js.frontend.common"))
-    api(project(":compiler:fir:resolve"))
+
 }
 
 
