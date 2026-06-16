@@ -75,7 +75,8 @@ fun createIncrementalProvidersForNonLeafMppModules(
         session,
         moduleDataProvider = SingleModuleDataProvider(moduleData),
         kotlinScopeProvider = session.kotlinScopeProvider,
-        resolvedLibraries
+        resolvedLibraries,
+        defaultDeserializationOrigin = FirDeclarationOrigin.Precompiled,
     )
     return FirJvmIncrementalCompilationSymbolProviders(
         symbolProviderForBinariesFromIncrementalCompilation = provider,
