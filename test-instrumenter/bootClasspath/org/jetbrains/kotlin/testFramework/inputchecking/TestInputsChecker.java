@@ -5,12 +5,11 @@
 
 package org.jetbrains.kotlin.testFramework.inputchecking;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.io.File;
 import java.io.IOException;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class TestInputsChecker {
@@ -19,11 +18,19 @@ public class TestInputsChecker {
 
     private final String rootDir;
     private final String buildDir;
+    @Nullable private final String internalKlibCacheDir;
+    @Nullable private final String internalKlibStdlibCacheDir;
     private final Set<String> declaredInputs;
     private final Set<String> undeclaredInputs;
 
-    public static void initialize(String rootDir, String buildDir, Collection<String> declaredInputs) {
-        INSTANCE = new TestInputsChecker(rootDir, buildDir, declaredInputs);
+    public static void initialize(
+            String rootDir,
+            String buildDir,
+            @Nullable String internalKlibCacheDir,
+            @Nullable String internalKlibStdlibCacheDir,
+            Collection<String> declaredInputs
+    ) {
+        INSTANCE = new TestInputsChecker(rootDir, buildDir, internalKlibCacheDir, internalKlibStdlibCacheDir, declaredInputs);
     }
 
     public static TestInputsChecker getInstance() {
@@ -33,9 +40,17 @@ public class TestInputsChecker {
         return INSTANCE;
     }
 
-    private TestInputsChecker(String rootDir, String buildDir, Collection<String> declaredInputs) {
+    private TestInputsChecker(
+            String rootDir,
+            String buildDir,
+            @Nullable String internalKlibCacheDir,
+            @Nullable String internalKlibStdlibCacheDir,
+            Collection<String> declaredInputs
+    ) {
         this.rootDir = rootDir;
         this.buildDir = buildDir;
+        this.internalKlibCacheDir = internalKlibCacheDir;
+        this.internalKlibStdlibCacheDir = internalKlibStdlibCacheDir;
         this.declaredInputs = Collections.unmodifiableSet(new HashSet<>(declaredInputs));
         this.undeclaredInputs = ConcurrentHashMap.newKeySet();
     }
@@ -68,6 +83,7 @@ public class TestInputsChecker {
     private boolean isAllowedInput(File file) {
         return isOutsideRootDir(file) ||
                isInsideBuildDir(file) ||
+               isDynamicallyCreatedKlibCache(file) ||
                declaredInputs.contains(file.getPath());
     }
 
@@ -84,6 +100,28 @@ public class TestInputsChecker {
      */
     private boolean isInsideBuildDir(File file) {
         return file.getPath().startsWith(buildDir);
+    }
+
+    /**
+     * <p>Allow reading files inside "kotlin-native/dist/klib/cache" as they are written dynamically during test execution.</p>
+     *
+     * <p>There is only one exception: the stdlib cache. It is produced by :kotlin-native:distStdlibCache
+     * and written into ".../klib/cache/{target}-gSTATIC-system/stdlib-per-file-cache".</p>
+     */
+    private boolean isDynamicallyCreatedKlibCache(File file) {
+        return isKlibCache(file) && !isKlibStdlibCache(file);
+    }
+
+    private boolean isKlibCache(File file) {
+        return Optional.ofNullable(internalKlibCacheDir)
+                .map(it -> file.getPath().startsWith(internalKlibCacheDir))
+                .orElse(false);
+    }
+
+    private boolean isKlibStdlibCache(File file) {
+        return Optional.ofNullable(internalKlibStdlibCacheDir)
+                .map(it -> file.getPath().startsWith(it))
+                .orElse(false);
     }
 
     /**

@@ -95,6 +95,15 @@ to that directory and then reads them back.
 
 To support such cases, we simply allow all reads from the build directory.
 
+### Allowing files from dynamically created klib cache
+
+The files in `kotlin-native/dist/klib/cache` are written dynamically during test execution and then read back. We don't consider them 
+inputs, thus we allow reading them in `TestInputsGuard`.
+
+There is only one exception: the stdlib cache. It is produced by `:kotlin-native:distStdlibCache` and written into 
+`.../klib/cache/{target}-gSTATIC-system/stdlib-per-file-cache`. Files inside this directory are not unconditionally 
+allowed to read because they are not dynamically created.
+
 ### Allowing non-existent files
 
 We allow files for which `File.exists()` returned `false`.
