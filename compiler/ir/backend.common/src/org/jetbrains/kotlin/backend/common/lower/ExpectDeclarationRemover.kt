@@ -22,6 +22,7 @@ import org.jetbrains.kotlin.ir.visitors.IrElementTransformerVoid
 import org.jetbrains.kotlin.resolve.descriptorUtil.module
 import org.jetbrains.kotlin.resolve.multiplatform.OptionalAnnotationUtil
 import org.jetbrains.kotlin.resolve.multiplatform.findCompatibleActualsForExpected
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.resolve.multiplatform.findCompatibleExpectsForActual
 import kotlin.collections.set
 
@@ -89,6 +90,7 @@ open class ExpectDeclarationRemover(val symbolTable: ReferenceSymbolTable, priva
 
     private fun MemberDescriptor.findActualForExpect(): MemberDescriptor? {
         if (!isExpect) error(this)
+        @OptIn(K1Deprecation::class)
         return findCompatibleActualsForExpected(module).singleOrNull()
     }
 
@@ -102,6 +104,7 @@ open class ExpectDeclarationRemover(val symbolTable: ReferenceSymbolTable, priva
     }
 
     private fun isOptionalAnnotationClass(klass: IrClass): Boolean {
+        @OptIn(K1Deprecation::class)
         return klass.kind == ClassKind.ANNOTATION_CLASS &&
                 klass.isExpect &&
                 klass.annotations.hasAnnotation(OptionalAnnotationUtil.OPTIONAL_EXPECTATION_FQ_NAME)
@@ -171,6 +174,7 @@ open class ExpectDeclarationRemover(val symbolTable: ReferenceSymbolTable, priva
 
     private fun MemberDescriptor.findExpectForActual(): MemberDescriptor? {
         if (!isActual) error(this)
+        @OptIn(K1Deprecation::class)
         return findCompatibleExpectsForActual().singleOrNull()
     }
 }
