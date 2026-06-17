@@ -333,7 +333,7 @@ private fun K2ScriptingCompilerEnvironmentInternal.getOrCreateSessionForAnnotati
         configureLibrarySessionIfNeeded(this, compilerContext.environment.configuration, dependencies)
     }
     return dummySessionForAnnotationResolution ?: (createSourceSession(
-        moduleDataProvider.addNewScriptModuleData(Name.special("<raw-script>")),
+        moduleDataProvider.addNewScriptModuleData(Name.special("<raw-script>"), isDummy = true),
         AbstractProjectFileSearchScope.EMPTY,
         createIncrementalCompilationSymbolProviders = { null },
         extensionRegistrars,

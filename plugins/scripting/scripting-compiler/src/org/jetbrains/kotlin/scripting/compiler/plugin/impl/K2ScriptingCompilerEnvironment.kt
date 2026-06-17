@@ -118,14 +118,17 @@ open class ScriptingModuleDataProvider(private val baseName: String, baseLibrary
         return newDependenciesModuleData to newLibraryPaths
     }
 
-    fun addNewScriptModuleData(name: Name): FirModuleData =
+    /**
+     * [isDummy] should be set to true for the module data that should be excluded from the history, e.g. in the session for annotation resolution
+     */
+    fun addNewScriptModuleData(name: Name, isDummy: Boolean = false): FirModuleData =
         FirSourceModuleData(
             name,
             dependencies = moduleDataHistory.filter { it.dependencies.isEmpty() }.asReversed(),
             dependsOnDependencies = emptyList(),
             friendDependencies = moduleDataHistory.filter { it.dependencies.isNotEmpty() },
             JvmPlatforms.defaultJvmPlatform,
-        ).also { moduleDataHistory.add(it) }
+        ).also { if (!isDummy) moduleDataHistory.add(it) }
 }
 
 fun createIsolatedCompilerState(

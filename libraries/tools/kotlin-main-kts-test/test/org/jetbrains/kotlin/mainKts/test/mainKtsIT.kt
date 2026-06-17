@@ -58,6 +58,18 @@ class MainKtsIT {
     }
 
     @Test
+    fun testKt86352() {
+        val mainKtsJar =  File("dist/kotlinc/lib/kotlin-main-kts.jar")
+
+        runWithK2JVMCompiler(
+            "$TEST_DATA_ROOT/kt86352-main.main.kts",
+            listOf("result = MyData"),
+            classpath = listOf(mainKtsJar)
+        )
+    }
+
+
+    @Test
     fun testThreadContextClassLoader() {
         runWithKotlincAndMainKts("$TEST_DATA_ROOT/context-classloader.main.kts", listOf("MainKtsConfigurator"))
     }
