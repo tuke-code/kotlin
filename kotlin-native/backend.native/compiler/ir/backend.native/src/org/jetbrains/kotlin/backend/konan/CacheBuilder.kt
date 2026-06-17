@@ -480,7 +480,6 @@ class CacheBuilder(
             checkDependencies = true
             konanLibraryToAddToCache = libraryPath
             konanNoDefaultLibs = true
-            konanNoEndorsedLibs = true
             konanNoStdlib = true
             konanLibraries = libraries
             val generateTestRunner = this@CacheBuilder.generateTestRunner

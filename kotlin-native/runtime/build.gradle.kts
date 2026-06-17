@@ -747,7 +747,6 @@ val stdlibBuildTask by tasks.registering(KonanCompileTask::class) {
 
     this.extraOpts.addAll(listOfNotNull(
             "-no-default-libs",
-            "-no-endorsed-libs",
             "-nostdlib",
             "-Werror".takeIf { !kotlinBuildProperties.disableWerror },
             "-Xallow-kotlin-package",
