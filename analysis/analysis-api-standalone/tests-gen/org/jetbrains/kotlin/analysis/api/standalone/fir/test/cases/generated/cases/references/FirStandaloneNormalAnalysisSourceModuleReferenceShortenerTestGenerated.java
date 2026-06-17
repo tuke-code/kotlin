@@ -989,6 +989,12 @@ public class FirStandaloneNormalAnalysisSourceModuleReferenceShortenerTestGenera
       }
 
       @Test
+      @TestMetadata("typeArgumentPartialSelection.kt")
+      public void testTypeArgumentPartialSelection() {
+        run("typeArgumentPartialSelection.kt");
+      }
+
+      @Test
       @TestMetadata("typeFeatureDisabled.kt")
       public void testTypeFeatureDisabled() {
         run("typeFeatureDisabled.kt");
