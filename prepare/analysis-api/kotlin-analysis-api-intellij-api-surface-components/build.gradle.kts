@@ -8,5 +8,10 @@ plugins {
 
 dependencies {
     api(libs.analysis.api.kotlin.stdlib)
-    embedded(project(":dependencies:intellij-java-psi-api"))
+}
+
+analysisApiArtifact {
+    content {
+        project(":dependencies:intellij-java-psi-api", isTransitive = true)
+    }
 }

@@ -17,8 +17,12 @@ dependencies {
 
     // Used by KotlinOpenTelemetryProvider
     api(libs.opentelemetry.api)
+}
 
-    embedded(project(":analysis:analysis-api-platform-interface")) { isTransitive = false }
+analysisApiArtifact {
+    content {
+        project(":analysis:analysis-api-platform-interface")
+    }
 }
 
 val checkForeignClassUsage by tasks.registering(CheckForeignClassUsageTask::class) {

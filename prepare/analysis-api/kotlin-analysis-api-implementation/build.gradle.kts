@@ -39,21 +39,23 @@ dependencies {
     implementation(libs.kotlinx.serialization.core)
     implementation(libs.antlr.runtime)
 
-    val embeddedProjects = buildSet {
-        addAll(compilerModules)
-        addAll(additionalCompilerProjects)
-        addAll(analysisApiModules)
-
-        removeAll(excludedCompilerProjects)
-
-        // Avoid copying content of 'kotlin-analysis-api-surface'
-        removeAll(analysisApiSurfaceDependencies)
-        removeAll(analysisApiSurfaceModules)
-    }
-
-    for (projectPath in embeddedProjects) {
-        embedded(project(projectPath)) { isTransitive = false }
-    }
-
     embedded(protobufFull())
+}
+
+analysisApiArtifact {
+    content {
+        val implementationProjects = buildSet {
+            addAll(compilerModules)
+            addAll(additionalCompilerProjects)
+            addAll(analysisApiModules)
+
+            removeAll(excludedCompilerProjects)
+
+            // Avoid copying content of 'kotlin-analysis-api-surface'
+            removeAll(analysisApiSurfaceDependencies)
+            removeAll(analysisApiSurfaceModules)
+        }
+
+        projects(implementationProjects)
+    }
 }

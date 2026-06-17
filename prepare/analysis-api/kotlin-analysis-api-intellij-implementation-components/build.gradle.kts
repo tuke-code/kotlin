@@ -26,9 +26,7 @@ dependencies {
     implementation(libs.guava)
     implementation(libs.auto.value.annotations)
 
-    embedded(project(":dependencies:intellij-core-implementation"))
     embedded(intellijUtilRtJava8()) { isTransitive = false }
-
     embedded(commonDependency("org.jetbrains.intellij.deps.jna:jna")) { isTransitive = false }
     embedded(commonDependency("org.jetbrains.intellij.deps.jna:jna-platform")) { isTransitive = false }
     embedded(commonDependency("org.jetbrains.intellij.deps:log4j")) { isTransitive = false }
@@ -36,4 +34,10 @@ dependencies {
     embedded(libs.analysis.api.intellij.patched.kotlinx.coroutines.core.jvm) { isTransitive = false }
     embedded(libs.intellij.fastutil)
     embedded(libs.intellij.asm)
+}
+
+analysisApiArtifact {
+    content {
+        project(":dependencies:intellij-core-implementation", isTransitive = true)
+    }
 }

@@ -13,11 +13,14 @@ val analysisApiSurfaceDependencies: List<String> by rootProject.extra
 val analysisApiSurfaceModules: Array<String> by rootProject.extra
 
 dependencies {
-    for (projectPath in analysisApiSurfaceDependencies + analysisApiSurfaceModules) {
-        embedded(project(projectPath)) { isTransitive = false }
-    }
-
     api(project(":prepare:analysis-api:kotlin-analysis-api-intellij-api-surface-components"))
+}
+
+analysisApiArtifact {
+    content {
+        projects(analysisApiSurfaceDependencies)
+        projects(analysisApiSurfaceModules)
+    }
 }
 
 val checkForeignClassUsage by tasks.registering(CheckForeignClassUsageTask::class) {
