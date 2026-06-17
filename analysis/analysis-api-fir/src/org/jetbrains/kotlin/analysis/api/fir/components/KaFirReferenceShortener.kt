@@ -553,36 +553,6 @@ private class ElementsToShortenCollector(
         )?.let(::addElementToShorten)
     }
 
-    /**
-     * Retrieves the corresponding [KtUserType] PSI the given [FirResolvedTypeRef].
-     *
-     * This code handles some quirks of FIR sources and PSI:
-     * - in `vararg args: String` declaration, `String` type reference has fake source, but `Array<String>` has real source
-     * (see [KtFakeSourceElementKind.ArrayTypeFromVarargParameter]).
-     * - if FIR reference points to the type with generic parameters (like `Foo<Bar>`), its source is not [KtTypeReference], but
-     * [KtNameReferenceExpression].
-     */
-    private val FirResolvedTypeRef.correspondingTypePsi: KtUserType?
-        get() {
-            val sourcePsi = when {
-                // array type for vararg parameters is not present in the code, so no need to handle it
-                delegatedTypeRef?.source?.kind == KtFakeSourceElementKind.ArrayTypeFromVarargParameter -> null
-
-                // but the array's underlying type is present with a fake source, and needs to be handled
-                source?.kind == KtFakeSourceElementKind.ArrayTypeFromVarargParameter -> psi
-
-                else -> realPsi
-            }
-
-            val outerTypeElement = when (sourcePsi) {
-                is KtTypeReference -> sourcePsi.typeElement
-                is KtNameReferenceExpression -> sourcePsi.parent as? KtTypeElement
-                else -> null
-            }
-
-            return outerTypeElement?.unwrapNullability() as? KtUserType
-        }
-
     val ConeKotlinType.candidateClassId: ClassId?
         get() {
             return when (this) {

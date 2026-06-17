@@ -5,18 +5,27 @@
 
 package org.jetbrains.kotlin.analysis.api.fir.components
 
+import org.jetbrains.kotlin.KtFakeSourceElementKind
 import org.jetbrains.kotlin.fir.declarations.FirMemberDeclaration
 import org.jetbrains.kotlin.fir.declarations.utils.isStatic
 import org.jetbrains.kotlin.fir.expressions.FirExpression
 import org.jetbrains.kotlin.fir.expressions.FirQualifiedAccessExpression
 import org.jetbrains.kotlin.fir.expressions.FirResolvedQualifier
 import org.jetbrains.kotlin.fir.expressions.FirThisReceiverExpression
+import org.jetbrains.kotlin.fir.psi
+import org.jetbrains.kotlin.fir.realPsi
 import org.jetbrains.kotlin.fir.references.symbol
 import org.jetbrains.kotlin.fir.resolve.calls.candidate.Candidate
 import org.jetbrains.kotlin.fir.resolve.diagnostics.ContextSensitiveResolutionMightBeUsed
 import org.jetbrains.kotlin.fir.symbols.FirBasedSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirRegularClassSymbol
+import org.jetbrains.kotlin.fir.types.FirResolvedTypeRef
 import org.jetbrains.kotlin.fir.utils.exceptions.withFirEntry
+import org.jetbrains.kotlin.psi.KtNameReferenceExpression
+import org.jetbrains.kotlin.psi.KtTypeElement
+import org.jetbrains.kotlin.psi.KtTypeReference
+import org.jetbrains.kotlin.psi.KtUserType
+import org.jetbrains.kotlin.psi.psiUtil.unwrapNullability
 import org.jetbrains.kotlin.utils.exceptions.requireWithAttachment
 
 /**
@@ -91,3 +100,33 @@ internal val FirQualifiedAccessExpression.isResolvableByContextSensitiveResoluti
 
 internal val FirResolvedQualifier.isResolvableByContextSensitiveResolution: Boolean
     get() = nonFatalDiagnostics.any { it is ContextSensitiveResolutionMightBeUsed }
+
+/**
+ * Retrieves the corresponding [KtUserType] PSI the given [FirResolvedTypeRef].
+ *
+ * This code handles some quirks of FIR sources and PSI:
+ * - in `vararg args: String` declaration, `String` type reference has fake source, but `Array<String>` has real source
+ * (see [KtFakeSourceElementKind.ArrayTypeFromVarargParameter]).
+ * - if FIR reference points to the type with generic parameters (like `Foo<Bar>`), its source is not [KtTypeReference], but
+ * [KtNameReferenceExpression].
+ */
+internal val FirResolvedTypeRef.correspondingTypePsi: KtUserType?
+    get() {
+        val sourcePsi = when {
+            // array type for vararg parameters is not present in the code, so no need to handle it
+            delegatedTypeRef?.source?.kind == KtFakeSourceElementKind.ArrayTypeFromVarargParameter -> null
+
+            // but the array's underlying type is present with a fake source, and needs to be handled
+            source?.kind == KtFakeSourceElementKind.ArrayTypeFromVarargParameter -> psi
+
+            else -> realPsi
+        }
+
+        val outerTypeElement = when (sourcePsi) {
+            is KtTypeReference -> sourcePsi.typeElement
+            is KtNameReferenceExpression -> sourcePsi.parent as? KtTypeElement
+            else -> null
+        }
+
+        return outerTypeElement?.unwrapNullability() as? KtUserType
+    }
