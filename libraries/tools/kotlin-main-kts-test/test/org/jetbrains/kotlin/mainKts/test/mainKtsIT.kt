@@ -7,15 +7,22 @@ package org.jetbrains.kotlin.mainKts.test
 
 import org.jetbrains.kotlin.mainKts.COMPILED_SCRIPTS_CACHE_DIR_ENV_VAR
 import org.jetbrains.kotlin.mainKts.COMPILED_SCRIPTS_CACHE_DIR_PROPERTY
-import org.jetbrains.kotlin.scripting.compiler.plugin.*
+import org.jetbrains.kotlin.scripting.compiler.plugin.runAndCheckResults
+import org.jetbrains.kotlin.scripting.compiler.plugin.runWithK2JVMCompiler
+import org.jetbrains.kotlin.scripting.compiler.plugin.runWithKotlinLauncherScript
+import org.jetbrains.kotlin.scripting.compiler.plugin.runWithKotlinc
 import org.jetbrains.kotlin.utils.KotlinPaths
 import org.jetbrains.kotlin.utils.PathUtil
 import org.junit.Assert
 import org.junit.Ignore
 import org.junit.Test
 import java.io.File
+import java.nio.file.Files
 import java.nio.file.Path
-import kotlin.io.path.*
+import kotlin.io.path.ExperimentalPathApi
+import kotlin.io.path.createTempDirectory
+import kotlin.io.path.exists
+import kotlin.io.path.listDirectoryEntries
 
 class MainKtsIT {
 
@@ -190,6 +197,48 @@ class MainKtsIT {
     fun testUseSlf4j() {
         val scriptPath = "$TEST_DATA_ROOT/use-slf4j.main.kts"
         runWithKotlincAndMainKts(scriptPath, expectedErrPatterns = listOf(".*test-slf4j"))
+    }
+
+    @Test
+    fun testWithCustomLocalRepository() {
+        withTempDir("main.kts.dep") { jardir ->
+            val libsrc = jardir.resolve("src.kt").apply { writeText("fun testFun() = \"hello\"") }
+            runWithK2JVMCompiler(
+                arrayOf("-d", jardir.resolve("lib.jar").absolutePath.toString(), libsrc.absolutePath)
+            )
+            val scr = jardir.resolve("s.main.kts").apply {
+                writeText(
+                    """
+                    @file:Repository("${jardir.platformIndependentPathString()}")
+                    @file:DependsOn("lib.jar")
+                    println(testFun())
+                """.trimIndent()
+                )
+            }
+            val mainKtsJar = File("dist/kotlinc/lib/kotlin-main-kts.jar")
+
+            runWithK2JVMCompiler(
+                scr.absolutePath,
+                listOf("hello"),
+                classpath = listOf(mainKtsJar)
+            )
+
+            runWithKotlincAndMainKts(
+                scr.absolutePath,
+                listOf("hello"),
+            )
+        }
+    }
+}
+
+private fun File.platformIndependentPathString(): String = path.replace(File.separatorChar, '/')
+
+internal fun <R> withTempDir(keyName: String = "tmp", body: (File) -> R): R {
+    val tempDir = Files.createTempDirectory(keyName).toFile()
+    try {
+        return body(tempDir)
+    } finally {
+        tempDir.deleteRecursively()
     }
 }
 
