@@ -924,6 +924,80 @@ public class FirStandaloneNormalAnalysisSourceModuleReferenceShortenerTestGenera
     public void testSealedSubObjectPartialSelection() {
       run("sealedSubObjectPartialSelection.kt");
     }
+
+    @Nested
+    @TestMetadata("analysis/analysis-api/testData/components/referenceShortener/shortenRange/contextSensitiveResolution/types")
+    @TestDataPath("$PROJECT_ROOT")
+    public class Types {
+      private void run(String fileName) {
+        runTest("analysis/analysis-api/testData/components/referenceShortener/shortenRange/contextSensitiveResolution/types/" + fileName);
+      }
+
+      @Test
+      public void testAllFilesPresentInTypes() {
+        KtTestUtil.assertAllTestsPresentByMetadataWithExcluded(this.getClass(), new File("analysis/analysis-api/testData/components/referenceShortener/shortenRange/contextSensitiveResolution/types"), Pattern.compile("^(.+)\\.(kt)$"), null, true);
+      }
+
+      @Test
+      @TestMetadata("asExpression.kt")
+      public void testAsExpression() {
+        run("asExpression.kt");
+      }
+
+      @Test
+      @TestMetadata("asSafeExpression.kt")
+      public void testAsSafeExpression() {
+        run("asSafeExpression.kt");
+      }
+
+      @Test
+      @TestMetadata("isExpression.kt")
+      public void testIsExpression() {
+        run("isExpression.kt");
+      }
+
+      @Test
+      @TestMetadata("isExpressionInWhen.kt")
+      public void testIsExpressionInWhen() {
+        run("isExpressionInWhen.kt");
+      }
+
+      @Test
+      @TestMetadata("negatedIsExpression.kt")
+      public void testNegatedIsExpression() {
+        run("negatedIsExpression.kt");
+      }
+
+      @Test
+      @TestMetadata("nestedSealedHierarchy.kt")
+      public void testNestedSealedHierarchy() {
+        run("nestedSealedHierarchy.kt");
+      }
+
+      @Test
+      @TestMetadata("typeFeatureDisabled.kt")
+      public void testTypeFeatureDisabled() {
+        run("typeFeatureDisabled.kt");
+      }
+
+      @Test
+      @TestMetadata("typeNotApplicable.kt")
+      public void testTypeNotApplicable() {
+        run("typeNotApplicable.kt");
+      }
+
+      @Test
+      @TestMetadata("typeOutsideTypeOperator.kt")
+      public void testTypeOutsideTypeOperator() {
+        run("typeOutsideTypeOperator.kt");
+      }
+
+      @Test
+      @TestMetadata("typePartialSelection.kt")
+      public void testTypePartialSelection() {
+        run("typePartialSelection.kt");
+      }
+    }
   }
 
   @Nested
