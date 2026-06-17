@@ -179,6 +179,17 @@ class MainKtsTest {
     }
 
     @Test
+    fun testKt86352() {
+
+        val out = captureOut {
+            val res = evalFile(File("$TEST_DATA_ROOT/kt86352-main.main.kts"))
+            assertSucceeded(res)
+        }.lines()
+
+        Assert.assertEquals(listOf("result = MyData"), out)
+    }
+
+    @Test
     fun testCompilerOptions() {
         val out = captureOut {
             val res = evalFile(File("$TEST_DATA_ROOT/compiler-options.main.kts"))

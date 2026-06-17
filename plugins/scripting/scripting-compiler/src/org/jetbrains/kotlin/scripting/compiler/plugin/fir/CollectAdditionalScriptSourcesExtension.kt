@@ -213,7 +213,7 @@ class CollectAdditionalScriptSourcesExtension : CollectAdditionalSourceFilesExte
             )
 
             FirJvmSessionFactory.createSourceSession(
-                moduleData = moduleDataProvider.addNewScriptModuleData(Name.special("<raw-script>")),
+                moduleData = moduleDataProvider.addNewScriptModuleData(Name.special("<raw-script>"), isDummy = true),
                 javaSourcesScope = AbstractProjectFileSearchScope.EMPTY,
                 createIncrementalCompilationSymbolProviders = { null },
                 extensionRegistrars = extensionRegistrars,
