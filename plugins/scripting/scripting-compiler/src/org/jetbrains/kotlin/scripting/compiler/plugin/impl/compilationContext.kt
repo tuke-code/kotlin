@@ -232,7 +232,9 @@ fun makeScriptCompilerArguments(compilerOptions: List<String>): K2JVMCompilerArg
 }
 
 private fun ScriptCompilationConfiguration.withUpdatesFromCompilerConfiguration(kotlinCompilerConfiguration: CompilerConfiguration) =
-    withUpdatedClasspath(kotlinCompilerConfiguration.jvmClasspathRoots + kotlinCompilerConfiguration.jvmModularRoots)
+    // the `prepend = true` ensures that the standard libs are added before other dependencies: otherwise runtime classloaders structure
+    // may fail to load some classes. See comments to KT-87041 for possible failures.
+    withUpdatedClasspath(kotlinCompilerConfiguration.jvmClasspathRoots + kotlinCompilerConfiguration.jvmModularRoots, prepend = true)
 
 private fun createInitialCompilerConfiguration(
     scriptCompilationConfiguration: ScriptCompilationConfiguration,

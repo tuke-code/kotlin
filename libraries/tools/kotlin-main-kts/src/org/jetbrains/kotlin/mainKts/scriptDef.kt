@@ -46,7 +46,7 @@ class MainKtsScriptDefinition : ScriptCompilationConfiguration(
     {
         defaultImports(DependsOn::class, Repository::class, Import::class, CompilerOptions::class, ScriptFileLocation::class)
         jvm {
-            dependenciesFromClassContext(MainKtsScriptDefinition::class, "kotlin-main-kts", "kotlin-stdlib", "kotlin-reflect")
+            dependenciesFromClassContext(MainKtsScriptDefinition::class, "kotlin-main-kts")
         }
         refineConfiguration {
             onAnnotations(DependsOn::class, Repository::class, Import::class, CompilerOptions::class, handler = MainKtsConfigurator())
