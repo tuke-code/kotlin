@@ -106,7 +106,7 @@ class MainKtsIT {
 
             try {
                 Assert.assertTrue(cache.exists() && cache.listDirectoryEntries("*.jar").isEmpty())
-                runWithKotlinRunner(script, OUT_FROM_IMPORT_TEST, cacheDir = cache)
+                runWithKotlincAndMainKts(script, OUT_FROM_IMPORT_TEST, cacheDir = cache)
                 val cacheFile = cache.listDirectoryEntries("*.jar").firstOrNull()
                 Assert.assertTrue(cacheFile != null && cacheFile.exists())
 
@@ -119,7 +119,7 @@ class MainKtsIT {
                 )
 
                 // this run should use the cached script
-                runWithKotlinRunner(script, OUT_FROM_IMPORT_TEST, cacheDir = cache)
+                runWithKotlincAndMainKts(script, OUT_FROM_IMPORT_TEST, cacheDir = cache)
             } finally {
                 cache.toFile().deleteRecursively()
             }
