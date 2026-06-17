@@ -545,11 +545,13 @@ private class ElementsToShortenCollector(
 
         val classifierId = resolvedTypeRef.coneType.abbreviatedTypeOrSelf.lowerBoundIfFlexible().candidateClassId ?: return
 
+        val enclosingTypeOperatorCall = resolvedTypeRef.enclosingTypeOperatorCall(resolutionFacade)
+
         findClassifierQualifierToShorten(
             classifierId,
             typeElement,
-            // TODO: Pass correct information after CSR shortening for types is available (KT-84719, KTIJ-38225)
-            wholeQualifierIsResolvableByContextSensitiveResolution = false
+            wholeQualifierIsResolvableByContextSensitiveResolution =
+                enclosingTypeOperatorCall?.isResolvableByContextSensitiveResolution == true,
         )?.let(::addElementToShorten)
     }
 
