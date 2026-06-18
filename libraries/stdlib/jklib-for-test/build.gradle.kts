@@ -1,6 +1,9 @@
 description = "Kotlin JKlib Stdlib for Tests"
 
 plugins {
+    id("common-configuration")
+    id("test-federation-convention")
+    id("com.autonomousapps.dependency-analysis")
     kotlin("jvm")
     base
 }

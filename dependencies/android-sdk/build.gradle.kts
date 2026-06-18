@@ -3,6 +3,12 @@ import java.net.URI
 import java.io.File
 
 // Repo content: https://dl.google.com/android/repository/repository2-1.xml
+plugins {
+    id("common-configuration")
+    id("test-federation-convention")
+    id("com.autonomousapps.dependency-analysis")
+}
+
 val platformToolsVersion = "r36.0.0"
 val commandLineToolsVersion = "13114758" /*19.0*/
 val emulatorVersion = "14433334" // v36.4.1

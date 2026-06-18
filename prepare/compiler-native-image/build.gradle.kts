@@ -8,6 +8,9 @@ import kotlin.io.path.exists
 description = "Kotlin Compiler (Native Image)"
 
 plugins {
+    id("common-configuration")
+    id("test-federation-convention")
+    id("com.autonomousapps.dependency-analysis")
     kotlin("jvm")
     id("java-test-fixtures")
     id("project-tests-convention")

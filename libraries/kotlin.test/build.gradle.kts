@@ -17,6 +17,9 @@ import plugins.configureKotlinPomAttributes
 import plugins.publishing.configureMultiModuleMavenPublishing
 
 plugins {
+    id("common-configuration")
+    id("test-federation-convention")
+    id("com.autonomousapps.dependency-analysis")
     kotlin("multiplatform")
     `maven-publish`
     id("signing-convention")

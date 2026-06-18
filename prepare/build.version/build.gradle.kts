@@ -2,6 +2,12 @@
 
 import java.io.File
 
+plugins {
+    id("common-configuration")
+    id("test-federation-convention")
+    id("com.autonomousapps.dependency-analysis")
+}
+
 val buildVersionFilePath = layout.buildDirectory.file("build.txt")
 val buildVersion by configurations.creating
 val buildNumber: String by rootProject.extra

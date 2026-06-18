@@ -2,6 +2,9 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import java.util.zip.ZipFile
 
 plugins {
+    id("common-configuration")
+    id("test-federation-convention")
+    id("com.autonomousapps.dependency-analysis")
     java
     kotlin("jvm")
     id("java-test-fixtures")

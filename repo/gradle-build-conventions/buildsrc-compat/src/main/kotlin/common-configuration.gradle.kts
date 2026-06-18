@@ -28,6 +28,7 @@ project.configureKotlinCompilationOptions()
 project.configureArtifacts()
 project.configureTests()
 project.checkNoApiDependenciesOnK1Modules()
+project.configureMigratedRootSettings()
 
 // There are problems with common build dir:
 //  - some tests (in particular js and binary-compatibility-validator depend on the fixed (default) location
@@ -468,6 +469,82 @@ afterEvaluate {
         friendPaths.setFrom(friendPathsWithoutVersion)
         doFirst {
             friendPaths.setFrom(realFriendPaths)
+        }
+    }
+}
+
+private val dependencyOnSnapshotReflectWhitelist = setOf(
+    ":kotlin-compiler",
+    ":kotlin-reflect",
+    ":tools:binary-compatibility-validator",
+    ":tools:kotlin-stdlib-gen",
+)
+
+// Per-project configuration migrated from the root `allprojects {}` block as part of the
+// Gradle Isolated Projects migration. This plugin is already applied to (almost) every project,
+// so running these bodies here is equivalent to the previous cross-project configuration.
+fun Project.configureMigratedRootSettings() {
+    if (kotlinBuildProperties.isInIdeaSync.get()) {
+        afterEvaluate {
+            configurations.all {
+                // Remove kotlin-compiler from dependencies during Idea import. KTI-1598
+                if (dependencies.removeIf { (it as? ProjectDependency)?.path == ":kotlin-compiler" }) {
+                    logger.warn("Removed :kotlin-compiler project dependency from \$this")
+                }
+            }
+        }
+    }
+
+    configurations.all {
+        val configuration = this
+        if (name != "compileClasspath") {
+            return@all
+        }
+        resolutionStrategy {
+            if (!kotlinBuildProperties.localBootstrap.getOrElse(false)) {
+                failOnNonReproducibleResolution()
+            }
+            eachDependency {
+                if (requested.group != "org.jetbrains.kotlin") {
+                    return@eachDependency
+                }
+
+                val isReflect = requested.name == "kotlin-reflect"
+                // More strict check for "compilerModules". We can't apply this check for all modules because it would force to
+                // exclude kotlin-reflect from transitive dependencies of kotlin-poet, ktor, com.android.tools.build:gradle, etc
+                if (project.path in @Suppress("UNCHECKED_CAST") (rootProject.extra["compilerModules"] as Array<String>)) {
+                    val expectedReflectVersion = commonDependencyVersion("org.jetbrains.kotlin", "kotlin-reflect")
+                    if (isReflect) {
+                        check(requested.version == expectedReflectVersion) {
+                            """
+                            \$configuration: 'kotlin-reflect' should have '\$expectedReflectVersion' version. But it was '\${requested.version}'
+                            Suggestions:
+                                1. Use 'commonDependency("org.jetbrains.kotlin:kotlin-reflect") { isTransitive = false }'
+                                2. Avoid 'kotlin-reflect' leakage from transitive dependencies with 'exclude("org.jetbrains.kotlin")'
+                        """.trimIndent()
+                        }
+                    }
+                    if (requested.name.startsWith("kotlin-stdlib")) {
+                        check(requested.version != expectedReflectVersion) {
+                            """
+                            \$configuration: '\${requested.name}' has a wrong version. It's not allowed to be '\$expectedReflectVersion'
+                            Suggestions:
+                                1. Most likely, it leaked from 'kotlin-reflect' transitive dependencies. Use 'isTransitive = false' for
+                                   'kotlin-reflect' dependencies
+                                2. Avoid '\${requested.name}' leakage from other transitive dependencies with 'exclude("org.jetbrains.kotlin")'
+                        """.trimIndent()
+                        }
+                    }
+                }
+                if (isReflect && project.path !in dependencyOnSnapshotReflectWhitelist) {
+                    check(requested.version != kotlinVersion) {
+                        """
+                        \$configuration: 'kotlin-reflect' is not allowed to have '\$kotlinVersion' version.
+                        Suggestion: Use 'commonDependency("org.jetbrains.kotlin:kotlin-reflect") { isTransitive = false }'
+                    """.trimIndent()
+                    }
+                }
+            }
         }
     }
 }

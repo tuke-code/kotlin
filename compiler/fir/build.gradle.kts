@@ -1,5 +1,11 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 
+plugins {
+    id("common-configuration")
+    id("test-federation-convention")
+    id("com.autonomousapps.dependency-analysis")
+}
+
 val projectsAllowedToUseFirFromSymbol = listOf(
     "analysis-tests",
     "dump",

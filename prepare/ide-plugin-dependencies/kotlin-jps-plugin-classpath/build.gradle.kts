@@ -1,4 +1,10 @@
 // This artifact is deprecated and will be remove in the near future. Use `kotlin-jps-plugin` instead
+plugins {
+    id("common-configuration")
+    id("test-federation-convention")
+    id("com.autonomousapps.dependency-analysis")
+}
+
 idePluginPublishingLatch {
     @Suppress("UNCHECKED_CAST")
     val embeddedDependencies = rootProject.extra["kotlinJpsPluginEmbeddedDependencies"] as List<String>

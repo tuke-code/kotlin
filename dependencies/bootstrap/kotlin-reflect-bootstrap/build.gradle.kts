@@ -1,3 +1,9 @@
+plugins {
+    id("common-configuration")
+    id("test-federation-convention")
+    id("com.autonomousapps.dependency-analysis")
+}
+
 val kotlinReflectVersion = rootProject.extra["versions.kotlin-reflect"] as String
 val resolvedBootstrap = configurations.resolvable("kotlinReflectBootstrapClasspath") {
     dependencies.addLater(providers.provider {

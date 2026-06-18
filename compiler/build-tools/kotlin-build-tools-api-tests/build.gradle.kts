@@ -4,6 +4,8 @@ import org.jetbrains.kotlin.testFederation.smokeTestConfig
 import org.jetbrains.kotlin.tooling.core.KotlinToolingVersion
 
 plugins {
+    id("common-configuration")
+    id("test-federation-convention")
     kotlin("jvm")
     `jvm-test-suite`
     id("test-symlink-transformation")

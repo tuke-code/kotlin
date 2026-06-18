@@ -38,6 +38,12 @@ import java.security.MessageDigest
 
 import static BuildPropertiesKt.getKotlinBuildProperties
 
+plugins {
+    id("common-configuration")
+    id("test-federation-convention")
+    id("com.autonomousapps.dependency-analysis")
+}
+
 defaultTasks 'clean', 'dist'
 
 apply plugin: XcodeOverridePlugin

@@ -2,6 +2,9 @@ import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import java.net.URI
 
 plugins {
+    id("common-configuration")
+    id("test-federation-convention")
+    id("com.autonomousapps.dependency-analysis")
     kotlin("multiplatform")
     id("generated-sources")
     id("binaryen-configuration")

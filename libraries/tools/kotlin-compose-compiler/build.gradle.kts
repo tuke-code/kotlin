@@ -1,6 +1,9 @@
 import gradle.GradlePluginVariant
 
 plugins {
+    id("common-configuration")
+    id("test-federation-convention")
+    id("com.autonomousapps.dependency-analysis")
     id("gradle-plugin-common-configuration")
     `jvm-test-suite`
     id("gradle-plugin-api-reference")

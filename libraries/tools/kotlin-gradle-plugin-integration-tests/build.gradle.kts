@@ -6,6 +6,9 @@ import org.jetbrains.kotlin.gradle.tasks.AbstractKotlinCompile
 import java.nio.file.Paths
 
 plugins {
+    id("common-configuration")
+    id("test-federation-convention")
+    id("com.autonomousapps.dependency-analysis")
     kotlin("jvm")
     kotlin("plugin.serialization")
     id("android-sdk-provisioner")

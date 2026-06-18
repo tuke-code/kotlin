@@ -18,6 +18,9 @@ import org.jetbrains.kotlin.utils.reproducibilityCompilerFlags
 import org.jetbrains.kotlin.utils.reproducibilityRootsMap
 
 plugins {
+    id("common-configuration")
+    id("test-federation-convention")
+    id("com.autonomousapps.dependency-analysis")
     id("base")
     id("platform-manager")
     id("native-dependencies")

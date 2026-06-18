@@ -3,6 +3,9 @@ import org.jetbrains.kotlin.gradle.targets.js.ir.KotlinJsIrLink
 import java.io.FileOutputStream
 
 plugins {
+    id("common-configuration")
+    id("test-federation-convention")
+    id("com.autonomousapps.dependency-analysis")
     kotlin("multiplatform")
     alias(libs.plugins.gradle.node)
     idea

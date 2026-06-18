@@ -6,6 +6,9 @@ import org.jetbrains.kotlin.testFederation.smokeTestConfig
 import java.util.*
 
 plugins {
+    id("common-configuration")
+    id("test-federation-convention")
+    id("com.autonomousapps.dependency-analysis")
     kotlin("jvm")
     alias(libs.plugins.gradle.node)
     id("d8-configuration")

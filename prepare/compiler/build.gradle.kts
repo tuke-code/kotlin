@@ -8,6 +8,9 @@ import java.util.regex.Pattern.quote
 description = "Kotlin Compiler"
 
 plugins {
+    id("common-configuration")
+    id("test-federation-convention")
+    id("com.autonomousapps.dependency-analysis")
     // HACK: java plugin makes idea import dependencies on this project as source (with empty sources however),
     // this prevents reindexing of kotlin-compiler.jar after build on every change in compiler modules
     `java-library`

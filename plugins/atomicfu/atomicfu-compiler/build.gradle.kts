@@ -7,6 +7,9 @@ import org.jetbrains.kotlin.konan.target.HostManager
 description = "Atomicfu Compiler Plugin"
 
 plugins {
+    id("common-configuration")
+    id("test-federation-convention")
+    id("com.autonomousapps.dependency-analysis")
     kotlin("jvm")
     id("d8-configuration")
     id("project-tests-convention")

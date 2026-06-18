@@ -37,6 +37,7 @@ pluginManagement {
 
     plugins {
         id("de.undercouch.download") version "5.1.0"
+        id("com.autonomousapps.dependency-analysis") version "3.6.1"
     }
 }
 
@@ -123,6 +124,8 @@ dependencyResolutionManagement {
         d8Distributions()
         androidRepository()
         androidSystemImages()
+        val mirrorRepo: String? = settings.providers.systemProperty("maven.repository.mirror").orNull
+        mirrorRepo?.let(::maven)
         mavenCentral()
     }
     repositoriesMode = RepositoriesMode.FAIL_ON_PROJECT_REPOS

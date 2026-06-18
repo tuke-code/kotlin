@@ -4,6 +4,9 @@ import org.gradle.internal.jvm.Jvm
 description = "KLIB ABI reader"
 
 plugins {
+    id("common-configuration")
+    id("test-federation-convention")
+    id("com.autonomousapps.dependency-analysis")
     kotlin("jvm")
 }
 

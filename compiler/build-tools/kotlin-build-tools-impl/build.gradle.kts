@@ -2,6 +2,8 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import com.github.jengelman.gradle.plugins.shadow.transformers.DontIncludeResourceTransformer
 
 plugins {
+    id("common-configuration")
+    id("test-federation-convention")
     kotlin("jvm")
     id("generated-sources")
     id("test-inputs-check")

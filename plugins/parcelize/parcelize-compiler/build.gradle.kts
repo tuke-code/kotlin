@@ -4,6 +4,9 @@ import java.util.zip.ZipFile
 description = "Parcelize compiler plugin"
 
 plugins {
+    id("common-configuration")
+    id("test-federation-convention")
+    id("com.autonomousapps.dependency-analysis")
     kotlin("jvm")
     id("android-sdk-provisioner")
     id("java-test-fixtures")

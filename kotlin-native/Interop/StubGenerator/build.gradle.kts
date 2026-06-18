@@ -5,6 +5,9 @@ import org.jetbrains.kotlin.nativeDistribution.llvmDistributionSource
 import org.jetbrains.kotlin.nativeDistribution.nativeProtoDistribution
 
 plugins {
+    id("common-configuration")
+    id("test-federation-convention")
+    id("com.autonomousapps.dependency-analysis")
     kotlin("jvm")
     application
     id("native-dependencies")

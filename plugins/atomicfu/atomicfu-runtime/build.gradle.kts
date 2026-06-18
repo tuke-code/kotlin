@@ -4,6 +4,9 @@ import plugins.configureKotlinPomAttributes
 description = "Runtime library for the Atomicfu compiler plugin"
 
 plugins {
+    id("common-configuration")
+    id("test-federation-convention")
+    id("com.autonomousapps.dependency-analysis")
     kotlin("multiplatform")
     `maven-publish`
     id("nodejs-configuration")
