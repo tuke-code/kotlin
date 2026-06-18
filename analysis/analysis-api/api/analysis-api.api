@@ -536,27 +536,9 @@ public abstract interface class org/jetbrains/kotlin/analysis/api/lifetime/KaLif
 	public abstract fun getToken ()Lorg/jetbrains/kotlin/analysis/api/lifetime/KaLifetimeToken;
 }
 
-public final class org/jetbrains/kotlin/analysis/api/lifetime/KaLifetimeOwnerField : kotlin/properties/ReadOnlyProperty {
-	public static final synthetic fun box-impl (Ljava/lang/Object;)Lorg/jetbrains/kotlin/analysis/api/lifetime/KaLifetimeOwnerField;
-	public static fun constructor-impl (Ljava/lang/Object;)Ljava/lang/Object;
-	public fun equals (Ljava/lang/Object;)Z
-	public static fun equals-impl (Ljava/lang/Object;Ljava/lang/Object;)Z
-	public static final fun equals-impl0 (Ljava/lang/Object;Ljava/lang/Object;)Z
-	public final fun getValue ()Ljava/lang/Object;
-	public synthetic fun getValue (Ljava/lang/Object;Lkotlin/reflect/KProperty;)Ljava/lang/Object;
-	public fun getValue (Lorg/jetbrains/kotlin/analysis/api/lifetime/KaLifetimeOwner;Lkotlin/reflect/KProperty;)Ljava/lang/Object;
-	public static fun getValue-impl (Ljava/lang/Object;Lorg/jetbrains/kotlin/analysis/api/lifetime/KaLifetimeOwner;Lkotlin/reflect/KProperty;)Ljava/lang/Object;
-	public fun hashCode ()I
-	public static fun hashCode-impl (Ljava/lang/Object;)I
-	public fun toString ()Ljava/lang/String;
-	public static fun toString-impl (Ljava/lang/Object;)Ljava/lang/String;
-	public final synthetic fun unbox-impl ()Ljava/lang/Object;
-}
-
 public final class org/jetbrains/kotlin/analysis/api/lifetime/KaLifetimeOwnerKt {
 	public static final fun assertIsValidAndAccessible (Lorg/jetbrains/kotlin/analysis/api/lifetime/KaLifetimeOwner;)V
 	public static final fun isValid (Lorg/jetbrains/kotlin/analysis/api/lifetime/KaLifetimeOwner;)Z
-	public static final fun validityAsserted (Lorg/jetbrains/kotlin/analysis/api/lifetime/KaLifetimeOwner;Ljava/lang/Object;)Ljava/lang/Object;
 	public static final fun withValidityAssertion (Lorg/jetbrains/kotlin/analysis/api/lifetime/KaLifetimeOwner;Lkotlin/jvm/functions/Function0;)Ljava/lang/Object;
 }
 
