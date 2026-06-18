@@ -9,6 +9,14 @@ import javax.inject.Inject
  */
 
 abstract class TestInputsCheckExtensionV2 @Inject constructor(objects: ObjectFactory) {
-    val failFast: Property<Boolean> = objects.property<Boolean>()
-        .convention(false)
+    /**
+     * Enable or disable test input checking
+     */
+    val enabled: Property<Boolean> = objects.property<Boolean>().convention(true)
+
+    /**
+     * In fail fast mode, an exception will be thrown immediately after accessing an undeclared input.
+     * It's mostly useful for debugging when the tests take a long time to finish.
+     */
+    val failFast: Property<Boolean> = objects.property<Boolean>().convention(false)
 }
