@@ -165,12 +165,12 @@ object FirJvmSessionFactory : FirAbstractSessionFactory<FirJvmSessionFactory.Con
                 val providers = listOfNotNull(
                     symbolProvider,
                     generatedSymbolsProvider,
-                    incrementalCompilationSymbolProviders?.symbolProviderForBinariesFromIncrementalCompilation,
                     javaSymbolProvider,
                     initializeForStdlibIfNeeded(projectEnvironment, session, kotlinScopeProvider),
                 )
                 SourceProviders(
                     providers,
+                    incrementalProvider = incrementalCompilationSymbolProviders?.symbolProviderForBinariesFromIncrementalCompilation,
                     incrementalCompilationSymbolProviders?.optionalAnnotationClassesProviderForBinariesFromIncrementalCompilation
                 )
             }

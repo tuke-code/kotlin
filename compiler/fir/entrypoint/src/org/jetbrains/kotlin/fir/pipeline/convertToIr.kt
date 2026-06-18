@@ -301,7 +301,6 @@ private class Fir2IrPipeline(
                     outputs.last().session,
                     componentsStoragePerSourceSession,
                 ),
-                hmppSchemeEnabled = componentsStorage.session.languageVersionSettings.getFlag(AnalysisFlags.hierarchicalMultiplatformCompilation)
             )
         }
     }

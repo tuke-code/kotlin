@@ -162,29 +162,25 @@ abstract class AbstractFirMetadataSessionFactory(
             kmpModuleKind,
             init,
             createProviders = { session, kotlinScopeProvider, symbolProvider, generatedSymbolsProvider ->
-                var symbolProviderForBinariesFromIncrementalCompilation: MetadataSymbolProvider? = null
-                incrementalCompilationContext?.let {
-                    val precompiledBinariesPackagePartProvider = it.precompiledBinariesPackagePartProvider
-                    if (it.precompiledBinariesFileScope != null) {
+                val symbolProviderForBinariesFromIncrementalCompilation = incrementalCompilationContext?.let { (precompiledBinariesPackagePartProvider, precompiledBinariesFileScope) -> // ->
+                        if (precompiledBinariesFileScope == null) return@let null
                         val moduleDataProvider = SingleModuleDataProvider(moduleData)
-                        symbolProviderForBinariesFromIncrementalCompilation =
-                            MetadataSymbolProvider(
-                                session,
-                                moduleDataProvider,
-                                kotlinScopeProvider,
-                                precompiledBinariesPackagePartProvider as PackageAndMetadataPartProvider,
-                                projectEnvironment.getKotlinClassFinder(it.precompiledBinariesFileScope) as KotlinMetadataFinder,
-                                defaultDeserializationOrigin = FirDeclarationOrigin.Precompiled
-                            )
+                        MetadataSymbolProvider(
+                            session,
+                            moduleDataProvider,
+                            kotlinScopeProvider,
+                            precompiledBinariesPackagePartProvider as PackageAndMetadataPartProvider,
+                            projectEnvironment.getKotlinClassFinder(precompiledBinariesFileScope) as KotlinMetadataFinder,
+                            defaultDeserializationOrigin = FirDeclarationOrigin.Precompiled
+                        )
                     }
-                }
 
                 SourceProviders(
-                    listOfNotNull(
+                    sourceProviders = listOfNotNull(
                         symbolProvider,
-                        symbolProviderForBinariesFromIncrementalCompilation,
                         generatedSymbolsProvider,
-                    )
+                    ),
+                    incrementalProvider = symbolProviderForBinariesFromIncrementalCompilation,
                 )
             }
         )
