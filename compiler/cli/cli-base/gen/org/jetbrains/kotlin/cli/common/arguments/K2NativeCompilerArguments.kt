@@ -197,6 +197,18 @@ The default value is 1.""",
         }
 
     @Argument(
+        value = "-Xdump-built-caches-to",
+        valueDescription = "<path>",
+        description = "Path to a file where the list of all cache archives produced by this build should be written.",
+        delimiter = Argument.Delimiters.none,
+    )
+    var dumpBuiltCachesTo: String? = null
+        set(value) {
+            checkFrozen()
+            field = if (value.isNullOrEmpty()) null else value
+        }
+
+    @Argument(
         value = "-Xdump-tests-to",
         valueDescription = "<path>",
         description = "Path to a file for dumping the list of all available tests.",

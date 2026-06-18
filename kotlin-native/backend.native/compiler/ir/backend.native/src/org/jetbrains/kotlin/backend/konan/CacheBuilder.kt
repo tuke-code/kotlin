@@ -29,6 +29,9 @@ import java.nio.file.StandardOpenOption
 import org.jetbrains.kotlin.konan.config.konanHome
 import org.jetbrains.kotlin.konan.library.isExplicitlySpecifiedByUserInCLIArgument
 import org.jetbrains.kotlin.konan.library.isImplicitlyLoadedFromKotlinNativeDistribution
+import java.nio.file.Path
+import kotlin.io.path.Path
+import kotlin.io.path.absolutePathString
 
 internal fun KotlinLibrary.getAllTransitiveDependencies(allLibraries: Map<String, KotlinLibrary>): List<KotlinLibrary> {
     val allDependencies = mutableSetOf<KotlinLibrary>()
@@ -96,6 +99,7 @@ class CacheBuilder(
     fun build() {
         val externalLibrariesToCache = mutableListOf<KotlinLibrary>()
         val icedLibraries = mutableListOf<KotlinLibrary>()
+        val lastRebuiltArchives = mutableListOf<Path>()
 
         allLibraries.forEach { library ->
             // For MinGW target avoid compiling caches for anything except stdlib.
@@ -119,9 +123,15 @@ class CacheBuilder(
             }
         }
 
-        externalLibrariesToCache.forEach { buildLibraryCache(it, true, emptyList()) }
+        externalLibrariesToCache.forEach { library ->
+            val builtCachePaths = buildLibraryCache(library, true, emptyList())
+            lastRebuiltArchives.addAll(builtCachePaths)
+        }
 
-        if (!icEnabled) return
+        if (!icEnabled) {
+            dumpLastRebuiltArchivesToDisk(lastRebuiltArchives)
+            return
+        }
 
         // The incremental dirty-file check later on only compares the IR content hash of each source file. So switching to
         // a different compiler without running `clean` would silently reuse the bitcode produced by the previous compiler,
@@ -199,19 +209,19 @@ class CacheBuilder(
                 addedFiles.add(LibraryFile(library, newFile))
         }
 
-        configuration.reportLog( "IC analysis results")
-        configuration.reportLog( "    CACHED:")
-        icedLibraries.filter { caches[it] != null }.forEach { configuration.reportLog( "        ${it.location}") }
-        configuration.reportLog( "    CLEAN BUILD:")
-        icedLibraries.filter { caches[it] == null }.forEach { configuration.reportLog( "        ${it.location}") }
-        configuration.reportLog( "    FULL REBUILD:")
-        icedLibraries.filter { it in needFullRebuild }.forEach { configuration.reportLog( "        ${it.location}") }
-        configuration.reportLog( "    ADDED FILES:")
-        addedFiles.forEach { configuration.reportLog( "        $it") }
-        configuration.reportLog( "    REMOVED FILES:")
-        removedFiles.forEach { configuration.reportLog( "        $it") }
-        configuration.reportLog( "    CHANGED FILES:")
-        changedFiles.forEach { configuration.reportLog( "        $it") }
+        configuration.reportLog("IC analysis results")
+        configuration.reportLog("    CACHED:")
+        icedLibraries.filter { caches[it] != null }.forEach { configuration.reportLog("        ${it.location}") }
+        configuration.reportLog("    CLEAN BUILD:")
+        icedLibraries.filter { caches[it] == null }.forEach { configuration.reportLog("        ${it.location}") }
+        configuration.reportLog("    FULL REBUILD:")
+        icedLibraries.filter { it in needFullRebuild }.forEach { configuration.reportLog("        ${it.location}") }
+        configuration.reportLog("    ADDED FILES:")
+        addedFiles.forEach { configuration.reportLog("        $it") }
+        configuration.reportLog("    REMOVED FILES:")
+        removedFiles.forEach { configuration.reportLog("        $it") }
+        configuration.reportLog("    CHANGED FILES:")
+        changedFiles.forEach { configuration.reportLog("        $it") }
 
         val dirtyFiles = mutableSetOf<LibraryFile>()
 
@@ -236,9 +246,9 @@ class CacheBuilder(
         }
 
         val groupedDirtyFiles = dirtyFiles.groupBy { it.library }
-        configuration.reportLog( "    DIRTY FILES:")
+        configuration.reportLog("    DIRTY FILES:")
         groupedDirtyFiles.values.flatten().forEach {
-            configuration.reportLog( "        $it")
+            configuration.reportLog("        $it")
         }
 
         for (library in icedLibraries) {
@@ -249,25 +259,53 @@ class CacheBuilder(
                 libraryFiles.map { filesWithFqNames[it.file]!!.filePath }
             }.orEmpty()
 
-            when {
-                library in needFullRebuild -> buildLibraryCache(library, false, emptyList())
-                caches[library] == null || filesToCache.isNotEmpty() -> buildLibraryCache(library, false, filesToCache)
+            val isFirstBuild = caches[library] == null
+
+            val builtCachePaths = when {
+                library in needFullRebuild -> {
+                    buildLibraryCache(library, false, emptyList())
+                }
+                isFirstBuild || filesToCache.isNotEmpty() -> {
+                    buildLibraryCache(library, false, filesToCache)
+                }
+                else -> emptyList()
             }
+
+            lastRebuiltArchives.addAll(builtCachePaths)
         }
+
+        dumpLastRebuiltArchivesToDisk(lastRebuiltArchives)
     }
 
-    private fun buildLibraryCache(library: KotlinLibrary, isExternal: Boolean, filesToCache: List<String>) {
+    private fun KotlinLibrary.getPerFileCachedBinaryFilePaths(cacheRoot: Path, filesToCache: List<String>): List<Path> {
+        require(!isExternal && !isCInteropLibrary()) {
+            "Can be only invoked per-file library cache."
+        }
+        // Restrict to the files rebuilt this run (empty = whole-library build) so the IC build output doesn't list untouched files as rebuilt.
+        return getFilesWithFqNames()
+                .filter { filesToCache.isEmpty() || it.filePath in filesToCache }
+                .map { fqnFile ->
+                    val fileId = CacheSupport.cacheFileId(fqnFile.fqName, fqnFile.filePath)
+                    cacheRoot.resolve(fileId).resolve("bin").resolve("lib$fileId.a")
+                }
+    }
+
+    private fun KotlinLibrary.getMonolithicCachedBinaryFilePaths(cacheRoot: Path): List<Path> {
+        val libraryFilename = "lib${CachedLibraries.getCachedLibraryName(this)}.a"
+        return listOf(cacheRoot.resolve("bin").resolve(libraryFilename))
+    }
+
+    private fun buildLibraryCache(library: KotlinLibrary, isExternal: Boolean, filesToCache: List<String>): List<Path> {
         val dependencies = library.getAllTransitiveDependencies(uniqueNameToLibrary)
         val dependencyCaches = dependencies.map {
             cacheRootDirectories[it] ?: run {
-                configuration.reportLog(
-                        "SKIPPING ${library.location} as some of the dependencies aren't cached")
-                return
+                configuration.reportLog("SKIPPING ${library.location} as some of the dependencies aren't cached")
+                return emptyList()
             }
         }
 
-        configuration.reportLog( "CACHING ${library.location}")
-        filesToCache.forEach { configuration.reportLog( "    $it") }
+        configuration.reportLog("CACHING ${library.location}")
+        filesToCache.forEach { configuration.reportLog("    $it") }
 
         // Produce monolithic caches for external libraries for now.
         val makePerFileCache = !isExternal && !library.isCInteropLibrary()
@@ -305,6 +343,14 @@ class CacheBuilder(
             }
         }) {
             tryBuildingLibraryCache(library, dependencies, dependencyCaches, libraryCacheDirectory, makePerFileCache, filesToCache, libraryCache)
+        }
+
+        val cacheRootPath = Path(libraryCache.absolutePath)
+
+        return if (makePerFileCache) {
+            library.getPerFileCachedBinaryFilePaths(cacheRootPath, filesToCache)
+        } else {
+            library.getMonolithicCachedBinaryFilePaths(cacheRootPath)
         }
     }
 
@@ -449,6 +495,17 @@ class CacheBuilder(
             this.makePerFileCache = makePerFileCache
             if (filesToCache.isNotEmpty())
                 this.filesToCache = filesToCache
+        }
+    }
+
+    private fun dumpLastRebuiltArchivesToDisk(lastRebuiltArchives: List<Path>) {
+        config.dumpBuiltCachesTo?.let { outputPath ->
+            val rebuiltArchivesFile = File(outputPath)
+            val fileContent = if (lastRebuiltArchives.isEmpty())
+                ""
+            else
+                lastRebuiltArchives.joinToString("\n") { it.absolutePathString() } + "\n"
+            rebuiltArchivesFile.writeText(fileContent)
         }
     }
 }

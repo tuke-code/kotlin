@@ -203,6 +203,7 @@ fun CompilerConfiguration.setupFromArguments(arguments: K2NativeCompilerArgument
         report(KONAN_ARGUMENT_ERROR, "For incremental compilation both flags should be supplied: " +
                 "-Xenable-incremental-compilation and ${K2NativeCompilerArguments::incrementalCacheDir.cliArgument}")
     incrementalCacheDir?.let { put(INCREMENTAL_CACHE_DIR, it) }
+    arguments.dumpBuiltCachesTo?.let { put(DUMP_BUILT_CACHES_TO, it) }
     put(FILES_TO_CACHE, arguments.filesToCache.toList())
     put(MAKE_PER_FILE_CACHE, arguments.makePerFileCache)
     val nThreadsRaw = parseBackendThreads(arguments.backendThreads)

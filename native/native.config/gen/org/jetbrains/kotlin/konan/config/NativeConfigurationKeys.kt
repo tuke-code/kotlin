@@ -71,6 +71,10 @@ object NativeConfigurationKeys {
     @JvmField
     val INCREMENTAL_CACHE_DIR = CompilerConfigurationKey.create<String>("INCREMENTAL_CACHE_DIR")
 
+    // Path to a file where the list of all cache archives produced by this build should be written.
+    @JvmField
+    val DUMP_BUILT_CACHES_TO = CompilerConfigurationKey.create<String>("DUMP_BUILT_CACHES_TO")
+
     // Mapping from library paths to cache paths.
     @JvmField
     val CACHED_LIBRARIES = CompilerConfigurationKey.create<Map<String, String>>("CACHED_LIBRARIES")
@@ -335,6 +339,10 @@ var CompilerConfiguration.autoCacheDir: String?
 var CompilerConfiguration.incrementalCacheDir: String?
     get() = get(NativeConfigurationKeys.INCREMENTAL_CACHE_DIR)
     set(value) { put(NativeConfigurationKeys.INCREMENTAL_CACHE_DIR, requireNotNull(value) { "nullable values are not allowed" }) }
+
+var CompilerConfiguration.dumpBuiltCachesTo: String?
+    get() = get(NativeConfigurationKeys.DUMP_BUILT_CACHES_TO)
+    set(value) { put(NativeConfigurationKeys.DUMP_BUILT_CACHES_TO, requireNotNull(value) { "nullable values are not allowed" }) }
 
 var CompilerConfiguration.cachedLibraries: Map<String, String>
     get() = getMap(NativeConfigurationKeys.CACHED_LIBRARIES)

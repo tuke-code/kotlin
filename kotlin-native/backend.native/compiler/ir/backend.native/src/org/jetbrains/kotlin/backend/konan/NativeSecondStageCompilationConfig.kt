@@ -604,6 +604,7 @@ class NativeSecondStageCompilationConfig(
         }
     }
     internal val incrementalCacheDirectory = incrementalCacheRootDirectory?.child(userCacheFlavorString)
+    internal val dumpBuiltCachesTo = configuration.dumpBuiltCachesTo
 
     internal val ignoreCacheReason = when {
         optimizationsEnabled -> "for optimized compilation"
