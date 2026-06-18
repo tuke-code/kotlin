@@ -5,7 +5,6 @@
 
 package org.jetbrains.kotlin.analysis.api.fir.projectStructure
 
-import com.intellij.ide.highlighter.JavaClassFileType
 import com.intellij.openapi.module.Module
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
@@ -77,13 +76,27 @@ private class KaFirCommonLibraryRestrictionScope(project: Project) : GlobalSearc
     override fun hashCode(): Int = project.hashCode()
 }
 
+/**
+ * The JVM restriction scope is formulated as a *denylist* rather than an allowlist of permitted extensions.
+ *
+ * An allowlist would have to enumerate every binary file type that can legitimately carry JVM declarations, which is not feasible: other
+ * JVM languages contribute their own binary metadata file types that the Analysis API knows nothing about. For example, the Scala plugin
+ * loads its declarations from `.tasty` files. It loads the PSI for `scala.Product` from `Product.tasty`, while the sibling `Product.class`
+ * is intentionally ignored. An allowlist would filter `.tasty` out, leading to missing symbols in Kotlin/Scala interop (see KT-86402).
+ *
+ * The restriction scope's actual purpose is narrow: to exclude *Kotlin-specific* files that should not be visible on the JVM platform. That
+ * set is small, known to the Analysis API, and free of custom types, so a denylist captures it precisely while admitting `.tasty` and any
+ * other language's JVM binary files for free.
+ *
+ * Note that `.kotlin_builtins` files are intentionally *not* excluded, as the JVM platform loads built-in declarations (such as `Any`) from
+ * them.
+ */
 private class KaFirJvmLibraryRestrictionScope(project: Project) : GlobalSearchScope(project), KotlinIntersectionScopeMergeTarget {
     override fun contains(file: VirtualFile): Boolean {
         if (file.isDirectory) return true
 
         val extension = file.extension
-        return extension == JavaClassFileType.INSTANCE.defaultExtension ||
-                extension == BuiltInSerializerProtocol.BUILTINS_FILE_EXTENSION
+        return extension != METADATA_FILE_EXTENSION && extension != KLIB_METADATA_FILE_EXTENSION
     }
 
     override fun isSearchInModuleContent(module: Module): Boolean = false

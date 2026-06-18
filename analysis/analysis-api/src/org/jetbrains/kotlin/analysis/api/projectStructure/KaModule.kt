@@ -183,9 +183,8 @@ public interface KaSourceModule : KaModule {
  *
  * ### Platform-specific content scope restriction
  *
- * In the K2 implementation of the Analysis API, the [contentScope] of the library module is restricted to file types that are relevant for
- * the [targetPlatform]. For example, a JVM library module filters out any files that are not `.class` and `.kotlin_builtins` files. This
- * allows the Analysis API to exclude content which isn't relevant for the target platform, such as `.knm` files in a JVM library.
+ * The [contentScope] of the library module excludes file types that are harmful for the [targetPlatform]. For example, a JVM library module
+ * filters out `.kotlin_metadata` and `.knm` files, which excludes Kotlin declarations from non-JVM platforms.
  *
  * While most proper library module setups don't need such filtering, there are both pathological as well as legitimate use cases in the
  * wild. For example, certain Kotlin stdlib setups required both the `kotlin-stdlib` and `kotlin-stdlib-common` JARs to be part of the same
