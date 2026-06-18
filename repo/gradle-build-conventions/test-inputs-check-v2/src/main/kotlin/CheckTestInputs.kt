@@ -8,13 +8,7 @@ import org.gradle.api.DefaultTask
 import org.gradle.api.file.ConfigurableFileCollection
 import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.provider.Property
-import org.gradle.api.tasks.CacheableTask
-import org.gradle.api.tasks.Input
-import org.gradle.api.tasks.InputFiles
-import org.gradle.api.tasks.OutputFile
-import org.gradle.api.tasks.PathSensitive
-import org.gradle.api.tasks.PathSensitivity
-import org.gradle.api.tasks.TaskAction
+import org.gradle.api.tasks.*
 import java.nio.file.Paths
 import kotlin.math.min
 
@@ -24,6 +18,10 @@ abstract class CheckTestInputs : DefaultTask() {
     @get:InputFiles
     @get:PathSensitive(PathSensitivity.NONE)
     abstract val jfrFile: ConfigurableFileCollection
+
+    @get:InputFile
+    @get:PathSensitive(PathSensitivity.NONE)
+    abstract val declaredInputsFile: RegularFileProperty
 
     @get:OutputFile
     abstract val undeclaredInputsFile: RegularFileProperty
@@ -41,6 +39,7 @@ abstract class CheckTestInputs : DefaultTask() {
             return
         }
         val jfrFile = jfrFile.singleFile
+        val declaredInputs = declaredInputsFile.get().asFile.readLines().filter(String::isNotEmpty)
 
         val undeclaredInputs = buildSet {
             RecordingFile(jfrFile.toPath()).use { recording ->
@@ -48,7 +47,10 @@ abstract class CheckTestInputs : DefaultTask() {
                     val event = recording.readEvent()
                     if (event.eventType.name !in listOf("jetbrains.UndeclaredInput")) continue
                     val path = event.getString("path")?.let(Paths::get) ?: continue
-                    add(path)
+
+                    if (declaredInputs.none { path.startsWith(it) }) {
+                        add(path)
+                    }
                 }
             }
         }
