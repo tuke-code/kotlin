@@ -39,14 +39,15 @@ internal data class WriteBitcodeFileInput(
 ) : LlvmIrHolder
 
 internal data class InsertEntryPointAliasInput(
-        override val llvmModule: LLVMModuleRef
+        override val llvmModule: LLVMModuleRef,
+        val entryPointName: String,
 ) : LlvmIrHolder
 
 internal val InsertEntryPointAliasPhase = createSimpleNamedCompilerPhase<NativeBackendPhaseContext, InsertEntryPointAliasInput>(
         "InsertEntryPointAlias"
-) { context, (llvmModule) ->
+) { _, (llvmModule, entryPointName) ->
     // Insert `_main` after pipeline, so we won't worry about optimizations corrupting entry point.
-    insertAliasToEntryPoint(context, llvmModule)
+    insertAliasToEntryPoint(llvmModule, entryPointName)
 }
 
 /**

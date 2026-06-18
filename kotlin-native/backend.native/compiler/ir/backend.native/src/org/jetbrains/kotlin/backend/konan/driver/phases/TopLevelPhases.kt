@@ -5,6 +5,7 @@
 
 package org.jetbrains.kotlin.backend.konan.driver.phases
 
+import llvm.LLVMModuleRef
 import org.jetbrains.kotlin.backend.common.phaser.PhaseEngine
 import org.jetbrains.kotlin.backend.konan.*
 import org.jetbrains.kotlin.backend.konan.driver.PerformanceManagerContext
@@ -28,6 +29,7 @@ import org.jetbrains.kotlin.ir.declarations.impl.IrModuleFragmentImpl
 import org.jetbrains.kotlin.ir.declarations.path
 import org.jetbrains.kotlin.ir.util.hasAnnotation
 import org.jetbrains.kotlin.konan.TempFiles
+import org.jetbrains.kotlin.konan.config.nomain
 import org.jetbrains.kotlin.konan.config.verifyBitcode
 import org.jetbrains.kotlin.konan.file.File
 import org.jetbrains.kotlin.konan.library.javaFile
@@ -279,7 +281,7 @@ internal fun <C : NativeBackendPhaseContext> PhaseEngine<C>.runBitcodeBackend(
         val outputPath = context.config.outputPath
         val outputFiles = OutputFiles(outputPath, context.config.target, context.config.produce)
         bitcodeEngine.runBitcodePostProcessing()
-        runAndMeasurePhase(InsertEntryPointAliasPhase, InsertEntryPointAliasInput(context.llvm.module))
+        runInsertEntryPointAliasPhaseIfNeededTo(context.llvm.module)
         runAndMeasurePhase(WriteBitcodeFilePhase, WriteBitcodeFileInput(context.llvm.module, bitcodeFile))
         val moduleCompilationOutput = ModuleCompilationOutput(bitcodeFile, dependencies)
         compileAndLink(moduleCompilationOutput, outputFiles.mainFileName, outputFiles, tempFiles)
@@ -371,6 +373,16 @@ private fun PhaseEngine<out Context>.splitIntoFragments(
     }
 }
 
+/**
+ * Runs the [InsertEntryPointAliasPhase] when the compiler produces a program, unless `nomain` is set.
+ */
+private fun <C : NativeBackendPhaseContext> PhaseEngine<C>.runInsertEntryPointAliasPhaseIfNeededTo(llvmModule: LLVMModuleRef) {
+    val config = context.config
+    if (config.produce != CompilerOutputKind.PROGRAM || config.configuration.nomain) return
+    val entryPointName = config.entryPointName
+    runAndMeasurePhase(InsertEntryPointAliasPhase, InsertEntryPointAliasInput(llvmModule, entryPointName))
+}
+
 internal data class ModuleCompilationOutput(
         val bitcodeFile: java.io.File,
         val dependenciesTrackingResult: DependenciesTrackingResult,
@@ -391,7 +403,7 @@ internal fun PhaseEngine<NativeGenerationState>.compileModule(
 ) {
     runBackendCodegen(module, irBuiltIns, cExportFiles)
     runPostCodegen()
-    runAndMeasurePhase(InsertEntryPointAliasPhase, InsertEntryPointAliasInput(context.llvm.module))
+    runInsertEntryPointAliasPhaseIfNeededTo(context.llvm.module)
     runAndMeasurePhase(WriteBitcodeFilePhase, WriteBitcodeFileInput(context.llvm.module, bitcodeFile))
 }
 
