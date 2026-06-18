@@ -367,11 +367,6 @@ internal class JvmInlineClassLowering(private val context: JvmBackendContext) : 
             annotations = original.annotations.withJvmExposeBoxedAnnotation(original, context)
             body = context.createIrBuilder(this.symbol).irBlockBody(this) {
                 +irDelegatingConstructorCall(constructor).apply {
-                    for (index in original.parameters.indices) {
-                        // Copy already lowered default values
-                        arguments[index] = constructor.parameters[index].defaultValue!!
-                            .deepCopyWithSymbols(this@noArg).expression
-                    }
                     arguments[constructor.parameters.size - 1] = irNull()
                 }
             }
