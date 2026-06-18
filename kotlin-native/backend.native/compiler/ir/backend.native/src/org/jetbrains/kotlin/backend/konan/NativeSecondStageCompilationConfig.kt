@@ -588,6 +588,8 @@ class NativeSecondStageCompilationConfig(
         appendCommonCacheFlavor()
         append("-user")
         append("-pl")
+        if (swiftExport)
+            append("-swift_export")
     }
 
     internal val systemCacheDirectory = File(distribution.systemCacheRootDirectory.absolutePath).child(systemCacheFlavorString)
