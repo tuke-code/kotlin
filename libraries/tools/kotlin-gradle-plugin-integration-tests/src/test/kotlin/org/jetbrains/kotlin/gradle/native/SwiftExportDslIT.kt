@@ -420,10 +420,12 @@ class SwiftExportDslIT : KGPBaseTest() {
                 }
             }
 
-            build(
+            buildAndFail(
                 ":embedSwiftExportForXcode",
                 environmentVariables = swiftExportEmbedAndSignEnvVariables(testBuildDir)
             ) {
+                // FIXME: Remove after KT-87014 is fixed
+                assertOutputContains("Internal compiler error: doesn't correspond to any C type: kotlin.native.internal.NativePtr")
                 val buildProductsDir = this@project.gradleRunner.environment?.get("BUILT_PRODUCTS_DIR")?.let { File(it) }
                 assertNotNull(buildProductsDir)
 
