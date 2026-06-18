@@ -347,6 +347,15 @@ object JvmFrontendPipelinePhase : PipelinePhase<ConfigurationPipelineArtifact, J
         val extensionRegistrars = configuration.getCompilerExtensions(FirExtensionRegistrar)
         val javaSourcesScope = projectEnvironment.getSearchScopeForProjectJavaSources()
 
+        /*
+         * TODO(OSIP-75): This code is needed to preserve the legacy implementation of IC in KMP scenario, which was generally incorrect,
+         *   but worked to some extent in some scenarios while the proper implementation is in development. It should be removed
+         *   together with `if()` in the lambda below once we will get the full support of IC for KMP.
+         */
+        val isKmpCompilationWithLegacyIC = configuration.hmppModuleStructure?.incrementalDependencies?.isEmpty() == true
+        var firJvmIncrementalCompilationSymbolProviders: FirJvmIncrementalCompilationSymbolProviders? = null
+        var firJvmIncrementalCompilationSymbolProvidersIsInitialized = false
+
         val context = FirJvmSessionFactory.Context(
             configuration,
             projectEnvironment,
@@ -383,7 +392,18 @@ object JvmFrontendPipelinePhase : PipelinePhase<ConfigurationPipelineArtifact, J
                 FirJvmSessionFactory.createSourceSession(
                     moduleData,
                     javaSourcesScope,
-                    createIncrementalCompilationSymbolProviders = { session ->
+                    createIncrementalCompilationSymbolProviders = ic@{ session ->
+                        // TODO(OSIP-75): should be removed, see the comment above
+                        if (isKmpCompilationWithLegacyIC) {
+                            return@ic if (firJvmIncrementalCompilationSymbolProvidersIsInitialized) firJvmIncrementalCompilationSymbolProviders
+                            else {
+                                firJvmIncrementalCompilationSymbolProvidersIsInitialized = true
+                                incrementalCompilationContext?.createSymbolProviders(session, moduleData, projectEnvironment)?.also {
+                                    firJvmIncrementalCompilationSymbolProviders = it
+                                }
+                            }
+                        }
+
                         when (kmpModuleKind) {
                             KmpModuleKind.SingleModule,
                             KmpModuleKind.LeafRegularModule,
