@@ -1,10 +1,10 @@
 import GenerateKgpBuildConstantsTask.Companion.registerGenerateKgpBuildConstantsTask
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import gradle.GradlePluginVariant
+import gradle.enableKotlinSerializationPlugin
 import org.gradle.plugin.compatibility.compatibility
 import org.jetbrains.kotlin.build.androidsdkprovisioner.ProvisioningType
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
-import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinWithJavaCompilation
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jetbrains.kotlin.nativeDistribution.registerNativeBootstrapDistribution
 import org.jetbrains.kotlin.nativeDistribution.useProvidedNativeBootstrapDistribution
@@ -620,13 +620,6 @@ sourceSets.getByName("testFixtures") {
         add(implementationConfigurationName, gradleApi())
         add(implementationConfigurationName, libs.junit.jupiter.api)
     }
-}
-
-fun KotlinWithJavaCompilation<*, *>.enableKotlinSerializationPlugin() {
-    val version = libs.versions.kotlin.`for`.gradle.plugins.compilation.get()
-    configurations.pluginConfiguration.dependencies.add(
-        dependencies.create("org.jetbrains.kotlin:kotlin-serialization-compiler-plugin-embeddable:${version}")
-    )
 }
 
 // Enforce lowest jvm version to make testFixtures compatible with KGP-IT injections
