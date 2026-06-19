@@ -5,6 +5,7 @@
 
 package org.jetbrains.kotlin.analysis.api.impl.base.test.cases.components.klibSourceFileProvider
 
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.analysis.api.analyze
 import org.jetbrains.kotlin.analysis.api.projectStructure.KaLibraryModule
 import org.jetbrains.kotlin.analysis.test.framework.base.AbstractAnalysisApiBasedTest
@@ -50,6 +51,8 @@ abstract class AbstractGetKlibSourceFileNameTest : AbstractAnalysisApiBasedTest(
             val library = klibLoadingResult.librariesStdlibFirst.single()
 
             val metadata = library.metadata
+
+            @OptIn(K1Deprecation::class)
             val headerProto = parseModuleHeader(metadata.moduleHeaderData)
 
             val packageMetadataSequence = headerProto.packageFragmentNameList.asSequence().flatMap { packageFragmentName ->
@@ -59,6 +62,7 @@ abstract class AbstractGetKlibSourceFileNameTest : AbstractAnalysisApiBasedTest(
             }
 
             packageMetadataSequence.forEach { packageMetadata ->
+                @OptIn(K1Deprecation::class)
                 val packageFragmentProto = parsePackageFragment(packageMetadata)
                 val nameResolver = NameResolverImpl(packageFragmentProto.strings, packageFragmentProto.qualifiedNames)
                 val packageFqName = packageFragmentProto.`package`.getExtensionOrNull(KlibMetadataProtoBuf.packageFqName)
