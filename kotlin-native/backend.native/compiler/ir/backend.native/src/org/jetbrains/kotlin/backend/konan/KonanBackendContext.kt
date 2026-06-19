@@ -5,6 +5,7 @@
 
 package org.jetbrains.kotlin.backend.konan
 
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.backend.common.CommonBackendContext
 import org.jetbrains.kotlin.backend.common.InlineClassesUtils
 import org.jetbrains.kotlin.backend.common.ir.KlibSharedVariablesManager
@@ -24,6 +25,7 @@ internal abstract class KonanBackendContext(config: NativeSecondStageCompilation
                 klass.isSingleFieldValueClass(treatCompatibleFullValueClassesAsInline = true)
     }
 
+    @OptIn(K1Deprecation::class)
     abstract val builtIns: KonanBuiltIns
 
     abstract override val symbols: BackendNativeSymbols

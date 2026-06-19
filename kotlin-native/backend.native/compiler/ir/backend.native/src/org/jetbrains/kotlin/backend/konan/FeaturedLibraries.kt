@@ -5,6 +5,7 @@
 
 package org.jetbrains.kotlin.backend.konan
 
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.cli.CliDiagnostics
 import org.jetbrains.kotlin.cli.report
 import org.jetbrains.kotlin.config.CompilerConfiguration
@@ -18,12 +19,15 @@ import org.jetbrains.kotlin.library.metadata.*
 import org.jetbrains.kotlin.library.metadata.resolver.KotlinLibraryResolveResult
 import org.jetbrains.kotlin.library.toUnresolvedLibraries
 
+@OptIn(K1Deprecation::class)
 internal fun ModuleDescriptor.getExportedDependencies(config: NativeSecondStageCompilationConfig): List<ModuleDescriptor> =
         getDescriptorsFromLibraries((config.exportedLibraries + config.includedLibraries).toSet())
 
+@OptIn(K1Deprecation::class)
 internal fun ModuleDescriptor.getIncludedLibraryDescriptors(config: NativeSecondStageCompilationConfig): List<ModuleDescriptor> =
         getDescriptorsFromLibraries(config.includedLibraries.toSet())
 
+@OptIn(K1Deprecation::class)
 private fun ModuleDescriptor.getDescriptorsFromLibraries(libraries: Set<KotlinLibrary>) =
     allDependencyModules.filter {
         when (val origin = it.klibModuleOrigin) {
@@ -32,6 +36,7 @@ private fun ModuleDescriptor.getDescriptorsFromLibraries(libraries: Set<KotlinLi
         }
     }
 
+@OptIn(K1Deprecation::class)
 internal fun getExportedLibraries(
     configuration: CompilerConfiguration,
     resolvedLibraries: KotlinLibraryResolveResult,
@@ -45,6 +50,7 @@ internal fun getExportedLibraries(
         allowDefaultLibs = false
 )
 
+@OptIn(K1Deprecation::class)
 internal fun getIncludedLibraries(
     includedLibraryFiles: List<File>,
     configuration: CompilerConfiguration,
@@ -63,6 +69,7 @@ private sealed class FeaturedLibrariesReporter {
 
     protected val KotlinLibrary.reportedKind: String
         get() = when {
+            @OptIn(K1Deprecation::class)
             isCInteropLibrary() -> "Interop"
             isImplicitlyLoadedFromKotlinNativeDistribution -> "Default"
             else -> "Unknown kind"
@@ -135,6 +142,7 @@ private sealed class FeaturedLibrariesReporter {
     }
 }
 
+@OptIn(K1Deprecation::class)
 private fun getFeaturedLibraries(
         featuredLibraries: List<String>,
         resolvedLibraries: KotlinLibraryResolveResult,
@@ -148,6 +156,7 @@ private fun getFeaturedLibraries(
         allowDefaultLibs
 )
 
+@OptIn(K1Deprecation::class)
 private fun getFeaturedLibraries(
     featuredLibraryFiles: Set<File>,
     resolvedLibraries: KotlinLibraryResolveResult,

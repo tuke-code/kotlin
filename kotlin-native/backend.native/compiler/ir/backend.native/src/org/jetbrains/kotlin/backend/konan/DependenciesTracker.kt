@@ -5,6 +5,7 @@
 
 package org.jetbrains.kotlin.backend.konan
 
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.utils.atMostOne
 import org.jetbrains.kotlin.backend.konan.llvm.FunctionOrigin
 import org.jetbrains.kotlin.backend.konan.llvm.llvmSymbolOrigin
@@ -88,6 +89,7 @@ internal class DependenciesTrackerImpl(
     private val allLibraries by lazy { context.config.librariesWithDependencies().toSet() }
 
     private fun findStdlibFile(fqName: FqName, fileName: String): LibraryFile {
+        @OptIn(K1Deprecation::class)
         val stdlib = (context.standardLlvmSymbolsOrigin as? DeserializedKlibModuleOrigin)?.library
                 ?: error("Can't find stdlib")
         val stdlibDeserializer = context.moduleDeserializerProvider.getDeserializerOrNull(stdlib)
@@ -126,12 +128,14 @@ internal class DependenciesTrackerImpl(
         return if (packageFragment.isFunctionInterfaceFile)
             FileOrigin.StdlibKFunctionImpl
         else {
+            @OptIn(K1Deprecation::class)
             val library = when (val origin = packageFragment.llvmSymbolOrigin) {
                 CurrentKlibModuleOrigin -> config.libraryToCache?.klib?.takeIf { config.producePerFileCache }
                 else -> (origin as DeserializedKlibModuleOrigin).library
             }
             when {
                 library == null -> FileOrigin.CurrentFile
+                @OptIn(K1Deprecation::class)
                 library.isCInteropLibrary() -> FileOrigin.EntireModule(library)
                 else -> FileOrigin.CertainFile(library, packageFragment.packageFqName.asString(), filePathGetter())
             }
@@ -171,6 +175,7 @@ internal class DependenciesTrackerImpl(
                     usedWeakBitcodeOfFile.map { UsedLibraryFile(it, weak = true) }
 
     private val topSortedLibraries by lazy {
+        @OptIn(K1Deprecation::class)
         context.config.resolvedLibraries.getFullList()
     }
 
@@ -199,6 +204,7 @@ internal class DependenciesTrackerImpl(
                         }
                         val moduleDeserializer = context.moduleDeserializerProvider.getDeserializerOrNull(library)
                         if (moduleDeserializer == null) {
+                            @OptIn(K1Deprecation::class)
                             require(library.isCInteropLibrary()) { "No module deserializer for cached library ${library.uniqueName}" }
                         } else {
                             val eagerInitializedFiles = CachedEagerInitializedFiles(context.config.cachedLibraries, library, moduleDeserializer)
@@ -446,6 +452,7 @@ data class DependenciesTrackingResult(
             val allNativeLibs = DependenciesSerializer.deserialize(path, dependencies.subList(allNativeDepsIndex + 1, allCachedBitcodeDepsIndex)).map { it.libName }
             val allCachedBitcodeDeps = DependenciesSerializer.deserialize(path, dependencies.subList(allCachedBitcodeDepsIndex + 1, dependencies.size))
 
+            @OptIn(K1Deprecation::class)
             val topSortedLibraries = config.resolvedLibraries.getFullList()
             val nativeDependenciesToLink = topSortedLibraries.mapNotNull { if (it.uniqueName in nativeLibsToLink) it else null }
             val allNativeDependencies = topSortedLibraries.mapNotNull { if (it.uniqueName in allNativeLibs) it else null }

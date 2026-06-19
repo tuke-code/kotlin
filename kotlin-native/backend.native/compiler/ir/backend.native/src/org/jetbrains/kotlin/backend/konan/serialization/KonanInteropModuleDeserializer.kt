@@ -13,6 +13,7 @@ import org.jetbrains.kotlin.backend.common.serialization.IrModuleDeserializerKin
 import org.jetbrains.kotlin.backend.common.serialization.encodings.BinarySymbolData
 import org.jetbrains.kotlin.backend.common.serialization.signature.PublicIdSignatureComputer
 import org.jetbrains.kotlin.backend.konan.InteropFqNames
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.builtins.StandardNames
 import org.jetbrains.kotlin.descriptors.*
 import org.jetbrains.kotlin.descriptors.ClassKind
@@ -76,6 +77,7 @@ import kotlin.metadata.Visibility as KmVisibility
  * It returns regular (non-lazy), body-less IR, with a top-level-class grauallity (i.e. even if one class member is referenced, it
  * deserializes the entire top-level class along with its nested classes).
  */
+@OptIn(K1Deprecation::class)
 internal class KonanInteropModuleDeserializer(
         private val deserializationConfiguration: DeserializationConfiguration,
         moduleDescriptor: ModuleDescriptor,
@@ -985,6 +987,7 @@ internal class KonanInteropModuleDeserializer(
 private val ClassName.packageFqName get() = FqName(substringBeforeLast('/').replace("/", "."))
 private val ClassName.declarationFqName get() = FqName(substringAfterLast('/'))
 
+@OptIn(K1Deprecation::class)
 class DeserializedSecondStageInteropPackageDescriptor(
         module: ModuleDescriptor,
         fqName: FqName,

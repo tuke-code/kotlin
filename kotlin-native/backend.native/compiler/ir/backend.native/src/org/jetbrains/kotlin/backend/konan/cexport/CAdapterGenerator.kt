@@ -13,6 +13,7 @@ import org.jetbrains.kotlin.config.CompilerConfiguration
 import org.jetbrains.kotlin.descriptors.*
 import org.jetbrains.kotlin.descriptors.annotations.AnnotationDescriptor
 import org.jetbrains.kotlin.descriptors.konan.allParameters
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.ir.ObsoleteDescriptorBasedAPI
 import org.jetbrains.kotlin.ir.util.referenceFunction
 import org.jetbrains.kotlin.name.FqName
@@ -180,7 +181,11 @@ internal class ExportedElement(
             else ->
                 SignatureElement(uniqueName(original, shortName), original.returnType!!)
         }
+
+        @OptIn(K1Deprecation::class)
         val uniqueNames = owner.paramsToUniqueNames(original.explicitParameters)
+
+        @OptIn(K1Deprecation::class)
         val params = ArrayList(original.explicitParameters
                 .filter { it.type.includeToSignature() }
                 .map { SignatureElement(uniqueNames[it]!!, it.type) })
@@ -193,10 +198,14 @@ internal class ExportedElement(
         }
         val descriptor = declaration
         val original = descriptor.original as FunctionDescriptor
+
+        @OptIn(K1Deprecation::class)
         val returnedType = when {
             original is ConstructorDescriptor -> typeTranslator.builtIns.unitType
             else -> original.returnType!!
         }
+
+        @OptIn(K1Deprecation::class)
         val params = ArrayList(original.allParameters
                 .filter { it.type.includeToSignature() }
                 .map {
@@ -363,6 +372,7 @@ internal class ExportedElement(
         when (descriptor) {
             is FunctionDescriptor -> {
                 val original = descriptor.original
+                @OptIn(K1Deprecation::class)
                 original.allParameters.forEach { addUsedType(it.type, set) }
                 original.returnType?.let { addUsedType(it, set) }
             }

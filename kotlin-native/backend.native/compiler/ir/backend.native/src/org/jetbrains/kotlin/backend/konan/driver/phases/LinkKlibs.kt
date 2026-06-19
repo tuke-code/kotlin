@@ -21,8 +21,10 @@ import org.jetbrains.kotlin.descriptors.ModuleDescriptor
 import org.jetbrains.kotlin.ir.declarations.impl.IrFactoryImpl
 import org.jetbrains.kotlin.ir.util.SymbolTable
 import org.jetbrains.kotlin.resolve.BindingContext
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.resolve.CleanableBindingContext
 
+@OptIn(K1Deprecation::class)
 internal class LinkKlibsContextImpl(
         config: NativeSecondStageCompilationConfig,
         private val moduleDescriptor: ModuleDescriptor,

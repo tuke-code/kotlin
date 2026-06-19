@@ -6,6 +6,7 @@
 package org.jetbrains.kotlin.backend.konan
 
 import llvm.LLVMTypeRef
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.config.LoggingContext
 import org.jetbrains.kotlin.backend.common.linkage.partial.createPartialLinkageSupportForLowerings
 import org.jetbrains.kotlin.backend.konan.cexport.CAdapterExportedElements
@@ -42,6 +43,7 @@ private var IrClass.layoutBuilder: ClassLayoutBuilder? by irAttribute(copyByDefa
 internal class Context(
         config: NativeSecondStageCompilationConfig,
         val sourcesModules: Set<ModuleDescriptor>,
+        @OptIn(K1Deprecation::class)
         override val builtIns: KonanBuiltIns,
         override val irBuiltIns: IrBuiltIns,
         val irModules: Map<String, IrModuleFragment>,
@@ -116,6 +118,7 @@ internal class Context(
 
     fun ghaEnabled() = ::globalHierarchyAnalysisResult.isInitialized
 
+    @OptIn(K1Deprecation::class)
     val stdlibModule
         get() = this.builtIns.any.module
 

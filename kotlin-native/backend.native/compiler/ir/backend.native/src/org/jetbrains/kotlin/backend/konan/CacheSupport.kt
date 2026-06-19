@@ -22,6 +22,7 @@ import org.jetbrains.kotlin.library.KotlinLibrary
 import org.jetbrains.kotlin.library.components.irOrFail
 import org.jetbrains.kotlin.library.metadata.resolver.KotlinLibraryResolveResult
 import org.jetbrains.kotlin.protobuf.ExtensionRegistryLite
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.backend.common.serialization.proto.IrFile as ProtoFile
 
 data class FileWithFqName(val filePath: String, val fqName: String)
@@ -57,6 +58,7 @@ fun KotlinLibrary.getFileFqNames(filePaths: List<String>): List<String> {
     }
 }
 
+@OptIn(K1Deprecation::class)
 class CacheSupport(
         private val configuration: CompilerConfiguration,
         private val resolvedLibraries: KotlinLibraryResolveResult,

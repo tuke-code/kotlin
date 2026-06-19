@@ -6,12 +6,9 @@
 package org.jetbrains.kotlin.backend.konan
 
 import com.intellij.openapi.project.Project
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.backend.common.reportLoadingProblemsIfAny
-import org.jetbrains.kotlin.backend.common.serialization.IrKlibBytesSource
-import org.jetbrains.kotlin.backend.common.serialization.IrLibraryFileFromBytes
-import org.jetbrains.kotlin.backend.common.serialization.codedInputStream
-import org.jetbrains.kotlin.backend.common.serialization.deserializeFileEntryName
-import org.jetbrains.kotlin.backend.common.serialization.fileEntry
+import org.jetbrains.kotlin.backend.common.serialization.*
 import org.jetbrains.kotlin.backend.common.serialization.proto.IrFile
 import org.jetbrains.kotlin.backend.konan.driver.NativeCompilerDriver
 import org.jetbrains.kotlin.cli.CliDiagnostics
@@ -22,15 +19,7 @@ import org.jetbrains.kotlin.cli.report
 import org.jetbrains.kotlin.config.CompilerConfiguration
 import org.jetbrains.kotlin.config.moduleName
 import org.jetbrains.kotlin.config.zipFileSystemAccessor
-import org.jetbrains.kotlin.konan.config.compileFromBitcode
-import org.jetbrains.kotlin.konan.config.exportedLibraries
-import org.jetbrains.kotlin.konan.config.filesToCache
-import org.jetbrains.kotlin.konan.config.generateTestRunner
-import org.jetbrains.kotlin.konan.config.konanIncludedLibraries
-import org.jetbrains.kotlin.konan.config.konanLibraries
-import org.jetbrains.kotlin.konan.config.konanLibraryToAddToCache
-import org.jetbrains.kotlin.konan.config.listTargets
-import org.jetbrains.kotlin.konan.config.makePerFileCache
+import org.jetbrains.kotlin.konan.config.*
 import org.jetbrains.kotlin.konan.target.CompilerOutputKind
 import org.jetbrains.kotlin.konan.target.KonanTarget
 import org.jetbrains.kotlin.library.KotlinAbiVersion
@@ -164,6 +153,7 @@ class KonanDriver(
 
     private fun ensureModuleName(config: NativeSecondStageCompilationConfig) {
         if (environment.getSourceFiles().isEmpty()) {
+            @OptIn(K1Deprecation::class)
             val libraries = config.resolvedLibraries.getFullList()
             val moduleName = config.moduleId
             if (libraries.any { it.uniqueName == moduleName }) {

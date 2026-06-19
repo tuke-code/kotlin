@@ -44,16 +44,19 @@ import org.jetbrains.kotlin.resolve.descriptorUtil.module
 import org.jetbrains.kotlin.serialization.deserialization.DeserializationConfiguration
 import org.jetbrains.kotlin.utils.DFS
 import org.jetbrains.kotlin.utils.mapToSetOrEmpty
+import org.jetbrains.kotlin.K1Deprecation
 
 internal interface LinkKlibsContext : NativeBackendPhaseContext {
     val symbolTable: SymbolTable?
 
     val reflectionTypes: KonanReflectionTypes
 
+    @OptIn(K1Deprecation::class)
     val builtIns: KonanBuiltIns
 
     val bindingContext: BindingContext
 
+    @OptIn(K1Deprecation::class)
     val stdlibModule: ModuleDescriptor
         get() = this.builtIns.any.module
 }
@@ -77,6 +80,7 @@ internal class LinkKlibsOutput(
 }
 
 
+@OptIn(K1Deprecation::class)
 internal fun LinkKlibsContext.linkKlibs(
         input: LinkKlibsInput
 ): LinkKlibsOutput {
@@ -250,6 +254,7 @@ private fun ensureCStructsAndEnumsAreLoadedForCaching(linker: KonanIrLinker, lib
     // Normally it's only for the classes actually used from the lib/app being compiled, but if instead we're building a cache for
     // a C-interop library, we want to load, process and cache everything. The consumer of the cached library will then have all the
     // resulting assembly code for the C structs and enums already available, without a need for any special processing.
+    @OptIn(K1Deprecation::class)
     if (libraryToCacheModule?.kotlinLibrary?.isCInteropLibrary() == true) {
         val interopModuleDeserializer = linker.getOrCreateDeserializerForModule(libraryToCacheModule, libraryToCacheModule.kotlinLibrary,
                 { DeserializationStrategy.ONLY_REFERENCED }, libraryToCacheModule.name.asString())
@@ -260,6 +265,7 @@ private fun ensureCStructsAndEnumsAreLoadedForCaching(linker: KonanIrLinker, lib
 private fun generateImplForCStructsAndEnums(linker: KonanIrLinker, builtIns: IrBuiltIns, symbols: BackendNativeSymbols) {
     val implGen = IrImplementationGeneratorForCStructsAndEnums(builtIns, symbols)
     for (module in linker.modules.values) {
+        @OptIn(K1Deprecation::class)
         if (module.kotlinLibrary?.isCInteropLibrary() == true) {
             for (file in module.files) {
                 for (declaration in file.declarations) {
@@ -272,6 +278,7 @@ private fun generateImplForCStructsAndEnums(linker: KonanIrLinker, builtIns: IrB
     }
 }
 
+@OptIn(K1Deprecation::class)
 internal class KonanCInteropModuleDeserializerFactory(
         private val cachedLibraries: CachedLibraries,
         private val deserializationConfiguration: DeserializationConfiguration,
