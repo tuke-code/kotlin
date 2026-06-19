@@ -12,7 +12,7 @@ plugins {
     id("java-test-fixtures")
     id("project-tests-convention")
     id("test-data-manager")
-    id("test-inputs-check")
+    id("test-inputs-check-v2")
 }
 
 dependencies {
@@ -74,16 +74,12 @@ projectTests {
     testTask(
         jUnitMode = JUnitMode.JUnit5,
         javaLauncher = JdkMajorVersion.JDK_1_8,
-        defineJDKEnvVariables = listOf(JdkMajorVersion.JDK_11_0)
+        defineJDKEnvVariables = listOf(JdkMajorVersion.JDK_11_0, JdkMajorVersion.JDK_21_0)
     ) {
         useJUnitPlatform()
 
         @OptIn(TemporaryTestFederationApi::class)
         smokeTestConfig = SmokeTestConfig.Enabled(autoSmokeTestPercentage = 5)
-
-        testInputsCheck {
-            allowFlightRecorder = true
-        }
     }
 
     testGenerator("org.jetbrains.kotlin.analysis.api.fir.test.TestGeneratorKt")
