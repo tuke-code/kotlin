@@ -6,6 +6,7 @@
 package org.jetbrains.kotlin.backend.jvm.codegen
 
 import com.intellij.util.ArrayUtil
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.backend.common.lower.ANNOTATION_IMPLEMENTATION
 import org.jetbrains.kotlin.backend.jvm.*
 import org.jetbrains.kotlin.backend.jvm.codegen.AnnotationCodegen.Companion.annotationClass
@@ -286,6 +287,7 @@ class ClassCodegen private constructor(
                     // normalized to `local` instead of `protected`
                     DescriptorVisibilities.LOCAL
                 } else irClass.visibility.normalize()
+            @OptIn(K1Deprecation::class)
             val visibilityFlagsValue = ProtoEnumFlags.descriptorVisibility(normalizedVisibilityForSyntheticClass).number
             val maxVisibilityBits =
                 1 + JvmAnnotationNames.METADATA_SYNTHETIC_CLASS_VISIBILITY_BIT_LAST - JvmAnnotationNames.METADATA_SYNTHETIC_CLASS_VISIBILITY_BIT_FIRST
