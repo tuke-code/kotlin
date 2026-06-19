@@ -5,6 +5,7 @@
 
 package org.jetbrains.kotlin.swiftexport.standalone.config
 
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.konan.target.Distribution
 import org.jetbrains.kotlin.konan.target.KonanTarget
 import org.jetbrains.kotlin.platform.TargetPlatform
@@ -34,7 +35,10 @@ public data class SwiftExportConfig(
     val coroutineSupportModuleName: String = "KotlinCoroutineSupport"
     val runtimeModuleName: String = "KotlinRuntime"
 
+    @OptIn(K1Deprecation::class)
     val stdlibInputModule: InputModule by lazy { createInputModuleForStdlib(distribution) }
+
+    @OptIn(K1Deprecation::class)
     val platformLibsInputModule: Set<InputModule> by lazy { createInputModuleForPlatformLibs(Path(distribution.platformLibs(konanTarget)).toFile()) }
 
     val targetPlatform: TargetPlatform by lazy { NativePlatforms.nativePlatformBySingleTarget(konanTarget) }
@@ -46,6 +50,7 @@ public data class SwiftExportConfig(
             SwiftModuleConfig(shouldBeFullyExported = false)
         )
 
+    @OptIn(K1Deprecation::class)
     private fun createInputModuleForPlatformLibs(platformLibsRootFile: File) = platformLibsRootFile.list()!!
         .map {
             InputModule(

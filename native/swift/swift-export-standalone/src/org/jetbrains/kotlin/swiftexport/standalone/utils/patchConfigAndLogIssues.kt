@@ -5,11 +5,13 @@
 
 package org.jetbrains.kotlin.swiftexport.standalone.utils
 
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.swiftexport.standalone.InputModule
 import org.jetbrains.kotlin.swiftexport.standalone.SwiftExportLogger
 import org.jetbrains.kotlin.swiftexport.standalone.config.SwiftExportConfig
 import org.jetbrains.kotlin.swiftexport.standalone.config.SwiftModuleConfig
 
+@OptIn(K1Deprecation::class)
 internal fun patchConfigAndLogIssues(modules: Set<InputModule>, config: SwiftExportConfig): SwiftExportConfig {
     val logger = config.logger
 
