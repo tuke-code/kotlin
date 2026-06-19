@@ -5,6 +5,7 @@
 
 package org.jetbrains.kotlin.backend.jvm.lower
 
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.backend.common.ClassLoweringPass
 import org.jetbrains.kotlin.backend.common.FileLoweringPass
 import org.jetbrains.kotlin.backend.common.ModuleLoweringPass
@@ -150,6 +151,7 @@ private fun generateMultifileFacades(
                 if (member.isExternal) continue
 
                 val correspondingProperty = member.correspondingPropertySymbol?.owner
+                @OptIn(K1Deprecation::class)
                 if (member.hasAnnotation(INLINE_ONLY_ANNOTATION_FQ_NAME) ||
                     correspondingProperty?.hasAnnotation(INLINE_ONLY_ANNOTATION_FQ_NAME) == true
                 ) continue

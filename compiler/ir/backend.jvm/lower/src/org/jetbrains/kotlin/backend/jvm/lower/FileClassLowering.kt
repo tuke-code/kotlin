@@ -48,6 +48,7 @@ import org.jetbrains.kotlin.name.JvmStandardClassIds.JVM_NAME_SHORT
 import org.jetbrains.kotlin.name.JvmStandardClassIds.JVM_PACKAGE_NAME_SHORT
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.psi.KtFile
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.resolve.inline.INLINE_ONLY_ANNOTATION_FQ_NAME
 import org.jetbrains.kotlin.resolve.jvm.JvmClassName
 import java.io.File
@@ -84,6 +85,7 @@ internal class FileClassLowering(val context: JvmBackendContext) : FileLoweringP
         val fileClassInfo = irFile.getFileClassInfo()
         val isMultifilePart = fileClassInfo.withJvmMultifileClass
 
+        @OptIn(K1Deprecation::class)
         val onlyPrivateDeclarationsAndFeatureIsEnabled =
             context.config.languageVersionSettings.supportsFeature(LanguageFeature.PackagePrivateFileClassesWithAllPrivateMembers) && fileClassMembers
                 .all {

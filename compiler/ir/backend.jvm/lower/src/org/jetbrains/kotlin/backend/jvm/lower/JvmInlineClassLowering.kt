@@ -47,6 +47,7 @@ import org.jetbrains.kotlin.name.JvmStandardClassIds
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.resolve.JVM_INLINE_ANNOTATION_FQ_NAME
 import org.jetbrains.kotlin.resolve.JVM_NAME_ANNOTATION_FQ_NAME
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.resolve.annotations.JVM_STATIC_ANNOTATION_FQ_NAME
 import org.jetbrains.kotlin.utils.addToStdlib.assignFrom
 
@@ -113,6 +114,7 @@ internal class JvmInlineClassLowering(private val context: JvmBackendContext) : 
 
     // If a property is annotated with @JvmStatic, we generate static accessors.
     // Thus, we should expose the accessors. The easiest way to do so is to copy @JvmStatic annotation.
+    @OptIn(K1Deprecation::class)
     private fun IrSimpleFunction.copyPropagatedJvmStaticAnnotation(): List<IrAnnotation> {
         if (!isPropertyAccessor) return emptyList()
         if (hasAnnotation(JVM_STATIC_ANNOTATION_FQ_NAME)) return emptyList()
