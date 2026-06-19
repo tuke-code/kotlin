@@ -37,8 +37,6 @@ sourceSets {
     "testFixtures" { projectDefault() }
 }
 
-optInToK1Deprecation()
-
 projectTests {
     objCExportHeaderGeneratorTestTask(
         "test",

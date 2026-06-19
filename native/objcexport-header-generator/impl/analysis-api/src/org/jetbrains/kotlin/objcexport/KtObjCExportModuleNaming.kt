@@ -7,6 +7,7 @@ package org.jetbrains.kotlin.objcexport
 
 import com.intellij.openapi.vfs.VfsUtilCore
 import com.intellij.openapi.vfs.toNioPathOrNull
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.analysis.api.KaExperimentalApi
 import org.jetbrains.kotlin.analysis.api.KaSession
 import org.jetbrains.kotlin.analysis.api.projectStructure.KaLibraryModule
@@ -75,6 +76,7 @@ internal object KtKlibObjCExportModuleNaming : KtObjCExportModuleNaming {
         // Since types from cinterop klibs are not exported, this klib is exactly what we are looking for.
         // The code below attempts to be more resilient by handling slightly more cases than this.
         return loadedKlibs.filterNot {
+            @OptIn(K1Deprecation::class)
             it.isCInteropLibrary()
         }.map {
             it.shortName ?: it.uniqueName
