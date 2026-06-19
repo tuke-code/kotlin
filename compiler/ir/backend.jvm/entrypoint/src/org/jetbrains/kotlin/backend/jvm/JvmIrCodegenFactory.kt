@@ -5,6 +5,7 @@
 
 package org.jetbrains.kotlin.backend.jvm
 
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.backend.common.extensions.FirIncompatiblePluginAPI
 import org.jetbrains.kotlin.backend.common.extensions.IrGenerationExtension
 import org.jetbrains.kotlin.backend.common.extensions.IrPluginContext
@@ -80,6 +81,7 @@ class JvmIrCodegenFactory(
     private val externalMangler: JvmDescriptorMangler? = null,
     private val externalSymbolTable: SymbolTable? = null,
     private val jvmGeneratorExtensions: JvmGeneratorExtensionsImpl = JvmGeneratorExtensionsImpl(configuration),
+    @OptIn(K1Deprecation::class)
     private val evaluatorFragmentInfoForPsi2Ir: EvaluatorFragmentInfo? = null,
     private val ideCodegenSettings: IdeCodegenSettings = IdeCodegenSettings(),
 ) {
@@ -156,7 +158,7 @@ class JvmIrCodegenFactory(
         get() = this.getCompilerExtensions(IrGenerationExtension)
             .filter { !ideCodegenSettings.doNotLoadDependencyModuleHeaders || it is IrGeneratorExtensionMarkerForExpressionEvaluation }
 
-    @OptIn(ObsoleteDescriptorBasedAPI::class)
+    @OptIn(ObsoleteDescriptorBasedAPI::class, K1Deprecation::class)
     fun convertToIr(
         files: Collection<KtFile>,
         configuration: CompilerConfiguration,
@@ -367,6 +369,7 @@ class JvmIrCodegenFactory(
         return CodegenInput(state, context, irModuleFragment, allBuiltins, generationExtensions)
     }
 
+    @OptIn(K1Deprecation::class)
     private fun computePsiBasedEvaluatorData(irModuleFragment: IrModuleFragment): JvmEvaluatorData? {
         val evaluatorFragmentInfoForPsi2Ir = evaluatorFragmentInfoForPsi2Ir ?: return null
 
@@ -479,6 +482,7 @@ class JvmIrCodegenFactory(
         }
     }
 
+    @OptIn(K1Deprecation::class)
     private fun generateModuleMetadata(backendContext: JvmBackendContext) {
         val builder = JvmModuleProtoBuf.Module.newBuilder()
         val stringTable = StringTableImpl()

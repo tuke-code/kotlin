@@ -16,6 +16,7 @@ import org.jetbrains.kotlin.ir.symbols.IrConstructorSymbol
 import org.jetbrains.kotlin.ir.symbols.IrSimpleFunctionSymbol
 import org.jetbrains.kotlin.ir.util.DeclarationStubGenerator
 import org.jetbrains.kotlin.resolve.descriptorUtil.module
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.resolve.multiplatform.findCompatibleActualsForExpected
 
 /**
@@ -90,6 +91,7 @@ private class StubOrphanedExpectSymbolTransformer(val stubGenerator: Declaration
      * If an `actual` symbol exists, we shouldn't stub the `expect` symbol. This will be performed by
      * [org.jetbrains.kotlin.backend.common.lower.ExpectDeclarationsRemoveLowering] during lowering.
      */
+    @OptIn(K1Deprecation::class)
     private fun MemberDescriptor.isOrphanedExpect(): Boolean = findCompatibleActualsForExpected(module).isEmpty()
 
     /**

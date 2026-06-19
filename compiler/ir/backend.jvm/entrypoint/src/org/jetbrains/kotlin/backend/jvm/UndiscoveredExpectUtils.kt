@@ -13,6 +13,7 @@ import org.jetbrains.kotlin.ir.util.SymbolTable
 import org.jetbrains.kotlin.ir.util.referenceFunction
 import org.jetbrains.kotlin.psi.*
 import org.jetbrains.kotlin.resolve.BindingContext
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.resolve.multiplatform.findCompatibleExpectsForActual
 import org.jetbrains.kotlin.util.slicedMap.ReadOnlySlice
 
@@ -79,6 +80,7 @@ class UndiscoveredExpectVisitor(
         bindingContextKey: ReadOnlySlice<K, V>,
     ): V? = findExpectForActualOfType<V, K, V>(bindingContextKey)
 
+    @OptIn(K1Deprecation::class)
     private inline fun <reified D : MemberDescriptor, K : PsiElement, V> K.findExpectForActualOfType(
         bindingContextKey: ReadOnlySlice<K, V>,
     ): D? {
