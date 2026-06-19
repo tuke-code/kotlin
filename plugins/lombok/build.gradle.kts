@@ -7,7 +7,7 @@ plugins {
     kotlin("jvm")
     id("java-test-fixtures")
     id("project-tests-convention")
-    id("test-inputs-check")
+    id("test-inputs-check-v2")
 }
 
 val guavaForTests by configurations.dependencyScope("guavaForTests")
@@ -109,13 +109,6 @@ projectTests {
         jUnitMode = JUnitMode.JUnit5,
         defineJDKEnvVariables = listOf(JdkMajorVersion.JDK_17_0)
     ) {
-        testInputsCheck {
-            // Log4j2's `LogManager.getLogger(...)` calls `System.getProperties()` during initialization,
-            // which requires read+write access on `java.util.PropertyPermission "*"`.
-            with(extraPermissions) {
-                add("permission java.util.PropertyPermission \"*\", \"read,write\";")
-            }
-        }
 
         val prefix = "org.jetbrains.kotlin.test"
         addClasspathProperty(guavaClasspathForTests, "$prefix.guava")
