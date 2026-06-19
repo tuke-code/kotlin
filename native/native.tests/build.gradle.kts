@@ -121,4 +121,3 @@ projectTests {
     }
 }
 
-optInToK1Deprecation()

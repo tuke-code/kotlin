@@ -13,6 +13,7 @@ import com.intellij.pom.PomModel
 import com.intellij.pom.core.impl.PomModelImpl
 import com.intellij.pom.tree.TreeAspect
 import com.intellij.psi.impl.source.tree.TreeCopyHandler
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.ObsoleteTestInfrastructure
 import org.jetbrains.kotlin.builtins.StandardNames
 import org.jetbrains.kotlin.cli.common.disposeRootInWriteAction
@@ -831,6 +832,7 @@ private class ExtTestDataFileStructureFactory(parentDisposable: Disposable) : Te
     companion object {
         private val lock = Any()
 
+        @OptIn(K1Deprecation::class)
         private fun createPsiFactory(parentDisposable: Disposable): KtPsiFactory {
             val configuration: CompilerConfiguration = KotlinTestUtils.newConfiguration()
             configuration.put(CommonConfigurationKeys.MODULE_NAME, "native-blackbox-test-patching-module")

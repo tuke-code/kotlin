@@ -5,6 +5,7 @@
 
 package org.jetbrains.kotlin.konan.test.blackbox.support.compilation
 
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.cli.common.ExitCode
 import org.jetbrains.kotlin.config.nativeBinaryOptions.BinaryOptionWithValue
 import org.jetbrains.kotlin.config.nativeBinaryOptions.BinaryOptions
@@ -855,6 +856,7 @@ class StaticCacheCompilation(
 
     private val useHeaders: Boolean = settings.get<CacheMode>().useHeaders
 
+    @OptIn(K1Deprecation::class)
     override fun applySpecificArgs(argsBuilder: ArgsBuilder): Unit = with(argsBuilder) {
         add("-produce", if (createHeaderCache) "header_cache" else "static_cache")
 

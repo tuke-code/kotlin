@@ -5,6 +5,7 @@
 
 package org.jetbrains.kotlin.konan.test
 
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.builtins.KotlinBuiltIns
 import org.jetbrains.kotlin.builtins.konan.KonanBuiltIns
 import org.jetbrains.kotlin.cli.common.diagnosticsCollector
@@ -87,6 +88,7 @@ class KlibSerializerNativeCliFacade(
         return BinaryArtifacts.KLib(File(output.outputKlibPath), input.configuration.diagnosticsCollector)
     }
 
+    @OptIn(K1Deprecation::class)
     private fun updateTestConfiguration(
         module: TestModule,
         outputKlibPath: String,
@@ -116,6 +118,7 @@ class KlibSerializerNativeCliFacade(
         testServices.moduleDescriptorProvider.replaceModuleDescriptorForModule(module, moduleDescriptor)
     }
 
+    @OptIn(K1Deprecation::class)
     private fun loadDependencies(
         dependencyLibraries: Collection<KotlinLibrary>,
         languageVersionSettings: LanguageVersionSettings,
@@ -169,6 +172,7 @@ class KlibSerializerNativeCliFacade(
     }
 
     companion object {
+        @OptIn(K1Deprecation::class)
         private val klibFactories = KlibMetadataFactories(::KonanBuiltIns, NullFlexibleTypeDeserializer)
     }
 }
