@@ -18,6 +18,7 @@ package org.jetbrains.kotlin.cli.common.messages
 
 import com.intellij.psi.PsiFile
 import org.jetbrains.kotlin.diagnostics.Diagnostic
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.diagnostics.DiagnosticUtils
 
 /**
@@ -25,6 +26,7 @@ import org.jetbrains.kotlin.diagnostics.DiagnosticUtils
  */
 class DefaultDiagnosticReporter(override val messageCollector: MessageCollector) : MessageCollectorBasedReporter
 
+@OptIn(K1Deprecation::class)
 interface MessageCollectorBasedReporter : DiagnosticMessageReporter {
     val messageCollector: MessageCollector
 
@@ -36,4 +38,5 @@ interface MessageCollectorBasedReporter : DiagnosticMessageReporter {
     )
 }
 
+@OptIn(K1Deprecation::class)
 internal fun Diagnostic.factoryNameOrNull(): String? = factory.nameOrNull

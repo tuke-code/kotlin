@@ -37,8 +37,10 @@ import org.jetbrains.kotlin.load.java.components.TraceBasedErrorReporter
 import org.jetbrains.kotlin.psi.KtFile
 import org.jetbrains.kotlin.resolve.*
 import org.jetbrains.kotlin.resolve.checkers.OptInUsageChecker
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.resolve.jvm.JvmBindingContextSlices
 
+@OptIn(K1Deprecation::class)
 class AnalyzerWithCompilerReport(private val configuration: CompilerConfiguration) : AbstractAnalyzerWithCompilerReport {
     override val targetEnvironment: TargetEnvironment
         get() = CompilerEnvironment
