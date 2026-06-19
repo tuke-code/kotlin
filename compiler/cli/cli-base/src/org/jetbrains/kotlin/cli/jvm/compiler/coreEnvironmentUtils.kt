@@ -23,6 +23,7 @@ import org.jetbrains.kotlin.config.CompilerConfiguration
 import org.jetbrains.kotlin.config.CompilerConfigurationKey
 import org.jetbrains.kotlin.config.JVMConfigurationKeys
 import org.jetbrains.kotlin.extensions.CompilerConfigurationExtension
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.extensions.PreprocessedFileCreator
 import org.jetbrains.kotlin.idea.KotlinFileType
 import org.jetbrains.kotlin.modules.Module
@@ -33,6 +34,7 @@ import java.io.File
 
 class SourceFileWithModule<T>(val sourceFiles: Iterable<T>, val isCommon: Boolean, val moduleName: String?)
 
+@OptIn(K1Deprecation::class)
 fun List<KotlinSourceRoot>.forAllFiles(
     configuration: CompilerConfiguration,
     project: Project,
@@ -120,6 +122,7 @@ fun <VirtualFile, Source> List<KotlinSourceRoot>.allSourceFilesSequence(
     }
 }
 
+@OptIn(K1Deprecation::class)
 fun createSourceFilesFromSourceRoots(
     configuration: CompilerConfiguration,
     project: Project,

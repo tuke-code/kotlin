@@ -65,7 +65,6 @@ projectTests {
 }
 
 optInToExperimentalCompilerApi()
-optInToK1Deprecation()
 
 tasks.jar.configure {
     //excludes unused bunch files

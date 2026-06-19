@@ -85,6 +85,7 @@ import org.jetbrains.kotlin.resolve.lazy.declarations.DeclarationProviderFactory
 import org.jetbrains.kotlin.serialization.DescriptorSerializerPlugin
 import java.io.File
 
+@OptIn(K1Deprecation::class)
 class KotlinCoreEnvironment private constructor(
     val projectEnvironment: ProjectEnvironment,
     val configuration: CompilerConfiguration,

@@ -19,11 +19,13 @@ import org.jetbrains.kotlin.load.kotlin.JvmPackagePartProviderBase
 import org.jetbrains.kotlin.load.kotlin.loadModuleMapping
 import org.jetbrains.kotlin.metadata.deserialization.MetadataVersion
 import org.jetbrains.kotlin.metadata.jvm.deserialization.ModuleMapping
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.resolve.CommonCompilerDeserializationConfiguration
 import java.io.ByteArrayOutputStream
 import java.io.EOFException
 import java.io.PrintStream
 
+@OptIn(K1Deprecation::class)
 class JvmPackagePartProvider(
     languageVersionSettings: LanguageVersionSettings,
     private val scope: GlobalSearchScope
@@ -62,6 +64,7 @@ class JvmPackagePartProvider(
     }
 }
 
+@OptIn(K1Deprecation::class)
 fun tryLoadModuleMapping(
     getModuleBytes: () -> ByteArray,
     debugName: String,
