@@ -51,6 +51,12 @@ plugins {
     id("cache-redirector")
 }
 
+gradle.lifecycle.afterProject {
+    if (plugins.hasPlugin("java-base") && !plugins.hasPlugin("common-configuration")) {
+        throw GradleException("common-configuration plugin should be applied to all projects")
+    }
+}
+
 val versionPropertiesFile = File(rootProject.projectDir, "gradle/versions.properties")
 val versionProperties = Properties()
 versionPropertiesFile.inputStream().use {
