@@ -9,7 +9,7 @@ plugins {
     id("java-test-fixtures")
     id("project-tests-convention")
     id("test-data-manager")
-    id("test-inputs-check")
+    id("test-inputs-check-v2")
 }
 
 dependencies {
@@ -119,10 +119,6 @@ projectTests {
             JdkMajorVersion.JDK_21_0  // TestsWithJava21 and others
         )
     ) {
-        testInputsCheck {
-            allowFlightRecorder = true
-        }
-
         if (!kotlinBuildProperties.isTeamcityBuild.get()) {
             // Ensure golden tests run first since some LL tests are complementary for the surface tests
             mustRunAfter(":analysis:analysis-api-fir:test")
