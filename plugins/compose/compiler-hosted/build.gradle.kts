@@ -9,7 +9,7 @@ plugins {
     kotlin("jvm")
     id("d8-configuration")
     id("project-tests-convention")
-    id("test-inputs-check")
+    id("test-inputs-check-v2")
 }
 
 repositories {
@@ -154,9 +154,6 @@ projectTests {
         addClasspathProperty(testJsRuntime, "compose.compiler.test.js.classpath")
         useJsIrBoxTests(buildDir = layout.buildDirectory)
 
-        testInputsCheck {
-            allowFlightRecorder.set(true)
-        }
     }
 
     testGenerator("androidx.compose.compiler.plugins.kotlin.TestGeneratorKt", doNotSetFixturesSourceSetDependency = true)
