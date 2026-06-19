@@ -32,6 +32,7 @@ import org.jetbrains.kotlin.metadata.jvm.deserialization.PackageParts
 import org.jetbrains.kotlin.metadata.jvm.deserialization.serializeToByteArray
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.FqName
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.serialization.SerializableStringTable
 import org.jetbrains.kotlin.serialization.deserialization.DOT_METADATA_FILE_EXTENSION
 import org.jetbrains.kotlin.serialization.deserialization.builtins.BuiltInSerializerProtocol
@@ -201,6 +202,7 @@ abstract class MetadataLegacySerializerPhaseBase(
             proto.`package` = packagePartProto.build()
         }
 
+        @OptIn(K1Deprecation::class)
         private fun serializeStringTable() {
             val [strings, qualifiedNames] = (extension.stringTable as? SerializableStringTable)?.buildProto() ?: return
             proto.strings = strings

@@ -39,4 +39,3 @@ sourceSets {
 }
 
 optInToExperimentalCompilerApi()
-optInToK1Deprecation()
