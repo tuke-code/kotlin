@@ -34,8 +34,6 @@ sourceSets {
     "testFixtures" { projectDefault() }
 }
 
-optInToK1Deprecation()
-
 projectTests {
     testData(isolated, "testData")
     testData(rootProject.isolated, "native/native.tests/testData/framework")

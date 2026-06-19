@@ -5,6 +5,7 @@
 
 package org.jetbrains.kotlin.swiftexport.standalone.test
 
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.codegen.forTestCompile.ForTestCompileRuntime
 import org.jetbrains.kotlin.konan.test.blackbox.support.TestModule
 import org.jetbrains.kotlin.konan.test.blackbox.support.compilation.TestCompilationResult.Companion.assertSuccess
@@ -51,6 +52,7 @@ abstract class AbstractExternalProjectExecutionTest : AbstractSwiftExportExecuti
         runTestsAgainstKlib(setOf(klibSettingsA, klibSettingsB), testPath)
     }
 
+    @OptIn(K1Deprecation::class)
     private fun runTestsAgainstKlib(klibSettings: Set<KlibExportSettings>, testPath: File) {
         val testModules = klibSettings.map { TestModule.Given(it.path.toFile()) }.toSet()
         val inputModules = klibSettings.map {
