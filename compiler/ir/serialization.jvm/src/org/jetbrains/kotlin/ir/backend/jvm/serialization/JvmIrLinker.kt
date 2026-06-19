@@ -5,6 +5,7 @@
 
 package org.jetbrains.kotlin.ir.backend.jvm.serialization
 
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.backend.common.linkage.partial.PartialLinkageSupportForLinker
 import org.jetbrains.kotlin.backend.common.overrides.IrLinkerFakeOverrideProvider
 import org.jetbrains.kotlin.backend.common.serialization.*
@@ -62,6 +63,7 @@ class JvmIrLinker(
     // TODO: implement special Java deserializer
     override fun createModuleDeserializer(moduleDescriptor: ModuleDescriptor, klib: KotlinLibrary?, strategyResolver: (String) -> DeserializationStrategy): IrModuleDeserializer {
         if (klib != null) {
+            @OptIn(K1Deprecation::class)
             assert(moduleDescriptor.getCapability(KlibModuleOrigin.CAPABILITY) != null)
             return JvmModuleDeserializer(moduleDescriptor, klib, klib.versions.abiVersion ?: KotlinAbiVersion.CURRENT, strategyResolver)
         }
@@ -78,6 +80,7 @@ class JvmIrLinker(
 
     private fun DeclarationDescriptor.isJavaDescriptor(): Boolean {
         if (this is PackageFragmentDescriptor) {
+            @OptIn(K1Deprecation::class)
             return this is LazyJavaPackageFragment || fqName.startsWith(javaName)
         }
 
