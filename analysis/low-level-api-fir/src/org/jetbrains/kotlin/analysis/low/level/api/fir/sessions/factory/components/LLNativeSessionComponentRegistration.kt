@@ -12,6 +12,7 @@ import org.jetbrains.kotlin.fir.scopes.FirOverrideChecker
 import org.jetbrains.kotlin.fir.scopes.impl.FirStandardOverrideChecker
 import org.jetbrains.kotlin.fir.session.FirNativeSessionFactory
 import org.jetbrains.kotlin.resolve.DefaultImportsProvider
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.resolve.konan.platform.NativeDefaultImportsProvider
 
 @OptIn(SessionConfiguration::class)
@@ -36,6 +37,7 @@ internal object LLNativeSessionComponentRegistration : LLPlatformSessionComponen
         register(FirOverrideChecker::class, FirStandardOverrideChecker(this))
     }
 
+    @OptIn(K1Deprecation::class)
     override val defaultImportsProvider: DefaultImportsProvider
         get() = NativeDefaultImportsProvider
 }

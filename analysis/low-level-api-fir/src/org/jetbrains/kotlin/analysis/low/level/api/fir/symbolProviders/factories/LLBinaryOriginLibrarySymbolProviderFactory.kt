@@ -28,6 +28,7 @@ import org.jetbrains.kotlin.fir.session.MetadataSymbolProvider
 import org.jetbrains.kotlin.fir.session.NativeForwardDeclarationsSymbolProvider
 import org.jetbrains.kotlin.fir.symbols.impl.FirClassLikeSymbol
 import org.jetbrains.kotlin.library.KlibConstants.KLIB_FILE_EXTENSION
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.library.KotlinLibrary
 import org.jetbrains.kotlin.library.loader.KlibLoader
 import org.jetbrains.kotlin.library.metadata.impl.KlibResolvedModuleDescriptorsFactoryImpl.Companion.FORWARD_DECLARATIONS_MODULE_NAME
@@ -117,6 +118,7 @@ internal object LLBinaryOriginLibrarySymbolProviderFactory : LLLibrarySymbolProv
      */
     private class LLNativeForwardDeclarationsModuleData(originalModule: KaModule) : LLFirModuleData(originalModule) {
         override val name: Name
+            @OptIn(K1Deprecation::class)
             get() = FORWARD_DECLARATIONS_MODULE_NAME
     }
 

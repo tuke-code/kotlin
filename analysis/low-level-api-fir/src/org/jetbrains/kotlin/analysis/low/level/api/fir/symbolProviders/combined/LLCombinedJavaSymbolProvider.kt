@@ -21,6 +21,7 @@ import org.jetbrains.kotlin.fir.resolve.providers.FirSymbolProvider
 import org.jetbrains.kotlin.fir.resolve.providers.FirSymbolProviderInternals
 import org.jetbrains.kotlin.fir.symbols.impl.*
 import org.jetbrains.kotlin.load.java.JavaClassFinder
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.load.java.createJavaClassFinder
 import org.jetbrains.kotlin.load.java.structure.JavaClass
 import org.jetbrains.kotlin.load.java.structure.impl.JavaClassImpl
@@ -104,6 +105,8 @@ internal class LLCombinedJavaSymbolProvider private constructor(
         fun merge(session: FirSession, project: Project, providers: List<LLFirJavaSymbolProvider>): FirSymbolProvider? =
             if (providers.size > 1) {
                 val combinedScope = KaGlobalSearchScopeMerger.getInstance(project).union(providers.map { it.searchScope })
+
+                @OptIn(K1Deprecation::class)
                 val javaClassFinder = project.createJavaClassFinder(combinedScope, session.javaAnnotationProvider)
                 LLCombinedJavaSymbolProvider(session, project, providers, javaClassFinder)
             } else providers.singleOrNull()

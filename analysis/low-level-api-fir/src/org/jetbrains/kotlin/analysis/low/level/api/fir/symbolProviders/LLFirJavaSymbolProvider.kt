@@ -20,6 +20,7 @@ import org.jetbrains.kotlin.fir.java.FirJavaFacadeForSource
 import org.jetbrains.kotlin.fir.java.JavaSymbolProvider
 import org.jetbrains.kotlin.fir.java.javaAnnotationProvider
 import org.jetbrains.kotlin.fir.symbols.impl.FirRegularClassSymbol
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.load.java.createJavaClassFinder
 import org.jetbrains.kotlin.load.java.structure.impl.JavaClassImpl
 import org.jetbrains.kotlin.name.ClassId
@@ -34,6 +35,7 @@ internal class LLFirJavaSymbolProvider(
         FirJavaFacadeForSource(
             session,
             session.moduleData,
+            @OptIn(K1Deprecation::class)
             session.project.createJavaClassFinder(searchScope, session.javaAnnotationProvider)
         ),
         searchScope
