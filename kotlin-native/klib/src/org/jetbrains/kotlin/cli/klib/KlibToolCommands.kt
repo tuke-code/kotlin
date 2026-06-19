@@ -5,6 +5,7 @@
 
 package org.jetbrains.kotlin.cli.klib
 
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.backend.common.DumpIrReferenceRenderingAsSignatureStrategy
 import org.jetbrains.kotlin.backend.common.IrSignaturesExtractor
 import org.jetbrains.kotlin.backend.common.serialization.IrInterningService
@@ -84,6 +85,7 @@ internal class Info(output: KlibToolOutput, args: KlibToolArguments) : KlibToolC
         val library = loadKlib(args.libraryPath, output) ?: return
         val metadata = library.metadata
 
+        @OptIn(K1Deprecation::class)
         val metadataHeader = parseModuleHeader(metadata.moduleHeaderData)
 
         val nonEmptyPackageFQNs = buildSet {
@@ -93,6 +95,7 @@ internal class Info(output: KlibToolOutput, args: KlibToolArguments) : KlibToolC
             // Sometimes `emptyPackageList` is empty, so it's necessary to explicitly filter out empty packages:
             val stillRemainingEmptyPackageFQNs = filterTo(hashSetOf()) { packageName ->
                 metadata.getPackageFragmentNames(packageName).all { partName ->
+                    @OptIn(K1Deprecation::class)
                     parsePackageFragment(metadata.getPackageFragment(packageName, partName)).isEmpty()
                 }
             }
@@ -149,7 +152,7 @@ internal class Info(output: KlibToolOutput, args: KlibToolArguments) : KlibToolC
 }
 
 internal class DumpIr(output: KlibToolOutput, args: KlibToolArguments) : KlibToolCommand(output, args) {
-    @OptIn(ObsoleteDescriptorBasedAPI::class)
+    @OptIn(ObsoleteDescriptorBasedAPI::class, K1Deprecation::class)
     override fun execute() {
         val library = loadKlib(args.libraryPath, output) ?: return
 
@@ -191,7 +194,7 @@ internal class DumpIr(output: KlibToolOutput, args: KlibToolArguments) : KlibToo
 }
 
 internal class DumpIrInlinableFunctions(output: KlibToolOutput, args: KlibToolArguments) : KlibToolCommand(output, args) {
-    @OptIn(ObsoleteDescriptorBasedAPI::class)
+    @OptIn(ObsoleteDescriptorBasedAPI::class, K1Deprecation::class)
     override fun execute() {
         val library = loadKlib(args.libraryPath, output) ?: return
 
