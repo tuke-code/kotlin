@@ -5,6 +5,7 @@
 
 package org.jetbrains.kotlin.konan.test.converters
 
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.backend.common.IrModuleDependencies
 import org.jetbrains.kotlin.backend.common.IrModuleInfo
 import org.jetbrains.kotlin.backend.common.linkage.partial.createPartialLinkageSupportForLinker
@@ -85,7 +86,7 @@ class NativeDeserializerFacade(
         ) { if (it == mainModuleLib) moduleDescriptor else testServices.libraryProvider.getDescriptorByCompiledLibrary(it) }
     }
 
-    @OptIn(ObsoleteDescriptorBasedAPI::class)
+    @OptIn(ObsoleteDescriptorBasedAPI::class, K1Deprecation::class)
     private inline fun getIrModuleInfoForKlib(
         moduleDescriptor: ModuleDescriptor,
         sortedDependencies: Collection<KotlinLibrary>,

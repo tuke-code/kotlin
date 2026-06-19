@@ -5,6 +5,7 @@
 
 package org.jetbrains.kotlin.konan.test
 
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.cli.common.arguments.K2NativeCompilerArguments
 import org.jetbrains.kotlin.cli.common.arguments.cliArgument
 import org.jetbrains.kotlin.incremental.createDirectory
@@ -141,6 +142,7 @@ class NativeKlibCliArgumentsTest : AbstractNativeSimpleTest() {
 
     @Test
     @DisplayName("Test -Xexport-kdoc argument")
+    @OptIn(K1Deprecation::class)
     fun testExportKdocArgument() {
         val sourcesDir = buildDir.resolve("sources").apply { createDirectory() }
 

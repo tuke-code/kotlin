@@ -43,8 +43,6 @@ sourceSets {
     "testFixtures" { projectDefault() }
 }
 
-optInToK1Deprecation()
-
 projectTests {
     testData(project(":compiler").isolated, "testData/klib")
     testData(project(":compiler").isolated, "testData/codegen")

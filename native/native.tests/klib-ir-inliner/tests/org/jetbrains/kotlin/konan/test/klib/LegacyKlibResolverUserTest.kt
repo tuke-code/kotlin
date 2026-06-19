@@ -5,6 +5,7 @@
 
 package org.jetbrains.kotlin.konan.test.klib
 
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.konan.file.ZipFileSystemAccessor
 import org.jetbrains.kotlin.konan.library.KLIB_INTEROP_IR_PROVIDER_IDENTIFIER
 import org.jetbrains.kotlin.konan.test.blackbox.AbstractNativeSimpleTest
@@ -169,6 +170,7 @@ class LegacyKlibResolverUserTest : AbstractNativeSimpleTest() {
 
         val library = resolveSingleFileKlib(KlibFile(libraryFile.path).canonicalFile)
 
+        @OptIn(K1Deprecation::class)
         return KotlinxBenchmarksLibraryResolverSimulation(
             klibs = dependencyFiles.map { it.path }
         ).libraryResolverLegacy().resolveWithDependencies(
