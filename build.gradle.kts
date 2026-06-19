@@ -276,17 +276,6 @@ allprojects {
     val mirrorRepo: String? = findProperty("maven.repository.mirror")?.toString()
 
     repositories {
-        when (kotlinBuildProperties.stringProperty("attachedIntellijVersion").orNull) {
-            null -> {}
-            "master" -> {
-                maven { setUrl("https://www.jetbrains.com/intellij-repository/snapshots") }
-            }
-
-            else -> {
-                kotlinBuildLocalRepo(project)
-            }
-        }
-
         mirrorRepo?.let(::maven)
     }
 }
