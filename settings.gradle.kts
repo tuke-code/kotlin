@@ -583,7 +583,6 @@ include(
 include(
     ":prepare:ide-plugin-dependencies:allopen-compiler-plugin-for-ide",
     ":prepare:ide-plugin-dependencies:scripting-compiler-plugin-for-ide",
-    ":prepare:ide-plugin-dependencies:allopen-compiler-plugin-tests-for-ide",
     ":prepare:ide-plugin-dependencies:compose-compiler-plugin-for-ide",
     ":prepare:ide-plugin-dependencies:js-plain-objects-compiler-plugin-for-ide",
     ":prepare:ide-plugin-dependencies:incremental-compilation-impl-tests-for-ide",
