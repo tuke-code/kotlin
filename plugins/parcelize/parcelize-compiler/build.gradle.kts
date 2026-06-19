@@ -11,7 +11,7 @@ plugins {
     id("android-sdk-provisioner")
     id("java-test-fixtures")
     id("project-tests-convention")
-    id("test-inputs-check")
+    id("test-inputs-check-v2")
 }
 
 /**
@@ -139,11 +139,6 @@ projectTests {
             from(tasks.jar)
         }
 
-        testInputsCheck {
-            with(extraPermissions) {
-                add("permission java.util.PropertyPermission \"kotlin.incremental.compilation\", \"write\";")
-            }
-        }
 
         val robolectricDependencyDir: Provider<Directory> = robolectricDependencyDir
         val projectDir = projectDir
