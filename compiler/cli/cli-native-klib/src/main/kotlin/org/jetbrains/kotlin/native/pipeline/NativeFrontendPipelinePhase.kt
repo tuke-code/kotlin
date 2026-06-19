@@ -25,6 +25,7 @@ import org.jetbrains.kotlin.fir.resolve.ImplicitIntegerCoercionModuleCapability
 import org.jetbrains.kotlin.konan.config.konanPrintFiles
 import org.jetbrains.kotlin.library.metadata.isCInteropLibrary
 import org.jetbrains.kotlin.name.Name
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.native.NativeFirstStagePhaseContext
 import org.jetbrains.kotlin.native.createFirstStageCompilationConfig
 
@@ -38,6 +39,7 @@ object NativeFrontendPipelinePhase : PipelinePhase<ConfigurationPipelineArtifact
         val config = createFirstStageCompilationConfig(configuration)
         val phaseContext = NativeFirstStagePhaseContext(config)
 
+        @OptIn(K1Deprecation::class)
         val environment = KotlinCoreEnvironment.createForProduction(
             rootDisposable,
             configuration,
@@ -67,6 +69,7 @@ object NativeFrontendPipelinePhase : PipelinePhase<ConfigurationPipelineArtifact
         val mainModuleName = Name.special("<${config.moduleId}>")
         files.forEach { checkSyntaxErrors(it) }
         val dependencyList = DependencyListForCliModule.build {
+            @OptIn(K1Deprecation::class)
             val [interopLibs, regularLibs] = config.loadedKlibs.all.partition { it.isCInteropLibrary() }
             defaultDependenciesSet(mainModuleName) {
                 dependencies(regularLibs.map { it.libraryFile.absolutePath })

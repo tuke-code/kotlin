@@ -13,7 +13,6 @@ import org.jetbrains.kotlin.backend.konan.lower.SpecialBackendChecksTraversal
 import org.jetbrains.kotlin.backend.konan.serialization.KonanManglerIr
 import org.jetbrains.kotlin.builtins.DefaultBuiltIns
 import org.jetbrains.kotlin.cli.common.diagnosticsCollector
-import org.jetbrains.kotlin.cli.common.fir.FirDiagnosticsCompilerResultsReporter
 import org.jetbrains.kotlin.cli.hasMessageCollectorErrors
 import org.jetbrains.kotlin.cli.pipeline.CheckCompilationErrors
 import org.jetbrains.kotlin.cli.pipeline.PerformanceNotifications
@@ -38,6 +37,7 @@ import org.jetbrains.kotlin.library.components.metadata
 import org.jetbrains.kotlin.library.isNativeStdlib
 import org.jetbrains.kotlin.library.metadata.parseModuleHeader
 import org.jetbrains.kotlin.name.NativeForwardDeclarationKind
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.native.Fir2IrOutput
 import org.jetbrains.kotlin.native.NativeFir2IrExtensions
 import org.jetbrains.kotlin.native.runPreSerializationLowerings
@@ -95,6 +95,7 @@ object NativeFir2IrPipelinePhase : PipelinePhase<NativeFrontendArtifact, NativeF
             removeAll(NativeForwardDeclarationKind.entries.map { it.packageFqName }.toSet())
         }.toList()
         val usedLibraries = loadedKlibs.all.filter { library ->
+            @OptIn(K1Deprecation::class)
             val header = parseModuleHeader(library.metadata.moduleHeaderData)
 
             val nonEmptyPackageNames = buildSet {

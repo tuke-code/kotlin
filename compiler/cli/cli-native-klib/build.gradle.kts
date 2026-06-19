@@ -40,4 +40,3 @@ dependencies {
 }
 
 optInToUnsafeDuringIrConstructionAPI()
-optInToK1Deprecation()
