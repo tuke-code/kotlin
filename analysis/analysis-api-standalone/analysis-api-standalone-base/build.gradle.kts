@@ -38,5 +38,3 @@ kotlin {
         optIn.add("org.jetbrains.kotlin.analysis.api.KaPlatformInterface")
     }
 }
-
-optInToK1Deprecation()

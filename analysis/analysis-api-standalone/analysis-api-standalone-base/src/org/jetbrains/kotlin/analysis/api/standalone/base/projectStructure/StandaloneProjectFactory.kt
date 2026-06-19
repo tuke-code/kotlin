@@ -15,6 +15,7 @@ import com.intellij.mock.MockProject
 import com.intellij.openapi.Disposable
 import com.intellij.openapi.module.Module
 import com.intellij.openapi.project.Project
+import org.jetbrains.kotlin.K1Deprecation
 import com.intellij.openapi.roots.PackageIndex
 import com.intellij.openapi.util.io.FileUtil
 import com.intellij.openapi.vfs.VirtualFile
@@ -79,6 +80,7 @@ object StandaloneProjectFactory {
         applicationEnvironmentMode: KotlinCoreApplicationEnvironmentMode,
         compilerConfiguration: CompilerConfiguration = CompilerConfiguration.create(),
     ): KotlinCoreProjectEnvironment {
+        @OptIn(K1Deprecation::class)
         val applicationEnvironment = KotlinCoreEnvironment.getOrCreateApplicationEnvironment(
             projectDisposable = projectDisposable,
             compilerConfiguration,
@@ -180,6 +182,7 @@ object StandaloneProjectFactory {
     ) {
         val project = environment.project
 
+        @OptIn(K1Deprecation::class)
         KotlinCoreEnvironment.registerProjectExtensionPoints(project.extensionArea)
 
         project.registerService(SmartTypePointerManager::class.java, SmartTypePointerManagerImpl::class.java)
@@ -198,7 +201,7 @@ object StandaloneProjectFactory {
         )
     }
 
-    @OptIn(KaImplementationDetail::class)
+    @OptIn(KaImplementationDetail::class, K1Deprecation::class)
     private fun initialiseVirtualFileFinderServices(
         environment: KotlinCoreProjectEnvironment,
         modules: List<KaModule>,
@@ -299,6 +302,8 @@ object StandaloneProjectFactory {
     ): List<Path> {
         val javaFileManager = project.getService(JavaFileManager::class.java) as KotlinCliJavaFileManagerImpl
         val javaModuleFinder = CliJavaModuleFinder(jdkHome?.toFile(), createStubConfigurationForReporting(), javaFileManager, project, null)
+
+        @OptIn(K1Deprecation::class)
         val javaModuleGraph = JavaModuleGraph(javaModuleFinder)
 
         val javaRoots = getDefaultJdkModuleRoots(javaModuleFinder, javaModuleGraph)
@@ -313,6 +318,7 @@ object StandaloneProjectFactory {
     private fun getDefaultJdkModuleRoots(javaModuleFinder: CliJavaModuleFinder, javaModuleGraph: JavaModuleGraph): List<JavaRoot> {
         // In contrast to `ClasspathRootsResolver.addModularRoots`, we do not need to handle automatic Java modules because JDK modules
         // aren't automatic.
+        @OptIn(K1Deprecation::class)
         return javaModuleGraph.getAllDependencies(javaModuleFinder.computeDefaultRootModules()).flatMap { moduleName ->
             val module = javaModuleFinder.findModule(moduleName) ?: return@flatMap emptyList<JavaRoot>()
             val result = module.getJavaModuleRoots()
