@@ -48,8 +48,6 @@ dependencies {
     testRuntimeOnly(libs.junit.platform.launcher)
 }
 
-optInToK1Deprecation()
-
 sourceSets {
     main { projectDefault() }
     test {

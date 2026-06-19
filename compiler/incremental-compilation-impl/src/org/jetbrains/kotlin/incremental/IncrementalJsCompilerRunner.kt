@@ -5,6 +5,7 @@
 
 package org.jetbrains.kotlin.incremental
 
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.build.GeneratedFile
 import org.jetbrains.kotlin.build.report.*
 import org.jetbrains.kotlin.build.report.metrics.BuildAttribute
@@ -102,8 +103,10 @@ class IncrementalJsCompilerRunner(
     override val shouldStoreFullFqNamesInLookupCache
         get() = icFeatures.withAbiSnapshot
 
-    override fun createCacheManager(icContext: IncrementalCompilationContext, args: CommonJsAndWasmCompilerArguments) =
-        IncrementalJsCachesManager(icContext, KlibMetadataSerializerProtocol, cacheDirectory)
+    override fun createCacheManager(icContext: IncrementalCompilationContext, args: CommonJsAndWasmCompilerArguments): IncrementalJsCachesManager {
+        @OptIn(K1Deprecation::class)
+        return IncrementalJsCachesManager(icContext, KlibMetadataSerializerProtocol, cacheDirectory)
+    }
 
     override fun destinationDir(args: CommonJsAndWasmCompilerArguments): File {
         return File(args.outputDir!!)
