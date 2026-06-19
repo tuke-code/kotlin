@@ -24,5 +24,3 @@ dependencies {
     testFixturesApi(testFixtures(project(":compiler:tests-common-new")))
     testFixturesApi(testFixtures(project(":analysis:decompiled:decompiler-to-file-stubs")))
 }
-
-optInToK1Deprecation()

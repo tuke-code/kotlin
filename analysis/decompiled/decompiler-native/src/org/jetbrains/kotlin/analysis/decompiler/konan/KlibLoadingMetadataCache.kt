@@ -13,6 +13,7 @@ import org.jetbrains.kotlin.library.components.KlibMetadataConstants.KLIB_METADA
 import org.jetbrains.kotlin.library.components.KlibMetadataConstants.KLIB_MODULE_METADATA_FILE_NAME
 import org.jetbrains.kotlin.library.metadata.KlibMetadataProtoBuf
 import org.jetbrains.kotlin.library.metadata.parseModuleHeader
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.library.metadata.parsePackageFragment
 import org.jetbrains.kotlin.library.readKonanLibraryVersioning
 import org.jetbrains.kotlin.metadata.ProtoBuf
@@ -94,6 +95,7 @@ class KlibLoadingMetadataCache {
             return null
 
         return try {
+            @OptIn(K1Deprecation::class)
             parsePackageFragment(packageFragmentFile.contentsToByteArray(false))
         } catch (_: IOException) {
             null
@@ -105,6 +107,7 @@ class KlibLoadingMetadataCache {
             return null
 
         return try {
+            @OptIn(K1Deprecation::class)
             parseModuleHeader(moduleHeaderFile.contentsToByteArray(false))
         } catch (_: IOException) {
             null
