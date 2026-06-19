@@ -23,6 +23,7 @@ import org.jetbrains.kotlin.konan.test.blackbox.support.util.ThreadSafeCache
 import org.jetbrains.kotlin.konan.test.blackbox.support.util.flatMapToSet
 import org.jetbrains.kotlin.konan.test.blackbox.support.util.getAbsoluteFile
 import org.jetbrains.kotlin.konan.test.blackbox.support.util.mapToSet
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.swiftexport.standalone.*
 import org.jetbrains.kotlin.test.services.JUnit5Assertions.assertTrue
 import org.jetbrains.kotlin.utils.KotlinNativePaths
@@ -76,6 +77,7 @@ abstract class AbstractSwiftExportTest : ExternalSourceTransformersProvider {
         return testRunSettings.isIgnoredTarget(testFile)
     }
 
+    @OptIn(K1Deprecation::class)
     protected fun runConvertToSwift(@TestDataFile testDir: String): Pair<Set<SwiftExportModule>, TestCase> {
         val testPathFull = getAbsoluteFile(testDir)
         val testFile = (testPathFull.toPath() / "${testPathFull.name}.kt").toFile()
@@ -151,6 +153,7 @@ abstract class AbstractSwiftExportTest : ExternalSourceTransformersProvider {
         return swiftExportOutputs to resultingTestCase
     }
 
+    @OptIn(K1Deprecation::class)
     private fun createInputModule(
         testModule: TestModule,
         originalTestCase: TestCase,
@@ -179,6 +182,7 @@ abstract class AbstractSwiftExportTest : ExternalSourceTransformersProvider {
         return if (objCModuleName != null) input.copy(name = objCModuleName) else input
     }
 
+    @OptIn(K1Deprecation::class)
     private fun TestModule.constructSwiftInput(
         freeCompilerArgs: TestCompilerArgs,
         moduleConfig: SwiftModuleConfig,
