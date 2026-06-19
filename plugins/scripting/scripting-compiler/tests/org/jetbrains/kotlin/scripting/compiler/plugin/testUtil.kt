@@ -170,6 +170,7 @@ fun runWithK2JVMCompiler(
     scriptPath: String,
     expectedOutPatterns: List<String> = emptyList(),
     expectedExitCode: Int = 0,
+    expectedSomeErrPatterns: List<String>? = null,
     classpath: List<File> = emptyList(),
     skipScriptArgument: Boolean = false,
     disableScriptCompilationCache: Boolean = true,
@@ -190,7 +191,7 @@ fun runWithK2JVMCompiler(
         }
         add(scriptPath)
     }
-    runWithK2JVMCompiler(args.toTypedArray(), expectedOutPatterns, expectedExitCode)
+    runWithK2JVMCompiler(args.toTypedArray(), expectedOutPatterns, expectedExitCode, expectedSomeErrPatterns = expectedSomeErrPatterns)
 }
 
 fun runWithK2JVMCompiler(

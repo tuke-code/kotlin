@@ -229,6 +229,51 @@ class MainKtsIT {
             )
         }
     }
+
+    @Test
+    fun testWithDifferrentJvmTarget() {
+        val jvmTarget = System.getProperty("java.runtime.version")?.substringBefore(".")
+        if (jvmTarget?.toIntOrNull()?.let { it >= 9 } != true) return
+        withTempDir("main.kts.jvmtarget") { jardir ->
+            val libsrc = jardir.resolve("src.kt").apply {
+                writeText(
+                    """
+                    fun testFun() = "hello"
+                    inline fun <T> runInline(block: () -> T): T = block()
+                    """.trimIndent())
+            }
+            runWithKotlinc(
+                arrayOf("-jvm-target", jvmTarget, "-d", jardir.resolve("lib.jar").absolutePath.toString(), libsrc.absolutePath)
+            )
+            fun makeScript(jvmTarget: String): String = """
+                                @file:CompilerOptions("-jvm-target", "$jvmTarget")
+                                @file:DependsOn("${jardir.resolve("lib.jar").absoluteFile.platformIndependentPathString()}")
+                                println(runInline(::testFun))
+                            """.trimIndent()
+
+            val scrErr = jardir.resolve("serr.main.kts").apply { writeText(makeScript("1.8")) }
+            val scrOk = jardir.resolve("sok.main.kts").apply { writeText(makeScript(jvmTarget)) }
+
+            val mainKtsJar = File("dist/kotlinc/lib/kotlin-main-kts.jar")
+
+            runWithK2JVMCompiler(
+                scrErr.absolutePath,
+                expectedExitCode = 1,
+                expectedSomeErrPatterns = listOf(".*cannot inline bytecode built with JVM target $jvmTarget.*"),
+                classpath = listOf(mainKtsJar)
+            )
+            runWithK2JVMCompiler(
+                scrOk.absolutePath,
+                listOf("hello"),
+                classpath = listOf(mainKtsJar)
+            )
+            runWithKotlincAndMainKts(
+                scrOk.absolutePath,
+                listOf("hello"),
+            )
+        }
+    }
+
 }
 
 private fun File.platformIndependentPathString(): String = path.replace(File.separatorChar, '/')

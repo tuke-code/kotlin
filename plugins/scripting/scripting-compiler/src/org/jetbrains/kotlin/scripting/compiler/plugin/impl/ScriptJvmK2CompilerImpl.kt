@@ -203,6 +203,7 @@ class ScriptJvmK2CompilerImpl(
                 ignoredOptionsReportingState,
                 true
             )
+            state.updateContext(compilerConfiguration)
         }
 
         if (reportingCtx.messageCollector.hasErrors()) return failure(reportingCtx.diagnosticsCollector)
