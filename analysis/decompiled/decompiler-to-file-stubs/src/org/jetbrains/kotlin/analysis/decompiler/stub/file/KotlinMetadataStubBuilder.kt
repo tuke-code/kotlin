@@ -12,6 +12,7 @@ import com.intellij.psi.stubs.PsiFileStub
 import com.intellij.util.indexing.FileContent
 import org.jetbrains.kotlin.analysis.decompiler.psi.text.createIncompatibleMetadataVersionDecompiledText
 import org.jetbrains.kotlin.analysis.decompiler.stub.*
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.descriptors.SourceElement
 import org.jetbrains.kotlin.metadata.ProtoBuf
 import org.jetbrains.kotlin.metadata.deserialization.BinaryVersion
@@ -130,6 +131,7 @@ abstract class KotlinMetadataStubBuilder : ClsStubBuilder() {
             open val classesToDecompile: List<ProtoBuf.Class>
                 get() = proto.class_List.filter { proto ->
                     val classId = nameResolver.getClassId(proto.fqName)
+                    @OptIn(K1Deprecation::class)
                     !classId.isNestedClass && classId !in ClassDeserializer.BLACK_LIST
                 }
         }
