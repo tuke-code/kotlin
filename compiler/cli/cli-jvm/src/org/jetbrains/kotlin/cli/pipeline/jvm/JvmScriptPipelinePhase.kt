@@ -18,6 +18,7 @@ import org.jetbrains.kotlin.cli.pipeline.ConfigurationPipelineArtifact
 import org.jetbrains.kotlin.cli.pipeline.PipelinePhase
 import org.jetbrains.kotlin.cli.report
 import org.jetbrains.kotlin.compiler.plugin.getCompilerExtensions
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.config.expressionToEvaluate
 
 object JvmScriptPipelinePhase : PipelinePhase<ConfigurationPipelineArtifact, JvmScriptPipelineArtifact>(
@@ -36,6 +37,7 @@ object JvmScriptPipelinePhase : PipelinePhase<ConfigurationPipelineArtifact, Jvm
         val projectEnvironment by lazy(LazyThreadSafetyMode.NONE) {
             KotlinCoreEnvironment.ProjectEnvironment(
                 rootDisposable,
+                @OptIn(K1Deprecation::class)
                 KotlinCoreEnvironment.getOrCreateApplicationEnvironmentForProduction(rootDisposable, configuration),
                 configuration
             ).also {

@@ -27,6 +27,7 @@ import org.jetbrains.kotlin.cli.reportException
 import org.jetbrains.kotlin.cli.reportLog
 import org.jetbrains.kotlin.config.*
 import org.jetbrains.kotlin.incremental.components.*
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.load.java.JavaClassesTracker
 import org.jetbrains.kotlin.load.kotlin.incremental.components.IncrementalCompilationComponents
 import org.jetbrains.kotlin.metadata.deserialization.BinaryVersion
@@ -125,6 +126,7 @@ object JvmConfigurationUpdater : ConfigurationUpdater<K2JVMCompilerArguments>() 
         enumWhenTracker = services[EnumWhenTracker::class.java]
         fileMappingTracker = services[ICFileMappingTracker::class.java]
         incrementalCompilationComponents = services[IncrementalCompilationComponents::class.java]
+        @OptIn(K1Deprecation::class)
         putIfNotNull(ClassicFrontendSpecificJvmConfigurationKeys.JAVA_CLASSES_TRACKER, services[JavaClassesTracker::class.java])
     }
 

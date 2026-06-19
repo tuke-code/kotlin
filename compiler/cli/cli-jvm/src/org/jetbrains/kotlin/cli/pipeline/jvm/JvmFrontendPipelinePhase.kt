@@ -22,6 +22,7 @@ import org.jetbrains.kotlin.cli.CliDiagnostics.ROOTS_RESOLUTION_WARNING
 import org.jetbrains.kotlin.cli.common.*
 import org.jetbrains.kotlin.cli.common.arguments.CommonCompilerArguments
 import org.jetbrains.kotlin.cli.common.config.KotlinSourceRoot
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.cli.common.messages.AnalyzerWithCompilerReport
 import org.jetbrains.kotlin.cli.common.modules.ModuleChunk
 import org.jetbrains.kotlin.cli.jvm.compiler.*
@@ -234,6 +235,7 @@ object JvmFrontendPipelinePhase : PipelinePhase<ConfigurationPipelineArtifact, J
         }.takeUnless { CheckCompilationErrors.CheckDiagnosticCollector.checkHasErrors(configuration) }
     }
 
+    @OptIn(K1Deprecation::class)
     private fun groupKtFiles(ktFiles: List<KtFile>): GroupedKtSources {
         val platformSources = mutableSetOf<KtPsiSourceFile>()
         val commonSources = mutableSetOf<KtPsiSourceFile>()
@@ -284,6 +286,7 @@ object JvmFrontendPipelinePhase : PipelinePhase<ConfigurationPipelineArtifact, J
             ?.mapTo(destination) { it::class.qualifiedName }
     }
 
+    @OptIn(K1Deprecation::class)
     private fun checkIfScriptsInCommonSources(configuration: CompilerConfiguration, ktFiles: List<KtFile>): Boolean {
         val lastHmppModule = configuration.hmppModuleStructure?.modules?.lastOrNull()
         val commonScripts = ktFiles.filter { it.isScript() && (it.isCommonSource == true || it.hmppModuleName != lastHmppModule?.name) }
@@ -548,6 +551,7 @@ object JvmFrontendPipelinePhase : PipelinePhase<ConfigurationPipelineArtifact, J
 
     // ----------------------- Project environment utils -----------------------
 
+    @OptIn(K1Deprecation::class)
     fun createProjectEnvironment(
         configuration: CompilerConfiguration,
         parentDisposable: Disposable,
@@ -708,6 +712,7 @@ object JvmFrontendPipelinePhase : PipelinePhase<ConfigurationPipelineArtifact, J
 
         if (CheckDiagnosticCollector.checkHasErrors(configuration)) return null
 
+        @OptIn(K1Deprecation::class)
         val environment = KotlinCoreEnvironment.createForProduction(
             rootDisposable,
             configuration,

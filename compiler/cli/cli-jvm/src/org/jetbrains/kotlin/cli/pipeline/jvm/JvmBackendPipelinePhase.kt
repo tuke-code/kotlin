@@ -32,6 +32,7 @@ import org.jetbrains.kotlin.ir.declarations.impl.IrModuleFragmentImpl
 import org.jetbrains.kotlin.modules.Module
 import org.jetbrains.kotlin.modules.TargetId
 import org.jetbrains.kotlin.progress.ProgressIndicatorAndCompilationCanceledStatus
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.psi.KtFile
 import org.jetbrains.kotlin.util.PhaseType
 import org.jetbrains.kotlin.util.tryMeasurePhaseTime
@@ -59,6 +60,8 @@ object JvmBackendPipelinePhase : PipelinePhase<JvmFir2IrPipelineArtifact, JvmBac
                 JvmGeneratorExtensionsImpl(configuration), jvmBackendExtension, pluginContext
             )
         }
+
+        @OptIn(K1Deprecation::class)
         val codegenFactory = JvmIrCodegenFactory(configuration)
 
         val chunk = configuration.moduleChunk!!.modules
@@ -129,7 +132,7 @@ object JvmBackendPipelinePhase : PipelinePhase<JvmFir2IrPipelineArtifact, JvmBac
         backendInput: BackendInput,
         diagnosticsReporter: BaseDiagnosticsCollector,
         backendClassResolver: JvmBackendClassResolver,
-    ) : JvmIrCodegenFactory.CodegenInput {
+    ): JvmIrCodegenFactory.CodegenInput {
         val state = GenerationState(
             project,
             moduleDescriptor,

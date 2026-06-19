@@ -19,6 +19,7 @@ import org.jetbrains.kotlin.cli.reportOutput
 import org.jetbrains.kotlin.codegen.state.GenerationState
 import org.jetbrains.kotlin.config.*
 import org.jetbrains.kotlin.javac.JavacWrapper
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.progress.ProgressIndicatorAndCompilationCanceledStatus
 import java.io.File
@@ -57,6 +58,7 @@ object JvmWriteOutputsPhase : PipelinePhase<JvmBackendPipelineArtifact, JvmBinar
         if (configuration.getBoolean(JVMConfigurationKeys.COMPILE_JAVA)) {
             val singleState = outputs.singleOrNull()
             if (singleState != null) {
+                @OptIn(K1Deprecation::class)
                 return JavacWrapper.getInstance(project).use {
                     it.compile(configuration.outputDirOrCurrentDirectory())
                 }
