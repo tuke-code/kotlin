@@ -49,8 +49,6 @@ sourceSets {
     "test" { projectDefault() }
 }
 
-optInToK1Deprecation()
-
 open class TestArgumentProvider @Inject constructor(
         objectFactory: ObjectFactory,
 ) : CommandLineArgumentProvider {
