@@ -23,6 +23,7 @@ import org.jetbrains.kotlin.ir.declarations.lazy.IrLazyDeclarationBase
 import org.jetbrains.kotlin.ir.descriptors.IrBasedDeclarationDescriptor
 import org.jetbrains.kotlin.ir.util.getPackageFragment
 import org.jetbrains.kotlin.ir.util.sourceElement
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.library.metadata.*
 import org.jetbrains.kotlin.resolve.descriptorUtil.module
 
@@ -33,6 +34,7 @@ import org.jetbrains.kotlin.resolve.descriptorUtil.module
  * only when `this` is a LazyIr declaration. Thus, it becomes possible to use this function with deserialized
  * pure IR where FIR and descriptors might be unavailable.
  */
+@OptIn(K1Deprecation::class)
 fun IrDeclaration.isFromCInteropLibrary(): Boolean {
     // We need to find top-level non-accessor declaration, because
     //  - fir2ir lazy IR creates non-AbstractFir2IrLazyDeclaration declarations sometimes, e.g. for enum entries;
@@ -81,6 +83,7 @@ private tailrec fun IrDeclaration.findTopLevelDeclaration(): IrDeclaration = whe
 private fun IrDeclaration.propertyIfAccessor(): IrDeclaration =
     (this as? IrSimpleFunction)?.correspondingPropertySymbol?.owner ?: this
 
+@OptIn(K1Deprecation::class)
 private fun ModuleDescriptor.isCInteropLibraryModule(): Boolean {
     return if (this is ModuleDescriptorImpl) {
         // cinterop libraries are deserialized by Fir2Ir as ModuleDescriptorImpl, not FirModuleDescriptor

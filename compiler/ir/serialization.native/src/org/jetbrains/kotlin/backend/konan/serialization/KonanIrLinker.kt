@@ -27,6 +27,7 @@ import org.jetbrains.kotlin.ir.util.SymbolTable
 import org.jetbrains.kotlin.ir.util.parentAsClass
 import org.jetbrains.kotlin.library.KotlinLibrary
 import org.jetbrains.kotlin.library.isNativeStdlib
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.library.metadata.DeserializedKlibModuleOrigin
 import org.jetbrains.kotlin.library.metadata.impl.KlibResolvedModuleDescriptorsFactoryImpl
 import org.jetbrains.kotlin.library.metadata.isCInteropLibrary
@@ -48,6 +49,7 @@ class KonanIrLinker(
     externalOverridabilityConditions: List<IrExternalOverridabilityCondition>,
 ) : KotlinIrLinker(currentModule, configuration, symbolTable, exportedDependencies) {
     override fun isBuiltInModule(moduleDescriptor: ModuleDescriptor): Boolean {
+        @OptIn(K1Deprecation::class)
         val klib = (moduleDescriptor.klibModuleOrigin as? DeserializedKlibModuleOrigin)?.library ?: return false
         return klib.isNativeStdlib
     }
@@ -90,6 +92,7 @@ class KonanIrLinker(
     val moduleDeserializers = mutableMapOf<ModuleDescriptor, KonanPartialModuleDeserializer>()
     val klibToModuleDeserializerMap = mutableMapOf<KotlinLibrary, KonanPartialModuleDeserializer>()
 
+    @OptIn(K1Deprecation::class)
     override fun createModuleDeserializer(
         moduleDescriptor: ModuleDescriptor,
         klib: KotlinLibrary?,
@@ -127,6 +130,7 @@ class KonanIrLinker(
         super.postProcess(irBuiltIns, inOrAfterLinkageStep)
     }
 
+    @OptIn(K1Deprecation::class)
     private val String.isForwardDeclarationModuleName: Boolean get() = this == KlibResolvedModuleDescriptorsFactoryImpl.Companion.FORWARD_DECLARATIONS_MODULE_NAME.asString()
 
     val modules: Map<String, IrModuleFragment>
