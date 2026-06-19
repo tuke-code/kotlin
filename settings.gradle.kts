@@ -363,7 +363,6 @@ include(
     ":compiler:tests-different-jdk",
     ":compiler:tests-spec",
     ":generators",
-    ":generators:ide-iml-to-gradle-generator",
     ":generators:test-generator",
     ":generators:tree-generator-common",
     ":tools:kotlinp",
