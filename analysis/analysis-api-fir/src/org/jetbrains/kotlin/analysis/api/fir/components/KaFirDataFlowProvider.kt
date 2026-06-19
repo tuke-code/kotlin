@@ -16,6 +16,7 @@ import org.jetbrains.kotlin.analysis.api.components.KaDataFlowExitPointSnapshot.
 import org.jetbrains.kotlin.analysis.api.components.KaDataFlowExitPointSnapshot.VariableReassignment
 import org.jetbrains.kotlin.analysis.api.fir.KaFirSession
 import org.jetbrains.kotlin.analysis.api.fir.utils.unwrap
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.analysis.api.impl.base.components.KaBaseImplicitReceiverSmartCast
 import org.jetbrains.kotlin.analysis.api.impl.base.components.KaBaseSessionComponent
 import org.jetbrains.kotlin.analysis.api.impl.base.components.KaBaseSmartCastInfo
@@ -288,6 +289,7 @@ internal class KaFirDataFlowProvider(
 
         val defaultStatementFromFir = firDefaultStatement.psi as? KtExpression ?: return null
 
+        @OptIn(K1Deprecation::class)
         if (!PsiTreeUtil.isAncestor(defaultStatementFromFir, defaultStatement.deparenthesize(), false)) {
             // In certain cases, expressions might be different in PSI and FIR sources.
             // E.g., in 'foo.<expr>bar()</expr>', there is no FIR expression that corresponds to the 'bar()' KtCallExpression.
