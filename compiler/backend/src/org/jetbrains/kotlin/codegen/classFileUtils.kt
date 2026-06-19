@@ -16,6 +16,7 @@ import org.jetbrains.kotlin.resolve.CommonCompilerDeserializationConfiguration
 import org.jetbrains.kotlin.resolve.jvm.JvmClassName
 import org.jetbrains.kotlin.serialization.KotlinSerializerExtensionBase
 import org.jetbrains.kotlin.serialization.StringTableImpl
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.serialization.deserialization.builtins.BuiltInSerializerProtocol
 
 fun ClassFileFactory.getClassFiles(): Iterable<OutputFile> {
@@ -34,6 +35,7 @@ fun List<OutputFile>.filterClassFiles(): List<OutputFile> {
     return filter { it.relativePath.endsWith(".class") }
 }
 
+@OptIn(K1Deprecation::class)
 class JvmOptionalAnnotationSerializerExtension(
     override val stringTable: StringTableImpl
 ) : KotlinSerializerExtensionBase(BuiltInSerializerProtocol) {
@@ -63,6 +65,7 @@ private fun Iterable<PackageParts>.addCompiledParts(state: GenerationState): Lis
         }
 }
 
+@OptIn(K1Deprecation::class)
 fun GenerationState.loadCompiledModule(): ModuleMapping? {
     val moduleMappingData = incrementalCacheForThisTarget?.getModuleMappingData() ?: return null
     val deserializationConfiguration = CommonCompilerDeserializationConfiguration(config.languageVersionSettings)

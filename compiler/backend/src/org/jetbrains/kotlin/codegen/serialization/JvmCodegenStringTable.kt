@@ -12,8 +12,10 @@ import org.jetbrains.kotlin.metadata.jvm.deserialization.JvmNameResolver
 import org.jetbrains.kotlin.metadata.jvm.serialization.JvmStringTable
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.FqName
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.serialization.DescriptorAwareStringTable
 
+@OptIn(K1Deprecation::class)
 class JvmCodegenStringTable @JvmOverloads constructor(
     private val typeMapper: KotlinTypeMapperBase,
     nameResolver: JvmNameResolver? = null

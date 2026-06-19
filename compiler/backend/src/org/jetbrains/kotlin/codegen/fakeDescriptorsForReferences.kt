@@ -16,6 +16,7 @@
 
 package org.jetbrains.kotlin.codegen
 
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.descriptors.*
 import org.jetbrains.kotlin.descriptors.impl.*
 import org.jetbrains.kotlin.serialization.DescriptorSerializer
@@ -25,10 +26,12 @@ import org.jetbrains.kotlin.types.*
  * Given a function descriptor, creates another function descriptor with type parameters copied from outer context(s).
  * This is needed because once we're serializing this to a proto, there's no place to store information about external type parameters.
  */
+@OptIn(K1Deprecation::class)
 fun createFreeFakeLambdaDescriptor(descriptor: FunctionDescriptor, typeApproximator: TypeApproximator): FunctionDescriptor {
     return createFreeDescriptor(descriptor, typeApproximator)
 }
 
+@OptIn(K1Deprecation::class)
 private fun <D : CallableMemberDescriptor> createFreeDescriptor(descriptor: D, typeApproximator: TypeApproximator): D {
     @Suppress("UNCHECKED_CAST")
     val builder = descriptor.newCopyBuilder() as CallableMemberDescriptor.CopyBuilder<D>
@@ -51,6 +54,7 @@ private fun <D : CallableMemberDescriptor> createFreeDescriptor(descriptor: D, t
     return if (typeParameters.isEmpty() && !approximated) descriptor else builder.build()!!
 }
 
+@OptIn(K1Deprecation::class)
 private fun TypeApproximator.approximate(descriptor: CallableMemberDescriptor, builder: CallableMemberDescriptor.CopyBuilder<*>): Boolean {
     var approximated = false
 
@@ -110,6 +114,7 @@ private fun ReceiverParameterDescriptor.substituteTopLevelType(newType: KotlinTy
     return substitute(TypeSubstitutor.create(wrappedSubstitution))
 }
 
+@OptIn(K1Deprecation::class)
 private fun TypeApproximator.approximate(type: UnwrappedType, toSuper: Boolean): KotlinType? {
     if (type.arguments.isEmpty() && type.constructor.isDenotable) return null
     return if (toSuper)
@@ -123,6 +128,7 @@ private fun TypeApproximator.approximate(type: UnwrappedType, toSuper: Boolean):
  * when using reflection on that local variable at runtime.
  * Only members used by [DescriptorSerializer.propertyProto] are implemented correctly in this property descriptor.
  */
+@OptIn(K1Deprecation::class)
 fun createFreeFakeLocalPropertyDescriptor(descriptor: LocalVariableDescriptor, typeApproximator: TypeApproximator): PropertyDescriptor {
     val property = PropertyDescriptorImpl.create(
         descriptor.containingDeclaration, descriptor.annotations, Modality.FINAL, descriptor.visibility, descriptor.isVar,

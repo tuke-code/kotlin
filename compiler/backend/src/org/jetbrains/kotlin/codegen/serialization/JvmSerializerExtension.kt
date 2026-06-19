@@ -5,6 +5,7 @@
 
 package org.jetbrains.kotlin.codegen.serialization
 
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.builtins.isFunctionType
 import org.jetbrains.kotlin.codegen.ClassBuilderMode
 import org.jetbrains.kotlin.codegen.createFreeFakeLocalPropertyDescriptor
@@ -41,6 +42,7 @@ import org.jetbrains.kotlin.types.FlexibleType
 import org.jetbrains.kotlin.types.KotlinType
 import org.jetbrains.org.objectweb.asm.Type
 
+@OptIn(K1Deprecation::class)
 class JvmSerializerExtension(
     private val bindings: JvmSerializationBindings,
     state: GenerationState,

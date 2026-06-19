@@ -20,6 +20,7 @@ import org.jetbrains.kotlin.codegen.AsmUtil
 import org.jetbrains.kotlin.codegen.optimization.common.StrictBasicValue
 import org.jetbrains.org.objectweb.asm.Type
 import org.jetbrains.org.objectweb.asm.tree.AbstractInsnNode
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.types.*
 
 class ProgressionIteratorBasicValue
@@ -71,6 +72,7 @@ private constructor(
                 valuesBoxedType
             )
 
+        @OptIn(K1Deprecation::class)
         fun byProgressionClassType(iteratorCallInsn: AbstractInsnNode, progressionClassType: Type): ProgressionIteratorBasicValue? =
             when (progressionClassType.className) {
                 CHAR_RANGE_FQN, CHAR_PROGRESSION_FQN ->

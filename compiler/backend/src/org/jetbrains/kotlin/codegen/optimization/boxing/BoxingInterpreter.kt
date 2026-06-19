@@ -15,6 +15,7 @@ import org.jetbrains.kotlin.codegen.state.KotlinTypeMapper
 import org.jetbrains.kotlin.codegen.topLevelClassInternalName
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.resolve.jvm.AsmTypes
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.resolve.jvm.JvmPrimitiveType
 import org.jetbrains.kotlin.types.*
 import org.jetbrains.org.objectweb.asm.Opcodes
@@ -315,6 +316,7 @@ fun AbstractInsnNode.isIteratorMethodCallOfProgression(values: List<BasicValue>)
                 firstArgType != null && isProgressionClass(firstArgType)
     }
 
+@OptIn(K1Deprecation::class)
 private val PROGRESSION_CLASS_FQNS = setOf(
     CHAR_RANGE_FQN, CHAR_PROGRESSION_FQN,
     INT_RANGE_FQN, INT_PROGRESSION_FQN,

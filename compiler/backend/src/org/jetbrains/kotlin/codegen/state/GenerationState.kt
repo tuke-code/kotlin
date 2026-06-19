@@ -33,6 +33,7 @@ import org.jetbrains.kotlin.resolve.DelegatingBindingTrace
 import org.jetbrains.kotlin.resolve.jvm.diagnostics.JvmDeclarationOrigin
 import org.jetbrains.kotlin.types.KotlinType
 import org.jetbrains.kotlin.types.TypeApproximator
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.org.objectweb.asm.Type
 import java.lang.reflect.InvocationTargetException
 
@@ -72,6 +73,8 @@ class GenerationState(
 
     val moduleName: String = moduleName ?: JvmCodegenUtil.getModuleName(module)
     val classBuilderMode: ClassBuilderMode = builderFactory.classBuilderMode
+
+    @OptIn(K1Deprecation::class)
     val bindingTrace: BindingTrace = DelegatingBindingTrace(BindingContext.EMPTY, "trace in GenerationState")
     val localDelegatedProperties: MutableMap<Type, List<VariableDescriptorWithAccessors>> = mutableMapOf()
 
@@ -94,6 +97,7 @@ class GenerationState(
 
     lateinit var reportDuplicateClassNameError: (JvmDeclarationOrigin, String, JvmDeclarationOrigin) -> Unit
 
+    @OptIn(K1Deprecation::class)
     val typeApproximator: TypeApproximator = TypeApproximator(module.builtIns, config.languageVersionSettings)
 
     val newFragmentCaptureParameters: MutableList<Triple<String, KotlinType, DeclarationDescriptor>> = mutableListOf()

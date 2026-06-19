@@ -19,6 +19,7 @@ import org.jetbrains.kotlin.renderer.DescriptorRenderer
 import org.jetbrains.kotlin.resolve.BindingContext
 import org.jetbrains.kotlin.resolve.DescriptorUtils
 import org.jetbrains.kotlin.resolve.DescriptorUtils.isSubclass
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.resolve.annotations.hasJvmStaticAnnotation
 import org.jetbrains.kotlin.resolve.descriptorUtil.builtIns
 import org.jetbrains.kotlin.resolve.jvm.JvmClassName
@@ -122,6 +123,7 @@ fun CallableDescriptor.isJvmStaticInObjectOrClassOrInterface(): Boolean =
 fun CallableDescriptor.isJvmStaticInCompanionObject(): Boolean =
     isJvmStaticIn { DescriptorUtils.isCompanionObject(it) }
 
+@OptIn(K1Deprecation::class)
 private fun CallableDescriptor.isJvmStaticIn(predicate: (DeclarationDescriptor) -> Boolean): Boolean =
     when (this) {
         is PropertyAccessorDescriptor -> {

@@ -15,6 +15,7 @@ import org.jetbrains.kotlin.codegen.topLevelClassInternalName
 import org.jetbrains.kotlin.descriptors.FunctionDescriptor
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.name.Name
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.resolve.calls.checkers.isBuiltInCoroutineContext
 import org.jetbrains.kotlin.resolve.jvm.AsmTypes
 import org.jetbrains.kotlin.resolve.jvm.AsmTypes.OBJECT_TYPE
@@ -62,6 +63,7 @@ private val SPILLING_INTERNAL_NAME =
 enum class SuspensionPointKind { NEVER, NOT_INLINE, ALWAYS }
 
 fun createMethodNodeForCoroutineContext(functionDescriptor: FunctionDescriptor): MethodNode {
+    @OptIn(K1Deprecation::class)
     assert(functionDescriptor.isBuiltInCoroutineContext()) {
         "functionDescriptor must be kotlin.coroutines.intrinsics.coroutineContext property getter"
     }

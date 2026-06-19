@@ -10,6 +10,7 @@ import org.jetbrains.kotlin.codegen.AsmUtil
 import org.jetbrains.kotlin.codegen.coroutines.createMethodNodeForCoroutineContext
 import org.jetbrains.kotlin.codegen.coroutines.createMethodNodeForSuspendCoroutineUninterceptedOrReturn
 import org.jetbrains.kotlin.descriptors.FunctionDescriptor
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.descriptors.isTopLevelInPackage
 import org.jetbrains.kotlin.resolve.calls.checkers.isBuiltInCoroutineContext
 import org.jetbrains.kotlin.resolve.jvm.AsmTypes.*
@@ -24,6 +25,7 @@ private fun FunctionDescriptor.isBuiltInSuspendCoroutineUninterceptedOrReturn():
 fun generateInlineIntrinsicForIr(descriptor: FunctionDescriptor): SMAPAndMethodNode? =
     when {
         // TODO: implement these as codegen intrinsics (see IrIntrinsicMethods)
+        @OptIn(K1Deprecation::class)
         descriptor.isBuiltInCoroutineContext() ->
             createMethodNodeForCoroutineContext(descriptor)
         descriptor.isBuiltInSuspendCoroutineUninterceptedOrReturn() ->

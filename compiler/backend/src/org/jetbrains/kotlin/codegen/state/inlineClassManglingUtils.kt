@@ -9,6 +9,7 @@ import org.jetbrains.kotlin.descriptors.*
 import org.jetbrains.kotlin.load.java.descriptors.JavaMethodDescriptor
 import org.jetbrains.kotlin.name.FqNameUnsafe
 import org.jetbrains.kotlin.resolve.DescriptorUtils
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.resolve.InlineClassDescriptorResolver
 import org.jetbrains.kotlin.resolve.descriptorUtil.fqNameUnsafe
 import org.jetbrains.kotlin.resolve.isValueClass
@@ -77,6 +78,7 @@ fun collectFunctionSignatureForManglingSuffix(
     return null
 }
 
+@OptIn(K1Deprecation::class)
 fun getManglingSuffixBasedOnKotlinSignature(
     descriptor: CallableMemberDescriptor,
     shouldMangleByReturnType: Boolean,

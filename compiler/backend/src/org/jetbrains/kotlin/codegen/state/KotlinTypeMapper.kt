@@ -5,6 +5,7 @@
 
 package org.jetbrains.kotlin.codegen.state
 
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.builtins.BuiltInsPackageFragment
 import org.jetbrains.kotlin.builtins.KotlinBuiltIns
 import org.jetbrains.kotlin.builtins.functions.FunctionClassDescriptor
@@ -58,6 +59,7 @@ import org.jetbrains.kotlin.utils.addToStdlib.zipWithNulls
 import org.jetbrains.org.objectweb.asm.Type
 import org.jetbrains.org.objectweb.asm.commons.Method
 
+@OptIn(K1Deprecation::class)
 class KotlinTypeMapper @JvmOverloads constructor(
     private val moduleName: String,
     val languageVersionSettings: LanguageVersionSettings,

@@ -9,10 +9,12 @@ import org.jetbrains.kotlin.codegen.state.KotlinTypeMapper
 import org.jetbrains.kotlin.config.LanguageVersionSettingsImpl
 import org.jetbrains.kotlin.descriptors.FunctionDescriptor
 import org.jetbrains.kotlin.metadata.jvm.deserialization.JvmProtoBufUtil
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.resolve.jvm.KotlinToJvmSignatureMapper
 import org.jetbrains.kotlin.resolve.jvm.KotlinToJvmSignatureMapper.MethodSignature
 import org.jetbrains.org.objectweb.asm.commons.Method
 
+@OptIn(K1Deprecation::class)
 class KotlinToJvmSignatureMapperImpl : KotlinToJvmSignatureMapper {
     private val typeMapper = KotlinTypeMapper(
         JvmProtoBufUtil.DEFAULT_MODULE_NAME,

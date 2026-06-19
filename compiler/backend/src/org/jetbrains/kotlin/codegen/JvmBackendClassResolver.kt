@@ -16,6 +16,7 @@
 
 package org.jetbrains.kotlin.codegen
 
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.builtins.jvm.JavaToKotlinClassMapper
 import org.jetbrains.kotlin.descriptors.ClassDescriptor
 import org.jetbrains.kotlin.descriptors.ModuleDescriptor
@@ -32,6 +33,7 @@ class JvmBackendClassResolverForModuleWithDependencies(
     private val moduleDescriptor: ModuleDescriptor
 ) : JvmBackendClassResolver {
 
+    @OptIn(K1Deprecation::class)
     override fun resolveToClassDescriptors(type: Type): List<ClassDescriptor> {
         if (type.sort != Type.OBJECT) return emptyList()
 
