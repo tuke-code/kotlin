@@ -6,6 +6,7 @@
 package org.jetbrains.kotlin.backend.konan.testUtils
 
 import com.intellij.openapi.Disposable
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.backend.common.serialization.metadata.DynamicTypeDeserializer
 import org.jetbrains.kotlin.builtins.konan.KonanBuiltIns
 import org.jetbrains.kotlin.cli.common.arguments.K2NativeCompilerArguments
@@ -50,6 +51,7 @@ fun createModuleDescriptor(
     return createModuleDescriptor(environment, testSourcesFiles)
 }
 
+@OptIn(K1Deprecation::class)
 fun createModuleDescriptor(
     environment: KotlinCoreEnvironment,
     kotlinFiles: List<File>,
@@ -115,6 +117,7 @@ fun createModuleDescriptor(
 fun createKotlinCoreEnvironment(
     disposable: Disposable, compilerConfiguration: CompilerConfiguration = createCompilerConfiguration(),
 ): KotlinCoreEnvironment {
+    @OptIn(K1Deprecation::class)
     return KotlinCoreEnvironment.createForTests(
         parentDisposable = disposable,
         initialConfiguration = compilerConfiguration,

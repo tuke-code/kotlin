@@ -7,6 +7,7 @@ package org.jetbrains.kotlin.backend.konan.testUtils
 
 import com.intellij.openapi.Disposable
 import com.intellij.openapi.util.Disposer
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.config.nativeBinaryOptions.UnitSuspendFunctionObjCExport
 import org.jetbrains.kotlin.backend.konan.objcexport.*
 import org.jetbrains.kotlin.builtins.DefaultBuiltIns
@@ -83,6 +84,7 @@ class Fe10HeaderGeneratorImpl(private val disposable: Disposable) : HeaderGenera
             ?.readObjCEntryPoints()
             ?: ObjCEntryPoints.ALL
 
+        @OptIn(K1Deprecation::class)
         val mapper = ObjCExportMapper(
             deprecationResolver = DeprecationResolver(
                 storageManager = LockBasedStorageManager.NO_LOCKS,
@@ -96,6 +98,7 @@ class Fe10HeaderGeneratorImpl(private val disposable: Disposable) : HeaderGenera
         // The implementation expects cinterop klibs to be filtered out from the exported modules:
         val exportedKlibs = configuration.exportedDependencies.map { it.mainKlib }.toSet()
 
+        @OptIn(K1Deprecation::class)
         val exportedModuleDescriptors = moduleDescriptors + moduleDescriptors
             .closure<ModuleDescriptor> { it.allDependencyModules }
             .filter { descriptor ->

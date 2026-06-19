@@ -58,8 +58,6 @@ dependencies {
     testImplementation(testFixtures(project(":compiler:tests-compiler-utils")))
 }
 
-
-optInToK1Deprecation()
 optInTo("org.jetbrains.kotlin.backend.konan.InternalKotlinNativeApi")
 
 projectTests {

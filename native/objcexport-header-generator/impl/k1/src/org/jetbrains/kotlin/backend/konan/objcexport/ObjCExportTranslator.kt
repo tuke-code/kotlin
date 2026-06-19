@@ -5,6 +5,7 @@
 
 package org.jetbrains.kotlin.backend.konan.objcexport
 
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.backend.konan.*
 import org.jetbrains.kotlin.backend.konan.descriptors.enumEntries
 import org.jetbrains.kotlin.backend.konan.descriptors.isArray
@@ -770,6 +771,8 @@ class ObjCExportTranslatorImpl(
         } else emptyList()
 
         val visibilityComments = visibilityComments(method.visibility, "method")
+
+        @OptIn(K1Deprecation::class)
         val paramComments = method.allParameters.flatMap { parameterDescriptor ->
             parameters.find { parameter -> parameter.origin?.name == parameterDescriptor.name }?.let { parameter ->
                 mustBeDocumentedParamAttributeList(parameter, descriptor = parameterDescriptor)
