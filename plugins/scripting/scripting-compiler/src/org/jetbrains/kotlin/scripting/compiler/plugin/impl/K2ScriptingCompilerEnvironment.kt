@@ -62,6 +62,7 @@ internal interface K2ScriptingCompilerEnvironmentInternal : K2ScriptingCompilerE
     val compilerContext: SharedScriptCompilationContext
     val packagePartProvider: PackagePartProvider
     val sessionFactoryContext: FirJvmSessionFactory.Context
+    fun updateContext(configuration: CompilerConfiguration)
 }
 
 internal open class K2ScriptingCompilerEnvironmentImpl(
@@ -76,8 +77,18 @@ internal open class K2ScriptingCompilerEnvironmentImpl(
     override val extensionRegistrars: List<FirExtensionRegistrar>,
     override val sharedLibrarySession: FirSession,
     override var dummySessionForAnnotationResolution: FirSession?,
-    override val sessionFactoryContext: FirJvmSessionFactory.Context
-) : K2ScriptingCompilerEnvironmentInternal
+    override var sessionFactoryContext: FirJvmSessionFactory.Context
+) : K2ScriptingCompilerEnvironmentInternal {
+
+    override fun updateContext(configuration: CompilerConfiguration) {
+        val previous = sessionFactoryContext
+        sessionFactoryContext = FirJvmSessionFactory.Context(
+            configuration = configuration,
+            projectEnvironment = previous.projectEnvironment,
+            librariesScope = previous.librariesScope,
+        )
+    }
+}
 
 open class ScriptingModuleDataProvider(private val baseName: String, baseLibraryPaths: List<Path>) : ModuleDataProvider() {
 
