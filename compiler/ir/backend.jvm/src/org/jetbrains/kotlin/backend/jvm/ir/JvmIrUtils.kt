@@ -6,6 +6,7 @@
 package org.jetbrains.kotlin.backend.jvm.ir
 
 import com.intellij.psi.PsiElement
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.backend.common.lower.at
 import org.jetbrains.kotlin.backend.common.lower.irNot
 import org.jetbrains.kotlin.backend.jvm.*
@@ -470,6 +471,7 @@ private val IrClass.classId: ClassId?
         else -> null
     }
 
+@OptIn(K1Deprecation::class)
 val IrClass.isOptionalAnnotationClass: Boolean
     get() = kind == ClassKind.ANNOTATION_CLASS &&
             isExpect &&
@@ -592,6 +594,7 @@ fun IrFunction.isBodyBridgeCallTo(target: IrSimpleFunction?): Boolean {
 context(irBuilder: JvmIrBuilder)
 fun IrMutableAnnotationContainer.addJavaLangDeprecatedAnnotation() = copyAnnotationsAndAddJavaLangDeprecated(this)
 
+@OptIn(K1Deprecation::class)
 context(irBuilder: JvmIrBuilder)
 fun IrMutableAnnotationContainer.copyAnnotationsAndAddJavaLangDeprecated(source: IrAnnotationContainer) {
     isJavaLangDeprecatedOnlyAddedByCompiler = !source.annotations.hasAnnotation(DeprecationResolver.JAVA_DEPRECATED)

@@ -5,6 +5,7 @@
 
 package org.jetbrains.kotlin.backend.jvm
 
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.backend.jvm.ir.*
 import org.jetbrains.kotlin.backend.jvm.ir.isStaticInlineClassReplacement
 import org.jetbrains.kotlin.builtins.StandardNames
@@ -167,6 +168,7 @@ class MemoizedInlineClassReplacements(
                 (it.parent as? IrClass)?.isSingleFieldValueClass == true ->
                     when {
                         it.isValueClassTypedEquals -> createStaticReplacement(it).also {
+                            @OptIn(K1Deprecation::class)
                             it.name = InlineClassDescriptorResolver.SPECIALIZED_EQUALS_NAME
                             specializedEqualsCache.computeIfAbsent(it.parentAsClass) { it }
                         }
@@ -219,6 +221,7 @@ class MemoizedInlineClassReplacements(
                 parent = irClass
                 copyTypeParametersFrom(irClass)
                 addValueParameter {
+                    @OptIn(K1Deprecation::class)
                     name = InlineClassDescriptorResolver.BOXING_VALUE_PARAMETER_NAME
                     type = irClass.inlineClassRepresentation!!.underlyingType
                 }
@@ -247,6 +250,7 @@ class MemoizedInlineClassReplacements(
         require(irClass.isSingleFieldValueClass)
         return specializedEqualsCache.computeIfAbsent(irClass) {
             irFactory.buildFun {
+                @OptIn(K1Deprecation::class)
                 name = InlineClassDescriptorResolver.SPECIALIZED_EQUALS_NAME
                 // TODO: Revisit this once we allow user defined equals methods in inline classes.
                 origin = JvmLoweredDeclarationOrigin.INLINE_CLASS_GENERATED_IMPL_METHOD
@@ -257,10 +261,12 @@ class MemoizedInlineClassReplacements(
                 val typeArgument =
                     IrSimpleTypeImpl(irClass.symbol, false, List(irClass.typeParameters.size) { IrStarProjectionImpl }, listOf())
                 addValueParameter {
+                    @OptIn(K1Deprecation::class)
                     name = InlineClassDescriptorResolver.SPECIALIZED_EQUALS_FIRST_PARAMETER_NAME
                     type = typeArgument
                 }
                 addValueParameter {
+                    @OptIn(K1Deprecation::class)
                     name = InlineClassDescriptorResolver.SPECIALIZED_EQUALS_SECOND_PARAMETER_NAME
                     type = typeArgument
                 }
@@ -407,9 +413,11 @@ class MemoizedInlineClassReplacements(
 private fun IrFunction.fromStdlib(): Boolean {
     if (!getPackageFragment().packageFqName.startsWith(StandardNames.BUILT_INS_PACKAGE_NAME)) return false
     // Since there can be libraries, which use -Xallow-kotlin-package, check, that the top-level declaration has @SinceKotlin
+    @OptIn(K1Deprecation::class)
     if (hasAnnotation(SINCE_KOTLIN_FQ_NAME)) return true
     var cursor: IrDeclaration = this
     while (true) {
+        @OptIn(K1Deprecation::class)
         if (cursor.hasAnnotation(SINCE_KOTLIN_FQ_NAME)) return true
         cursor = cursor.parentClassOrNull ?: return false
     }

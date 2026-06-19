@@ -5,6 +5,7 @@
 
 package org.jetbrains.kotlin.backend.jvm.mapping
 
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.backend.common.defaultArgumentsOriginalFunction
 import org.jetbrains.kotlin.backend.jvm.*
 import org.jetbrains.kotlin.backend.jvm.ir.*
@@ -410,6 +411,7 @@ class MethodSignatureMapper(private val context: JvmBackendContext, private val 
     private fun mapOverriddenSpecialBuiltinIfNeeded(callee: IrFunction, superCall: Boolean): JvmMethodSignature? {
         // Do not remap calls to static replacements of inline class methods, since they have completely different signatures.
         if (callee.isStaticInlineClassReplacement) return null
+        @OptIn(K1Deprecation::class)
         val overriddenSpecialBuiltinFunction =
             (callee.toIrBasedDescriptor().getOverriddenBuiltinReflectingJvmDescriptor() as IrBasedSimpleFunctionDescriptor?)?.owner
         if (overriddenSpecialBuiltinFunction != null && !superCall) {

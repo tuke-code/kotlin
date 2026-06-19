@@ -5,6 +5,7 @@
 
 package org.jetbrains.kotlin.backend.jvm.metadata
 
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.backend.jvm.JvmBackendContext
 import org.jetbrains.kotlin.backend.jvm.JvmLoweredDeclarationOrigin
 import org.jetbrains.kotlin.backend.jvm.localDelegatedProperties
@@ -32,6 +33,8 @@ class DescriptorMetadataSerializer(
     parent: MetadataSerializer?
 ) : MetadataSerializer {
     private val serializerExtension = JvmSerializerExtension(serializationBindings, context.state, context.defaultTypeMapper)
+
+    @OptIn(K1Deprecation::class)
     private val serializer: DescriptorSerializer? = run {
         val languageVersionSettings = context.config.languageVersionSettings
         when (val metadata = irClass.metadata) {
@@ -63,6 +66,8 @@ class DescriptorMetadataSerializer(
                 localDelegatedProperties.mapNotNull { (it.owner.metadata as? DescriptorMetadataSource.LocalDelegatedProperty)?.descriptor }
             )
         }
+
+        @OptIn(K1Deprecation::class)
         val message = when (metadata) {
             is DescriptorMetadataSource.Class -> serializer!!.classProto(metadata.descriptor).build()
             is DescriptorMetadataSource.Script -> serializer!!.classProto(metadata.descriptor).build()
@@ -79,6 +84,7 @@ class DescriptorMetadataSerializer(
             }
             else -> null
         } ?: return null
+        @OptIn(K1Deprecation::class)
         return message to serializer!!.stringTable as JvmStringTable
     }
 

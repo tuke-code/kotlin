@@ -16,6 +16,7 @@ import org.jetbrains.kotlin.ir.declarations.MetadataSource
 import org.jetbrains.kotlin.metadata.ProtoBuf
 import org.jetbrains.kotlin.serialization.DescriptorSerializer
 import org.jetbrains.kotlin.serialization.StringTableImpl
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.org.objectweb.asm.Type
 
 interface JvmBackendExtension {
@@ -35,6 +36,7 @@ interface JvmBackendExtension {
         }
 
         override fun createModuleMetadataSerializer(context: JvmBackendContext) = object : ModuleMetadataSerializer {
+            @OptIn(K1Deprecation::class)
             override fun serializeOptionalAnnotationClass(metadata: MetadataSource.Class, stringTable: StringTableImpl): ProtoBuf.Class {
                 require(metadata is DescriptorMetadataSource.Class)
                 return DescriptorSerializer.createTopLevel(
@@ -52,5 +54,6 @@ interface JvmBackendExtension {
 }
 
 interface ModuleMetadataSerializer {
+    @OptIn(K1Deprecation::class)
     fun serializeOptionalAnnotationClass(metadata: MetadataSource.Class, stringTable: StringTableImpl): ProtoBuf.Class
 }
