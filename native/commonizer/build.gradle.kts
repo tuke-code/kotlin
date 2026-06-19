@@ -68,8 +68,6 @@ sourceSets {
     test { projectDefault() }
 }
 
-optInToK1Deprecation()
-
 projectTests {
     testTask(jUnitMode = JUnitMode.JUnit5) {
         // Use the bootstrap K/N stdlib for compiling test code samples.

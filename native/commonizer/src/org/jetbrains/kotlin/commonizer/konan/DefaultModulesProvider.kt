@@ -5,6 +5,7 @@
 
 package org.jetbrains.kotlin.commonizer.konan
 
+import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.commonizer.ModulesProvider
 import org.jetbrains.kotlin.commonizer.ModulesProvider.ModuleInfo
 import org.jetbrains.kotlin.library.SerializedFragment
@@ -67,6 +68,8 @@ internal class DefaultModulesProvider private constructor(
         val metadata = library.metadata
 
         val moduleHeader = metadata.moduleHeaderData
+
+        @OptIn(K1Deprecation::class)
         val fragmentNames = parseModuleHeader(moduleHeader).packageFragmentNameList.toSet()
         val fragments = fragmentNames.map { fragmentName ->
             val partNames = metadata.getPackageFragmentNames(fragmentName)

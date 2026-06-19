@@ -5,6 +5,7 @@
 
 package org.jetbrains.kotlin.commonizer.metadata
 
+import org.jetbrains.kotlin.K1Deprecation
 import kotlinx.metadata.klib.*
 import org.jetbrains.kotlin.commonizer.cir.*
 import org.jetbrains.kotlin.commonizer.metadata.TypeAliasExpansion.*
@@ -266,6 +267,7 @@ private fun List<CirTypeParameter>.serializeTypeParameters(
     }
 }
 
+
 private fun CirType.serializeType(
     context: CirTreeSerializationContext,
     expansion: TypeAliasExpansion = FOR_TOP_LEVEL_TYPE
@@ -275,6 +277,7 @@ private fun CirType.serializeType(
     is CirTypeParameterType -> serializeTypeParameterType()
     is CirFlexibleType -> {
         lowerBound.serializeType(context, expansion).also {
+            @OptIn(K1Deprecation::class)
             it.flexibleTypeUpperBound = KmFlexibleTypeUpperBound(
                 type = upperBound.serializeType(context, expansion),
                 typeFlexibilityId = DYNAMIC_TYPE_DESERIALIZER_ID
