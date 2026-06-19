@@ -11,8 +11,6 @@ dependencies {
     api(project(":native:binary-options"))
 }
 
-optInToK1Deprecation()
-
 kotlin {
     compilerOptions {
         optIn.add("org.jetbrains.kotlin.backend.konan.InternalKotlinNativeApi")
