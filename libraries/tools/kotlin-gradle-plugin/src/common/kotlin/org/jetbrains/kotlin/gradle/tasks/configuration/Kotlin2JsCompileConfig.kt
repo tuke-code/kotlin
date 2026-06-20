@@ -56,6 +56,7 @@ internal open class BaseKotlin2JsCompileConfig<TASK : Kotlin2JsCompile>(
                 )
             }
             task.runViaBuildToolsApi.value(false).disallowChanges()
+            task.generateCompilerRefIndex.value(false).disallowChanges()
         }
     }
 
