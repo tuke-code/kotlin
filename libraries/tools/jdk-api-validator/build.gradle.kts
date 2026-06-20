@@ -3,7 +3,7 @@ plugins {
     id("test-federation-convention")
     id("com.autonomousapps.dependency-analysis")
     id("kotlin")
-    id("test-inputs-check")
+    id("test-inputs-check-v2")
 }
 
 val signature by configurations.creating
