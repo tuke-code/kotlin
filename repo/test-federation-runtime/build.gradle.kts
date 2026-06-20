@@ -12,7 +12,7 @@ plugins {
     id("test-federation-convention")
     id("com.autonomousapps.dependency-analysis")
     kotlin("jvm")
-    id("test-inputs-check")
+    id("test-inputs-check-v2")
 }
 
 val generateSources = tasks.register<GenerateTestFederationRuntimeCodeTask>("generateTestFederationSources")
