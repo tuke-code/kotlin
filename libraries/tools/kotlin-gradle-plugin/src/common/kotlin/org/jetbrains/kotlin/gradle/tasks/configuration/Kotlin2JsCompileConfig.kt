@@ -63,6 +63,7 @@ internal open class BaseKotlin2JsCompileConfig<TASK : Kotlin2JsCompile>(
                 KotlinPlatformType.wasm -> task.runViaBuildToolsApi.convention(propertiesProvider.runKotlinWasmCompilerViaBuildToolsApi)
                 else -> task.runViaBuildToolsApi.value(false).disallowChanges()
             }
+            task.generateCompilerRefIndex.value(false).disallowChanges()
         }
     }
 
