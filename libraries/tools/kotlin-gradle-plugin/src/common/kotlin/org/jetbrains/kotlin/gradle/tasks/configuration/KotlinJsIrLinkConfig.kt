@@ -10,7 +10,6 @@ import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.plugin.KotlinCompilationInfo
 import org.jetbrains.kotlin.gradle.plugin.KotlinPlatformType
 import org.jetbrains.kotlin.gradle.plugin.PropertiesProvider.Companion.kotlinPropertiesProvider
-import org.jetbrains.kotlin.gradle.targets.js.KotlinWasmTargetType
 import org.jetbrains.kotlin.gradle.targets.js.dsl.KotlinJsBinaryMode
 import org.jetbrains.kotlin.gradle.targets.js.ir.*
 import org.jetbrains.kotlin.gradle.targets.js.npm.NpmProject
@@ -123,10 +122,7 @@ internal open class KotlinJsIrLinkConfig(
         vararg additionalCompilerArgs: String,
     ) {
         configureOptions(*additionalCompilerArgs)
-        add(WASM_BACKEND)
-        val wasmTargetType = (compilation.origin as KotlinJsIrCompilation).target.wasmTargetType!!
-        val targetValue = if (wasmTargetType == KotlinWasmTargetType.WASI) "wasm-wasi" else "wasm-js"
-        add("$WASM_TARGET=$targetValue")
+        addAdditionalCompilerFlags(compilation)
         if (wasmSupportsPerKlibCompilation) {
             when(wasmCompilationMode) {
                 WasmCompilationMode.MULTIMODULE_OPEN_WORLD -> {
