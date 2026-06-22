@@ -405,10 +405,6 @@ fun ProjectTestsExtension.nativeTestTask(
         // additional stack frames more compared to the old one because of another launcher, etc. and it turns out this is not enough.
         jvmArgs("-Xss2m")
 
-        // Allow the test to access Kotlin/Native-specific locations.
-        // See `repo/gradle-build-conventions/project-tests-convention/Readme.md` for more details
-        extensions.findByType<TestInputsCheckExtension>()?.isNative?.set(true)
-
         jvmArgumentProviders.add(project.objects.newInstance(NativeArgsProvider::class.java, requirePlatformLibs).apply {
             this.customCompilerDependencies.from(customCompilerDependencies)
             this.compilerPluginDependencies.from(compilerPluginDependencies)
