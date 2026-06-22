@@ -20,7 +20,6 @@ import org.jetbrains.kotlin.test.directives.CodegenTestDirectives.REQUIRES_SEPAR
 import org.jetbrains.kotlin.test.directives.JvmEnvironmentConfigurationDirectives.JDK_KIND
 import org.jetbrains.kotlin.test.directives.JvmEnvironmentConfigurationDirectives.LOAD_METADATA_DIRECTLY_IN_REFLECTION
 import org.jetbrains.kotlin.test.directives.JvmEnvironmentConfigurationDirectives.USE_LEGACY_REFLECTION_IMPLEMENTATION
-import org.jetbrains.kotlin.test.directives.JvmEnvironmentConfigurationDirectives.USE_NEW_REFLECTION_FAKE_OVERRIDE_IMPLEMENTATION
 import org.jetbrains.kotlin.test.directives.LanguageSettingsDirectives.ENABLE_JVM_PREVIEW
 import org.jetbrains.kotlin.test.directives.LanguageSettingsDirectives.PREFER_IN_TEST_OVER_STDLIB
 import org.jetbrains.kotlin.test.directives.model.singleOrZeroValue
@@ -349,9 +348,6 @@ fun generatedTestClassLoader(
     if (PREFER_IN_TEST_OVER_STDLIB in module.directives) {
         // Test-infrastructure invariant violations (not failures of the code under test): throw
         // TestInfrastructureException so they are never masked by failure suppressors (e.g. an IGNORE_BACKEND directive).
-        checkTestInfrastructure(USE_NEW_REFLECTION_FAKE_OVERRIDE_IMPLEMENTATION !in module.directives) {
-            "$USE_NEW_REFLECTION_FAKE_OVERRIDE_IMPLEMENTATION is incompatible with $PREFER_IN_TEST_OVER_STDLIB"
-        }
         checkTestInfrastructure(USE_LEGACY_REFLECTION_IMPLEMENTATION !in module.directives) {
             "$USE_LEGACY_REFLECTION_IMPLEMENTATION is incompatible with $PREFER_IN_TEST_OVER_STDLIB"
         }
@@ -368,8 +364,6 @@ fun generatedTestClassLoader(
             !withReflection -> testServices.standardLibrariesPathProvider.getRuntimeJarClassLoader()
             LOAD_METADATA_DIRECTLY_IN_REFLECTION in module.directives ->
                 testServices.standardLibrariesPathProvider.getRuntimeAndReflectWithLoadMetadataDirectlyClassLoader()
-            USE_NEW_REFLECTION_FAKE_OVERRIDE_IMPLEMENTATION in module.directives ->
-                testServices.standardLibrariesPathProvider.getRuntimeAndReflectWithNewFakeOverrridesJarClassLoader()
             USE_LEGACY_REFLECTION_IMPLEMENTATION in module.directives ->
                 testServices.standardLibrariesPathProvider.getRuntimeAndK1ReflectJarClassLoader()
             else -> testServices.standardLibrariesPathProvider.getRuntimeAndReflectJarClassLoader()
