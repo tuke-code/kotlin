@@ -41,6 +41,7 @@ import org.jetbrains.kotlin.test.directives.LanguageSettingsDirectives.LANGUAGE
 import org.jetbrains.kotlin.test.directives.LanguageSettingsDirectives.LANGUAGE_VERSION
 import org.jetbrains.kotlin.test.directives.LanguageSettingsDirectives.RETURN_VALUE_CHECKER_MODE
 import org.jetbrains.kotlin.test.directives.LanguageSettingsDirectives.TESTED_LANGUAGE_FEATURE_DISABLED
+import org.jetbrains.kotlin.test.directives.TestDumpDirectives
 import org.jetbrains.kotlin.test.directives.configureFirParser
 import org.jetbrains.kotlin.test.frontend.classic.handlers.FirTestDataConsistencyHandler
 import org.jetbrains.kotlin.test.frontend.fir.*
@@ -335,6 +336,7 @@ fun TestConfigurationBuilder.configurationForTestWithLatestLanguageVersion() {
         LANGUAGE_VERSION with LanguageVersion.entries.last()
         +ALLOW_DANGEROUS_LANGUAGE_VERSION_TESTING
         +USE_LATEST_LANGUAGE_VERSION
+        TestDumpDirectives.DUMP_CLASSIFIER with "latestLV"
         LANGUAGE with LanguageFeature.entries.mapNotNull { feature ->
             runIf(feature.enabledInLatestLVTests) { "+${feature.name}" }
         }
@@ -352,6 +354,7 @@ fun TestConfigurationBuilder.configurationForTestWithLatestLanguageVersion() {
 fun TestConfigurationBuilder.configurationForTestWithLanguageFeatureDisabled() {
     defaultDirectives {
         +TESTED_LANGUAGE_FEATURE_DISABLED
+        TestDumpDirectives.DUMP_CLASSIFIER with "disabled"
     }
     useMetaTestConfigurators(::LanguageFeatureDisabledMetaConfigurator)
     useAfterAnalysisCheckers(
