@@ -9,6 +9,7 @@ import com.intellij.openapi.fileTypes.FileType
 import com.intellij.openapi.vfs.VirtualFile
 import org.jetbrains.kotlin.analysis.decompiler.psi.KotlinLabelProviderService
 
+@Deprecated("The file type is obsolete as it is K1-specific")
 object KotlinJavaScriptMetaFileType : FileType {
     override fun getName() = "KJSM"
     override fun getDescription() = KotlinLabelProviderService.getService()?.getLabelForKotlinJavaScriptMetaFileType()
