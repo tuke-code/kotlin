@@ -294,6 +294,8 @@ fun Project.configureArtifacts() {
             ignore("META-INF/compiler.version")
             ignore("META-INF/plugin.xml")
             ignore("kotlin/KotlinVersionCurrentValue.class")
+            ignore("**/build.txt")
+            ignore("*.spdx.json")
         }
     }
 }
