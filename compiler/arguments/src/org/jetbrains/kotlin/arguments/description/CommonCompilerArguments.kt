@@ -1065,7 +1065,6 @@ The argument should be used only if the new compilation scheme is enabled with -
             Declare common klib incremental dependencies (results from the previous compilation) for the specific fragment.    
             This argument can be specified for any HMPP module except the platform leaf module: it takes incremental
               dependencies from the platform specific incremental service.
-            The argument should be used only if the new compilation scheme is enabled with -Xseparate-kmp-compilation
         """.trimIndent().asReleaseDependent()
         valueType = StringArrayType.defaultNull
         delimiter = KotlinCompilerArgument.Delimiter.None
