@@ -383,7 +383,7 @@ kotlin {
         }
         commonTest {
             dependencies {
-                api(kotlinTest())
+                implementation(kotlinTest())
             }
             kotlin {
                 srcDir("common/test")
