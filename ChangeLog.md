@@ -1,3 +1,724 @@
+## 2.4.20-Beta1
+
+### Analysis API
+
+- [`KT-85418`](https://youtrack.jetbrains.com/issue/KT-85418) Implement an API for accessing deserialized file annotations in Analysis API
+- [`KT-74448`](https://youtrack.jetbrains.com/issue/KT-74448) K2. False positive MISSING_DEPENDENCY_SUPERCLASS in LinkedListTest.kt, kotlinx.coroutines
+- [`KT-85856`](https://youtrack.jetbrains.com/issue/KT-85856) containingSymbol of constructor property differs for local and non-local classes
+
+### Analysis API. Code Compilation
+
+- [`KT-76457`](https://youtrack.jetbrains.com/issue/KT-76457) K2 IDE / KMP Debugger: KISEWA “Cannot compile a common source without a JVM counterpart” on evaluating inline fun from common module inside jvm
+
+### Analysis API. FIR
+
+- [`KT-70552`](https://youtrack.jetbrains.com/issue/KT-70552) No expects for actual
+- [`KT-86014`](https://youtrack.jetbrains.com/issue/KT-86014) Types are broken after remove parameter through change signature
+- [`KT-86363`](https://youtrack.jetbrains.com/issue/KT-86363) KotlinIllegalArgumentExceptionWithAttachments: No dangling modifier found on companion blocks
+- [`KT-86147`](https://youtrack.jetbrains.com/issue/KT-86147) Drop `kotlin.parallel.resolve.under.global.lock` registry key
+- [`KT-85543`](https://youtrack.jetbrains.com/issue/KT-85543) Avoid lazy resolve for the contracts phase if no constracts might be resolved
+
+### Analysis API. Infrastructure
+
+- [`KT-86186`](https://youtrack.jetbrains.com/issue/KT-86186) Analysis API: Codebase tests run twice in some analysis modules — pick a single JUnit runner and migrate
+- [`KT-85360`](https://youtrack.jetbrains.com/issue/KT-85360) Drop kotlin-compiler-testdata-for-ide artifact
+- [`KT-85585`](https://youtrack.jetbrains.com/issue/KT-85585) Simplify the dependencies graph for the Analysis API modules
+- [`KT-85381`](https://youtrack.jetbrains.com/issue/KT-85381) Remove tests for the FE10 implementation
+
+### Analysis API. Light Classes
+
+#### New Features
+
+- [`KT-84645`](https://youtrack.jetbrains.com/issue/KT-84645) Support resolving to companion block members & extensions from Java (light classes)
+- [`KT-80775`](https://youtrack.jetbrains.com/issue/KT-80775) Support PsiClass#getRecordComponents in light classes
+
+#### Fixes
+
+- [`KT-57537`](https://youtrack.jetbrains.com/issue/KT-57537) SLC: propagate default parameter value from (`@JvmOverloads`) `expect` declarations to `actual` declarations
+- [`KT-63568`](https://youtrack.jetbrains.com/issue/KT-63568) Symbol Light Classes: KtAnnotationApplicationWithArgumentsInfo.normalizedArguments() may work incorrectly when psi is not set
+- [`KT-70428`](https://youtrack.jetbrains.com/issue/KT-70428) AA: good code is red when a Java class extends a Kotlin class implementing MutableList by delegation
+- [`KT-36740`](https://youtrack.jetbrains.com/issue/KT-36740) MPP: False-positive incompatible types in .java when using expect-class returned by non-expect member from common when actual is actual typealias
+- [`KT-67749`](https://youtrack.jetbrains.com/issue/KT-67749) Analysis API: Symbol Light classes should be available only to pure JVM sources
+- [`KT-85040`](https://youtrack.jetbrains.com/issue/KT-85040) [Analysis API] Improve Java / Kotlin interop in KMP projects
+- [`KT-68169`](https://youtrack.jetbrains.com/issue/KT-68169) K2 IDE. KMP. False positive type mismatch in java file of jvm source-set when using common declaration which expects String
+- [`KT-37783`](https://youtrack.jetbrains.com/issue/KT-37783) KMP Java Interop: JVM-only methods on actual superclass not resolved in Java for common subclass
+- [`KT-40059`](https://youtrack.jetbrains.com/issue/KT-40059) Provide type correction for expect/actual types used from Java-code
+- [`KT-71429`](https://youtrack.jetbrains.com/issue/KT-71429) MPP: False positive "Function1 is not a functional interface" when calling code from Common in Java
+- [`KT-70426`](https://youtrack.jetbrains.com/issue/KT-70426) SLC: kotlin.Collection#size is not exposed by default
+- [`KT-60480`](https://youtrack.jetbrains.com/issue/KT-60480) Symbol Light Classes: Classes implementing kotlin.collections.* interfaces don't implement all methods from the corresponding java.util.* interfaces
+- [`KT-36991`](https://youtrack.jetbrains.com/issue/KT-36991) IDE: "both methods have same erasure" for Java classes directly or indirectly extending Kotlin collections
+- [`KT-22594`](https://youtrack.jetbrains.com/issue/KT-22594) KotlinCollection.getSize is not highlighted as an error in Java
+
+### Analysis API. PSI
+
+- [`KT-85052`](https://youtrack.jetbrains.com/issue/KT-85052) Move mutation methods out of the Kotlin PSI
+- [`KT-84925`](https://youtrack.jetbrains.com/issue/KT-84925) Move KtReference to the Kotlin IntelliJ plugin
+- [`KT-85427`](https://youtrack.jetbrains.com/issue/KT-85427) Use factory-like pattern instead of reflection in KtNodeType
+- [`KT-84789`](https://youtrack.jetbrains.com/issue/KT-84789) Ensure all `KtClassBody.parent` usages are correct
+- [`KT-85154`](https://youtrack.jetbrains.com/issue/KT-85154) PSI: "AE: parent is ERROR_ELEMENT" with top-level destructuring declaration
+
+### Analysis API. Providers and Caches
+
+- [`KT-82220`](https://youtrack.jetbrains.com/issue/KT-82220) Analysis API: Support platform-specific session components and checkers in metadata sessions
+- [`KT-82731`](https://youtrack.jetbrains.com/issue/KT-82731) Analysis API: Limit granular tree change processing to a few files
+
+### Analysis API. Standalone
+
+- [`KT-85112`](https://youtrack.jetbrains.com/issue/KT-85112) AA does not see packages from unpacked klibs
+- [`KT-86417`](https://youtrack.jetbrains.com/issue/KT-86417) Support parameters in 'getExpectsForActual()'
+- [`KT-84916`](https://youtrack.jetbrains.com/issue/KT-84916) Metadata stub deserializers aren't properly set up for Analysis API Standalone
+- [`KT-83191`](https://youtrack.jetbrains.com/issue/KT-83191) Analysis API: JvmDependenciesIndexImpl performs very poorly for large classpaths
+
+### Analysis API. Stubs and Decompilation
+
+- [`KT-86520`](https://youtrack.jetbrains.com/issue/KT-86520) KotlinDeclarationInCompiledFileSearcher doesn't support visibility-mangled declarations
+- [`KT-64901`](https://youtrack.jetbrains.com/issue/KT-64901) Inconsistency between AST and Stub tree in the case of non-local destructuring declarations
+- [`KT-84444`](https://youtrack.jetbrains.com/issue/KT-84444) Support stubs for companion blocks & extensions
+
+### Analysis API. Surface
+
+#### New Features
+
+- [`KT-73214`](https://youtrack.jetbrains.com/issue/KT-73214) Add `KaScope#declarations` with name filter
+- [`KT-69085`](https://youtrack.jetbrains.com/issue/KT-69085) Provide API to retrieve label/name from KtFunctionLikeSymbol
+- [`KT-70771`](https://youtrack.jetbrains.com/issue/KT-70771) KaLocalVariableSymbol: support `isDelegatedProperty`
+- [`KT-85239`](https://youtrack.jetbrains.com/issue/KT-85239) Streaming version of collectDiagnostics()
+- [`KT-85037`](https://youtrack.jetbrains.com/issue/KT-85037) Add API for KaFunctionType's returnType modification
+- [`KT-80460`](https://youtrack.jetbrains.com/issue/KT-80460) AA: Introduce `KtExpression.isStableForSmartCasting` API
+- [`KT-82519`](https://youtrack.jetbrains.com/issue/KT-82519) Automatically recognize the appropriate analysis mode for in-memory file copies based on their content
+- [`KT-65912`](https://youtrack.jetbrains.com/issue/KT-65912) Analysis API: Implement type building API for all KtType
+
+#### Fixes
+
+- [`KT-66039`](https://youtrack.jetbrains.com/issue/KT-66039) K2: Analysis API: redesign resolution API
+- [`KT-70794`](https://youtrack.jetbrains.com/issue/KT-70794) K2 IDE: Reference to object does not resolve as LHS in "plusAssign" assignment expression
+- [`KT-70774`](https://youtrack.jetbrains.com/issue/KT-70774) Unary operators on literals are not resolvable
+- [`KT-86757`](https://youtrack.jetbrains.com/issue/KT-86757) Flaky annotations result for `@all` annotation on a backing field
+- [`KT-85382`](https://youtrack.jetbrains.com/issue/KT-85382) Remove the FE10 implementation
+- [`KT-86681`](https://youtrack.jetbrains.com/issue/KT-86681) [Analysis API] Move `isDelegated` to `KaVariableSymbol`
+- [`KT-86685`](https://youtrack.jetbrains.com/issue/KT-86685) collectCallCandidates works incorrectly for a constructor vs. a companion invoke
+- [`KT-86514`](https://youtrack.jetbrains.com/issue/KT-86514) No expected type within collection literal in annotation entry using array rather than varargs
+- [`KT-76076`](https://youtrack.jetbrains.com/issue/KT-76076) K2 AA: safe call expression navigates to parent array index access expression
+- [`KT-86418`](https://youtrack.jetbrains.com/issue/KT-86418) Support property accessors in 'getExpectsForActual()'
+- [`KT-71312`](https://youtrack.jetbrains.com/issue/KT-71312) `KaFirPsiJavaClassSymbol.{hasAnnotations, annotationSimpleNames}` is inconsistent with `FirJavaClass` implementation
+- [`KT-86394`](https://youtrack.jetbrains.com/issue/KT-86394) Resolve from KDoc reference is inconsistent with source code
+- [`KT-86248`](https://youtrack.jetbrains.com/issue/KT-86248) `isUsedAsExpression` true for typealias lhs in ::
+- [`KT-85778`](https://youtrack.jetbrains.com/issue/KT-85778) Analysis API: Ensure that all public endpoints in implementation modules are internal or opt-in
+- [`KT-78285`](https://youtrack.jetbrains.com/issue/KT-78285) resolveToCallCandidates inconsistent behaviour with invoke operator and constructor
+- [`KT-85852`](https://youtrack.jetbrains.com/issue/KT-85852) CCE in buildClassType
+- [`KT-85989`](https://youtrack.jetbrains.com/issue/KT-85989) Super type references should be aware of type alias constructors
+- [`KT-84184`](https://youtrack.jetbrains.com/issue/KT-84184) [Analysis API] Provide a unification substitutor API
+- [`KT-84584`](https://youtrack.jetbrains.com/issue/KT-84584) Support companion extensions and blocks in the Analysis API
+- [`KT-84932`](https://youtrack.jetbrains.com/issue/KT-84932) Deprecate utilities exposed through analysis-internal-utils
+- [`KT-73059`](https://youtrack.jetbrains.com/issue/KT-73059) Consider dropping of KaOriginalPsiProvider
+- [`KT-84737`](https://youtrack.jetbrains.com/issue/KT-84737) KaCallableSymbol#directlyOverriddenSymbols doesn't work for java overrides of kotlin properties
+- [`KT-71101`](https://youtrack.jetbrains.com/issue/KT-71101) [AA] Consider getting rid of KaTypeNullability
+
+### Backend. J2KLIB
+
+- [`KT-86368`](https://youtrack.jetbrains.com/issue/KT-86368) [JKLIB] MetadataJVMModuleDeserializer tries to deserialize all symbols
+- [`KT-86367`](https://youtrack.jetbrains.com/issue/KT-86367) [JKLIB] kotlin.Cloneable built-in class not found
+
+### Backend. Native. Debug
+
+- [`KT-85264`](https://youtrack.jetbrains.com/issue/KT-85264) [Native] Stepping trace starts with `// test.kt:1 box` in some debug stepping tests
+- [`KT-81740`](https://youtrack.jetbrains.com/issue/KT-81740) Native: importing konan_lldb.py to lldb prints a warning
+
+### Backend. Wasm
+
+#### Fixes
+
+- [`KT-83159`](https://youtrack.jetbrains.com/issue/KT-83159) K/Wasm: generate one common base class fun interfaces (including Function*)
+- [`KT-86123`](https://youtrack.jetbrains.com/issue/KT-86123) [Wasm] Callable reference refactoring (KT-83159) broke klib binary compatibility with libraries compiled by Kotlin 2.0.x
+- [`KT-83171`](https://youtrack.jetbrains.com/issue/KT-83171) K/Wasm: Investigate import.meta usage in mjs files
+- [`KT-84267`](https://youtrack.jetbrains.com/issue/KT-84267) K/Wasm: init order of companion objects is different from JVM
+- [`KT-86192`](https://youtrack.jetbrains.com/issue/KT-86192) K/Wasm: Raise a warning on usage of top-level require in JsFun
+- [`KT-83356`](https://youtrack.jetbrains.com/issue/KT-83356) K/Wasm: Difference in behavior on nested class initialization (for enums?)
+- [`KT-71505`](https://youtrack.jetbrains.com/issue/KT-71505) [Wasm, IC] Incremental step can produce wrong main function call
+- [`KT-86822`](https://youtrack.jetbrains.com/issue/KT-86822) K/Wasm: don't cast the result of calling callable references with Unit return type
+- [`KT-86180`](https://youtrack.jetbrains.com/issue/KT-86180) [Wasm] backward compatibility is broken in 2.1->2.2 by changed order of type parameters
+- [`KT-86640`](https://youtrack.jetbrains.com/issue/KT-86640) [wasm]: Single-module test failures with companion object initializers
+- [`KT-71039`](https://youtrack.jetbrains.com/issue/KT-71039) [Wasm, IC] Investigate synthetic function types loading
+- [`KT-66105`](https://youtrack.jetbrains.com/issue/KT-66105) Wasm: SyntaxError: Identifier 'box' has already been declared
+- [`KT-82843`](https://youtrack.jetbrains.com/issue/KT-82843) K/Wasm: pass a lambda call helpers to convert funs as an argument instead of exporting them
+- [`KT-83245`](https://youtrack.jetbrains.com/issue/KT-83245) K/Wasm: Run stepping tests with local variables with K/Wasm
+- [`KT-86166`](https://youtrack.jetbrains.com/issue/KT-86166) [Wasm] Make possible to have passing test in multimodule but having it fail in monolith
+- [`KT-84667`](https://youtrack.jetbrains.com/issue/KT-84667) wasm: Add general support for custom sections/annotations
+- [`KT-85506`](https://youtrack.jetbrains.com/issue/KT-85506) [Wasm/WASI] Stdlib readLn and readlnOrNull implementation
+- [`KT-85270`](https://youtrack.jetbrains.com/issue/KT-85270) K/Wasm: incremental compilation fails with NoSuchElementException when a stdlib call is removed
+
+### Compiler
+
+#### New Features
+
+- [`KT-86410`](https://youtrack.jetbrains.com/issue/KT-86410) [KMP] Implement acceptance of JVM IC metadata from previous compilation
+- [`KT-84295`](https://youtrack.jetbrains.com/issue/KT-84295) Support Companion Block `of` Operator for Collection Literals
+- [`KT-86657`](https://youtrack.jetbrains.com/issue/KT-86657) Native: turn on incremental compilation by default
+- [`KT-84956`](https://youtrack.jetbrains.com/issue/KT-84956) Resolve of references to static & companion object members of generic class
+- [`KT-86409`](https://youtrack.jetbrains.com/issue/KT-86409) [KMP] Create JVM IC metadata output
+- [`KT-85593`](https://youtrack.jetbrains.com/issue/KT-85593) ELA: Support multiple lambda arguments
+- [`KT-84618`](https://youtrack.jetbrains.com/issue/KT-84618) Emit a warning when an undesrcore variable is assigned to a Unit expression
+- [`KT-83040`](https://youtrack.jetbrains.com/issue/KT-83040) Collection literals: ensure normal interaction with CFG
+- [`KT-84333`](https://youtrack.jetbrains.com/issue/KT-84333) Collection literals: type inference in delegate expression
+- [`KT-84289`](https://youtrack.jetbrains.com/issue/KT-84289) Resolution to Companion Block & Extension Invoke Operator
+- [`KT-82961`](https://youtrack.jetbrains.com/issue/KT-82961) Type inference from upper type for type parameters designed for tracking of checked exceptions
+- [`KT-81444`](https://youtrack.jetbrains.com/issue/KT-81444) False positive: "Overload resolution ambiguity" with `@OverloadResolutionByLambdaReturnType` and multiple lambda parameters
+- [`KT-84393`](https://youtrack.jetbrains.com/issue/KT-84393) Support Unit-conversions and Unit-adaptations for arbitrary expressions in argument positions
+- [`KT-84319`](https://youtrack.jetbrains.com/issue/KT-84319) Add JVM target bytecode version 26
+
+#### Performance Improvements
+
+- [`KT-69758`](https://youtrack.jetbrains.com/issue/KT-69758) FastJarFS - avoid copying data on inflating (JDK 16+)
+- [`KT-85647`](https://youtrack.jetbrains.com/issue/KT-85647) Compilation performance regression in AbstractFirDeserializedSymbolProvider since 2.3.20
+- [`KT-86104`](https://youtrack.jetbrains.com/issue/KT-86104) [JVM] use static methods/fields of KTypeProjection in typeOf generated bytecode
+- [`KT-86084`](https://youtrack.jetbrains.com/issue/KT-86084) IDEA freezes when a lot of properties are modified to lazy delegates
+- [`KT-83068`](https://youtrack.jetbrains.com/issue/KT-83068) Investigate long compilation times with many generics & overloads
+- [`KT-66469`](https://youtrack.jetbrains.com/issue/KT-66469) Long compilation with mockk import
+- [`KT-79677`](https://youtrack.jetbrains.com/issue/KT-79677) Remove meaningless LVT records
+
+#### Fixes
+
+- [`KT-84802`](https://youtrack.jetbrains.com/issue/KT-84802) Add new synthetic class flag to JVM metadata
+- [`KT-83766`](https://youtrack.jetbrains.com/issue/KT-83766) K2: Wrong sourcePsi is set for `SymbolPsiLiteral` in SLC for annotation arguments referencing a const val
+- [`KT-86728`](https://youtrack.jetbrains.com/issue/KT-86728) Reified type inference: expected type not propagated into inline call inside lambda with elvis operator
+- [`KT-82510`](https://youtrack.jetbrains.com/issue/KT-82510) K/N, IC: "Undefined symbols for architecture arm64" for iosSimulatorArm64 with `kotlin.incremental.native=true`
+- [`KT-84185`](https://youtrack.jetbrains.com/issue/KT-84185) Type arguments are wrongly allowed in receivers of static calls
+- [`KT-84154`](https://youtrack.jetbrains.com/issue/KT-84154) Invalid qualifiers with type arguments in package parts compile without diagnostics
+- [`KT-80227`](https://youtrack.jetbrains.com/issue/KT-80227) Support unnamed context parameters in evaluation
+- [`KT-86751`](https://youtrack.jetbrains.com/issue/KT-86751) IntroducedAt: Do not generate `@IntroducedAt` overrides as synthetic
+- [`KT-85816`](https://youtrack.jetbrains.com/issue/KT-85816) Drop remaining usages of ComponentRegistrar
+- [`KT-86534`](https://youtrack.jetbrains.com/issue/KT-86534) Extract reworked annotations resolution under separate language feature
+- [`KT-84626`](https://youtrack.jetbrains.com/issue/KT-84626) Try to combine `FirConstChecks` and `FirExpressionEvaluator`
+- [`KT-85291`](https://youtrack.jetbrains.com/issue/KT-85291) MFVC: consider analyzing the type of declaration instead of use-site target in AnnotationChecker
+- [`KT-86755`](https://youtrack.jetbrains.com/issue/KT-86755) False negative NATIVE_SPECIFIC_ATOMIC in type arguments
+- [`KT-86752`](https://youtrack.jetbrains.com/issue/KT-86752) K2: False negative NO_REFLECTION_IN_CLASS_PATH on type parameters, intersection types, captured types
+- [`KT-85972`](https://youtrack.jetbrains.com/issue/KT-85972) [ArrayEqualityCanBeReplacedWithContentEquals checker] Checker misses smart-cast array operands when the original type is a type parameter
+- [`KT-85970`](https://youtrack.jetbrains.com/issue/KT-85970) [ArrayEqualityCanBeReplacedWithContentEquals checker] Warning message mentions ==/=== instead of !=/!== for inequality operator
+- [`KT-86705`](https://youtrack.jetbrains.com/issue/KT-86705) False positive REDUNDANT_SINGLE_EXPRESSION_STRING_TEMPLATE for nullable String? expressions with -Wextra
+- [`KT-86798`](https://youtrack.jetbrains.com/issue/KT-86798) Native: don't use stale incremental cache when a new compiler version is used
+- [`KT-86524`](https://youtrack.jetbrains.com/issue/KT-86524) JvmExposeBoxed: Collection does not implement abstract method
+- [`KT-86526`](https://youtrack.jetbrains.com/issue/KT-86526) JvmExposeBoxed: Sequence contains more than one matching element
+- [`KT-86298`](https://youtrack.jetbrains.com/issue/KT-86298) LEAKED_IN_PLACE_LAMBDA when a lambda parameter is forwarded into an inline function parameter
+- [`KT-76632`](https://youtrack.jetbrains.com/issue/KT-76632) K2: False positive "Assigned value is never read" with 'flatMap()'
+- [`KT-86699`](https://youtrack.jetbrains.com/issue/KT-86699) Kotlin/Native: get rid of OptimizeTLSDataLoads
+- [`KT-86646`](https://youtrack.jetbrains.com/issue/KT-86646) IllegalStateException "unknown supertype kind null" when compiling data class with definitely non-nullable type parameter (U : T & Any)
+- [`KT-86662`](https://youtrack.jetbrains.com/issue/KT-86662) Check for loss of ConeIntersectionType.upperBoundForApproximation
+- [`KT-86629`](https://youtrack.jetbrains.com/issue/KT-86629) Approximation of Intersection Type to Upper Bound is Broken by Bang Bang Operator
+- [`KT-86115`](https://youtrack.jetbrains.com/issue/KT-86115) Platform declaration clash on no-arg constructor with `@JvmExposeBoxed` and `@IntroducedAt`
+- [`KT-78079`](https://youtrack.jetbrains.com/issue/KT-78079) Enable generation of `when` using invokedynamic by default for JVM targets 21+
+- [`KT-86643`](https://youtrack.jetbrains.com/issue/KT-86643) Warning for returning callsInPlace lambda
+- [`KT-86609`](https://youtrack.jetbrains.com/issue/KT-86609) Make `KDocSection` implement `PsiLanguageInjectionHost`
+- [`KT-86642`](https://youtrack.jetbrains.com/issue/KT-86642) Flexible type with nullable intersection types in both bounds
+- [`KT-85148`](https://youtrack.jetbrains.com/issue/KT-85148) Native: check/fix KT-72710 Incorrect behaviour of tail call suspend functions optimization
+- [`KT-85641`](https://youtrack.jetbrains.com/issue/KT-85641) Nullable-marked object qualifiers in LHSs of callable references
+- [`KT-86464`](https://youtrack.jetbrains.com/issue/KT-86464) Support `isPublicAbi` JVM metadata flag for anonymous and synthetic local classes
+- [`KT-82216`](https://youtrack.jetbrains.com/issue/KT-82216) Sanitize '.kotlin_module' filename
+- [`KT-85230`](https://youtrack.jetbrains.com/issue/KT-85230) False negative deprecation diagnostics on import of member of nested class
+- [`KT-62467`](https://youtrack.jetbrains.com/issue/KT-62467) K2: Result type of elvis operator should be flexible if rhs is flexible
+- [`KT-86319`](https://youtrack.jetbrains.com/issue/KT-86319) K2: StackOverflowError in AbstractConeSubstitutor with recursive Java type bound under mixed JSpecify `@NullMarked`/`@NullUnmarked`
+- [`KT-86512`](https://youtrack.jetbrains.com/issue/KT-86512) K2: Bad IR for adapted callable reference to function with generic vararg and optional parameter
+- [`KT-77726`](https://youtrack.jetbrains.com/issue/KT-77726) Move FirUnusedExpressionChecker to the default checkers list
+- [`KT-85947`](https://youtrack.jetbrains.com/issue/KT-85947) Collection literals: internal failure when SAM is expected
+- [`KT-85842`](https://youtrack.jetbrains.com/issue/KT-85842) Collection literals (and CSR): internal failure when lambda is analyzed during inference of outer call
+- [`KT-85535`](https://youtrack.jetbrains.com/issue/KT-85535) Collection literals: Migrate to new resolve in annotations under "-Xcollection-literals"
+- [`KT-84559`](https://youtrack.jetbrains.com/issue/KT-84559) `@OptIn` on collection literal and context-sensitive does not work
+- [`KT-86468`](https://youtrack.jetbrains.com/issue/KT-86468) K2: False negative DSL_SCOPE_VIOLATION when type parameter has DSL-annotated bound
+- [`KT-86292`](https://youtrack.jetbrains.com/issue/KT-86292) False negative: INFERRED_TYPE_VARIABLE_INTO_EMPTY_INTERSECTION_WARNING reported for direct getValue call but not for equivalent by delegation
+- [`KT-86467`](https://youtrack.jetbrains.com/issue/KT-86467) K2: False negative ILLEGAL_RESTRICTED_SUSPENDING_FUNCTION_CALL with DNN, flexible, captured and intersection receiver types
+- [`KT-85848`](https://youtrack.jetbrains.com/issue/KT-85848) Recursion on value classes through type parameters
+- [`KT-75874`](https://youtrack.jetbrains.com/issue/KT-75874) K2: Adjust the type mismatch diagnostic on lambda parameters
+- [`KT-86110`](https://youtrack.jetbrains.com/issue/KT-86110) K/N Incremental compilation: stale cache is reused after enum entry reorder
+- [`KT-82456`](https://youtrack.jetbrains.com/issue/KT-82456) K2. Missing deprecation for object with invoke
+- [`KT-85656`](https://youtrack.jetbrains.com/issue/KT-85656) [NO_ACTUAL_CLASS_MEMBER_FOR_EXPECTED_CLASS] False negative for nested type alias
+- [`KT-86184`](https://youtrack.jetbrains.com/issue/KT-86184) KDoc: syntax highlighting incorrect when `@param`, `@return`, or summary line begins with a backtick
+- [`KT-85454`](https://youtrack.jetbrains.com/issue/KT-85454) Make :compiler:android-tests:test cacheable
+- [`KT-85955`](https://youtrack.jetbrains.com/issue/KT-85955) Implicit JvmExposeBoxed: double default constructor parameter leads to IOOBE
+- [`KT-51400`](https://youtrack.jetbrains.com/issue/KT-51400) Additional independent candidate with `@OverloadResolutionByLambdaReturnType` could change inference results
+- [`KT-86042`](https://youtrack.jetbrains.com/issue/KT-86042) Inference fixes lambda's return type variable too early
+- [`KT-86327`](https://youtrack.jetbrains.com/issue/KT-86327) Add flag to `LanguageFeature` enum to enable it in the latest language version tests
+- [`KT-86133`](https://youtrack.jetbrains.com/issue/KT-86133) K/N IC: stale cache is reused after reified inline body change
+- [`KT-84718`](https://youtrack.jetbrains.com/issue/KT-84718) Provide information for simple names resolved through imports which might be resolved via context-sensitive in IDE mode
+- [`KT-75112`](https://youtrack.jetbrains.com/issue/KT-75112) FE resolves wrong receivers order for property passed to delegate
+- [`KT-86130`](https://youtrack.jetbrains.com/issue/KT-86130) False positive UNINITIALIZED_ENUM_COMPANION on LV 2.3 and lower
+- [`KT-84860`](https://youtrack.jetbrains.com/issue/KT-84860) False positive UNINITIALIZED_ENUM_COMPANION in enum access with explicit receiver in enum initializer when enum class has a companion
+- [`KT-85300`](https://youtrack.jetbrains.com/issue/KT-85300) Improve message for UNRESOLVED_REFERENCE_WRONG_RECEIVER
+- [`KT-80590`](https://youtrack.jetbrains.com/issue/KT-80590) Drop language version 1.9 for JVM
+- [`KT-86191`](https://youtrack.jetbrains.com/issue/KT-86191) Check not null on a dynamic-typed property leads to malformed CFG
+- [`KT-85957`](https://youtrack.jetbrains.com/issue/KT-85957) Contract on function is getting discarded if any of effect declarations is unknown
+- [`KT-86143`](https://youtrack.jetbrains.com/issue/KT-86143) `operator` keyword is allowed on arbitrary equals in enum entries
+- [`KT-73197`](https://youtrack.jetbrains.com/issue/KT-73197) Order-dependent choice of overload by lambda return type with Unit
+- [`KT-86144`](https://youtrack.jetbrains.com/issue/KT-86144) Unresolved code in ambiguous plus assign is not reported
+- [`KT-86006`](https://youtrack.jetbrains.com/issue/KT-86006) CFG: Exponential growth when visiting unresolved delegates in FirLocalVariableAssignmentAnalyzer
+- [`KT-86103`](https://youtrack.jetbrains.com/issue/KT-86103) Incorrectly reported `CONFLICTING_OVERLOAD` on companion member
+- [`KT-84344`](https://youtrack.jetbrains.com/issue/KT-84344) Disambiguate fake source elements for source-based symbol IDs
+- [`KT-85965`](https://youtrack.jetbrains.com/issue/KT-85965) Native: incremental compilation blows up with NoSuchFileException: class_fields
+- [`KT-86005`](https://youtrack.jetbrains.com/issue/KT-86005) Fix misuse of DeferredMethodVisitor.intermediate in AnonymousObjectTransformer
+- [`KT-72840`](https://youtrack.jetbrains.com/issue/KT-72840) [JVM Inliner] Two fails `AFTER mandatory stack transformations: incorrect bytecode`
+- [`KT-30728`](https://youtrack.jetbrains.com/issue/KT-30728) "VerifyError: Operand stack underflow" on crossinline lambda usage inside inline function in anonymous object
+- [`KT-84589`](https://youtrack.jetbrains.com/issue/KT-84589) Prohibit `Array<Nothing>` in lhs of `::class`
+- [`KT-85825`](https://youtrack.jetbrains.com/issue/KT-85825) Context parameter lambda loses context type when wrapped in nested `run` blocks
+- [`KT-84766`](https://youtrack.jetbrains.com/issue/KT-84766) Kotlin/Native: separate compiler cache for latin1Strings=true
+- [`KT-82899`](https://youtrack.jetbrains.com/issue/KT-82899) Native IC: AIOOBE on coroutines
+- [`KT-85188`](https://youtrack.jetbrains.com/issue/KT-85188) Don't poison binaries with companion blocks & extensions for LV >= 2.5
+- [`KT-80176`](https://youtrack.jetbrains.com/issue/KT-80176) ASSERT FAILED: SDE.c : 296 - bad SourceDebugExtension syntax - position 376 - expected ':'
+- [`KT-84581`](https://youtrack.jetbrains.com/issue/KT-84581) Inline function with `@JvmOverloads` produces SourceDebugExtension attribute with invalid line numbers
+- [`KT-85954`](https://youtrack.jetbrains.com/issue/KT-85954) Implicit JvmExposeBoxed leads to IOOBE when data class constructor accepts nullable inline class
+- [`KT-84960`](https://youtrack.jetbrains.com/issue/KT-84960) Property contract leaks unsubstituted type parameter in smart cast
+- [`KT-85203`](https://youtrack.jetbrains.com/issue/KT-85203) Kotlin/Native: "Invalid LLVM module - Instruction does not dominate all uses" with nested   inline suspend functions and withContext
+- [`KT-84280`](https://youtrack.jetbrains.com/issue/KT-84280) Standalone `Unit` qualifier allows type arguments: `Unit<Any>`
+- [`KT-85766`](https://youtrack.jetbrains.com/issue/KT-85766) Confusing error message "'this' is not defined in this context" on companion extension delegated property
+- [`KT-72706`](https://youtrack.jetbrains.com/issue/KT-72706) Confusing "INVISIBLE_REFERENCE" when calling private constructor
+- [`KT-85888`](https://youtrack.jetbrains.com/issue/KT-85888) Native: incremental compilation blows up when a method changes from open to final
+- [`KT-85720`](https://youtrack.jetbrains.com/issue/KT-85720) K2: Missing null check in generic vararg function call when passing value of flexible type
+- [`KT-85701`](https://youtrack.jetbrains.com/issue/KT-85701) K2: Type parameter is out of bounds for `IMPLICIT_DYNAMIC_CAST`
+- [`KT-80841`](https://youtrack.jetbrains.com/issue/KT-80841) Confusing positioning of NO_VALUE_FOR_PARAMETER
+- [`KT-82196`](https://youtrack.jetbrains.com/issue/KT-82196) False positive: "Recursive call is not a tail call" inside when/if with lambda and elvis
+- [`KT-85841`](https://youtrack.jetbrains.com/issue/KT-85841) Error message for NULLABLE_ON_DEFINITELY_NOT_NULLABLE uses obsolete term for DNN types
+- [`KT-81932`](https://youtrack.jetbrains.com/issue/KT-81932) False positive TAIL_RECURSION_IN_TRY_IS_NOT_SUPPORTED caused by try in another branch inside tailrec function
+- [`KT-85661`](https://youtrack.jetbrains.com/issue/KT-85661) Lazy resolve for substituted property accessors with a contract doesn't work
+- [`KT-84719`](https://youtrack.jetbrains.com/issue/KT-84719) Provide information for qualified types that might be replaced with context-sensitive simple names in IDE mode
+- [`KT-85667`](https://youtrack.jetbrains.com/issue/KT-85667) Add experimental language version 2.6
+- [`KT-85770`](https://youtrack.jetbrains.com/issue/KT-85770) Support companion block properties in interfaces
+- [`KT-85168`](https://youtrack.jetbrains.com/issue/KT-85168) Generate static initializers as proper IR functions
+- [`KT-85703`](https://youtrack.jetbrains.com/issue/KT-85703) Drop pre-2.0 language features from K2 & common compiler code
+- [`KT-74516`](https://youtrack.jetbrains.com/issue/KT-74516) False negative TYPE_PARAMETER_AS_REIFIED for DNN type
+- [`KT-85733`](https://youtrack.jetbrains.com/issue/KT-85733) Illegal unqualified resolution to companion extension through scope linking
+- [`KT-85679`](https://youtrack.jetbrains.com/issue/KT-85679) Internal Compiler Error when trying to access a value parameter from companion block
+- [`KT-81814`](https://youtrack.jetbrains.com/issue/KT-81814) Field name '$$context-Functor#1' cannot be represented in dex format
+- [`KT-81708`](https://youtrack.jetbrains.com/issue/KT-81708) K/N incremental compilation: `No module deserializer for FUN name:writeObject`
+- [`KT-6071`](https://youtrack.jetbrains.com/issue/KT-6071) Change USELESS_CAST warning message
+- [`KT-85527`](https://youtrack.jetbrains.com/issue/KT-85527) Unmute Android tests after removing IGNORE_BACKEND_K1 directive
+- [`KT-84939`](https://youtrack.jetbrains.com/issue/KT-84939) Kotlin/Native: support llvm passes in -Xsave-llvm-ir-after
+- [`KT-85341`](https://youtrack.jetbrains.com/issue/KT-85341) K2."TYPECHECKER_HAS_RUN_INTO_RECURSIVE_PROBLEM" false positive on accesses to properties of an anonymous object
+- [`KT-84861`](https://youtrack.jetbrains.com/issue/KT-84861) Support Companion Blocks & Extensions in Scripts/REPL
+- [`KT-72999`](https://youtrack.jetbrains.com/issue/KT-72999) K/N: Do not consider `IrTypeOperatorCall` as a tail call expression
+- [`KT-84327`](https://youtrack.jetbrains.com/issue/KT-84327) Name-based destructuring conflicts with in-scope functions
+- [`KT-78678`](https://youtrack.jetbrains.com/issue/KT-78678) Checking for nullable type against nullable type falls back to inline-when generation mechanism
+- [`KT-83652`](https://youtrack.jetbrains.com/issue/KT-83652) Confusing messages when using package parts with type arguments in qualifiers
+- [`KT-85479`](https://youtrack.jetbrains.com/issue/KT-85479) Improve diagnostic messages for upper bound violations
+- [`KT-84717`](https://youtrack.jetbrains.com/issue/KT-84717) Provide information for qualified expressions that might be replaced with context-sensitive simple names in IDE mode
+- [`KT-84859`](https://youtrack.jetbrains.com/issue/KT-84859) Skip deprecation phase for generic arguments in qualifier receiver of static call for companion block members and extensions
+- [`KT-75372`](https://youtrack.jetbrains.com/issue/KT-75372) Deprecate K1 compiler
+- [`KT-80093`](https://youtrack.jetbrains.com/issue/KT-80093) Type inference depends on the presence of transitive dependency
+- [`KT-68933`](https://youtrack.jetbrains.com/issue/KT-68933) CompilationException: Back-end: Could not get inlined class
+- [`KT-70461`](https://youtrack.jetbrains.com/issue/KT-70461) K2: "Inline class types should have the same representation" caused by value class and smart check
+- [`KT-63746`](https://youtrack.jetbrains.com/issue/KT-63746) K2: JSpecify: If a class has a `@Nullable` type-parameter bound, Kotlin should still treat unbounded wildcards like platform types
+- [`KT-17738`](https://youtrack.jetbrains.com/issue/KT-17738) Java cannot extend class implementing kotlin.collections.Map
+
+### Compose compiler
+
+- [`b/489339299`](https://issuetracker.google.com/issues/489339299) Move Compose runtime to a stable version
+- [`b/509945632`](https://issuetracker.google.com/issues/509945632) Always wrap inline lambdas with a composable group with a group
+- [`b/422193018`](https://issuetracker.google.com/issues/422193018) Cherry-pick "Fix `callableInferenceNodeOf` in `ComposableTargetChecker.kt`"
+
+### IR. Inlining
+
+- [`KT-85605`](https://youtrack.jetbrains.com/issue/KT-85605) "Local delegated property has not delegate" exception when calling inline function containing delegated property in a lambda from within an inline lambda
+- [`KT-79065`](https://youtrack.jetbrains.com/issue/KT-79065) Try to remove `NativeRuntimeReflectionIrBuilder`
+- [`KT-72464`](https://youtrack.jetbrains.com/issue/KT-72464) [Native][JS][Wasm] Non-local return through suspend conversion breaks the IR inliner
+
+### IR. Interpreter
+
+- [`KT-86083`](https://youtrack.jetbrains.com/issue/KT-86083) Create a new CLI flag to enable `IntrinsicConstEvaluation` feature
+
+### IR. Tree
+
+- [`KT-86527`](https://youtrack.jetbrains.com/issue/KT-86527) Remove unreachable code from UpgradeCallableReferences
+- [`KT-85673`](https://youtrack.jetbrains.com/issue/KT-85673) Replace `classId` with `IrClassSymbol` in `IrAnnotation`
+- [`KT-85572`](https://youtrack.jetbrains.com/issue/KT-85572) KLIBs: New signatures for companion funs/vals
+- [`KT-74938`](https://youtrack.jetbrains.com/issue/KT-74938) Use SYNTHETIC_OFFSET in IR fake overrides
+- [`KT-78175`](https://youtrack.jetbrains.com/issue/KT-78175) Remove remaining usages of attributeOwnerId outside of JVM backend
+- [`KT-85573`](https://youtrack.jetbrains.com/issue/KT-85573) Store "companion parameter" in IR of funs/vals declared as companion extensions
+- [`KT-85896`](https://youtrack.jetbrains.com/issue/KT-85896) Type parameter is out of bounds (in setter) for a property with context parameters
+- [`KT-85698`](https://youtrack.jetbrains.com/issue/KT-85698) Type parameter is out of bounds (in setter) for an extension property with type parameter
+- [`KT-76934`](https://youtrack.jetbrains.com/issue/KT-76934) Drop old IR parameter API
+
+### JVM. Reflection
+
+#### New Features
+
+- [`KT-73657`](https://youtrack.jetbrains.com/issue/KT-73657) Fix  kotlin-reflect performance issues for reflection operations common for both reflection implementation: stdlib and kotlin-reflect
+
+#### Fixes
+
+- [`KT-86709`](https://youtrack.jetbrains.com/issue/KT-86709) Reflection: KRIE with Reaktor on fresh master
+- [`KT-85903`](https://youtrack.jetbrains.com/issue/KT-85903) Reflection: do not inherit companion block members from supertypes in `KClass.members`
+- [`KT-85902`](https://youtrack.jetbrains.com/issue/KT-85902) Reflection: support call/callBy for companion blocks & extensions
+- [`KT-86477`](https://youtrack.jetbrains.com/issue/KT-86477) Reflection: test builtin class contents
+- [`KT-86545`](https://youtrack.jetbrains.com/issue/KT-86545) Reflection: extra Serializable supertype for non-mapped enum classes in "kotlin" package
+- [`KT-83677`](https://youtrack.jetbrains.com/issue/KT-83677) Reflection: aliased extension function type is rendered as non-extension in toString
+- [`KT-85836`](https://youtrack.jetbrains.com/issue/KT-85836) Reflection: KotlinReflectionInternalError on isSubtypeOf with definitely-not-null type
+- [`KT-83986`](https://youtrack.jetbrains.com/issue/KT-83986) Reflection: java.io.Serializable is not shown in supertypes of Int type in new reflection
+- [`KT-84495`](https://youtrack.jetbrains.com/issue/KT-84495) Reflection: "KotlinReflectionInternalError: Annotation class not found: kotlin/jvm/internal/EnhancedNullability" on Java Optional type
+- [`KT-86017`](https://youtrack.jetbrains.com/issue/KT-86017) KClass.constructors returns all java.lang.String constructors for mapped type kotlin.String
+- [`KT-85550`](https://youtrack.jetbrains.com/issue/KT-85550) Reflection: KParameter.type.classifier returns boxed KClass for non-nullable primitive types
+- [`KT-86177`](https://youtrack.jetbrains.com/issue/KT-86177) Reflection: incorrect modality of Java constructors in the new implementation
+- [`KT-85999`](https://youtrack.jetbrains.com/issue/KT-85999) Reflection: ByteArray KType incorrectly has type arguments in Kotlin 2.4.0
+
+### JavaScript
+
+#### New Features
+
+- [`KT-56493`](https://youtrack.jetbrains.com/issue/KT-56493) KJS: Export documentation to generated d.ts files
+- [`KT-51292`](https://youtrack.jetbrains.com/issue/KT-51292) Proposed behavior of `@JsExport` on interfaces and classes with companion objects
+- [`KT-21626`](https://youtrack.jetbrains.com/issue/KT-21626) Support ES2015 syntax in `js` function
+
+#### Fixes
+
+- [`KT-80188`](https://youtrack.jetbrains.com/issue/KT-80188) Design exporting of suspend lambdas into JS/TS
+- [`KT-84710`](https://youtrack.jetbrains.com/issue/KT-84710) Kotlin/JS: Suspending default interface methods are not accessible on subclasses from JS
+- [`KT-19819`](https://youtrack.jetbrains.com/issue/KT-19819) JS: source maps: write the longest common prefix of all paths to "sourceRoot" field
+- [`KT-85990`](https://youtrack.jetbrains.com/issue/KT-85990) K/JS: Default parameter values ignored in `@JsStatic` suspend functions when class is exported
+- [`KT-82266`](https://youtrack.jetbrains.com/issue/KT-82266) Support transitive export in Analysis API-based TypeScript export
+- [`KT-85616`](https://youtrack.jetbrains.com/issue/KT-85616) [K/JS] Add synthetic and internal compiler APIs into sourcemap's `ignoreList`
+- [`KT-84090`](https://youtrack.jetbrains.com/issue/KT-84090) Save variance in the generated TypeScript
+- [`KT-56618`](https://youtrack.jetbrains.com/issue/KT-56618) KJS/IR: Support external interfaces from common code (via annotation?)
+- [`KT-80991`](https://youtrack.jetbrains.com/issue/KT-80991) K/JS/Wasm interop: JsReference.get is easy to accidentally use in JS target
+- [`KT-85424`](https://youtrack.jetbrains.com/issue/KT-85424) Replace each `js` call with `jsClassIntrinsic` after bootstrapping
+- [`KT-84457`](https://youtrack.jetbrains.com/issue/KT-84457) KJS: Support implementable interfaces in Analysis API-based TypeScript Export
+- [`KT-85452`](https://youtrack.jetbrains.com/issue/KT-85452) K/JS: Cannot create static member with `@JsStatic` in non-companion object
+- [`KT-83462`](https://youtrack.jetbrains.com/issue/KT-83462) Usage of star projection makes any generic type not-exportable
+- [`KT-85599`](https://youtrack.jetbrains.com/issue/KT-85599) Allow exporting annotation classes into JS/TS
+- [`KT-85563`](https://youtrack.jetbrains.com/issue/KT-85563) Kotlin/JS: TypeScript mts files do not properly escape enum values
+- [`KT-85411`](https://youtrack.jetbrains.com/issue/KT-85411) Fix conversionCombinations.kt tests for the JS target
+- [`KT-60899`](https://youtrack.jetbrains.com/issue/KT-60899) K2 JS: Implement warning NO_REFLECTION_IN_CLASS_PATH
+
+### Klibs
+
+#### Performance Improvements
+
+- [`KT-84837`](https://youtrack.jetbrains.com/issue/KT-84837) Introduce an index in IR linker for faster look up of suitable module deserializers
+
+#### Fixes
+
+- [`KT-86501`](https://youtrack.jetbrains.com/issue/KT-86501) Native: IrTypeAliasSymbolImpl is already bound. Signature: kotlinx.datetime/Instant|null[0] on iosSimulatorArm64
+- [`KT-85578`](https://youtrack.jetbrains.com/issue/KT-85578) KLIBs: New manifest property to indicate "new initialization order"
+- [`KT-84836`](https://youtrack.jetbrains.com/issue/KT-84836) Minimize usages of IrBuiltIns in the KotlinIrLinker
+- [`KT-86037`](https://youtrack.jetbrains.com/issue/KT-86037) [Tests] Split test directive IGNORE_KLIB_BACKEND_ERRORS_WITH_CUSTOM_FIRST_STAGE
+- [`KT-81947`](https://youtrack.jetbrains.com/issue/KT-81947) [Wasm] Klib backward and forward compatibility testing
+- [`KT-86228`](https://youtrack.jetbrains.com/issue/KT-86228) Simplify Klib's ReadBuffer
+- [`KT-58409`](https://youtrack.jetbrains.com/issue/KT-58409) [KLIB Reproducibility] File path separators should be platform-independent in KLIBs
+- [`KT-78188`](https://youtrack.jetbrains.com/issue/KT-78188) [JS] Klib backward and forward compatibility testing
+- [`KT-76195`](https://youtrack.jetbrains.com/issue/KT-76195) Combine `toJvmMetadataVersion` and `toKlibMetadataVersion`
+- [`KT-84750`](https://youtrack.jetbrains.com/issue/KT-84750) [K/N] Set "kotlin.native.home" appropriately in forward testing of `master` -> 2.4.0-Beta2
+- [`KT-85805`](https://youtrack.jetbrains.com/issue/KT-85805) AtomicfuNativeKlibSyntheticAccessorTestGenerated broken
+- [`KT-85359`](https://youtrack.jetbrains.com/issue/KT-85359) ExportKlibToOlderAbiVersion with LV=2.2 is silently ignored
+- [`KT-85290`](https://youtrack.jetbrains.com/issue/KT-85290) Make :native:native.tests:klib-compatibility:testMinimalInAggregate cachable
+- [`KT-85080`](https://youtrack.jetbrains.com/issue/KT-85080) Klib/IR Tests TC configuration -- need to explicitly download the necessary dependencies
+- [`KT-84990`](https://youtrack.jetbrains.com/issue/KT-84990) Investigate the usage of `allDependencyModules` in IR linker
+- [`KT-84349`](https://youtrack.jetbrains.com/issue/KT-84349) [Wasm] Implement forward klib compatibility testing
+
+### Language Design
+
+- [`KT-86089`](https://youtrack.jetbrains.com/issue/KT-86089) Explicit context arguments: Stable release
+- [`KT-86201`](https://youtrack.jetbrains.com/issue/KT-86201) Name-based destructuring stable release of `only-syntax` in 2.5
+- [`KT-7882`](https://youtrack.jetbrains.com/issue/KT-7882) Generic vs Non-Generic and implicit Unit return type
+- [`KT-78796`](https://youtrack.jetbrains.com/issue/KT-78796) Decide the future of the AllowEagerSupertypeAccessibilityChecks language feature
+- [`KT-73821`](https://youtrack.jetbrains.com/issue/KT-73821) Decide the future of the ForbidUsingSupertypesWithInaccessibleContentInTypeArguments language feature
+
+### Libraries
+
+#### New Features
+
+- [`KT-86595`](https://youtrack.jetbrains.com/issue/KT-86595) Introduce StackTraceRecoverable interface into the standard library
+- [`KT-10380`](https://youtrack.jetbrains.com/issue/KT-10380) allEqual function for Iterable<T>
+
+#### Performance Improvements
+
+- [`KT-86032`](https://youtrack.jetbrains.com/issue/KT-86032) K/N, K/Wasm: BitSet::get allocates objects for each access
+
+#### Fixes
+
+- [`KT-86027`](https://youtrack.jetbrains.com/issue/KT-86027) Hide returnsResultOf under a separate flag and remove its usages from kotlin stdlib
+- [`KT-86696`](https://youtrack.jetbrains.com/issue/KT-86696) return-value-checker: false positive Path.setPosixFilePermissions and Path.setLastModifiedTime
+- [`KT-86470`](https://youtrack.jetbrains.com/issue/KT-86470) Stdlib doc: Wrong timestamp in kotlin.time.Instant.parse example (leads to InstantFormatException)
+- [`KT-86053`](https://youtrack.jetbrains.com/issue/KT-86053) Update kotlin-metadata-jvm for the companion blocks and extensions
+- [`KT-80654`](https://youtrack.jetbrains.com/issue/KT-80654) K/N and K/Wasm: implement missing Regex tests
+- [`KT-85326`](https://youtrack.jetbrains.com/issue/KT-85326) Libraries: rangeUntil docs sample code uses a rangeTo example
+- [`KT-82505`](https://youtrack.jetbrains.com/issue/KT-82505) API reference: add links to array transformations returning arrays from their list-returning counterparts
+- [`KT-62423`](https://youtrack.jetbrains.com/issue/KT-62423) Consider providing Common atomic types
+
+### Native
+
+- [`KT-74844`](https://youtrack.jetbrains.com/issue/KT-74844) `kotlin.native.internal.FileFailedToInitializeException` when running native tests with Kotlin 2.1.20-Beta2
+- [`KT-83914`](https://youtrack.jetbrains.com/issue/KT-83914) Native: when loading JNI libraries, java.library.path can contain system directories with libraries with same names
+
+### Native. Build Infrastructure
+
+- [`KT-82607`](https://youtrack.jetbrains.com/issue/KT-82607) [K/N] Dist build fails when gradle daemon was started on a JRE (i.e., without JNI headers)
+- [`KT-85451`](https://youtrack.jetbrains.com/issue/KT-85451) Native: migrate the remaining tests to testFixtures
+- [`KT-86725`](https://youtrack.jetbrains.com/issue/KT-86725) Kotlin/Native: make KonanCacheTask aware of per-file caches
+- [`KT-85803`](https://youtrack.jetbrains.com/issue/KT-85803) K/N: build not reproducible - platformLibs caches
+- [`KT-85823`](https://youtrack.jetbrains.com/issue/KT-85823) Kotlin/Native: delete outputs in :kotlin-native:distNativeLibs
+- [`KT-85522`](https://youtrack.jetbrains.com/issue/KT-85522) Kotlin/Native: llvmLinkBreakpadMainMacos_arm64 fails
+
+### Native. C and ObjC Import
+
+- [`KT-83940`](https://youtrack.jetbrains.com/issue/KT-83940) Generate IR from C-interop KLIBs without descriptors
+- [`KT-86871`](https://youtrack.jetbrains.com/issue/KT-86871) C-interop Klib caches are not deterministic after KT-83940
+- [`KT-86559`](https://youtrack.jetbrains.com/issue/KT-86559) [K/N] More stable `@CCall` ids
+- [`KT-73656`](https://youtrack.jetbrains.com/issue/KT-73656) Native: `@OverrideInit` on a capturing local class constructor causes a compiler crash
+- [`KT-85765`](https://youtrack.jetbrains.com/issue/KT-85765) Prohibit emitting C-interop KLIBs with `kotlin` or `kotlinx.cinterop` packages
+- [`KT-84043`](https://youtrack.jetbrains.com/issue/KT-84043) Native: findMacros takes a lot of time with -fmodules in cinterop
+- [`KT-85705`](https://youtrack.jetbrains.com/issue/KT-85705) Swift-generated headers with external_source_symbol produce duplicate enum declarations
+
+### Native. ObjC Export
+
+- [`KT-86069`](https://youtrack.jetbrains.com/issue/KT-86069) Native: the annotation target for `@ObjCEnum`.EntryName` is wrong
+- [`KT-83504`](https://youtrack.jetbrains.com/issue/KT-83504) ObjCExport: Source unresolved dependency
+- [`KT-83505`](https://youtrack.jetbrains.com/issue/KT-83505) ObjCExport: Transitive unresolved dependency
+
+### Native. Runtime
+
+- [`KT-85897`](https://youtrack.jetbrains.com/issue/KT-85897) [K/N] C Export sometimes hangs on termination on mingw
+- [`KT-85811`](https://youtrack.jetbrains.com/issue/KT-85811) K/N: FirNativeGCTestGenerated.testMemoryDump fails
+- [`KT-85882`](https://youtrack.jetbrains.com/issue/KT-85882) Performance improvement in Kotlin_getCurrentStackTrace: use vectorized/range-checkless copy
+- [`KT-85077`](https://youtrack.jetbrains.com/issue/KT-85077) Native: if CoreSymbolication fails, report this to users with a troubleshooting guide
+
+### Native. Runtime. Memory
+
+- [`KT-85457`](https://youtrack.jetbrains.com/issue/KT-85457) Native: TSAN tests fail with Xcode 26.4
+
+### Native. Swift Export
+
+#### New Features
+
+- [`KT-79477`](https://youtrack.jetbrains.com/issue/KT-79477) Make Swift Export work handle `@OptIn` declarations well
+
+#### Fixes
+
+- [`KT-86650`](https://youtrack.jetbrains.com/issue/KT-86650) [Swift Export] Trampoulinebuilding for a function with changed argument name produces incorrect code.
+- [`KT-85870`](https://youtrack.jetbrains.com/issue/KT-85870) [Swift Export] Invalid unavailability propagation to protocol members
+- [`KT-85918`](https://youtrack.jetbrains.com/issue/KT-85918) [Swift Export] unavailable operator function fails to compile
+- [`KT-85869`](https://youtrack.jetbrains.com/issue/KT-85869) [Swift Export] `release` function conflicts with unavailable `NSObject.release`
+- [`KT-85868`](https://youtrack.jetbrains.com/issue/KT-85868) [Swift Export] Factory function conflicts with class name
+- [`KT-85871`](https://youtrack.jetbrains.com/issue/KT-85871) [Swift Export] 'AbstractCoroutineContextKey' is inaccessible due to '`@_spi`' protection level
+- [`KT-85788`](https://youtrack.jetbrains.com/issue/KT-85788) [Swift Export] Doesn't resolve generic upper bound
+- [`KT-85534`](https://youtrack.jetbrains.com/issue/KT-85534) [Swift Export] Fails to bind private class implementing deprecated public interface
+- [`KT-85784`](https://youtrack.jetbrains.com/issue/KT-85784) [Swift Export] generic class with multiple upper bounds fails
+- [`KT-85704`](https://youtrack.jetbrains.com/issue/KT-85704) [Swift Export] cannot infer generic type of function returning a generic type
+- [`KT-85711`](https://youtrack.jetbrains.com/issue/KT-85711) [Swift Export] suspend function returning non-null generic fails to compile
+- [`KT-85715`](https://youtrack.jetbrains.com/issue/KT-85715) [Swift Export] generic interface in typealias fails to compile
+- [`KT-85714`](https://youtrack.jetbrains.com/issue/KT-85714) [Swift Export] unsupported input type param in functional receiver
+- [`KT-85458`](https://youtrack.jetbrains.com/issue/KT-85458) [Swift Export] value of a closure returning a closure generates invalid swift code
+
+### Tools. BCV
+
+- [`KT-83476`](https://youtrack.jetbrains.com/issue/KT-83476) Use Maven publications as dump input [ABI Validation]
+
+### Tools. Build Tools API
+
+#### New Features
+
+- [`KT-85663`](https://youtrack.jetbrains.com/issue/KT-85663) Make BTA JS Compiler Arguments Type-Safe
+- [`KT-66425`](https://youtrack.jetbrains.com/issue/KT-66425) BTA: implement `ClasspathEntrySnapshot.hashCode`
+- [`KT-84598`](https://youtrack.jetbrains.com/issue/KT-84598) [BTA] Expose API Version via Public Property
+- [`KT-85421`](https://youtrack.jetbrains.com/issue/KT-85421) BTA: validate arguments for invalid characters and guide users to feedback issue
+- [`KT-78207`](https://youtrack.jetbrains.com/issue/KT-78207) BTA: implement basic Kotlin/Wasm binaries linking support
+- [`KT-78206`](https://youtrack.jetbrains.com/issue/KT-78206) BTA: implement basic Kotlin/Wasm compilation support
+- [`KT-83794`](https://youtrack.jetbrains.com/issue/KT-83794) Make BTA JVM Compiler Arguments Type-Safe
+- [`KT-84401`](https://youtrack.jetbrains.com/issue/KT-84401) BTA: implement Kotlin/JS incremental compilation support
+- [`KT-78204`](https://youtrack.jetbrains.com/issue/KT-78204) BTA: implement basic Kotlin/JS compilation support
+
+#### Fixes
+
+- [`KT-82986`](https://youtrack.jetbrains.com/issue/KT-82986) BTA: setting unknown options may pass silently
+- [`KT-86734`](https://youtrack.jetbrains.com/issue/KT-86734) Add Kotlin 2.4.0 into backward-compatibility tests
+- [`KT-86785`](https://youtrack.jetbrains.com/issue/KT-86785) [KGP] Compilation logs are not prefixed with taskPath in BTA mode
+- [`KT-85093`](https://youtrack.jetbrains.com/issue/KT-85093) [BTA] Resolve Forward Compatibility Test Blocker for X_IGNORED_ANNOTATIONS_FOR_BRIDGES
+- [`KT-85787`](https://youtrack.jetbrains.com/issue/KT-85787) BTA: Distinguish typed argument values from raw string values in compatibility test descriptors
+- [`KT-85504`](https://youtrack.jetbrains.com/issue/KT-85504) Kotlin Daemon crashes if there is a typo in compiler args added as key-value freeCompilerArgs
+- [`KT-85736`](https://youtrack.jetbrains.com/issue/KT-85736) BTA tests: automate detection of missing versions in compatibilityTestsVersions
+- [`KT-78208`](https://youtrack.jetbrains.com/issue/KT-78208) BTA: split Kotlin/JS compilation and linking arguments
+- [`KT-78209`](https://youtrack.jetbrains.com/issue/KT-78209) BTA: split Kotlin/Wasm compilation and linking arguments
+- [`KT-86395`](https://youtrack.jetbrains.com/issue/KT-86395) [BTA] forward-compatibility violation: NoSuchMethodError on JvmSnapshotBasedIncrementalCompilationConfiguration.<init> breaks IC
+- [`KT-80679`](https://youtrack.jetbrains.com/issue/KT-80679) Add support  for the Build Tools API [ABI Validation]
+- [`KT-86156`](https://youtrack.jetbrains.com/issue/KT-86156) BTA: report all invalid argument values at once instead of stopping at the first one
+- [`KT-85505`](https://youtrack.jetbrains.com/issue/KT-85505) Kotlin daemon crashes if "-Xwarning-level=" compiler option is added with a syntax error
+- [`KT-85958`](https://youtrack.jetbrains.com/issue/KT-85958) argumentsToStrings produces corrupted arguments when value starts with "@"
+- [`KT-86059`](https://youtrack.jetbrains.com/issue/KT-86059) [BTA] Handle enum parsing errors related to case sensitivity
+- [`KT-86243`](https://youtrack.jetbrains.com/issue/KT-86243) [BTA] Compat package has wrong version of compiler on compile classpath
+- [`KT-86247`](https://youtrack.jetbrains.com/issue/KT-86247) [BTA] Improve -Xjsr305 parser error message: include the full failing entry
+- [`KT-85556`](https://youtrack.jetbrains.com/issue/KT-85556) BTA: SearchPathType compiler arguments (classpath, -Xklib, -Xmodule-path) not resolved to absolute paths
+- [`KT-85167`](https://youtrack.jetbrains.com/issue/KT-85167) Make Xjsr305 type safe
+- [`KT-86117`](https://youtrack.jetbrains.com/issue/KT-86117) CRI: `fileId` is hashed from the absolute source path, not the stored relative path
+- [`KT-85696`](https://youtrack.jetbrains.com/issue/KT-85696) BTA: deepCopy() in JvmCompilerArgumentsImpl uses string round-trip, corrupting delimiter characters
+- [`KT-85738`](https://youtrack.jetbrains.com/issue/KT-85738) BTA forward compatibility: NoSuchFieldError on X_IGNORED_ANNOTATIONS_FOR_BRIDGES when API 2.3.0 is used with impl 2.4.0
+- [`KT-85722`](https://youtrack.jetbrains.com/issue/KT-85722) [SSoT, JS/Wasm] Switch to "nopack" naming for argument controlling packing of klibs to unify with Native backend
+- [`KT-85702`](https://youtrack.jetbrains.com/issue/KT-85702) [SSoT] Simplify compiler argument enum serialization by replacing per-type serializers with a generic contextual serializer
+- [`KT-85607`](https://youtrack.jetbrains.com/issue/KT-85607) [BTA] -Xignored-annotations-for-bridges missing forward compatibility support (API 2.3.20 + impl 2.4.x+)
+
+### Tools. CLI
+
+- [`KT-56850`](https://youtrack.jetbrains.com/issue/KT-56850) Separate K/Wasm CLI entry point from K/JS CLI
+- [`KT-86202`](https://youtrack.jetbrains.com/issue/KT-86202) Warn against disabling a language feature with a parametrized compiler argument that's already stable
+- [`KT-86746`](https://youtrack.jetbrains.com/issue/KT-86746) Drop all org.jetbrains.kotlin.asJava usages from CLI
+- [`KT-85813`](https://youtrack.jetbrains.com/issue/KT-85813) Inconsistent behavior of -Xcontext-parameters warning depending on daemon/in-process
+- [`KT-85414`](https://youtrack.jetbrains.com/issue/KT-85414) Argument DSL: `delimiter = KotlinCompilerArgument.Delimiter.PathSeparator` generates invalid Kotlin code
+- [`KT-85920`](https://youtrack.jetbrains.com/issue/KT-85920) Remove MessageCollector Usage from ErrorReportingContext
+- [`KT-85898`](https://youtrack.jetbrains.com/issue/KT-85898) Register all KtDiagnosticsContainers
+- [`KT-85187`](https://youtrack.jetbrains.com/issue/KT-85187) Add compiler argument for companion blocks & extensions
+
+### Tools. CLI. Native
+
+- [`KT-85538`](https://youtrack.jetbrains.com/issue/KT-85538) Native: allow using JNI in CLI tools on JDK 24+ and Unsafe on JDK 24
+
+### Tools. Compiler Plugin API
+
+- [`KT-85969`](https://youtrack.jetbrains.com/issue/KT-85969) KtLint incompatible with Kotlin 2.4.0-Beta2 (parsing errors / Extensions storage issue)
+
+### Tools. Compiler Plugins
+
+#### New Features
+
+- [`KT-85758`](https://youtrack.jetbrains.com/issue/KT-85758) Support for `@Log` annotation on Kotlin classes
+
+#### Fixes
+
+- [`KT-86286`](https://youtrack.jetbrains.com/issue/KT-86286) `all-open` plugin makes `@JvmRecord` classes non-final, causing compilation error "'`@JvmRecord`' class must be final"
+- [`KT-86620`](https://youtrack.jetbrains.com/issue/KT-86620) Lombok incorrectly detects clashing constructor with varargs argument
+- [`KT-86773`](https://youtrack.jetbrains.com/issue/KT-86773) PowerAssert: sorting of possible overloads
+- [`KT-86225`](https://youtrack.jetbrains.com/issue/KT-86225) Atomicfu generates IR with out-of-scope type parameters
+- [`KT-83121`](https://youtrack.jetbrains.com/issue/KT-83121) Lombok. A constructor without parameters is available for a class with `@Data` and staticConstructor
+- [`KT-84059`](https://youtrack.jetbrains.com/issue/KT-84059) Lombok. CANNOT_INFER_PARAMETER_TYPE for toBuilder function if `@Builder` is applied to a generic class
+- [`KT-84058`](https://youtrack.jetbrains.com/issue/KT-84058) Lombok. NoSuchMethodError for the builder function when `@Builder` is applied to the method
+- [`KT-81622`](https://youtrack.jetbrains.com/issue/KT-81622) Support `@Slf4j` and other logging annotations (`@CommonsLog`, `@Flogger`, `@JBossLog`, `@Log4j`, `@Log4j2`, `@XSlf4j`)
+- [`KT-86170`](https://youtrack.jetbrains.com/issue/KT-86170) PowerAssert: Stabilize runtime ABI for initial release
+- [`KT-86058`](https://youtrack.jetbrains.com/issue/KT-86058) Check the frontend-owned plugins for the Companion blocks and extensions
+- [`KT-85762`](https://youtrack.jetbrains.com/issue/KT-85762) Support for `@ToString` annotation on kotlin classes
+- [`KT-86065`](https://youtrack.jetbrains.com/issue/KT-86065) Scripting plugin adds `HashMap<K, V>` (with HashMap's own out-of-scope type parameters) as a supertype of the synthetic REPL state class
+- [`KT-86064`](https://youtrack.jetbrains.com/issue/KT-86064) Plugin sandbox generates `IrClassReferenceImpl` typed as `KClass<T>` where `T` is KClass's own type parameter
+- [`KT-86063`](https://youtrack.jetbrains.com/issue/KT-86063) PowerAssert plugin generates IR call to `listOf<T>` with an out-of-scope type parameter as its type
+- [`KT-86070`](https://youtrack.jetbrains.com/issue/KT-86070) PowerAssert: Enum entries should not be displayed
+- [`KT-85250`](https://youtrack.jetbrains.com/issue/KT-85250) PowerAssert: Automatically add runtime library dependency
+- [`KT-85472`](https://youtrack.jetbrains.com/issue/KT-85472) Compiler crash if use unexpected value of AccessLevel in a lombok annotation
+- [`KT-85693`](https://youtrack.jetbrains.com/issue/KT-85693) Don't generate declarations with `NONE` access level
+
+### Tools. Compiler plugins. Serialization
+
+- [`KT-85963`](https://youtrack.jetbrains.com/issue/KT-85963) `IncompatibleClassChangeError: Expected non-static field $stable` on deserialization of `@Serializable` data class when Compose compiler plugin is applied before Serialization plugin
+- [`KT-85554`](https://youtrack.jetbrains.com/issue/KT-85554) Serialization: "IndexOutOfBoundsException" on property generated by Compose plugin
+
+### Tools. Daemon
+
+- [`KT-85634`](https://youtrack.jetbrains.com/issue/KT-85634) -Xwarning-level warnings are escalated to errors when -Werror is enabled in BTA daemon mode
+- [`KT-71048`](https://youtrack.jetbrains.com/issue/KT-71048) KotlinCompileDaemon compatibility not discriminated by JVM version
+- [`KT-75840`](https://youtrack.jetbrains.com/issue/KT-75840) Almost dead daemons are considered in the daemon elections
+
+### Tools. Gradle
+
+#### New Features
+
+- [`KT-78214`](https://youtrack.jetbrains.com/issue/KT-78214) Gradle: implement Kotlin/JS compilation and linking through BTA
+- [`KT-80509`](https://youtrack.jetbrains.com/issue/KT-80509) Gradle: implement metadata compilation through BTA
+- [`KT-78216`](https://youtrack.jetbrains.com/issue/KT-78216) Gradle: implement Kotlin/Wasm compilation and linking through BTA
+
+#### Fixes
+
+- [`KT-83679`](https://youtrack.jetbrains.com/issue/KT-83679) Add ERROR deprecation for CleanableStore and CleanDataTask
+- [`KT-85689`](https://youtrack.jetbrains.com/issue/KT-85689) Delete `prepareDeps` from kotlin repo
+- [`KT-86118`](https://youtrack.jetbrains.com/issue/KT-86118) CRI: Enabling `kotlin.compiler.generateCompilerRefIndex` does not invalidate `compileKotlin` UP-TO-DATE state
+- [`KT-85942`](https://youtrack.jetbrains.com/issue/KT-85942) Carry compiler diagnostic identifiers through MessageCollector infrastructure
+- [`KT-85568`](https://youtrack.jetbrains.com/issue/KT-85568) Use compiler diagnostic identifiers in KGP Problems API reporting
+- [`KT-86346`](https://youtrack.jetbrains.com/issue/KT-86346) Compiler warnings printed twice in console — once as `w:` and again as Gradle "Problem found:" block
+- [`KT-85567`](https://youtrack.jetbrains.com/issue/KT-85567) Carry compiler diagnostic identifiers through Build Tools API messages
+- [`KT-85901`](https://youtrack.jetbrains.com/issue/KT-85901) [Gradle] Refactor KGP functional test task configuration to use file-backed system properties
+- [`KT-85373`](https://youtrack.jetbrains.com/issue/KT-85373) Compile against Gradle API 9.5.0
+- [`KT-85374`](https://youtrack.jetbrains.com/issue/KT-85374) Run tests against Gradle 9.5.0
+- [`KT-86429`](https://youtrack.jetbrains.com/issue/KT-86429) Deprecate KGP `contentEquals()` utility, move it to internal utility function
+- [`KT-66381`](https://youtrack.jetbrains.com/issue/KT-66381) Build reports in JSON: incorrect path to a json build report is printed to build output if a relative path defined as a value for kotlin.build.report.json.directory property
+- [`KT-85590`](https://youtrack.jetbrains.com/issue/KT-85590) Gradle: cannot create task MainKt.main() due to missing defaultSourceSetName
+- [`KT-85412`](https://youtrack.jetbrains.com/issue/KT-85412) Module name is not sanitized with older Kotlin compiler versions
+
+### Tools. Gradle. Compiler plugins
+
+- [`KT-84811`](https://youtrack.jetbrains.com/issue/KT-84811) PowerAssert: Gradle configuration option for default sourcesets to transform
+
+### Tools. Gradle. JS
+
+- [`KT-86630`](https://youtrack.jetbrains.com/issue/KT-86630) Introduce mocha browser runner for kotlin test as part of kotlin-web-helpers
+- [`KT-86260`](https://youtrack.jetbrains.com/issue/KT-86260) Integrate Playwright with JS Tests pipeline
+- [`KT-86106`](https://youtrack.jetbrains.com/issue/KT-86106) Fix task dependency in KGP lockfile generation
+- [`KT-86271`](https://youtrack.jetbrains.com/issue/KT-86271) [WasmJs/Js] 2.4.0-Beta2 - Node version not compatible with popular JS dependencies
+- [`KT-85854`](https://youtrack.jetbrains.com/issue/KT-85854) Improve AbstractSetupTask logging
+- [`KT-64275`](https://youtrack.jetbrains.com/issue/KT-64275) Gradle: remove deprecated symbols related to the legacy JS target
+- [`KT-84790`](https://youtrack.jetbrains.com/issue/KT-84790) Use package.json as 'source of truth' for KGP npm tooling dependencies
+
+### Tools. Gradle. Multiplatform
+
+- [`KT-69571`](https://youtrack.jetbrains.com/issue/KT-69571) compileNativeMainKotlinMetadata not handling project/prebuilt substitutions
+- [`KT-84533`](https://youtrack.jetbrains.com/issue/KT-84533) KMP: compileCommonMainKotlinMetadata: "Unresolved reference" for androidx.savedstate from Maven (works with project() dependency)
+- [`KT-84767`](https://youtrack.jetbrains.com/issue/KT-84767) K/N: associateWith triggers warning about friend-modules libs not included in -library argument
+- [`KT-81117`](https://youtrack.jetbrains.com/issue/KT-81117) With `android.builtInKotlin=true` (AGP 9.0), using `kotlin-multiplatform` plugin will fail with `Cannot add extension with name 'kotlin'`
+- [`KT-83370`](https://youtrack.jetbrains.com/issue/KT-83370) Incorrect metadata transformation for stdlib's webMain source set
+- [`KT-84669`](https://youtrack.jetbrains.com/issue/KT-84669) SPM import: If iosApp dir located outside of the project, checkSyntheticImportProjectIsCorrectlyIntegrated will fail
+
+### Tools. Gradle. Native
+
+#### New Features
+
+- [`KT-86047`](https://youtrack.jetbrains.com/issue/KT-86047) Suggest CocoaPods -> SwiftPM migration skill and documentation on cocoapods plugin application
+- [`KT-86155`](https://youtrack.jetbrains.com/issue/KT-86155) Print what changed in the linkage package
+- [`KT-85797`](https://youtrack.jetbrains.com/issue/KT-85797) Use faster findMacros in SwiftPM import cinterops
+- [`KT-83873`](https://youtrack.jetbrains.com/issue/KT-83873) Redo how dynamic library linkage and promotion are handled
+
+#### Fixes
+
+- [`KT-85961`](https://youtrack.jetbrains.com/issue/KT-85961) integrateLinkagePackage without parameters fails with an obscure error
+- [`KT-84238`](https://youtrack.jetbrains.com/issue/KT-84238) SPM Import: Ensure generated Package.swift preserves symlinks in local package paths
+- [`KT-86015`](https://youtrack.jetbrains.com/issue/KT-86015) Swift export binary doesn't see main compilation cinterop output
+- [`KT-85502`](https://youtrack.jetbrains.com/issue/KT-85502) Swift PM Import: "Library not loaded": KotlinMultiplatformLinkedPackage.framework is not copied next to the executable
+- [`KT-86024`](https://youtrack.jetbrains.com/issue/KT-86024) Empty main compilations cause w: [COMPILER_ARGUMENTS_WARNING] There are libraries in -friend-modules CLI argument that are not included in -library CLI argument:
+- [`KT-69896`](https://youtrack.jetbrains.com/issue/KT-69896) Native: output to stderr ends up in the Gradle log
+- [`KT-85708`](https://youtrack.jetbrains.com/issue/KT-85708) [KGP] dSYM copy task ignores `isStatic` due to eager read before framework configuration
+- [`KT-84262`](https://youtrack.jetbrains.com/issue/KT-84262) integrateEmbedAndSign produces an incorrect Gradle call for the root project
+- [`KT-84730`](https://youtrack.jetbrains.com/issue/KT-84730) Add Kdocs to SwiftPM import APIs
+
+### Tools. Gradle. Wasm
+
+- [`KT-86457`](https://youtrack.jetbrains.com/issue/KT-86457) [Wasm, Gradle] BinaryenExec.standardOutput is silently ignored after migration to Gradle Workers
+- [`KT-85688`](https://youtrack.jetbrains.com/issue/KT-85688) K/Wasm: Remove setting of failOnNoDiscoveredTests in Wasm Gradle tests
+- [`KT-86054`](https://youtrack.jetbrains.com/issue/KT-86054) K/Wasm: Not set sourceMapBaseDir if there is no sourceMap property in JS and Wasm
+- [`KT-85974`](https://youtrack.jetbrains.com/issue/KT-85974) K/Wasm: Do not set -Xir-per-module for Wasm tasks
+- [`KT-85861`](https://youtrack.jetbrains.com/issue/KT-85861) K/Wasm: Upgrade NPM dependencies
+- [`KT-85806`](https://youtrack.jetbrains.com/issue/KT-85806) K/Wasm: Do not rewrite native_implementations.kt file path in source map
+
+### Tools. Incremental Compile
+
+- [`KT-84271`](https://youtrack.jetbrains.com/issue/KT-84271) Kotlin Incremental compilation failure "The following FqNames can't be derived from DirtyData.dirtyLookupSymbols"
+- [`KT-85740`](https://youtrack.jetbrains.com/issue/KT-85740) Incremental compilation misses classpath removal when removed type is used only in a dependency's method signature
+- [`KT-85074`](https://youtrack.jetbrains.com/issue/KT-85074) IC: false build success when anonymous class fails to implement new abstract member from another module's interface
+- [`KT-85642`](https://youtrack.jetbrains.com/issue/KT-85642) IC:  Classpath snapshot cache may serve stale entries when snapshot file is overwritten at the same path
+
+### Tools. Kapt
+
+- [`KT-85195`](https://youtrack.jetbrains.com/issue/KT-85195) KAPT: IntroducedAt is not supported in KAPT
+- [`KT-86003`](https://youtrack.jetbrains.com/issue/KT-86003) Remove MessageCollector usage from kapt
+- [`KT-85453`](https://youtrack.jetbrains.com/issue/KT-85453) Make :kotlin-annotation-processing-cli:test cacheable
+
+### Tools. Maven
+
+- [`KT-85622`](https://youtrack.jetbrains.com/issue/KT-85622) [Maven] setting kotlin.compiler.jdkRelease without explicit jvmTarget causes compilation failure due to conflicting default
+- [`KT-61667`](https://youtrack.jetbrains.com/issue/KT-61667) Maven: -Xjdk-release=20 leads to "'-Xjdk-release=20' option conflicts with '-jvm-target 1.8'. Please remove the '-jvm-target' option"
+- [`KT-84163`](https://youtrack.jetbrains.com/issue/KT-84163) Maven smart defaults: <sourceDirectory> and <testSourceDirectory> overrides not respected
+
+### Tools. Performance benchmarks
+
+- [`KT-85233`](https://youtrack.jetbrains.com/issue/KT-85233) Refine benchmarks module and add new custom long-running tests to it
+
+### Tools. REPL
+
+- [`KT-86290`](https://youtrack.jetbrains.com/issue/KT-86290) Drop GenericReplTest & LegacyReplTest
+
+### Tools. Scripts
+
+- [`KT-86391`](https://youtrack.jetbrains.com/issue/KT-86391) Drop SkipStandaloneScriptsInSourceRoots
+
+### Tools. Wasm
+
+- [`KT-83434`](https://youtrack.jetbrains.com/issue/KT-83434) K/Wasm: add wasm-wasi stdlib into compiler distribution (dist/)
+
+
 ## 2.4.0
 
 ### Analysis API
