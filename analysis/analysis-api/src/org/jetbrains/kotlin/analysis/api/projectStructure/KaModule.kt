@@ -282,8 +282,9 @@ public interface KaLibrarySourceModule : KaModule {
  * [dependentLibrary]. This allows resolving symbols defined in the dependencies of the library. In most cases, while not perfectly precise,
  * this approach resolves the correct symbols.
  *
- * The fallback dependencies module's [baseContentScope] should be the scope of all libraries excluding [dependentLibrary]. It should have
- * the same [targetPlatform] as [dependentLibrary].
+ * The fallback dependencies module's [baseContentScope] should be the scope of the *binary files* of all libraries excluding
+ * [dependentLibrary]. Source files must not be included. Additionally, the module should have the same [targetPlatform] as
+ * [dependentLibrary].
  *
  * [KaLibraryFallbackDependenciesModule] is not [resolvable][isResolvable] and thus cannot be a use-site module of an [analyze][org.jetbrains.kotlin.analysis.api.session.analyze]
  * call. It should not be returned by [KaModuleProvider.getModule].
