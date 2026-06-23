@@ -77,7 +77,6 @@ KaSyntheticJavaPropertySymbol:
   isExpect: false
   isExtension: false
   isExternal: false
-  isFromPrimaryConstructor: false
   isOverride: false
   isStatic: false
   isVal: true

@@ -233,7 +233,6 @@ scopes:
         isExpect: false
         isExtension: true
         isExternal: false
-        isFromPrimaryConstructor: false
         isLateInit: false
         isOverride: false
         isStatic: false

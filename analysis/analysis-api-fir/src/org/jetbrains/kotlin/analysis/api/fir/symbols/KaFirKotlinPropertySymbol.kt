@@ -369,6 +369,10 @@ private class KaFirKotlinPropertyKtPropertyBasedSymbol : KaFirKotlinPropertySymb
             firSymbol.getKtConstantInitializer(builder)
         }
 
+    @Deprecated(
+        "Use `KaKotlinProperty.primaryConstructorParameter` instead.",
+        ReplaceWith("primaryConstructorParameter != null")
+    )
     override val isFromPrimaryConstructor: Boolean
         get() = withValidityAssertion {
             if (backingPsi != null)
@@ -526,6 +530,10 @@ private class KaFirKotlinPropertyKtParameterBasedSymbol : KaFirKotlinPropertySym
                 ?.let(::KaNonConstantInitializerValue) ?: firSymbol.getKtConstantInitializer(builder)
         }
 
+    @Deprecated(
+        "Use `correspondingPrimaryConstructorParameter` instead.",
+        replaceWith = ReplaceWith("correspondingPrimaryConstructorParameter != null")
+    )
     override val isFromPrimaryConstructor: Boolean
         get() = withValidityAssertion { true }
 
@@ -642,6 +650,10 @@ private class KaFirKotlinPropertyKtDestructuringDeclarationEntryBasedSymbol : Ka
             backingPsi?.let(::KaNonConstantInitializerValue) ?: firSymbol.getKtConstantInitializer(builder)
         }
 
+    @Deprecated(
+        "Use `correspondingPrimaryConstructorParameter` instead.",
+        replaceWith = ReplaceWith("correspondingPrimaryConstructorParameter != null")
+    )
     override val isFromPrimaryConstructor: Boolean
         get() = withValidityAssertion { false }
 

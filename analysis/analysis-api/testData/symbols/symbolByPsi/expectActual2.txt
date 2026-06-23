@@ -316,7 +316,6 @@ KaKotlinPropertySymbol:
   isExpect: true
   isExtension: false
   isExternal: false
-  isFromPrimaryConstructor: false
   isLateInit: false
   isOverride: false
   isStatic: false
@@ -554,7 +553,6 @@ KaKotlinPropertySymbol:
   isExpect: true
   isExtension: false
   isExternal: false
-  isFromPrimaryConstructor: false
   isLateInit: false
   isOverride: false
   isStatic: false

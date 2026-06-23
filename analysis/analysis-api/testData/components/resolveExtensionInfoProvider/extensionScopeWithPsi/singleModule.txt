@@ -251,7 +251,6 @@ callables: 5
     isExpect: false
     isExtension: false
     isExternal: false
-    isFromPrimaryConstructor: false
     isLateInit: false
     isOverride: false
     isStatic: false
@@ -337,7 +336,6 @@ callables: 5
     isExpect: false
     isExtension: false
     isExternal: false
-    isFromPrimaryConstructor: false
     isLateInit: false
     isOverride: false
     isStatic: false
@@ -527,7 +525,6 @@ callables: 5
     isExpect: false
     isExtension: true
     isExternal: false
-    isFromPrimaryConstructor: false
     isLateInit: false
     isOverride: false
     isStatic: false

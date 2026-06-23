@@ -511,7 +511,6 @@ scopes:
         isExpect: false
         isExtension: false
         isExternal: false
-        isFromPrimaryConstructor: false
         isLateInit: false
         isOverride: true
         isStatic: false
@@ -1081,7 +1080,6 @@ scopes:
         isExpect: false
         isExtension: false
         isExternal: false
-        isFromPrimaryConstructor: false
         isLateInit: false
         isOverride: true
         isStatic: false
