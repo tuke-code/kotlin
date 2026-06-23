@@ -242,6 +242,7 @@ scopes:
         modality: FINAL
         name: foo
         origin: SOURCE
+        primaryConstructorParameter: null
         receiverParameter: KaReceiverParameterSymbol:
           annotations: []
           callableId: null

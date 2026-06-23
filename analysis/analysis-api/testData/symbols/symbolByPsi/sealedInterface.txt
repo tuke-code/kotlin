@@ -221,6 +221,7 @@ KaKotlinPropertySymbol:
   modality: ABSTRACT
   name: variable
   origin: SOURCE
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -430,6 +431,7 @@ KaKotlinPropertySymbol:
   modality: OPEN
   name: defaultVariable
   origin: SOURCE
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -635,6 +637,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: privateDefaultVariable
   origin: SOURCE
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

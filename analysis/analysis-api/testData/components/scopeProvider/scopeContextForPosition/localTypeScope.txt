@@ -124,6 +124,7 @@ scopes:
         modality: FINAL
         name: propertyInY
         origin: SOURCE
+        primaryConstructorParameter: null
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []

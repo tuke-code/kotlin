@@ -89,6 +89,7 @@ KaKotlinPropertySymbol:
   modality: ABSTRACT
   name: abstractProperty
   origin: LIBRARY
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -201,6 +202,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: customAccessorAndBackingField
   origin: LIBRARY
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -414,6 +416,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: customGetter
   origin: LIBRARY
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -526,6 +529,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: customGetterDelegation
   origin: LIBRARY
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -638,6 +642,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: customGetterDelegationWithBackingField
   origin: LIBRARY
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -750,6 +755,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: customSetter
   origin: LIBRARY
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -966,6 +972,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: defaultGetterWithAnnotation
   origin: LIBRARY
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -1078,6 +1085,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: defaultProperty
   origin: LIBRARY
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -1190,6 +1198,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: defaultSetterWithAnotherVisibility
   origin: LIBRARY
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -1403,6 +1412,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: defaultVariable
   origin: LIBRARY
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -1643,6 +1653,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: extensionProperty
   origin: LIBRARY
+  primaryConstructorParameter: null
   receiverParameter: KaReceiverParameterSymbol:
     annotations: []
     callableId: null
@@ -1782,6 +1793,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: fromConstructor
   origin: LIBRARY
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -1995,6 +2007,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: lateinitVariable
   origin: LIBRARY
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -2208,6 +2221,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: postponed
   origin: LIBRARY
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

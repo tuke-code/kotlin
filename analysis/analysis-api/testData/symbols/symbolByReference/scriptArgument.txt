@@ -99,6 +99,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: args
   origin: LIBRARY
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

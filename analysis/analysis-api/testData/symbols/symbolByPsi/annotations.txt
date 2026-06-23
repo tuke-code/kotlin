@@ -117,6 +117,7 @@ KaConstructorSymbol:
         modality: FINAL
         name: param1
         origin: SOURCE
+        primaryConstructorParameter: KaValueParameterSymbol(<local>/param1)
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -261,6 +262,7 @@ KaConstructorSymbol:
         modality: FINAL
         name: param2
         origin: SOURCE
+        primaryConstructorParameter: KaValueParameterSymbol(<local>/param2)
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []

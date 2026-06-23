@@ -209,6 +209,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: topLevelProperty
   origin: SOURCE
+  primaryConstructorParameter: null
   receiverParameter: KaReceiverParameterSymbol:
     annotations: []
     callableId: null

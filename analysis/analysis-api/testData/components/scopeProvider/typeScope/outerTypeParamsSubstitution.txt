@@ -262,6 +262,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: map
   origin: SOURCE
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

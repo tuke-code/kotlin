@@ -236,6 +236,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: entries
   origin: SOURCE_MEMBER_GENERATED
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

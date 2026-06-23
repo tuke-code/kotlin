@@ -199,6 +199,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: testVal
   origin: SOURCE
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -299,6 +300,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: initializedVariable
   origin: SOURCE
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -496,6 +498,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: unitializedVariable
   origin: SOURCE
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -693,6 +696,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: lateinitVariable
   origin: SOURCE
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -890,6 +894,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: variableWithBackingField
   origin: SOURCE
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -1087,6 +1092,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: privateSetter
   origin: SOURCE
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -1287,6 +1293,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: jvmNameOnSetter
   origin: SOURCE
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -1490,6 +1497,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: customGetter
   origin: SOURCE
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -1593,6 +1601,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: jvmNameOnGetter
   origin: SOURCE
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -1720,6 +1729,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: propertyWithReceiver
   origin: SOURCE
+  primaryConstructorParameter: null
   receiverParameter: KaReceiverParameterSymbol:
     annotations: []
     callableId: null
@@ -1873,6 +1883,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: propertyWithGenericReceiver
   origin: SOURCE
+  primaryConstructorParameter: null
   receiverParameter: KaReceiverParameterSymbol:
     annotations: []
     callableId: null
@@ -2017,6 +2028,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: constant
   origin: SOURCE
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -2120,6 +2132,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: jvmField
   origin: SOURCE
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

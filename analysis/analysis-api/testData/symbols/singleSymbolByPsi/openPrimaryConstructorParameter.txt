@@ -94,6 +94,7 @@ KaValueParameterSymbol:
     modality: OPEN
     name: ctx
     origin: SOURCE
+    primaryConstructorParameter: KaValueParameterSymbol(<local>/ctx)
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []

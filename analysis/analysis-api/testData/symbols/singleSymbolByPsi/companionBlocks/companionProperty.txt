@@ -108,6 +108,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: static1
   origin: SOURCE
+  primaryConstructorParameter: null
   receiverParameter: KaReceiverParameterSymbol:
     annotations: []
     callableId: null

@@ -89,6 +89,39 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: firstProperty
   origin: SOURCE
+  primaryConstructorParameter: KaValueParameterSymbol:
+    annotations: []
+    callableId: null
+    contextReceivers: []
+    generatedPrimaryConstructorProperty: KaKotlinPropertySymbol(/Abc.firstProperty)
+    hasDeclaredDefaultValue: false
+    hasDefaultValue: false
+    isActual: false
+    isCompanion: false
+    isCrossinline: false
+    isDelegated: false
+    isExpect: false
+    isExtension: false
+    isExternal: false
+    isImplicitLambdaParameter: false
+    isNoinline: false
+    isVal: true
+    isVararg: false
+    location: LOCAL
+    modality: FINAL
+    name: firstProperty
+    origin: SOURCE
+    receiverParameter: null
+    returnType: KaUsualClassType:
+      annotations: []
+      typeArguments: []
+      type: kotlin/Int
+    visibility: PUBLIC
+    getContainingFileSymbol: KaFileSymbol(dataClass.kt)
+    getContainingJvmClassName: Abc
+    getContainingModule: KaSourceModule "Sources of main"
+    deprecation: null
+    importableFqName: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -201,6 +234,39 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: secondProperty
   origin: SOURCE
+  primaryConstructorParameter: KaValueParameterSymbol:
+    annotations: []
+    callableId: null
+    contextReceivers: []
+    generatedPrimaryConstructorProperty: KaKotlinPropertySymbol(/Abc.secondProperty)
+    hasDeclaredDefaultValue: false
+    hasDefaultValue: false
+    isActual: false
+    isCompanion: false
+    isCrossinline: false
+    isDelegated: false
+    isExpect: false
+    isExtension: false
+    isExternal: false
+    isImplicitLambdaParameter: false
+    isNoinline: false
+    isVal: true
+    isVararg: false
+    location: LOCAL
+    modality: FINAL
+    name: secondProperty
+    origin: SOURCE
+    receiverParameter: null
+    returnType: KaUsualClassType:
+      annotations: []
+      typeArguments: []
+      type: kotlin/Double
+    visibility: PUBLIC
+    getContainingFileSymbol: KaFileSymbol(dataClass.kt)
+    getContainingJvmClassName: Abc
+    getContainingModule: KaSourceModule "Sources of main"
+    deprecation: null
+    importableFqName: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -313,6 +379,39 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: thirdProperty
   origin: SOURCE
+  primaryConstructorParameter: KaValueParameterSymbol:
+    annotations: []
+    callableId: null
+    contextReceivers: []
+    generatedPrimaryConstructorProperty: KaKotlinPropertySymbol(/Abc.thirdProperty)
+    hasDeclaredDefaultValue: false
+    hasDefaultValue: false
+    isActual: false
+    isCompanion: false
+    isCrossinline: false
+    isDelegated: false
+    isExpect: false
+    isExtension: false
+    isExternal: false
+    isImplicitLambdaParameter: false
+    isNoinline: false
+    isVal: true
+    isVararg: false
+    location: LOCAL
+    modality: FINAL
+    name: thirdProperty
+    origin: SOURCE
+    receiverParameter: null
+    returnType: KaUsualClassType:
+      annotations: []
+      typeArguments: []
+      type: kotlin/String
+    visibility: PUBLIC
+    getContainingFileSymbol: KaFileSymbol(dataClass.kt)
+    getContainingJvmClassName: Abc
+    getContainingModule: KaSourceModule "Sources of main"
+    deprecation: null
+    importableFqName: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -492,6 +591,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: bodyProperty
   origin: SOURCE
+  primaryConstructorParameter: null
   receiverParameter: KaReceiverParameterSymbol:
     annotations: []
     callableId: null
@@ -1105,6 +1205,7 @@ KaConstructorSymbol:
         modality: FINAL
         name: firstProperty
         origin: SOURCE
+        primaryConstructorParameter: KaValueParameterSymbol(<local>/firstProperty)
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -1249,6 +1350,7 @@ KaConstructorSymbol:
         modality: FINAL
         name: secondProperty
         origin: SOURCE
+        primaryConstructorParameter: KaValueParameterSymbol(<local>/secondProperty)
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -1393,6 +1495,7 @@ KaConstructorSymbol:
         modality: FINAL
         name: thirdProperty
         origin: SOURCE
+        primaryConstructorParameter: KaValueParameterSymbol(<local>/thirdProperty)
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []

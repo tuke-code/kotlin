@@ -57,6 +57,7 @@ KaKotlinPropertySymbol:
   modality: OPEN
   name: foo
   origin: DELEGATED
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

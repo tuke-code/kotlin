@@ -836,6 +836,7 @@ KaKotlinPropertySymbol:
   modality: ABSTRACT
   name: size
   origin: LIBRARY
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

@@ -377,6 +377,15 @@ private class KaFirKotlinPropertyKtPropertyBasedSymbol : KaFirKotlinPropertySymb
                 firSymbol.fir.fromPrimaryConstructor == true
         }
 
+    override val primaryConstructorParameter: KaValueParameterSymbol?
+        get() = withValidityAssertion {
+            if (backingPsi != null) {
+                return null
+            }
+            val firValueParameter = firSymbol.correspondingValueParameterFromPrimaryConstructor ?: return@withValidityAssertion null
+            return KaFirValueParameterSymbol(firValueParameter, analysisSession)
+        }
+
     override val isExternal: Boolean
         get() = withValidityAssertion {
             backingPsi?.isExternalDeclaration ?: firSymbol.isEffectivelyExternal(analysisSession.firSession)
@@ -520,6 +529,15 @@ private class KaFirKotlinPropertyKtParameterBasedSymbol : KaFirKotlinPropertySym
     override val isFromPrimaryConstructor: Boolean
         get() = withValidityAssertion { true }
 
+    override val primaryConstructorParameter: KaValueParameterSymbol?
+        get() = withValidityAssertion {
+            if (backingPsi != null) {
+                return KaFirValueParameterSymbol(backingPsi, analysisSession)
+            }
+            val firValueParameter = firSymbol.correspondingValueParameterFromPrimaryConstructor ?: return@withValidityAssertion null
+            return KaFirValueParameterSymbol(firValueParameter, analysisSession)
+        }
+
     override val isExternal: Boolean
         get() = withValidityAssertion {
             // a generated primary constructor property is external if its containing class is external (it can't be external by itself)
@@ -626,6 +644,9 @@ private class KaFirKotlinPropertyKtDestructuringDeclarationEntryBasedSymbol : Ka
 
     override val isFromPrimaryConstructor: Boolean
         get() = withValidityAssertion { false }
+
+    override val primaryConstructorParameter: KaValueParameterSymbol?
+        get() = withValidityAssertion { null }
 
     override val isExternal: Boolean
         get() = withValidityAssertion { false }

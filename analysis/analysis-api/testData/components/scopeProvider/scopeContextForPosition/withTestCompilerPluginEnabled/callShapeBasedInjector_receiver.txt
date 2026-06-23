@@ -116,6 +116,7 @@ scopes:
         modality: FINAL
         name: column
         origin: PLUGIN
+        primaryConstructorParameter: null
         receiverParameter: KaReceiverParameterSymbol:
           annotations: []
           callableId: null

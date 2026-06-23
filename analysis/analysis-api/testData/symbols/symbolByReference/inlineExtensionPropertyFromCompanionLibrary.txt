@@ -116,6 +116,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: extension
   origin: LIBRARY
+  primaryConstructorParameter: null
   receiverParameter: KaReceiverParameterSymbol:
     annotations: []
     callableId: null

@@ -340,6 +340,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: variable
   origin: SOURCE
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -553,6 +554,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: privateVariable
   origin: SOURCE
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -766,6 +768,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: internalVariable
   origin: SOURCE
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -1214,6 +1217,7 @@ KaConstructorSymbol:
         modality: FINAL
         name: constructorProperty
         origin: SOURCE
+        primaryConstructorParameter: KaValueParameterSymbol(<local>/constructorProperty)
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []

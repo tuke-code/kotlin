@@ -137,6 +137,7 @@ scopes:
         modality: FINAL
         name: x
         origin: SOURCE
+        primaryConstructorParameter: null
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -473,6 +474,7 @@ scopes:
         modality: FINAL
         name: name
         origin: LIBRARY
+        primaryConstructorParameter: null
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -554,6 +556,7 @@ scopes:
         modality: FINAL
         name: ordinal
         origin: LIBRARY
+        primaryConstructorParameter: null
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -832,6 +835,7 @@ scopes:
         modality: FINAL
         name: entries
         origin: SOURCE_MEMBER_GENERATED
+        primaryConstructorParameter: null
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []

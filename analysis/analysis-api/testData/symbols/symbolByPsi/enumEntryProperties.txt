@@ -89,6 +89,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: a
   origin: SOURCE
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -259,6 +260,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: b
   origin: SOURCE
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -394,6 +396,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: d
   origin: SOURCE
+  primaryConstructorParameter: null
   receiverParameter: KaReceiverParameterSymbol:
     annotations: []
     callableId: null

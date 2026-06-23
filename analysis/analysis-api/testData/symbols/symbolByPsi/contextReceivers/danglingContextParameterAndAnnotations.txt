@@ -117,6 +117,7 @@ KaConstructorSymbol:
         modality: FINAL
         name: position
         origin: SOURCE
+        primaryConstructorParameter: KaValueParameterSymbol(<local>/position)
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []

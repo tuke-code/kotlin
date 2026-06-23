@@ -133,6 +133,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: $$result
   origin: PLUGIN
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

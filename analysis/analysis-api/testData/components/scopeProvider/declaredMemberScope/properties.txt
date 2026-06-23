@@ -89,6 +89,39 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: fromConstructor
   origin: SOURCE
+  primaryConstructorParameter: KaValueParameterSymbol:
+    annotations: []
+    callableId: null
+    contextReceivers: []
+    generatedPrimaryConstructorProperty: KaKotlinPropertySymbol(one/Foo.fromConstructor)
+    hasDeclaredDefaultValue: false
+    hasDefaultValue: false
+    isActual: false
+    isCompanion: false
+    isCrossinline: false
+    isDelegated: false
+    isExpect: false
+    isExtension: false
+    isExternal: false
+    isImplicitLambdaParameter: false
+    isNoinline: false
+    isVal: true
+    isVararg: false
+    location: LOCAL
+    modality: FINAL
+    name: fromConstructor
+    origin: SOURCE
+    receiverParameter: null
+    returnType: KaUsualClassType:
+      annotations: []
+      typeArguments: []
+      type: kotlin/String
+    visibility: PUBLIC
+    getContainingFileSymbol: KaFileSymbol(properties.kt)
+    getContainingJvmClassName: one.Foo
+    getContainingModule: KaSourceModule "Sources of main"
+    deprecation: null
+    importableFqName: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -302,6 +335,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: defaultProperty
   origin: SOURCE
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -414,6 +448,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: defaultVariable
   origin: SOURCE
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -623,6 +658,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: customAccessorAndBackingField
   origin: SOURCE
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -828,6 +864,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: customGetter
   origin: SOURCE
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -940,6 +977,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: customSetter
   origin: SOURCE
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -1145,6 +1183,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: customGetterDelegation
   origin: SOURCE
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -1253,6 +1292,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: customGetterDelegationWithBackingField
   origin: SOURCE
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -1368,6 +1408,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: defaultGetterWithAnnotation
   origin: SOURCE
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -1480,6 +1521,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: defaultSetterWithAnotherVisibility
   origin: SOURCE
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -1716,6 +1758,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: extensionProperty
   origin: SOURCE
+  primaryConstructorParameter: null
   receiverParameter: KaReceiverParameterSymbol:
     annotations: []
     callableId: null
@@ -1851,6 +1894,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: postponed
   origin: SOURCE
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -1963,6 +2007,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: lateinitVariable
   origin: SOURCE
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -2176,6 +2221,7 @@ KaKotlinPropertySymbol:
   modality: ABSTRACT
   name: abstractProperty
   origin: SOURCE
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -2316,6 +2362,7 @@ KaConstructorSymbol:
         modality: FINAL
         name: fromConstructor
         origin: SOURCE
+        primaryConstructorParameter: KaValueParameterSymbol(<local>/fromConstructor)
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []

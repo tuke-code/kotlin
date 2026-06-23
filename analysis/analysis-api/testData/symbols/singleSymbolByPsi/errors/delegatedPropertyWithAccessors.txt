@@ -91,6 +91,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: lazyProp
   origin: SOURCE
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

@@ -121,6 +121,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: cCompanionProperty
   origin: SOURCE
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

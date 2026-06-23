@@ -87,6 +87,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: p
   origin: SOURCE
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaDynamicType:
     annotations: []

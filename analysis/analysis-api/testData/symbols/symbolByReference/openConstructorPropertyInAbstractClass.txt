@@ -89,6 +89,39 @@ KaKotlinPropertySymbol:
   modality: OPEN
   name: prop
   origin: SOURCE
+  primaryConstructorParameter: KaValueParameterSymbol:
+    annotations: []
+    callableId: null
+    contextReceivers: []
+    generatedPrimaryConstructorProperty: KaKotlinPropertySymbol(/Check.prop)
+    hasDeclaredDefaultValue: false
+    hasDefaultValue: false
+    isActual: false
+    isCompanion: false
+    isCrossinline: false
+    isDelegated: false
+    isExpect: false
+    isExtension: false
+    isExternal: false
+    isImplicitLambdaParameter: false
+    isNoinline: false
+    isVal: true
+    isVararg: false
+    location: LOCAL
+    modality: FINAL
+    name: prop
+    origin: SOURCE
+    receiverParameter: null
+    returnType: KaUsualClassType:
+      annotations: []
+      typeArguments: []
+      type: kotlin/Int
+    visibility: PUBLIC
+    getContainingFileSymbol: KaFileSymbol(openConstructorPropertyInAbstractClass.kt)
+    getContainingJvmClassName: Check
+    getContainingModule: KaSourceModule "Sources of main"
+    deprecation: null
+    importableFqName: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

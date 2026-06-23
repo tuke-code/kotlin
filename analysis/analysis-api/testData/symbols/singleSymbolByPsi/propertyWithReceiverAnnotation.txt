@@ -114,6 +114,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: prop
   origin: SOURCE
+  primaryConstructorParameter: null
   receiverParameter: KaReceiverParameterSymbol:
     annotations: [
       ReceiverAnnotation()

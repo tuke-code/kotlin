@@ -117,6 +117,7 @@ KaConstructorSymbol:
         modality: FINAL
         name: x
         origin: SOURCE
+        primaryConstructorParameter: KaValueParameterSymbol(<local>/x)
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -261,6 +262,7 @@ KaConstructorSymbol:
         modality: FINAL
         name: y
         origin: SOURCE
+        primaryConstructorParameter: KaValueParameterSymbol(<local>/y)
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -405,6 +407,7 @@ KaConstructorSymbol:
         modality: FINAL
         name: z
         origin: SOURCE
+        primaryConstructorParameter: KaValueParameterSymbol(<local>/z)
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -606,6 +609,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: delegate
   origin: SOURCE
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -755,6 +759,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: lambda
   origin: SOURCE
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -872,6 +877,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: nonLazy
   origin: SOURCE
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

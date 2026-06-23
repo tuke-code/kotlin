@@ -325,6 +325,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: n
   origin: SOURCE
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -583,6 +584,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: m
   origin: SOURCE
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

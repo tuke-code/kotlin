@@ -129,6 +129,7 @@ scopes:
         modality: FINAL
         name: foo
         origin: SOURCE
+        primaryConstructorParameter: null
         receiverParameter: null
         returnType: KaClassErrorType:
           annotations: []

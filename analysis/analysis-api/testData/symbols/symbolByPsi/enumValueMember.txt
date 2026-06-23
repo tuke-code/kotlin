@@ -117,6 +117,7 @@ KaConstructorSymbol:
         modality: FINAL
         name: value
         origin: SOURCE
+        primaryConstructorParameter: KaValueParameterSymbol(<local>/value)
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -260,6 +261,7 @@ KaKotlinPropertySymbol:
   modality: OPEN
   name: exitAnimation
   origin: SOURCE
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -401,6 +403,7 @@ KaKotlinPropertySymbol:
   modality: ABSTRACT
   name: exitAnimation
   origin: SOURCE
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

@@ -25,6 +25,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: dynamicPropertyAccess
   origin: JS_DYNAMIC
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaDynamicType:
     annotations: []

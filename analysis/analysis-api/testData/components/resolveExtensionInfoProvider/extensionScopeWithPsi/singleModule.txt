@@ -260,6 +260,7 @@ callables: 5
     modality: FINAL
     name: genTopLevelVal1
     origin: SOURCE
+    primaryConstructorParameter: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -345,6 +346,7 @@ callables: 5
     modality: FINAL
     name: genTopLevelVar1
     origin: SOURCE
+    primaryConstructorParameter: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -534,6 +536,7 @@ callables: 5
     modality: FINAL
     name: genExtensionVal1
     origin: SOURCE
+    primaryConstructorParameter: null
     receiverParameter: KaReceiverParameterSymbol:
       annotations: []
       callableId: null

@@ -95,6 +95,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: propertyWithFlexibleDnnImplicitType
   origin: SOURCE
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaFlexibleType:
     annotations: []

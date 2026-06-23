@@ -89,6 +89,7 @@ KaKotlinPropertySymbol:
   modality: ABSTRACT
   name: foo
   origin: LIBRARY
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

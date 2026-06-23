@@ -81,6 +81,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: foo
   origin: SOURCE
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -221,6 +222,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: internalFoo
   origin: SOURCE
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -361,6 +363,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: privateFoo
   origin: SOURCE
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -501,6 +504,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: bar
   origin: SOURCE
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -641,6 +645,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: internalBar
   origin: SOURCE
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -781,6 +786,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: privateBar
   origin: SOURCE
+  primaryConstructorParameter: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -1015,6 +1021,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: companionBar
   origin: SOURCE
+  primaryConstructorParameter: null
   receiverParameter: KaReceiverParameterSymbol:
     annotations: []
     callableId: null
@@ -1236,6 +1243,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: companionInternalBar
   origin: SOURCE
+  primaryConstructorParameter: null
   receiverParameter: KaReceiverParameterSymbol:
     annotations: []
     callableId: null
@@ -1457,6 +1465,7 @@ KaKotlinPropertySymbol:
   modality: FINAL
   name: companionPrivateBar
   origin: SOURCE
+  primaryConstructorParameter: null
   receiverParameter: KaReceiverParameterSymbol:
     annotations: []
     callableId: null

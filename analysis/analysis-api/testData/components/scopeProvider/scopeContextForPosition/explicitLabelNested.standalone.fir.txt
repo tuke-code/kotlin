@@ -520,6 +520,7 @@ scopes:
         modality: OPEN
         name: length
         origin: LIBRARY
+        primaryConstructorParameter: null
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -1089,6 +1090,7 @@ scopes:
         modality: OPEN
         name: length
         origin: LIBRARY
+        primaryConstructorParameter: null
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
