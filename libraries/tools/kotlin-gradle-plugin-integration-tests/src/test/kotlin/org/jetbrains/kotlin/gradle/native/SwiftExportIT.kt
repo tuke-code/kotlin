@@ -615,6 +615,18 @@ class SwiftExportIT : KGPBaseTest() {
                         SwiftSymbol(
                             demangledId = "KotlinRuntimeSupport.KotlinError.description : Swift.String",
                             pathComponents = listOf("KotlinError.description")
+                        ),
+                        SwiftSymbol(
+                            demangledId = "KotlinRuntimeSupport.SealedType",
+                            pathComponents = listOf("SealedType")
+                        ),
+                        SwiftSymbol(
+                            demangledId = "KotlinRuntimeSupport.SealedType.T",
+                            pathComponents = listOf("SealedType", "T")
+                        ),
+                        SwiftSymbol(
+                            demangledId = "KotlinRuntimeSupport.SealedType.value : A.T",
+                            pathComponents = listOf("SealedType", "value")
                         )
                     )
                 )
