@@ -82,6 +82,7 @@ internal val SwiftImportSetupAction = KotlinProjectSetupAction {
             }
         }
     }
+    val hasLocalSwiftPMDependencies = transitiveLocalSwiftPMDependenciesProvider.map { it.isNotEmpty() }
 
     val syntheticImportProjectGenerationTaskForEmbedAndSignLinkage = locateOrRegisterRegenerateLinkageImportProjectTask()
     syntheticImportProjectGenerationTaskForEmbedAndSignLinkage.configure {
@@ -154,7 +155,9 @@ internal val SwiftImportSetupAction = KotlinProjectSetupAction {
         it.dependsOn(hasDirectOrTransitiveSwiftPMDependencies)
         it.dependsOn(syncPersistedPackageResolvedToSyntheticSwiftPMPackage)
         it.dependsOn(syntheticImportProjectGenerationTaskForCinteropsAndLdDump)
-        it.dependsOn(validateLocalSwiftPMDependencies)
+        it.dependsOn(hasLocalSwiftPMDependencies.map { hasLocal ->
+            if (hasLocal) listOf(validateLocalSwiftPMDependencies) else emptyList()
+        })
         it.localPackageManifests.from(
             transitiveLocalSwiftPMDependenciesProvider.map { localPackageDependencyProvider ->
                 localPackageDependencyProvider.map { localPackageDependency ->
