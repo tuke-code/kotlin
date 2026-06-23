@@ -481,6 +481,9 @@ class NativeSecondStageCompilationConfig(
         } ?: true
     }
 
+    val enableReleaseBinaryCache: Boolean
+        get() = configuration.get(BinaryOptions.enableReleaseBinaryCache) ?: false
+
     internal val runtimeLinkageStrategy: RuntimeLinkageStrategy by lazy {
         // Intentionally optimize in debug mode only. See `RuntimeLinkageStrategy`.
         val defaultStrategy = if (debug) RuntimeLinkageStrategy.Optimize else RuntimeLinkageStrategy.Raw
@@ -534,6 +537,7 @@ class NativeSecondStageCompilationConfig(
     private fun StringBuilder.appendCommonCacheFlavor() {
         append(target.toString())
         if (debug) append("-g")
+        if (optimizationsEnabled) append("-opt")
         append("STATIC")
 
         if (perFileCacheForStdlib != defaultPerFileCacheForStdlib)
@@ -614,7 +618,7 @@ class NativeSecondStageCompilationConfig(
     internal val dumpBuiltCachesTo = configuration.dumpBuiltCachesTo
 
     internal val ignoreCacheReason = when {
-        optimizationsEnabled -> "for optimized compilation"
+        optimizationsEnabled && !enableReleaseBinaryCache -> "with global optimizations"
         forceNativeThreadStateForFunctions != defaultForceNativeThreadStateForFunctions -> "with non-default forceNativeThreadStateForFunctions"
         else -> null
     }

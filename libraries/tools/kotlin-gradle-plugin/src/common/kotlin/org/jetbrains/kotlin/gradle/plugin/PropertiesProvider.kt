@@ -394,6 +394,9 @@ internal class PropertiesProvider private constructor(private val project: Proje
     val nativeParallelThreads: Int?
         get() = this.property(PropertyNames.KOTLIN_NATIVE_PARALLEL_THREADS).orNull?.toInt()
 
+    val nativeEnableReleaseBinaryCache: Boolean
+        get() = booleanProperty(PropertyNames.KOTLIN_NATIVE_ENABLE_RELEASE_BINARY_CACHE) ?: false
+
     val errorJsGenerateExternals: Boolean?
         get() = booleanProperty("kotlin.js.generate.externals")
 
@@ -850,6 +853,7 @@ internal class PropertiesProvider private constructor(private val project: Proje
         val ABI_VALIDATION_BANNED_TARGETS = property(ABI_VALIDATION_BANNED_TARGETS_NAME)
         val KOTLIN_PARSE_INLINED_LOCAL_CLASSES = property("$KOTLIN_INTERNAL_NAMESPACE.classpathSnapshot.parseInlinedLocalClasses")
         val KOTLIN_SWIFTPM_MACRO_COLLECTING_MODE = property("$KOTLIN_INTERNAL_NAMESPACE.swiftPMCinteropMacroNamesCollectingMode")
+        val KOTLIN_NATIVE_ENABLE_RELEASE_BINARY_CACHE = property("$KOTLIN_INTERNAL_NAMESPACE.native.enableReleaseBinaryCache")
 
         val FUNCTIONAL_TEST_MODE_PROPERTY = "$KOTLIN_INTERNAL_NAMESPACE.functionalTestMode"
     }
