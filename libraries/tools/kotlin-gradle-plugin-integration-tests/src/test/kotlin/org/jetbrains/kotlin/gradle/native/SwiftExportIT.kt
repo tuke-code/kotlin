@@ -38,7 +38,7 @@ class SwiftExportIT : KGPBaseTest() {
     // See docs/swift-export/testing-usr-stability.md.
 
     private companion object {
-        private const val DEFAULT_IOS_DEPLOYMENT_TARGET = "14.1"
+        private const val DEFAULT_IOS_DEPLOYMENT_TARGET = "17.6"
     }
 
     @DisplayName("embedSwiftExportForXcode fail")
