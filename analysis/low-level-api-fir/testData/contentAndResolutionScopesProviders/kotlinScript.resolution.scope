@@ -1,9 +1,9 @@
 Resulting Resolution Scope:
 Module LIBRARY:
     + Foo.class
-    + Script.kts
+    - Script.kts
     - main.kt
 Module MAIN:
     + Foo.class
-    + Script.kts
+    - Script.kts
     + main.kt

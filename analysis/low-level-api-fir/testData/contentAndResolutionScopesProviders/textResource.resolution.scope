@@ -2,8 +2,8 @@ Resulting Resolution Scope:
 Module LIBRARY:
     + Foo.class
     - main.kt
-    + notes.txt
+    - notes.txt
 Module MAIN:
     + Foo.class
     + main.kt
-    + notes.txt
+    - notes.txt

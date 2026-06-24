@@ -184,12 +184,16 @@ public interface KaSourceModule : KaModule {
  * ### Platform-specific content scope restriction
  *
  * The [contentScope] of the library module excludes file types that are harmful for the [targetPlatform]. For example, a JVM library module
- * filters out `.kotlin_metadata` and `.knm` files, which excludes Kotlin declarations from non-JVM platforms.
+ * filters out `.kotlin_metadata` and `.knm` files, which excludes Kotlin declarations from non-JVM platforms. It also filters out source
+ * files.
  *
  * While most proper library module setups don't need such filtering, there are both pathological as well as legitimate use cases in the
  * wild. For example, certain Kotlin stdlib setups required both the `kotlin-stdlib` and `kotlin-stdlib-common` JARs to be part of the same
  * [KaLibraryModule] (this has been fixed with 2.x stdlibs). Such a library module has the JVM target platform, and we need to exclude
  * `.kotlin_metadata` files from the content scope.
+ *
+ * As another example, a JVM library module might accidentally include source JARs in its binary roots. These sources must be excluded.
+ * Otherwise, the Analysis API might accidentally try to load library declarations from them.
  */
 @SubclassOptInRequired(KaPlatformInterface::class)
 public interface KaLibraryModule : KaModule {

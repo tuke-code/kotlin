@@ -1,6 +1,6 @@
 Resulting Content Scopes:
 Module LIBRARY:
     + Foo.class
-    + LICENSE
+    - LICENSE
 Module MAIN:
     + main.kt
