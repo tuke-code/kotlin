@@ -443,7 +443,7 @@ By default caches will be placed into the kotlin-native system cache directory."
         valueDescription = "<path>".asReleaseDependent()
         delimiter = KotlinCompilerArgument.Delimiter.None
         lifecycle(
-            introducedVersion = KotlinReleaseVersion.v2_5_0
+            introducedVersion = KotlinReleaseVersion.v2_4_20
         )
     }
 
