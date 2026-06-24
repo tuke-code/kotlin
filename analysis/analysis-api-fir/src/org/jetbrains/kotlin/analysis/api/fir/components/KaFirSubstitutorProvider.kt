@@ -5,7 +5,6 @@
 
 package org.jetbrains.kotlin.analysis.api.fir.components
 
-import org.jetbrains.kotlin.analysis.api.components.KaSubstitutorProvider
 import org.jetbrains.kotlin.analysis.api.components.KaUnificationSubstitutorPolicy
 import org.jetbrains.kotlin.analysis.api.fir.KaFirSession
 import org.jetbrains.kotlin.analysis.api.fir.symbols.KaFirTypeParameterSymbol
@@ -15,6 +14,7 @@ import org.jetbrains.kotlin.analysis.api.fir.types.KaFirMapBackedSubstitutor
 import org.jetbrains.kotlin.analysis.api.fir.types.KaFirType
 import org.jetbrains.kotlin.analysis.api.fir.utils.firSymbol
 import org.jetbrains.kotlin.analysis.api.impl.base.components.KaBaseSessionComponent
+import org.jetbrains.kotlin.analysis.api.internals.KaInternalsSubstitutorProvider
 import org.jetbrains.kotlin.analysis.api.lifetime.withValidityAssertion
 import org.jetbrains.kotlin.analysis.api.symbols.KaClassSymbol
 import org.jetbrains.kotlin.analysis.api.symbols.KaTypeParameterSymbol
@@ -39,7 +39,7 @@ import org.jetbrains.kotlin.utils.filterToSetOrEmpty
 
 internal class KaFirSubstitutorProvider(
     override val analysisSessionProvider: () -> KaFirSession
-) : KaBaseSessionComponent<KaFirSession>(), KaSubstitutorProvider, KaFirSessionComponent {
+) : KaBaseSessionComponent<KaFirSession>(), KaInternalsSubstitutorProvider, KaFirSessionComponent {
     override fun createInheritanceTypeSubstitutor(subClass: KaClassSymbol, superClass: KaClassSymbol): KaSubstitutor? {
         withValidityAssertion {
             if (subClass == superClass) return KaSubstitutor.Empty(token)
