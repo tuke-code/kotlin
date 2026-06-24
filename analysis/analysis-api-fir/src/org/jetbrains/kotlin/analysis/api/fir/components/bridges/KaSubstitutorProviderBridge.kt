@@ -15,6 +15,7 @@ import org.jetbrains.kotlin.analysis.api.symbols.KaClassSymbol
 import org.jetbrains.kotlin.analysis.api.symbols.KaTypeParameterSymbol
 import org.jetbrains.kotlin.analysis.api.types.KaSubstitutor
 import org.jetbrains.kotlin.analysis.api.types.KaType
+import org.jetbrains.kotlin.analysis.api.types.KaUnificationSubstitutorPolicy as KaEndpointUnificationSubstitutorPolicy
 import org.jetbrains.kotlin.analysis.api.types.createInheritanceTypeSubstitutor as createInheritanceTypeSubstitutorEndpoint
 import org.jetbrains.kotlin.analysis.api.types.createSubstitutor as createSubstitutorEndpoint
 import org.jetbrains.kotlin.analysis.api.types.createSubtypingUnificationSubstitutor as createSubtypingUnificationSubstitutorEndpoint
@@ -40,11 +41,28 @@ internal class KaSubstitutorProviderBridge(
         rightType: KaType,
         constructionPolicy: KaUnificationSubstitutorPolicy,
     ): KaSubstitutor? =
-        context(analysisSession) { createSubtypingUnificationSubstitutorEndpoint(leftType, rightType, constructionPolicy) }
+        context(analysisSession) {
+            createSubtypingUnificationSubstitutorEndpoint(
+                leftType,
+                rightType,
+                constructionPolicy.toEndpointPolicy()
+            )
+        }
 
     override fun createSubtypingUnificationSubstitutor(
         leftTypesToRightTypes: List<Pair<KaType, KaType>>,
         constructionPolicy: KaUnificationSubstitutorPolicy,
     ): KaSubstitutor? =
-        context(analysisSession) { createSubtypingUnificationSubstitutorEndpoint(leftTypesToRightTypes, constructionPolicy) }
+        context(analysisSession) {
+            createSubtypingUnificationSubstitutorEndpoint(
+                leftTypesToRightTypes,
+                constructionPolicy.toEndpointPolicy()
+            )
+        }
+}
+
+private fun KaUnificationSubstitutorPolicy.toEndpointPolicy(): KaEndpointUnificationSubstitutorPolicy = when (this) {
+    KaUnificationSubstitutorPolicy.ASSIGN_LEFT -> KaEndpointUnificationSubstitutorPolicy.ASSIGN_LEFT
+    KaUnificationSubstitutorPolicy.ASSIGN_RIGHT -> KaEndpointUnificationSubstitutorPolicy.ASSIGN_RIGHT
+    KaUnificationSubstitutorPolicy.ASSIGN_ALL -> KaEndpointUnificationSubstitutorPolicy.ASSIGN_ALL
 }
