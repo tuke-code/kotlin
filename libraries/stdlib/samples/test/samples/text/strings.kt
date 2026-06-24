@@ -113,6 +113,22 @@ class Strings {
     }
 
     @Sample
+    fun elementAtOrElse() {
+        val phone = "+263783"
+
+        // in-bounds indices return the character at that position
+        assertPrints(phone.elementAtOrElse(0) { 'X' }, "+")
+        assertPrints(phone.elementAtOrElse(phone.lastIndex) { 'X' }, "3")
+
+        // an out-of-bounds index evaluates the fallback lambda
+        assertPrints(phone.elementAtOrElse(-1) { if (it < 0) '<' else '>' }, "<")
+        assertPrints(phone.elementAtOrElse(8) { if (it < 0) '<' else '>' }, ">")
+
+        // empty string always evaluates the fallback lambda
+        assertPrints("".elementAtOrElse(0) { 'X' }, "X")
+    }
+
+    @Sample
     fun filter() {
         val text = "a1b2c3d4e5"
 
