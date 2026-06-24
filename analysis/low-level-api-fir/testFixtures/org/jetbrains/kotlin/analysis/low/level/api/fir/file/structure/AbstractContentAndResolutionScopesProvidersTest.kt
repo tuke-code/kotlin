@@ -96,8 +96,14 @@ import org.jetbrains.kotlin.utils.addToStdlib.runIf
  * allows testing which file types a library restriction scope admits or excludes.
  */
 abstract class AbstractContentAndResolutionScopesProvidersTest : AbstractAnalysisApiBasedTest() {
-    private var refinerToRegister: DummyContentScopeRefiner = DummyContentScopeRefiner()
-    override val configurator: AnalysisApiTestConfigurator = ContentScopeProviderConfigurator(refinerToRegister)
+    private val contentScopeRefiner: DummyContentScopeRefiner = DummyContentScopeRefiner()
+
+    override val configurator: AnalysisApiTestConfigurator = ContentScopeProviderConfigurator(contentScopeRefiner)
+
+    override fun configureTest(builder: TestConfigurationBuilder) {
+        super.configureTest(builder)
+        builder.useDirectives(Directives)
+    }
 
     override fun doTest(testServices: TestServices) {
         val testModulesWithFiles =
@@ -117,49 +123,47 @@ abstract class AbstractContentAndResolutionScopesProvidersTest : AbstractAnalysi
             "Files from working modules cannot have an 'ADDED' directive. Add it to the corresponding refiner."
         }
 
-        val baseContentScopesByKaModule =
+        val baseFilesByKaModule =
             workingModules.associate { module ->
                 module.kaModule to module.files.map { it.virtualFile }
             }
 
-        val enlargementScopesByKaModule =
-            refinerModules.associate { module ->
-                val originalModule = module.originalModule ?: error("No original module found for refiner module '${module.moduleName}'.")
-                originalModule.kaModule to module.files.filter { file -> file.ktTestFile.testFile.directives.contains(Directives.ADDED) }
-                    .map { file ->
-                        val baseScope = baseContentScopesByKaModule.getValue(originalModule.kaModule)
-                        baseScope.firstOrNull { it.name == file.virtualFile.name } ?: file.virtualFile
-                    }
-            }
+        val addedFilesByKaModule = refinerModules.associate { module ->
+            val originalModule = module.originalModule ?: error("No original module found for refiner module '${module.moduleName}'.")
+            val baseFiles = baseFilesByKaModule.getValue(originalModule.kaModule)
+            val addedFiles = module.files
+                .filter { file -> file.ktTestFile.testFile.directives.contains(Directives.ADDED) }
+                .map { file ->
+                    baseFiles.firstOrNull { it.name == file.virtualFile.name } ?: file.virtualFile
+                }
+            originalModule.kaModule to addedFiles
+        }
 
-        val shadowedScopesByKaModule = workingModules.associate { module ->
+        val shadowedFilesByKaModule = workingModules.associate { module ->
             val refinerModule = refinerModules.firstOrNull { it.originalModule == module }
             val files = buildList {
                 addAll(module.files)
                 refinerModule?.let { addAll(it.files) }
             }
-            module.kaModule to files.filter { file -> file.ktTestFile.testFile.directives.contains(Directives.SHADOWED) }
+            val baseFiles = baseFilesByKaModule.getValue(module.kaModule)
+            val shadowedFiles = files
+                .filter { file -> file.ktTestFile.testFile.directives.contains(Directives.SHADOWED) }
                 .map { file ->
-                    val baseScope = baseContentScopesByKaModule.getValue(module.kaModule)
-                    baseScope.firstOrNull { it.name == file.virtualFile.name } ?: file.virtualFile
+                    baseFiles.firstOrNull { it.name == file.virtualFile.name } ?: file.virtualFile
                 }
+            module.kaModule to shadowedFiles
         }
 
-        refinerToRegister.apply {
-            enlargementScope.clear()
-            shadowedScope.clear()
-            enlargementScope.putAll(enlargementScopesByKaModule)
-            shadowedScope.putAll(shadowedScopesByKaModule)
-        }
+        contentScopeRefiner.setFiles(addedFilesByKaModule, shadowedFilesByKaModule)
 
-        // The files relevant to a working module are its base content files plus the files added or shadowed via its refiner. The test
+        // The files relevant to a working module are its base content files, plus the files added or shadowed via its refiner. The test
         // probes whether each of these files actually ends up in the module's scopes (see `testContentScope` and `testResolutionScope`).
         val candidateFilesByKaModule = workingModules.associate { module ->
             val kaModule = module.kaModule
             val files = buildSet {
-                baseContentScopesByKaModule[kaModule]?.let(::addAll)
-                enlargementScopesByKaModule[kaModule]?.let(::addAll)
-                shadowedScopesByKaModule[kaModule]?.let(::addAll)
+                baseFilesByKaModule[kaModule]?.let(::addAll)
+                addedFilesByKaModule[kaModule]?.let(::addAll)
+                shadowedFilesByKaModule[kaModule]?.let(::addAll)
             }
             kaModule to files.sortedWith(virtualFilesComparator)
         }
@@ -228,7 +232,7 @@ abstract class AbstractContentAndResolutionScopesProvidersTest : AbstractAnalysi
     ) {
         buildMap {
             workingModules.forEach { module ->
-                this.put(module.moduleName, module.files.map { it.virtualFile.name }.toMutableList())
+                this[module.moduleName] = module.files.map { it.virtualFile.name }.toMutableList()
             }
 
             refinerModules.forEach { module ->
@@ -329,50 +333,51 @@ abstract class AbstractContentAndResolutionScopesProvidersTest : AbstractAnalysi
 
         private const val REFINER_MODULE_SUFFIX = "_REFINER"
     }
-
-    override fun configureTest(builder: TestConfigurationBuilder) {
-        super.configureTest(builder)
-        builder.useDirectives(Directives)
-    }
 }
 
 
-private class ContentScopeProviderConfigurator(private val scopeRefinerToRegister: DummyContentScopeRefiner) :
-    LLSourceLikeTestConfigurator() {
+private class ContentScopeProviderConfigurator(
+    private val contentScopeRefiner: DummyContentScopeRefiner,
+) : LLSourceLikeTestConfigurator() {
     override val serviceRegistrars: List<AnalysisApiServiceRegistrar<TestServices>>
         get() = buildList {
             addAll(super.serviceRegistrars)
-            add(ContentScopeProviderRegistrar(scopeRefinerToRegister))
+            add(ContentScopeProviderRegistrar(contentScopeRefiner))
         }
 }
 
-private class ContentScopeProviderRegistrar(private val scopeRefinerToRegister: DummyContentScopeRefiner) :
-    AnalysisApiTestServiceRegistrar() {
+private class ContentScopeProviderRegistrar(
+    private val contentScopeRefiner: DummyContentScopeRefiner,
+) : AnalysisApiTestServiceRegistrar() {
     override fun registerProjectModelServices(project: MockProject, disposable: Disposable, testServices: TestServices) {
         val extensionPoint = project.extensionArea.getExtensionPoint(KotlinContentScopeRefiner.EP_NAME)
-        extensionPoint.registerExtension(scopeRefinerToRegister, disposable)
+        extensionPoint.registerExtension(contentScopeRefiner, disposable)
     }
 }
 
-private class DummyContentScopeRefiner(
-    val enlargementScope: MutableMap<KaModule, List<VirtualFile>> = mutableMapOf(),
-    val shadowedScope: MutableMap<KaModule, List<VirtualFile>> = mutableMapOf(),
-) : KotlinContentScopeRefiner {
+private class DummyContentScopeRefiner : KotlinContentScopeRefiner {
+    private val addedFilesByKaModule = mutableMapOf<KaModule, List<VirtualFile>>()
+    private val shadowedFilesByKaModule = mutableMapOf<KaModule, List<VirtualFile>>()
+
+    fun setFiles(
+        added: Map<KaModule, List<VirtualFile>>,
+        shadowed: Map<KaModule, List<VirtualFile>>,
+    ) {
+        addedFilesByKaModule.clear()
+        addedFilesByKaModule.putAll(added)
+        shadowedFilesByKaModule.clear()
+        shadowedFilesByKaModule.putAll(shadowed)
+    }
+
     override fun getEnlargementScopes(module: KaModule): List<GlobalSearchScope> {
-        val files = enlargementScope[module] ?: return emptyList()
-        val scope = GlobalSearchScope.filesScope(
-            module.project,
-            files
-        )
+        val files = addedFilesByKaModule[module] ?: return emptyList()
+        val scope = GlobalSearchScope.filesScope(module.project, files)
         return listOf(scope)
     }
 
     override fun getRestrictionScopes(module: KaModule): List<GlobalSearchScope> {
-        val files = shadowedScope[module] ?: return emptyList()
-        val scope = GlobalSearchScope.filesScope(
-            module.project,
-            files
-        )
+        val files = shadowedFilesByKaModule[module] ?: return emptyList()
+        val scope = GlobalSearchScope.filesScope(module.project, files)
         return listOf(GlobalSearchScope.notScope(scope))
     }
 }
