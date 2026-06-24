@@ -352,6 +352,13 @@ public class KaSubstitutorBuilder
  * @see KaSubstitutor
  */
 // Auto-generated bridge. DO NOT EDIT MANUALLY!
+@Deprecated(
+    message = "Use the 'org.jetbrains.kotlin.analysis.api.types' endpoint instead.",
+    replaceWith = ReplaceWith(
+        "createSubstitutor(mappings)",
+        "org.jetbrains.kotlin.analysis.api.types.createSubstitutor",
+    ),
+)
 @KaExperimentalApi
 @KaContextParameterApi
 context(session: KaSession)
@@ -385,6 +392,13 @@ public fun createSubstitutor(mappings: Map<KaTypeParameterSymbol, KaType>): KaSu
  * - `createInheritanceTypeSubstitutor(A, C)` returns `KaSubstitutor { X -> T, Y -> Int } and then KaSubstitutor { T -> String }`
  */
 // Auto-generated bridge. DO NOT EDIT MANUALLY!
+@Deprecated(
+    message = "Use the 'org.jetbrains.kotlin.analysis.api.types' endpoint instead.",
+    replaceWith = ReplaceWith(
+        "createInheritanceTypeSubstitutor(subClass, superClass)",
+        "org.jetbrains.kotlin.analysis.api.types.createInheritanceTypeSubstitutor",
+    ),
+)
 @KaExperimentalApi
 @KaContextParameterApi
 context(session: KaSession)
@@ -419,6 +433,13 @@ public fun createInheritanceTypeSubstitutor(subClass: KaClassSymbol, superClass:
  * and the produced substitutor will only contain mappings for these parameters.
  */
 // Auto-generated bridge. DO NOT EDIT MANUALLY!
+@Deprecated(
+    message = "Use the 'org.jetbrains.kotlin.analysis.api.types' endpoint instead.",
+    replaceWith = ReplaceWith(
+        "createSubtypingUnificationSubstitutor(leftTypesToRightTypes, isFreeTypeParameter)",
+        "org.jetbrains.kotlin.analysis.api.types.createSubtypingUnificationSubstitutor",
+    ),
+)
 @KaIdeApi
 @OptIn(KaExperimentalApi::class)
 @KaContextParameterApi
@@ -482,6 +503,13 @@ public fun createSubtypingUnificationSubstitutor(
  * @see KaUnificationSubstitutorPolicy.ASSIGN_ALL
  */
 // Auto-generated bridge. DO NOT EDIT MANUALLY!
+@Deprecated(
+    message = "Use the 'org.jetbrains.kotlin.analysis.api.types' endpoint instead.",
+    replaceWith = ReplaceWith(
+        "createSubtypingUnificationSubstitutor(leftType, rightType, constructionPolicy)",
+        "org.jetbrains.kotlin.analysis.api.types.createSubtypingUnificationSubstitutor",
+    ),
+)
 @KaIdeApi
 @OptIn(KaExperimentalApi::class)
 @KaContextParameterApi
@@ -539,6 +567,13 @@ public fun createSubtypingUnificationSubstitutor(
  * @see KaUnificationSubstitutorPolicy.ASSIGN_ALL
  */
 // Auto-generated bridge. DO NOT EDIT MANUALLY!
+@Deprecated(
+    message = "Use the 'org.jetbrains.kotlin.analysis.api.types' endpoint instead.",
+    replaceWith = ReplaceWith(
+        "createSubtypingUnificationSubstitutor(leftTypesToRightTypes, constructionPolicy)",
+        "org.jetbrains.kotlin.analysis.api.types.createSubtypingUnificationSubstitutor",
+    ),
+)
 @KaIdeApi
 @OptIn(KaExperimentalApi::class)
 @KaContextParameterApi
