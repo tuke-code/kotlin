@@ -44,6 +44,11 @@ abstract class KaBaseKDocProvider<T : KaSession> : KaBaseSessionComponent<T>(), 
                 ?.let { return it }
         }
 
+        if (this@findKDoc is KaPropertyAccessorSymbol) {
+            val containingProperty = containingDeclaration as? KaPropertySymbol
+            containingProperty?.findKDoc()?.let { return it }
+        }
+
         if (this@findKDoc is KaCallableSymbol) {
             allOverriddenSymbols.forEach { overrider ->
                 overrider.findKDoc()?.let {
@@ -61,11 +66,6 @@ abstract class KaBaseKDocProvider<T : KaSession> : KaBaseSessionComponent<T>(), 
                         expectFunction.valueParameters[idx].findKDoc()
                     }?.let { return it }
             }
-        }
-
-        if (this@findKDoc is KaPropertyAccessorSymbol) {
-            val containingProperty = containingDeclaration as? KaPropertySymbol
-            containingProperty?.findKDoc()?.let { return it }
         }
 
         getExpectsForActual().firstNotNullOfOrNull { expectSymbol ->

@@ -66,14 +66,14 @@ child property docs
 child property docs
 ----------<getter>(<dispatch receiver>: Child): kotlin.Int----------------------
 <primary tag="null" subject="null">
-parent property docs
+child property docs
 <section="null" subject="null">
-parent property docs
+child property docs
 ----------<setter>(<dispatch receiver>: Child, value: kotlin.Int): kotlin.Unit--
 <primary tag="null" subject="null">
-parent property docs
+child property docs
 <section="null" subject="null">
-parent property docs
+child property docs
 
 ----------/GrandChild-----------------------------------------------------------
 null
