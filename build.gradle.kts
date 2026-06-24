@@ -136,7 +136,7 @@ if (!project.hasProperty("versions.kotlin-native")) {
     } else if (kotlinBuildProperties.isKotlinNativeEnabled.get()) {
         kotlinBuildProperties.defaultSnapshotVersion.get()
     } else {
-        "2.4.20-dev-3418"
+        "2.4.20-dev-7680"
     }
 }
 
