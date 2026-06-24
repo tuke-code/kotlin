@@ -798,36 +798,20 @@ internal sealed interface Bridge {
         }
     }
 
-    sealed class AsOptionalWrapper private constructor(
+    class AsOptionalWrapper(
         val wrappedObject: Bridge,
-    ) : Bridge {
-
-        class Bidirectional(wrappedObject: BidirectionalBridge) : AsOptionalWrapper(wrappedObject), BidirectionalBridge
-        class SwiftToKotlin(wrappedObject: SwiftToKotlinBridge) : AsOptionalWrapper(wrappedObject), SwiftToKotlinBridge
-        class KotlinToSwift(wrappedObject: KotlinToSwiftBridge) : AsOptionalWrapper(wrappedObject), KotlinToSwiftBridge
-
-        companion object {
-            operator fun invoke(wrappedObject: BidirectionalBridge): Bidirectional = Bidirectional(wrappedObject)
-            operator fun invoke(wrappedObject: SwiftToKotlinBridge): SwiftToKotlin = SwiftToKotlin(wrappedObject)
-            operator fun invoke(wrappedObject: KotlinToSwiftBridge): KotlinToSwift = KotlinToSwift(wrappedObject)
-            operator fun invoke(wrappedObject: Bridge): AsOptionalWrapper = when (wrappedObject) {
-                is BidirectionalBridge -> Bidirectional(wrappedObject)
-                is SwiftToKotlinBridge -> SwiftToKotlin(wrappedObject)
-                is KotlinToSwiftBridge -> KotlinToSwift(wrappedObject)
-            }
-        }
-
+    ) : BidirectionalBridge {
         override val swiftType = wrappedObject.swiftType.optional()
-        val kotlinType = when (wrappedObject) {
+        override val kotlinType = when (wrappedObject) {
             is SwiftToKotlinBridge -> wrappedObject.kotlinType
             is KotlinToSwiftBridge -> wrappedObject.kotlinType
         }
-        val cType = when (wrappedObject) {
+        override val cType = when (wrappedObject) {
             is SwiftToKotlinBridge -> wrappedObject.cType
             is KotlinToSwiftBridge -> wrappedObject.cType
         }.nullable
 
-        val inKotlinSources: ValueConversion
+        override val inKotlinSources: ValueConversion
             get() = object : ValueConversion {
                 context(session: SirSession)
                 override fun swiftToKotlin(typeNamer: SirTypeNamer, valueExpression: String): String {
@@ -846,7 +830,7 @@ internal sealed interface Bridge {
                 }
             }
 
-        val inSwiftSources: ValueConversion = object : ValueConversion {
+        override val inSwiftSources: ValueConversion = object : ValueConversion {
             context(session: SirSession)
             override fun swiftToKotlin(typeNamer: SirTypeNamer, valueExpression: String): String {
                 require(
