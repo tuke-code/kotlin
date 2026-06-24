@@ -80,4 +80,10 @@ public class ContentAndResolutionScopesProvidersTestGenerated extends AbstractCo
   public void testSingleModule() {
     run("singleModule.kt");
   }
+
+  @Test
+  @TestMetadata("tasty.kt")
+  public void testTasty() {
+    run("tasty.kt");
+  }
 }
