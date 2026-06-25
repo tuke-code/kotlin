@@ -56,7 +56,7 @@ buildscript {
 plugins {
     base
     idea
-    id("org.jetbrains.gradle.plugin.idea-ext") version "1.0.1" // this version should be in sync with repo/buildsrc-compat/build.gradle.kts
+    alias(libs.plugins.jetbrains.ideaExt)
     id("build-time-report")
     id("java-instrumentation")
     id("modularized-test-configurations")

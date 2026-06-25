@@ -24,7 +24,7 @@ ktor = "3.1.3"
 kotlinx-bcv = "0.17.0"
 kotlinx-benchmark = "0.4.16"
 gson = "2.11.0"
-jetbrains-ideaExt = "1.0.1"
+jetbrains-ideaExt = "1.4.1"
 jackson = "2.21.1"
 jgit = "7.3.0.202506031305-r"
 jsoup = "1.17.2"
@@ -237,3 +237,4 @@ analysis-api-intellij-patched-kotlinx-coroutines-debug = { module = "com.intelli
 gradle-node = { id = "com.github.node-gradle.node", version.ref = "gradle-node-plugin" }
 kotlinx-benchmark = { id = "org.jetbrains.kotlinx.benchmark", version.ref = "kotlinx-benchmark" }
 kotlinx-bcv = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version.ref = "kotlinx-bcv" }
+jetbrains-ideaExt = { id = "org.jetbrains.gradle.plugin.idea-ext", version.ref = "jetbrains-ideaExt" }
