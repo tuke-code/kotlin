@@ -10,7 +10,7 @@ import org.jetbrains.kotlin.metadata.ProtoBuf
 import org.jetbrains.kotlin.serialization.deserialization.FlexibleTypeDeserializer
 import org.jetbrains.kotlin.types.SimpleType
 
-@K1Deprecation
+@OptIn(K1Deprecation::class)
 object NullFlexibleTypeDeserializer : FlexibleTypeDeserializer {
 
     override fun create(

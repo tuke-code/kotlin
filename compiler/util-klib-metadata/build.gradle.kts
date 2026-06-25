@@ -29,8 +29,6 @@ sourceSets {
     "test" { none() }
 }
 
-optInToK1Deprecation()
-
 publish()
 
 standardPublicJars()

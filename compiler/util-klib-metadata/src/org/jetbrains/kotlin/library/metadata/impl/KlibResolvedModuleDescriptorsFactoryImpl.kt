@@ -21,7 +21,10 @@ import org.jetbrains.kotlin.library.KotlinLibrary
 import org.jetbrains.kotlin.library.metadata.*
 import org.jetbrains.kotlin.library.metadata.impl.KlibResolvedModuleDescriptorsFactoryImpl.Companion.FORWARD_DECLARATIONS_MODULE_NAME
 import org.jetbrains.kotlin.library.metadata.resolver.KotlinLibraryResolveResult
-import org.jetbrains.kotlin.name.*
+import org.jetbrains.kotlin.name.FqName
+import org.jetbrains.kotlin.name.Name
+import org.jetbrains.kotlin.name.NativeForwardDeclarationKind
+import org.jetbrains.kotlin.name.NativeStandardInteropNames
 import org.jetbrains.kotlin.resolve.descriptorUtil.builtIns
 import org.jetbrains.kotlin.resolve.scopes.MemberScope
 import org.jetbrains.kotlin.resolve.scopes.MemberScopeImpl
@@ -32,7 +35,6 @@ import org.jetbrains.kotlin.util.profile
 import org.jetbrains.kotlin.utils.Printer
 
 // TODO: eliminate Native specifics.
-@K1Deprecation
 class KlibResolvedModuleDescriptorsFactoryImpl(
     override val moduleDescriptorFactory: KlibMetadataModuleDescriptorFactory
 ) : KlibResolvedModuleDescriptorsFactory {
@@ -130,6 +132,7 @@ class KlibResolvedModuleDescriptorsFactoryImpl(
         val module = createDescriptorOptionalBuiltsIns(FORWARD_DECLARATIONS_MODULE_NAME, storageManager, builtIns, SyntheticModulesOrigin)
 
         fun createPackage(forwardDeclarationKind: NativeForwardDeclarationKind) =
+            @OptIn(K1Deprecation::class)
             ForwardDeclarationsPackageFragmentDescriptor(
                 storageManager,
                 module,
@@ -140,6 +143,7 @@ class KlibResolvedModuleDescriptorsFactoryImpl(
             )
 
         val packageFragmentProvider = PackageFragmentProviderImpl(
+            @OptIn(K1Deprecation::class)
             NativeForwardDeclarationKind.entries.map { createPackage(it) }
         )
 

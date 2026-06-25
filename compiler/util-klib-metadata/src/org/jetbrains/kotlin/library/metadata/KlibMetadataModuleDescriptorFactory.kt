@@ -17,11 +17,12 @@ import org.jetbrains.kotlin.serialization.deserialization.DeserializationConfigu
 import org.jetbrains.kotlin.serialization.deserialization.FlexibleTypeDeserializer
 import org.jetbrains.kotlin.storage.StorageManager
 
-@K1Deprecation
 interface KlibMetadataModuleDescriptorFactory {
 
     val descriptorFactory: KlibModuleDescriptorFactory
     val packageFragmentsFactory: KlibMetadataDeserializedPackageFragmentsFactory
+
+    @OptIn(K1Deprecation::class)
     val flexibleTypeDeserializer: FlexibleTypeDeserializer
 
     fun createDescriptor(

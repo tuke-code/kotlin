@@ -31,10 +31,10 @@ import org.jetbrains.kotlin.serialization.deserialization.*
 import org.jetbrains.kotlin.storage.StorageManager
 import org.jetbrains.kotlin.utils.addToStdlib.runIf
 
-@K1Deprecation
 class KlibMetadataModuleDescriptorFactoryImpl(
     override val descriptorFactory: KlibModuleDescriptorFactory,
     override val packageFragmentsFactory: KlibMetadataDeserializedPackageFragmentsFactory,
+    @OptIn(K1Deprecation::class)
     override val flexibleTypeDeserializer: FlexibleTypeDeserializer,
     val additionalClassPartsProvider: AdditionalClassPartsProvider = AdditionalClassPartsProvider.None,
     val fictitiousClassDescriptorFactories: List<ClassDescriptorFactory> = emptyList(),
@@ -87,6 +87,8 @@ class KlibMetadataModuleDescriptorFactoryImpl(
         )
 
         val provider = PackageFragmentProviderImpl(deserializedPackageFragments)
+
+        @OptIn(K1Deprecation::class)
         return initializePackageFragmentProvider(provider, deserializedPackageFragments, storageManager,
             moduleDescriptor, configuration, null, lookupTracker)
     }
@@ -125,12 +127,14 @@ class KlibMetadataModuleDescriptorFactoryImpl(
         }
 
         val provider = PackageFragmentProviderImpl(deserializedPackageFragments + emptyPackageFragments)
+        @OptIn(K1Deprecation::class)
         return initializePackageFragmentProvider(provider, deserializedPackageFragments, storageManager,
             moduleDescriptor, configuration, compositePackageFragmentAddend, lookupTracker)
     }
 
     fun initializePackageFragmentProvider(
         provider: PackageFragmentProviderImpl,
+        @OptIn(K1Deprecation::class)
         fragmentsToInitialize: List<DeserializedPackageFragment>,
         storageManager: StorageManager,
         moduleDescriptor: ModuleDescriptor,
@@ -141,16 +145,19 @@ class KlibMetadataModuleDescriptorFactoryImpl(
 
         val notFoundClasses = NotFoundClasses(storageManager, moduleDescriptor)
 
+        @OptIn(K1Deprecation::class)
         val annotationAndConstantLoader = AnnotationAndConstantLoaderImpl(
             moduleDescriptor,
             notFoundClasses,
             KlibMetadataSerializerProtocol
         )
 
+        @OptIn(K1Deprecation::class)
         val enumEntriesDeserializationSupport = object : EnumEntriesDeserializationSupport {
             override fun canSynthesizeEnumEntries(): Boolean = moduleDescriptor.platform.isJvm()
         }
 
+        @OptIn(K1Deprecation::class)
         val components = DeserializationComponents(
             storageManager,
             moduleDescriptor,
@@ -171,6 +178,7 @@ class KlibMetadataModuleDescriptorFactoryImpl(
             enumEntriesDeserializationSupport = enumEntriesDeserializationSupport,
         )
 
+        @OptIn(K1Deprecation::class)
         fragmentsToInitialize.forEach {
             it.initialize(components)
         }
@@ -189,6 +197,7 @@ class KlibMetadataModuleDescriptorFactoryImpl(
         module: ModuleDescriptorImpl
     ): PackageFragmentProviderImpl {
         fun createPackage(kind: NativeForwardDeclarationKind) =
+            @OptIn(K1Deprecation::class)
             ForwardDeclarationsPackageFragmentDescriptor(
                 storageManager,
                 module,
@@ -199,6 +208,7 @@ class KlibMetadataModuleDescriptorFactoryImpl(
             )
 
         val packageFragmentProvider = PackageFragmentProviderImpl(
+            @OptIn(K1Deprecation::class)
             NativeForwardDeclarationKind.entries.map { createPackage(it) }
         )
         return packageFragmentProvider
