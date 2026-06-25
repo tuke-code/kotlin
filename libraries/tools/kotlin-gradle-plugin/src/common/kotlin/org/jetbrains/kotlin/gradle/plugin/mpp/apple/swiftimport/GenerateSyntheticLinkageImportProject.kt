@@ -204,15 +204,14 @@ internal abstract class GenerateSyntheticLinkageImportProject : DefaultTask(), U
         val changes = SyntheticPackageChangeReport.diff(initialSnapshot, finalSnapshot)
         if (changes.isEmpty) return
 
-        logger.error("Synthetic project regenerated")
+        println("error: Synthetic project regenerated")
         if (buildingFromXcode.get()) {
-            logger.error("Please go to File -> Package -> Resolve Package Versions in Xcode")
+            println("error: Please go to File -> Package -> Resolve Package Versions in Xcode")
         } else {
             // KMP IJ plugin
-            logger.error("Please go to Tools -> Swift Package Manager -> Resolve Dependencies")
+            println("error: Please go to Tools -> Swift Package Manager -> Resolve Dependencies")
         }
-        val rendered = SyntheticPackageChangeReport.render(changes)
-        if (rendered.isNotEmpty()) logger.error(rendered)
+        SyntheticPackageChangeReport.render(changes).lines().forEach { println(it) }
         error("Synthetic project state updated")
     }
 
@@ -220,6 +219,7 @@ internal abstract class GenerateSyntheticLinkageImportProject : DefaultTask(), U
         val name: String,
         val relativePath: String,
     )
+
     private fun generatePackageManifest(
         identifier: String,
         packageRoot: File,
