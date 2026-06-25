@@ -11,6 +11,12 @@ dependencies {
     implementation(project(":prepare:analysis-api:kotlin-analysis-api-implementation"))
 }
 
+analysisApiArtifact {
+    // This umbrella artifact re-exports its dependencies and ships no binaries or sources of its own.
+    expectNonEmptyBinaries = false
+    expectNonEmptySources = false
+}
+
 val mergedClasspathJar by tasks.registering(Jar::class) {
     description = "Merges all runtime classpath JARs into a single JAR for ProGuard validation"
     destinationDirectory.set(layout.buildDirectory.dir("proguard"))

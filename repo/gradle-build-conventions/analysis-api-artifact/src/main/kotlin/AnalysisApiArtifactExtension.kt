@@ -6,6 +6,7 @@
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Configuration
 import org.gradle.api.artifacts.result.ResolvedArtifactResult
+import org.gradle.api.provider.Property
 import org.gradle.jvm.JvmLibrary
 import org.gradle.jvm.tasks.Jar
 import org.gradle.kotlin.dsl.dependencies
@@ -14,6 +15,26 @@ import javax.inject.Inject
 
 abstract class AnalysisApiArtifactExtension @Inject constructor(private val project: Project) {
     private var isPublishedProjectsConfigured = false
+
+    /**
+     * Whether the binaries ('.jar') artifact is expected to contain content. `true` by default.
+     *
+     * Set to `false` for umbrella artifacts that ship no binaries of their own (for instance, ones that
+     * re-export their dependencies without declaring [content]).
+     */
+    abstract val expectNonEmptyBinaries: Property<Boolean>
+
+    /**
+     * Whether the sources ('-sources.jar') artifact is expected to contain content. `true` by default.
+     *
+     * Set to `false` for artifacts that intentionally ship no sources.
+     */
+    abstract val expectNonEmptySources: Property<Boolean>
+
+    init {
+        expectNonEmptyBinaries.convention(true)
+        expectNonEmptySources.convention(true)
+    }
 
     /**
      * Configures the artifact content.
