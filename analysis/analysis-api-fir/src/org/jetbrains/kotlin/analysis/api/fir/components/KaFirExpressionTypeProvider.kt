@@ -315,6 +315,7 @@ internal class KaFirExpressionTypeProvider(
                 ?: getExpectedTypeOfIndexingParameter(unwrapped)
                 ?: getExpectedTypeOfInfixFunctionParameter(unwrapped)
                 ?: getExpectedTypeOfCollectionLiteralElement(unwrapped)
+                ?: getExpectedTypeOfArrayOfCallElement(unwrapped)
                 ?: getExpectedTypeByVariableAssignment(unwrapped)
                 ?: getExpectedTypeByPropertyDeclaration(unwrapped)
                 ?: getExpectedTypeByCallableExpressionBody(unwrapped)
@@ -344,6 +345,30 @@ internal class KaFirExpressionTypeProvider(
 
         val collectionLiteralType = collectionLiteral.expectedType ?: return null
         return with(analysisSession) { collectionLiteralType.arrayElementType }
+    }
+
+    /**
+     * Returns the expected type of an expression nested inside an `arrayOf(...)`-like
+     * call used as an annotation argument, e.g., the `FOO` in `@Anno(arg = arrayOf(FOO))`
+     * where `arg` has an array-like type.
+     *
+     * In annotation arguments the frontend rewrites `arrayOf(...)` (as well as the
+     * primitive `intArrayOf(...)`, `doubleArrayOf(...)`, etc.) into a [FirCollectionLiteral],
+     * which has neither a callee nor value parameters. Hence [getExpectedTypeOfFunctionParameter]
+     * cannot derive the element's expected type, and we fall back to treating the call
+     * like a collection literal: the expected type of a nested element is the element type
+     * of the array type that the call itself is expected to produce.
+     *
+     * Note that for `arrayOf(...)` calls outside of annotations the frontend keeps the
+     * regular call, so the [FirCollectionLiteral] check below filters those out (they are
+     * already handled by [getExpectedTypeOfFunctionParameter]).
+     */
+    private fun getExpectedTypeOfArrayOfCallElement(expression: PsiElement): KaType? {
+        val call = expression.getFunctionCallAsWithThisAsParameter()?.call ?: return null
+        if (call.getOrBuildFir(resolutionFacade)?.unwrapSafeCall() !is FirCollectionLiteral) return null
+
+        val arrayType = call.expectedType ?: return null
+        return with(analysisSession) { arrayType.arrayElementType }
     }
 
     private fun getExpectedTypeByDelegatedSuperType(expression: PsiElement): KaType? {
