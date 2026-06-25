@@ -5,7 +5,6 @@
 
 package org.jetbrains.kotlin.swiftexport.standalone.translation
 
-import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.analysis.api.analyze
 import org.jetbrains.kotlin.analysis.api.klib.reader.getAllClassifiers
 import org.jetbrains.kotlin.analysis.api.projectStructure.KaLibraryModule
@@ -37,7 +36,6 @@ import org.jetbrains.sir.printer.SirPrinter
 /**
  * Translates the whole public API surface of the given [module] to [SirModule] and generates compiler bridges between them.
  */
-@OptIn(K1Deprecation::class)
 internal fun translateModulePublicApi(module: InputModule, kaModules: KaModules, config: SwiftExportConfig): TranslationResult {
     // We access KaSymbols through all the module translation process. Since it is not correct to access them directly
     // outside of the session they were created, we create KaSession here.

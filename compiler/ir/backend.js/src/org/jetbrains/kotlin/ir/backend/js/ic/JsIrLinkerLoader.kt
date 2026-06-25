@@ -26,7 +26,6 @@ import org.jetbrains.kotlin.ir.IrBuiltIns
 import org.jetbrains.kotlin.ir.KtDiagnosticReporterWithImplicitIrBasedContext
 import org.jetbrains.kotlin.ir.ObsoleteDescriptorBasedAPI
 import org.jetbrains.kotlin.ir.backend.js.FunctionTypeInterfacePackages
-import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.ir.backend.js.JsFactories
 import org.jetbrains.kotlin.ir.backend.js.lower.serialization.ir.JsIrLinker
 import org.jetbrains.kotlin.ir.backend.js.lower.serialization.ir.JsManglerDesc
@@ -164,7 +163,6 @@ internal class JsIrLinkerLoader(
 
             val lookupTracker = LookupTracker.DO_NOTHING
 
-            @OptIn(K1Deprecation::class)
             val md = JsFactories.DefaultDeserializedDescriptorFactory.createDescriptorOptionalBuiltIns(
                 current,
                 compilerConfiguration.languageVersionSettings,

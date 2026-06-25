@@ -12,10 +12,8 @@ import org.jetbrains.kotlin.ir.declarations.IrPackageFragment
 import org.jetbrains.kotlin.ir.declarations.moduleDescriptor
 import org.jetbrains.kotlin.library.metadata.CompiledKlibModuleOrigin
 import org.jetbrains.kotlin.library.metadata.SyntheticModulesOrigin
-import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.library.metadata.klibModuleOrigin
 
-@OptIn(K1Deprecation::class)
 private val ModuleDescriptor.llvmSymbolOrigin: CompiledKlibModuleOrigin
     get() {
         assert(!this.isExpectMember) { this }
@@ -26,9 +24,7 @@ private val ModuleDescriptor.llvmSymbolOrigin: CompiledKlibModuleOrigin
         }
     }
 
-@OptIn(K1Deprecation::class)
 internal val Context.standardLlvmSymbolsOrigin: CompiledKlibModuleOrigin get() = this.stdlibModule.llvmSymbolOrigin
 
-@OptIn(K1Deprecation::class)
 internal val IrPackageFragment.llvmSymbolOrigin
     get() = moduleDescriptor.llvmSymbolOrigin

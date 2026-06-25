@@ -26,7 +26,6 @@ import org.jetbrains.kotlin.konan.file.File
 import org.jetbrains.kotlin.konan.library.isExplicitlySpecifiedByUserInCLIArgument
 import org.jetbrains.kotlin.konan.properties.loadProperties
 import org.jetbrains.kotlin.konan.target.*
-import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.library.KotlinLibrary
 import org.jetbrains.kotlin.native.resolve.KonanLibrariesResolveSupport
 import org.jetbrains.kotlin.utils.KotlinNativePaths
@@ -388,10 +387,8 @@ class NativeSecondStageCompilationConfig(
             configuration, target, distribution, resolveManifestDependenciesLenient = true
     )
 
-    @OptIn(K1Deprecation::class)
     val resolvedLibraries get() = resolve.resolvedLibraries
 
-    @OptIn(K1Deprecation::class)
     val includedLibraries: List<KotlinLibrary>
         get() = getIncludedLibraries(
                 configuration.konanIncludedLibraries.map { File(it) },
@@ -399,14 +396,12 @@ class NativeSecondStageCompilationConfig(
                 resolve.resolvedLibraries
         )
 
-    @OptIn(K1Deprecation::class)
     val exportedLibraries: List<KotlinLibrary>
         get() = getExportedLibraries(configuration, resolve.resolvedLibraries, resolve.resolver.searchPathResolver, report = true)
 
     /**
      * Returns the list of libraries in reverse topological order.
      */
-    @OptIn(K1Deprecation::class)
     fun librariesWithDependencies(): List<KotlinLibrary> {
         return resolvedLibraries.filterRoots {
             // Let's leave only those dependencies (roots) that have been explicitly specified by the used in compiler's CLI.
@@ -623,7 +618,6 @@ class NativeSecondStageCompilationConfig(
         else -> null
     }
 
-    @OptIn(K1Deprecation::class)
     internal val cacheSupport = CacheSupport(
             configuration = configuration,
             resolvedLibraries = resolvedLibraries,

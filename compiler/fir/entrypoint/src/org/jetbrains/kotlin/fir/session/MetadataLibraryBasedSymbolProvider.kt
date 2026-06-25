@@ -5,7 +5,6 @@
 
 package org.jetbrains.kotlin.fir.session
 
-import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.descriptors.annotations.AnnotationUseSiteTarget
 import org.jetbrains.kotlin.fir.FirModuleData
 import org.jetbrains.kotlin.fir.FirSession
@@ -36,7 +35,6 @@ import org.jetbrains.kotlin.serialization.deserialization.descriptors.Deserializ
 import org.jetbrains.kotlin.serialization.deserialization.getClassId
 import java.util.*
 
-@OptIn(K1Deprecation::class)
 abstract class MetadataLibraryBasedSymbolProvider<L>(
     session: FirSession,
     moduleDataProvider: ModuleDataProvider,

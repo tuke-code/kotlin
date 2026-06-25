@@ -5,7 +5,6 @@
 package org.jetbrains.kotlin.backend.konan
 
 import llvm.*
-import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.backend.konan.driver.NativeBackendPhaseContext
 import org.jetbrains.kotlin.backend.konan.llvm.*
 import org.jetbrains.kotlin.backend.konan.llvm.objc.patchObjCRuntimeModule
@@ -98,7 +97,6 @@ private data class LlvmModules(
  * - Runtime modules. These may be used as an input for a separate LTO (e.g. for debug builds).
  * - Everything else.
  */
-@OptIn(K1Deprecation::class)
 private fun collectLlvmModules(generationState: NativeGenerationState, generatedBitcodeFiles: List<String>): LlvmModules {
     val config = generationState.config
     val runtimeModulesConfig = generationState.runtimeModulesConfig

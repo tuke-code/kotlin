@@ -6,7 +6,6 @@
 package org.jetbrains.kotlin.swiftexport.standalone.test
 
 import com.intellij.openapi.util.io.FileUtil
-import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.codegen.forTestCompile.ForTestCompileRuntime
 import org.jetbrains.kotlin.konan.test.blackbox.support.TestCase
 import org.jetbrains.kotlin.konan.test.blackbox.support.compilation.TestCompilationArtifact
@@ -53,7 +52,6 @@ abstract class AbstractExternalProjectGenerationTest : AbstractSwiftExportWithBi
         validateFullLibraryDump(klibSettings, "kotlinx-serialization-core")
     }
 
-    @OptIn(K1Deprecation::class)
     private fun validateFullLibraryDump(
         klib: KlibExportSettings,
         goldenData: String,

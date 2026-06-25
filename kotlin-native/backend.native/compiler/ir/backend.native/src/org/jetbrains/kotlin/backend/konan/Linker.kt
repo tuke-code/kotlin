@@ -1,6 +1,5 @@
 package org.jetbrains.kotlin.backend.konan
 
-import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.backend.konan.driver.NativeBackendPhaseContext
 import org.jetbrains.kotlin.backend.konan.util.toObsoleteKind
 import org.jetbrains.kotlin.config.CommonConfigurationKeys
@@ -185,7 +184,6 @@ internal fun runLinkerCommands(context: NativeBackendPhaseContext, commands: Lis
     } else null
 
     val extraUserSetupInfo = run {
-        @OptIn(K1Deprecation::class)
         context.config.resolvedLibraries.getFullList()
                 .filter { it.isCInteropLibrary() }
                 .mapNotNull { library ->

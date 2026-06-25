@@ -5,7 +5,6 @@
 
 package org.jetbrains.kotlin.backend.konan.driver.phases
 
-import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.backend.common.phaser.createSimpleNamedCompilerPhase
 import org.jetbrains.kotlin.backend.konan.CacheStorage
 import org.jetbrains.kotlin.backend.konan.NativeGenerationState
@@ -28,7 +27,6 @@ internal val BuildAdditionalCacheInfoPhase = createSimpleNamedCompilerPhase<Nati
     // TODO: Use explicit parameter
     val parent = context.context
 
-    @OptIn(K1Deprecation::class)
     val moduleDeserializer = parent.moduleDeserializerProvider.getDeserializerOrNull(module.descriptor.kotlinLibrary)
     if (moduleDeserializer == null) {
         require(module.descriptor.isFromCInteropLibrary()) { "No module deserializer for ${module.descriptor}" }

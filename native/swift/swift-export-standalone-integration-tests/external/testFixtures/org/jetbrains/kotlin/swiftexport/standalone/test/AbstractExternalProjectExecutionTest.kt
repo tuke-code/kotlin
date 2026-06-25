@@ -5,7 +5,6 @@
 
 package org.jetbrains.kotlin.swiftexport.standalone.test
 
-import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.codegen.forTestCompile.ForTestCompileRuntime
 import org.jetbrains.kotlin.konan.test.blackbox.support.TestModule
 import org.jetbrains.kotlin.konan.test.blackbox.support.compilation.TestCompilationResult.Companion.assertSuccess
@@ -13,8 +12,8 @@ import org.jetbrains.kotlin.konan.test.blackbox.support.settings.BinaryLibraryKi
 import org.jetbrains.kotlin.konan.test.blackbox.support.util.flatMapToSet
 import org.jetbrains.kotlin.konan.test.testLibraryAKlibFile
 import org.jetbrains.kotlin.konan.test.testLibraryBKlibFile
-import org.jetbrains.kotlin.swiftexport.standalone.config.SwiftExportConfig
 import org.jetbrains.kotlin.swiftexport.standalone.SwiftExportModule
+import org.jetbrains.kotlin.swiftexport.standalone.config.SwiftExportConfig
 import org.jetbrains.kotlin.swiftexport.standalone.config.SwiftModuleConfig
 import org.jetbrains.kotlin.swiftexport.standalone.runSwiftExport
 import org.junit.jupiter.api.Test
@@ -52,7 +51,6 @@ abstract class AbstractExternalProjectExecutionTest : AbstractSwiftExportExecuti
         runTestsAgainstKlib(setOf(klibSettingsA, klibSettingsB), testPath)
     }
 
-    @OptIn(K1Deprecation::class)
     private fun runTestsAgainstKlib(klibSettings: Set<KlibExportSettings>, testPath: File) {
         val testModules = klibSettings.map { TestModule.Given(it.path.toFile()) }.toSet()
         val inputModules = klibSettings.map {

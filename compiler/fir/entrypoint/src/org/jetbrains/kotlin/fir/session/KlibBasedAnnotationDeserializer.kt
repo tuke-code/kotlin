@@ -10,7 +10,6 @@ import org.jetbrains.kotlin.fir.FirSession
 import org.jetbrains.kotlin.fir.deserialization.AnnotationDeserializerWithProtocol
 import org.jetbrains.kotlin.fir.deserialization.loadAnnotationsFromMetadataIfNotEmpty
 import org.jetbrains.kotlin.fir.expressions.FirAnnotation
-import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.library.metadata.KlibMetadataSerializerProtocol
 import org.jetbrains.kotlin.metadata.ProtoBuf
 import org.jetbrains.kotlin.metadata.deserialization.NameResolver
@@ -19,7 +18,6 @@ import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.protobuf.MessageLite
 import org.jetbrains.kotlin.serialization.deserialization.descriptors.DeserializedContainerSource
 
-@OptIn(K1Deprecation::class)
 class KlibBasedAnnotationDeserializer(private val session: FirSession) :
     AnnotationDeserializerWithProtocol(session, KlibMetadataSerializerProtocol) {
 

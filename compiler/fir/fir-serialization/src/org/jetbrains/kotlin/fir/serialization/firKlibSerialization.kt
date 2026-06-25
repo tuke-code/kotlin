@@ -15,7 +15,6 @@ import org.jetbrains.kotlin.library.metadata.buildKlibPackageFragment
 import org.jetbrains.kotlin.metadata.ProtoBuf
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.StandardClassIds
-import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.serialization.SerializableStringTable
 
 // TODO: handle incremental/monolothic (see klib serializer) - maybe externally
@@ -69,7 +68,6 @@ fun serializeSingleFirFile(
         serializerExtension.annotationSerializer.serializeAnnotation(annotation)
     }
 
-    @OptIn(K1Deprecation::class)
     return buildKlibPackageFragment(
         packageProto,
         classesProto,

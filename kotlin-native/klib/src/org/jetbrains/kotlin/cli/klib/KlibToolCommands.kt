@@ -21,19 +21,14 @@ import org.jetbrains.kotlin.ir.symbols.impl.IrFileSymbolImpl
 import org.jetbrains.kotlin.ir.util.*
 import org.jetbrains.kotlin.konan.library.components.bitcode
 import org.jetbrains.kotlin.konan.target.KonanTarget
-import org.jetbrains.kotlin.library.KlibElementWithSize
-import org.jetbrains.kotlin.library.KotlinIrSignatureVersion
-import org.jetbrains.kotlin.library.KotlinLibrary
+import org.jetbrains.kotlin.library.*
 import org.jetbrains.kotlin.library.abi.*
 import org.jetbrains.kotlin.library.components.inlinableFunctionsIr
 import org.jetbrains.kotlin.library.components.ir
 import org.jetbrains.kotlin.library.components.metadata
-import org.jetbrains.kotlin.library.hasAbi
-import org.jetbrains.kotlin.library.loadSizeInfo
 import org.jetbrains.kotlin.library.metadata.kotlinLibrary
 import org.jetbrains.kotlin.library.metadata.parseModuleHeader
 import org.jetbrains.kotlin.library.metadata.parsePackageFragment
-import org.jetbrains.kotlin.library.nativeTargets
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.psi2ir.descriptors.IrBuiltInsOverDescriptors
 import org.jetbrains.kotlin.psi2ir.generators.TypeTranslatorImpl
@@ -85,7 +80,6 @@ internal class Info(output: KlibToolOutput, args: KlibToolArguments) : KlibToolC
         val library = loadKlib(args.libraryPath, output) ?: return
         val metadata = library.metadata
 
-        @OptIn(K1Deprecation::class)
         val metadataHeader = parseModuleHeader(metadata.moduleHeaderData)
 
         val nonEmptyPackageFQNs = buildSet {
@@ -95,7 +89,6 @@ internal class Info(output: KlibToolOutput, args: KlibToolArguments) : KlibToolC
             // Sometimes `emptyPackageList` is empty, so it's necessary to explicitly filter out empty packages:
             val stillRemainingEmptyPackageFQNs = filterTo(hashSetOf()) { packageName ->
                 metadata.getPackageFragmentNames(packageName).all { partName ->
-                    @OptIn(K1Deprecation::class)
                     parsePackageFragment(metadata.getPackageFragment(packageName, partName)).isEmpty()
                 }
             }

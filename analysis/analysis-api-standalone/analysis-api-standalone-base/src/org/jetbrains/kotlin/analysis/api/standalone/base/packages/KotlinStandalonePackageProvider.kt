@@ -16,7 +16,6 @@ import org.jetbrains.kotlin.analysis.api.platform.packages.*
 import org.jetbrains.kotlin.library.KlibConstants.KLIB_FILE_EXTENSION
 import org.jetbrains.kotlin.library.components.metadata
 import org.jetbrains.kotlin.library.loader.KlibLoader
-import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.library.metadata.parseModuleHeader
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.name.Name
@@ -81,7 +80,6 @@ class KotlinStandalonePackageProviderFactory(
             buildList {
                 val kotlinLibraries = KlibLoader { libraryPaths(libraryFile) }.load().librariesStdlibFirst
                 for (kotlinLibrary in kotlinLibraries) {
-                    @OptIn(K1Deprecation::class)
                     val moduleHeader = parseModuleHeader(kotlinLibrary.metadata.moduleHeaderData)
                     for (packageNameString in moduleHeader.packageFragmentNameList) {
                         add(FqName(packageNameString))

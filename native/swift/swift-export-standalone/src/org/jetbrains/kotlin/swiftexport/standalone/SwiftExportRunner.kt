@@ -5,7 +5,6 @@
 
 package org.jetbrains.kotlin.swiftexport.standalone
 
-import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.analysis.api.klib.reader.createKaModulesForStandaloneAnalysis
 import org.jetbrains.kotlin.library.metadata.KlibInputModule
 import org.jetbrains.kotlin.sir.SirModule
@@ -49,7 +48,6 @@ public enum class ErrorTypeStrategy {
     }
 }
 
-@OptIn(K1Deprecation::class)
 public typealias InputModule = KlibInputModule<SwiftModuleConfig>
 
 public sealed class SwiftExportModule(
@@ -128,7 +126,6 @@ public fun createDummyLogger(): SwiftExportLogger = object : SwiftExportLogger {
  * @param config The configuration object specifying the behavior, paths, and options for Swift export.
  * @return A [Result] containing a set of translated Swift export modules upon success, or an exception in case of a failure.
  */
-@OptIn(K1Deprecation::class)
 public fun runSwiftExport(
     modules: Set<InputModule>,
     config: SwiftExportConfig,
@@ -153,7 +150,6 @@ public fun runSwiftExport(
     return@runCatching predefinedModules + allModules.map { it.writeModule(config) }
 }
 
-@OptIn(K1Deprecation::class)
 private fun translateModules(
     inputModules: Set<InputModule>,
     config: SwiftExportConfig,

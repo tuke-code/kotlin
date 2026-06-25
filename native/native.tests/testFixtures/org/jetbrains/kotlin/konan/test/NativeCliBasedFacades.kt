@@ -88,7 +88,6 @@ class KlibSerializerNativeCliFacade(
         return BinaryArtifacts.KLib(File(output.outputKlibPath), input.configuration.diagnosticsCollector)
     }
 
-    @OptIn(K1Deprecation::class)
     private fun updateTestConfiguration(
         module: TestModule,
         outputKlibPath: String,
@@ -118,7 +117,6 @@ class KlibSerializerNativeCliFacade(
         testServices.moduleDescriptorProvider.replaceModuleDescriptorForModule(module, moduleDescriptor)
     }
 
-    @OptIn(K1Deprecation::class)
     private fun loadDependencies(
         dependencyLibraries: Collection<KotlinLibrary>,
         languageVersionSettings: LanguageVersionSettings,

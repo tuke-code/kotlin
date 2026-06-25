@@ -14,7 +14,6 @@ import org.jetbrains.kotlin.backend.konan.RuntimeNames
 import org.jetbrains.kotlin.backend.konan.ir.BackendNativeSymbols
 import org.jetbrains.kotlin.backend.konan.ir.buildSimpleAnnotation
 import org.jetbrains.kotlin.backend.konan.ir.konanLibrary
-import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.descriptors.ClassKind
 import org.jetbrains.kotlin.descriptors.DescriptorVisibilities
 import org.jetbrains.kotlin.descriptors.Modality
@@ -232,7 +231,6 @@ internal fun KotlinStubs.generateCCall(
     }
 
     val libraryName = if (isInvoke) "" else callee.getPackageFragment().konanLibrary.let {
-        @OptIn(K1Deprecation::class)
         require(it?.isCInteropLibrary() == true) { "Expected a function from a cinterop library: ${callee.render()}" }
         it.uniqueName
     }
@@ -353,7 +351,6 @@ internal fun KotlinStubs.generateCGlobalDirectAccess(
     }
 
     val libraryName = callee.getPackageFragment().konanLibrary.let {
-        @OptIn(K1Deprecation::class)
         require(it?.isCInteropLibrary() == true) { "Expected a function from a cinterop library: ${callee.render()}" }
         it.uniqueName
     }
@@ -606,7 +603,6 @@ internal fun KotlinStubs.generateObjCCall(
         ""
     } else { // Category-provided.
         method.getPackageFragment().konanLibrary.let {
-            @OptIn(K1Deprecation::class)
             require(it?.isCInteropLibrary() == true) { "Expected a function from a cinterop library: ${method.render()}" }
             it.uniqueName
         }

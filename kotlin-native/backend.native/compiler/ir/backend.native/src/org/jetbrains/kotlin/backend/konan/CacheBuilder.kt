@@ -14,6 +14,8 @@ import org.jetbrains.kotlin.cli.reportLog
 import org.jetbrains.kotlin.config.CommonConfigurationKeys
 import org.jetbrains.kotlin.konan.config.*
 import org.jetbrains.kotlin.konan.file.File
+import org.jetbrains.kotlin.konan.library.isExplicitlySpecifiedByUserInCLIArgument
+import org.jetbrains.kotlin.konan.library.isImplicitlyLoadedFromKotlinNativeDistribution
 import org.jetbrains.kotlin.konan.target.CompilerOutputKind
 import org.jetbrains.kotlin.konan.target.KonanTarget
 import org.jetbrains.kotlin.library.KotlinLibrary
@@ -24,15 +26,11 @@ import org.jetbrains.kotlin.library.unresolvedDependencies
 import java.nio.channels.FileChannel
 import java.nio.channels.FileLock
 import java.nio.channels.OverlappingFileLockException
+import java.nio.file.Path
 import java.nio.file.Paths
 import java.nio.file.StandardOpenOption
-import org.jetbrains.kotlin.konan.config.konanHome
-import org.jetbrains.kotlin.konan.library.isExplicitlySpecifiedByUserInCLIArgument
-import org.jetbrains.kotlin.konan.library.isImplicitlyLoadedFromKotlinNativeDistribution
-import java.nio.file.Path
 import kotlin.io.path.Path
 import kotlin.io.path.absolutePathString
-import org.jetbrains.kotlin.K1Deprecation
 
 internal fun KotlinLibrary.getAllTransitiveDependencies(allLibraries: Map<String, KotlinLibrary>): List<KotlinLibrary> {
     val allDependencies = mutableSetOf<KotlinLibrary>()
@@ -66,7 +64,6 @@ class CacheBuilder(
             && (config.isFinalBinary || config.produce.isFullCache)
             && (autoCacheableFrom.isNotEmpty() || icEnabled)
 
-    @OptIn(K1Deprecation::class)
     private val allLibraries by lazy { config.resolvedLibraries.getFullList() }
     private val uniqueNameToLibrary by lazy { allLibraries.associateBy { it.uniqueName } }
     private val uniqueNameToHash = mutableMapOf<String, FingerprintHash>()
@@ -166,7 +163,6 @@ class CacheBuilder(
             if (library in needFullRebuild) continue
             val cache = caches[library] ?: continue
             if (cache !is CachedLibraries.Cache.PerFile) {
-                @OptIn(K1Deprecation::class)
                 require(library.isCInteropLibrary())
                 continue
             }
@@ -281,7 +277,6 @@ class CacheBuilder(
     }
 
     private fun KotlinLibrary.getPerFileCachedBinaryFilePaths(cacheRoot: Path, filesToCache: List<String>): List<Path> {
-        @OptIn(K1Deprecation::class)
         require(!isExternal && !isCInteropLibrary()) {
             "Can be only invoked per-file library cache."
         }
@@ -312,7 +307,6 @@ class CacheBuilder(
         filesToCache.forEach { configuration.reportLog("    $it") }
 
         // Produce monolithic caches for external libraries for now.
-        @OptIn(K1Deprecation::class)
         val makePerFileCache = !isExternal && !library.isCInteropLibrary()
 
         val libraryCacheDirectory = when {

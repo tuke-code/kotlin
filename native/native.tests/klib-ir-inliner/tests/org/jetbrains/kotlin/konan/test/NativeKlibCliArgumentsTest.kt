@@ -5,7 +5,6 @@
 
 package org.jetbrains.kotlin.konan.test
 
-import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.cli.common.arguments.CommonCompilerArguments
 import org.jetbrains.kotlin.cli.common.arguments.K2NativeCompilerArguments
 import org.jetbrains.kotlin.cli.common.arguments.cliArgument
@@ -32,7 +31,6 @@ import org.jetbrains.kotlin.util.toMetadataVersion
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import java.io.File
-import kotlin.text.startsWith
 
 class NativeKlibCliArgumentsTest : AbstractNativeSimpleTest() {
     @Test
@@ -280,7 +278,6 @@ class NativeKlibCliArgumentsTest : AbstractNativeSimpleTest() {
 
     @Test
     @DisplayName("Test -Xexport-kdoc argument")
-    @OptIn(K1Deprecation::class)
     fun testExportKdocArgument() {
         val sourcesDir = buildDir.resolve("sources").apply { createDirectory() }
 

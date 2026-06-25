@@ -6,11 +6,6 @@
 package org.jetbrains.kotlin.cli.klib
 
 import kotlinx.metadata.klib.KlibMetadataVersion
-import kotlin.metadata.KmConstructor
-import kotlin.metadata.KmFunction
-import kotlin.metadata.KmPackage
-import kotlin.metadata.KmProperty
-import kotlin.metadata.internal.common.KmModuleFragment
 import kotlinx.metadata.klib.KlibModuleMetadata
 import kotlinx.metadata.klib.className
 import kotlinx.metadata.klib.fqName
@@ -24,16 +19,18 @@ import org.jetbrains.kotlin.kotlinp.Printer
 import org.jetbrains.kotlin.kotlinp.Settings
 import org.jetbrains.kotlin.kotlinp.klib.*
 import org.jetbrains.kotlin.kotlinp.klib.TypeArgumentId.VarianceId
-import org.jetbrains.kotlin.library.KLIB_PROPERTY_METADATA_VERSION
 import org.jetbrains.kotlin.library.KotlinLibrary
 import org.jetbrains.kotlin.library.components.metadata
 import org.jetbrains.kotlin.library.metadataVersion
-import org.jetbrains.kotlin.metadata.deserialization.BinaryVersion
-import org.jetbrains.kotlin.metadata.deserialization.MetadataVersion
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.resolve.calls.components.isVararg
 import org.jetbrains.kotlin.resolve.descriptorUtil.classId
 import org.jetbrains.kotlin.types.*
+import kotlin.metadata.KmConstructor
+import kotlin.metadata.KmFunction
+import kotlin.metadata.KmPackage
+import kotlin.metadata.KmProperty
+import kotlin.metadata.internal.common.KmModuleFragment
 
 internal class KotlinpBasedMetadataDumper(
     private val output: KlibToolOutput,
@@ -218,7 +215,6 @@ private class SignaturesCollector(private val renderer: IdSignatureRenderer) : D
         returnType = type.id()
     )
 
-    @OptIn(K1Deprecation::class)
     private fun FunctionDescriptor.id(ignoreParameterNames: Boolean = false) = FunctionId(
         qualifiedName = qualifiedName(),
         contextReceivers = contextReceiverParameters.map { it.type.id() },

@@ -6,7 +6,6 @@
 package org.jetbrains.kotlin.backend.konan
 
 import com.intellij.openapi.project.Project
-import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.backend.common.reportLoadingProblemsIfAny
 import org.jetbrains.kotlin.backend.common.serialization.*
 import org.jetbrains.kotlin.backend.common.serialization.proto.IrFile
@@ -153,7 +152,6 @@ class KonanDriver(
 
     private fun ensureModuleName(config: NativeSecondStageCompilationConfig) {
         if (environment.getSourceFiles().isEmpty()) {
-            @OptIn(K1Deprecation::class)
             val libraries = config.resolvedLibraries.getFullList()
             val moduleName = config.moduleId
             if (libraries.any { it.uniqueName == moduleName }) {

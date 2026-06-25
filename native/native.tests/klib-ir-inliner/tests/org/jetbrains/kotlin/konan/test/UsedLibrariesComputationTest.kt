@@ -5,7 +5,6 @@
 
 package org.jetbrains.kotlin.konan.test
 
-import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.konan.properties.Properties
 import org.jetbrains.kotlin.konan.properties.propertyList
 import org.jetbrains.kotlin.konan.test.blackbox.AbstractNativeSimpleTest
@@ -113,7 +112,6 @@ class UsedLibrariesComputationTest : AbstractNativeSimpleTest() {
 
         // Compute used libraries using metadata proto header.
         val usedLibraries: Set<MockKotlinLibrary> = allLibraries.filter { library ->
-            @OptIn(K1Deprecation::class)
             val header = parseModuleHeader(library.metadata.moduleHeaderData)
             val nonEmptyPackageNames = buildSet {
                 addAll(header.packageFragmentNameList)

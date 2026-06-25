@@ -8,7 +8,6 @@ import com.intellij.openapi.fileTypes.FileType
 import com.intellij.openapi.vfs.VirtualFile
 import org.jetbrains.kotlin.analysis.decompiler.stub.file.KotlinMetadataStubBuilder
 import org.jetbrains.kotlin.library.metadata.KlibMetadataProtoBuf
-import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.library.metadata.KlibMetadataSerializerProtocol
 import org.jetbrains.kotlin.metadata.ProtoBuf
 import org.jetbrains.kotlin.metadata.deserialization.BinaryVersion
@@ -17,7 +16,6 @@ import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.psi.stubs.KotlinStubVersions
 import org.jetbrains.kotlin.serialization.deserialization.ClassDataFinder
 
-@OptIn(K1Deprecation::class)
 object KlibMetadataStubBuilder : KotlinMetadataStubBuilder() {
     override fun getStubVersion(): Int = KotlinStubVersions.KLIB_STUB_VERSION
     override val supportedFileType: FileType get() = KlibMetaFileType

@@ -6,7 +6,10 @@
 package org.jetbrains.kotlin.backend.common.serialization
 
 import com.intellij.openapi.vfs.VfsUtilCore
-import org.jetbrains.kotlin.*
+import org.jetbrains.kotlin.KtIoFileSourceFile
+import org.jetbrains.kotlin.KtPsiSourceFile
+import org.jetbrains.kotlin.KtSourceFile
+import org.jetbrains.kotlin.KtVirtualFileSourceFile
 import org.jetbrains.kotlin.backend.common.serialization.metadata.KlibSingleFileMetadataSerializer
 import org.jetbrains.kotlin.config.*
 import org.jetbrains.kotlin.ir.IrDiagnosticReporter
@@ -177,7 +180,6 @@ private fun serializeKlibHeader(
     header.moduleName = moduleName
 
     if (languageVersionSettings.isPreRelease()) {
-        @OptIn(K1Deprecation::class)
         header.flags = KlibMetadataHeaderFlags.PRE_RELEASE
     }
 
@@ -213,4 +215,3 @@ fun addLanguageFeaturesToManifest(manifestProperties: Properties, languageVersio
         manifestProperties.setProperty(KLIB_PROPERTY_NEW_COMPANION_INITIALIZATION, true.toString())
     }
 }
-

@@ -371,7 +371,6 @@ internal class KonanInteropModuleDeserializer(
 
 private val ClassName.declarationFqName get() = FqName(substringAfterLast('/'))
 
-@OptIn(K1Deprecation::class)
 class DeserializedSecondStageInteropPackageDescriptor(
         module: ModuleDescriptor,
         fqName: FqName,

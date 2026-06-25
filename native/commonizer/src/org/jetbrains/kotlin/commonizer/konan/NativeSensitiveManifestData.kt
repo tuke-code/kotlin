@@ -5,7 +5,6 @@
 
 package org.jetbrains.kotlin.commonizer.konan
 
-import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.commonizer.*
 import org.jetbrains.kotlin.konan.properties.Properties
 import org.jetbrains.kotlin.konan.properties.propertyList
@@ -31,7 +30,6 @@ data class NativeSensitiveManifestData(
 ) {
 
     companion object {
-        @OptIn(K1Deprecation::class)
         fun readFrom(library: KotlinLibrary) = NativeSensitiveManifestData(
             uniqueName = library.uniqueName,
             versions = library.versions,

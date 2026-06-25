@@ -266,7 +266,6 @@ private fun ensureCStructsAndEnumsAreLoadedForCaching(linker: KonanIrLinker, lib
 private fun generateImplForCStructsAndEnums(linker: KonanIrLinker, builtIns: IrBuiltIns, symbols: BackendNativeSymbols) {
     val implGen = IrImplementationGeneratorForCStructsAndEnums(builtIns, symbols)
     for (module in linker.modules.values) {
-        @OptIn(K1Deprecation::class)
         if (module.kotlinLibrary?.isCInteropLibrary() == true) {
             for (file in module.files) {
                 for (declaration in file.declarations) {

@@ -14,7 +14,10 @@ import org.jetbrains.kotlin.backend.konan.util.reportCompilationErrorAndThrow
 import org.jetbrains.kotlin.cli.CliDiagnostics
 import org.jetbrains.kotlin.cli.report
 import org.jetbrains.kotlin.config.CompilerConfiguration
-import org.jetbrains.kotlin.konan.config.*
+import org.jetbrains.kotlin.konan.config.NativeConfigurationKeys
+import org.jetbrains.kotlin.konan.config.filesToCache
+import org.jetbrains.kotlin.konan.config.konanLibraryToAddToCache
+import org.jetbrains.kotlin.konan.config.preLinkCaches
 import org.jetbrains.kotlin.konan.file.File
 import org.jetbrains.kotlin.konan.target.CompilerOutputKind
 import org.jetbrains.kotlin.konan.target.KonanTarget
@@ -22,7 +25,6 @@ import org.jetbrains.kotlin.library.KotlinLibrary
 import org.jetbrains.kotlin.library.components.irOrFail
 import org.jetbrains.kotlin.library.metadata.resolver.KotlinLibraryResolveResult
 import org.jetbrains.kotlin.protobuf.ExtensionRegistryLite
-import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.backend.common.serialization.proto.IrFile as ProtoFile
 
 data class FileWithFqName(val filePath: String, val fqName: String)
@@ -58,7 +60,6 @@ fun KotlinLibrary.getFileFqNames(filePaths: List<String>): List<String> {
     }
 }
 
-@OptIn(K1Deprecation::class)
 class CacheSupport(
         private val configuration: CompilerConfiguration,
         private val resolvedLibraries: KotlinLibraryResolveResult,

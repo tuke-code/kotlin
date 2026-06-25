@@ -8,10 +8,11 @@ package org.jetbrains.kotlin.backend.konan.testUtils
 import com.intellij.openapi.Disposable
 import com.intellij.openapi.util.Disposer
 import org.jetbrains.kotlin.K1Deprecation
-import org.jetbrains.kotlin.config.nativeBinaryOptions.UnitSuspendFunctionObjCExport
 import org.jetbrains.kotlin.backend.konan.objcexport.*
 import org.jetbrains.kotlin.builtins.DefaultBuiltIns
+import org.jetbrains.kotlin.cli.common.disposeRootInWriteAction
 import org.jetbrains.kotlin.cli.jvm.compiler.KotlinCoreEnvironment
+import org.jetbrains.kotlin.config.nativeBinaryOptions.UnitSuspendFunctionObjCExport
 import org.jetbrains.kotlin.descriptors.ModuleDescriptor
 import org.jetbrains.kotlin.library.impl.javaFile
 import org.jetbrains.kotlin.library.metadata.DeserializedKlibModuleOrigin
@@ -19,7 +20,6 @@ import org.jetbrains.kotlin.library.metadata.KlibModuleOrigin
 import org.jetbrains.kotlin.load.java.components.JavaDeprecationSettings
 import org.jetbrains.kotlin.resolve.deprecation.DeprecationResolver
 import org.jetbrains.kotlin.storage.LockBasedStorageManager
-import org.jetbrains.kotlin.cli.common.disposeRootInWriteAction
 import org.jetbrains.kotlin.tooling.core.closure
 import org.junit.jupiter.api.extension.AfterEachCallback
 import org.junit.jupiter.api.extension.ExtensionContext
@@ -98,7 +98,6 @@ class Fe10HeaderGeneratorImpl(private val disposable: Disposable) : HeaderGenera
         // The implementation expects cinterop klibs to be filtered out from the exported modules:
         val exportedKlibs = configuration.exportedDependencies.map { it.mainKlib }.toSet()
 
-        @OptIn(K1Deprecation::class)
         val exportedModuleDescriptors = moduleDescriptors + moduleDescriptors
             .closure<ModuleDescriptor> { it.allDependencyModules }
             .filter { descriptor ->

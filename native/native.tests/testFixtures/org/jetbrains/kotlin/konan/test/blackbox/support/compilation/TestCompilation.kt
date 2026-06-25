@@ -5,17 +5,12 @@
 
 package org.jetbrains.kotlin.konan.test.blackbox.support.compilation
 
-import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.cli.common.ExitCode
 import org.jetbrains.kotlin.config.nativeBinaryOptions.BinaryOptionWithValue
 import org.jetbrains.kotlin.config.nativeBinaryOptions.BinaryOptions
 import org.jetbrains.kotlin.config.nativeBinaryOptions.RuntimeAssertsMode
 import org.jetbrains.kotlin.konan.properties.resolvablePropertyList
-import org.jetbrains.kotlin.konan.target.AppleConfigurables
-import org.jetbrains.kotlin.konan.target.Family
-import org.jetbrains.kotlin.konan.target.KonanTarget
-import org.jetbrains.kotlin.konan.target.isMacabi
-import org.jetbrains.kotlin.konan.target.withOSVersion
+import org.jetbrains.kotlin.konan.target.*
 import org.jetbrains.kotlin.konan.test.blackbox.support.*
 import org.jetbrains.kotlin.konan.test.blackbox.support.TestCase.*
 import org.jetbrains.kotlin.konan.test.blackbox.support.TestModule.Companion.allDependsOnDependencies
@@ -856,7 +851,6 @@ class StaticCacheCompilation(
 
     private val useHeaders: Boolean = settings.get<CacheMode>().useHeaders
 
-    @OptIn(K1Deprecation::class)
     override fun applySpecificArgs(argsBuilder: ArgsBuilder): Unit = with(argsBuilder) {
         add("-produce", if (createHeaderCache) "header_cache" else "static_cache")
 

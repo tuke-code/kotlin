@@ -14,16 +14,10 @@ import org.jetbrains.kotlin.backend.konan.ir.isArray
 import org.jetbrains.kotlin.backend.konan.ir.isBoxOrUnbox
 import org.jetbrains.kotlin.backend.konan.ir.isSingleFieldValueClass
 import org.jetbrains.kotlin.backend.konan.ir.konanLibrary
-import org.jetbrains.kotlin.backend.konan.lower.PreCodegenFunctionInlining
-import org.jetbrains.kotlin.backend.konan.lower.bridgeTarget
-import org.jetbrains.kotlin.backend.konan.lower.isEagerStaticInitializer
-import org.jetbrains.kotlin.backend.konan.lower.isLazyStaticInitializer
-import org.jetbrains.kotlin.backend.konan.lower.liveVariablesAtSuspensionPoint
-import org.jetbrains.kotlin.backend.konan.lower.originalConstructor
+import org.jetbrains.kotlin.backend.konan.lower.*
 import org.jetbrains.kotlin.ir.declarations.IrFunction
 import org.jetbrains.kotlin.ir.expressions.IrSuspensionPoint
 import org.jetbrains.kotlin.ir.types.classOrNull
-import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.ir.util.*
 import org.jetbrains.kotlin.library.metadata.isCInteropLibrary
 
@@ -100,7 +94,6 @@ internal class PreCodegenInliner(
 
                     val irFunction = functionSymbol.irFunction ?: continue
                     val irBody = irFunction.body ?: continue
-                    @OptIn(K1Deprecation::class)
                     if (irFunction.bridgeTarget != null
                             || irFunction.konanLibrary?.isCInteropLibrary() == true
                             || irFunction.originalConstructor?.let { constructor ->
@@ -128,7 +121,6 @@ internal class PreCodegenInliner(
                         }
 
                         val calleeSize = callee.body.allScopes.sumOf { it.nodes.size }
-                        @OptIn(K1Deprecation::class)
                         val shouldInline = !isALoop // As FunctionInlining doesn't work with recursive functions.
                                 && calleeSize <= inlineThreshold
                                 && calleeIrFunction.symbol != context.symbols.entryPoint // Might be unexpected to not see [main] in stacktraces.

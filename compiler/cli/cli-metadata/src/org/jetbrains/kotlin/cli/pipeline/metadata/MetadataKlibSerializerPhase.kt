@@ -23,7 +23,6 @@ import org.jetbrains.kotlin.library.SerializedFragment
 import org.jetbrains.kotlin.library.SerializedFragmentWithSource
 import org.jetbrains.kotlin.library.SerializedMetadata
 import org.jetbrains.kotlin.library.loadSizeInfo
-import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.library.metadata.KlibMetadataHeaderFlags
 import org.jetbrains.kotlin.library.metadata.KlibMetadataProtoBuf
 import org.jetbrains.kotlin.util.metadataVersion
@@ -66,7 +65,6 @@ object MetadataKlibInMemorySerializerPhase : PipelinePhase<MetadataFrontendPipel
         header.moduleName = analysisResult.last().session.moduleData.name.asString()
 
         if (configuration.languageVersionSettings.isPreRelease()) {
-            @OptIn(K1Deprecation::class)
             header.flags = KlibMetadataHeaderFlags.PRE_RELEASE
         }
 

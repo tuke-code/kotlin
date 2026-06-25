@@ -5,7 +5,6 @@
 
 package org.jetbrains.kotlin.cli.pipeline.web
 
-import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.backend.common.extensions.IrGenerationExtension
 import org.jetbrains.kotlin.builtins.DefaultBuiltIns
 import org.jetbrains.kotlin.builtins.KotlinBuiltIns
@@ -74,7 +73,6 @@ object WebFir2IrPipelinePhase : PipelinePhase<WebFrontendPipelineArtifact, WebFi
         val librariesDescriptors = moduleStructure.klibs.all.map { resolvedLibrary ->
             val storageManager = LockBasedStorageManager("ModulesStructure")
 
-            @OptIn(K1Deprecation::class)
             val moduleDescriptor = JsFactories.DefaultDeserializedDescriptorFactory.createDescriptorOptionalBuiltIns(
                 resolvedLibrary,
                 moduleStructure.compilerConfiguration.languageVersionSettings,

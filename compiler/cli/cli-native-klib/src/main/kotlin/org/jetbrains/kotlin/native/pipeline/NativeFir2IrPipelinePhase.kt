@@ -37,7 +37,6 @@ import org.jetbrains.kotlin.library.components.metadata
 import org.jetbrains.kotlin.library.isNativeStdlib
 import org.jetbrains.kotlin.library.metadata.parseModuleHeader
 import org.jetbrains.kotlin.name.NativeForwardDeclarationKind
-import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.native.Fir2IrOutput
 import org.jetbrains.kotlin.native.NativeFir2IrExtensions
 import org.jetbrains.kotlin.native.runPreSerializationLowerings
@@ -95,7 +94,6 @@ object NativeFir2IrPipelinePhase : PipelinePhase<NativeFrontendArtifact, NativeF
             removeAll(NativeForwardDeclarationKind.entries.map { it.packageFqName }.toSet())
         }.toList()
         val usedLibraries = loadedKlibs.all.filter { library ->
-            @OptIn(K1Deprecation::class)
             val header = parseModuleHeader(library.metadata.moduleHeaderData)
 
             val nonEmptyPackageNames = buildSet {

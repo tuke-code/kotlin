@@ -5,7 +5,6 @@
 
 package org.jetbrains.kotlin.native.resolve
 
-import org.jetbrains.kotlin.K1Deprecation
 import org.jetbrains.kotlin.analyzer.CompilationErrorException
 import org.jetbrains.kotlin.cli.CliDiagnostics
 import org.jetbrains.kotlin.cli.common.messages.GroupingMessageCollector
@@ -23,7 +22,6 @@ import org.jetbrains.kotlin.library.toUnresolvedLibraries
 import org.jetbrains.kotlin.library.validateNoLibrariesWerePassedViaCliByUniqueName
 import org.jetbrains.kotlin.util.Logger
 
-@OptIn(K1Deprecation::class)
 class KonanLibrariesResolveSupport(
     configuration: CompilerConfiguration,
     target: KonanTarget,

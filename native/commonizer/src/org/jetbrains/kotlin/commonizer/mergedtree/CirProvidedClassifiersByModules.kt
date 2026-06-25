@@ -5,7 +5,6 @@
 
 package org.jetbrains.kotlin.commonizer.mergedtree
 
-import org.jetbrains.kotlin.K1Deprecation
 import com.intellij.util.containers.FactoryMap
 import org.jetbrains.kotlin.commonizer.ModulesProvider
 import org.jetbrains.kotlin.commonizer.ModulesProvider.CInteropModuleAttributes
@@ -118,7 +117,6 @@ private fun readModule(metadata: SerializedMetadata, consumer: (CirEntityId, Cir
         val classProtosToRead = ClassProtosToRead()
 
         for (j in packageFragments.indices) {
-            @OptIn(K1Deprecation::class)
             val packageFragmentProto = parsePackageFragment(packageFragments[j].content)
 
             val classProtos: List<ProtoBuf.Class> = packageFragmentProto.class_List
