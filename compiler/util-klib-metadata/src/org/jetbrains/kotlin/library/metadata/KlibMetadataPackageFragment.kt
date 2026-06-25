@@ -110,17 +110,17 @@ abstract class KlibMetadataPackageFragment(
     open val proto: ProtoBuf.PackageFragment
         get() = protoForNames
 
-    private val nameResolver by lazy {
+    private val nameResolver: NameResolverImpl by lazy {
         NameResolverImpl(protoForNames.strings, protoForNames.qualifiedNames)
     }
 
-    override val classDataFinder by lazy {
+    override val classDataFinder: KlibMetadataClassDataFinder by lazy {
         KlibMetadataClassDataFinder(protoForNames, nameResolver, containerSource)
     }
 
     override fun getSource(): SourceElement = containerSource ?: super.source
 
-    private val _memberScope by lazy {
+    private val _memberScope: DeserializedPackageMemberScope by lazy {
         DeserializedPackageMemberScope(
             this,
             proto.getPackage(),

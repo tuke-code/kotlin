@@ -25,7 +25,7 @@ internal class KlibModuleDescriptorFactoryImpl(val createBuiltIns: (StorageManag
         builtIns: KotlinBuiltIns,
         origin: KlibModuleOrigin,
         customCapabilities: Map<ModuleCapability<*>, Any?>
-    ) = ModuleDescriptorImpl(
+    ): ModuleDescriptorImpl = ModuleDescriptorImpl(
         name,
         storageManager,
         builtIns,

@@ -204,7 +204,7 @@ class KotlinLibraryResolverResultImpl(
                 }
             }
 
-    override fun filterRoots(predicate: (KotlinResolvedLibrary) -> Boolean) =
+    override fun filterRoots(predicate: (KotlinResolvedLibrary) -> Boolean): KotlinLibraryResolveResult =
         KotlinLibraryResolverResultImpl(roots.filter(predicate))
 
     /**

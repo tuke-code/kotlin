@@ -30,7 +30,7 @@ interface KlibMetadataModuleDescriptorFactory {
         languageVersionSettings: LanguageVersionSettings,
         storageManager: StorageManager,
         builtIns: KotlinBuiltIns,
-    ) = createDescriptorOptionalBuiltIns(
+    ): ModuleDescriptorImpl = createDescriptorOptionalBuiltIns(
         library,
         languageVersionSettings,
         storageManager,
@@ -42,7 +42,7 @@ interface KlibMetadataModuleDescriptorFactory {
         library: KotlinLibrary,
         languageVersionSettings: LanguageVersionSettings,
         storageManager: StorageManager,
-    ) = createDescriptorOptionalBuiltIns(
+    ): ModuleDescriptorImpl = createDescriptorOptionalBuiltIns(
         library, languageVersionSettings, storageManager, null, LookupTracker.DO_NOTHING
     )
 

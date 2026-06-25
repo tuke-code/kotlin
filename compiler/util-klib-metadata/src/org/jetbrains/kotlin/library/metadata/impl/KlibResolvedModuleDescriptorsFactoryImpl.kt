@@ -158,7 +158,7 @@ class KlibResolvedModuleDescriptorsFactoryImpl(
         storageManager: StorageManager,
         builtIns: KotlinBuiltIns?,
         moduleOrigin: KlibModuleOrigin
-    ) = if (builtIns != null)
+    ): ModuleDescriptorImpl = if (builtIns != null)
         moduleDescriptorFactory.descriptorFactory.createDescriptor(name, storageManager, builtIns, moduleOrigin)
     else
         moduleDescriptorFactory.descriptorFactory.createDescriptorAndNewBuiltIns(name, storageManager, moduleOrigin)
@@ -168,7 +168,7 @@ class KlibResolvedModuleDescriptorsFactoryImpl(
         languageVersionSettings: LanguageVersionSettings,
         storageManager: StorageManager,
         builtIns: KotlinBuiltIns?,
-    ) = if (builtIns != null)
+    ): ModuleDescriptorImpl = if (builtIns != null)
         moduleDescriptorFactory.createDescriptor(library, languageVersionSettings, storageManager, builtIns)
     else
         moduleDescriptorFactory.createDescriptorAndNewBuiltIns(library, languageVersionSettings, storageManager)
@@ -193,7 +193,7 @@ class ForwardDeclarationsPackageFragmentDescriptor(
 
     private val memberScope = object : MemberScopeImpl() {
 
-        private val declarations = storageManager.createMemoizedFunction(this::createDeclaration)
+        private val declarations: (Name) -> ClassDescriptor = storageManager.createMemoizedFunction(this::createDeclaration)
 
         private val supertype by storageManager.createLazyValue {
             findCinteropClass(supertypeName).defaultType
@@ -246,7 +246,7 @@ class ForwardDeclarationsPackageFragmentDescriptor(
             }
         }
 
-        override fun getContributedClassifier(name: Name, location: LookupLocation) = declarations(name)
+        override fun getContributedClassifier(name: Name, location: LookupLocation): ClassifierDescriptor = declarations(name)
 
         override fun printScopeStructure(p: Printer) {
             p.println(this::class.java.simpleName, "{}")

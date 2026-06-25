@@ -32,7 +32,7 @@ fun BaseKotlinLibrary.isCommonizedCInteropLibrary(): Boolean =
     ReplaceWith("isCInteropLibrary()", "org.jetbrains.kotlin.library.metadata.isCInteropLibrary"),
     DeprecationLevel.ERROR
 )
-fun BaseKotlinLibrary.isInteropLibrary() = irProviderName == KLIB_INTEROP_IR_PROVIDER_IDENTIFIER
+fun BaseKotlinLibrary.isInteropLibrary(): Boolean = irProviderName == KLIB_INTEROP_IR_PROVIDER_IDENTIFIER
 
 @Deprecated(
     "Use isFromCInteropLibrary() instead",

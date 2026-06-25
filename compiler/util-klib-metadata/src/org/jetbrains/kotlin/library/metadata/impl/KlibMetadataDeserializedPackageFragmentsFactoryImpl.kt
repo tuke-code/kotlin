@@ -69,7 +69,7 @@ open class KlibMetadataDeserializedPackageFragmentsFactoryImpl : KlibMetadataDes
         packageFragments: List<ByteArray>,
         moduleDescriptor: ModuleDescriptor,
         storageManager: StorageManager
-    ) = packageFragments.map { byteArray ->
+    ): List<KlibMetadataPackageFragment> = packageFragments.map { byteArray ->
         KlibMetadataCachedPackageFragment(byteArray, storageManager, moduleDescriptor)
     }
 
