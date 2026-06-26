@@ -64,6 +64,12 @@ public class FirIdeNormalAnalysisSourceLikeModuleSymbolByReferenceTestGenerated 
   }
 
   @Test
+  @TestMetadata("actualEnumCloneJvm.kt")
+  public void testActualEnumCloneJvm() {
+    run("actualEnumCloneJvm.kt");
+  }
+
+  @Test
   public void testAllFilesPresentInSymbolByReference() {
     KtTestUtil.assertAllTestsPresentByMetadataWithExcluded(this.getClass(), new File("analysis/analysis-api/testData/symbols/symbolByReference"), Pattern.compile("^(.+)\\.(kt|kts)$"), null, true);
   }
@@ -695,9 +701,9 @@ public class FirIdeNormalAnalysisSourceLikeModuleSymbolByReferenceTestGenerated 
     }
 
     @Test
-    @TestMetadata("actualEnum.kt")
-    public void testActualEnum() {
-      run("actualEnum.kt");
+    @TestMetadata("actualEnumCloneJs.kt")
+    public void testActualEnumCloneJs() {
+      run("actualEnumCloneJs.kt");
     }
 
     @Test
