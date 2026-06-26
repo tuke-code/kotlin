@@ -1,6 +1,8 @@
+import org.gradle.api.publish.maven.tasks.GenerateMavenPom
 import org.gradle.jvm.tasks.Jar
 import org.gradle.kotlin.dsl.named
 import org.gradle.kotlin.dsl.register
+import plugins.mainPublicationName
 
 standardPublicJars()
 
@@ -57,4 +59,17 @@ analysisApiPublishingLatch {
     }
 
     publish()
+
+    val verifyArtifactPom = tasks.register<VerifyArtifactPomTask>("verifyArtifactPom") {
+        description = "Verifies that the generated POM matches the committed 'expected-pom.xml'"
+
+        val generateMavenPomTaskName = "generatePomFileFor${mainPublicationName}Publication"
+        pomFile.set(layout.file(tasks.named<GenerateMavenPom>(generateMavenPomTaskName).map { it.destination }))
+        artifactVersion.set(version.toString())
+        expectedPomFile.set(layout.projectDirectory.file("expected-pom.xml"))
+    }
+
+    tasks.named("check").configure {
+        dependsOn(verifyArtifactPom)
+    }
 }
