@@ -19,7 +19,6 @@ plugins {
 testInputsCheck {
     enabled = true
     failFast = false
-    skipTests = false
 }
 ```
 
@@ -38,26 +37,6 @@ Open it in IDEA, then go to: `Events | Uncategorized | jetbrains.UndeclaredInput
 ![jfr-snapshot.png](docs/jfr-snapshot.png)
 
 Now you can explore the stacktrace to identify where exactly the undeclared input has been accessed.
-
-### Optimizing your feedback loop
-
-After running your tests at least once, you may want to speed up your feedback loop (adding/removing 
-inputs and verifying if they are enough). The `testInputsCheck.skipTests` property is here to help.
-
-How does it work? It removes all actions from the `test` task, except the one for updating `declared-inputs-for-test.txt`
-file. As a result, the test execution is skipped, but changes made in the input declarations are reflected in the file. 
-Then, the `checkInputsForTest` task will read the pre-populated JFR snapshot and compare it with the updated
-`declared-inputs-for-test.txt`. If the previously detected declared inputs are now covered by the declared inputs dump, 
-it will pass successfully.
-
-The recommended approach:
-1. Remove all custom inputs (like `withStdlibCommon()`) from your `projectTests { ... }`.
-2. Execute the test task (it's ok if some of the tests fail). This will collect JFR events about which files are accessed.
-3. Enable `testInputsCheck.skipTests`.
-4. Start adding the inputs in `projectTests { ... }` one by one.
-5. After each change, execute the test task again. This time, the tests will be skipped, and only inputs will be checked.
-   If the number of undeclared inputs decreased, it means the input you just added is actually needed. If not, remove it.
-6. IMPORTANT: Remember to disable `testInputsCheck.skipTests` after finishing. It's only for debugging!
 
 ## Which files are considered inputs?
 

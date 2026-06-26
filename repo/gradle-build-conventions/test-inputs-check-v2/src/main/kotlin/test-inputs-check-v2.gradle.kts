@@ -13,7 +13,7 @@ tasks.withType<Test>().configureEach {
 afterEvaluate {
     tasks.withType<Test>().names.forEach { testName ->
         val test = tasks.named<Test>(testName)
-        configureCheckTestInputsTask(test, declaredInputsFile(test.name), undeclaredInputsFile(test.name))
+        configureCheckTestInputsTask(test, declaredInputsFile(test.name))
     }
 }
 
@@ -23,12 +23,6 @@ fun configureTestTask(test: Test, declaredInputsFile: Provider<RegularFile>) {
     test.addAbsoluteDirectoryProperty(layout.settingsDirectory, "test.instrumenter.root.dir")
     test.addAbsoluteDirectoryProperty(layout.buildDirectory, "test.instrumenter.build.dir")
     test.addLazyBooleanSystemProperty(testInputsCheck.failFast, "test.instrumenter.fail.fast")
-
-    if (testInputsCheck.skipTests.get()) {
-        checkIfTestsCanBeSkipped(test)
-        logger.warn("Skipping tests for task ${test.path}. Disable testInputsCheck.skipTests after you're done debugging!")
-        test.actions.clear()
-    }
 
     test.doFirst {
         declaredInputsFile.get().asFile.apply {
@@ -40,14 +34,12 @@ fun configureTestTask(test: Test, declaredInputsFile: Provider<RegularFile>) {
 
 fun configureCheckTestInputsTask(
     test: TaskProvider<Test>,
-    declaredInputsFile: Provider<RegularFile>,
     undeclaredInputsFile: Provider<RegularFile>,
 ) {
     val checkTestInputs = tasks.register<CheckTestInputs>("checkInputsFor${test.name.capitalize()}") {
         group = "verification"
         description = "Check undeclared inputs from task ${test.name}"
         this.jfrFile.from(test.map { it.javaFlightRecorder.jfrFile })
-        this.declaredInputsFile.set(declaredInputsFile)
         this.undeclaredInputsFile.set(undeclaredInputsFile)
         this.verificationTasksDisabled.value(kotlinBuildProperties.verificationTasksDisabled).finalizeValue()
         this.teamcityBuild.value(kotlinBuildProperties.isTeamcityBuild).finalizeValue()
@@ -57,23 +49,6 @@ fun configureCheckTestInputsTask(
         if (enabled && !inputs.sourceFiles.isEmpty) {
             finalizedBy(checkTestInputs)
         }
-    }
-}
-
-fun checkIfTestsCanBeSkipped(test: Test) {
-    val jfrFile = test.javaFlightRecorder.jfrFile.singleFile
-    if (!jfrFile.exists()) {
-        error(buildString {
-            appendLine("Tests can't be skipped if the JFR snapshot doesn't exist!")
-            appendLine("Run your tests at least once to produce this file, than you will be able to skip them.")
-            appendLine("The JFR snapshot will appear here: ${jfrFile.absolutePath}")
-        })
-    }
-    if (kotlinBuildProperties.isTeamcityBuild.get()) {
-        error(buildString {
-            appendLine("Tests can't be skipped on TeamCity build, this feature is only for debugging!")
-            appendLine("Please set testInputsCheck.skipTests = false")
-        })
     }
 }
 
