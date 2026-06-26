@@ -36,8 +36,7 @@ abstract class CheckTestInputs : DefaultTask() {
 
     @TaskAction
     fun execute() {
-        if (verificationTasksDisabled.get()) {
-            logger.warn("Skipping undeclared inputs checking because `kotlin.build.disable.verification.tasks` is true")
+        if (shouldSkip()) {
             return
         }
         val jfrFile = jfrFile.singleFile
@@ -68,5 +67,17 @@ abstract class CheckTestInputs : DefaultTask() {
                 undeclaredInputs.take(100).forEach { appendLine(it) }
             })
         }
+    }
+
+    private fun shouldSkip(): Boolean {
+        if (verificationTasksDisabled.get()) {
+            logger.warn("Skipping test inputs checking because `kotlin.build.disable.verification.tasks` is true")
+            return true
+        }
+        if (!jfrFile.singleFile.exists()) {
+            logger.warn("Skipping test inputs checking because JFR file doesn't exist")
+            return true
+        }
+        return false
     }
 }
