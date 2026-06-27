@@ -184,9 +184,12 @@ public interface KaSubstitutorProvider : KaSessionComponent {
 }
 
 /**
+ * **The type has been moved to a new package. Use [org.jetbrains.kotlin.analysis.api.types.KaUnificationSubstitutorPolicy] instead.**
+ *
  * [KaUnificationSubstitutorPolicy] determines the way unification [KaSubstitutor]s are created in [KaSubstitutorProvider.createSubtypingUnificationSubstitutor].
  * Note that the policy only affects the construction when at least one of the involved types is generic, i.e., depends on a type parameter.
  */
+@KaObsoleteComponentApi
 @KaIdeApi
 public enum class KaUnificationSubstitutorPolicy {
     /**
