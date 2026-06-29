@@ -118,7 +118,6 @@ rootProject.apply {
     from(rootProject.file("gradle/checkArtifacts.gradle.kts"))
     from(rootProject.file("gradle/checkCacheability.gradle.kts"))
     from(rootProject.file("gradle/compilerModules.gradle.kts"))
-    from(rootProject.file("gradle/retryPublishing.gradle.kts"))
 }
 
 pluginManager.apply("nodejs-configuration")

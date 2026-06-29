@@ -31,6 +31,7 @@ project.configureTests()
 project.checkNoApiDependenciesOnK1Modules()
 project.configureMigratedRootSettings()
 project.configureJsCacheRedirector()
+project.configurePublishingRetry()
 
 // There are problems with common build dir:
 //  - some tests (in particular js and binary-compatibility-validator depend on the fixed (default) location

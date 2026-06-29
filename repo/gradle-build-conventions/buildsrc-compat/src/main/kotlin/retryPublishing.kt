@@ -1,6 +1,8 @@
-allprojects {
-    configurePublishingRetry()
-}
+import org.gradle.api.Project
+import org.gradle.api.Task
+import org.gradle.api.publish.maven.tasks.PublishToMavenRepository
+import org.gradle.api.tasks.StopExecutionException
+import org.gradle.kotlin.dsl.withType
 
 fun Project.configurePublishingRetry() {
     val publishingAttempts = findProperty("kotlin.build.publishing.attempts")?.toString()?.toInt()
