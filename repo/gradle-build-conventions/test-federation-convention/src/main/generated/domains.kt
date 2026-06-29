@@ -74,7 +74,7 @@ internal object CompilerPluginsDomainInfo : DomainInfo {
     override val domain = Domain.CompilerPlugins
     override val include: List<String> = listOf("plugins/**")
     override val exclude: List<String> = listOf()
-    override val fullyAffectedBy: List<DomainInfo> by lazy { listOf(CompilerDomainInfo, UnknownDomainInfo) }
+    override val fullyAffectedBy: List<DomainInfo> by lazy { listOf(CompilerDomainInfo) }
 }
 
 internal object GradleDomainInfo : DomainInfo {
