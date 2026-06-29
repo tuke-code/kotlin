@@ -5,6 +5,7 @@
 
 package org.jetbrains.kotlin.analysis.api.fir.components
 
+import com.intellij.psi.util.parentOfType
 import org.jetbrains.kotlin.KtFakeSourceElementKind
 import org.jetbrains.kotlin.analysis.low.level.api.fir.api.LLResolutionFacade
 import org.jetbrains.kotlin.analysis.low.level.api.fir.api.getOrBuildFir
@@ -146,7 +147,7 @@ internal val FirResolvedTypeRef.correspondingTypePsi: KtUserType?
  * of any type-operator call.
  */
 internal fun FirResolvedTypeRef.enclosingTypeOperatorCall(resolutionFacade: LLResolutionFacade): FirTypeOperatorCall? {
-    val typeReference = correspondingTypePsi?.parent as? KtTypeReference ?: return null
+    val typeReference = correspondingTypePsi?.parentOfType<KtTypeReference>() ?: return null
 
     val operatorPsi = when (val typeReferenceParent = typeReference.parent) {
         is KtIsExpression -> typeReferenceParent
