@@ -17,4 +17,7 @@ class Container {
     fun callFunTwoOverloadsWithRemovedClassTP() = funTwoOverloadsTP<RemovedClass>(RemovedClass())
     fun callFunTwoOverloadsWithRemovedEnumTP() = funTwoOverloadsTP<RemovedEnum>(RemovedEnum.A)
 
+    inline fun inlineFunExistingAnyOverload(arg: Any?): String = "Any?"
+    inline fun inlineFunExistingAnyOverload(arg: RemovedClass): String = "RemovedClass"
+    fun callInlineFunExistingAnyOverloadWithRemovedClass(): String = inlineFunExistingAnyOverload(RemovedClass())
 }
