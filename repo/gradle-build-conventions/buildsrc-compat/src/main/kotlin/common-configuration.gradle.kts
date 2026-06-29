@@ -14,6 +14,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 // Contains common configuration that should be applied to all projects
 plugins {
     id("implicit-dependencies")
+    id("java-instrumentation")
 }
 
 // Common Group and version

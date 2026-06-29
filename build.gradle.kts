@@ -58,7 +58,6 @@ plugins {
     idea
     alias(libs.plugins.jetbrains.ideaExt)
     id("build-time-report")
-    id("java-instrumentation")
     id("modularized-test-configurations")
     id("resolve-dependencies")
     id("org.gradle.crypto.checksum") version "1.4.0"
