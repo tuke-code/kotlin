@@ -12528,8 +12528,14 @@
                                                         "valueInVersions": []
                                                     },
                                                     "defaultValue": {
-                                                        "current": false,
-                                                        "valueInVersions": []
+                                                        "current": true,
+                                                        "valueInVersions": [
+                                                            {
+                                                                "minReleaseVersion": "2.1.20",
+                                                                "maxReleaseVersion": "2.4.0",
+                                                                "value": false
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 "valueDescription": {
@@ -12549,8 +12555,14 @@
                                                         "valueInVersions": []
                                                     },
                                                     "defaultValue": {
-                                                        "current": false,
-                                                        "valueInVersions": []
+                                                        "current": true,
+                                                        "valueInVersions": [
+                                                            {
+                                                                "minReleaseVersion": "2.1.20",
+                                                                "maxReleaseVersion": "2.4.0",
+                                                                "value": false
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 "deprecatedMessage": null
@@ -14562,8 +14574,14 @@
                                                         "valueInVersions": []
                                                     },
                                                     "defaultValue": {
-                                                        "current": false,
-                                                        "valueInVersions": []
+                                                        "current": true,
+                                                        "valueInVersions": [
+                                                            {
+                                                                "minReleaseVersion": "2.1.20",
+                                                                "maxReleaseVersion": "2.4.0",
+                                                                "value": false
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 "valueDescription": {
@@ -14583,8 +14601,14 @@
                                                         "valueInVersions": []
                                                     },
                                                     "defaultValue": {
-                                                        "current": false,
-                                                        "valueInVersions": []
+                                                        "current": true,
+                                                        "valueInVersions": [
+                                                            {
+                                                                "minReleaseVersion": "2.1.20",
+                                                                "maxReleaseVersion": "2.4.0",
+                                                                "value": false
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 "deprecatedMessage": null
