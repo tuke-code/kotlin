@@ -989,6 +989,18 @@ public class FirStandaloneNormalAnalysisSourceModuleReferenceShortenerTestGenera
       }
 
       @Test
+      @TestMetadata("nullableType.kt")
+      public void testNullableType() {
+        run("nullableType.kt");
+      }
+
+      @Test
+      @TestMetadata("nullableTypeInnerRef.kt")
+      public void testNullableTypeInnerRef() {
+        run("nullableTypeInnerRef.kt");
+      }
+
+      @Test
       @TestMetadata("typeArgumentPartialSelection.kt")
       public void testTypeArgumentPartialSelection() {
         run("typeArgumentPartialSelection.kt");
