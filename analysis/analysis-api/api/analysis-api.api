@@ -795,6 +795,7 @@ public abstract interface class org/jetbrains/kotlin/analysis/api/resolution/KaI
 }
 
 public abstract interface class org/jetbrains/kotlin/analysis/api/resolution/KaPartiallyAppliedSymbol : org/jetbrains/kotlin/analysis/api/lifetime/KaLifetimeOwner {
+	public abstract fun getContextArguments ()Ljava/util/List;
 	public abstract fun getDispatchReceiver ()Lorg/jetbrains/kotlin/analysis/api/resolution/KaReceiverValue;
 	public abstract fun getExtensionReceiver ()Lorg/jetbrains/kotlin/analysis/api/resolution/KaReceiverValue;
 	public abstract fun getSignature ()Lorg/jetbrains/kotlin/analysis/api/signatures/KaCallableSignature;
