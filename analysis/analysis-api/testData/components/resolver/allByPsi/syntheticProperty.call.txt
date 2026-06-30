@@ -752,6 +752,7 @@ KtPostfixExpression(219,230): 'something++'
           symbol = KaReceiverParameterSymbol:
             annotations: []
             callableId: null
+            contextParameters: []
             contextReceivers: []
             isActual: false
             isCompanion: false
@@ -792,6 +793,7 @@ KtNameReferenceExpression(219,228): 'something'
         symbol = KaReceiverParameterSymbol:
           annotations: []
           callableId: null
+          contextParameters: []
           contextReceivers: []
           isActual: false
           isCompanion: false
@@ -853,6 +855,7 @@ KtOperationReferenceExpression(228,230): '++'
           symbol = KaReceiverParameterSymbol:
             annotations: []
             callableId: null
+            contextParameters: []
             contextReceivers: []
             isActual: false
             isCompanion: false
@@ -914,6 +917,7 @@ KtPostfixExpression(235,248): '(something)++'
           symbol = KaReceiverParameterSymbol:
             annotations: []
             callableId: null
+            contextParameters: []
             contextReceivers: []
             isActual: false
             isCompanion: false
@@ -957,6 +961,7 @@ KtNameReferenceExpression(236,245): 'something'
         symbol = KaReceiverParameterSymbol:
           annotations: []
           callableId: null
+          contextParameters: []
           contextReceivers: []
           isActual: false
           isCompanion: false
@@ -1018,6 +1023,7 @@ KtOperationReferenceExpression(246,248): '++'
           symbol = KaReceiverParameterSymbol:
             annotations: []
             callableId: null
+            contextParameters: []
             contextReceivers: []
             isActual: false
             isCompanion: false
@@ -1058,6 +1064,7 @@ KtBinaryExpression(253,268): '(something) = 1'
         symbol = KaReceiverParameterSymbol:
           annotations: []
           callableId: null
+          contextParameters: []
           contextReceivers: []
           isActual: false
           isCompanion: false
@@ -1102,6 +1109,7 @@ KtNameReferenceExpression(254,263): 'something'
         symbol = KaReceiverParameterSymbol:
           annotations: []
           callableId: null
+          contextParameters: []
           contextReceivers: []
           isActual: false
           isCompanion: false
@@ -1143,6 +1151,7 @@ KtOperationReferenceExpression(265,266): '='
         symbol = KaReceiverParameterSymbol:
           annotations: []
           callableId: null
+          contextParameters: []
           contextReceivers: []
           isActual: false
           isCompanion: false

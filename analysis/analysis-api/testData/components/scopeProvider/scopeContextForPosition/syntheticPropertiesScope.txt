@@ -87,6 +87,7 @@ scopes:
           KaValueParameterSymbol:
             annotations: []
             callableId: null
+            contextParameters: []
             contextReceivers: []
             generatedPrimaryConstructorProperty: null
             hasDeclaredDefaultValue: false
@@ -182,10 +183,12 @@ scopes:
         annotations: []
         backingFieldSymbol: null
         callableId: /JavaClass.value
+        contextParameters: []
         contextReceivers: []
         getter: KaPropertyGetterSymbol:
           annotations: []
           callableId: /JavaClass.getValue
+          contextParameters: []
           contextReceivers: []
           hasStableParameterNames: true
           isActual: false
@@ -237,6 +240,7 @@ scopes:
         annotations: []
         callableId: null
         containingClassId: JavaClass
+        contextParameters: []
         contextReceivers: []
         hasStableParameterNames: false
         isActual: false
@@ -349,6 +353,7 @@ scopes:
         receiverParameter: KaReceiverParameterSymbol:
           annotations: []
           callableId: null
+          contextParameters: []
           contextReceivers: []
           isActual: false
           isCompanion: false

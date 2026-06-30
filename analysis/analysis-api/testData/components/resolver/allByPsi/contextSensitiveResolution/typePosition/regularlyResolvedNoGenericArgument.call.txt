@@ -180,6 +180,7 @@ KtNameReferenceExpression(305,306): 'y'
           symbol = KaReceiverParameterSymbol:
             annotations: []
             callableId: null
+            contextParameters: []
             contextReceivers: []
             isActual: false
             isCompanion: false

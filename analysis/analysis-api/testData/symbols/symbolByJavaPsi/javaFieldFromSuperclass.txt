@@ -1,6 +1,7 @@
 KaJavaFieldSymbol:
   annotations: []
   callableId: /SuperClass.count
+  contextParameters: []
   contextReceivers: []
   isActual: false
   isCompanion: false

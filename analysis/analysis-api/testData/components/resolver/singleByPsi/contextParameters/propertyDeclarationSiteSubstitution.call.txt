@@ -6,6 +6,7 @@ KtNameReferenceExpression(193,196): 'foo'
           symbol = KaReceiverParameterSymbol:
             annotations: []
             callableId: null
+            contextParameters: []
             contextReceivers: []
             isActual: false
             isCompanion: false
@@ -30,6 +31,7 @@ KtNameReferenceExpression(193,196): 'foo'
           symbol = KaReceiverParameterSymbol:
             annotations: []
             callableId: null
+            contextParameters: []
             contextReceivers: []
             isActual: false
             isCompanion: false

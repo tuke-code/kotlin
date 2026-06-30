@@ -1,12 +1,14 @@
 KaValueParameterSymbol:
   annotations: []
   callableId: null
+  contextParameters: []
   contextReceivers: []
   generatedPrimaryConstructorProperty: KaKotlinPropertySymbol:
     annotations: []
     backingFieldSymbol: KaBackingFieldSymbol:
       annotations: []
       callableId: null
+      contextParameters: []
       contextReceivers: []
       isActual: false
       isCompanion: false
@@ -42,6 +44,7 @@ KaValueParameterSymbol:
     getter: KaPropertyGetterSymbol:
       annotations: []
       callableId: null
+      contextParameters: []
       contextReceivers: []
       hasStableParameterNames: true
       isActual: false
@@ -99,6 +102,7 @@ KaValueParameterSymbol:
     setter: KaPropertySetterSymbol:
       annotations: []
       callableId: null
+      contextParameters: []
       contextReceivers: []
       hasStableParameterNames: true
       isActual: false
@@ -115,6 +119,7 @@ KaValueParameterSymbol:
       parameter: KaValueParameterSymbol:
         annotations: []
         callableId: null
+        contextParameters: []
         contextReceivers: []
         generatedPrimaryConstructorProperty: null
         hasDeclaredDefaultValue: false
@@ -154,6 +159,7 @@ KaValueParameterSymbol:
         KaValueParameterSymbol:
           annotations: []
           callableId: null
+          contextParameters: []
           contextReceivers: []
           generatedPrimaryConstructorProperty: null
           hasDeclaredDefaultValue: false

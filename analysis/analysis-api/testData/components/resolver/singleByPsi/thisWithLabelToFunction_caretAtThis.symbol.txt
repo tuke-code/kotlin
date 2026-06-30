@@ -6,6 +6,7 @@ KtNameReferenceExpression(43,47): 'this'
       KaReceiverParameterSymbol:
         annotations: []
         callableId: null
+        contextParameters: []
         contextReceivers: []
         isActual: false
         isCompanion: false

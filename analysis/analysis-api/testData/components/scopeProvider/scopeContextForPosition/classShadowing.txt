@@ -105,6 +105,7 @@ scopes:
           KaValueParameterSymbol:
             annotations: []
             callableId: null
+            contextParameters: []
             contextReceivers: []
             generatedPrimaryConstructorProperty: null
             hasDeclaredDefaultValue: false
@@ -201,6 +202,7 @@ scopes:
         annotations: []
         callableId: null
         containingClassId: null
+        contextParameters: []
         contextReceivers: []
         hasStableParameterNames: true
         isActual: false
@@ -328,6 +330,7 @@ scopes:
           KaValueParameterSymbol:
             annotations: []
             callableId: null
+            contextParameters: []
             contextReceivers: []
             generatedPrimaryConstructorProperty: null
             hasDeclaredDefaultValue: false
@@ -424,6 +427,7 @@ scopes:
         annotations: []
         callableId: null
         containingClassId: Foo
+        contextParameters: []
         contextReceivers: []
         hasStableParameterNames: true
         isActual: false

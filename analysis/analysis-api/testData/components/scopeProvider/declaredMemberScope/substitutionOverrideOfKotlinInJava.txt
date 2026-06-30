@@ -48,6 +48,7 @@ KaSyntheticJavaPropertySymbol:
   annotations: []
   backingFieldSymbol: null
   callableId: /JavaC.prop
+  contextParameters: []
   contextReceivers: []
   getter: KaPropertyGetterSymbol:
     annotations: [
@@ -55,6 +56,7 @@ KaSyntheticJavaPropertySymbol:
         psi: null
     ]
     callableId: /JavaC.getProp
+    contextParameters: []
     contextReceivers: []
     hasStableParameterNames: true
     isActual: false
@@ -126,6 +128,7 @@ KaConstructorSymbol:
   annotations: []
   callableId: null
   containingClassId: JavaC
+  contextParameters: []
   contextReceivers: []
   hasStableParameterNames: false
   isActual: false
@@ -147,6 +150,7 @@ KaConstructorSymbol:
     KaValueParameterSymbol:
       annotations: []
       callableId: null
+      contextParameters: []
       contextReceivers: []
       generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false

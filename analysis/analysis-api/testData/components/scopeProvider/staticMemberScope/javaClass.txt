@@ -1,6 +1,7 @@
 KaJavaFieldSymbol:
   annotations: []
   callableId: /JavaClass.foo
+  contextParameters: []
   contextReceivers: []
   isActual: false
   isCompanion: true
@@ -68,6 +69,7 @@ KaNamedFunctionSymbol:
 KaJavaFieldSymbol:
   annotations: []
   callableId: /SuperClass.superFoo
+  contextParameters: []
   contextReceivers: []
   isActual: false
   isCompanion: true

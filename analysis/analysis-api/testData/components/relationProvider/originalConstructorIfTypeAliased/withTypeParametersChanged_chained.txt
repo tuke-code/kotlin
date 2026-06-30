@@ -3,6 +3,7 @@ Resolved constructor:
     annotations: []
     callableId: null
     containingClassId: test/MyTypeAliasSecond
+    contextParameters: []
     contextReceivers: []
     hasStableParameterNames: true
     isActual: false
@@ -56,6 +57,7 @@ Resolved constructor:
       KaValueParameterSymbol:
         annotations: []
         callableId: null
+        contextParameters: []
         contextReceivers: []
         generatedPrimaryConstructorProperty: null
         hasDeclaredDefaultValue: false
@@ -108,6 +110,7 @@ Original constructor if type aliased:
     annotations: []
     callableId: null
     containingClassId: test/MyClass
+    contextParameters: []
     contextReceivers: []
     hasStableParameterNames: true
     isActual: false
@@ -151,6 +154,7 @@ Original constructor if type aliased:
       KaValueParameterSymbol:
         annotations: []
         callableId: null
+        contextParameters: []
         contextReceivers: []
         generatedPrimaryConstructorProperty: null
         hasDeclaredDefaultValue: false

@@ -32,6 +32,7 @@ KaNamedFunctionSymbol:
     KaValueParameterSymbol:
       annotations: []
       callableId: null
+      contextParameters: []
       contextReceivers: []
       generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
@@ -292,6 +293,7 @@ KaConstructorSymbol:
   annotations: []
   callableId: null
   containingClassId: test/B
+  contextParameters: []
   contextReceivers: []
   hasStableParameterNames: true
   isActual: false

@@ -1,6 +1,7 @@
 KaJavaFieldSymbol:
   annotations: []
   callableId: /JavaClass.foo
+  contextParameters: []
   contextReceivers: []
   isActual: false
   isCompanion: true

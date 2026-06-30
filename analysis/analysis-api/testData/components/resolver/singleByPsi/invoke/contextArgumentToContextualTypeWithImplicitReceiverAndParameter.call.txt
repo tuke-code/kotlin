@@ -15,6 +15,7 @@ KtCallExpression(117,140): 'block(regularParameter)'
         symbol = KaReceiverParameterSymbol:
           annotations: []
           callableId: null
+          contextParameters: []
           contextReceivers: []
           isActual: false
           isCompanion: false

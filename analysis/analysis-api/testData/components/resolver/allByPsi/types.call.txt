@@ -127,6 +127,7 @@ KtCallExpression(251,263): 'InnerClass()'
         symbol = KaReceiverParameterSymbol:
           annotations: []
           callableId: null
+          contextParameters: []
           contextReceivers: []
           isActual: false
           isCompanion: false
@@ -167,6 +168,7 @@ KtNameReferenceExpression(251,261): 'InnerClass'
         symbol = KaReceiverParameterSymbol:
           annotations: []
           callableId: null
+          contextParameters: []
           contextReceivers: []
           isActual: false
           isCompanion: false

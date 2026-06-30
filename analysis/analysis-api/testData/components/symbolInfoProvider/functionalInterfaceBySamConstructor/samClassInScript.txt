@@ -2,6 +2,7 @@ CONSTRUCTOR:
   KaSamConstructorSymbol:
   annotations: []
   callableId: /IntPredicate
+  contextParameters: []
   contextReceivers: []
   hasStableParameterNames: true
   isActual: false
@@ -34,6 +35,7 @@ CONSTRUCTOR:
     KaValueParameterSymbol:
       annotations: []
       callableId: null
+      contextParameters: []
       contextReceivers: []
       generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false

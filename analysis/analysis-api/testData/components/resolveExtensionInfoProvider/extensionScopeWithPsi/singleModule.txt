@@ -97,6 +97,7 @@ callables: 5
       KaValueParameterSymbol:
         annotations: []
         callableId: null
+        contextParameters: []
         contextReceivers: []
         generatedPrimaryConstructorProperty: null
         hasDeclaredDefaultValue: false
@@ -155,6 +156,7 @@ callables: 5
     receiverParameter: KaReceiverParameterSymbol:
       annotations: []
       callableId: null
+      contextParameters: []
       contextReceivers: []
       isActual: false
       isCompanion: false
@@ -190,6 +192,7 @@ callables: 5
     backingFieldSymbol: KaBackingFieldSymbol:
       annotations: []
       callableId: null
+      contextParameters: []
       contextReceivers: []
       isActual: false
       isCompanion: false
@@ -216,6 +219,7 @@ callables: 5
     getter: KaPropertyGetterSymbol:
       annotations: []
       callableId: null
+      contextParameters: []
       contextReceivers: []
       hasStableParameterNames: true
       isActual: false
@@ -273,6 +277,7 @@ callables: 5
     backingFieldSymbol: KaBackingFieldSymbol:
       annotations: []
       callableId: null
+      contextParameters: []
       contextReceivers: []
       isActual: false
       isCompanion: false
@@ -299,6 +304,7 @@ callables: 5
     getter: KaPropertyGetterSymbol:
       annotations: []
       callableId: null
+      contextParameters: []
       contextReceivers: []
       hasStableParameterNames: true
       isActual: false
@@ -347,6 +353,7 @@ callables: 5
     setter: KaPropertySetterSymbol:
       annotations: []
       callableId: null
+      contextParameters: []
       contextReceivers: []
       hasStableParameterNames: true
       isActual: false
@@ -363,6 +370,7 @@ callables: 5
       parameter: KaValueParameterSymbol:
         annotations: []
         callableId: null
+        contextParameters: []
         contextReceivers: []
         generatedPrimaryConstructorProperty: null
         hasDeclaredDefaultValue: false
@@ -397,6 +405,7 @@ callables: 5
         KaValueParameterSymbol:
           annotations: []
           callableId: null
+          contextParameters: []
           contextReceivers: []
           generatedPrimaryConstructorProperty: null
           hasDeclaredDefaultValue: false
@@ -435,6 +444,7 @@ callables: 5
     backingFieldSymbol: KaBackingFieldSymbol:
       annotations: []
       callableId: null
+      contextParameters: []
       contextReceivers: []
       isActual: false
       isCompanion: false
@@ -461,6 +471,7 @@ callables: 5
     getter: KaPropertyGetterSymbol:
       annotations: []
       callableId: null
+      contextParameters: []
       contextReceivers: []
       hasStableParameterNames: true
       isActual: false
@@ -477,6 +488,7 @@ callables: 5
       receiverParameter: KaReceiverParameterSymbol:
         annotations: []
         callableId: null
+        contextParameters: []
         contextReceivers: []
         isActual: false
         isCompanion: false
@@ -525,6 +537,7 @@ callables: 5
     receiverParameter: KaReceiverParameterSymbol:
       annotations: []
       callableId: null
+      contextParameters: []
       contextReceivers: []
       isActual: false
       isCompanion: false

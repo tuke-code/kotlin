@@ -4,6 +4,7 @@ KaJavaFieldSymbol:
       psi: null
   ]
   callableId: /JavaClass.field
+  contextParameters: []
   contextReceivers: []
   isActual: false
   isCompanion: false

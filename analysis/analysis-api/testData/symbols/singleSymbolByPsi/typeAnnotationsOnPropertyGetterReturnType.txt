@@ -1,6 +1,7 @@
 KaPropertyGetterSymbol:
   annotations: []
   callableId: null
+  contextParameters: []
   contextReceivers: []
   hasStableParameterNames: true
   isActual: false

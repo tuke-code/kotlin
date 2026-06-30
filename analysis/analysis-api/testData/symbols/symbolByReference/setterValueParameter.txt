@@ -1,6 +1,7 @@
 KaValueParameterSymbol:
   annotations: []
   callableId: null
+  contextParameters: []
   contextReceivers: []
   generatedPrimaryConstructorProperty: null
   hasDeclaredDefaultValue: false

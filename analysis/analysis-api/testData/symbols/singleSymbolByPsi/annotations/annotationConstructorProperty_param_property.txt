@@ -8,6 +8,7 @@ KaValueParameterSymbol:
       psi: KtAnnotationEntry
   ]
   callableId: null
+  contextParameters: []
   contextReceivers: []
   generatedPrimaryConstructorProperty: KaKotlinPropertySymbol:
     annotations: [
@@ -23,6 +24,7 @@ KaValueParameterSymbol:
     backingFieldSymbol: KaBackingFieldSymbol:
       annotations: []
       callableId: null
+      contextParameters: []
       contextReceivers: []
       isActual: false
       isCompanion: false
@@ -58,6 +60,7 @@ KaValueParameterSymbol:
     getter: KaPropertyGetterSymbol:
       annotations: []
       callableId: null
+      contextParameters: []
       contextReceivers: []
       hasStableParameterNames: true
       isActual: false
