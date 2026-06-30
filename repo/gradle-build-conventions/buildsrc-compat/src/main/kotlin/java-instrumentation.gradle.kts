@@ -15,10 +15,10 @@ logger.info("Setting java.awt.headless=true, old value was $headlessOldValue")
  *  Configures instrumentation for all JavaCompile tasks in project
  */
 fun Project.configureJavaInstrumentation() {
-    if (plugins.hasPlugin("org.gradle.java")) {
+    plugins.withId("org.gradle.java") {
         val javaInstrumentator by configurations.creating
         dependencies {
-            javaInstrumentator("com.jetbrains.intellij.java:java-compiler-ant-tasks:${rootProject.extra["versions.intellijSdk"]}")
+            javaInstrumentator("com.jetbrains.intellij.java:java-compiler-ant-tasks:${project.kotlinBuildProperties.versionsProperty("intellijSdk").get()}")
         }
         for (sourceSet in listOf(mainSourceSet, testSourceSet)) {
             tasks.named(sourceSet.compileJavaTaskName, InstrumentJava(javaInstrumentator))

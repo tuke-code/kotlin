@@ -35,6 +35,10 @@ class KotlinBuildProperties internal constructor(
         it.property(name).map { it.trim().toIntOrNull() }
     }
 
+    fun versionsProperty(name: String): Provider<String> = propertiesBuildService.flatMap {
+        it.versionsProperty("versions.$name")
+    }
+
     val isInIdeaSync: Provider<Boolean> = propertiesBuildService.flatMap {
         it.systemProperty("idea.sync.active").toBoolean()
     }

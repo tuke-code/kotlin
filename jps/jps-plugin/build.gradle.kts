@@ -8,6 +8,7 @@ plugins {
     id("com.autonomousapps.dependency-analysis")
     kotlin("jvm")
     id("project-tests-convention")
+    id("kotlin-build-helpers")
 }
 
 val compilerModules: Array<String> by rootProject.extra
@@ -79,7 +80,7 @@ dependencies {
         testRuntimeOnly(project(it))
     }
 
-    testImplementation("org.projectlombok:lombok:${rootProject.extra["versions.lombok"]}")
+    testImplementation("org.projectlombok:lombok:${project.kotlinBuildProperties.versionsProperty("lombok").get()}")
     testImplementation(libs.kotlinx.serialization.json)
 }
 

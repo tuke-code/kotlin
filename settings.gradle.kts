@@ -57,19 +57,16 @@ gradle.lifecycle.afterProject {
     }
 }
 
-val versionPropertiesFile = File(rootProject.projectDir, "gradle/versions.properties")
-val versionProperties = Properties()
-versionPropertiesFile.inputStream().use {
-    versionProperties.load(it)
-}
 dependencyResolutionManagement {
+    val buildProperties = getKotlinBuildPropertiesForSettings(settings)
+
     components {
         withModule("com.google.code.gson:gson") {
             allVariants {
                 withDependencies {
                     add("com.google.code.gson:gson") {
                         version {
-                            require(versionProperties["versions.gson"] as String)
+                            require(buildProperties.versionsProperty("gson").get())
                         }
                     }
                 }
@@ -81,7 +78,7 @@ dependencyResolutionManagement {
                 withDependencies {
                     add("org.apache.commons:commons-compress") {
                         version {
-                            require(versionProperties["versions.commons-compress"] as String)
+                            require(buildProperties.versionsProperty("commons-compress").get())
                         }
                     }
                 }
@@ -93,7 +90,7 @@ dependencyResolutionManagement {
                 withDependencies {
                     add("commons-io:commons-io") {
                         version {
-                            require(versionProperties["versions.commons-io"] as String)
+                            require(buildProperties.versionsProperty("commons-io").get())
                         }
                     }
                 }
@@ -107,7 +104,7 @@ dependencyResolutionManagement {
         }
     }
     repositories {
-        intellijRepository(versionProperties["versions.intellijSdk"].toString())
+        intellijRepository(buildProperties.versionsProperty("intellijSdk").get())
         intellijDependencies()
         kotlinDependencies()
         teamcityRepository()

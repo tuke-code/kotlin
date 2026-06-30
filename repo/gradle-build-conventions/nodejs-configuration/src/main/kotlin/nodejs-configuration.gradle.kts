@@ -14,7 +14,7 @@ val nodeJsKotlinBuild = extensions.create<NodeJsExtension>(
     project,
     nodeJs,
     "javascript.engine.path.NodeJs",
-    "versions.nodejs.lts",
+    "nodejs.lts",
 )
 
 val wasmNodeJsKotlinBuild = extensions.create<NodeJsExtension>(
@@ -22,7 +22,7 @@ val wasmNodeJsKotlinBuild = extensions.create<NodeJsExtension>(
     project,
     wasmNodeJs,
     "wasm.javascript.engine.path.NodeJs",
-    "versions.nodejs",
+    "nodejs",
 )
 
 with(nodeJsKotlinBuild) {

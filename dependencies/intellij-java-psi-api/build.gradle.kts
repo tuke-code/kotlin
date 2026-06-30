@@ -7,7 +7,7 @@ plugins {
 
 // See ":dependencies:intellij-core" for the complete list of modules included in "intellij-core"
 
-val intellijVersion = rootProject.extra["versions.intellijSdk"]
+val intellijVersion = kotlinBuildProperties.versionsProperty("intellijSdk").get()
 
 dependencies {
     api("com.jetbrains.intellij.platform:util-base:$intellijVersion") { isTransitive = false }

@@ -7,13 +7,11 @@ import org.gradle.api.provider.ValueSourceParameters
 import java.io.File
 import java.util.*
 
-internal fun ProviderFactory.localProperties(
-    rootDir: File
+internal fun ProviderFactory.propertiesFromFile(
+    propertiesFile: File
 ): Provider<Map<String, String>> =
     of(CustomPropertiesFileValueSource::class.java) {
-        it.parameters.propertiesFile.set(
-            rootDir.resolve("local.properties")
-        )
+        it.parameters.propertiesFile.set(propertiesFile)
     }
 
 internal abstract class CustomPropertiesFileValueSource : ValueSource<Map<String, String>, CustomPropertiesFileValueSource.Parameters>,

@@ -215,7 +215,7 @@ val dist = tasks.register("dist") {
 
 tasks.register("createIdeaHomeForTests") {
     val ideaBuildNumberFileForTests = ideaBuildNumberFileForTests()
-    val intellijSdkVersion = rootProject.extra["versions.intellijSdk"]
+    val intellijSdkVersion = kotlinBuildProperties.versionsProperty("intellijSdk").get()
     outputs.dir(ideaHomePathForTests())
     doFirst {
         with(ideaBuildNumberFileForTests.get().asFile) {
