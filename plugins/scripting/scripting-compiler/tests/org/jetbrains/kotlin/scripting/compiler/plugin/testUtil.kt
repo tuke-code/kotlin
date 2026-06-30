@@ -11,12 +11,12 @@ import org.jetbrains.kotlin.cli.common.CLICompiler
 import org.jetbrains.kotlin.cli.common.arguments.CommonCompilerArguments
 import org.jetbrains.kotlin.cli.common.arguments.K2JVMCompilerArguments
 import org.jetbrains.kotlin.cli.common.arguments.cliArgument
+import org.jetbrains.kotlin.cli.common.disposeRootInWriteAction
 import org.jetbrains.kotlin.cli.jvm.K2JVMCompiler
+import org.jetbrains.kotlin.codegen.forTestCompile.ForTestCompileRuntime
 import org.jetbrains.kotlin.config.CompilerConfiguration
 import org.jetbrains.kotlin.scripting.compiler.plugin.impl.SCRIPT_BASE_COMPILER_ARGUMENTS_PROPERTY
 import org.jetbrains.kotlin.scripting.compiler.plugin.impl.updateWithCompilerOptions
-import org.jetbrains.kotlin.cli.common.disposeRootInWriteAction
-import org.jetbrains.kotlin.codegen.forTestCompile.ForTestCompileRuntime
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.InputStream
@@ -175,12 +175,14 @@ fun runWithK2JVMCompiler(
     classpath: List<File> = emptyList(),
     skipScriptArgument: Boolean = false,
     disableScriptCompilationCache: Boolean = true,
+    additionalArgs: List<String> = emptyList()
 ) {
     val args = arrayListOf(K2JVMCompilerArguments::kotlinHome.cliArgument, ForTestCompileRuntime.distKotlincForTests().path).apply {
         if (classpath.isNotEmpty()) {
             add(K2JVMCompilerArguments::classpath.cliArgument)
             add(classpath.joinToString(File.pathSeparator))
         }
+        addAll(additionalArgs)
         if (!skipScriptArgument) {
             add(K2JVMCompilerArguments::script.cliArgument)
         } else {

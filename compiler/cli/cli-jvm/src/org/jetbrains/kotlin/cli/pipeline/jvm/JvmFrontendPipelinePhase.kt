@@ -632,7 +632,10 @@ object JvmFrontendPipelinePhase : PipelinePhase<ConfigurationPipelineArtifact, J
             project,
             listOfNotNull(projectEnvironment.jarFileSystem, projectEnvironment.environment.jrtFileSystem, localFileSystem),
             { JvmPackagePartProvider(configuration.languageVersionSettings, it) },
-            initialRoots, configuration
+            initialRoots, configuration,
+            projectEnvironment,
+            classpathRootsResolver,
+            rootsIndex
         ).also {
             javaFileManager.initialize(
                 rootsIndex,
@@ -648,19 +651,44 @@ object JvmFrontendPipelinePhase : PipelinePhase<ConfigurationPipelineArtifact, J
         project: Project,
         knownFileSystems: List<VirtualFileSystem>,
         getPackagePartProviderFn: (GlobalSearchScope) -> PackagePartProvider,
-        val initialRoots: List<JavaRoot>,
-        val configuration: CompilerConfiguration
+        initialRoots: List<JavaRoot>,
+        val configuration: CompilerConfiguration,
+        val projectEnvironment: KotlinCoreEnvironment.ProjectEnvironment,
+        val classpathRootsResolver: ClasspathRootsResolver,
+        val rootsIndex: JvmDependenciesDynamicCompoundIndex
     ) : VfsBasedProjectEnvironment(project, knownFileSystems, getPackagePartProviderFn) {
+
+        private val currentRoots = initialRoots.toMutableList()
 
         val packagePartProviders = mutableListOf<JvmPackagePartProvider>()
 
         override fun getPackagePartProvider(fileSearchScope: AbstractProjectFileSearchScope): PackagePartProvider {
             return super.getPackagePartProvider(fileSearchScope).also {
                 (it as? JvmPackagePartProvider)?.run {
-                    addRoots(initialRoots, configuration)
+                    addRoots(currentRoots, configuration)
                     packagePartProviders += this
                 }
             }
+        }
+
+        override fun updateClasspath(classpath: List<File>) {
+            val contentRoots = classpath.map { JvmClasspathRoot(it) }
+            val newRoots = classpathRootsResolver.convertClasspathRoots(contentRoots).roots - currentRoots
+            val unindexedRoots = rootsIndex.getUnindexedRoots(newRoots)
+            if (unindexedRoots.isEmpty()) return
+
+            val newIndex = JvmDependenciesIndexImpl(unindexedRoots)
+            rootsIndex.addIndex(newIndex)
+            newIndex.indexedRoots.forEach {
+                projectEnvironment.addSourcesToClasspath(it.file)
+            }
+
+            currentRoots.addAll(newRoots)
+            for (packagePartProvider in packagePartProviders) {
+                packagePartProvider.addRoots(newRoots, configuration)
+            }
+
+            configuration.addAll(CLIConfigurationKeys.CONTENT_ROOTS, contentRoots - configuration.getList(CLIConfigurationKeys.CONTENT_ROOTS))
         }
     }
 

@@ -35,6 +35,22 @@ class MainKtsIT {
     }
 
     @Test
+    fun testCompileResolveJunit() {
+        withTempDir { tmpDir ->
+            runWithK2JVMCompiler(
+                "$TEST_DATA_ROOT/hello-resolve-junit.main.kts",
+                classpath = listOf(
+                    ForTestCompileRuntime.mainKtsJar()
+                ),
+                expectedExitCode = 0,
+                skipScriptArgument = true,
+                disableScriptCompilationCache = true,
+                additionalArgs = listOf("-d", tmpDir.path)
+            )
+        }
+    }
+
+    @Test
     @Ignore // Fails on TC most likely due to repo proxying
     fun testKotlinxHtml() {
         runWithK2JVMCompilerAndMainKts(
