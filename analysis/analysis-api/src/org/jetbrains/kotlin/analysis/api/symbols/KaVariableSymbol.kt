@@ -107,7 +107,6 @@ public abstract class KaBackingFieldSymbol : KaVariableSymbol() {
     @KaExperimentalApi
     final override val contextReceivers: List<KaContextReceiver> get() = withValidityAssertion { emptyList() }
 
-    @KaExperimentalApi
     final override val contextParameters: List<KaContextParameterSymbol> get() = withValidityAssertion { emptyList() }
 
     abstract override fun createPointer(): KaSymbolPointer<KaBackingFieldSymbol>
@@ -171,7 +170,6 @@ public abstract class KaEnumEntrySymbol : KaVariableSymbol() {
     final override val isExtension: Boolean get() = withValidityAssertion { false }
     final override val receiverParameter: KaReceiverParameterSymbol? get() = withValidityAssertion { null }
 
-    @KaExperimentalApi
     final override val contextParameters: List<KaContextParameterSymbol> get() = withValidityAssertion { emptyList() }
 
     @KaExperimentalApi
@@ -245,7 +243,6 @@ public abstract class KaJavaFieldSymbol : KaVariableSymbol() {
     @KaExperimentalApi
     final override val contextReceivers: List<KaContextReceiver> get() = withValidityAssertion { emptyList() }
 
-    @KaExperimentalApi
     final override val contextParameters: List<KaContextParameterSymbol> get() = withValidityAssertion { emptyList() }
 
     abstract override fun createPointer(): KaSymbolPointer<KaJavaFieldSymbol>
@@ -504,7 +501,6 @@ public abstract class KaSyntheticJavaPropertySymbol : KaPropertySymbol() {
     final override val isFromPrimaryConstructor: Boolean get() = withValidityAssertion { false }
     override val origin: KaSymbolOrigin get() = withValidityAssertion { KaSymbolOrigin.JAVA_SYNTHETIC_PROPERTY }
 
-    @KaExperimentalApi
     final override val contextParameters: List<KaContextParameterSymbol> get() = withValidityAssertion { emptyList() }
 
     abstract override val getter: KaPropertyGetterSymbol
@@ -524,7 +520,6 @@ public abstract class KaLocalVariableSymbol : KaVariableSymbol() {
     @KaExperimentalApi
     final override val contextReceivers: List<KaContextReceiver> get() = withValidityAssertion { emptyList() }
 
-    @KaExperimentalApi
     final override val contextParameters: List<KaContextParameterSymbol> get() = withValidityAssertion { emptyList() }
 
     final override val location: KaSymbolLocation get() = withValidityAssertion { KaSymbolLocation.LOCAL }
@@ -566,7 +561,6 @@ public sealed class KaParameterSymbol : KaVariableSymbol() {
     @KaExperimentalApi
     final override val contextReceivers: List<KaContextReceiver> get() = withValidityAssertion { emptyList() }
 
-    @KaExperimentalApi
     final override val contextParameters: List<KaContextParameterSymbol> get() = withValidityAssertion { emptyList() }
 
     final override val isVal: Boolean get() = withValidityAssertion { true }

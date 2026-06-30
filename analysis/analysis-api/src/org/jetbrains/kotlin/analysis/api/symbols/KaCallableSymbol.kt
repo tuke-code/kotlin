@@ -48,7 +48,6 @@ public sealed class KaCallableSymbol : KaDeclarationSymbol, KaContextReceiversOw
     /**
      * A list of [KaContextParameterSymbol]s directly declared in the symbol.
      */
-    @KaExperimentalApi
     public abstract val contextParameters: List<KaContextParameterSymbol>
 
     /**

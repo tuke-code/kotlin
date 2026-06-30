@@ -90,7 +90,6 @@ public abstract class KaSamConstructorSymbol : KaFunctionSymbol(), KaNamedSymbol
     final override val location: KaSymbolLocation get() = withValidityAssertion { KaSymbolLocation.TOP_LEVEL }
     final override val receiverParameter: KaReceiverParameterSymbol? get() = withValidityAssertion { null }
 
-    @KaExperimentalApi
     final override val contextParameters: List<KaContextParameterSymbol> get() = withValidityAssertion { emptyList() }
 
     final override val isExternal: Boolean get() = withValidityAssertion { false }
@@ -190,7 +189,6 @@ public abstract class KaConstructorSymbol : KaFunctionSymbol(), KaTypeParameterO
     final override val isExtension: Boolean get() = withValidityAssertion { false }
     final override val receiverParameter: KaReceiverParameterSymbol? get() = withValidityAssertion { null }
 
-    @KaExperimentalApi
     final override val contextParameters: List<KaContextParameterSymbol> get() = withValidityAssertion { emptyList() }
 
     @KaExperimentalApi

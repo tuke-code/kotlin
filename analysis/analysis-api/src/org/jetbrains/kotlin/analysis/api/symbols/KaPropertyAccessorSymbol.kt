@@ -32,7 +32,6 @@ public sealed class KaPropertyAccessorSymbol : KaFunctionSymbol() {
     @KaExperimentalApi
     final override val contextReceivers: List<KaContextReceiver> get() = withValidityAssertion { emptyList() }
 
-    @KaExperimentalApi
     final override val contextParameters: List<KaContextParameterSymbol> get() = withValidityAssertion { emptyList() }
 
     /**
