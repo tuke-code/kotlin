@@ -598,7 +598,6 @@ public sealed class KaParameterSymbol : KaVariableSymbol() {
  *
  * @see KaCallableSymbol.contextParameters
  */
-@KaExperimentalApi
 @SubclassOptInRequired(KaImplementationDetail::class)
 public abstract class KaContextParameterSymbol : KaParameterSymbol() {
     abstract override fun createPointer(): KaSymbolPointer<KaContextParameterSymbol>

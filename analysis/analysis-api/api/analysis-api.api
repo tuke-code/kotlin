@@ -1039,6 +1039,11 @@ public abstract class org/jetbrains/kotlin/analysis/api/symbols/KaConstructorSym
 	public abstract fun isPrimary ()Z
 }
 
+public abstract class org/jetbrains/kotlin/analysis/api/symbols/KaContextParameterSymbol : org/jetbrains/kotlin/analysis/api/symbols/KaParameterSymbol {
+	public fun <init> ()V
+	public abstract fun createPointer ()Lorg/jetbrains/kotlin/analysis/api/symbols/pointers/KaSymbolPointer;
+}
+
 public abstract interface class org/jetbrains/kotlin/analysis/api/symbols/KaDeclarationSymbol : org/jetbrains/kotlin/analysis/api/symbols/KaSymbol, org/jetbrains/kotlin/analysis/api/symbols/markers/KaAnnotatedSymbol {
 	public abstract fun createPointer ()Lorg/jetbrains/kotlin/analysis/api/symbols/pointers/KaSymbolPointer;
 	public abstract fun getModality ()Lorg/jetbrains/kotlin/analysis/api/symbols/KaSymbolModality;
