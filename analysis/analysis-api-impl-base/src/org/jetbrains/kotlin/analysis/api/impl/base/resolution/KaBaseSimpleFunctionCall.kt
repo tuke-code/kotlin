@@ -57,7 +57,6 @@ class KaBaseSimpleFunctionCall(
     override val valueArgumentMapping: Map<KtExpression, KaVariableSignature<KaValueParameterSymbol>>
         get() = withValidityAssertion { backingArgumentMapping.toValueArgumentMapping() }
 
-    @KaExperimentalApi
     override val contextArgumentMapping: Map<KtExpression, KaVariableSignature<KaContextParameterSymbol>>
         get() = withValidityAssertion { backingArgumentMapping.toContextArgumentMapping() }
 

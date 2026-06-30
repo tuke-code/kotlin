@@ -42,11 +42,12 @@ class KaBaseAnnotationCall(
     override val contextArguments: List<KaReceiverValue>
         get() = withValidityAssertion { backingPartiallyAppliedSymbol.contextArguments }
 
-    override val typeArgumentsMapping: Map<KaTypeParameterSymbol, KaType> get() = withValidityAssertion { emptyMap() }
+    override val typeArgumentsMapping: Map<KaTypeParameterSymbol, KaType>
+        get() = withValidityAssertion { emptyMap() }
+
     override val valueArgumentMapping: Map<KtExpression, KaVariableSignature<KaValueParameterSymbol>>
         get() = withValidityAssertion { backingArgumentMapping.toValueArgumentMapping() }
 
-    @KaExperimentalApi
     override val contextArgumentMapping: Map<KtExpression, KaVariableSignature<KaContextParameterSymbol>>
         get() = withValidityAssertion { backingArgumentMapping.toContextArgumentMapping() }
 
