@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2025 JetBrains s.r.o. and Kotlin Programming Language contributors.
+ * Copyright 2010-2026 JetBrains s.r.o. and Kotlin Programming Language contributors.
  * Use of this source code is governed by the Apache 2.0 license that can be found in the license/LICENSE.txt file.
  */
 
@@ -10,7 +10,7 @@ import org.jetbrains.kotlin.KtFakeSourceElementKind
 import org.jetbrains.kotlin.analysis.api.annotations.KaAnnotationList
 import org.jetbrains.kotlin.analysis.api.fir.KaFirSession
 import org.jetbrains.kotlin.analysis.api.fir.entryName
-import org.jetbrains.kotlin.analysis.api.fir.getAllowedPsi
+import org.jetbrains.kotlin.analysis.api.fir.findPsi
 import org.jetbrains.kotlin.analysis.api.fir.parameterName
 import org.jetbrains.kotlin.analysis.api.fir.symbols.pointers.KaFirScriptParameterSymbolPointer
 import org.jetbrains.kotlin.analysis.api.fir.symbols.pointers.createOwnerPointer
@@ -50,7 +50,7 @@ internal sealed class KaFirLocalOrErrorVariableSymbol(
     )
 
     override val psi: PsiElement?
-        get() = withValidityAssertion { backingPsi ?: firSymbol.fir.getAllowedPsi() }
+        get() = withValidityAssertion { backingPsi ?: findPsi() }
 
     override val annotations: KaAnnotationList
         get() = withValidityAssertion { psiOrSymbolAnnotationList() }
