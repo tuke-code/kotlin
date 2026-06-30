@@ -1,9 +1,0 @@
-KaFileSymbol:
-  annotations: []
-  location: TOP_LEVEL
-  origin: SOURCE
-  psi: null
-  getContainingFileSymbol: null
-  getContainingModule: KaSourceModule "Sources of main"
-  deprecation: null
-  importableFqName: null

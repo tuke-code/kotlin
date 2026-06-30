@@ -1,12 +1,11 @@
 /*
- * Copyright 2010-2024 JetBrains s.r.o. and Kotlin Programming Language contributors.
+ * Copyright 2010-2026 JetBrains s.r.o. and Kotlin Programming Language contributors.
  * Use of this source code is governed by the Apache 2.0 license that can be found in the license/LICENSE.txt file.
  */
 
 package org.jetbrains.kotlin.analysis.api.fir.symbols
 
 import com.intellij.psi.PsiClass
-import com.intellij.psi.PsiElement
 import org.jetbrains.kotlin.analysis.api.annotations.KaAnnotationList
 import org.jetbrains.kotlin.analysis.api.base.KaContextReceiver
 import org.jetbrains.kotlin.analysis.api.fir.KaFirSession
@@ -47,8 +46,6 @@ internal class KaFirPsiJavaClassSymbol(
     private val javaClass: JavaClass = JavaClassImpl(
         JavaElementSourceFactory.getInstance(analysisSession.project).createPsiSource(backingPsi)
     )
-
-    override val psi: PsiElement get() = withValidityAssertion { backingPsi }
 
     override val name: Name get() = withValidityAssertion { javaClass.name }
 

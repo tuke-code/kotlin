@@ -5,10 +5,8 @@
 
 package org.jetbrains.kotlin.analysis.api.fir.symbols
 
-import com.intellij.psi.PsiElement
 import org.jetbrains.kotlin.analysis.api.annotations.KaAnnotationList
 import org.jetbrains.kotlin.analysis.api.fir.KaFirSession
-import org.jetbrains.kotlin.analysis.api.fir.findPsi
 import org.jetbrains.kotlin.analysis.api.lifetime.withValidityAssertion
 import org.jetbrains.kotlin.analysis.api.symbols.KaClassInitializerSymbol
 import org.jetbrains.kotlin.analysis.api.symbols.pointers.KaSymbolPointer
@@ -25,8 +23,6 @@ internal class KaFirClassInitializerSymbol private constructor(
         lazyFirSymbol = lazyFirSymbol(declaration, session),
         analysisSession = session,
     )
-
-    override val psi: PsiElement? get() = withValidityAssertion { backingPsi ?: findPsi() }
 
     override fun createPointer(): KaSymbolPointer<KaClassInitializerSymbol> = withValidityAssertion {
         psiBasedSymbolPointerOfTypeIfSource<KaClassInitializerSymbol>()?.let { return it }

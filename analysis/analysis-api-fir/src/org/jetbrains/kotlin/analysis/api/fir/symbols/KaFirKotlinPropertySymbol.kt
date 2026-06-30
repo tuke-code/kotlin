@@ -5,7 +5,6 @@
 
 package org.jetbrains.kotlin.analysis.api.fir.symbols
 
-import com.intellij.psi.PsiElement
 import org.jetbrains.kotlin.analysis.api.KaExperimentalApi
 import org.jetbrains.kotlin.analysis.api.KaInitializerValue
 import org.jetbrains.kotlin.analysis.api.KaNonConstantInitializerValue
@@ -51,9 +50,6 @@ internal sealed class KaFirKotlinPropertySymbol<P : KtCallableDeclaration>(
     final override val analysisSession: KaFirSession,
     final override val lazyFirSymbol: Lazy<FirPropertySymbol>,
 ) : KaKotlinPropertySymbol(), KaFirKtBasedSymbol<P, FirPropertySymbol> {
-    override val psi: PsiElement?
-        get() = withValidityAssertion { backingPsi ?: findPsi() }
-
     override val name: Name
         get() = withValidityAssertion { backingPsi?.nameAsSafeName ?: firSymbol.name }
 

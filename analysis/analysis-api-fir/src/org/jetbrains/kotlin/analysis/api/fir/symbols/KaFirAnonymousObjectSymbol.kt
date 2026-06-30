@@ -5,10 +5,8 @@
 
 package org.jetbrains.kotlin.analysis.api.fir.symbols
 
-import com.intellij.psi.PsiElement
 import org.jetbrains.kotlin.analysis.api.annotations.KaAnnotationList
 import org.jetbrains.kotlin.analysis.api.fir.KaFirSession
-import org.jetbrains.kotlin.analysis.api.fir.findPsi
 import org.jetbrains.kotlin.analysis.api.impl.base.symbols.pointers.KaCannotCreateSymbolPointerForLocalLibraryDeclarationException
 import org.jetbrains.kotlin.analysis.api.lifetime.withValidityAssertion
 import org.jetbrains.kotlin.analysis.api.symbols.KaAnonymousObjectSymbol
@@ -38,8 +36,6 @@ internal open class KaFirAnonymousObjectSymbol private constructor(
         lazyFirSymbol = lazyOf(symbol),
         analysisSession = session,
     )
-
-    override val psi: PsiElement? get() = withValidityAssertion { backingPsi ?: findPsi() }
 
     override val annotations: KaAnnotationList
         get() = withValidityAssertion {
