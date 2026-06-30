@@ -57,7 +57,6 @@ public sealed interface KaCallableSignature<out S : KaCallableSymbol> : KaLifeti
     /**
      * The use-site-substituted [context parameters][KaCallableSymbol.contextParameters].
      */
-    @KaExperimentalApi
     public val contextParameters: List<KaVariableSignature<KaContextParameterSymbol>> get() = withValidityAssertion { emptyList() }
 
     /**

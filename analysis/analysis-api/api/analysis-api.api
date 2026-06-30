@@ -897,6 +897,7 @@ public final class org/jetbrains/kotlin/analysis/api/session/UseSiteKt {
 public abstract interface class org/jetbrains/kotlin/analysis/api/signatures/KaCallableSignature : org/jetbrains/kotlin/analysis/api/lifetime/KaLifetimeOwner {
 	public abstract fun equals (Ljava/lang/Object;)Z
 	public fun getCallableId ()Lorg/jetbrains/kotlin/name/CallableId;
+	public fun getContextParameters ()Ljava/util/List;
 	public abstract fun getReceiverType ()Lorg/jetbrains/kotlin/analysis/api/types/KaType;
 	public abstract fun getReturnType ()Lorg/jetbrains/kotlin/analysis/api/types/KaType;
 	public abstract fun getSymbol ()Lorg/jetbrains/kotlin/analysis/api/symbols/KaCallableSymbol;
