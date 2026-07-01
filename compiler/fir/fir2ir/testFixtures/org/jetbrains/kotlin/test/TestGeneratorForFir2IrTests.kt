@@ -136,6 +136,10 @@ fun main(args: Array<String>) {
             testClass<AbstractWriteSignatureTest> {
                 model("writeSignature")
             }
+
+            testClass<AbstractWriteFlagsTest> {
+                model("writeFlags")
+            }
         }
 
         testGroup(testRoot, testDataRoot = "compiler/testData") {

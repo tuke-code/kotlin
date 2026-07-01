@@ -1,31 +1,23 @@
 /*
- * Copyright 2010-2015 JetBrains s.r.o.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Copyright 2010-2026 JetBrains s.r.o. and Kotlin Programming Language contributors.
+ * Use of this source code is governed by the Apache 2.0 license that can be found in the license/LICENSE.txt file.
  */
-package org.jetbrains.kotlin.codegen.flags
 
-import com.intellij.openapi.util.io.FileUtil
+package org.jetbrains.kotlin.test.backend.handlers
+
 import junit.framework.TestCase
-import org.jetbrains.kotlin.codegen.CodegenTestCase
-import org.jetbrains.kotlin.test.FirParser
+import junit.framework.TestCase.assertFalse
+import junit.framework.TestCase.assertNotNull
 import org.jetbrains.kotlin.test.InTextDirectivesUtils
+import org.jetbrains.kotlin.test.model.BinaryArtifacts
+import org.jetbrains.kotlin.test.model.JvmClassFileArtifact
+import org.jetbrains.kotlin.test.model.TestModule
+import org.jetbrains.kotlin.test.services.TestServices
+import org.jetbrains.kotlin.test.services.moduleStructure
 import org.jetbrains.kotlin.utils.rethrow
 import org.jetbrains.org.objectweb.asm.*
-import java.io.File
 import java.lang.reflect.Modifier
 import java.util.*
-
 /*
  * Test correctness of written flags in class file
  *
@@ -47,23 +39,16 @@ import java.util.*
  * TESTED_OBJECTS: Test, function, (ILjava/lang/String;)[Ljava/lang/Object;
  * FLAGS: ACC_PUBLIC, ACC_SYNTHETIC
  */
-abstract class AbstractWriteFlagsTest : CodegenTestCase() {
-    override val useFir: Boolean
-        get() = true
-
-    override val firParser: FirParser
-        get() = FirParser.LightTree
-
-    @Throws(Exception::class)
-    override fun doMultiFileTest(wholeFile: File, files: List<TestFile>) {
-        compile(files, true)
-
-        val fileText = FileUtil.loadFile(wholeFile, true)
-
+class JvmWriteFlagsHandler(testServices: TestServices) : JvmBinaryArtifactHandler(testServices) {
+    override fun processModule(module: TestModule, info: BinaryArtifacts.Jvm) {
+        require(info is JvmClassFileArtifact)
+        val classFileFactory = info.classFileFactory
+        val testDataFile = testServices.moduleStructure.originalTestDataFiles.first()
+        val fileText = testDataFile.readText()
         val testedObjects: MutableList<TestedObject> = parseExpectedTestedObject(fileText)
         for (testedObject in testedObjects) {
             var className: String? = null
-            for (outputFile in classFileFactory!!.asList()) {
+            for (outputFile in classFileFactory.asList()) {
                 val filePath = outputFile.relativePath
                 if (testedObject.isFullContainingClassName && filePath == testedObject.containingClass + ".class" ||
                     !testedObject.isFullContainingClassName && filePath.startsWith(testedObject.containingClass)
@@ -74,7 +59,7 @@ abstract class AbstractWriteFlagsTest : CodegenTestCase() {
 
             assertNotNull("Couldn't find a class file with name " + testedObject.containingClass, className)
 
-            val outputFile = classFileFactory!!.get(className!!)
+            val outputFile = classFileFactory.get(className!!)
             assertNotNull(outputFile)
 
             val cr = ClassReader(outputFile!!.asByteArray())
@@ -102,6 +87,8 @@ abstract class AbstractWriteFlagsTest : CodegenTestCase() {
         }
     }
 
+    override fun processAfterAllModules(someAssertionWasFailed: Boolean) {}
+
     private class TestedObject {
         var name: String? = null
         var containingClass: String = ""
@@ -116,7 +103,7 @@ abstract class AbstractWriteFlagsTest : CodegenTestCase() {
         }
     }
 
-    protected abstract class TestClassVisitor : ClassVisitor(Opcodes.API_VERSION) {
+    private abstract class TestClassVisitor : ClassVisitor(Opcodes.API_VERSION) {
         var isExists: Boolean = false
             protected set
 

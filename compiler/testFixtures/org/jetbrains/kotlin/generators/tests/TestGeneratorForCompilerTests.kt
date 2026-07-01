@@ -5,12 +5,9 @@
 
 package org.jetbrains.kotlin.generators.tests
 
-import org.jetbrains.kotlin.codegen.flags.AbstractWriteFlagsTest
-import org.jetbrains.kotlin.generators.dsl.junit4.generateTestGroupSuiteWithJUnit4
 import org.jetbrains.kotlin.generators.dsl.junit5.generateTestGroupSuiteWithJUnit5
 import org.jetbrains.kotlin.generators.util.TestGeneratorUtil
 import org.jetbrains.kotlin.jvm.compiler.AbstractCompileJavaAgainstKotlinTest
-import org.jetbrains.kotlin.test.TargetBackend
 
 fun main(args: Array<String>) {
     val mainClassName = TestGeneratorUtil.getMainClassName()
@@ -27,14 +24,6 @@ fun main(args: Array<String>) {
                     testClassName = "WithJavac",
                     testMethod = "doTestWithJavac",
                 )
-            }
-        }
-    }
-
-    generateTestGroupSuiteWithJUnit4(args, mainClassName) {
-        testGroup("compiler/tests-gen", "compiler/testData") {
-            testClass<AbstractWriteFlagsTest> {
-                model("writeFlags", targetBackend = TargetBackend.JVM_IR)
             }
         }
     }
