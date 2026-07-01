@@ -132,6 +132,10 @@ fun main(args: Array<String>) {
             testClass<AbstractFirScriptCodegenTest> {
                 model("codegen/script", pattern = "^(.*)\\.kts?$", excludedPattern = excludedCustomTestdataPattern)
             }
+
+            testClass<AbstractWriteSignatureTest> {
+                model("writeSignature")
+            }
         }
 
         testGroup(testRoot, testDataRoot = "compiler/testData") {

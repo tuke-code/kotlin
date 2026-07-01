@@ -1,41 +1,31 @@
 /*
- * Copyright 2000-2018 JetBrains s.r.o. and Kotlin Programming Language contributors.
+ * Copyright 2010-2026 JetBrains s.r.o. and Kotlin Programming Language contributors.
  * Use of this source code is governed by the Apache 2.0 license that can be found in the license/LICENSE.txt file.
  */
 
-package org.jetbrains.kotlin.jvm.compiler
+package org.jetbrains.kotlin.test.backend.handlers
 
-import org.jetbrains.kotlin.codegen.CodegenTestCase
-import org.jetbrains.kotlin.test.FirParser
-import org.jetbrains.kotlin.test.InTextDirectivesUtils
+import org.jetbrains.kotlin.codegen.ClassFileFactory
+import org.jetbrains.kotlin.test.model.BinaryArtifacts
+import org.jetbrains.kotlin.test.model.JvmClassFileArtifact
+import org.jetbrains.kotlin.test.model.TestModule
+import org.jetbrains.kotlin.test.services.TestServices
+import org.jetbrains.kotlin.test.services.moduleStructure
 import org.jetbrains.kotlin.utils.sure
 import org.jetbrains.org.objectweb.asm.*
-import org.junit.Assert
 import java.io.File
-import java.util.*
 import java.util.regex.MatchResult
 
-abstract class AbstractWriteSignatureTest : CodegenTestCase() {
-    override val useFir: Boolean
-        get() = true
-
-    override val firParser: FirParser
-        get() = FirParser.LightTree
-
-    override fun doMultiFileTest(wholeFile: File, files: List<TestFile>) {
-        val isIgnored = InTextDirectivesUtils.isIgnoredTarget(backend, wholeFile)
-        compile(files)
-        try {
-            parseExpectations(wholeFile).check()
-        } catch (e: Throwable) {
-            if (!isIgnored) {
-                println(classFileFactory?.createText())
-            }
-            throw e
-        }
+class JvmWriteSignatureHandler(testServices: TestServices) : JvmBinaryArtifactHandler(testServices) {
+    override fun processModule(module: TestModule, info: BinaryArtifacts.Jvm) {
+        require(info is JvmClassFileArtifact)
+        val testDataFile = testServices.moduleStructure.originalTestDataFiles.first()
+        parseExpectations(testDataFile, info.classFileFactory).check()
     }
 
-    private class SignatureExpectation(
+    override fun processAfterAllModules(someAssertionWasFailed: Boolean) {}
+
+    private inner class SignatureExpectation(
         val header: String,
         val name: String,
         val expectedJvmSignature: String?,
@@ -46,20 +36,19 @@ abstract class AbstractWriteSignatureTest : CodegenTestCase() {
 
         fun accept(name: String, actualJvmSignature: String, actualGenericSignature: String) {
             if (this.name == name) {
-                Assert.assertFalse(jvmDescriptorToFormattedSignature.containsKey(actualJvmSignature))
+                assertions.assertFalse(jvmDescriptorToFormattedSignature.containsKey(actualJvmSignature))
 
                 jvmDescriptorToFormattedSignature[actualJvmSignature] =
-                        formatSignature(header, expectedJvmSignature?.let { actualJvmSignature }, actualGenericSignature)
+                    formatSignature(header, expectedJvmSignature?.let { actualJvmSignature }, actualGenericSignature)
             }
         }
 
         fun check() {
             val formattedActualSignature =
                 if (expectedJvmSignature == null) {
-                    Assert.assertTrue(
-                        "Expected single declaration, but ${jvmDescriptorToFormattedSignature.keys} found",
-                        jvmDescriptorToFormattedSignature.size == 1
-                    )
+                    assertions.assertTrue(jvmDescriptorToFormattedSignature.size == 1) {
+                        "Expected single declaration, but ${jvmDescriptorToFormattedSignature.keys} found"
+                    }
 
                     jvmDescriptorToFormattedSignature.values.single()
                 } else {
@@ -68,24 +57,24 @@ abstract class AbstractWriteSignatureTest : CodegenTestCase() {
                     }
                 }
 
-            Assert.assertEquals(expectedFormattedSignature, formattedActualSignature)
+            assertions.assertEquals(expectedFormattedSignature, formattedActualSignature)
         }
     }
 
-    private inner class PackageExpectationsSuite {
+    private inner class PackageExpectationsSuite(val classFileFactory: ClassFileFactory) {
         private val classSuitesByClassName = LinkedHashMap<String, ClassExpectationsSuite>()
 
         fun getOrCreateClassSuite(className: String): ClassExpectationsSuite =
-            classSuitesByClassName.getOrPut(className) { ClassExpectationsSuite(className) }
+            classSuitesByClassName.getOrPut(className) { ClassExpectationsSuite(className, classFileFactory) }
 
         fun check() {
-            Assert.assertTrue(classSuitesByClassName.isNotEmpty())
+            assertions.assertTrue(classSuitesByClassName.isNotEmpty())
             classSuitesByClassName.values.forEach { it.check() }
         }
 
     }
 
-    private inner class ClassExpectationsSuite(val className: String) {
+    private inner class ClassExpectationsSuite(val className: String, val classFileFactory: ClassFileFactory) {
         val classExpectations = ArrayList<SignatureExpectation>()
         val methodExpectations = ArrayList<SignatureExpectation>()
         val fieldExpectations = ArrayList<SignatureExpectation>()
@@ -94,7 +83,7 @@ abstract class AbstractWriteSignatureTest : CodegenTestCase() {
             val checker = Checker()
             val relativeClassFileName = "${className.replace('.', '/')}.class"
 
-            val outputFile = classFileFactory!!.currentOutput.single { it.relativePath == relativeClassFileName }
+            val outputFile = classFileFactory.currentOutput.single { it.relativePath == relativeClassFileName }
             processClassFile(checker, outputFile.asByteArray())
 
             if (className.endsWith("Package")) {
@@ -109,9 +98,9 @@ abstract class AbstractWriteSignatureTest : CodegenTestCase() {
             // Look for package parts in the same directory.
             // Package part file names for package SomePackage look like SomePackage$<hash>.class.
             val partPrefix = relativeClassFileName.replace(".class", "\$")
-            classFileFactory?.currentOutput?.filter {
+            classFileFactory.currentOutput.filter {
                 it.relativePath.startsWith(partPrefix) && it.relativePath.endsWith(".class")
-            }?.forEach { packageFacadeFile ->
+            }.forEach { packageFacadeFile ->
                 processClassFile(checker, packageFacadeFile.asByteArray())
             }
         }
@@ -170,10 +159,10 @@ abstract class AbstractWriteSignatureTest : CodegenTestCase() {
         }
     }
 
-    private fun parseExpectations(ktFile: File): PackageExpectationsSuite {
-        val expectations = PackageExpectationsSuite()
+    private fun parseExpectations(testDataFile: File, classFileFactory: ClassFileFactory): PackageExpectationsSuite {
+        val expectations = PackageExpectationsSuite(classFileFactory)
 
-        val lines = ktFile.readLines()
+        val lines = testDataFile.readLines()
         var lineNo = 0
         while (lineNo < lines.size) {
             val line = lines[lineNo]
@@ -185,7 +174,7 @@ abstract class AbstractWriteSignatureTest : CodegenTestCase() {
                 val memberName = expectationMatch.group(4)
 
                 if (kind == "class" && memberName != null) {
-                    throw AssertionError("$ktFile:${lineNo + 1}: use $className\$$memberName to denote inner class")
+                    throw AssertionError("$testDataFile:${lineNo + 1}: use $className\$$memberName to denote inner class")
                 }
 
                 val jvmSignatureMatch = jvmSignatureRegex.matchExact(lines[lineNo + 1])
@@ -202,13 +191,13 @@ abstract class AbstractWriteSignatureTest : CodegenTestCase() {
                         "class" -> classSuite.addClassExpectation(className, jvmSignature, genericSignature)
                         "field" -> classSuite.addFieldExpectation(className, memberName, jvmSignature, genericSignature)
                         "method" -> classSuite.addMethodExpectation(className, memberName, jvmSignature, genericSignature)
-                        else -> throw AssertionError("$ktFile:${lineNo + 1}: unsupported expectation kind: $kind")
+                        else -> throw AssertionError("$testDataFile:${lineNo + 1}: unsupported expectation kind: $kind")
                     }
 
                     // Expectation, skip the following 'jvm signature' and 'generic signature' lines
                     lineNo += 3
                 } else {
-                    throw AssertionError("$ktFile:${lineNo + 1}: '$kind' should be followed by 'jvm signature' and 'generic signature'")
+                    throw AssertionError("$testDataFile:${lineNo + 1}: '$kind' should be followed by 'jvm signature' and 'generic signature'")
                 }
             } else {
                 ++lineNo
@@ -241,4 +230,3 @@ abstract class AbstractWriteSignatureTest : CodegenTestCase() {
         }
     }
 }
-
