@@ -673,7 +673,7 @@ public abstract class KaValueParameterSymbol : KaParameterSymbol() {
      * The parameter has a default value if:
      * - For a regular function, a default value is explicitly declared for the parameter.
      * - For an overriding function, the corresponding parameter in the overridden function has a default value.
-     * - For an `actual` function, the corresponding parameter in the `expect` function has a default value.
+     * - For an `actual` function or constructor, the corresponding parameter in the matched `expect` declaration has a default value.
      *
      * @see hasDeclaredDefaultValue
      */
