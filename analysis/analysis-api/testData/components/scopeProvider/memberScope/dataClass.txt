@@ -92,6 +92,7 @@ KaKotlinPropertySymbol:
   primaryConstructorParameter: KaValueParameterSymbol:
     annotations: []
     callableId: null
+    contextParameters: []
     contextReceivers: []
     generatedPrimaryConstructorProperty: KaKotlinPropertySymbol(/Abc.firstProperty)
     hasDeclaredDefaultValue: false
@@ -237,6 +238,7 @@ KaKotlinPropertySymbol:
   primaryConstructorParameter: KaValueParameterSymbol:
     annotations: []
     callableId: null
+    contextParameters: []
     contextReceivers: []
     generatedPrimaryConstructorProperty: KaKotlinPropertySymbol(/Abc.secondProperty)
     hasDeclaredDefaultValue: false
@@ -382,6 +384,7 @@ KaKotlinPropertySymbol:
   primaryConstructorParameter: KaValueParameterSymbol:
     annotations: []
     callableId: null
+    contextParameters: []
     contextReceivers: []
     generatedPrimaryConstructorProperty: KaKotlinPropertySymbol(/Abc.thirdProperty)
     hasDeclaredDefaultValue: false

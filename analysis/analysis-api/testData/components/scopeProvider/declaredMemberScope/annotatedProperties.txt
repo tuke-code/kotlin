@@ -95,6 +95,7 @@ KaKotlinPropertySymbol:
   primaryConstructorParameter: KaValueParameterSymbol:
     annotations: []
     callableId: null
+    contextParameters: []
     contextReceivers: []
     generatedPrimaryConstructorProperty: KaKotlinPropertySymbol(/Foo.withDefaultGetter)
     hasDeclaredDefaultValue: false
@@ -240,6 +241,7 @@ KaKotlinPropertySymbol:
   primaryConstructorParameter: KaValueParameterSymbol:
     annotations: []
     callableId: null
+    contextParameters: []
     contextReceivers: []
     generatedPrimaryConstructorProperty: KaKotlinPropertySymbol(/Foo.withDefaultSetter)
     hasDeclaredDefaultValue: false
@@ -492,6 +494,7 @@ KaKotlinPropertySymbol:
   primaryConstructorParameter: KaValueParameterSymbol:
     annotations: []
     callableId: null
+    contextParameters: []
     contextReceivers: []
     generatedPrimaryConstructorProperty: KaKotlinPropertySymbol(/Foo.both)
     hasDeclaredDefaultValue: false
@@ -753,6 +756,7 @@ KaKotlinPropertySymbol:
         psi: KtAnnotationEntry
     ]
     callableId: null
+    contextParameters: []
     contextReceivers: []
     generatedPrimaryConstructorProperty: KaKotlinPropertySymbol(/Foo.allAnnotations)
     hasDeclaredDefaultValue: false

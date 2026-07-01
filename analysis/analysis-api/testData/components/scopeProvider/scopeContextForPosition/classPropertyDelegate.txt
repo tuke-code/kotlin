@@ -127,6 +127,7 @@ scopes:
         primaryConstructorParameter: KaValueParameterSymbol:
           annotations: []
           callableId: null
+          contextParameters: []
           contextReceivers: []
           generatedPrimaryConstructorProperty: KaKotlinPropertySymbol(test/Child.constructorProp)
           hasDeclaredDefaultValue: false
@@ -350,6 +351,7 @@ scopes:
         primaryConstructorParameter: KaValueParameterSymbol:
           annotations: []
           callableId: null
+          contextParameters: []
           contextReceivers: []
           generatedPrimaryConstructorProperty: KaKotlinPropertySymbol(test/Base.value)
           hasDeclaredDefaultValue: false

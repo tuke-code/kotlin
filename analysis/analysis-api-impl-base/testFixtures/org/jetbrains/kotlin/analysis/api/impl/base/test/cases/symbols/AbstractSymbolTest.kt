@@ -118,6 +118,7 @@ abstract class AbstractSymbolTest : AbstractAnalysisApiBasedTest() {
                             implicitSymbol to false
                         }
                     }
+                    .sortedByDescending { it.second }
                     .distinctBy { it.first }
                     .map { [symbol, shouldBeRendered] ->
                         PointerWithRenderedSymbol(

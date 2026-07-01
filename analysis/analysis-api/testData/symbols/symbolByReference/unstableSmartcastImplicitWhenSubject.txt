@@ -92,6 +92,7 @@ KaKotlinPropertySymbol:
   primaryConstructorParameter: KaValueParameterSymbol:
     annotations: []
     callableId: null
+    contextParameters: []
     contextReceivers: []
     generatedPrimaryConstructorProperty: KaKotlinPropertySymbol(/Test.ctx)
     hasDeclaredDefaultValue: false
