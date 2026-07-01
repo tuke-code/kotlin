@@ -4,6 +4,8 @@
  */
 package org.jetbrains.kotlin.codegen
 
+import com.intellij.openapi.Disposable
+import com.intellij.openapi.util.Disposer
 import com.intellij.openapi.util.io.FileUtil
 import com.intellij.testFramework.TestDataFile
 import org.jetbrains.kotlin.CoreEnvironmentDeprecation
@@ -25,10 +27,14 @@ import org.jetbrains.kotlin.scripting.definitions.K1SpecificScriptingServiceAcce
 import org.jetbrains.kotlin.scripting.definitions.ScriptConfigurationsProvider
 import org.jetbrains.kotlin.scripting.resolve.KtFileScriptSource
 import org.jetbrains.kotlin.test.*
-import org.jetbrains.kotlin.test.testFramework.KtUsefulTestCase
+import org.jetbrains.kotlin.test.testFramework.KtUsefulTestCase.getTestName
+import org.jetbrains.kotlin.test.testFramework.disposeRootDisposable
 import org.jetbrains.kotlin.test.util.KtTestUtil
 import org.jetbrains.kotlin.test.util.KtTestUtil.getAnnotationsJar
 import org.jetbrains.kotlin.utils.rethrow
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.TestInfo
 import java.io.File
 import java.io.IOException
 import java.lang.reflect.Method
@@ -36,7 +42,10 @@ import java.net.MalformedURLException
 import java.net.URL
 import kotlin.script.experimental.api.valueOrNull
 
-abstract class CodegenTestCase : KtUsefulTestCase() {
+abstract class CodegenTestCase {
+    protected val testRootDisposable: Disposable = Disposer.newDisposable()
+    protected lateinit var testInfo: TestInfo
+
     @JvmField
     protected var myEnvironment: KotlinCoreEnvironment? = null
 
@@ -81,8 +90,13 @@ abstract class CodegenTestCase : KtUsefulTestCase() {
 
     protected open fun setupEnvironment(environment: KotlinCoreEnvironment) {}
 
-    @Throws(Exception::class)
-    override fun tearDown() {
+    @BeforeEach
+    fun setUp(testInfo: TestInfo) {
+        this.testInfo = testInfo
+    }
+
+    @AfterEach
+    open fun tearDown() {
         myFiles = null
         myEnvironment = null
         classFileFactory = null
@@ -92,7 +106,7 @@ abstract class CodegenTestCase : KtUsefulTestCase() {
             initializedClassLoader = null
         }
 
-        super.tearDown()
+        disposeRootDisposable(testRootDisposable)
     }
 
     protected fun loadText(text: String) {
@@ -128,7 +142,7 @@ abstract class CodegenTestCase : KtUsefulTestCase() {
     }
 
     protected fun loadFile() {
-        loadFile(this.prefix + "/" + getTestName(true) + ".kt")
+        loadFile(this.prefix + "/" + getTestName(testInfo) + ".kt")
     }
 
     protected open val prefix: String

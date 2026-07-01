@@ -7,12 +7,15 @@ package org.jetbrains.kotlin.codegen
 
 import org.jetbrains.kotlin.test.ConfigurationKind
 import org.jetbrains.kotlin.test.FirParser
+import org.jetbrains.kotlin.test.testFramework.KtUsefulTestCase.assertOrderedEquals
+import org.junit.jupiter.api.Test
 
 open class CustomBytecodeTextTest : CodegenTestCase() {
 
     override val firParser: FirParser
         get() = FirParser.LightTree
 
+    @Test
     fun testEnumMapping() {
         createEnvironmentWithMockJdkAndIdeaAnnotations(ConfigurationKind.ALL)
         myFiles = CodegenTestFiles.create(

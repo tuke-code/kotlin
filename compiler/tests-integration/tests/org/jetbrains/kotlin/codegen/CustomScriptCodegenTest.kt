@@ -18,6 +18,8 @@ import org.jetbrains.kotlin.test.FirParser.LightTree
 import org.jetbrains.kotlin.test.FirParser.Psi
 import org.jetbrains.kotlin.test.TestJdkKind
 import org.jetbrains.kotlin.test.runners.codegen.TestScriptWithReceivers
+import org.junit.jupiter.api.Assertions.assertNull
+import org.junit.jupiter.api.Test
 import java.io.File
 import java.lang.reflect.Constructor
 import kotlin.reflect.KClass
@@ -38,7 +40,8 @@ class FirPsiCustomScriptCodegenTest : CustomScriptCodegenTest() {
 }
 
 abstract class CustomScriptCodegenTest : CodegenTestCase() {
-    open fun testAnnotatedDefinition() {
+    @Test
+    fun testAnnotatedDefinition() {
         createScriptTestEnvironment("org.jetbrains.kotlin.codegen.TestScriptWithAnnotatedBaseClass")
         loadScript("val x = 1")
         val res = generateScriptClass()

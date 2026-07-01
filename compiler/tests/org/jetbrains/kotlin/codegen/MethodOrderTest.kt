@@ -11,11 +11,14 @@ import org.jetbrains.org.objectweb.asm.ClassReader
 import org.jetbrains.org.objectweb.asm.ClassVisitor
 import org.jetbrains.org.objectweb.asm.MethodVisitor
 import org.jetbrains.org.objectweb.asm.Opcodes
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Test
 
 open class MethodOrderTest : CodegenTestCase() {
     override val firParser: FirParser
         get() = FirParser.LightTree
 
+    @Test
     fun testDelegatedMethod() {
         doTest(
             """
@@ -42,6 +45,7 @@ open class MethodOrderTest : CodegenTestCase() {
     protected open fun delegatedMethodExpectation(): List<String> =
         listOf("<init>()V", "f3()V", "f0()V", "f4()V", "f2()V", "f1()V", "f5()V")
 
+    @Test
     fun testAnonymousObjectClosureOrdering() {
         doTest(
             """
@@ -60,6 +64,7 @@ open class MethodOrderTest : CodegenTestCase() {
         )
     }
 
+    @Test
     fun testMemberAccessor() {
         doTest(
             """
@@ -87,6 +92,7 @@ open class MethodOrderTest : CodegenTestCase() {
         )
     }
 
+    @Test
     fun testDeterministicDefaultMethodImplOrder() {
         doTest(
             """
@@ -123,6 +129,7 @@ open class MethodOrderTest : CodegenTestCase() {
         )
     }
 
+    @Test
     fun testBridgeOrder() {
         doTest(
             """

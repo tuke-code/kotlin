@@ -19,11 +19,15 @@ package org.jetbrains.kotlin.codegen;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.kotlin.test.ConfigurationKind;
 import org.jetbrains.kotlin.test.FirParser;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class VarArgTest extends CodegenTestCase {
     @Override
@@ -31,12 +35,12 @@ public class VarArgTest extends CodegenTestCase {
         return FirParser.LightTree;
     }
 
-    @Override
+    @BeforeEach
     protected void setUp() throws Exception {
-        super.setUp();
         createEnvironmentWithMockJdkAndIdeaAnnotations(ConfigurationKind.JDK_ONLY);
     }
 
+    @Test
     public void testStringArray() throws InvocationTargetException, IllegalAccessException {
         loadText("fun test(vararg ts: String) = ts");
         Method main = generateFunction();
@@ -44,6 +48,7 @@ public class VarArgTest extends CodegenTestCase {
         assertSame(args, main.invoke(null, new Object[] {args}));
     }
 
+    @Test
     public void testIntArray() throws InvocationTargetException, IllegalAccessException {
         loadText("fun test(vararg ts: Int) = ts");
         Method main = generateFunction();
@@ -51,6 +56,7 @@ public class VarArgTest extends CodegenTestCase {
         assertSame(args, main.invoke(null, new Object[] {args}));
     }
 
+    @Test
     public void testIntArrayKotlinNoArgs() throws InvocationTargetException, IllegalAccessException {
         loadText("fun test() = testf(); fun testf(vararg ts: Int) = ts");
         Method main = generateFunction("test");
@@ -58,6 +64,7 @@ public class VarArgTest extends CodegenTestCase {
         assertEquals(0, ((int[]) res).length);
     }
 
+    @Test
     public void testIntArrayKotlin() throws InvocationTargetException, IllegalAccessException {
         loadText("fun test() = testf(239, 7); fun testf(vararg ts: Int) = ts");
         Method main = generateFunction("test");
@@ -67,6 +74,7 @@ public class VarArgTest extends CodegenTestCase {
         assertEquals(7, ((int[]) res)[1]);
     }
 
+    @Test
     public void testNullableIntArrayKotlin() throws InvocationTargetException, IllegalAccessException {
         loadText("fun test() = testf(239.toByte(), 7.toByte()); fun testf(vararg ts: Byte?) = ts");
         Method main = generateFunction("test");
@@ -76,6 +84,7 @@ public class VarArgTest extends CodegenTestCase {
         assertEquals(7, (byte) ((Byte[]) res)[1]);
     }
 
+    @Test
     public void testIntArrayKotlinObj() throws InvocationTargetException, IllegalAccessException {
         loadText("fun test() = testf(\"239\"); fun testf(vararg ts: String) = ts");
         Method main = generateFunction("test");
@@ -84,6 +93,7 @@ public class VarArgTest extends CodegenTestCase {
         assertEquals("239", ((String[]) res)[0]);
     }
 
+    @Test
     public void testArrayT() throws InvocationTargetException, IllegalAccessException {
         loadText("fun test() = _array(2, 4); fun <T> _array(vararg elements : T) = elements");
         Method main = generateFunction("test");
@@ -93,6 +103,7 @@ public class VarArgTest extends CodegenTestCase {
         assertEquals(4, (int) ((Integer[]) res)[1]);
     }
 
+    @Test
     public void testArrayAsVararg() throws InvocationTargetException, IllegalAccessException {
         loadText("private fun asList(vararg elems: String) = elems; fun test(ts: Array<String>) = asList(*ts); ");
         Method main = generateFunction("test");
@@ -102,11 +113,12 @@ public class VarArgTest extends CodegenTestCase {
         assertTrue(Arrays.equals(args, result));
     }
 
+    @Test
     public void testArrayAsVararg2() throws InvocationTargetException, IllegalAccessException {
         loadText("private fun asList(vararg elems: String) = elems; fun test(ts1: Array<String>, ts2: String) = asList(*ts1, ts2); ");
         Method main = generateFunction("test");
         Object invoke = main.invoke(null, new String[] {"mama"}, "papa");
-        assertInstanceOf(invoke, String[].class);
+        assertInstanceOf(String[].class, invoke);
         assertEquals(2, Array.getLength(invoke));
         assertEquals("mama", Array.get(invoke, 0));
         assertEquals("papa", Array.get(invoke, 1));

@@ -23,7 +23,9 @@ import org.jetbrains.kotlin.ir.visitors.acceptChildrenVoid
 import org.jetbrains.kotlin.ir.visitors.acceptVoid
 import org.jetbrains.kotlin.test.ConfigurationKind
 import org.jetbrains.kotlin.test.FirParser
+import org.jetbrains.kotlin.test.testFramework.KtUsefulTestCase.assertEmpty
 import org.jetbrains.kotlin.utils.addIfNotNull
+import org.junit.jupiter.api.Test
 
 class FirLightTreeLinkageModeTest : JvmIrLinkageModeTest() {
     override val firParser: FirParser
@@ -54,6 +56,7 @@ abstract class JvmIrLinkageModeTest : CodegenTestCase() {
         var property: S? = "OK"
     """.trimIndent()
 
+    @Test
     fun testLinkageViaDescriptors() {
         enableLinkageViaSignatures = false
         createEnvironmentWithMockJdkAndIdeaAnnotations(ConfigurationKind.NO_KOTLIN_REFLECT)
@@ -61,6 +64,7 @@ abstract class JvmIrLinkageModeTest : CodegenTestCase() {
         generateAndCreateClassLoader()
     }
 
+    @Test
     fun testLinkageViaSignatures() {
         enableLinkageViaSignatures = true
         createEnvironmentWithMockJdkAndIdeaAnnotations(ConfigurationKind.NO_KOTLIN_REFLECT)
