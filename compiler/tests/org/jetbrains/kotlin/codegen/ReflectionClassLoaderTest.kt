@@ -9,9 +9,6 @@ import org.jetbrains.kotlin.test.ConfigurationKind
 import org.jetbrains.kotlin.test.FirParser
 
 open class ReflectionClassLoaderTest : CodegenTestCase() {
-    override val useFir: Boolean
-        get() = true
-
     override val firParser: FirParser
         get() = FirParser.LightTree
 

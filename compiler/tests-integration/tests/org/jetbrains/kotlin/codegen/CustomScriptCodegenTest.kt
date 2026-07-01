@@ -27,18 +27,12 @@ import kotlin.script.experimental.jvm.util.scriptCompilationClasspathFromContext
 
 @Suppress("JUnitTestCaseWithNoTests")
 class FirLightTreeCustomScriptCodegenTest : CustomScriptCodegenTest() {
-    override val useFir: Boolean
-        get() = true
-
     override val firParser: FirParser
         get() = LightTree
 }
 
 @Suppress("JUnitTestCaseWithNoTests")
 class FirPsiCustomScriptCodegenTest : CustomScriptCodegenTest() {
-    override val useFir: Boolean
-        get() = true
-
     override val firParser: FirParser
         get() = Psi
 }

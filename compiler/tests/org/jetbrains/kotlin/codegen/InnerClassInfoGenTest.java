@@ -25,11 +25,6 @@ import static org.jetbrains.org.objectweb.asm.Opcodes.*;
 
 public class InnerClassInfoGenTest extends CodegenTestCase {
     @Override
-    public boolean getUseFir() {
-        return true;
-    }
-
-    @Override
     public @NotNull FirParser getFirParser() {
         return FirParser.LightTree;
     }

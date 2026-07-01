@@ -27,11 +27,6 @@ import java.util.Arrays;
 
 public class VarArgTest extends CodegenTestCase {
     @Override
-    public boolean getUseFir() {
-        return true;
-    }
-
-    @Override
     public @NotNull FirParser getFirParser() {
         return FirParser.LightTree;
     }

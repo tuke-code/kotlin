@@ -31,11 +31,6 @@ import java.io.File;
 // TODO Remove this class once general multi-module bytecode text tests are implemented.
 public class GenerateNotNullAssertionsTest extends CodegenTestCase {
     @Override
-    public boolean getUseFir() {
-        return true;
-    }
-
-    @Override
     public @NotNull FirParser getFirParser() {
         return FirParser.LightTree;
     }

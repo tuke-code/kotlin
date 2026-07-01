@@ -29,11 +29,6 @@ import static org.jetbrains.kotlin.codegen.CodegenTestUtil.findDeclaredMethodByN
 
 public class PropertyGenTest extends CodegenTestCase {
     @Override
-    public boolean getUseFir() {
-        return true;
-    }
-
-    @Override
     public @NotNull FirParser getFirParser() {
         return FirParser.LightTree;
     }

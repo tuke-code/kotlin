@@ -5,14 +5,10 @@
 
 package org.jetbrains.kotlin.codegen
 
-import org.jetbrains.kotlin.ObsoleteTestInfrastructure
 import org.jetbrains.kotlin.test.ConfigurationKind
 import org.jetbrains.kotlin.test.FirParser
 
-@OptIn(ObsoleteTestInfrastructure::class)
 open class CustomBytecodeTextTest : CodegenTestCase() {
-    override val useFir: Boolean
-        get() = true
 
     override val firParser: FirParser
         get() = FirParser.LightTree

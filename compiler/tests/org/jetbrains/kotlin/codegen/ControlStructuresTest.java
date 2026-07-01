@@ -12,10 +12,6 @@ import org.jetbrains.kotlin.test.FirParser;
 import java.lang.reflect.Method;
 
 public class ControlStructuresTest extends CodegenTestCase {
-    @Override
-    public boolean getUseFir() {
-        return true;
-    }
 
     @Override
     public @NotNull FirParser getFirParser() {

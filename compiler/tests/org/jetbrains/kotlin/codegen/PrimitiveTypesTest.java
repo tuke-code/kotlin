@@ -24,11 +24,6 @@ import java.lang.reflect.Method;
 
 public class PrimitiveTypesTest extends CodegenTestCase {
     @Override
-    public boolean getUseFir() {
-        return true;
-    }
-
-    @Override
     public @NotNull FirParser getFirParser() {
         return FirParser.LightTree;
     }

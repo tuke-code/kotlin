@@ -29,6 +29,7 @@ import org.jetbrains.kotlin.scripting.configuration.ScriptingConfigurationKeys
 import org.jetbrains.kotlin.scripting.definitions.ScriptDefinition
 import org.jetbrains.kotlin.scripting.definitions.ScriptEvaluationConfigurationFromHostConfiguration
 import org.jetbrains.kotlin.test.ConfigurationKind
+import org.jetbrains.kotlin.test.FirParser
 import org.jetbrains.kotlin.test.TestJdkKind
 import org.jetbrains.kotlin.test.util.KtTestUtil
 import org.jetbrains.org.objectweb.asm.Opcodes
@@ -79,6 +80,9 @@ class ScriptGenTest : CodegenTestCase() {
                     .takeIf { it.isNotEmpty() }
                         ?: throw IllegalStateException("Unable to get classes output dirs, set PROJECT_CLASSES_DIRS environment variable")
     }
+
+    override val firParser: FirParser
+        get() = FirParser.Psi
 
     fun testLanguage(): Unit = muteTest {
         setUpEnvironment("scriptCustom/fib.lang.kts")

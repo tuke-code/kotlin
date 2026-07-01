@@ -25,10 +25,6 @@ import java.lang.annotation.*;
 import java.lang.reflect.*;
 
 public class AnnotationGenTest extends CodegenTestCase {
-    @Override
-    public boolean getUseFir() {
-        return true;
-    }
 
     @Override
     public @NotNull FirParser getFirParser() {

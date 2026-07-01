@@ -38,11 +38,6 @@ import static org.jetbrains.kotlin.load.java.JvmAnnotationNames.METADATA_VERSION
 
 public class KotlinSyntheticClassAnnotationTest extends CodegenTestCase {
     @Override
-    public boolean getUseFir() {
-        return true;
-    }
-
-    @Override
     public @NotNull FirParser getFirParser() {
         return FirParser.LightTree;
     }

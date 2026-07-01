@@ -18,12 +18,13 @@ import org.jetbrains.kotlin.config.CompilerConfiguration
 import org.jetbrains.kotlin.config.JVMConfigurationKeys
 import org.jetbrains.kotlin.config.JvmTarget
 import org.jetbrains.kotlin.config.JvmTarget.Companion.fromString
+import org.jetbrains.kotlin.config.useFir
+import org.jetbrains.kotlin.config.useLightTree
 import org.jetbrains.kotlin.fileClasses.JvmFileClassUtil.getFileClassInfoNoResolve
 import org.jetbrains.kotlin.scripting.definitions.K1SpecificScriptingServiceAccessor
 import org.jetbrains.kotlin.scripting.definitions.ScriptConfigurationsProvider
 import org.jetbrains.kotlin.scripting.resolve.KtFileScriptSource
 import org.jetbrains.kotlin.test.*
-import org.jetbrains.kotlin.test.testFramework.FrontendBackendConfiguration
 import org.jetbrains.kotlin.test.testFramework.KtUsefulTestCase
 import org.jetbrains.kotlin.test.util.KtTestUtil
 import org.jetbrains.kotlin.test.util.KtTestUtil.getAnnotationsJar
@@ -35,7 +36,7 @@ import java.net.MalformedURLException
 import java.net.URL
 import kotlin.script.experimental.api.valueOrNull
 
-abstract class CodegenTestCase : KtUsefulTestCase(), FrontendBackendConfiguration {
+abstract class CodegenTestCase : KtUsefulTestCase() {
     @JvmField
     protected var myEnvironment: KotlinCoreEnvironment? = null
 
@@ -272,11 +273,14 @@ abstract class CodegenTestCase : KtUsefulTestCase(), FrontendBackendConfiguratio
 
     protected open fun updateConfiguration(configuration: CompilerConfiguration) {
         setCustomDefaultJvmTarget(configuration)
-        configureIrFir(configuration)
+        configuration.useFir = true
+        when (firParser) {
+            FirParser.LightTree -> configuration.useLightTree = true
+            FirParser.Psi -> {}
+        }
     }
 
-    override val backend: TargetBackend
-        get() = TargetBackend.JVM_IR
+    protected abstract val firParser: FirParser
 
     companion object {
         private const val DEFAULT_TEST_FILE_NAME = "a_test"
