@@ -1,0 +1,34 @@
+KaValueParameterSymbol:
+  annotations: []
+  callableId: null
+  contextParameters: []
+  contextReceivers: []
+  hasDeclaredDefaultValue: false
+  hasDefaultValue: false
+  isActual: false
+  isCompanion: false
+  isCrossinline: false
+  isDelegated: false
+  isExpect: false
+  isExtension: false
+  isExternal: false
+  isImplicitLambdaParameter: false
+  isNoinline: false
+  isVal: true
+  isVararg: false
+  location: LOCAL
+  modality: FINAL
+  name: withDefault
+  origin: SOURCE
+  primaryConstructorProperty: null
+  receiverParameter: null
+  returnType: KaUsualClassType:
+    annotations: []
+    typeArguments: []
+    type: kotlin/Int
+  visibility: PUBLIC
+  getContainingFileSymbol: KaFileSymbol(main.kt)
+  getContainingJvmClassName: test.pkg.Foo
+  getContainingModule: KaSourceModule "Sources of jvm"
+  deprecation: null
+  importableFqName: null
