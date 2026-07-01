@@ -23,7 +23,6 @@ import org.jetbrains.kotlin.ir.visitors.acceptChildrenVoid
 import org.jetbrains.kotlin.ir.visitors.acceptVoid
 import org.jetbrains.kotlin.test.ConfigurationKind
 import org.jetbrains.kotlin.test.FirParser
-import org.jetbrains.kotlin.test.testFramework.KtUsefulTestCase.assertEmpty
 import org.jetbrains.kotlin.utils.addIfNotNull
 import org.junit.jupiter.api.Test
 
@@ -103,7 +102,7 @@ abstract class JvmIrLinkageModeTest : CodegenTestCase() {
                 }
             })
             val allSignatures = signatures.map { it.render().substringBefore("|") }.toSet()
-            assertEmpty(allSignatures)
+            assert(allSignatures.isEmpty())
         }
     }
 }
