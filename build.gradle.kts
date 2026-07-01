@@ -225,6 +225,16 @@ tasks.register("createIdeaHomeForTests") {
     }
 }
 
+val publishedMark: NamedDomainObjectProvider<DependencyScopeConfiguration> = configurations.dependencyScope("fakePublishpublishedMark")
+val publishedMarkElements: NamedDomainObjectProvider<ResolvableConfiguration> = configurations.resolvable("publishedMarkClasspath").apply {
+    configure { extendsFrom(publishedMark) }
+}
+dependencies {
+    allprojects.forEach { p ->
+        add(publishedMark.name, project(p.path, configuration = "publishedMark"))
+    }
+}
+
 tasks {
     register("compileAll") {
         /*
@@ -638,17 +648,12 @@ tasks {
 
     // 'mvnPublish' is required for local bootstrap
     if (!kotlinBuildProperties.isTeamcityBuild.get()) {
-        val localPublishTask = register("publish") {
+        register("publish") {
             group = "publishing"
+            inputs.files(publishedMarkElements.get().incoming.artifactView { lenient(true) }.files)
+                .withPathSensitivity(PathSensitivity.NONE)
+                .withPropertyName("publishedMarks")
             finalizedBy(mvnPublishTask)
-        }
-
-        subprojects {
-            tasks.configureEach {
-                if (name == "publish") {
-                    localPublishTask.get().dependsOn(this)
-                }
-            }
         }
     }
 
