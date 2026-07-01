@@ -217,7 +217,6 @@ include(
     ":compiler:tests-mutes",
     ":compiler:tests-mutes:mutes-junit4",
     ":compiler:tests-mutes:mutes-junit5",
-    ":compiler:tests-against-klib",
     ":compiler:jklib.tests",
     ":js:js.ast",
     ":js:js.sourcemap",

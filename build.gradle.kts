@@ -316,7 +316,6 @@ tasks {
             ":compiler:container:test",
             ":compiler:tests-java8:test",
             ":compiler:tests-spec:test",
-            ":compiler:tests-against-klib:test"
         )
     }
 

@@ -48,7 +48,6 @@ Compiler:
  - compiler/testFixtures
  - compiler/testResources
  - compiler/tests
- - compiler/tests-against-klib
  - compiler/tests-common
  - compiler/tests-common-new
  - compiler/tests-compiler-utils
