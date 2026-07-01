@@ -142,7 +142,7 @@ class ScriptGenTest : CodegenTestCase() {
 
     private fun setUpEnvironment(sourcePaths: List<String>) {
         val configuration = createConfiguration(
-            ConfigurationKind.ALL, TestJdkKind.FULL_JDK, additionalDependencies, emptyList(), emptyList()
+            ConfigurationKind.ALL, TestJdkKind.FULL_JDK, additionalDependencies
         ).apply {
             @OptIn(MessageCollectorAccess::class) // write access
             messageCollector = PrintingMessageCollector(System.err, MessageRenderer.PLAIN_FULL_PATHS, false)

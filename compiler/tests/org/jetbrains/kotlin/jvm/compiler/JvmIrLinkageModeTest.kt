@@ -64,14 +64,14 @@ abstract class JvmIrLinkageModeTest : CodegenTestCase() {
         enableLinkageViaSignatures = false
         createEnvironmentWithMockJdkAndIdeaAnnotations(ConfigurationKind.NO_KOTLIN_REFLECT)
         loadText(source)
-        generateAndCreateClassLoader(true)
+        generateAndCreateClassLoader()
     }
 
     fun testLinkageViaSignatures() {
         enableLinkageViaSignatures = true
         createEnvironmentWithMockJdkAndIdeaAnnotations(ConfigurationKind.NO_KOTLIN_REFLECT)
         loadText(source)
-        generateAndCreateClassLoader(true)
+        generateAndCreateClassLoader()
     }
 
     override fun updateConfiguration(configuration: CompilerConfiguration) {

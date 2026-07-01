@@ -5,80 +5,26 @@
 
 package org.jetbrains.kotlin.test
 
-import org.jetbrains.kotlin.checkers.ENABLE_JVM_PREVIEW
-import org.jetbrains.kotlin.checkers.parseLanguageVersionSettings
 import org.jetbrains.kotlin.cli.jvm.compiler.KotlinCoreEnvironment
-import org.jetbrains.kotlin.config.*
+import org.jetbrains.kotlin.config.CompilerConfiguration
 import org.jetbrains.kotlin.test.testFramework.FrontendBackendConfiguration
 import org.jetbrains.kotlin.test.testFramework.KtUsefulTestCase
-import org.jetbrains.kotlin.test.util.KtTestUtil
 import java.io.File
 
 abstract class KotlinBaseTest<F : KotlinBaseTest.TestFile> : KtUsefulTestCase(), FrontendBackendConfiguration {
-    @Throws(Exception::class)
-    override fun setUp() {
-        super.setUp()
-    }
-
-    @Throws(java.lang.Exception::class)
-    protected open fun doTest(filePath: String) {
-        val file = File(filePath)
-        val expectedText = KtTestUtil.doLoadFile(file)
-        doMultiFileTest(file, createTestFilesFromFile(file, expectedText))
-    }
-
-    protected abstract fun createTestFilesFromFile(file: File, expectedText: String): List<F>
-
-    @Throws(java.lang.Exception::class)
-    protected open fun doMultiFileTest(
-        wholeFile: File,
-        files: List<F>
-    ) {
-        throw UnsupportedOperationException("Multi-file test cases are not supported in this test")
-    }
-
-    protected open fun getTestJdkKind(files: List<F>): TestJdkKind {
-        if (files.any { file -> InTextDirectivesUtils.isDirectiveDefined(file.content, "JDK_17_0") }) return TestJdkKind.FULL_JDK_17
-
-        for (file in files) {
-            if (InTextDirectivesUtils.isDirectiveDefined(file.content, "FULL_JDK")) {
-                return TestJdkKind.FULL_JDK
-            }
-        }
-        return TestJdkKind.MOCK_JDK
-    }
-
-    protected open fun extractConfigurationKind(files: List<F>): ConfigurationKind {
-        @Suppress("RedundantCompanionReference")
-        return Companion.extractConfigurationKind(files)
-    }
-
     protected open fun updateConfiguration(configuration: CompilerConfiguration) {
         configureIrFir(configuration)
     }
 
     protected open fun setupEnvironment(environment: KotlinCoreEnvironment) {}
 
-    protected open fun parseDirectivesPerFiles() = false
-
-
-    protected open fun configureTestSpecific(configuration: CompilerConfiguration, testFiles: List<TestFile>) {}
-
     protected fun createConfiguration(
         kind: ConfigurationKind,
         jdkKind: TestJdkKind,
         classpath: List<File>,
-        javaSource: List<File>,
-        testFilesWithConfigurationDirectives: List<TestFile>
     ): CompilerConfiguration {
-        val configuration = KotlinTestUtils.newConfiguration(kind, jdkKind, classpath, javaSource)
-        updateConfigurationByDirectivesInTestFiles(
-            testFilesWithConfigurationDirectives,
-            configuration,
-            parseDirectivesPerFiles()
-        )
+        val configuration = KotlinTestUtils.newConfiguration(kind, jdkKind, classpath, emptyList())
         updateConfiguration(configuration)
-        configureTestSpecific(configuration, testFilesWithConfigurationDirectives)
         return configuration
     }
 
@@ -120,71 +66,5 @@ abstract class KotlinBaseTest<F : KotlinBaseTest.TestFile> : KtUsefulTestCase(),
         override fun compareTo(other: TestModule): Int = name.compareTo(other.name)
 
         override fun toString(): String = name
-    }
-
-    companion object {
-        private fun updateConfigurationByDirectivesInTestFiles(
-            testFilesWithConfigurationDirectives: List<TestFile>,
-            configuration: CompilerConfiguration,
-            usePreparsedDirectives: Boolean
-        ) {
-            var explicitLanguageVersionSettings: LanguageVersionSettings? = null
-            for (testFile in testFilesWithConfigurationDirectives) {
-                val content = testFile.content
-                val directives = if (usePreparsedDirectives) testFile.directives else KotlinTestUtils.parseDirectives(content)
-                val targetString = directives["JVM_TARGET"]
-                if (targetString != null) {
-                    val jvmTarget = JvmTarget.fromString(targetString)
-                        ?: testInfraError("Unknown target: $targetString")
-                    configuration.put(JVMConfigurationKeys.JVM_TARGET, jvmTarget)
-                }
-
-                if (directives.contains(ENABLE_JVM_PREVIEW)) {
-                    configuration.put(JVMConfigurationKeys.ENABLE_JVM_PREVIEW, true)
-                }
-
-                val version = directives["LANGUAGE_VERSION"]
-                if (version != null) {
-                    throw AssertionError(
-                        """
-                    Do not use LANGUAGE_VERSION directive in compiler tests because it's prone to limiting the test
-                    to a specific language version, which will become obsolete at some point and the test won't check
-                    things like feature intersection with newer releases. Use `// LANGUAGE: [+-]FeatureName` directive instead,
-                    where FeatureName is an entry of the enum `LanguageFeature`
-                    
-                    """.trimIndent()
-                    )
-                }
-                val fileLanguageVersionSettings: LanguageVersionSettings? = parseLanguageVersionSettings(directives)
-                if (fileLanguageVersionSettings != null) {
-                    assert(explicitLanguageVersionSettings == null) { "Should not specify !LANGUAGE directive twice" }
-                    explicitLanguageVersionSettings = fileLanguageVersionSettings
-                }
-
-                val lambdasString = directives["LAMBDAS"]
-                if (lambdasString != null) {
-                    val lambdas = JvmClosureGenerationScheme.fromString(lambdasString)
-                        ?: testInfraError("Unknown lambdas mode: $lambdasString")
-                    configuration.put(JVMConfigurationKeys.LAMBDAS, lambdas)
-                }
-            }
-            if (explicitLanguageVersionSettings != null) {
-                configuration.languageVersionSettings = explicitLanguageVersionSettings
-            }
-        }
-
-        fun extractConfigurationKind(files: List<TestFile>): ConfigurationKind {
-            var addRuntime = false
-            var addReflect = false
-            for (file in files) {
-                if (InTextDirectivesUtils.isDirectiveDefined(file.content, "WITH_STDLIB")) {
-                    addRuntime = true
-                }
-                if (InTextDirectivesUtils.isDirectiveDefined(file.content, "WITH_REFLECT")) {
-                    addReflect = true
-                }
-            }
-            return if (addReflect) ConfigurationKind.ALL else if (addRuntime) ConfigurationKind.NO_KOTLIN_REFLECT else ConfigurationKind.JDK_ONLY
-        }
     }
 }

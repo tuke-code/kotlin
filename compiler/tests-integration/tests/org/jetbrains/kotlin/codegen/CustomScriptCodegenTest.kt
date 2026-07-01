@@ -75,9 +75,7 @@ abstract class CustomScriptCodegenTest : CodegenTestCase() {
         val configuration = createConfiguration(
             ConfigurationKind.ALL,
             TestJdkKind.MOCK_JDK,
-            additionalDependencies,
-            emptyList(),
-            emptyList()
+            additionalDependencies
         )
 
         if (scriptDefinitions.isNotEmpty()) {
