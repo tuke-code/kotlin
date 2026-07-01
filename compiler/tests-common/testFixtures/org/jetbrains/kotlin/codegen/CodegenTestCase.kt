@@ -23,6 +23,8 @@ import org.jetbrains.kotlin.scripting.definitions.K1SpecificScriptingServiceAcce
 import org.jetbrains.kotlin.scripting.definitions.ScriptConfigurationsProvider
 import org.jetbrains.kotlin.scripting.resolve.KtFileScriptSource
 import org.jetbrains.kotlin.test.*
+import org.jetbrains.kotlin.test.testFramework.FrontendBackendConfiguration
+import org.jetbrains.kotlin.test.testFramework.KtUsefulTestCase
 import org.jetbrains.kotlin.test.util.KtTestUtil
 import org.jetbrains.kotlin.test.util.KtTestUtil.getAnnotationsJar
 import org.jetbrains.kotlin.utils.rethrow
@@ -33,7 +35,7 @@ import java.net.MalformedURLException
 import java.net.URL
 import kotlin.script.experimental.api.valueOrNull
 
-abstract class CodegenTestCase : KotlinBaseTest() {
+abstract class CodegenTestCase : KtUsefulTestCase(), FrontendBackendConfiguration {
     @JvmField
     protected var myEnvironment: KotlinCoreEnvironment? = null
 
@@ -52,6 +54,16 @@ abstract class CodegenTestCase : KotlinBaseTest() {
 
     protected var configurationKind: ConfigurationKind = ConfigurationKind.JDK_ONLY
 
+    protected fun createConfiguration(
+        kind: ConfigurationKind,
+        jdkKind: TestJdkKind,
+        classpath: List<File>,
+    ): CompilerConfiguration {
+        val configuration = KotlinTestUtils.newConfiguration(kind, jdkKind, classpath, emptyList())
+        updateConfiguration(configuration)
+        return configuration
+    }
+
     protected fun createEnvironmentWithMockJdkAndIdeaAnnotations(configurationKind: ConfigurationKind) {
         checkTestInfrastructure(myEnvironment == null) { "must not set up myEnvironment twice" }
         val configuration = createConfiguration(
@@ -65,6 +77,8 @@ abstract class CodegenTestCase : KotlinBaseTest() {
         )
         setupEnvironment(myEnvironment!!)
     }
+
+    protected open fun setupEnvironment(environment: KotlinCoreEnvironment) {}
 
     @Throws(Exception::class)
     override fun tearDown() {
@@ -256,7 +270,7 @@ abstract class CodegenTestCase : KotlinBaseTest() {
         return CodegenTestUtil.findDeclaredMethodByName(generateFacadeClass(), name)
     }
 
-    override fun updateConfiguration(configuration: CompilerConfiguration) {
+    protected open fun updateConfiguration(configuration: CompilerConfiguration) {
         setCustomDefaultJvmTarget(configuration)
         configureIrFir(configuration)
     }
