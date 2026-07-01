@@ -93,7 +93,6 @@ private fun JavaExec.wireFromTestTask(peerTaskName: String) {
     enableAssertions = testTask.enableAssertions
     minHeapSize = testTask.minHeapSize
     maxHeapSize = testTask.maxHeapSize
-    jvmArgumentProviders += testTask.jvmArgumentProviders
     javaLauncher = testTask.javaLauncher
 
     /**
@@ -105,6 +104,12 @@ private fun JavaExec.wireFromTestTask(peerTaskName: String) {
     systemProperties = testTask.systemProperties.filterKeys {
         !it.startsWith("java.security.") && !it.startsWith("test.instrumenter.")
     }
+
+    /**
+     * Filter out JVM argument provider used by `test-inputs-check-v2`
+     */
+    jvmArgumentProviders += testTask.jvmArgumentProviders
+        .filter { it !is JfrArgumentProvider }
 
     // Forward idea.active to enable IDE integration in TestDataManagerRunner
     if (project.providers.systemProperty("idea.active").isPresent) {
