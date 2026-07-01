@@ -39,8 +39,8 @@ import org.jetbrains.kotlin.test.KotlinTestUtils.newConfiguration
 import org.jetbrains.kotlin.test.util.JUnit4Assertions
 import org.jetbrains.kotlin.test.util.KtTestUtil
 import org.jetbrains.kotlin.test.util.RecursiveDescriptorComparatorAdaptor.validateAndCompareDescriptorWithFile
-import org.junit.Assert
 import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertTrue
 import java.io.File
 import java.io.IOException
 import java.lang.annotation.Retention
@@ -55,7 +55,7 @@ abstract class AbstractCompileJavaAgainstKotlinTest : TestCaseWithTmpdir() {
     }
 
     protected open fun doTest(ktFilePath: String, useJavac: Boolean) {
-        Assert.assertTrue(ktFilePath.endsWith(".kt"))
+        assertTrue(ktFilePath.endsWith(".kt"))
         val ktFilePath = ForTestCompileRuntime.transformTestDataPath(ktFilePath).absolutePath
         val ktFile = File(ktFilePath)
         val javaFile = File(ktFilePath.replaceFirst("\\.kt$".toRegex(), ".java"))

@@ -29,7 +29,6 @@ import org.jetbrains.kotlin.util.PerformanceManager;
 import org.jetbrains.kotlin.utils.ExceptionUtilsKt;
 import org.jetbrains.kotlin.utils.KotlinNativePaths;
 import org.jetbrains.kotlin.utils.StringsKt;
-import org.junit.Assert;
 
 import java.io.File;
 import java.io.IOException;
@@ -44,6 +43,7 @@ import static org.jetbrains.kotlin.cli.common.arguments.PreprocessCommandLineArg
 import static org.jetbrains.kotlin.konan.library.NativeLibraryConstantsKt.KONAN_STDLIB_NAME;
 import static org.jetbrains.kotlin.konan.library.NativeLibraryConstantsKt.konanCommonLibraryPath;
 import static org.jetbrains.kotlin.test.TestDataAssertions.assertValueAgnosticEqualsToFile;
+import static org.junit.jupiter.api.Assertions.fail;
 
 public abstract class AbstractCliTest extends TestCaseWithTmpdir {
     private static final String TESTDATA_DIR = "$TESTDATA_DIR$";
@@ -193,7 +193,7 @@ public abstract class AbstractCliTest extends TestCaseWithTmpdir {
 
         if (!diagnostics.isEmpty()) {
             diagnostics.add(0, diagnostics.size() + " problem(s) found:");
-            Assert.fail(StringsKt.join(diagnostics, "\n"));
+            fail(StringsKt.join(diagnostics, "\n"));
         }
     }
 

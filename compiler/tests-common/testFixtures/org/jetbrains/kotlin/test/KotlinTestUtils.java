@@ -45,7 +45,7 @@ import org.jetbrains.kotlin.resolve.lazy.JvmResolveUtil;
 import org.jetbrains.kotlin.storage.LockBasedStorageManager;
 import org.jetbrains.kotlin.test.util.KtTestUtil;
 import org.jetbrains.kotlin.utils.ExceptionUtilsKt;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.TestInfo;
 
 import java.io.File;
@@ -61,6 +61,7 @@ import java.util.regex.Pattern;
 
 import static org.jetbrains.kotlin.test.InTextDirectivesUtils.IGNORE_BACKEND_DIRECTIVE_PREFIXES;
 import static org.jetbrains.kotlin.test.InTextDirectivesUtils.isIgnoredTarget;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class KotlinTestUtils {
     public static final String ACTUAL_DATA_DIFFERS_FROM_FILE_CONTENT = "Actual data differs from file content";
@@ -276,7 +277,7 @@ public class KotlinTestUtils {
             }
         });
 
-        Assert.assertTrue("Exactly two files expected: ", files.size() == 2);
+        assertEquals(2, files.size(), "Exactly two files expected: ");
 
         return files;
     }
