@@ -105,6 +105,10 @@ fun main(args: Array<String>) {
                 model("debug/localVariables")
             }
 
+            testClass<AbstractLocalVariableTableTest> {
+                model("checkLocalVariablesTable")
+            }
+
             testClass<AbstractFirPsiLocalVariableTest> {
                 model("debug/localVariables")
             }
