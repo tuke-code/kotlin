@@ -33,7 +33,7 @@ import java.net.MalformedURLException
 import java.net.URL
 import kotlin.script.experimental.api.valueOrNull
 
-abstract class CodegenTestCase : KotlinBaseTest<KotlinBaseTest.TestFile>() {
+abstract class CodegenTestCase : KotlinBaseTest() {
     @JvmField
     protected var myEnvironment: KotlinCoreEnvironment? = null
 
