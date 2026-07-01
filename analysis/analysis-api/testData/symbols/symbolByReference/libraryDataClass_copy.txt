@@ -34,7 +34,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: true
       hasDefaultValue: true
       isActual: false
@@ -52,6 +51,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: name
       origin: LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []

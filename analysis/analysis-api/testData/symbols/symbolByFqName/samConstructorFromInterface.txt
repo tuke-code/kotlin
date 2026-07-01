@@ -25,7 +25,6 @@ KaSamConstructorSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -43,6 +42,7 @@ KaSamConstructorSymbol:
       modality: FINAL
       name: function
       origin: SAM_CONSTRUCTOR
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaFunctionType:
         annotations: []

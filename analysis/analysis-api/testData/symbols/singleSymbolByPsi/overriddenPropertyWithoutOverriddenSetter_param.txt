@@ -3,7 +3,6 @@ KaValueParameterSymbol:
   callableId: null
   contextParameters: []
   contextReceivers: []
-  generatedPrimaryConstructorProperty: KaKotlinPropertySymbol(pack/Impl.bar)
   hasDeclaredDefaultValue: false
   hasDefaultValue: false
   isActual: false
@@ -21,6 +20,7 @@ KaValueParameterSymbol:
   modality: FINAL
   name: bar
   origin: SOURCE
+  primaryConstructorProperty: KaKotlinPropertySymbol(pack/Impl.bar)
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -128,7 +128,6 @@ KaKotlinPropertySymbol:
     callableId: null
     contextParameters: []
     contextReceivers: []
-    generatedPrimaryConstructorProperty: KaKotlinPropertySymbol(pack/Impl.bar)
     hasDeclaredDefaultValue: false
     hasDefaultValue: false
     isActual: false
@@ -146,6 +145,7 @@ KaKotlinPropertySymbol:
     modality: FINAL
     name: bar
     origin: SOURCE
+    primaryConstructorProperty: KaKotlinPropertySymbol(pack/Impl.bar)
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -184,7 +184,6 @@ KaKotlinPropertySymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -202,6 +201,7 @@ KaKotlinPropertySymbol:
       modality: FINAL
       name: value
       origin: SOURCE
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -224,7 +224,6 @@ KaKotlinPropertySymbol:
         callableId: null
         contextParameters: []
         contextReceivers: []
-        generatedPrimaryConstructorProperty: null
         hasDeclaredDefaultValue: false
         hasDefaultValue: false
         isActual: false
@@ -242,6 +241,7 @@ KaKotlinPropertySymbol:
         modality: FINAL
         name: value
         origin: SOURCE
+        primaryConstructorProperty: null
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []

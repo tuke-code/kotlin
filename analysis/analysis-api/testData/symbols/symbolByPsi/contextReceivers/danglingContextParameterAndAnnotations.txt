@@ -26,7 +26,6 @@ KaConstructorSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: KaKotlinPropertySymbol(/Anno.position)
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -44,6 +43,7 @@ KaConstructorSymbol:
       modality: FINAL
       name: position
       origin: SOURCE
+      primaryConstructorProperty: KaKotlinPropertySymbol(/Anno.position)
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []

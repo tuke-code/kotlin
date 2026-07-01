@@ -3,7 +3,6 @@ KaValueParameterSymbol:
   callableId: null
   contextParameters: []
   contextReceivers: []
-  generatedPrimaryConstructorProperty: null
   hasDeclaredDefaultValue: false
   hasDefaultValue: false
   isActual: false
@@ -21,6 +20,7 @@ KaValueParameterSymbol:
   modality: FINAL
   name: it
   origin: SOURCE_MEMBER_GENERATED
+  primaryConstructorProperty: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

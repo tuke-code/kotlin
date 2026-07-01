@@ -360,7 +360,7 @@ public sealed class KaPropertySymbol : KaVariableSymbol(), KaTypeParameterOwnerS
      *
      * `Foo.name` is declared in `Foo`'s primary constructor. The compiler generates a corresponding property which is accessible via the
      * class's [member scope][org.jetbrains.kotlin.analysis.api.components.KaScopeProvider.memberScope], as well as the primary
-     * constructor's value parameters via [KaValueParameterSymbol.generatedPrimaryConstructorProperty].
+     * constructor's value parameters via [KaValueParameterSymbol.primaryConstructorProperty].
      *
      * In contrast, `Foo.count` is not declared in the primary constructor.
      */
@@ -704,7 +704,16 @@ public abstract class KaValueParameterSymbol : KaParameterSymbol() {
      *
      * @see KaKotlinPropertySymbol.primaryConstructorParameter
      */
-    public open val generatedPrimaryConstructorProperty: KaKotlinPropertySymbol? get() = null
+    @Deprecated("Property was renamed. Use 'primaryConstructorProperty' instead.", ReplaceWith("primaryConstructorProperty"))
+    public open val generatedPrimaryConstructorProperty: KaKotlinPropertySymbol? get() = primaryConstructorProperty
+
+    /**
+     * The associated generated [KaPropertySymbol] if this value parameter corresponds to a `val` or `var` property declaration in a primary
+     * constructor.
+     *
+     * @see KaKotlinPropertySymbol.primaryConstructorParameter
+     */
+    public open val primaryConstructorProperty: KaKotlinPropertySymbol? get() = null
 
     abstract override fun createPointer(): KaSymbolPointer<KaValueParameterSymbol>
 }

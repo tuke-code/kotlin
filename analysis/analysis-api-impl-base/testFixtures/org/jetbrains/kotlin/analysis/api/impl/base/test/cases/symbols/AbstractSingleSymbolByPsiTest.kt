@@ -49,7 +49,7 @@ abstract class AbstractSingleSymbolByPsiTest : AbstractSymbolTest() {
             else -> error("Selected element type should be a declaration or a file")
         }
 
-        return SymbolsData(listOfNotNull(symbol, (symbol as? KaValueParameterSymbol)?.generatedPrimaryConstructorProperty))
+        return SymbolsData(listOfNotNull(symbol, (symbol as? KaValueParameterSymbol)?.primaryConstructorProperty))
     }
 }
 

@@ -384,7 +384,7 @@ internal object KDocReferenceResolver {
                     when (declaration) {
                         is KtPrimaryConstructor -> {
                             val valueParameterSymbol = valueParameter.symbol as? KaValueParameterSymbol
-                            val generatedProperty = valueParameterSymbol?.generatedPrimaryConstructorProperty
+                            val generatedProperty = valueParameterSymbol?.primaryConstructorProperty
                             if (generatedProperty != null && contextDeclarationHandlingMode == ContextDeclarationHandlingMode.PropertySymbolsForPropertyParameters) {
                                 add(generatedProperty)
                             } else {

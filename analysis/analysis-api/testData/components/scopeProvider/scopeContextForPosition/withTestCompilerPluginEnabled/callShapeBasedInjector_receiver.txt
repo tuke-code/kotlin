@@ -187,7 +187,6 @@ scopes:
             callableId: null
             contextParameters: []
             contextReceivers: []
-            generatedPrimaryConstructorProperty: null
             hasDeclaredDefaultValue: false
             hasDefaultValue: false
             isActual: false
@@ -205,6 +204,7 @@ scopes:
             modality: FINAL
             name: other
             origin: LIBRARY
+            primaryConstructorProperty: null
             receiverParameter: null
             returnType: KaUsualClassType:
               annotations: []
@@ -318,7 +318,6 @@ scopes:
         callableId: null
         contextParameters: []
         contextReceivers: []
-        generatedPrimaryConstructorProperty: null
         hasDeclaredDefaultValue: false
         hasDefaultValue: false
         isActual: false
@@ -336,6 +335,7 @@ scopes:
         modality: FINAL
         name: df
         origin: SOURCE
+        primaryConstructorProperty: null
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -541,7 +541,6 @@ scopes:
             callableId: null
             contextParameters: []
             contextReceivers: []
-            generatedPrimaryConstructorProperty: null
             hasDeclaredDefaultValue: false
             hasDefaultValue: false
             isActual: false
@@ -559,6 +558,7 @@ scopes:
             modality: FINAL
             name: columnName
             origin: SOURCE
+            primaryConstructorProperty: null
             receiverParameter: null
             returnType: KaUsualClassType:
               annotations: []
@@ -570,7 +570,6 @@ scopes:
             callableId: null
             contextParameters: []
             contextReceivers: []
-            generatedPrimaryConstructorProperty: null
             hasDeclaredDefaultValue: false
             hasDefaultValue: false
             isActual: false
@@ -588,6 +587,7 @@ scopes:
             modality: FINAL
             name: expression
             origin: SOURCE
+            primaryConstructorProperty: null
             receiverParameter: null
             returnType: KaFunctionType:
               annotations: []
@@ -636,7 +636,6 @@ scopes:
             callableId: null
             contextParameters: []
             contextReceivers: []
-            generatedPrimaryConstructorProperty: null
             hasDeclaredDefaultValue: false
             hasDefaultValue: false
             isActual: false
@@ -654,6 +653,7 @@ scopes:
             modality: FINAL
             name: df
             origin: SOURCE
+            primaryConstructorProperty: null
             receiverParameter: null
             returnType: KaUsualClassType:
               annotations: []

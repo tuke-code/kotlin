@@ -298,7 +298,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -316,6 +315,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: index
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -377,7 +377,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -395,6 +394,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: index
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -456,7 +456,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -474,6 +473,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: beginIndex
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -490,7 +490,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -508,6 +507,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: endIndex
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -569,7 +569,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -587,6 +586,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: index
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -603,7 +603,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -621,6 +620,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: codePointOffset
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -682,7 +682,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -700,6 +699,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: dst
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -715,7 +715,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -733,6 +732,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: dstBegin
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -794,7 +794,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -812,6 +811,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: srcBegin
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -828,7 +828,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -846,6 +845,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: srcEnd
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -862,7 +862,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -880,6 +879,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: dst
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -895,7 +895,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -913,6 +912,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: dstBegin
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -977,7 +977,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -995,6 +994,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: srcBegin
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -1011,7 +1011,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -1029,6 +1028,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: srcEnd
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -1045,7 +1045,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -1063,6 +1062,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: dst
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -1078,7 +1078,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -1096,6 +1095,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: dstBegin
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -1156,7 +1156,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -1174,6 +1173,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: charsetName
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -1233,7 +1233,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -1251,6 +1250,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: charset
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -1354,7 +1354,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -1372,6 +1371,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: anObject
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -1433,7 +1433,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -1451,6 +1450,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: sb
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -1511,7 +1511,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -1529,6 +1528,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: cs
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -1589,7 +1589,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -1607,6 +1606,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: anotherString
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -1667,7 +1667,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -1685,6 +1684,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: anotherString
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -1745,7 +1745,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -1763,6 +1762,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: str
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -1823,7 +1823,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -1841,6 +1840,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: toffset
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -1857,7 +1857,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -1875,6 +1874,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: other
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -1890,7 +1890,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -1908,6 +1907,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: ooffset
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -1924,7 +1924,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -1942,6 +1941,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: len
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -2003,7 +2003,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -2021,6 +2020,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: ignoreCase
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -2037,7 +2037,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -2055,6 +2054,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: toffset
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -2071,7 +2071,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -2089,6 +2088,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: other
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -2104,7 +2104,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -2122,6 +2121,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: ooffset
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -2138,7 +2138,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -2156,6 +2155,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: len
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -2217,7 +2217,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -2235,6 +2234,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: prefix
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -2250,7 +2250,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -2268,6 +2267,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: toffset
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -2329,7 +2329,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -2347,6 +2346,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: prefix
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -2407,7 +2407,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -2425,6 +2424,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: suffix
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -2529,7 +2529,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -2547,6 +2546,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: ch
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -2608,7 +2608,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -2626,6 +2625,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: ch
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -2642,7 +2642,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -2660,6 +2659,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: fromIndex
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -2721,7 +2721,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -2739,6 +2738,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: str
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -2799,7 +2799,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -2817,6 +2816,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: str
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -2832,7 +2832,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -2850,6 +2849,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: fromIndex
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -2911,7 +2911,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -2929,6 +2928,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: ch
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -2945,7 +2945,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -2963,6 +2962,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: fromIndex
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -3024,7 +3024,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -3042,6 +3041,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: ch
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -3103,7 +3103,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -3121,6 +3120,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: ch
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -3137,7 +3137,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -3155,6 +3154,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: fromIndex
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -3216,7 +3216,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -3234,6 +3233,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: str
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -3294,7 +3294,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -3312,6 +3311,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: str
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -3327,7 +3327,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -3345,6 +3344,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: fromIndex
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -3406,7 +3406,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -3424,6 +3423,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: ch
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -3440,7 +3440,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -3458,6 +3457,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: fromIndex
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -3518,7 +3518,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -3536,6 +3535,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: beginIndex
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -3596,7 +3596,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -3614,6 +3613,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: beginIndex
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -3630,7 +3630,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -3648,6 +3647,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: endIndex
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -3709,7 +3709,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -3727,6 +3726,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: beginIndex
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -3743,7 +3743,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -3761,6 +3760,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: endIndex
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -3821,7 +3821,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -3839,6 +3838,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: str
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -3898,7 +3898,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -3916,6 +3915,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: oldChar
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -3932,7 +3932,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -3950,6 +3949,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: newChar
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -4010,7 +4010,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -4028,6 +4027,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: target
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -4043,7 +4043,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -4061,6 +4060,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: replacement
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -4121,7 +4121,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -4139,6 +4138,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: regex
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -4199,7 +4199,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -4217,6 +4216,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: s
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -4276,7 +4276,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -4294,6 +4293,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: regex
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -4309,7 +4309,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -4327,6 +4326,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: replacement
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -4386,7 +4386,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -4404,6 +4403,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: regex
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -4419,7 +4419,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -4437,6 +4436,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: replacement
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -4496,7 +4496,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -4514,6 +4513,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: regex
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -4529,7 +4529,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -4547,6 +4546,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: limit
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -4607,7 +4607,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -4625,6 +4624,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: regex
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -4684,7 +4684,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -4702,6 +4701,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: locale
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -4804,7 +4804,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -4822,6 +4821,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: locale
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -5098,7 +5098,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -5116,6 +5115,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: index
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -5242,7 +5242,6 @@ KaConstructorSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -5260,6 +5259,7 @@ KaConstructorSymbol:
       modality: FINAL
       name: original
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -5306,7 +5306,6 @@ KaConstructorSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -5324,6 +5323,7 @@ KaConstructorSymbol:
       modality: FINAL
       name: value
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -5370,7 +5370,6 @@ KaConstructorSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -5388,6 +5387,7 @@ KaConstructorSymbol:
       modality: FINAL
       name: value
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -5403,7 +5403,6 @@ KaConstructorSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -5421,6 +5420,7 @@ KaConstructorSymbol:
       modality: FINAL
       name: offset
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -5437,7 +5437,6 @@ KaConstructorSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -5455,6 +5454,7 @@ KaConstructorSymbol:
       modality: FINAL
       name: count
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -5502,7 +5502,6 @@ KaConstructorSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -5520,6 +5519,7 @@ KaConstructorSymbol:
       modality: FINAL
       name: codePoints
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -5535,7 +5535,6 @@ KaConstructorSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -5553,6 +5552,7 @@ KaConstructorSymbol:
       modality: FINAL
       name: offset
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -5569,7 +5569,6 @@ KaConstructorSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -5587,6 +5586,7 @@ KaConstructorSymbol:
       modality: FINAL
       name: count
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -5637,7 +5637,6 @@ KaConstructorSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -5655,6 +5654,7 @@ KaConstructorSymbol:
       modality: FINAL
       name: ascii
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -5670,7 +5670,6 @@ KaConstructorSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -5688,6 +5687,7 @@ KaConstructorSymbol:
       modality: FINAL
       name: hibyte
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -5704,7 +5704,6 @@ KaConstructorSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -5722,6 +5721,7 @@ KaConstructorSymbol:
       modality: FINAL
       name: offset
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -5738,7 +5738,6 @@ KaConstructorSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -5756,6 +5755,7 @@ KaConstructorSymbol:
       modality: FINAL
       name: count
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -5806,7 +5806,6 @@ KaConstructorSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -5824,6 +5823,7 @@ KaConstructorSymbol:
       modality: FINAL
       name: ascii
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -5839,7 +5839,6 @@ KaConstructorSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -5857,6 +5856,7 @@ KaConstructorSymbol:
       modality: FINAL
       name: hibyte
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -5904,7 +5904,6 @@ KaConstructorSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -5922,6 +5921,7 @@ KaConstructorSymbol:
       modality: FINAL
       name: bytes
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -5937,7 +5937,6 @@ KaConstructorSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -5955,6 +5954,7 @@ KaConstructorSymbol:
       modality: FINAL
       name: offset
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -5971,7 +5971,6 @@ KaConstructorSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -5989,6 +5988,7 @@ KaConstructorSymbol:
       modality: FINAL
       name: length
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -6005,7 +6005,6 @@ KaConstructorSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -6023,6 +6022,7 @@ KaConstructorSymbol:
       modality: FINAL
       name: charsetName
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -6069,7 +6069,6 @@ KaConstructorSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -6087,6 +6086,7 @@ KaConstructorSymbol:
       modality: FINAL
       name: bytes
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -6102,7 +6102,6 @@ KaConstructorSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -6120,6 +6119,7 @@ KaConstructorSymbol:
       modality: FINAL
       name: offset
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -6136,7 +6136,6 @@ KaConstructorSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -6154,6 +6153,7 @@ KaConstructorSymbol:
       modality: FINAL
       name: length
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -6170,7 +6170,6 @@ KaConstructorSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -6188,6 +6187,7 @@ KaConstructorSymbol:
       modality: FINAL
       name: charset
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -6234,7 +6234,6 @@ KaConstructorSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -6252,6 +6251,7 @@ KaConstructorSymbol:
       modality: FINAL
       name: bytes
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -6267,7 +6267,6 @@ KaConstructorSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -6285,6 +6284,7 @@ KaConstructorSymbol:
       modality: FINAL
       name: charsetName
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -6331,7 +6331,6 @@ KaConstructorSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -6349,6 +6348,7 @@ KaConstructorSymbol:
       modality: FINAL
       name: bytes
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -6364,7 +6364,6 @@ KaConstructorSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -6382,6 +6381,7 @@ KaConstructorSymbol:
       modality: FINAL
       name: charset
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -6428,7 +6428,6 @@ KaConstructorSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -6446,6 +6445,7 @@ KaConstructorSymbol:
       modality: FINAL
       name: bytes
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -6461,7 +6461,6 @@ KaConstructorSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -6479,6 +6478,7 @@ KaConstructorSymbol:
       modality: FINAL
       name: offset
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -6495,7 +6495,6 @@ KaConstructorSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -6513,6 +6512,7 @@ KaConstructorSymbol:
       modality: FINAL
       name: length
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -6560,7 +6560,6 @@ KaConstructorSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -6578,6 +6577,7 @@ KaConstructorSymbol:
       modality: FINAL
       name: bytes
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -6624,7 +6624,6 @@ KaConstructorSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -6642,6 +6641,7 @@ KaConstructorSymbol:
       modality: FINAL
       name: buffer
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -6688,7 +6688,6 @@ KaConstructorSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -6706,6 +6705,7 @@ KaConstructorSymbol:
       modality: FINAL
       name: builder
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -6752,7 +6752,6 @@ KaConstructorSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -6770,6 +6769,7 @@ KaConstructorSymbol:
       modality: FINAL
       name: value
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -6785,7 +6785,6 @@ KaConstructorSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -6803,6 +6802,7 @@ KaConstructorSymbol:
       modality: FINAL
       name: share
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -6853,7 +6853,6 @@ KaConstructorSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -6871,6 +6870,7 @@ KaConstructorSymbol:
       modality: FINAL
       name: offset
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -6887,7 +6887,6 @@ KaConstructorSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -6905,6 +6904,7 @@ KaConstructorSymbol:
       modality: FINAL
       name: count
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -6921,7 +6921,6 @@ KaConstructorSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -6939,6 +6938,7 @@ KaConstructorSymbol:
       modality: FINAL
       name: value
       origin: JAVA_LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []

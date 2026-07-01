@@ -48,7 +48,6 @@ KaConstructorSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -66,6 +65,7 @@ KaConstructorSymbol:
       modality: FINAL
       name: t
       origin: TYPEALIASED_CONSTRUCTOR
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaTypeParameterType:
         annotations: []

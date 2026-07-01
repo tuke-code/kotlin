@@ -89,7 +89,6 @@ FUNCTIONAL INTERFACE FUNCTION:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -107,6 +106,7 @@ FUNCTIONAL INTERFACE FUNCTION:
       modality: FINAL
       name: i
       origin: SOURCE
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         abbreviation: null

@@ -33,7 +33,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -51,6 +50,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: p1
       origin: LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaTypeParameterType:
         annotations: []
@@ -66,7 +66,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -84,6 +83,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: p2
       origin: LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaTypeParameterType:
         annotations: []
@@ -154,7 +154,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -172,6 +171,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: other
       origin: LIBRARY
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []

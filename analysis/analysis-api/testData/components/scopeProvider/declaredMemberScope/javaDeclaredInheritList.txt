@@ -34,7 +34,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -52,6 +51,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: s
       origin: JAVA_SOURCE
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -111,7 +111,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -129,6 +128,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: index
       origin: JAVA_SOURCE
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []

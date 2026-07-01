@@ -128,7 +128,7 @@ internal class KaFirValueParameterSymbol private constructor(
             KaFirAnnotationListForDeclaration.create(firSymbol, builder)
         }
 
-    override val generatedPrimaryConstructorProperty: KaKotlinPropertySymbol?
+    override val primaryConstructorProperty: KaKotlinPropertySymbol?
         get() = withValidityAssertion {
             if (backingPsi != null) {
                 return if (backingPsi.hasValOrVar() && backingPsi.ownerFunction is KtPrimaryConstructor) {

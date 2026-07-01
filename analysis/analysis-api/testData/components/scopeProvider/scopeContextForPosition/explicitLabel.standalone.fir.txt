@@ -86,7 +86,6 @@ scopes:
             callableId: null
             contextParameters: []
             contextReceivers: []
-            generatedPrimaryConstructorProperty: null
             hasDeclaredDefaultValue: false
             hasDefaultValue: false
             isActual: false
@@ -104,6 +103,7 @@ scopes:
             modality: FINAL
             name: other
             origin: LIBRARY
+            primaryConstructorProperty: null
             receiverParameter: null
             returnType: KaUsualClassType:
               annotations: []
@@ -151,7 +151,6 @@ scopes:
             callableId: null
             contextParameters: []
             contextReceivers: []
-            generatedPrimaryConstructorProperty: null
             hasDeclaredDefaultValue: false
             hasDefaultValue: false
             isActual: false
@@ -169,6 +168,7 @@ scopes:
             modality: FINAL
             name: index
             origin: LIBRARY
+            primaryConstructorProperty: null
             receiverParameter: null
             returnType: KaUsualClassType:
               annotations: []
@@ -213,7 +213,6 @@ scopes:
             callableId: null
             contextParameters: []
             contextReceivers: []
-            generatedPrimaryConstructorProperty: null
             hasDeclaredDefaultValue: false
             hasDefaultValue: false
             isActual: false
@@ -231,6 +230,7 @@ scopes:
             modality: FINAL
             name: startIndex
             origin: LIBRARY
+            primaryConstructorProperty: null
             receiverParameter: null
             returnType: KaUsualClassType:
               annotations: []
@@ -242,7 +242,6 @@ scopes:
             callableId: null
             contextParameters: []
             contextReceivers: []
-            generatedPrimaryConstructorProperty: null
             hasDeclaredDefaultValue: false
             hasDefaultValue: false
             isActual: false
@@ -260,6 +259,7 @@ scopes:
             modality: FINAL
             name: endIndex
             origin: LIBRARY
+            primaryConstructorProperty: null
             receiverParameter: null
             returnType: KaUsualClassType:
               annotations: []
@@ -307,7 +307,6 @@ scopes:
             callableId: null
             contextParameters: []
             contextReceivers: []
-            generatedPrimaryConstructorProperty: null
             hasDeclaredDefaultValue: false
             hasDefaultValue: false
             isActual: false
@@ -325,6 +324,7 @@ scopes:
             modality: FINAL
             name: other
             origin: LIBRARY
+            primaryConstructorProperty: null
             receiverParameter: null
             returnType: KaUsualClassType:
               annotations: []
@@ -372,7 +372,6 @@ scopes:
             callableId: null
             contextParameters: []
             contextReceivers: []
-            generatedPrimaryConstructorProperty: null
             hasDeclaredDefaultValue: false
             hasDefaultValue: false
             isActual: false
@@ -390,6 +389,7 @@ scopes:
             modality: FINAL
             name: other
             origin: LIBRARY
+            primaryConstructorProperty: null
             receiverParameter: null
             returnType: KaUsualClassType:
               annotations: []
@@ -695,7 +695,6 @@ scopes:
             callableId: null
             contextParameters: []
             contextReceivers: []
-            generatedPrimaryConstructorProperty: null
             hasDeclaredDefaultValue: false
             hasDefaultValue: false
             isActual: false
@@ -713,6 +712,7 @@ scopes:
             modality: FINAL
             name: value
             origin: SOURCE
+            primaryConstructorProperty: null
             receiverParameter: null
             returnType: KaUsualClassType:
               annotations: []
@@ -724,7 +724,6 @@ scopes:
             callableId: null
             contextParameters: []
             contextReceivers: []
-            generatedPrimaryConstructorProperty: null
             hasDeclaredDefaultValue: false
             hasDefaultValue: false
             isActual: false
@@ -742,6 +741,7 @@ scopes:
             modality: FINAL
             name: block
             origin: SOURCE
+            primaryConstructorProperty: null
             receiverParameter: null
             returnType: KaFunctionType:
               annotations: []

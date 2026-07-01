@@ -3,7 +3,6 @@ KaValueParameterSymbol:
   callableId: null
   contextParameters: []
   contextReceivers: []
-  generatedPrimaryConstructorProperty: KaKotlinPropertySymbol(pack/Anno.value)
   hasDeclaredDefaultValue: true
   hasDefaultValue: true
   isActual: false
@@ -21,6 +20,7 @@ KaValueParameterSymbol:
   modality: FINAL
   name: value
   origin: SOURCE
+  primaryConstructorProperty: KaKotlinPropertySymbol(pack/Anno.value)
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -128,7 +128,6 @@ KaKotlinPropertySymbol:
     callableId: null
     contextParameters: []
     contextReceivers: []
-    generatedPrimaryConstructorProperty: KaKotlinPropertySymbol(pack/Anno.value)
     hasDeclaredDefaultValue: true
     hasDefaultValue: true
     isActual: false
@@ -146,6 +145,7 @@ KaKotlinPropertySymbol:
     modality: FINAL
     name: value
     origin: SOURCE
+    primaryConstructorProperty: KaKotlinPropertySymbol(pack/Anno.value)
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []

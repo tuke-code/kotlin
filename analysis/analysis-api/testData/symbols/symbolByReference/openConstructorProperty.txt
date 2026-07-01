@@ -93,7 +93,6 @@ KaKotlinPropertySymbol:
     callableId: null
     contextParameters: []
     contextReceivers: []
-    generatedPrimaryConstructorProperty: KaKotlinPropertySymbol(/Test.property)
     hasDeclaredDefaultValue: false
     hasDefaultValue: false
     isActual: false
@@ -111,6 +110,7 @@ KaKotlinPropertySymbol:
     modality: FINAL
     name: property
     origin: SOURCE
+    primaryConstructorProperty: KaKotlinPropertySymbol(/Test.property)
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []

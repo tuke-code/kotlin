@@ -34,7 +34,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -52,6 +51,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: inlineParameter
       origin: SOURCE
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaFunctionType:
         annotations: []
@@ -73,7 +73,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -91,6 +90,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: crossinlineParameter
       origin: SOURCE
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaFunctionType:
         annotations: []
@@ -112,7 +112,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -130,6 +129,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: noinlineParameter
       origin: SOURCE
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaFunctionType:
         annotations: []

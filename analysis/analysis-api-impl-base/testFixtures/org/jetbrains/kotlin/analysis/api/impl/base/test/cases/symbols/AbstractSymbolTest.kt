@@ -212,25 +212,25 @@ abstract class AbstractSymbolTest : AbstractAnalysisApiBasedTest() {
          *
          * E.g., if the backing PSI was dropped for some [KaPropertySymbol], its [KaKotlinPropertySymbol.primaryConstructorParameter]
          * will still have the backing PSI that was restored from the FIR.
-         * So check like `KaPropertySymbol == KaKotlinPropertySymbol.primaryConstructorParameter.generatedPrimaryConstructorProperty`
+         * So check like `KaPropertySymbol == KaKotlinPropertySymbol.primaryConstructorParameter.primaryConstructorProperty`
          * will always fail for nonPsi version as the symbol on the RHS will have some restored PSI, while the LHS symbol has it dropped.
          */
         fun <S : KaSymbol> S.dropPsiIfNeeded(): S = also { if (disablePsiBasedLogic) it.dropBackingPsi() }
 
         when (symbol) {
             is KaValueParameterSymbol -> {
-                val generatedPropertySymbol = symbol.generatedPrimaryConstructorProperty
+                val generatedPropertySymbol = symbol.primaryConstructorProperty
                 if (generatedPropertySymbol != null) {
                     check(generatedPropertySymbol.primaryConstructorParameter?.dropPsiIfNeeded() == symbol) {
-                        "'generatedPrimaryConstructorProperty' must be consistent with 'primaryConstructorParameter'"
+                        "'primaryConstructorProperty' must be consistent with 'primaryConstructorParameter'"
                     }
                 }
             }
             is KaKotlinPropertySymbol -> {
                 val parameterSymbol = symbol.primaryConstructorParameter
                 if (parameterSymbol != null) {
-                    check(parameterSymbol.generatedPrimaryConstructorProperty?.dropPsiIfNeeded() == symbol) {
-                        "'generatedPrimaryConstructorProperty' must be consistent with 'primaryConstructorParameter'"
+                    check(parameterSymbol.primaryConstructorProperty?.dropPsiIfNeeded() == symbol) {
+                        "'primaryConstructorProperty' must be consistent with 'primaryConstructorParameter'"
                     }
                 }
             }
@@ -563,7 +563,7 @@ private fun KaSymbol?.withImplicitSymbols(): Sequence<KaSymbol> {
         }
 
         if (ktSymbol is KaValueParameterSymbol) {
-            yieldAll(ktSymbol.generatedPrimaryConstructorProperty.withImplicitSymbols())
+            yieldAll(ktSymbol.primaryConstructorProperty.withImplicitSymbols())
         }
     }
 }

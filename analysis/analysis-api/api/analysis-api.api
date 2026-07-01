@@ -1399,6 +1399,7 @@ public abstract class org/jetbrains/kotlin/analysis/api/symbols/KaValueParameter
 	public fun getGeneratedPrimaryConstructorProperty ()Lorg/jetbrains/kotlin/analysis/api/symbols/KaKotlinPropertySymbol;
 	public abstract fun getHasDefaultValue ()Z
 	public abstract fun getName ()Lorg/jetbrains/kotlin/name/Name;
+	public fun getPrimaryConstructorProperty ()Lorg/jetbrains/kotlin/analysis/api/symbols/KaKotlinPropertySymbol;
 	public abstract fun isCrossinline ()Z
 	public abstract fun isImplicitLambdaParameter ()Z
 	public abstract fun isNoinline ()Z

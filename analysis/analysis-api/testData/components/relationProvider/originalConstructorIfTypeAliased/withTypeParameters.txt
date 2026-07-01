@@ -49,7 +49,6 @@ Resolved constructor:
         callableId: null
         contextParameters: []
         contextReceivers: []
-        generatedPrimaryConstructorProperty: null
         hasDeclaredDefaultValue: false
         hasDefaultValue: false
         isActual: false
@@ -67,6 +66,7 @@ Resolved constructor:
         modality: FINAL
         name: t
         origin: TYPEALIASED_CONSTRUCTOR
+        primaryConstructorProperty: null
         receiverParameter: null
         returnType: KaTypeParameterType:
           annotations: []
@@ -136,7 +136,6 @@ Original constructor if type aliased:
         callableId: null
         contextParameters: []
         contextReceivers: []
-        generatedPrimaryConstructorProperty: null
         hasDeclaredDefaultValue: false
         hasDefaultValue: false
         isActual: false
@@ -154,6 +153,7 @@ Original constructor if type aliased:
         modality: FINAL
         name: t
         origin: SOURCE
+        primaryConstructorProperty: null
         receiverParameter: null
         returnType: KaTypeParameterType:
           annotations: []

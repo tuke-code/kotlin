@@ -151,7 +151,6 @@ KaConstructorSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -169,6 +168,7 @@ KaConstructorSymbol:
       modality: FINAL
       name: integer
       origin: JAVA_SOURCE
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []

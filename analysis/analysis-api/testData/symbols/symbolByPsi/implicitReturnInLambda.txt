@@ -52,7 +52,6 @@ KaAnonymousFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -70,6 +69,7 @@ KaAnonymousFunctionSymbol:
       modality: FINAL
       name: a
       origin: SOURCE
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -181,7 +181,6 @@ KaAnonymousFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -199,6 +198,7 @@ KaAnonymousFunctionSymbol:
       modality: FINAL
       name: a
       origin: SOURCE
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -310,7 +310,6 @@ KaAnonymousFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -328,6 +327,7 @@ KaAnonymousFunctionSymbol:
       modality: FINAL
       name: it
       origin: SOURCE_MEMBER_GENERATED
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -423,7 +423,6 @@ KaNamedFunctionSymbol:
       callableId: null
       contextParameters: []
       contextReceivers: []
-      generatedPrimaryConstructorProperty: null
       hasDeclaredDefaultValue: false
       hasDefaultValue: false
       isActual: false
@@ -441,6 +440,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: lmbd
       origin: SOURCE
+      primaryConstructorProperty: null
       receiverParameter: null
       returnType: KaFunctionType:
         annotations: []
