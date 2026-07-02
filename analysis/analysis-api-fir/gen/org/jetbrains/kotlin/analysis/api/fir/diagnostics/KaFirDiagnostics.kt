@@ -290,6 +290,10 @@ sealed interface KaFirDiagnostic<PSI : PsiElement> : KaDiagnosticWithPsi<PSI> {
         override val diagnosticClass get() = ParenthesizedPackageQualifierWarning::class
     }
 
+    interface KotlinPackageUsage : KaFirDiagnostic<PsiElement> {
+        override val diagnosticClass get() = KotlinPackageUsage::class
+    }
+
     interface UnsupportedArrayLiteralOutsideOfAnnotationError : KaFirDiagnostic<PsiElement> {
         override val diagnosticClass get() = UnsupportedArrayLiteralOutsideOfAnnotationError::class
     }
