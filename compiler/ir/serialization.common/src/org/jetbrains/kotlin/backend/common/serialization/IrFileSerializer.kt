@@ -510,7 +510,7 @@ open class IrFileSerializer(
                 },
                 classifier = type.classifierOrNull,
                 nullability = (type as? IrSimpleType)?.nullability,
-                arguments = (type as? IrSimpleType)?.arguments?.map { it.toIrTypeArgumentDeduplicationKey },
+                arguments = type.arguments?.map { it.toIrTypeArgumentDeduplicationKey },
                 annotations = type.annotations,
             )
         }
