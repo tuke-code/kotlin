@@ -2,8 +2,9 @@
 // IGNORE_BACKEND: NATIVE
 // ISSUE: KT-84267 K/Wasm: init order of companion objects is different from JVM
 // ISSUE: KT-86640 K/Wasm: cross-module signature mismatch for parent companion getInstance
-// IGNORE_KLIB_RUNTIME_ERRORS_WITH_CUSTOM_SECOND_STAGE: Wasm-js:2.3,2.4
-// ^^^KT-84267 is fixed in 2.4.20-beta1
+// IGNORE_KLIB_RUNTIME_ERRORS_WITH_CUSTOM_SECOND_STAGE: JS,Wasm-js:2.3,2.4
+// ^^^KT-84267 is fixed in 2.4.20-beta1 for Wasm
+// ^^^KT-40768 is fixed in 2.4.20-beta1 for JS
 
 // MODULE: lib
 // FILE: lib.kt
