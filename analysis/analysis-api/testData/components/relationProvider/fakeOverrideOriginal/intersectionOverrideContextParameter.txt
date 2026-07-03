@@ -15,7 +15,7 @@ FAKE_OVERRIDE_ORIGINAL:
     location: LOCAL
     modality: FINAL
     name: c
-    origin: SOURCE
+    origin: INTERSECTION_OVERRIDE
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -23,4 +23,4 @@ FAKE_OVERRIDE_ORIGINAL:
       type: kotlin/Int
     typeParameters: []
     visibility: PUBLIC
-    containingDeclaration: test/A.foo
+    containingDeclaration: test/C.foo

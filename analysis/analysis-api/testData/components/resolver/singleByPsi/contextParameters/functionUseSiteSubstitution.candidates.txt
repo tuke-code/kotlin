@@ -86,7 +86,7 @@ KtCallExpression(168,182): 'foo(1L, "str")'
             name = <unused var>
             receiverType = null
             returnType = kotlin.Long
-            symbol = <unused var>: kotlin.Long
+            symbol = <unused var>: T
             contextParameters = []
             callableId = null,
           KaVariableSignature:

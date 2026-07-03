@@ -1,7 +1,7 @@
 context(xx@Int)
 fun <T> Int.foo(x: T) fromClass Delegating
   T from /Delegating.foo
-  xx: Int from /I.foo
+  xx: Int from /Delegating.foo
   receiver Int from /Delegating.foo
   x: T from /Delegating.foo
 

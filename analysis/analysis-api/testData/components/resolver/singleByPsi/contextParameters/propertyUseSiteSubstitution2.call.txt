@@ -79,7 +79,7 @@ KtNameReferenceExpression(170,173): 'foo'
             name = c
             receiverType = null
             returnType = kotlin.Boolean
-            symbol = c: kotlin.Boolean
+            symbol = c: C
             contextParameters = []
             callableId = null
         ]

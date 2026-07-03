@@ -1,7 +1,7 @@
 context(c@T)
 fun <T> Int.foo(x: T) fromClass Y
   T from /Y.foo
-  c: T from /A.foo
+  c: T from /Y.foo
   receiver Int from /Y.foo
   x: T from /Y.foo
 

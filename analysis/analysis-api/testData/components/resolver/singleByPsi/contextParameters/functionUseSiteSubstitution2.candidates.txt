@@ -68,7 +68,7 @@ KtDotQualifiedExpression(257,274): 's.foo(this@usage)'
             name = c
             receiverType = null
             returnType = kotlin.Int
-            symbol = c: kotlin.Int
+            symbol = c: A
             contextParameters = []
             callableId = null
         ]
