@@ -4,7 +4,6 @@ import org.jetbrains.kotlin.gradle.targets.js.yarn.YarnPlugin
 import org.jetbrains.kotlin.gradle.targets.js.yarn.YarnRootEnvSpec
 import org.jetbrains.kotlin.gradle.targets.wasm.yarn.WasmYarnPlugin
 import org.jetbrains.kotlin.gradle.targets.wasm.yarn.WasmYarnRootEnvSpec
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
 import org.jetbrains.kotlin.testFederation.TestFederationInferAffectedDomainsTask
 
 buildscript {
@@ -237,6 +236,7 @@ dependencies {
 
 tasks {
     register("compileAll") {
+        doNotTrackState("This is just a lifecycle task to compile all, we don't want to hash the inputs.")
         /*
          * Build cache tests don't work properly with KMP projects,
          * so such projects are temporarily excluded from them (KTI-2822)
@@ -247,14 +247,16 @@ tasks {
             ":plugins:plugin-sandbox:plugin-annotations",
             ":kotlin-power-assert-runtime",
         )
-        allprojects
+        val projectsToRun = allprojects
             .filter {
                 excludedNativePrefixes.none(it.path::startsWith) || kotlinBuildProperties.isKotlinNativeEnabled.get()
-            }
-            .forEach {
-                dependsOn(it.tasks.withType<KotlinCompilationTask<*>>())
-                dependsOn(it.tasks.withType<JavaCompile>())
-            }
+            }.map { it.path }
+        val conf: FileCollection = configurations.detachedConfiguration(
+            *projectsToRun.map {
+                this.project.dependencies.project(it, configuration = "compileAll")
+            }.toTypedArray()
+        ).incoming.artifactView { lenient(true) }.files
+        inputs.files(conf).withNormalizer(ClasspathNormalizer::class.java)
     }
 
     named<Delete>("clean") {

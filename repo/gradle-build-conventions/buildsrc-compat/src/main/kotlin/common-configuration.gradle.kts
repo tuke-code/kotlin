@@ -9,6 +9,7 @@ import org.jetbrains.kotlin.gradle.plugin.KotlinBasePluginWrapper
 import org.jetbrains.kotlin.gradle.plugin.kotlinToolingVersion
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompileCommon
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompileTool
 import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 
 // Contains common configuration that should be applied to all projects
@@ -32,6 +33,7 @@ project.checkNoApiDependenciesOnK1Modules()
 project.configureMigratedRootSettings()
 project.configureJsCacheRedirector()
 project.configurePublishingRetry()
+project.exposeCompileAllConfiguration()
 
 // There are problems with common build dir:
 //  - some tests (in particular js and binary-compatibility-validator depend on the fixed (default) location
@@ -537,6 +539,22 @@ fun Project.configureMigratedRootSettings() {
                     }
                 }
             }
+        }
+    }
+}
+
+fun Project.exposeCompileAllConfiguration() {
+    val compileAllConfig = configurations.consumable("compileAll")
+    afterEvaluate {
+        val kotlinCompileToolNames = tasks.withType<KotlinCompileTool>().names
+        val javaCompileNames = tasks.withType<JavaCompile>().names
+        kotlinCompileToolNames.forEach {
+            val task = tasks.named<KotlinCompileTool>(it)
+            artifacts.add(compileAllConfig.name, task.map { it.destinationDirectory }) { builtBy(task) }
+        }
+        javaCompileNames.forEach {
+            val task = tasks.named<JavaCompile>(it)
+            artifacts.add(compileAllConfig.name, task.map { it.destinationDirectory }) { builtBy(task) }
         }
     }
 }
