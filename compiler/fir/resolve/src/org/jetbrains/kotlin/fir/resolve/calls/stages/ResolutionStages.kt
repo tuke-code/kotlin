@@ -980,9 +980,6 @@ internal object CheckIncompatibleTypeVariableUpperBounds : ResolutionStage() {
                         emptyIntersectionTypeInfo.casingTypes.toList() as List<ConeKotlinType>,
                         variableWithConstraints.typeVariable.asCone(),
                         emptyIntersectionTypeInfo.kind,
-                        isError = context.session.languageVersionSettings.supportsFeature(
-                            LanguageFeature.ForbidInferringTypeVariablesIntoEmptyIntersection
-                        )
                     )
                 )
             }
