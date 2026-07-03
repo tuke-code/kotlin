@@ -54,6 +54,7 @@ import org.jetbrains.kotlin.types.AbstractTypeChecker
 import org.jetbrains.kotlin.types.TypeApproximatorConfiguration
 import org.jetbrains.kotlin.types.model.TypeVariableTypeConstructorMarker
 import org.jetbrains.kotlin.types.model.typeConstructor
+import org.jetbrains.kotlin.util.OnlyForDefaultLanguageFeatureDisabled
 import org.jetbrains.kotlin.utils.addToStdlib.runIf
 import org.jetbrains.kotlin.utils.addToStdlib.unreachableBranch
 
@@ -860,8 +861,8 @@ internal object EagerResolveOfCallableReferences : ResolutionStage() {
                     if (AbstractTypeChecker.RUN_SLOW_ASSERTIONS) check(atom in candidate.postponedAtoms)
 
                     sink.yieldDiagnostic(UnsuccessfulCallableReferenceArgument)
-                } else when (applicability) {
-                    CandidateApplicability.RESOLVED_NEED_PRESERVE_COMPATIBILITY ->
+                } else @OptIn(OnlyForDefaultLanguageFeatureDisabled::class) when (applicability) {
+                    CandidateApplicability.RESOLVED_NEED_PRESERVE_COMPATIBILITY /* DisableCompatibilityModeForNewInference, PrioritizedEnumEntries */ ->
                         sink.reportDiagnostic(LowerPriorityToPreserveCompatibilityDiagnostic)
                     else -> {
                     }
