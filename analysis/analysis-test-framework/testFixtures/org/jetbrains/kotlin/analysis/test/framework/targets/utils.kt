@@ -11,6 +11,7 @@ import org.jetbrains.kotlin.analysis.api.scopes.combinedDeclaredMemberScope
 import org.jetbrains.kotlin.analysis.api.scopes.combinedMemberScope
 import org.jetbrains.kotlin.analysis.api.symbols.KaCallableSymbol
 import org.jetbrains.kotlin.analysis.api.symbols.KaClassSymbol
+import org.jetbrains.kotlin.analysis.api.symbols.containingDeclaration
 import org.jetbrains.kotlin.name.CallableId
 
 context(_: KaSession)
@@ -39,5 +40,6 @@ internal fun findMatchingCallableSymbols(callableId: CallableId, classSymbol: Ka
     // Fake overrides are absent in the declared member scope.
     return classSymbol.combinedMemberScope
         .callables(callableId.callableName)
+        .filter { it.containingDeclaration == classSymbol }
         .toList()
 }

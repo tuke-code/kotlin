@@ -15,11 +15,12 @@ FAKE_OVERRIDE_ORIGINAL:
     location: LOCAL
     modality: FINAL
     name: c
-    origin: SOURCE
+    origin: SUBSTITUTION_OVERRIDE
     receiverParameter: null
-    returnType: KaTypeParameterType:
+    returnType: KaUsualClassType:
       annotations: []
-      type: T
+      typeArguments: []
+      type: kotlin/String
     typeParameters: []
     visibility: PUBLIC
-    containingDeclaration: test/Base.foo
+    containingDeclaration: test/Derived.foo

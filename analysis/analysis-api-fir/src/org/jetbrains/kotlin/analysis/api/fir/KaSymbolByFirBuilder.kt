@@ -663,6 +663,7 @@ private fun collectReferencedTypeParameters(declaration: FirCallableDeclaration)
             namedFunction.typeParameters.forEach { it.accept(this) }
 
             namedFunction.receiverParameter?.accept(this)
+            namedFunction.contextParameters.forEach { it.returnTypeRef.accept(this) }
             namedFunction.valueParameters.forEach { it.returnTypeRef.accept(this) }
             namedFunction.returnTypeRef.accept(this)
         }
@@ -671,6 +672,7 @@ private fun collectReferencedTypeParameters(declaration: FirCallableDeclaration)
             property.typeParameters.forEach { it.accept(this) }
 
             property.receiverParameter?.accept(this)
+            property.contextParameters.forEach { it.returnTypeRef.accept(this) }
             property.returnTypeRef.accept(this)
         }
 
