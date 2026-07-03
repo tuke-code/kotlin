@@ -1,4 +1,4 @@
-IS_THE_SAME_SYMBOL: true
+IS_THE_SAME_SYMBOL: false
 FAKE_OVERRIDE_ORIGINAL:
   KaValueParameterSymbol:
     annotations: []
@@ -21,7 +21,7 @@ FAKE_OVERRIDE_ORIGINAL:
     location: LOCAL
     modality: FINAL
     name: value
-    origin: DELEGATED
+    origin: SOURCE
     primaryConstructorProperty: null
     receiverParameter: null
     returnType: KaUsualClassType:
@@ -30,4 +30,4 @@ FAKE_OVERRIDE_ORIGINAL:
       type: kotlin/Int
     typeParameters: []
     visibility: PUBLIC
-    containingDeclaration: <setter> test/Delegating.foo
+    containingDeclaration: <setter> test/I.foo

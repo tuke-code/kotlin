@@ -1,4 +1,4 @@
-IS_THE_SAME_SYMBOL: true
+IS_THE_SAME_SYMBOL: false
 FAKE_OVERRIDE_ORIGINAL:
   KaValueParameterSymbol:
     annotations: []
@@ -21,13 +21,12 @@ FAKE_OVERRIDE_ORIGINAL:
     location: LOCAL
     modality: FINAL
     name: value
-    origin: SUBSTITUTION_OVERRIDE
+    origin: SOURCE
     primaryConstructorProperty: null
     receiverParameter: null
-    returnType: KaUsualClassType:
+    returnType: KaTypeParameterType:
       annotations: []
-      typeArguments: []
-      type: kotlin/Int?
+      type: T?
     typeParameters: []
     visibility: PUBLIC
-    containingDeclaration: <setter> test/Substituted.foo
+    containingDeclaration: <setter> test/I.foo

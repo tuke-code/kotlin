@@ -1,4 +1,4 @@
-IS_THE_SAME_SYMBOL: true
+IS_THE_SAME_SYMBOL: false
 FAKE_OVERRIDE_ORIGINAL:
   KaReceiverParameterSymbol:
     annotations: []
@@ -15,13 +15,12 @@ FAKE_OVERRIDE_ORIGINAL:
     location: LOCAL
     modality: FINAL
     name: <receiver>
-    origin: SUBSTITUTION_OVERRIDE
-    owningCallableSymbol: KaNamedFunctionSymbol(test/B.foo)
+    origin: SOURCE
+    owningCallableSymbol: KaNamedFunctionSymbol(test/A.foo)
     receiverParameter: null
-    returnType: KaUsualClassType:
+    returnType: KaTypeParameterType:
       annotations: []
-      typeArguments: []
-      type: kotlin/Int
+      type: T
     typeParameters: []
     visibility: PUBLIC
-    containingDeclaration: test/B.foo
+    containingDeclaration: test/A.foo

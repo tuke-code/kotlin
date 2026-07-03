@@ -1,4 +1,4 @@
-IS_THE_SAME_SYMBOL: true
+IS_THE_SAME_SYMBOL: false
 FAKE_OVERRIDE_ORIGINAL:
   KaPropertySetterSymbol:
     annotations: []
@@ -13,10 +13,10 @@ FAKE_OVERRIDE_ORIGINAL:
     isExternal: false
     isInline: false
     isNotDefault: true
-    isOverride: true
+    isOverride: false
     location: PROPERTY
     modality: OPEN
-    origin: SUBSTITUTION_OVERRIDE
+    origin: SOURCE
     parameter: KaValueParameterSymbol:
       annotations: []
       callableId: null
@@ -38,13 +38,12 @@ FAKE_OVERRIDE_ORIGINAL:
       location: LOCAL
       modality: FINAL
       name: value
-      origin: SUBSTITUTION_OVERRIDE
+      origin: SOURCE
       primaryConstructorProperty: null
       receiverParameter: null
-      returnType: KaUsualClassType:
+      returnType: KaTypeParameterType:
         annotations: []
-        typeArguments: []
-        type: kotlin/String
+        type: T
       typeParameters: []
       visibility: PUBLIC
     receiverParameter: null
@@ -75,15 +74,14 @@ FAKE_OVERRIDE_ORIGINAL:
         location: LOCAL
         modality: FINAL
         name: value
-        origin: SUBSTITUTION_OVERRIDE
+        origin: SOURCE
         primaryConstructorProperty: null
         receiverParameter: null
-        returnType: KaUsualClassType:
+        returnType: KaTypeParameterType:
           annotations: []
-          typeArguments: []
-          type: kotlin/String
+          type: T
         typeParameters: []
         visibility: PUBLIC
     ]
     visibility: PUBLIC
-    containingDeclaration: test/Derived.value
+    containingDeclaration: test/Base.value
