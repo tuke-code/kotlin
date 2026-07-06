@@ -102,7 +102,7 @@ object JKlibIrCompilationPhase :
         )
 
         val allDescriptors = dependencyDescriptorsByKlib.values + jarDepsModuleDescriptor
-        dependencyDescriptorsByKlib.values.forEach { it.setDependencies(allDescriptors) }
+        allDescriptors.forEach { it.setDependencies(allDescriptors) }
 
         val mainModule = dependencyDescriptorsByKlib.getValue(sortedDependencies.single { it.path == klib })
 
@@ -238,9 +238,6 @@ object JKlibIrCompilationPhase :
         )
         moduleClassResolver.compiledCodeResolver = dependenciesContainer.get()
 
-        dependenciesContext.setDependencies(
-            listOf(dependenciesContext.module, builtIns.builtInsModule)
-        )
         dependenciesContext.initializeModuleContents(
             CompositePackageFragmentProvider(
                 listOf(
