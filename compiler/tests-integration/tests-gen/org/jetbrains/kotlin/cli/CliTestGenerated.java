@@ -1389,6 +1389,12 @@ public class CliTestGenerated extends AbstractCliTest {
     public void testExecutorSubmitEnabled() {
       run("executorSubmitEnabled.args");
     }
+
+    @Test
+    @TestMetadata("unitConversionWithEla.args")
+    public void testUnitConversionWithEla() {
+      run("unitConversionWithEla.args");
+    }
   }
 
   @Nested
