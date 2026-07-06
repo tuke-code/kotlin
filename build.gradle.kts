@@ -223,13 +223,18 @@ tasks.register("createIdeaHomeForTests") {
     }
 }
 
-val publishedMark: NamedDomainObjectProvider<DependencyScopeConfiguration> = configurations.dependencyScope("fakePublishpublishedMark")
+val publishedMark: NamedDomainObjectProvider<DependencyScopeConfiguration> = configurations.dependencyScope("publishedMark")
 val publishedMarkElements: NamedDomainObjectProvider<ResolvableConfiguration> = configurations.resolvable("publishedMarkClasspath").apply {
+    configure { extendsFrom(publishedMark) }
+}
+val localPublishedMark: NamedDomainObjectProvider<DependencyScopeConfiguration> = configurations.dependencyScope("localPublishedMark")
+val localPublishedMarkElements: NamedDomainObjectProvider<ResolvableConfiguration> = configurations.resolvable("localPublishedMarkClasspath").apply {
     configure { extendsFrom(publishedMark) }
 }
 dependencies {
     allprojects.forEach { p ->
         add(publishedMark.name, project(p.path, configuration = "publishedMark"))
+        add(localPublishedMark.name, project(p.path, configuration = "localPublishedMark"))
     }
 }
 
@@ -626,6 +631,9 @@ tasks {
         group = "publishing"
         workingDir = rootProject.projectDir.resolve("libraries")
         commandLine = getMvnwCmd() + listOf("clean", "install", "-DskipTests")
+        inputs.files(localPublishedMarkElements.get().incoming.artifactView { lenient(true) }.files)
+            .withPathSensitivity(PathSensitivity.NONE)
+            .withPropertyName("localPublishedMarks")
         doFirst {
             environment("JDK_1_8", getToolchainJdkHomeFor(JdkMajorVersion.JDK_1_8).get())
         }
