@@ -442,7 +442,6 @@ Example: `path/to/dir/*.log` creates logs like `path/to/dir/my-module_2025-06-20
         description = "Enable eager analysis of lambda bodies to improve overload resolution by the lambda's return type.",
     )
     @Enables(LanguageFeature.EagerLambdaAnalysis)
-    @Enables(LanguageFeature.UnitConversionsOnArbitraryExpressions)
     @Enables(LanguageFeature.InferThrowableTypeParameterToUpperBound)
     @Enables(LanguageFeature.CallCompletionRefinementsFor25)
     var eagerLambdaAnalysis: Boolean = false

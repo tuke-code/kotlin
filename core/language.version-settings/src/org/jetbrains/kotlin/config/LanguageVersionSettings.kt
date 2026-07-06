@@ -664,21 +664,19 @@ enum class LanguageFeature(
     },
     JsExportingSuspendLambdas(sinceVersion = null, "KT-80188"),
 
-    UnitConversionsOnArbitraryExpressions(sinceVersion = null, issue = "KT-84393", enabledInLatestLVTests = true),
     InferThrowableTypeParameterToUpperBound(sinceVersion = null, issue = "KT-82961", enabledInLatestLVTests = true),
-
     EagerLambdaAnalysis(sinceVersion = null, issue = "KT-51107", enabledInLatestLVTests = true) {
         context(context: CrossFeatureChecksResultsCollector)
         override fun crossFeatureChecks() {
             checkEnabledNotEarlierThan(
                 CallCompletionRefinementsFor25,
-                UnitConversionsOnArbitraryExpressions,
                 InferThrowableTypeParameterToUpperBound,
             )
         }
     },
 
     ReportEscapingCapturedVariable(sinceVersion = null, testOnly = true, issue = "KT-15514", enabledInLatestLVTests = true),
+    UnitConversionsOnArbitraryExpressions(sinceVersion = null, issue = "KT-84393"),
     ;
 
     constructor(
