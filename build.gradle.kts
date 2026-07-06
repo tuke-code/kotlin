@@ -109,7 +109,6 @@ rootProject.apply {
     from(rootProject.file("gradle/versions.gradle.kts"))
     from(rootProject.file("gradle/checkArtifacts.gradle.kts"))
     from(rootProject.file("gradle/checkCacheability.gradle.kts"))
-    from(rootProject.file("gradle/compilerModules.gradle.kts"))
 }
 
 pluginManager.apply("nodejs-configuration")
@@ -613,13 +612,13 @@ tasks {
 
     registerSpecialPublishingTasks(
         nameSuffix = "IdeArtifacts",
-        artifactProjectList = @Suppress("UNCHECKED_CAST") (rootProject.extra["compilerArtifactsForIde"] as List<String>),
+        artifactProjectList = @Suppress("UNCHECKED_CAST") (CompilerModules.compilerArtifactsForIde),
         latch = Project::idePluginPublishingLatch
     )
 
     registerSpecialPublishingTasks(
         nameSuffix = "AnalysisApiArtifacts",
-        artifactProjectList = @Suppress("UNCHECKED_CAST") (rootProject.extra["analysisApiArtifacts"] as List<String>),
+        artifactProjectList = @Suppress("UNCHECKED_CAST") (CompilerModules.analysisApiArtifacts),
         latch = Project::analysisApiPublishingLatch
     )
 

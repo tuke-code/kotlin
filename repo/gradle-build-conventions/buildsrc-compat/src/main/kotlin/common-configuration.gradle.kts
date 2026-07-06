@@ -58,10 +58,10 @@ fun Project.checkNoApiDependenciesOnK1Modules() {
         val apiConfiguration = configurations.findByName("api") ?: return@afterEvaluate
 
         @Suppress("UNCHECKED_CAST")
-        val fe10CompilerModules = rootProject.extra["fe10CompilerModules"] as Array<String>
+        val fe10CompilerModules = CompilerModules.fe10CompilerModules
 
         @Suppress("UNCHECKED_CAST")
-        val descriptorModules = rootProject.extra["descriptorsCompilerModules"] as Array<String>
+        val descriptorModules = CompilerModules.descriptorsCompilerModules
 
         val k1Modules = (fe10CompilerModules + descriptorModules).toSet()
 
@@ -76,7 +76,7 @@ fun Project.checkNoApiDependenciesOnK1Modules() {
                 "Project '$path' declares `api` dependencies on K1 frontend modules: " +
                         violations.joinToString(prefix = "[", postfix = "]") + ". " +
                         "K1 frontend modules must only be depended on with the `implementation` " +
-                        "configuration (see `fe10CompilerModules` in gradle/compilerModules.gradle.kts)."
+                        "configuration (see `fe10CompilerModules` in repo/kotlin-build-helpers/src/CompilerModules.kt)."
             )
         }
     }
@@ -105,7 +105,6 @@ fun Project.configureJavaCompile() {
     }
 }
 
-val projectsDependingOnStableStdlib: Array<String> by rootProject.extra
 val kotlinApiVersionForProjectsDependingOnStableStdlib: String by rootProject.extra
 
 fun Project.configureKotlinCompilationOptions() {
@@ -142,7 +141,7 @@ fun Project.configureKotlinCompilationOptions() {
                 apiVersion.set(KotlinVersion.fromVersion(kotlinLanguageVersion))
                 freeCompilerArgs.add("-Xskip-prerelease-check")
 
-                if (project.path in projectsDependingOnStableStdlib) {
+                if (project.path in CompilerModules.projectsDependingOnStableStdlib) {
                     apiVersion.set(KotlinVersion.fromVersion(kotlinApiVersionForProjectsDependingOnStableStdlib))
                 }
             }
@@ -506,7 +505,7 @@ fun Project.configureMigratedRootSettings() {
                 val isReflect = requested.name == "kotlin-reflect"
                 // More strict check for "compilerModules". We can't apply this check for all modules because it would force to
                 // exclude kotlin-reflect from transitive dependencies of kotlin-poet, ktor, com.android.tools.build:gradle, etc
-                if (project.path in @Suppress("UNCHECKED_CAST") (rootProject.extra["compilerModules"] as Array<String>)) {
+                if (project.path in @Suppress("UNCHECKED_CAST") (CompilerModules.compilerModules)) {
                     val expectedReflectVersion = commonDependencyVersion("org.jetbrains.kotlin", "kotlin-reflect")
                     if (isReflect) {
                         check(requested.version == expectedReflectVersion) {

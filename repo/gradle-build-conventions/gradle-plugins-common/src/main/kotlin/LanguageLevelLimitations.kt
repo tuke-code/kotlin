@@ -11,7 +11,7 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 
 internal fun Project.limitLanguageAndApiVersions(version: KotlinVersion) {
-    val projectsDependingOnStableStdlib: Array<String> by rootProject.extra
+    val projectsDependingOnStableStdlib: Array<String> = CompilerModules.projectsDependingOnStableStdlib
     val kotlinApiVersionForProjectsDependingOnStableStdlib: String by rootProject.extra
 
     tasks.withType<KotlinJvmCompile>().configureEach {

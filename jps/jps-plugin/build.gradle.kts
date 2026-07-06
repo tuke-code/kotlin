@@ -11,20 +11,16 @@ plugins {
     id("kotlin-build-helpers")
 }
 
-val compilerModules: Array<String> by rootProject.extra
-
 dependencies {
     compileOnly(project(":jps:jps-platform-api-signatures"))
     testImplementation(testFixtures(project(":generators:test-generator")))
 
     @Suppress("UNCHECKED_CAST")
-    rootProject.extra["kotlinJpsPluginEmbeddedDependencies"]
-        .let { it as List<String> }
+    CompilerModules.kotlinJpsPluginEmbeddedDependencies
         .forEach { implementation(project(it)) }
 
     @Suppress("UNCHECKED_CAST")
-    rootProject.extra["kotlinJpsPluginMavenDependencies"]
-        .let { it as List<String> }
+    CompilerModules.kotlinJpsPluginMavenDependencies
         .forEach { implementation(project(it)) }
 
     @Suppress("UNCHECKED_CAST")
@@ -76,7 +72,7 @@ dependencies {
     testImplementation(jpsBuild())
     testImplementation(jpsBuildJavacRt())
 
-    compilerModules.forEach {
+    CompilerModules.compilerModules.forEach {
         testRuntimeOnly(project(it))
     }
 

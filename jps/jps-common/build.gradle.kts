@@ -11,13 +11,11 @@ plugins {
 dependencies {
     implementation(kotlinStdlib("jdk8"))
     @Suppress("UNCHECKED_CAST")
-    rootProject.extra["kotlinJpsPluginEmbeddedDependencies"]
-        .let { it as List<String> }
+    CompilerModules.kotlinJpsPluginEmbeddedDependencies
         .forEach { implementation(project(it)) }
 
     @Suppress("UNCHECKED_CAST")
-    rootProject.extra["kotlinJpsPluginMavenDependencies"]
-        .let { it as List<String> }
+    CompilerModules.kotlinJpsPluginMavenDependencies
         .forEach { implementation(project(it)) }
 
     @Suppress("UNCHECKED_CAST")
