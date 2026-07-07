@@ -4,6 +4,7 @@
  */
 
 @file:OptIn(ExperimentalKotlinGradlePluginApi::class)
+@file:Suppress("DEPRECATION")
 
 package org.jetbrains.kotlin.gradle.apple
 

@@ -4,6 +4,7 @@
  */
 
 @file:OptIn(ExperimentalAbiValidation::class)
+@file:Suppress("DEPRECATION")
 
 package org.jetbrains.kotlin.gradle.abi
 
