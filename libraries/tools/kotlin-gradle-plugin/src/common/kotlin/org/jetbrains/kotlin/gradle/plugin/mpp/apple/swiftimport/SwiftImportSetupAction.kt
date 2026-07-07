@@ -618,7 +618,8 @@ private fun Project.enableFingerprintCoordination(
     val fingerprintedSwiftPMDependencyGraph = transitiveSwiftPMMetadataProvider.zip(directSwiftPMMetadata) { transitiveMetadata, directMetadata ->
         fingerprintSwiftPMDependencyGraph(
             directMetadata,
-            transitiveMetadata
+            transitiveMetadata,
+            normalizeVersions = false,
         )
     }
 
