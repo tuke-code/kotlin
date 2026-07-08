@@ -19,6 +19,8 @@ import org.jetbrains.kotlin.gradle.plugin.PropertiesProvider.Companion.kotlinPro
 import org.jetbrains.kotlin.gradle.plugin.ide.Idea222Api
 import org.jetbrains.kotlin.gradle.plugin.ide.prepareKotlinIdeaImportTask
 import org.jetbrains.kotlin.gradle.internal.isInIdeaSync
+import org.jetbrains.kotlin.gradle.plugin.KotlinPluginLifecycle
+import org.jetbrains.kotlin.gradle.plugin.await
 import org.jetbrains.kotlin.gradle.plugin.mpp.Framework
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 import org.jetbrains.kotlin.gradle.plugin.mpp.apple.appleArchitecture
@@ -191,7 +193,9 @@ internal val SwiftImportSetupAction = KotlinProjectSetupAction {
         provideSyntheticPackageDir(),
     )
 
-    project.afterEvaluate {
+    project.launch {
+        KotlinPluginLifecycle.Stage.AfterEvaluateBuildscript.await()
+
         val persistedPackageResolved = providePersistedPackageResolved()
 
         syncPersistedPackageResolvedToSyntheticSwiftPMPackage.configure { taskProvider ->
@@ -211,49 +215,47 @@ internal val SwiftImportSetupAction = KotlinProjectSetupAction {
         when (val packageIdentifier = identifierSynchronizationOrNull()) {
             is PackageResolvedSynchronization.Identifier -> {
                 val packageResolvedSynchronizationIdentifier = packageIdentifier.identifier
-                project.launch {
-                    enableFingerprintCoordination(
-                        fingerprintCoordinationService = fingerprintCoordinationService,
-                        generateSyntheticPackageTask = syntheticImportProjectGenerationTaskForCinteropsAndLdDump,
-                        fingerprintSyntheticPackageTask = fingerprintSyntheticPackageTask,
-                        transitiveSwiftPMMetadataProvider = transitiveSwiftPMMetadataProvider,
-                        directSwiftPMMetadata = directSwiftPMMetadataProvider,
-                        fetchSyntheticImportProjectPackages = fetchSyntheticImportProjectPackages,
-                        syncPersistedPackageResolvedToSyntheticSwiftPMPackage = syncPersistedPackageResolvedToSyntheticSwiftPMPackage,
-                        syncSyntheticPackageResolvedToPersisted = syncSyntheticPackageResolvedToPersisted,
+                enableFingerprintCoordination(
+                    fingerprintCoordinationService = fingerprintCoordinationService,
+                    generateSyntheticPackageTask = syntheticImportProjectGenerationTaskForCinteropsAndLdDump,
+                    fingerprintSyntheticPackageTask = fingerprintSyntheticPackageTask,
+                    transitiveSwiftPMMetadataProvider = transitiveSwiftPMMetadataProvider,
+                    directSwiftPMMetadata = directSwiftPMMetadataProvider,
+                    fetchSyntheticImportProjectPackages = fetchSyntheticImportProjectPackages,
+                    syncPersistedPackageResolvedToSyntheticSwiftPMPackage = syncPersistedPackageResolvedToSyntheticSwiftPMPackage,
+                    syncSyntheticPackageResolvedToPersisted = syncSyntheticPackageResolvedToPersisted,
+                )
+
+                if (multiplatformExtension.awaitTargets().any { it.supportsSwiftPMImport() }) {
+
+                    val aggregationService = SwiftPMLockTaskAggregationBuildService.registerIfAbsent(project)
+
+                    val projectPath = project.path
+
+                    aggregationService.get().contribute(
+                        identifier = packageResolvedSynchronizationIdentifier,
+                        projectPathContribution = projectPath,
                     )
 
-                    if (multiplatformExtension.awaitTargets().any { it.supportsSwiftPMImport() }) {
+                    val sharedCheckoutDir = provideIdentifierCheckoutDir(packageResolvedSynchronizationIdentifier)
 
-                        val aggregationService = SwiftPMLockTaskAggregationBuildService.registerIfAbsent(project)
+                    val actualGeneratedClaimer = locateOrRegisterUmbrellaPackageGenerateTask(
+                        identifier = packageResolvedSynchronizationIdentifier,
+                        aggregationService = aggregationService,
+                        isMacOSHost = isMacOSHost,
+                    )
+                    val actualFetchClaimer = locateOrRegisterUmbrellaFetchTask(
+                        identifier = packageResolvedSynchronizationIdentifier,
+                        aggregationService = aggregationService,
+                        checkOutDir = sharedCheckoutDir,
+                        actualGeneratedClaimer = actualGeneratedClaimer,
+                        isMacOSHost = isMacOSHost,
+                    )
 
-                        val projectPath = project.path
-
-                        aggregationService.get().contribute(
-                            identifier = packageResolvedSynchronizationIdentifier,
-                            projectPathContribution = projectPath,
-                        )
-
-                        val sharedCheckoutDir = provideIdentifierCheckoutDir(packageResolvedSynchronizationIdentifier)
-
-                        val actualGeneratedClaimer = locateOrRegisterUmbrellaPackageGenerateTask(
-                            identifier = packageResolvedSynchronizationIdentifier,
-                            aggregationService = aggregationService,
-                            isMacOSHost = isMacOSHost,
-                        )
-                        val actualFetchClaimer = locateOrRegisterUmbrellaFetchTask(
-                            identifier = packageResolvedSynchronizationIdentifier,
-                            aggregationService = aggregationService,
-                            checkOutDir = sharedCheckoutDir,
-                            actualGeneratedClaimer = actualGeneratedClaimer,
-                            isMacOSHost = isMacOSHost,
-                        )
-
-                        syncPersistedPackageResolvedToSyntheticSwiftPMPackage.configure {
-                            it.dependsOn(actualFetchClaimer)
-                            it.onlyIf("Shared Package.resolved exists") {
-                                persistedPackageResolved.asFile.exists()
-                            }
+                    syncPersistedPackageResolvedToSyntheticSwiftPMPackage.configure {
+                        it.dependsOn(actualFetchClaimer)
+                        it.onlyIf("Shared Package.resolved exists") {
+                            persistedPackageResolved.asFile.exists()
                         }
                     }
                 }
