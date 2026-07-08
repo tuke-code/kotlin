@@ -103,20 +103,16 @@ With `--configuration-cache` enabled, two consecutive runs of the same task that
 will reuse the same CC entry — Gradle prints
 `Reusing configuration cache.` and skips reconfiguration entirely. Only values **consumed during the configuration phase** affect the CC
 key. `@Option` CLI flags are applied while the task is configured, so iterating on `--test-data-path` via `--option` would force a full
-reconfiguration (often 1–2 minutes) on every value change. These tasks instead read their `-P` options **only at execution time**, which is
-not a configuration input, so the CC entry stays stable across option values.
+reconfiguration (often 1–2 minutes) on every value change. The options here are `@Input` properties fed from `-P` Gradle properties and
+resolved **lazily at execution time**, which is not a configuration input, so the CC entry stays stable across option values. On CC reuse
+the provider is re-evaluated, so the current `-P` value takes effect rather than a stale cached one.
 
-### Trade-off: options are not tracked inputs
+### Trade-off: never UP-TO-DATE, not build-cacheable
 
-These tasks do not declare the options as `@Input` properties at all — `exec()` reads the `-P` values directly. As a result Gradle cannot
-see the options as task inputs, so both tasks are **never** UP-TO-DATE and their result is never restored from the build cache: the test
-runner is invoked on every invocation. This is acceptable because both are `JavaExec` tasks with no declared outputs that always re-run
-anyway.
-
-Note this is a deliberate simplification, **not** a requirement of CC-friendliness. `@Input` values feed task up-to-date/build-cache
-identity at *execution* time — they are not part of the CC key. The options could instead be exposed as `@Input` providers fed from `-P` and
-still keep the CC stable, as long as those providers are never resolved during configuration. Only configuration-time access (such as
-`@Option` flags) invalidates the CC.
+The options are tracked `@Input`s, but these tasks declare **no outputs**. Gradle needs declared outputs both for UP-TO-DATE checks and for
+the build cache, so both tasks always re-run: the test runner is invoked on every invocation regardless of input values. This is intentional
+— they are `JavaExec` tasks that always execute their tests anyway. Making them cacheable would require modeling the managed test data files
+as task outputs, which is out of scope here.
 
 ## Execution Order
 

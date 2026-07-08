@@ -41,11 +41,11 @@
  */
 
 tasks.register<CheckTestDataModuleTask>(checkTestDataTaskName) {
-    wireFromTestTask(checkTestDataTaskName)
+    wireOptions(checkTestDataTaskName)
 }
 
 tasks.register<UpdateTestDataModuleTask>(updateTestDataTaskName) {
-    wireFromTestTask(updateTestDataTaskName)
+    wireOptions(updateTestDataTaskName)
 }
 
 /**
@@ -59,7 +59,16 @@ tasks.register<UpdateTestDataModuleTask>(updateTestDataTaskName) {
  *   `:moduleA:peerTaskName → :moduleB:peerTaskName` — preserving cross-module ordering
  *   between manager-task instances.
  */
-private fun JavaExec.wireFromTestTask(peerTaskName: String) {
+private fun AbstractTestDataModuleTask.wireOptions(peerTaskName: String) {
+    /**
+     * Wires each option's convention from its `-P` Gradle property. The providers are resolved lazily at
+     * execution time, so they are not configuration-cache inputs — see [AbstractTestDataModuleTask].
+     */
+    testDataPath.convention(project.providers.gradleProperty(TestDataManagerOption.TEST_DATA_PATH))
+    testClassPattern.convention(project.providers.gradleProperty(TestDataManagerOption.TEST_CLASS_PATTERN))
+    goldenOnly.convention(project.providers.gradleProperty(TestDataManagerOption.GOLDEN_ONLY).map { it.toBoolean() })
+    incremental.convention(project.providers.gradleProperty(TestDataManagerOption.INCREMENTAL).map { it.toBoolean() })
+
     // Capture test task configuration eagerly during configuration (configuration-cache compatible)
     // Note: taskProvider.map creates a task dependency, so we capture the value directly
     val testTask = tasks.named<Test>("test").get()

@@ -3,11 +3,13 @@
  * Use of this source code is governed by the Apache 2.0 license that can be found in the license/LICENSE.txt file.
  */
 
-import org.gradle.api.provider.ProviderFactory
-import org.gradle.api.tasks.JavaExec
+import org.gradle.api.provider.Property
+import org.gradle.api.provider.Provider
+import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.Internal
+import org.gradle.api.tasks.JavaExec
+import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.TaskAction
-import javax.inject.Inject
 
 /**
  * Base class for the `-P`-driven test data manager tasks: [CheckTestDataModuleTask] (`checkTestData`)
@@ -22,20 +24,19 @@ import javax.inject.Inject
  * Only values **consumed during the configuration phase** are part of Gradle's configuration-cache
  * (CC) key. `@Option` CLI flags are applied while the task is *configured*, so iterating on, e.g.,
  * `--test-data-path` via `--option` re-runs configuration (1–2 minutes on this project) for each
- * distinct value. `-P` properties read **only at execution time** are not configuration inputs, so
- * the CC entry stays stable across option values and subsequent invocations skip reconfiguration.
+ * distinct value. The options here are instead declared as `@Input` properties fed from `-P` Gradle
+ * properties (see the plugin's `wireOptions`), resolved **lazily at execution time**. A lazily
+ * resolved provider is not a configuration input, so the CC entry stays stable across option values
+ * and subsequent invocations skip reconfiguration; on CC reuse the provider is re-evaluated, so the
+ * current `-P` value takes effect rather than a stale cached one.
  *
- * ## Trade-off: options are not tracked inputs
+ * ## Trade-off: never UP-TO-DATE, not build-cacheable
  *
- * These tasks do not declare the options as `@Input` properties at all — [exec] reads the `-P` values
- * directly. As a result Gradle cannot see the options as task inputs, so the tasks are never
- * UP-TO-DATE, never restored from the build cache, and the runner is invoked on every invocation. This
- * is acceptable because they are [JavaExec] tasks with no declared outputs that always re-run anyway.
- *
- * Note this is a deliberate simplification, **not** a requirement of CC-friendliness: `@Input` values
- * feed task up-to-date/build-cache identity at *execution* time, not the CC key. The options could
- * instead be exposed as `@Input` providers fed from `-P` and still keep the CC stable, as long as
- * those providers are never resolved during configuration.
+ * The options are tracked `@Input`s, but these tasks declare **no outputs**. Gradle needs declared
+ * outputs both for UP-TO-DATE checks and for the build cache, so the tasks always re-run: the runner
+ * is invoked on every invocation regardless of input values. This is intentional — they are
+ * [JavaExec] tasks that always execute their tests anyway. Making them cacheable would require
+ * modeling the managed test data files as task outputs, which is out of scope here.
  *
  * ## Options
  *
@@ -53,17 +54,29 @@ import javax.inject.Inject
  * @see UpdateTestDataModuleTask
  */
 abstract class AbstractTestDataModuleTask : JavaExec() {
-    @get:Inject
-    protected abstract val providers: ProviderFactory
-
     /**
      * The fixed mode this task runs in; forwarded to the runner. Each concrete subclass pins it.
      *
-     * `@Internal` because the mode is a constant of the task type, not a tracked input — see the
-     * class KDoc on why these tasks deliberately expose no `@Input` options.
+     * `@Internal` because the mode is a constant of the task type, not a user-supplied input.
      */
     @get:Internal
     protected abstract val mode: Mode
+
+    /** Comma-separated test data paths (directory or file) to filter tests. */
+    @get:[Input Optional]
+    abstract val testDataPath: Property<String>
+
+    /** Regex pattern for test class names. */
+    @get:[Input Optional]
+    abstract val testClassPattern: Property<String>
+
+    /** When `true`, runs only golden tests (empty variant chain). */
+    @get:[Input Optional]
+    abstract val goldenOnly: Property<Boolean>
+
+    /** When `true`, only runs variant tests for golden paths that changed (effective in update mode). */
+    @get:[Input Optional]
+    abstract val incremental: Property<Boolean>
 
     init {
         group = "verification"
@@ -71,7 +84,7 @@ abstract class AbstractTestDataModuleTask : JavaExec() {
     }
 
     /**
-     * Forwards the fixed [mode] and all `-P` options to the test runner as `-D` system properties,
+     * Forwards the fixed [mode] and every set option to the test runner as `-D` system properties,
      * then delegates to [JavaExec.exec].
      *
      * All options are forwarded regardless of [mode] for symmetry; the runner ignores options that are
@@ -80,15 +93,15 @@ abstract class AbstractTestDataModuleTask : JavaExec() {
     @TaskAction
     override fun exec() {
         systemProperty(TestDataManagerOption.MODE, mode)
-        forwardOption(TestDataManagerOption.TEST_DATA_PATH)
-        forwardOption(TestDataManagerOption.TEST_CLASS_PATTERN)
-        forwardOption(TestDataManagerOption.GOLDEN_ONLY)
-        forwardOption(TestDataManagerOption.INCREMENTAL)
+        forwardOption(TestDataManagerOption.TEST_DATA_PATH, testDataPath)
+        forwardOption(TestDataManagerOption.TEST_CLASS_PATTERN, testClassPattern)
+        forwardOption(TestDataManagerOption.GOLDEN_ONLY, goldenOnly)
+        forwardOption(TestDataManagerOption.INCREMENTAL, incremental)
         super.exec()
     }
 
-    private fun forwardOption(key: String) {
-        providers.gradleProperty(key).orNull?.let { systemProperty(key, it) }
+    private fun forwardOption(key: String, value: Provider<*>) {
+        value.orNull?.let { systemProperty(key, it) }
     }
 
     /**
