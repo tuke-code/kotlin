@@ -50,6 +50,7 @@ import org.jetbrains.kotlin.fir.analysis.diagnostics.jvm.FirJvmErrors.INTERFACE_
 import org.jetbrains.kotlin.fir.analysis.diagnostics.jvm.FirJvmErrors.INTERFACE_COMPANION_BLOCK_PROPERTY_PRIVATE_FIELD
 import org.jetbrains.kotlin.fir.analysis.diagnostics.jvm.FirJvmErrors.JAVA_CLASS_INHERITS_KT_PRIVATE_CLASS
 import org.jetbrains.kotlin.fir.analysis.diagnostics.jvm.FirJvmErrors.JAVA_CLASS_ON_COMPANION
+import org.jetbrains.kotlin.fir.analysis.diagnostics.jvm.FirJvmErrors.JAVA_CLASS_PROPERTY_REFERENCE
 import org.jetbrains.kotlin.fir.analysis.diagnostics.jvm.FirJvmErrors.JAVA_FIELD_SHADOWED_BY_KOTLIN_PROPERTY
 import org.jetbrains.kotlin.fir.analysis.diagnostics.jvm.FirJvmErrors.JAVA_MODULE_DOES_NOT_DEPEND_ON_MODULE
 import org.jetbrains.kotlin.fir.analysis.diagnostics.jvm.FirJvmErrors.JAVA_MODULE_DOES_NOT_EXPORT_PACKAGE
@@ -185,6 +186,10 @@ object FirJvmErrorsDefaultMessages : BaseDiagnosticRendererFactory() {
             "The resulting type of this ''javaClass'' call is ''{0}'' and not ''{1}''. Use ''::class.java'' to access type ''{1}''.",
             RENDER_TYPE,
             RENDER_TYPE,
+        )
+        map.put(
+            JAVA_CLASS_PROPERTY_REFERENCE,
+            "'::javaClass' returns a property reference and is error-prone. Use '.javaClass' or '::class.java' to access the Java class of the receiver.",
         )
 
         map.put(
