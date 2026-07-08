@@ -25,6 +25,7 @@ KtNameReferenceExpression(122,125): 'foo'
               annotations: []
               typeArguments: []
               type: kotlin/Int
+            typeParameters: []
             visibility: PUBLIC
           type = kotlin.Int,
         KaImplicitReceiverValue:

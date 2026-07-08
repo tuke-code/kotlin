@@ -146,6 +146,7 @@ KtCallExpression(251,263): 'InnerClass()'
             annotations: []
             typeArguments: []
             type: one/two/TopLevelClass
+          typeParameters: []
           visibility: PUBLIC
         type = one.two.TopLevelClass
       extensionReceiver = null
@@ -187,6 +188,7 @@ KtNameReferenceExpression(251,261): 'InnerClass'
             annotations: []
             typeArguments: []
             type: one/two/TopLevelClass
+          typeParameters: []
           visibility: PUBLIC
         type = one.two.TopLevelClass
       extensionReceiver = null

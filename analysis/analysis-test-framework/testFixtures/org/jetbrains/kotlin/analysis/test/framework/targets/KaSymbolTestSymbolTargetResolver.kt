@@ -7,7 +7,6 @@ package org.jetbrains.kotlin.analysis.test.framework.targets
 
 import org.jetbrains.kotlin.analysis.api.KaSession
 import org.jetbrains.kotlin.analysis.api.symbols.*
-import org.jetbrains.kotlin.analysis.api.symbols.markers.KaTypeParameterOwnerSymbol
 import org.jetbrains.kotlin.analysis.test.framework.targets.TestSymbolTarget.*
 import org.jetbrains.kotlin.name.CallableId
 import org.jetbrains.kotlin.name.ClassId
@@ -107,7 +106,7 @@ internal class KaSymbolTestSymbolTargetResolver(private val session: KaSession) 
     }
 
     override fun resolveTypeParameterTarget(target: TypeParameterTarget, owner: KaSymbol): KaSymbol? {
-        requireSpecificOwner<KaTypeParameterOwnerSymbol>(target, owner)
+        requireSpecificOwner<KaDeclarationSymbol>(target, owner)
         return owner.typeParameters.find { it.name == target.name }
     }
 

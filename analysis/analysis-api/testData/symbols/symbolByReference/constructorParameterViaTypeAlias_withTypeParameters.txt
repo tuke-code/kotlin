@@ -25,6 +25,7 @@ KaValueParameterSymbol:
   returnType: KaTypeParameterType:
     annotations: []
     type: TT
+  typeParameters: []
   visibility: PUBLIC
   getContainingFileSymbol: KaFileSymbol(constructorParameterViaTypeAlias_withTypeParameters.kt)
   getContainingJvmClassName: null

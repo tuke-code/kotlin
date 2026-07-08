@@ -22,6 +22,7 @@ KaNamedFunctionSymbol:
       returnType: KaTypeParameterType:
         annotations: []
         type: T1
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: null
       getContainingJvmClassName: lib.LibKt
@@ -162,6 +163,7 @@ KaNamedFunctionSymbol:
             type: kotlin/Int
         ]
         type: context(lib/A, lib/B) kotlin/Int.(kotlin/Int) -> kotlin/Int
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: null
       getContainingJvmClassName: lib.LibKt
@@ -220,6 +222,7 @@ KaNamedFunctionSymbol:
             type: kotlin/Int
         ]
         type: context(lib/A, lib/B) kotlin/Int.(kotlin/Int) -> kotlin/Int
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: null
       getContainingJvmClassName: lib.LibKt
@@ -275,6 +278,7 @@ KaNamedFunctionSymbol:
             type: kotlin/Int
         ]
         type: (context(lib/A, lib/B) kotlin/Int.(kotlin/Int) -> kotlin/Int)?
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: null
       getContainingJvmClassName: lib.LibKt
@@ -330,6 +334,7 @@ KaNamedFunctionSymbol:
             type: kotlin/Int
         ]
         type: suspend context(lib/A, lib/B) kotlin/Int.(kotlin/Int) -> kotlin/Int
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: null
       getContainingJvmClassName: lib.LibKt
@@ -371,6 +376,7 @@ KaNamedFunctionSymbol:
             type: R
         ]
         type: context(T2) () -> R
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: null
       getContainingJvmClassName: lib.LibKt

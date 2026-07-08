@@ -23,6 +23,7 @@ KaKotlinPropertySymbol:
       annotations: []
       typeArguments: []
       type: kotlin/Int
+    typeParameters: []
     visibility: PRIVATE
     getDispatchReceiver(): KaUsualClassType:
       annotations: []
@@ -80,6 +81,7 @@ KaKotlinPropertySymbol:
             type: <local>/Schema1
         ]
         type: DataFrame<<local>/Schema1>
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: null
       getContainingJvmClassName: null
@@ -90,6 +92,7 @@ KaKotlinPropertySymbol:
       annotations: []
       typeArguments: []
       type: kotlin/Int
+    typeParameters: []
     valueParameters: []
     visibility: LOCAL
     getDispatchReceiver(): KaUsualClassType:
@@ -148,6 +151,7 @@ KaKotlinPropertySymbol:
           type: <local>/Schema1
       ]
       type: DataFrame<<local>/Schema1>
+    typeParameters: []
     visibility: PUBLIC
     getContainingFileSymbol: null
     getContainingJvmClassName: null

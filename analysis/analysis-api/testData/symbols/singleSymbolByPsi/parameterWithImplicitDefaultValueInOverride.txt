@@ -26,6 +26,7 @@ KaValueParameterSymbol:
     annotations: []
     typeArguments: []
     type: kotlin/Int
+  typeParameters: []
   visibility: PUBLIC
   getContainingFileSymbol: KaFileSymbol(parameterWithImplicitDefaultValueInOverride.kt)
   getContainingJvmClassName: test.pkg.Child

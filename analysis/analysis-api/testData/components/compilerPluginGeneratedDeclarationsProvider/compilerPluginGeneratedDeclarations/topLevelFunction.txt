@@ -60,6 +60,7 @@ callables: 1
           annotations: []
           typeArguments: []
           type: test/Test
+        typeParameters: []
         visibility: PUBLIC
     ]
     visibility: PUBLIC

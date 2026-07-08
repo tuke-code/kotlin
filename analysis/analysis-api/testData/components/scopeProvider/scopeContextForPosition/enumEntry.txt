@@ -89,6 +89,7 @@ scopes:
             annotations: []
             typeArguments: []
             type: kotlin/String
+          typeParameters: []
           visibility: PRIVATE
         callableId: null
         contextParameters: []
@@ -115,6 +116,7 @@ scopes:
             annotations: []
             typeArguments: []
             type: kotlin/String
+          typeParameters: []
           valueParameters: []
           visibility: PUBLIC
         hasBackingField: true
@@ -268,6 +270,7 @@ scopes:
               annotations: []
               typeArguments: []
               type: E
+            typeParameters: []
             visibility: PUBLIC
         ]
         visibility: PUBLIC
@@ -330,6 +333,7 @@ scopes:
               annotations: []
               typeArguments: []
               type: kotlin/Any?
+            typeParameters: []
             visibility: PUBLIC
         ]
         visibility: PUBLIC
@@ -425,6 +429,7 @@ scopes:
             annotations: []
             typeArguments: []
             type: kotlin/String
+          typeParameters: []
           visibility: PRIVATE
         callableId: kotlin/Enum.name
         contextParameters: []
@@ -451,6 +456,7 @@ scopes:
             annotations: []
             typeArguments: []
             type: kotlin/String
+          typeParameters: []
           valueParameters: []
           visibility: PUBLIC
         hasBackingField: true
@@ -506,6 +512,7 @@ scopes:
             annotations: []
             typeArguments: []
             type: kotlin/Int
+          typeParameters: []
           visibility: PRIVATE
         callableId: kotlin/Enum.ordinal
         contextParameters: []
@@ -532,6 +539,7 @@ scopes:
             annotations: []
             typeArguments: []
             type: kotlin/Int
+          typeParameters: []
           valueParameters: []
           visibility: PUBLIC
         hasBackingField: true
@@ -677,6 +685,7 @@ scopes:
           annotations: []
           typeArguments: []
           type: E
+        typeParameters: []
         visibility: PUBLIC
       KaNamedFunctionSymbol:
         annotations: []
@@ -774,6 +783,7 @@ scopes:
               annotations: []
               typeArguments: []
               type: kotlin/String
+            typeParameters: []
             visibility: PUBLIC
         ]
         visibility: PUBLIC
@@ -810,6 +820,7 @@ scopes:
                 type: E
             ]
             type: kotlin/enums/EnumEntries<E>
+          typeParameters: []
           valueParameters: []
           visibility: PUBLIC
         hasBackingField: false
@@ -941,6 +952,7 @@ scopes:
               annotations: []
               typeArguments: []
               type: kotlin/Any?
+            typeParameters: []
             visibility: PUBLIC
         ]
         visibility: PUBLIC

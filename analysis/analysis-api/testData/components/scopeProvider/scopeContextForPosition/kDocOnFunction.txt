@@ -75,6 +75,7 @@ scopes:
               annotations: []
               typeArguments: []
               type: kotlin/Any?
+            typeParameters: []
             visibility: PUBLIC
         ]
         visibility: PUBLIC
@@ -200,6 +201,7 @@ scopes:
           annotations: []
           typeArguments: []
           type: test/Param1
+        typeParameters: []
         visibility: PUBLIC
       KaValueParameterSymbol:
         annotations: []
@@ -229,6 +231,7 @@ scopes:
           annotations: []
           typeArguments: []
           type: test/Param2
+        typeParameters: []
         visibility: PUBLIC
     constructors: 0
 
@@ -382,6 +385,7 @@ scopes:
             annotations: []
             typeArguments: []
             type: test/Receiver
+          typeParameters: []
           visibility: PUBLIC
         returnType: KaTypeParameterType:
           annotations: []
@@ -430,6 +434,7 @@ scopes:
               annotations: []
               typeArguments: []
               type: test/Param1
+            typeParameters: []
             visibility: PUBLIC
           KaValueParameterSymbol:
             annotations: []
@@ -459,6 +464,7 @@ scopes:
               annotations: []
               typeArguments: []
               type: test/Param2
+            typeParameters: []
             visibility: PUBLIC
         ]
         visibility: PUBLIC

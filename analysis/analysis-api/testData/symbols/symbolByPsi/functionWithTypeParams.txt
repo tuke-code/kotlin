@@ -92,6 +92,7 @@ KaNamedFunctionSymbol:
       returnType: KaTypeParameterType:
         annotations: []
         type: X
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(functionWithTypeParams.kt)
       getContainingJvmClassName: FunctionWithTypeParamsKt

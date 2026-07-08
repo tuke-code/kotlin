@@ -25,6 +25,7 @@ KtNameReferenceExpression(50,51): 'i'
             annotations: []
             typeArguments: []
             type: A
+          typeParameters: []
           visibility: PUBLIC
         type = A
       extensionReceiver = null

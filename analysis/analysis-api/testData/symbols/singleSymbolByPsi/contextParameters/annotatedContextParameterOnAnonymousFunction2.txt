@@ -27,6 +27,7 @@ KaContextParameterSymbol:
     ]
     typeArguments: []
     type: @R|Anno|()  kotlin/String
+  typeParameters: []
   visibility: PUBLIC
   getContainingFileSymbol: KaFileSymbol(annotatedContextParameterOnAnonymousFunction2.kt)
   getContainingJvmClassName: null

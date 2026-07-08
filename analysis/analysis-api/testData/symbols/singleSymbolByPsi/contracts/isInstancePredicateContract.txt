@@ -43,6 +43,7 @@ KaNamedFunctionSymbol:
                     annotations: []
                     typeArguments: []
                     type: kotlin/Any
+                  typeParameters: []
                   visibility: PUBLIC
                   getContainingFileSymbol: KaFileSymbol(isInstancePredicateContract.kt)
                   getContainingJvmClassName: IsInstancePredicateContractKt
@@ -109,6 +110,7 @@ KaNamedFunctionSymbol:
         annotations: []
         typeArguments: []
         type: kotlin/Any
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(isInstancePredicateContract.kt)
       getContainingJvmClassName: IsInstancePredicateContractKt

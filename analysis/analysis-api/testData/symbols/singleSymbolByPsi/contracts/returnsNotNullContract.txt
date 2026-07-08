@@ -43,6 +43,7 @@ KaNamedFunctionSymbol:
                     annotations: []
                     typeArguments: []
                     type: kotlin/Any?
+                  typeParameters: []
                   visibility: PUBLIC
                   getContainingFileSymbol: KaFileSymbol(returnsNotNullContract.kt)
                   getContainingJvmClassName: ReturnsNotNullContractKt
@@ -104,6 +105,7 @@ KaNamedFunctionSymbol:
         annotations: []
         typeArguments: []
         type: kotlin/Any?
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(returnsNotNullContract.kt)
       getContainingJvmClassName: ReturnsNotNullContractKt

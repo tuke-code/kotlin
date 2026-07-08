@@ -61,6 +61,7 @@ scopes:
           annotations: []
           typeArguments: []
           type: one/B
+        typeParameters: []
         visibility: PUBLIC
     constructors: 0
 
@@ -93,6 +94,7 @@ scopes:
             annotations: []
             typeArguments: []
             type: kotlin/Unit
+          typeParameters: []
           visibility: PRIVATE
         callableId: one/B.foo
         contextParameters: [
@@ -117,6 +119,7 @@ scopes:
               annotations: []
               typeArguments: []
               type: one/B
+            typeParameters: []
             visibility: PUBLIC
           KaContextParameterSymbol:
             annotations: []
@@ -139,6 +142,7 @@ scopes:
               annotations: []
               typeArguments: []
               type: kotlin/Int
+            typeParameters: []
             visibility: PUBLIC
         ]
         contextReceivers: [
@@ -177,6 +181,7 @@ scopes:
             annotations: []
             typeArguments: []
             type: kotlin/Unit
+          typeParameters: []
           valueParameters: []
           visibility: PUBLIC
         hasBackingField: false
@@ -266,6 +271,7 @@ scopes:
               annotations: []
               typeArguments: []
               type: kotlin/Any?
+            typeParameters: []
             visibility: PUBLIC
         ]
         visibility: PUBLIC

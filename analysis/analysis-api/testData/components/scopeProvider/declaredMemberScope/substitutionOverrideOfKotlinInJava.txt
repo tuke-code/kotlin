@@ -74,6 +74,7 @@ KaSyntheticJavaPropertySymbol:
     returnType: KaFlexibleType:
       annotations: []
       type: kotlin/Int!
+    typeParameters: []
     valueParameters: []
     visibility: PUBLIC
     getDispatchReceiver(): KaUsualClassType:
@@ -173,6 +174,7 @@ KaConstructorSymbol:
       returnType: KaFlexibleType:
         annotations: []
         type: kotlin/Int!
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: null
       getContainingJvmClassName: JavaC

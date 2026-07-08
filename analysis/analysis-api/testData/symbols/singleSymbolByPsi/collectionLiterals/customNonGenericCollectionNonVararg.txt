@@ -57,6 +57,7 @@ KaNamedFunctionSymbol:
         annotations: []
         typeArguments: []
         type: kotlin/String
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(customNonGenericCollectionNonVararg.kt)
       getContainingJvmClassName: MyList.Companion
@@ -91,6 +92,7 @@ KaNamedFunctionSymbol:
         annotations: []
         typeArguments: []
         type: kotlin/Int
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(customNonGenericCollectionNonVararg.kt)
       getContainingJvmClassName: MyList.Companion

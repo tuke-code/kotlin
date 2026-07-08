@@ -26,6 +26,7 @@ KaValueParameterSymbol:
     annotations: []
     typeArguments: []
     type: kotlin/Boolean
+  typeParameters: []
   visibility: PUBLIC
   getContainingFileSymbol: KaFileSymbol(openPrimaryConstructorParameterInFinalClass.kt)
   getContainingJvmClassName: Test
@@ -58,6 +59,7 @@ KaKotlinPropertySymbol:
       annotations: []
       typeArguments: []
       type: kotlin/Boolean
+    typeParameters: []
     visibility: PRIVATE
     getDispatchReceiver(): KaUsualClassType:
       annotations: []
@@ -93,6 +95,7 @@ KaKotlinPropertySymbol:
       annotations: []
       typeArguments: []
       type: kotlin/Boolean
+    typeParameters: []
     valueParameters: []
     visibility: PUBLIC
     getDispatchReceiver(): KaUsualClassType:
@@ -151,6 +154,7 @@ KaKotlinPropertySymbol:
       annotations: []
       typeArguments: []
       type: kotlin/Boolean
+    typeParameters: []
     visibility: PUBLIC
     getContainingFileSymbol: KaFileSymbol(openPrimaryConstructorParameterInFinalClass.kt)
     getContainingJvmClassName: Test

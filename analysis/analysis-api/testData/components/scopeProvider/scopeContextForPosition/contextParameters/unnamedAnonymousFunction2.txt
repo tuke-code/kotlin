@@ -42,6 +42,7 @@ scopes:
           annotations: []
           typeArguments: []
           type: kotlin/Int
+        typeParameters: []
         visibility: PUBLIC
     constructors: 0
 

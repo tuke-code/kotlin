@@ -132,6 +132,7 @@ KaNamedFunctionSymbol:
       returnType: KaTypeParameterType:
         annotations: []
         type: J
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(similarGenericSignature.kt)
       getContainingJvmClassName: SimilarGenericSignatureKt
@@ -241,6 +242,7 @@ KaNamedFunctionSymbol:
       returnType: KaTypeParameterType:
         annotations: []
         type: T
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(similarGenericSignature.kt)
       getContainingJvmClassName: SimilarGenericSignatureKt

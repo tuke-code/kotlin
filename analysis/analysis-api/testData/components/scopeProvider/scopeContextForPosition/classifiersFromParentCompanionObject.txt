@@ -82,6 +82,7 @@ scopes:
           returnType: KaClassErrorType:
             annotations: []
             type: ERROR_TYPE
+          typeParameters: []
           visibility: PRIVATE
         callableId: /Child.foo
         contextParameters: []
@@ -107,6 +108,7 @@ scopes:
           returnType: KaClassErrorType:
             annotations: []
             type: ERROR_TYPE
+          typeParameters: []
           valueParameters: []
           visibility: PUBLIC
         hasBackingField: true
@@ -195,6 +197,7 @@ scopes:
               annotations: []
               typeArguments: []
               type: kotlin/Any?
+            typeParameters: []
             visibility: PUBLIC
         ]
         visibility: PUBLIC
@@ -414,6 +417,7 @@ scopes:
               annotations: []
               typeArguments: []
               type: kotlin/Any?
+            typeParameters: []
             visibility: PUBLIC
         ]
         visibility: PUBLIC

@@ -138,6 +138,7 @@ KaNamedFunctionSymbol:
         annotations: []
         typeArguments: []
         type: kotlin/Any?
+      typeParameters: []
       visibility: PUBLIC
   ]
   visibility: PUBLIC
@@ -232,6 +233,7 @@ KaSyntheticJavaPropertySymbol:
     returnType: KaFlexibleType:
       annotations: []
       type: kotlin/Int!
+    typeParameters: []
     valueParameters: []
     visibility: PUBLIC
   hasBackingField: true

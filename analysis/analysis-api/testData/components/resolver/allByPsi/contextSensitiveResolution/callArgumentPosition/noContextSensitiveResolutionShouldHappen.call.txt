@@ -606,6 +606,7 @@ KtNameReferenceExpression(354,355): 'X'
               annotations: []
               typeArguments: []
               type: A
+            typeParameters: []
             visibility: PUBLIC
           type = A
         isContextSensitive = false

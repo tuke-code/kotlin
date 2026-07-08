@@ -46,6 +46,7 @@ KaNamedFunctionSymbol:
                     type: R
                 ]
                 type: (T) -> R
+              typeParameters: []
               visibility: PUBLIC
               getContainingFileSymbol: KaFileSymbol(returnsResultOfContract.kt)
               getContainingJvmClassName: ReturnsResultOfContractKt
@@ -92,6 +93,7 @@ KaNamedFunctionSymbol:
                     type: R
                 ]
                 type: (T) -> R
+              typeParameters: []
               visibility: PUBLIC
               getContainingFileSymbol: KaFileSymbol(returnsResultOfContract.kt)
               getContainingJvmClassName: ReturnsResultOfContractKt
@@ -138,6 +140,7 @@ KaNamedFunctionSymbol:
     returnType: KaTypeParameterType:
       annotations: []
       type: T
+    typeParameters: []
     visibility: PUBLIC
     getContainingFileSymbol: KaFileSymbol(returnsResultOfContract.kt)
     getContainingJvmClassName: ReturnsResultOfContractKt
@@ -219,6 +222,7 @@ KaNamedFunctionSymbol:
             type: R
         ]
         type: (T) -> R
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(returnsResultOfContract.kt)
       getContainingJvmClassName: ReturnsResultOfContractKt

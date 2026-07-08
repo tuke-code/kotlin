@@ -55,6 +55,7 @@ KaNamedFunctionSymbol:
       returnType: KaDefinitelyNotNullType:
         annotations: []
         type: T1 & Any
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(KotlinInterface.kt)
       getContainingJvmClassName: KotlinInterface

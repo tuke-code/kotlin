@@ -28,6 +28,7 @@ KaKotlinPropertySymbol:
           type: kotlin/String
       ]
       type: kotlin/collections/Set<kotlin/String>
+    typeParameters: []
     visibility: PRIVATE
     getContainingFileSymbol: KaFileSymbol(delegatedPropertyWithAccessors.kt)
     getContainingJvmClassName: DelegatedPropertyWithAccessorsKt
@@ -64,6 +65,7 @@ KaKotlinPropertySymbol:
           type: kotlin/String
       ]
       type: kotlin/collections/Set<kotlin/String>
+    typeParameters: []
     valueParameters: []
     visibility: PRIVATE
     getContainingFileSymbol: KaFileSymbol(delegatedPropertyWithAccessors.kt)
@@ -151,6 +153,7 @@ KaKotlinPropertySymbol:
             type: kotlin/String
         ]
         type: kotlin/collections/Set<kotlin/String>
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(delegatedPropertyWithAccessors.kt)
       getContainingJvmClassName: null
@@ -162,6 +165,7 @@ KaKotlinPropertySymbol:
       annotations: []
       typeArguments: []
       type: kotlin/Unit
+    typeParameters: []
     valueParameters: [
       KaValueParameterSymbol:
         annotations: []
@@ -196,6 +200,7 @@ KaKotlinPropertySymbol:
               type: kotlin/String
           ]
           type: kotlin/collections/Set<kotlin/String>
+        typeParameters: []
         visibility: PUBLIC
         getContainingFileSymbol: KaFileSymbol(delegatedPropertyWithAccessors.kt)
         getContainingJvmClassName: null

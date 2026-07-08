@@ -22,6 +22,7 @@ KaKotlinPropertySymbol:
     returnType: KaDynamicType:
       annotations: []
       type: dynamic
+    typeParameters: []
     visibility: PRIVATE
     getDispatchReceiver(): KaUsualClassType:
       annotations: []
@@ -56,6 +57,7 @@ KaKotlinPropertySymbol:
     returnType: KaDynamicType:
       annotations: []
       type: dynamic
+    typeParameters: []
     valueParameters: []
     visibility: PUBLIC
     getDispatchReceiver(): KaUsualClassType:
@@ -125,6 +127,7 @@ KaAnonymousFunctionSymbol:
   returnType: KaDynamicType:
     annotations: []
     type: dynamic
+  typeParameters: []
   valueParameters: []
   visibility: PUBLIC
   getContainingFileSymbol: KaFileSymbol(dynamic.kt)
@@ -190,6 +193,7 @@ KaNamedFunctionSymbol:
       returnType: KaDynamicType:
         annotations: []
         type: dynamic
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(dynamic.kt)
       getContainingJvmClassName: Foo

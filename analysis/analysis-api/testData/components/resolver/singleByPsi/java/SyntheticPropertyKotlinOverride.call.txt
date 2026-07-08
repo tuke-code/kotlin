@@ -133,6 +133,7 @@
               annotations: []
               typeArguments: []
               type: KotlinClass
+            typeParameters: []
             visibility: PUBLIC
           type = KotlinClass
         extensionReceiver = null

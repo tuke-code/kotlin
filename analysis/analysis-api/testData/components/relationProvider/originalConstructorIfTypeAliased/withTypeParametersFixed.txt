@@ -55,6 +55,7 @@ Resolved constructor:
           annotations: []
           typeArguments: []
           type: kotlin/String
+        typeParameters: []
         visibility: PUBLIC
         getContainingFileSymbol: KaFileSymbol(withTypeParametersFixed.kt)
         getContainingJvmClassName: null
@@ -142,6 +143,7 @@ Original constructor if type aliased:
         returnType: KaTypeParameterType:
           annotations: []
           type: T
+        typeParameters: []
         visibility: PUBLIC
         getContainingFileSymbol: KaFileSymbol(withTypeParametersFixed.kt)
         getContainingJvmClassName: test.MyClass

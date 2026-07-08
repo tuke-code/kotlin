@@ -49,6 +49,7 @@ KaConstructorSymbol:
         annotations: []
         typeArguments: []
         type: kotlin/String
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(main.kt)
       getContainingJvmClassName: A
@@ -145,6 +146,7 @@ KaConstructorSymbol:
         annotations: []
         typeArguments: []
         type: kotlin/String
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(main.kt)
       getContainingJvmClassName: B

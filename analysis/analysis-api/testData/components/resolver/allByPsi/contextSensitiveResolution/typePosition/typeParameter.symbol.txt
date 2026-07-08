@@ -217,6 +217,7 @@ KtThisExpression(232,236): 'this'
         returnType: KaTypeParameterType:
           annotations: []
           type: T
+        typeParameters: []
         visibility: PUBLIC
     ]
 
@@ -246,6 +247,7 @@ KtNameReferenceExpression(232,236): 'this'
         returnType: KaTypeParameterType:
           annotations: []
           type: T
+        typeParameters: []
         visibility: PUBLIC
     ]
 
@@ -441,6 +443,7 @@ KtThisExpression(346,350): 'this'
         returnType: KaTypeParameterType:
           annotations: []
           type: T
+        typeParameters: []
         visibility: PUBLIC
     ]
 
@@ -470,6 +473,7 @@ KtNameReferenceExpression(346,350): 'this'
         returnType: KaTypeParameterType:
           annotations: []
           type: T
+        typeParameters: []
         visibility: PUBLIC
     ]
 

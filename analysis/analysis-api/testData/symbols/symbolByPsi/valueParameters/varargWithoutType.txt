@@ -56,6 +56,7 @@ KaNamedFunctionSymbol:
       returnType: KaErrorType:
         annotations: []
         type: ERROR_TYPE
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(varargWithoutType.kt)
       getContainingJvmClassName: VarargWithoutTypeKt

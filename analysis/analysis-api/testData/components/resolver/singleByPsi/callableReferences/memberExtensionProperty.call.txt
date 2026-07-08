@@ -25,6 +25,7 @@ KtCallableReferenceExpression(249,257): 'Bar::foo'
             annotations: []
             typeArguments: []
             type: Foo
+          typeParameters: []
           visibility: PUBLIC
         type = Foo
       extensionReceiver = null

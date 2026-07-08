@@ -23,6 +23,7 @@ KaKotlinPropertySymbol:
       annotations: []
       typeArguments: []
       type: kotlin/Int
+    typeParameters: []
     visibility: PRIVATE
     getContainingFileSymbol: KaFileSymbol(Foo.kt)
     getContainingJvmClassName: test.FooKt
@@ -54,6 +55,7 @@ KaKotlinPropertySymbol:
       annotations: []
       typeArguments: []
       type: kotlin/Int
+    typeParameters: []
     valueParameters: []
     visibility: PUBLIC
     getContainingFileSymbol: KaFileSymbol(Foo.kt)
@@ -163,6 +165,7 @@ KaKotlinPropertySymbol:
       annotations: []
       typeArguments: []
       type: kotlin/Int
+    typeParameters: []
     visibility: PRIVATE
     getContainingFileSymbol: KaFileSymbol(Foo.kt)
     getContainingJvmClassName: test.FooKt
@@ -194,6 +197,7 @@ KaKotlinPropertySymbol:
       annotations: []
       typeArguments: []
       type: kotlin/Int
+    typeParameters: []
     valueParameters: []
     visibility: INTERNAL
     getContainingFileSymbol: KaFileSymbol(Foo.kt)
@@ -303,6 +307,7 @@ KaKotlinPropertySymbol:
       annotations: []
       typeArguments: []
       type: kotlin/Int
+    typeParameters: []
     visibility: PRIVATE
     getContainingFileSymbol: KaFileSymbol(Foo.kt)
     getContainingJvmClassName: test.FooKt
@@ -334,6 +339,7 @@ KaKotlinPropertySymbol:
       annotations: []
       typeArguments: []
       type: kotlin/Int
+    typeParameters: []
     valueParameters: []
     visibility: PRIVATE
     getContainingFileSymbol: KaFileSymbol(Foo.kt)
@@ -443,6 +449,7 @@ KaKotlinPropertySymbol:
       annotations: []
       typeArguments: []
       type: kotlin/Int
+    typeParameters: []
     visibility: PRIVATE
     getContainingFileSymbol: KaFileSymbol(Bar.kt)
     getContainingJvmClassName: test.BarKt
@@ -474,6 +481,7 @@ KaKotlinPropertySymbol:
       annotations: []
       typeArguments: []
       type: kotlin/Int
+    typeParameters: []
     valueParameters: []
     visibility: PUBLIC
     getContainingFileSymbol: KaFileSymbol(Bar.kt)
@@ -583,6 +591,7 @@ KaKotlinPropertySymbol:
       annotations: []
       typeArguments: []
       type: kotlin/Int
+    typeParameters: []
     visibility: PRIVATE
     getContainingFileSymbol: KaFileSymbol(Bar.kt)
     getContainingJvmClassName: test.BarKt
@@ -614,6 +623,7 @@ KaKotlinPropertySymbol:
       annotations: []
       typeArguments: []
       type: kotlin/Int
+    typeParameters: []
     valueParameters: []
     visibility: INTERNAL
     getContainingFileSymbol: KaFileSymbol(Bar.kt)
@@ -723,6 +733,7 @@ KaKotlinPropertySymbol:
       annotations: []
       typeArguments: []
       type: kotlin/Int
+    typeParameters: []
     visibility: PRIVATE
     getContainingFileSymbol: KaFileSymbol(Bar.kt)
     getContainingJvmClassName: test.BarKt
@@ -754,6 +765,7 @@ KaKotlinPropertySymbol:
       annotations: []
       typeArguments: []
       type: kotlin/Int
+    typeParameters: []
     valueParameters: []
     visibility: PRIVATE
     getContainingFileSymbol: KaFileSymbol(Bar.kt)
@@ -884,6 +896,7 @@ KaNamedFunctionSymbol:
       annotations: []
       typeArguments: []
       type: test/Bar
+    typeParameters: []
     visibility: PUBLIC
     getContainingFileSymbol: KaFileSymbol(Bar.kt)
     getContainingJvmClassName: test.BarKt
@@ -930,6 +943,7 @@ KaKotlinPropertySymbol:
       annotations: []
       typeArguments: []
       type: kotlin/Int
+    typeParameters: []
     visibility: PRIVATE
     getContainingFileSymbol: KaFileSymbol(Bar.kt)
     getContainingJvmClassName: test.BarKt
@@ -978,6 +992,7 @@ KaKotlinPropertySymbol:
         annotations: []
         typeArguments: []
         type: test/Bar
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(Bar.kt)
       getContainingJvmClassName: test.BarKt
@@ -988,6 +1003,7 @@ KaKotlinPropertySymbol:
       annotations: []
       typeArguments: []
       type: kotlin/Int
+    typeParameters: []
     valueParameters: []
     visibility: PUBLIC
     getContainingFileSymbol: KaFileSymbol(Bar.kt)
@@ -1037,6 +1053,7 @@ KaKotlinPropertySymbol:
       annotations: []
       typeArguments: []
       type: test/Bar
+    typeParameters: []
     visibility: PUBLIC
     getContainingFileSymbol: KaFileSymbol(Bar.kt)
     getContainingJvmClassName: test.BarKt
@@ -1105,6 +1122,7 @@ KaNamedFunctionSymbol:
       annotations: []
       typeArguments: []
       type: test/Bar
+    typeParameters: []
     visibility: PUBLIC
     getContainingFileSymbol: KaFileSymbol(Bar.kt)
     getContainingJvmClassName: test.BarKt
@@ -1151,6 +1169,7 @@ KaKotlinPropertySymbol:
       annotations: []
       typeArguments: []
       type: kotlin/Int
+    typeParameters: []
     visibility: PRIVATE
     getContainingFileSymbol: KaFileSymbol(Bar.kt)
     getContainingJvmClassName: test.BarKt
@@ -1199,6 +1218,7 @@ KaKotlinPropertySymbol:
         annotations: []
         typeArguments: []
         type: test/Bar
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(Bar.kt)
       getContainingJvmClassName: test.BarKt
@@ -1209,6 +1229,7 @@ KaKotlinPropertySymbol:
       annotations: []
       typeArguments: []
       type: kotlin/Int
+    typeParameters: []
     valueParameters: []
     visibility: INTERNAL
     getContainingFileSymbol: KaFileSymbol(Bar.kt)
@@ -1258,6 +1279,7 @@ KaKotlinPropertySymbol:
       annotations: []
       typeArguments: []
       type: test/Bar
+    typeParameters: []
     visibility: PUBLIC
     getContainingFileSymbol: KaFileSymbol(Bar.kt)
     getContainingJvmClassName: test.BarKt
@@ -1326,6 +1348,7 @@ KaNamedFunctionSymbol:
       annotations: []
       typeArguments: []
       type: test/Bar
+    typeParameters: []
     visibility: PUBLIC
     getContainingFileSymbol: KaFileSymbol(Bar.kt)
     getContainingJvmClassName: test.BarKt
@@ -1372,6 +1395,7 @@ KaKotlinPropertySymbol:
       annotations: []
       typeArguments: []
       type: kotlin/Int
+    typeParameters: []
     visibility: PRIVATE
     getContainingFileSymbol: KaFileSymbol(Bar.kt)
     getContainingJvmClassName: test.BarKt
@@ -1420,6 +1444,7 @@ KaKotlinPropertySymbol:
         annotations: []
         typeArguments: []
         type: test/Bar
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(Bar.kt)
       getContainingJvmClassName: test.BarKt
@@ -1430,6 +1455,7 @@ KaKotlinPropertySymbol:
       annotations: []
       typeArguments: []
       type: kotlin/Int
+    typeParameters: []
     valueParameters: []
     visibility: PRIVATE
     getContainingFileSymbol: KaFileSymbol(Bar.kt)
@@ -1479,6 +1505,7 @@ KaKotlinPropertySymbol:
       annotations: []
       typeArguments: []
       type: test/Bar
+    typeParameters: []
     visibility: PUBLIC
     getContainingFileSymbol: KaFileSymbol(Bar.kt)
     getContainingJvmClassName: test.BarKt

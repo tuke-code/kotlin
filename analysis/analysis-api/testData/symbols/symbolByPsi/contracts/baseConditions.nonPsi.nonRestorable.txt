@@ -20,6 +20,7 @@ KaReceiverParameterSymbol:
     annotations: []
     typeArguments: []
     type: kotlin/contracts/ContractBuilder
+  typeParameters: []
   visibility: PUBLIC
   getContainingFileSymbol: KaFileSymbol(baseConditions.kt)
   getContainingJvmClassName: null
@@ -49,6 +50,7 @@ KaReceiverParameterSymbol:
     annotations: []
     typeArguments: []
     type: kotlin/contracts/ContractBuilder
+  typeParameters: []
   visibility: PUBLIC
   getContainingFileSymbol: KaFileSymbol(baseConditions.kt)
   getContainingJvmClassName: null
@@ -78,6 +80,7 @@ KaReceiverParameterSymbol:
     annotations: []
     typeArguments: []
     type: kotlin/contracts/ContractBuilder
+  typeParameters: []
   visibility: PUBLIC
   getContainingFileSymbol: KaFileSymbol(baseConditions.kt)
   getContainingJvmClassName: null
@@ -107,6 +110,7 @@ KaReceiverParameterSymbol:
     annotations: []
     typeArguments: []
     type: kotlin/contracts/ContractBuilder
+  typeParameters: []
   visibility: PUBLIC
   getContainingFileSymbol: KaFileSymbol(baseConditions.kt)
   getContainingJvmClassName: null

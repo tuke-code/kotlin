@@ -28,6 +28,7 @@ KaKotlinPropertySymbol:
           type: kotlin/String
       ]
       type: kotlin/collections/MutableList<kotlin/String>
+    typeParameters: []
     visibility: PRIVATE
     getDispatchReceiver(): KaUsualClassType:
       annotations: []
@@ -68,6 +69,7 @@ KaKotlinPropertySymbol:
           type: kotlin/String
       ]
       type: kotlin/collections/List<kotlin/String>
+    typeParameters: []
     valueParameters: []
     visibility: PUBLIC
     getDispatchReceiver(): KaUsualClassType:

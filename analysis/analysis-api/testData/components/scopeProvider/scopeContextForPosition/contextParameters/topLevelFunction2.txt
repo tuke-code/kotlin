@@ -47,6 +47,7 @@ scopes:
           annotations: []
           typeArguments: []
           type: one/A
+        typeParameters: []
         visibility: PUBLIC
       KaValueParameterSymbol:
         annotations: []
@@ -76,6 +77,7 @@ scopes:
           annotations: []
           typeArguments: []
           type: kotlin/Boolean
+        typeParameters: []
         visibility: PUBLIC
     constructors: 0
 
@@ -139,6 +141,7 @@ scopes:
               annotations: []
               typeArguments: []
               type: one/A
+            typeParameters: []
             visibility: PUBLIC
           KaContextParameterSymbol:
             annotations: []
@@ -161,6 +164,7 @@ scopes:
               annotations: []
               typeArguments: []
               type: kotlin/Int
+            typeParameters: []
             visibility: PUBLIC
         ]
         contextReceivers: [
@@ -231,6 +235,7 @@ scopes:
               annotations: []
               typeArguments: []
               type: kotlin/Boolean
+            typeParameters: []
             visibility: PUBLIC
         ]
         visibility: PUBLIC

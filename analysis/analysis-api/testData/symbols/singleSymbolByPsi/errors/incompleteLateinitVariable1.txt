@@ -19,6 +19,7 @@ KaLocalVariableSymbol:
   returnType: KaErrorType:
     annotations: []
     type: ERROR_TYPE
+  typeParameters: []
   visibility: LOCAL
   getContainingFileSymbol: KaFileSymbol(incompleteLateinitVariable1.kt)
   getContainingJvmClassName: null

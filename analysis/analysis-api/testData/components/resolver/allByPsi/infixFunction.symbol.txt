@@ -110,6 +110,7 @@ KtThisExpression(37,41): 'this'
           annotations: []
           typeArguments: []
           type: kotlin/Int
+        typeParameters: []
         visibility: PUBLIC
     ]
 
@@ -140,6 +141,7 @@ KtNameReferenceExpression(37,41): 'this'
           annotations: []
           typeArguments: []
           type: kotlin/Int
+        typeParameters: []
         visibility: PUBLIC
     ]
 

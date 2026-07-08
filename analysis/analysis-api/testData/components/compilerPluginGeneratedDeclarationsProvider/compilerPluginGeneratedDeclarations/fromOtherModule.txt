@@ -85,6 +85,7 @@ callables: 1
           annotations: []
           typeArguments: []
           type: dependency/Test
+        typeParameters: []
         visibility: PUBLIC
     ]
     visibility: PUBLIC

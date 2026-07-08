@@ -24,6 +24,7 @@ KaContextParameterSymbol:
         type: kotlin/Int
     ]
     type: kotlin/collections/List<kotlin/Int>
+  typeParameters: []
   visibility: PUBLIC
   getContainingFileSymbol: KaFileSymbol(contextParameterOnFunction.kt)
   getContainingJvmClassName: ContextParameterOnFunctionKt

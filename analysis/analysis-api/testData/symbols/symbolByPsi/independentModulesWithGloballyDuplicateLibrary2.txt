@@ -23,6 +23,7 @@ KaKotlinPropertySymbol:
       annotations: []
       typeArguments: []
       type: library/Common
+    typeParameters: []
     visibility: PRIVATE
     getContainingFileSymbol: KaFileSymbol(module2.kt)
     getContainingJvmClassName: Module2Kt
@@ -54,6 +55,7 @@ KaKotlinPropertySymbol:
       annotations: []
       typeArguments: []
       type: library/Common
+    typeParameters: []
     valueParameters: []
     visibility: PUBLIC
     getContainingFileSymbol: KaFileSymbol(module2.kt)
@@ -123,6 +125,7 @@ KaKotlinPropertySymbol:
       annotations: []
       typeArguments: []
       type: kotlin/Int
+    typeParameters: []
     visibility: PRIVATE
     getContainingFileSymbol: KaFileSymbol(module2.kt)
     getContainingJvmClassName: Module2Kt
@@ -154,6 +157,7 @@ KaKotlinPropertySymbol:
       annotations: []
       typeArguments: []
       type: kotlin/Int
+    typeParameters: []
     valueParameters: []
     visibility: PUBLIC
     getContainingFileSymbol: KaFileSymbol(module2.kt)

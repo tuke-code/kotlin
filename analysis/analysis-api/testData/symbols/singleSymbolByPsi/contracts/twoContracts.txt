@@ -48,6 +48,7 @@ KaNamedFunctionSymbol:
                         annotations: []
                         typeArguments: []
                         type: kotlin/Any?
+                      typeParameters: []
                       visibility: PUBLIC
                       getContainingFileSymbol: KaFileSymbol(twoContracts.kt)
                       getContainingJvmClassName: TwoContractsKt
@@ -88,6 +89,7 @@ KaNamedFunctionSymbol:
                         annotations: []
                         typeArguments: []
                         type: kotlin/Any?
+                      typeParameters: []
                       visibility: PUBLIC
                       getContainingFileSymbol: KaFileSymbol(twoContracts.kt)
                       getContainingJvmClassName: TwoContractsKt
@@ -133,6 +135,7 @@ KaNamedFunctionSymbol:
                     type: kotlin/Unit
                 ]
                 type: () -> kotlin/Unit
+              typeParameters: []
               visibility: PUBLIC
               getContainingFileSymbol: KaFileSymbol(twoContracts.kt)
               getContainingJvmClassName: TwoContractsKt
@@ -194,6 +197,7 @@ KaNamedFunctionSymbol:
         annotations: []
         typeArguments: []
         type: kotlin/Any?
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(twoContracts.kt)
       getContainingJvmClassName: TwoContractsKt
@@ -228,6 +232,7 @@ KaNamedFunctionSymbol:
         annotations: []
         typeArguments: []
         type: kotlin/Any?
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(twoContracts.kt)
       getContainingJvmClassName: TwoContractsKt
@@ -267,6 +272,7 @@ KaNamedFunctionSymbol:
             type: kotlin/Unit
         ]
         type: () -> kotlin/Unit
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(twoContracts.kt)
       getContainingJvmClassName: TwoContractsKt

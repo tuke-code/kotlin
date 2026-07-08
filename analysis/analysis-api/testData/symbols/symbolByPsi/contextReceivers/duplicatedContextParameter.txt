@@ -23,6 +23,7 @@ KaNamedFunctionSymbol:
         annotations: []
         typeArguments: []
         type: kotlin/Int
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(duplicatedContextParameter.kt)
       getContainingJvmClassName: DuplicatedContextParameterKt
@@ -50,6 +51,7 @@ KaNamedFunctionSymbol:
         annotations: []
         typeArguments: []
         type: kotlin/String
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(duplicatedContextParameter.kt)
       getContainingJvmClassName: DuplicatedContextParameterKt
@@ -131,6 +133,7 @@ KaKotlinPropertySymbol:
       annotations: []
       typeArguments: []
       type: kotlin/Int
+    typeParameters: []
     visibility: PRIVATE
     getContainingFileSymbol: KaFileSymbol(duplicatedContextParameter.kt)
     getContainingJvmClassName: DuplicatedContextParameterKt
@@ -160,6 +163,7 @@ KaKotlinPropertySymbol:
         annotations: []
         typeArguments: []
         type: kotlin/Int
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(duplicatedContextParameter.kt)
       getContainingJvmClassName: DuplicatedContextParameterKt
@@ -187,6 +191,7 @@ KaKotlinPropertySymbol:
         annotations: []
         typeArguments: []
         type: kotlin/String
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(duplicatedContextParameter.kt)
       getContainingJvmClassName: DuplicatedContextParameterKt
@@ -230,6 +235,7 @@ KaKotlinPropertySymbol:
       annotations: []
       typeArguments: []
       type: kotlin/Int
+    typeParameters: []
     valueParameters: []
     visibility: PUBLIC
     getContainingFileSymbol: KaFileSymbol(duplicatedContextParameter.kt)

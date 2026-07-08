@@ -49,6 +49,7 @@ KaConstructorSymbol:
         annotations: []
         typeArguments: []
         type: kotlin/Int
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(propertyFromAnnotationWithVarargAnd.kt)
       getContainingJvmClassName: one.Anno

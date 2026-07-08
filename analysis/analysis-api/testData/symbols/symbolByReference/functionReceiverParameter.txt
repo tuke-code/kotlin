@@ -26,6 +26,7 @@ KaReceiverParameterSymbol:
     ]
     typeArguments: []
     type: @R|ReceiverTypeAnnotation|()  kotlin/Int
+  typeParameters: []
   visibility: PUBLIC
   getContainingFileSymbol: KaFileSymbol(functionReceiverParameter.kt)
   getContainingJvmClassName: FunctionReceiverParameterKt

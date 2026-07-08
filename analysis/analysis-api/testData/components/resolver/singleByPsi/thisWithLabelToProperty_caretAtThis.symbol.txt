@@ -25,5 +25,6 @@ KtNameReferenceExpression(64,68): 'this'
           annotations: []
           typeArguments: []
           type: kotlin/String
+        typeParameters: []
         visibility: PUBLIC
     ]

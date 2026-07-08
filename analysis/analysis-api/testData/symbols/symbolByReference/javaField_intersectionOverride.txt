@@ -19,6 +19,7 @@ KaJavaFieldSymbol:
   returnType: KaFlexibleType:
     annotations: []
     type: ft<it(kotlin/Int & T), it(kotlin/Int? & T?)>
+  typeParameters: []
   visibility: PUBLIC
   getDispatchReceiver(): KaIntersectionType:
     annotations: []

@@ -38,6 +38,7 @@ scopes:
           annotations: []
           typeArguments: []
           type: kotlin/Int
+        typeParameters: []
         visibility: LOCAL
     constructors: 0
 
@@ -76,6 +77,7 @@ scopes:
             annotations: []
             typeArguments: []
             type: kotlin/Int
+          typeParameters: []
           visibility: PRIVATE
         callableId: null
         contextParameters: []
@@ -102,6 +104,7 @@ scopes:
             annotations: []
             typeArguments: []
             type: kotlin/Int
+          typeParameters: []
           valueParameters: []
           visibility: PUBLIC
         hasBackingField: true
@@ -223,6 +226,7 @@ scopes:
               annotations: []
               typeArguments: []
               type: kotlin/Any?
+            typeParameters: []
             visibility: PUBLIC
         ]
         visibility: PUBLIC
@@ -367,6 +371,7 @@ scopes:
           annotations: []
           typeArguments: []
           type: kotlin/Int
+        typeParameters: []
         visibility: LOCAL
     constructors: 0
 

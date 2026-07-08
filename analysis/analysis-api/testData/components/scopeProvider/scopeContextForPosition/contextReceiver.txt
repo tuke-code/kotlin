@@ -97,6 +97,7 @@ scopes:
               annotations: []
               typeArguments: []
               type: Context
+            typeParameters: []
             visibility: PUBLIC
         ]
         contextReceivers: [

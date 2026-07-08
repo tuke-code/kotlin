@@ -109,6 +109,7 @@ scopes:
               annotations: []
               typeArguments: []
               type: kotlin/Any?
+            typeParameters: []
             visibility: PUBLIC
         ]
         visibility: PUBLIC
@@ -227,6 +228,7 @@ scopes:
           annotations: []
           typeArguments: []
           type: A
+        typeParameters: []
         visibility: PUBLIC
       KaValueParameterSymbol:
         annotations: []
@@ -256,6 +258,7 @@ scopes:
           annotations: []
           typeArguments: []
           type: kotlin/Int
+        typeParameters: []
         visibility: PUBLIC
       KaValueParameterSymbol:
         annotations: []
@@ -285,6 +288,7 @@ scopes:
           annotations: []
           typeArguments: []
           type: kotlin/String
+        typeParameters: []
         visibility: PUBLIC
     constructors: 0
 
@@ -466,6 +470,7 @@ scopes:
               annotations: []
               typeArguments: []
               type: A
+            typeParameters: []
             visibility: PUBLIC
         ]
         contextReceivers: [
@@ -517,6 +522,7 @@ scopes:
             annotations: []
             typeArguments: []
             type: C
+          typeParameters: []
           visibility: PUBLIC
         returnType: KaUsualClassType:
           annotations: []
@@ -566,6 +572,7 @@ scopes:
               annotations: []
               typeArguments: []
               type: kotlin/Int
+            typeParameters: []
             visibility: PUBLIC
           KaValueParameterSymbol:
             annotations: []
@@ -595,6 +602,7 @@ scopes:
               annotations: []
               typeArguments: []
               type: kotlin/String
+            typeParameters: []
             visibility: PUBLIC
         ]
         visibility: PUBLIC

@@ -169,6 +169,7 @@ KtNameReferenceExpression(255,256): 'x'
             returnType: KaTypeParameterType:
               annotations: []
               type: T
+            typeParameters: []
             visibility: PUBLIC
           type = T
         type = it(MySealed.Left & T)
@@ -227,6 +228,7 @@ KtNameReferenceExpression(273,274): 'y'
             returnType: KaTypeParameterType:
               annotations: []
               type: T
+            typeParameters: []
             visibility: PUBLIC
           type = T
         type = it(MySealed.Right & T)

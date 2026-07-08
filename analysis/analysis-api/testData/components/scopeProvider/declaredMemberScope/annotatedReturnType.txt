@@ -29,6 +29,7 @@ KaKotlinPropertySymbol:
       ]
       typeArguments: []
       type: @R|test/TypeAnno|()  kotlin/String
+    typeParameters: []
     visibility: PRIVATE
     getDispatchReceiver(): KaUsualClassType:
       annotations: []
@@ -67,6 +68,7 @@ KaKotlinPropertySymbol:
       ]
       typeArguments: []
       type: @R|test/TypeAnno|()  kotlin/String
+    typeParameters: []
     valueParameters: []
     visibility: PUBLIC
     getDispatchReceiver(): KaUsualClassType:
@@ -193,6 +195,7 @@ KaNamedFunctionSymbol:
         ]
         typeArguments: []
         type: @R|test/TypeAnno|()  kotlin/Int
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(annotatedReturnType.kt)
       getContainingJvmClassName: test.MyInterface

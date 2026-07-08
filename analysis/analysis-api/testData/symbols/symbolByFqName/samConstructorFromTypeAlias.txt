@@ -53,6 +53,7 @@ KaSamConstructorSymbol:
             type: kotlin/Unit
         ]
         type: () -> kotlin/Unit
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(samConstructorFromTypeAlias.kt)
       getContainingJvmClassName: one.SamConstructorFromTypeAliasKt

@@ -26,6 +26,7 @@ KtNameReferenceExpression(51,57): 'length'
               annotations: []
               typeArguments: []
               type: kotlin/Any
+            typeParameters: []
             visibility: PUBLIC
           type = kotlin.Any
         type = kotlin.String

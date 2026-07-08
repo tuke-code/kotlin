@@ -150,6 +150,7 @@ KaNamedFunctionSymbol:
       returnType: KaTypeParameterType:
         annotations: []
         type: X
+      typeParameters: []
       visibility: PUBLIC
     KaValueParameterSymbol:
       annotations: []
@@ -178,6 +179,7 @@ KaNamedFunctionSymbol:
       returnType: KaTypeParameterType:
         annotations: []
         type: Y
+      typeParameters: []
       visibility: PUBLIC
   ]
   visibility: PUBLIC
@@ -213,6 +215,7 @@ KaKotlinPropertySymbol:
           type: O
       ]
       type: kotlin/collections/Map<X, O>
+    typeParameters: []
     visibility: PRIVATE
   callableId: /Outer.A.map
   contextParameters: []
@@ -246,6 +249,7 @@ KaKotlinPropertySymbol:
           type: O
       ]
       type: kotlin/collections/Map<X, O>
+    typeParameters: []
     valueParameters: []
     visibility: PUBLIC
   hasBackingField: true
@@ -342,6 +346,7 @@ KaNamedFunctionSymbol:
         annotations: []
         typeArguments: []
         type: kotlin/Any?
+      typeParameters: []
       visibility: PUBLIC
   ]
   visibility: PUBLIC

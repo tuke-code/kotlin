@@ -7,7 +7,6 @@ package org.jetbrains.kotlin.analysis.api.symbols.markers
 
 import org.jetbrains.kotlin.analysis.api.KaImplementationDetail
 import org.jetbrains.kotlin.analysis.api.symbols.KaSymbol
-import org.jetbrains.kotlin.analysis.api.symbols.KaTypeParameterSymbol
 import org.jetbrains.kotlin.analysis.api.symbols.pointers.KaSymbolPointer
 import org.jetbrains.kotlin.name.Name
 
@@ -38,20 +37,4 @@ public interface KaNamedSymbol : KaSymbol {
     public val name: Name
 
     override fun createPointer(): KaSymbolPointer<KaNamedSymbol>
-}
-
-/**
- * A [KaSymbol] with [typeParameters].
- *
- * This class is an implementation detail and should not be used directly as a type. Consider using [typeParameters] directly from the
- * symbol, or [org.jetbrains.kotlin.analysis.api.symbols.typeParameters] for [KaDeclarationSymbol][org.jetbrains.kotlin.analysis.api.symbols.KaDeclarationSymbol]s.
- *
- * @see org.jetbrains.kotlin.analysis.api.symbols.typeParameters
- */
-@KaImplementationDetail
-@SubclassOptInRequired(KaImplementationDetail::class)
-public interface KaTypeParameterOwnerSymbol : KaSymbol {
-    public val typeParameters: List<KaTypeParameterSymbol>
-
-    override fun createPointer(): KaSymbolPointer<KaTypeParameterOwnerSymbol>
 }

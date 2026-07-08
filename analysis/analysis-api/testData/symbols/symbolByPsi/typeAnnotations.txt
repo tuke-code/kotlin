@@ -185,6 +185,7 @@ KaConstructorSymbol:
         annotations: []
         typeArguments: []
         type: kotlin/String
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(typeAnnotations.kt)
       getContainingJvmClassName: Anno5
@@ -329,6 +330,7 @@ KaNamedFunctionSymbol:
         ]
         typeArguments: []
         type: @R|Anno2|()  I
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(typeAnnotations.kt)
       getContainingJvmClassName: X
@@ -377,6 +379,7 @@ KaKotlinPropertySymbol:
       ]
       typeArguments: []
       type: @R|Anno4|()  I
+    typeParameters: []
     visibility: PRIVATE
     getDispatchReceiver(): KaUsualClassType:
       annotations: []
@@ -415,6 +418,7 @@ KaKotlinPropertySymbol:
       ]
       typeArguments: []
       type: @R|Anno4|()  I
+    typeParameters: []
     valueParameters: []
     visibility: PUBLIC
     getDispatchReceiver(): KaUsualClassType:
@@ -567,6 +571,7 @@ KaNamedFunctionSymbol:
     returnType: KaTypeParameterType:
       annotations: []
       type: T
+    typeParameters: []
     visibility: PUBLIC
     getContainingFileSymbol: KaFileSymbol(typeAnnotations.kt)
     getContainingJvmClassName: TypeAnnotationsKt
@@ -676,6 +681,7 @@ KaNamedFunctionSymbol:
     returnType: KaTypeParameterType:
       annotations: []
       type: T
+    typeParameters: []
     visibility: PUBLIC
     getContainingFileSymbol: KaFileSymbol(typeAnnotations.kt)
     getContainingJvmClassName: TypeAnnotationsKt

@@ -55,6 +55,7 @@ KaNamedFunctionSymbol:
       returnType: KaDynamicType:
         annotations: []
         type: dynamic
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: null
       getContainingJvmClassName: null

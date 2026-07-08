@@ -60,6 +60,7 @@ KaNamedFunctionSymbol:
         annotations: []
         typeArguments: []
         type: kotlin/Any
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(invalidContractParameterPassedToReturns.kt)
       getContainingJvmClassName: InvalidContractParameterPassedToReturnsKt
@@ -94,6 +95,7 @@ KaNamedFunctionSymbol:
         annotations: []
         typeArguments: []
         type: kotlin/Boolean
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(invalidContractParameterPassedToReturns.kt)
       getContainingJvmClassName: InvalidContractParameterPassedToReturnsKt

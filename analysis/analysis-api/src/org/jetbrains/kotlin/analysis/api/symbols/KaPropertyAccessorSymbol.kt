@@ -34,6 +34,8 @@ public sealed class KaPropertyAccessorSymbol : KaFunctionSymbol() {
 
     final override val contextParameters: List<KaContextParameterSymbol> get() = withValidityAssertion { emptyList() }
 
+    final override val typeParameters: List<KaTypeParameterSymbol> get() = withValidityAssertion { emptyList() }
+
     /**
      * Whether the accessor is implicitly generated.
      */

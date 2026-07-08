@@ -38,6 +38,7 @@ scopes:
               type: kotlin/Int
           ]
           type: kotlin/collections/Iterator<kotlin/Int>
+        typeParameters: []
         visibility: LOCAL
     constructors: 0
 
@@ -84,6 +85,7 @@ scopes:
               type: kotlin/Int
           ]
           type: kotlin/collections/List<kotlin/Int>
+        typeParameters: []
         visibility: PUBLIC
     constructors: 0
 
@@ -161,6 +163,7 @@ scopes:
                   type: kotlin/Int
               ]
               type: kotlin/collections/List<kotlin/Int>
+            typeParameters: []
             visibility: PUBLIC
         ]
         visibility: PUBLIC

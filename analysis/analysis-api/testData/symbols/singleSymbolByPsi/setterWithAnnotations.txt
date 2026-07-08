@@ -53,6 +53,7 @@ KaPropertySetterSymbol:
       annotations: []
       typeArguments: []
       type: kotlin/Int
+    typeParameters: []
     visibility: PUBLIC
     getContainingFileSymbol: KaFileSymbol(setterWithAnnotations.kt)
     getContainingJvmClassName: null
@@ -64,6 +65,7 @@ KaPropertySetterSymbol:
     annotations: []
     typeArguments: []
     type: kotlin/Unit
+  typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
       annotations: [
@@ -98,6 +100,7 @@ KaPropertySetterSymbol:
         annotations: []
         typeArguments: []
         type: kotlin/Int
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(setterWithAnnotations.kt)
       getContainingJvmClassName: null

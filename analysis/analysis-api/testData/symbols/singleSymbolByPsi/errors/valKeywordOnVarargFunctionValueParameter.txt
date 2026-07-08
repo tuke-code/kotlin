@@ -25,6 +25,7 @@ KaValueParameterSymbol:
   returnType: KaErrorType:
     annotations: []
     type: ERROR_TYPE
+  typeParameters: []
   visibility: PUBLIC
   getContainingFileSymbol: KaFileSymbol(valKeywordOnVarargFunctionValueParameter.kt)
   getContainingJvmClassName: ValKeywordOnVarargFunctionValueParameterKt

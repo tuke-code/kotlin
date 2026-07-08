@@ -256,6 +256,7 @@ KtNameReferenceExpression(217,220): 'baz'
               annotations: []
               typeArguments: []
               type: kotlin/Any
+            typeParameters: []
             visibility: PUBLIC
           type = kotlin.Any
         type = Base
@@ -299,6 +300,7 @@ KtBinaryExpression(229,238): 'baz = baz'
               annotations: []
               typeArguments: []
               type: kotlin/Any
+            typeParameters: []
             visibility: PUBLIC
           type = kotlin.Any
         type = Base
@@ -343,6 +345,7 @@ KtNameReferenceExpression(229,232): 'baz'
               annotations: []
               typeArguments: []
               type: kotlin/Any
+            typeParameters: []
             visibility: PUBLIC
           type = kotlin.Any
         type = Base
@@ -387,6 +390,7 @@ KtOperationReferenceExpression(233,234): '='
               annotations: []
               typeArguments: []
               type: kotlin/Any
+            typeParameters: []
             visibility: PUBLIC
           type = kotlin.Any
         type = Base
@@ -431,6 +435,7 @@ KtNameReferenceExpression(235,238): 'baz'
               annotations: []
               typeArguments: []
               type: kotlin/Any
+            typeParameters: []
             visibility: PUBLIC
           type = kotlin.Any
         type = Base
@@ -475,6 +480,7 @@ KtCallExpression(247,252): 'baz()'
               annotations: []
               typeArguments: []
               type: kotlin/Any
+            typeParameters: []
             visibility: PUBLIC
           type = kotlin.Any
         type = Base
@@ -518,6 +524,7 @@ KtNameReferenceExpression(247,250): 'baz'
               annotations: []
               typeArguments: []
               type: kotlin/Any
+            typeParameters: []
             visibility: PUBLIC
           type = kotlin.Any
         type = Base
@@ -694,6 +701,7 @@ KtNameReferenceExpression(333,336): 'baz'
               annotations: []
               typeArguments: []
               type: kotlin/Any
+            typeParameters: []
             visibility: PUBLIC
           type = kotlin.Any
         type = Test
@@ -737,6 +745,7 @@ KtBinaryExpression(349,358): 'baz = baz'
               annotations: []
               typeArguments: []
               type: kotlin/Any
+            typeParameters: []
             visibility: PUBLIC
           type = kotlin.Any
         type = Test
@@ -781,6 +790,7 @@ KtNameReferenceExpression(349,352): 'baz'
               annotations: []
               typeArguments: []
               type: kotlin/Any
+            typeParameters: []
             visibility: PUBLIC
           type = kotlin.Any
         type = Test
@@ -825,6 +835,7 @@ KtOperationReferenceExpression(353,354): '='
               annotations: []
               typeArguments: []
               type: kotlin/Any
+            typeParameters: []
             visibility: PUBLIC
           type = kotlin.Any
         type = Test
@@ -869,6 +880,7 @@ KtNameReferenceExpression(355,358): 'baz'
               annotations: []
               typeArguments: []
               type: kotlin/Any
+            typeParameters: []
             visibility: PUBLIC
           type = kotlin.Any
         type = Test
@@ -1010,6 +1022,7 @@ KtNameReferenceExpression(383,386): 'foo'
               annotations: []
               typeArguments: []
               type: kotlin/Any
+            typeParameters: []
             visibility: PUBLIC
           type = kotlin.Any
         type = Test
@@ -1053,6 +1066,7 @@ KtBinaryExpression(399,408): 'foo = foo'
               annotations: []
               typeArguments: []
               type: kotlin/Any
+            typeParameters: []
             visibility: PUBLIC
           type = kotlin.Any
         type = Test
@@ -1097,6 +1111,7 @@ KtNameReferenceExpression(399,402): 'foo'
               annotations: []
               typeArguments: []
               type: kotlin/Any
+            typeParameters: []
             visibility: PUBLIC
           type = kotlin.Any
         type = Test
@@ -1141,6 +1156,7 @@ KtOperationReferenceExpression(403,404): '='
               annotations: []
               typeArguments: []
               type: kotlin/Any
+            typeParameters: []
             visibility: PUBLIC
           type = kotlin.Any
         type = Test
@@ -1185,6 +1201,7 @@ KtNameReferenceExpression(405,408): 'foo'
               annotations: []
               typeArguments: []
               type: kotlin/Any
+            typeParameters: []
             visibility: PUBLIC
           type = kotlin.Any
         type = Test
@@ -1229,6 +1246,7 @@ KtCallExpression(422,427): 'foo()'
               annotations: []
               typeArguments: []
               type: kotlin/Any
+            typeParameters: []
             visibility: PUBLIC
           type = kotlin.Any
         type = Test
@@ -1272,6 +1290,7 @@ KtNameReferenceExpression(422,425): 'foo'
               annotations: []
               typeArguments: []
               type: kotlin/Any
+            typeParameters: []
             visibility: PUBLIC
           type = kotlin.Any
         type = Test

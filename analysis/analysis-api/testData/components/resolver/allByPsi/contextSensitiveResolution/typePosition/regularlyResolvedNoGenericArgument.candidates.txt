@@ -197,6 +197,7 @@ KtNameReferenceExpression(305,306): 'y'
               annotations: []
               typeArguments: []
               type: MySealed
+            typeParameters: []
             visibility: PUBLIC
           type = MySealed
         type = MySealed.Right

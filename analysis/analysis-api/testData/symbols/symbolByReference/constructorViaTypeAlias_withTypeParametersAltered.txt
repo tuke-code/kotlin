@@ -80,6 +80,7 @@ KaConstructorSymbol:
             type: TT
         ]
         type: test/Cell<TT>
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(constructorViaTypeAlias_withTypeParametersAltered.kt)
       getContainingJvmClassName: null

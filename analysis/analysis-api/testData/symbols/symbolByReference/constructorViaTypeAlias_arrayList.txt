@@ -70,6 +70,7 @@ KaConstructorSymbol:
       returnType: KaFlexibleType:
         annotations: []
         type: ft<kotlin/collections/MutableCollection<out E!>, kotlin/collections/Collection<out E!>?>
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: null
       getContainingJvmClassName: null

@@ -68,6 +68,7 @@ KaNamedFunctionSymbol:
             type: ERROR_TYPE
         ]
         type: (kotlin/Int, ERROR CLASS: Symbol not found for p2) -> ERROR CLASS: Incomplete code
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(parameterNotFunctionalType.kt)
       getContainingJvmClassName: ParameterNotFunctionalTypeKt
@@ -101,6 +102,7 @@ KaNamedFunctionSymbol:
       returnType: KaErrorType:
         annotations: []
         type: ERROR_TYPE
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(parameterNotFunctionalType.kt)
       getContainingJvmClassName: ParameterNotFunctionalTypeKt

@@ -37,6 +37,7 @@ KaNamedFunctionSymbol:
                     annotations: []
                     typeArguments: []
                     type: kotlin/Boolean
+                  typeParameters: []
                   visibility: PUBLIC
                   getContainingFileSymbol: KaFileSymbol(referenceBooleanReceiverInContract.kt)
                   getContainingJvmClassName: ReferenceBooleanReceiverInContractKt
@@ -84,6 +85,7 @@ KaNamedFunctionSymbol:
       annotations: []
       typeArguments: []
       type: kotlin/Boolean
+    typeParameters: []
     visibility: PUBLIC
     getContainingFileSymbol: KaFileSymbol(referenceBooleanReceiverInContract.kt)
     getContainingJvmClassName: ReferenceBooleanReceiverInContractKt

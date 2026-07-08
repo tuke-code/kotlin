@@ -33,6 +33,7 @@ scopes:
           annotations: []
           typeArguments: []
           type: test/Base
+        typeParameters: []
         visibility: PUBLIC
     constructors: 0
 

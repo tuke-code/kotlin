@@ -426,3 +426,15 @@ public fun KaFunctionSymbol.hasConflictingSignatureWith(other: KaFunctionSymbol,
     @OptIn(KaImplementationDetail::class)
     return internals.symbolRelationProvider.hasConflictingSignatureWith(this, other, targetPlatform)
 }
+
+/**
+ * The declaration's type parameters provided it can have them. Otherwise, an empty list.
+ *
+ * See [Generics](https://kotlinlang.org/docs/generics.html)
+ */
+public val KaDeclarationSymbol.typeParameters: List<KaTypeParameterSymbol>
+    get() = when (this) {
+        is KaClassLikeSymbol -> typeParameters
+        is KaCallableSymbol -> typeParameters
+        else -> emptyList()
+    }

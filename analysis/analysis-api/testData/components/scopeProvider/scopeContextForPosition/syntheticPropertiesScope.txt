@@ -112,6 +112,7 @@ scopes:
               annotations: []
               typeArguments: []
               type: kotlin/Any?
+            typeParameters: []
             visibility: PUBLIC
         ]
         visibility: PUBLIC
@@ -206,6 +207,7 @@ scopes:
           returnType: KaFlexibleType:
             annotations: []
             type: kotlin/Int!
+          typeParameters: []
           valueParameters: []
           visibility: PUBLIC
         hasBackingField: true
@@ -371,6 +373,7 @@ scopes:
             annotations: []
             typeArguments: []
             type: JavaClass
+          typeParameters: []
           visibility: PUBLIC
         returnType: KaUsualClassType:
           annotations: []

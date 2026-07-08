@@ -45,6 +45,7 @@ KaNamedFunctionSymbol:
                         annotations: []
                         typeArguments: []
                         type: kotlin/Boolean
+                      typeParameters: []
                       visibility: PUBLIC
                       getContainingFileSymbol: KaFileSymbol(logicalNotContract.kt)
                       getContainingJvmClassName: LogicalNotContractKt
@@ -105,6 +106,7 @@ KaNamedFunctionSymbol:
         annotations: []
         typeArguments: []
         type: kotlin/Boolean
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(logicalNotContract.kt)
       getContainingJvmClassName: LogicalNotContractKt

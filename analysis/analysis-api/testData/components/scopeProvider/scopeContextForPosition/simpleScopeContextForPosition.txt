@@ -135,6 +135,7 @@ scopes:
               annotations: []
               typeArguments: []
               type: kotlin/Any?
+            typeParameters: []
             visibility: PUBLIC
         ]
         visibility: PUBLIC
@@ -335,6 +336,7 @@ scopes:
               annotations: []
               typeArguments: []
               type: kotlin/Any?
+            typeParameters: []
             visibility: PUBLIC
         ]
         visibility: PUBLIC
@@ -460,6 +462,7 @@ scopes:
           annotations: []
           typeArguments: []
           type: kotlin/Int
+        typeParameters: []
         visibility: LOCAL
     constructors: 0
 
@@ -495,6 +498,7 @@ scopes:
           annotations: []
           typeArguments: []
           type: kotlin/String
+        typeParameters: []
         visibility: PUBLIC
     constructors: 0
 
@@ -524,6 +528,7 @@ scopes:
           annotations: []
           typeArguments: []
           type: kotlin/Int
+        typeParameters: []
         visibility: LOCAL
       KaNamedFunctionSymbol:
         annotations: []
@@ -591,6 +596,7 @@ scopes:
           annotations: []
           typeArguments: []
           type: kotlin/String?
+        typeParameters: []
         visibility: PUBLIC
     constructors: 0
 
@@ -740,6 +746,7 @@ scopes:
               annotations: []
               typeArguments: []
               type: kotlin/String?
+            typeParameters: []
             visibility: PUBLIC
         ]
         visibility: PUBLIC
@@ -802,6 +809,7 @@ scopes:
               annotations: []
               typeArguments: []
               type: kotlin/Any?
+            typeParameters: []
             visibility: PUBLIC
         ]
         visibility: PUBLIC
@@ -1159,6 +1167,7 @@ scopes:
                   type: kotlin/Unit
               ]
               type: A.() -> kotlin/Unit
+            typeParameters: []
             visibility: PUBLIC
         ]
         visibility: PUBLIC
@@ -1230,6 +1239,7 @@ scopes:
                   type: kotlin/Unit
               ]
               type: B.() -> kotlin/Unit
+            typeParameters: []
             visibility: PUBLIC
         ]
         visibility: PUBLIC
@@ -1301,6 +1311,7 @@ scopes:
                   type: kotlin/Unit
               ]
               type: JavaClass.() -> kotlin/Unit
+            typeParameters: []
             visibility: PUBLIC
         ]
         visibility: PUBLIC

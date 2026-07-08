@@ -23,5 +23,6 @@ KDocName(8,12): 'this'
           annotations: []
           typeArguments: []
           type: AAA
+        typeParameters: []
         visibility: PUBLIC
     ]

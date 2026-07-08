@@ -54,6 +54,7 @@ KaConstructorSymbol:
         annotations: []
         typeArguments: []
         type: kotlin/String
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(constructorReferenceViaTypeAlias_withTypeParametersFixed.kt)
       getContainingJvmClassName: null

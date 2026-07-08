@@ -80,6 +80,7 @@ FUNCTION:
         isMarkedNullable: false
         isNullable: false
         hasFlexibleNullability: false
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(overrideOperator.kt)
       getContainingJvmClassName: B

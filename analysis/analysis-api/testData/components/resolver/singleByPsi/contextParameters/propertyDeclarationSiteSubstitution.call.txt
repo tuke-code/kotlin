@@ -25,6 +25,7 @@ KtNameReferenceExpression(193,196): 'foo'
               annotations: []
               typeArguments: []
               type: kotlin/Long
+            typeParameters: []
             visibility: PUBLIC
           type = kotlin.Long,
         KaImplicitReceiverValue:
@@ -50,6 +51,7 @@ KtNameReferenceExpression(193,196): 'foo'
               annotations: []
               typeArguments: []
               type: kotlin/Boolean
+            typeParameters: []
             visibility: PUBLIC
           type = kotlin.Boolean
       ]

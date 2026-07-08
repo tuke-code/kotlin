@@ -164,6 +164,7 @@ KaNamedFunctionSymbol:
       annotations: []
       typeArguments: []
       type: library/api/FakeI
+    typeParameters: []
     visibility: PUBLIC
     getContainingFileSymbol: KaFileSymbol(extension.kt)
     getContainingJvmClassName: library.api.ExtensionKt
@@ -231,6 +232,7 @@ KaNamedFunctionSymbol:
       annotations: []
       typeArguments: []
       type: library/api/InternalFakeI
+    typeParameters: []
     visibility: PUBLIC
     getContainingFileSymbol: KaFileSymbol(extension.kt)
     getContainingJvmClassName: library.api.ExtensionKt
@@ -298,6 +300,7 @@ KaNamedFunctionSymbol:
       annotations: []
       typeArguments: []
       type: library/api/PrivateFakeI
+    typeParameters: []
     visibility: PUBLIC
     getContainingFileSymbol: KaFileSymbol(extension.kt)
     getContainingJvmClassName: library.api.ExtensionKt
@@ -485,6 +488,7 @@ KaNamedFunctionSymbol:
       annotations: []
       typeArguments: []
       type: library/api/C1
+    typeParameters: []
     visibility: PUBLIC
     getContainingFileSymbol: null
     getContainingJvmClassName: library.api.C1Kt
@@ -552,6 +556,7 @@ KaNamedFunctionSymbol:
       annotations: []
       typeArguments: []
       type: library/api/InternalC1
+    typeParameters: []
     visibility: PUBLIC
     getContainingFileSymbol: null
     getContainingJvmClassName: library.api.C1Kt
@@ -619,6 +624,7 @@ KaNamedFunctionSymbol:
       annotations: []
       typeArguments: []
       type: library/api/PrivateC1
+    typeParameters: []
     visibility: PUBLIC
     getContainingFileSymbol: null
     getContainingJvmClassName: library.api.C1Kt
@@ -806,6 +812,7 @@ KaNamedFunctionSymbol:
       annotations: []
       typeArguments: []
       type: library/api/I
+    typeParameters: []
     visibility: PUBLIC
     getContainingFileSymbol: null
     getContainingJvmClassName: library.api.IKt
@@ -873,6 +880,7 @@ KaNamedFunctionSymbol:
       annotations: []
       typeArguments: []
       type: library/api/InternalI
+    typeParameters: []
     visibility: PUBLIC
     getContainingFileSymbol: null
     getContainingJvmClassName: library.api.IKt
@@ -940,6 +948,7 @@ KaNamedFunctionSymbol:
       annotations: []
       typeArguments: []
       type: library/api/PrivateI
+    typeParameters: []
     visibility: PUBLIC
     getContainingFileSymbol: null
     getContainingJvmClassName: library.api.IKt

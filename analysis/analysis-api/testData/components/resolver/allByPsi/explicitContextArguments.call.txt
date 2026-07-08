@@ -1103,6 +1103,7 @@ KtCallExpression(691,736): 'unnamed/*explicit regular*/(regular = "str2")'
               annotations: []
               typeArguments: []
               type: Implicit
+            typeParameters: []
             visibility: PUBLIC
           type = Implicit,
         KaImplicitReceiverValue:
@@ -1128,6 +1129,7 @@ KtCallExpression(691,736): 'unnamed/*explicit regular*/(regular = "str2")'
               annotations: []
               typeArguments: []
               type: Explicit
+            typeParameters: []
             visibility: PUBLIC
           type = Explicit
       ]
@@ -1202,6 +1204,7 @@ KtNameReferenceExpression(691,698): 'unnamed'
               annotations: []
               typeArguments: []
               type: Implicit
+            typeParameters: []
             visibility: PUBLIC
           type = Implicit,
         KaImplicitReceiverValue:
@@ -1227,6 +1230,7 @@ KtNameReferenceExpression(691,698): 'unnamed'
               annotations: []
               typeArguments: []
               type: Explicit
+            typeParameters: []
             visibility: PUBLIC
           type = Explicit
       ]
@@ -1319,6 +1323,7 @@ KtCallExpression(745,788): 'named/*explicit regular*/(regular = "str2")'
               annotations: []
               typeArguments: []
               type: Implicit
+            typeParameters: []
             visibility: PUBLIC
           type = Implicit,
         KaImplicitReceiverValue:
@@ -1344,6 +1349,7 @@ KtCallExpression(745,788): 'named/*explicit regular*/(regular = "str2")'
               annotations: []
               typeArguments: []
               type: Explicit
+            typeParameters: []
             visibility: PUBLIC
           type = Explicit
       ]
@@ -1418,6 +1424,7 @@ KtNameReferenceExpression(745,750): 'named'
               annotations: []
               typeArguments: []
               type: Implicit
+            typeParameters: []
             visibility: PUBLIC
           type = Implicit,
         KaImplicitReceiverValue:
@@ -1443,6 +1450,7 @@ KtNameReferenceExpression(745,750): 'named'
               annotations: []
               typeArguments: []
               type: Explicit
+            typeParameters: []
             visibility: PUBLIC
           type = Explicit
       ]
@@ -1543,6 +1551,7 @@ KtCallExpression(800,864): 'unnamed/*all explicit*/(explicit = Explicit(), regul
               annotations: []
               typeArguments: []
               type: Implicit
+            typeParameters: []
             visibility: PUBLIC
           type = Implicit,
         KaExplicitReceiverValue:
@@ -1629,6 +1638,7 @@ KtNameReferenceExpression(800,807): 'unnamed'
               annotations: []
               typeArguments: []
               type: Implicit
+            typeParameters: []
             visibility: PUBLIC
           type = Implicit,
         KaExplicitReceiverValue:
@@ -1779,6 +1789,7 @@ KtCallExpression(869,931): 'named/*all explicit*/(explicit = Explicit(), regular
               annotations: []
               typeArguments: []
               type: Implicit
+            typeParameters: []
             visibility: PUBLIC
           type = Implicit,
         KaExplicitReceiverValue:
@@ -1865,6 +1876,7 @@ KtNameReferenceExpression(869,874): 'named'
               annotations: []
               typeArguments: []
               type: Implicit
+            typeParameters: []
             visibility: PUBLIC
           type = Implicit,
         KaExplicitReceiverValue:

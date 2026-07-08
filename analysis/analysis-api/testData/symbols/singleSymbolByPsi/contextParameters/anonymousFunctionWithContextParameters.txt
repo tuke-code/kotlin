@@ -26,6 +26,7 @@ KaAnonymousFunctionSymbol:
         ]
         typeArguments: []
         type: @R|Anno|(position = <strcat>(String(1), String(2)) [evaluated = String(12)])  kotlin/String
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(anonymousFunctionWithContextParameters.kt)
       getContainingJvmClassName: null
@@ -61,6 +62,7 @@ KaAnonymousFunctionSymbol:
             type: @R|Anno|(position = String(str) [evaluated = String(str)])  kotlin/Int
         ]
         type: kotlin/collections/List<@R|Anno|(position = String(str) [evaluated = String(str)])  kotlin/Int>
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(anonymousFunctionWithContextParameters.kt)
       getContainingJvmClassName: null
@@ -107,6 +109,7 @@ KaAnonymousFunctionSymbol:
     annotations: []
     typeArguments: []
     type: kotlin/Unit
+  typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
       annotations: []
@@ -136,6 +139,7 @@ KaAnonymousFunctionSymbol:
         annotations: []
         typeArguments: []
         type: kotlin/Int
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(anonymousFunctionWithContextParameters.kt)
       getContainingJvmClassName: null

@@ -109,6 +109,7 @@ KaNamedFunctionSymbol:
         annotations: []
         typeArguments: []
         type: {TypeAlias=} A
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(functionWithTypeAlias.kt)
       getContainingJvmClassName: FunctionWithTypeAliasKt
@@ -184,6 +185,7 @@ KaNamedFunctionSymbol:
         annotations: []
         typeArguments: []
         type: A
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(functionWithTypeAlias.kt)
       getContainingJvmClassName: FunctionWithTypeAliasKt

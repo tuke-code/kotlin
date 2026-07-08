@@ -44,6 +44,7 @@ KaNamedFunctionSymbol:
                     type: kotlin/Unit
                 ]
                 type: () -> kotlin/Unit
+              typeParameters: []
               visibility: PUBLIC
               getContainingFileSymbol: KaFileSymbol(callsInPlaceUnknownContract.kt)
               getContainingJvmClassName: CallsInPlaceUnknownContractKt
@@ -110,6 +111,7 @@ KaNamedFunctionSymbol:
             type: kotlin/Unit
         ]
         type: () -> kotlin/Unit
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(callsInPlaceUnknownContract.kt)
       getContainingJvmClassName: CallsInPlaceUnknownContractKt

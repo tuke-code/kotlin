@@ -390,6 +390,7 @@ KtThisExpression(321,325): 'this'
           annotations: []
           typeArguments: []
           type: MyClass
+        typeParameters: []
         visibility: PUBLIC
     ]
 
@@ -420,6 +421,7 @@ KtNameReferenceExpression(321,325): 'this'
           annotations: []
           typeArguments: []
           type: MyClass
+        typeParameters: []
         visibility: PUBLIC
     ]
 

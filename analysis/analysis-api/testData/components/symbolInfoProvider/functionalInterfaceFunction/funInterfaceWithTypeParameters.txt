@@ -150,6 +150,7 @@ FUNCTIONAL INTERFACE FUNCTION:
         isMarkedNullable: false
         isNullable: true
         hasFlexibleNullability: false
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(funInterfaceWithTypeParameters.kt)
       getContainingJvmClassName: GenericPredicate

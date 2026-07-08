@@ -138,6 +138,7 @@ scopes:
               annotations: []
               typeArguments: []
               type: kotlin/Any?
+            typeParameters: []
             visibility: PUBLIC
         ]
         visibility: PUBLIC
@@ -203,6 +204,7 @@ scopes:
               annotations: []
               typeArguments: []
               type: kotlin/Int
+            typeParameters: []
             visibility: PUBLIC
         ]
         visibility: PUBLIC
@@ -265,6 +267,7 @@ scopes:
               annotations: []
               typeArguments: []
               type: kotlin/Int
+            typeParameters: []
             visibility: PUBLIC
           KaValueParameterSymbol:
             annotations: []
@@ -294,6 +297,7 @@ scopes:
               annotations: []
               typeArguments: []
               type: kotlin/Int
+            typeParameters: []
             visibility: PUBLIC
         ]
         visibility: PUBLIC
@@ -359,6 +363,7 @@ scopes:
               annotations: []
               typeArguments: []
               type: kotlin/String
+            typeParameters: []
             visibility: PUBLIC
         ]
         visibility: PUBLIC
@@ -424,6 +429,7 @@ scopes:
               annotations: []
               typeArguments: []
               type: kotlin/Any?
+            typeParameters: []
             visibility: PUBLIC
         ]
         visibility: PUBLIC
@@ -490,6 +496,7 @@ scopes:
             annotations: []
             typeArguments: []
             type: kotlin/Int
+          typeParameters: []
           visibility: PRIVATE
         callableId: kotlin/String.length
         contextParameters: []
@@ -516,6 +523,7 @@ scopes:
             annotations: []
             typeArguments: []
             type: kotlin/Int
+          typeParameters: []
           valueParameters: []
           visibility: PUBLIC
         hasBackingField: true
@@ -629,6 +637,7 @@ scopes:
           annotations: []
           typeArguments: []
           type: one/A
+        typeParameters: []
         visibility: PUBLIC
       KaValueParameterSymbol:
         annotations: []
@@ -658,6 +667,7 @@ scopes:
           annotations: []
           typeArguments: []
           type: kotlin/Boolean
+        typeParameters: []
         visibility: PUBLIC
     constructors: 0
 
@@ -690,6 +700,7 @@ scopes:
               annotations: []
               typeArguments: []
               type: one/A
+            typeParameters: []
             visibility: PUBLIC
           KaContextParameterSymbol:
             annotations: []
@@ -712,6 +723,7 @@ scopes:
               annotations: []
               typeArguments: []
               type: kotlin/Int
+            typeParameters: []
             visibility: PUBLIC
         ]
         contextReceivers: [
@@ -769,6 +781,7 @@ scopes:
             annotations: []
             typeArguments: []
             type: kotlin/String
+          typeParameters: []
           visibility: PUBLIC
         returnType: KaUsualClassType:
           annotations: []
@@ -804,6 +817,7 @@ scopes:
               annotations: []
               typeArguments: []
               type: kotlin/Boolean
+            typeParameters: []
             visibility: PUBLIC
         ]
         visibility: PUBLIC
@@ -866,6 +880,7 @@ scopes:
               annotations: []
               typeArguments: []
               type: kotlin/Any?
+            typeParameters: []
             visibility: PUBLIC
         ]
         visibility: PUBLIC

@@ -41,6 +41,7 @@ scopes:
           annotations: []
           typeArguments: []
           type: kotlin/Any
+        typeParameters: []
         visibility: PUBLIC
     constructors: 0
 
@@ -103,6 +104,7 @@ scopes:
               annotations: []
               typeArguments: []
               type: kotlin/Int
+            typeParameters: []
             visibility: PUBLIC
         ]
         contextReceivers: [
@@ -197,6 +199,7 @@ scopes:
             annotations: []
             typeArguments: []
             type: kotlin/Unit
+          typeParameters: []
           visibility: PRIVATE
         callableId: /foo
         contextParameters: [
@@ -221,6 +224,7 @@ scopes:
               annotations: []
               typeArguments: []
               type: kotlin/Any
+            typeParameters: []
             visibility: PUBLIC
         ]
         contextReceivers: [
@@ -253,6 +257,7 @@ scopes:
             annotations: []
             typeArguments: []
             type: kotlin/Unit
+          typeParameters: []
           valueParameters: []
           visibility: PUBLIC
         hasBackingField: false

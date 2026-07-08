@@ -948,6 +948,7 @@ KtPrefixExpression(890,899): '+thisProp'
               annotations: []
               typeArguments: []
               type: A
+            typeParameters: []
             visibility: PUBLIC
           type = A
       ]
@@ -1002,6 +1003,7 @@ KtOperationReferenceExpression(890,891): '+'
               annotations: []
               typeArguments: []
               type: A
+            typeParameters: []
             visibility: PUBLIC
           type = A
       ]
@@ -1073,6 +1075,7 @@ KtPrefixExpression(908,910): '+a'
               annotations: []
               typeArguments: []
               type: A
+            typeParameters: []
             visibility: PUBLIC
           type = A
       ]
@@ -1127,6 +1130,7 @@ KtOperationReferenceExpression(908,909): '+'
               annotations: []
               typeArguments: []
               type: A
+            typeParameters: []
             visibility: PUBLIC
           type = A
       ]
@@ -1198,6 +1202,7 @@ KtBinaryExpression(919,931): 'thisProp + 1'
               annotations: []
               typeArguments: []
               type: A
+            typeParameters: []
             visibility: PUBLIC
           type = A
       ]
@@ -1285,6 +1290,7 @@ KtOperationReferenceExpression(928,929): '+'
               annotations: []
               typeArguments: []
               type: A
+            typeParameters: []
             visibility: PUBLIC
           type = A
       ]
@@ -1358,6 +1364,7 @@ KtBinaryExpression(940,945): 'a + 1'
               annotations: []
               typeArguments: []
               type: A
+            typeParameters: []
             visibility: PUBLIC
           type = A
       ]
@@ -1445,6 +1452,7 @@ KtOperationReferenceExpression(942,943): '+'
               annotations: []
               typeArguments: []
               type: A
+            typeParameters: []
             visibility: PUBLIC
           type = A
       ]
@@ -1518,6 +1526,7 @@ KtArrayAccessExpression(954,965): 'thisProp[1]'
               annotations: []
               typeArguments: []
               type: A
+            typeParameters: []
             visibility: PUBLIC
           type = A
       ]
@@ -1611,6 +1620,7 @@ KtArrayAccessExpression(974,978): 'a[1]'
               annotations: []
               typeArguments: []
               type: A
+            typeParameters: []
             visibility: PUBLIC
           type = A
       ]
@@ -1704,6 +1714,7 @@ KtBinaryExpression(987,1004): 'thisProp[1] = A()'
               annotations: []
               typeArguments: []
               type: A
+            typeParameters: []
             visibility: PUBLIC
           type = A
       ]
@@ -1788,6 +1799,7 @@ KtArrayAccessExpression(987,998): 'thisProp[1]'
               annotations: []
               typeArguments: []
               type: A
+            typeParameters: []
             visibility: PUBLIC
           type = A
       ]
@@ -1895,6 +1907,7 @@ KtOperationReferenceExpression(999,1000): '='
               annotations: []
               typeArguments: []
               type: A
+            typeParameters: []
             visibility: PUBLIC
           type = A
       ]
@@ -2016,6 +2029,7 @@ KtBinaryExpression(1013,1023): 'a[1] = A()'
               annotations: []
               typeArguments: []
               type: A
+            typeParameters: []
             visibility: PUBLIC
           type = A
       ]
@@ -2100,6 +2114,7 @@ KtArrayAccessExpression(1013,1017): 'a[1]'
               annotations: []
               typeArguments: []
               type: A
+            typeParameters: []
             visibility: PUBLIC
           type = A
       ]
@@ -2207,6 +2222,7 @@ KtOperationReferenceExpression(1018,1019): '='
               annotations: []
               typeArguments: []
               type: A
+            typeParameters: []
             visibility: PUBLIC
           type = A
       ]
@@ -2328,6 +2344,7 @@ KtCallExpression(1032,1042): 'thisProp()'
               annotations: []
               typeArguments: []
               type: A
+            typeParameters: []
             visibility: PUBLIC
           type = A
       ]
@@ -2402,6 +2419,7 @@ KtCallExpression(1051,1054): 'a()'
               annotations: []
               typeArguments: []
               type: A
+            typeParameters: []
             visibility: PUBLIC
           type = A
       ]
@@ -2476,6 +2494,7 @@ KtBinaryExpression(1063,1076): 'thisProp += 1'
               annotations: []
               typeArguments: []
               type: A
+            typeParameters: []
             visibility: PUBLIC
           type = A
       ]
@@ -2563,6 +2582,7 @@ KtOperationReferenceExpression(1072,1074): '+='
               annotations: []
               typeArguments: []
               type: A
+            typeParameters: []
             visibility: PUBLIC
           type = A
       ]
@@ -2636,6 +2656,7 @@ KtBinaryExpression(1085,1091): 'a += 1'
               annotations: []
               typeArguments: []
               type: A
+            typeParameters: []
             visibility: PUBLIC
           type = A
       ]
@@ -2723,6 +2744,7 @@ KtOperationReferenceExpression(1087,1089): '+='
               annotations: []
               typeArguments: []
               type: A
+            typeParameters: []
             visibility: PUBLIC
           type = A
       ]
@@ -2799,6 +2821,7 @@ KtPostfixExpression(1100,1110): 'thisProp++'
                   annotations: []
                   typeArguments: []
                   type: A
+                typeParameters: []
                 visibility: PUBLIC
               type = A
           ]
@@ -2888,6 +2911,7 @@ KtOperationReferenceExpression(1108,1110): '++'
                   annotations: []
                   typeArguments: []
                   type: A
+                typeParameters: []
                 visibility: PUBLIC
               type = A
           ]
@@ -3014,6 +3038,7 @@ KtPostfixExpression(1123,1126): 'a++'
                   annotations: []
                   typeArguments: []
                   type: A
+                typeParameters: []
                 visibility: PUBLIC
               type = A
           ]
@@ -3103,6 +3128,7 @@ KtOperationReferenceExpression(1124,1126): '++'
                   annotations: []
                   typeArguments: []
                   type: A
+                typeParameters: []
                 visibility: PUBLIC
               type = A
           ]
@@ -3172,6 +3198,7 @@ KtBinaryExpression(1136,1141): 'b + 1'
               annotations: []
               typeArguments: []
               type: A
+            typeParameters: []
             visibility: PUBLIC
           type = A
       ]
@@ -3259,6 +3286,7 @@ KtOperationReferenceExpression(1138,1139): '+'
               annotations: []
               typeArguments: []
               type: A
+            typeParameters: []
             visibility: PUBLIC
           type = A
       ]
@@ -3332,6 +3360,7 @@ KtPrefixExpression(1150,1152): '+b'
               annotations: []
               typeArguments: []
               type: A
+            typeParameters: []
             visibility: PUBLIC
           type = A
       ]
@@ -3386,6 +3415,7 @@ KtOperationReferenceExpression(1150,1151): '+'
               annotations: []
               typeArguments: []
               type: A
+            typeParameters: []
             visibility: PUBLIC
           type = A
       ]
@@ -3457,6 +3487,7 @@ KtArrayAccessExpression(1161,1165): 'b[1]'
               annotations: []
               typeArguments: []
               type: A
+            typeParameters: []
             visibility: PUBLIC
           type = A
       ]
@@ -3550,6 +3581,7 @@ KtBinaryExpression(1174,1184): 'b[1] = A()'
               annotations: []
               typeArguments: []
               type: A
+            typeParameters: []
             visibility: PUBLIC
           type = A
       ]
@@ -3634,6 +3666,7 @@ KtArrayAccessExpression(1174,1178): 'b[1]'
               annotations: []
               typeArguments: []
               type: A
+            typeParameters: []
             visibility: PUBLIC
           type = A
       ]
@@ -3741,6 +3774,7 @@ KtOperationReferenceExpression(1179,1180): '='
               annotations: []
               typeArguments: []
               type: A
+            typeParameters: []
             visibility: PUBLIC
           type = A
       ]
@@ -3862,6 +3896,7 @@ KtCallExpression(1193,1196): 'b()'
               annotations: []
               typeArguments: []
               type: A
+            typeParameters: []
             visibility: PUBLIC
           type = A
       ]
@@ -3936,6 +3971,7 @@ KtBinaryExpression(1205,1211): 'b += 1'
               annotations: []
               typeArguments: []
               type: A
+            typeParameters: []
             visibility: PUBLIC
           type = A
       ]
@@ -4023,6 +4059,7 @@ KtOperationReferenceExpression(1207,1209): '+='
               annotations: []
               typeArguments: []
               type: A
+            typeParameters: []
             visibility: PUBLIC
           type = A
       ]
@@ -4099,6 +4136,7 @@ KtPostfixExpression(1220,1223): 'b++'
                   annotations: []
                   typeArguments: []
                   type: A
+                typeParameters: []
                 visibility: PUBLIC
               type = A
           ]
@@ -4188,6 +4226,7 @@ KtOperationReferenceExpression(1221,1223): '++'
                   annotations: []
                   typeArguments: []
                   type: A
+                typeParameters: []
                 visibility: PUBLIC
               type = A
           ]

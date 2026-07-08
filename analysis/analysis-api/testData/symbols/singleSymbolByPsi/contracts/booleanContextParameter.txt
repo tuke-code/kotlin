@@ -26,6 +26,7 @@ KaNamedFunctionSymbol:
         annotations: []
         typeArguments: []
         type: kotlin/String?
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(booleanContextParameter.kt)
       getContainingJvmClassName: BooleanContextParameterKt
@@ -71,6 +72,7 @@ KaNamedFunctionSymbol:
                     annotations: []
                     typeArguments: []
                     type: kotlin/String?
+                  typeParameters: []
                   visibility: PUBLIC
                   getContainingFileSymbol: KaFileSymbol(booleanContextParameter.kt)
                   getContainingJvmClassName: BooleanContextParameterKt
@@ -132,6 +134,7 @@ KaNamedFunctionSymbol:
         annotations: []
         typeArguments: []
         type: kotlin/Int?
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(booleanContextParameter.kt)
       getContainingJvmClassName: BooleanContextParameterKt

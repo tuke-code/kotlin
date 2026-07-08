@@ -48,6 +48,7 @@ KaNamedFunctionSymbol:
                         annotations: []
                         typeArguments: []
                         type: kotlin/Any?
+                      typeParameters: []
                       visibility: PUBLIC
                       getContainingFileSymbol: KaFileSymbol(booleanExprContract.kt)
                       getContainingJvmClassName: BooleanExprContractKt
@@ -88,6 +89,7 @@ KaNamedFunctionSymbol:
                         annotations: []
                         typeArguments: []
                         type: kotlin/Any?
+                      typeParameters: []
                       visibility: PUBLIC
                       getContainingFileSymbol: KaFileSymbol(booleanExprContract.kt)
                       getContainingJvmClassName: BooleanExprContractKt
@@ -150,6 +152,7 @@ KaNamedFunctionSymbol:
         annotations: []
         typeArguments: []
         type: kotlin/Any?
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(booleanExprContract.kt)
       getContainingJvmClassName: BooleanExprContractKt
@@ -184,6 +187,7 @@ KaNamedFunctionSymbol:
         annotations: []
         typeArguments: []
         type: kotlin/Any?
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(booleanExprContract.kt)
       getContainingJvmClassName: BooleanExprContractKt

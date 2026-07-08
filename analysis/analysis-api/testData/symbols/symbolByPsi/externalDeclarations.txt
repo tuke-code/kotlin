@@ -49,6 +49,7 @@ KaConstructorSymbol:
         annotations: []
         typeArguments: []
         type: kotlin/String
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(externalDeclarations.kt)
       getContainingJvmClassName: ClassC
@@ -129,6 +130,7 @@ KaLocalVariableSymbol:
     annotations: []
     typeArguments: []
     type: kotlin/Int
+  typeParameters: []
   visibility: LOCAL
   getContainingFileSymbol: KaFileSymbol(externalDeclarations.kt)
   getContainingJvmClassName: null
@@ -182,6 +184,7 @@ KaNamedFunctionSymbol:
       annotations: []
       typeArguments: []
       type: kotlin/String
+    typeParameters: []
     visibility: PUBLIC
     getContainingFileSymbol: KaFileSymbol(externalDeclarations.kt)
     getContainingJvmClassName: ClassC
@@ -222,6 +225,7 @@ KaNamedFunctionSymbol:
         annotations: []
         typeArguments: []
         type: kotlin/Int
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(externalDeclarations.kt)
       getContainingJvmClassName: ClassC
@@ -382,6 +386,7 @@ KaKotlinPropertySymbol:
       annotations: []
       typeArguments: []
       type: kotlin/Int
+    typeParameters: []
     visibility: PRIVATE
     getDispatchReceiver(): KaUsualClassType:
       annotations: []
@@ -417,6 +422,7 @@ KaKotlinPropertySymbol:
       annotations: []
       typeArguments: []
       type: kotlin/Int
+    typeParameters: []
     valueParameters: []
     visibility: PUBLIC
     getDispatchReceiver(): KaUsualClassType:
@@ -498,6 +504,7 @@ KaKotlinPropertySymbol:
         annotations: []
         typeArguments: []
         type: kotlin/Int
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(externalDeclarations.kt)
       getContainingJvmClassName: null
@@ -509,6 +516,7 @@ KaKotlinPropertySymbol:
       annotations: []
       typeArguments: []
       type: kotlin/Unit
+    typeParameters: []
     valueParameters: [
       KaValueParameterSymbol:
         annotations: []
@@ -538,6 +546,7 @@ KaKotlinPropertySymbol:
           annotations: []
           typeArguments: []
           type: kotlin/Int
+        typeParameters: []
         visibility: PUBLIC
         getContainingFileSymbol: KaFileSymbol(externalDeclarations.kt)
         getContainingJvmClassName: null
@@ -626,6 +635,7 @@ KaKotlinPropertySymbol:
       annotations: []
       typeArguments: []
       type: kotlin/Int
+    typeParameters: []
     visibility: PRIVATE
     getContainingFileSymbol: KaFileSymbol(externalDeclarations.kt)
     getContainingJvmClassName: ExternalDeclarationsKt
@@ -657,6 +667,7 @@ KaKotlinPropertySymbol:
       annotations: []
       typeArguments: []
       type: kotlin/Int
+    typeParameters: []
     valueParameters: []
     visibility: PUBLIC
     getContainingFileSymbol: KaFileSymbol(externalDeclarations.kt)
@@ -723,6 +734,7 @@ KaEnumEntrySymbol:
     annotations: []
     typeArguments: []
     type: EnumE
+  typeParameters: []
   visibility: PUBLIC
   getContainingFileSymbol: KaFileSymbol(externalDeclarations.kt)
   getContainingJvmClassName: EnumE
@@ -752,6 +764,7 @@ KaEnumEntrySymbol:
     annotations: []
     typeArguments: []
     type: EnumE
+  typeParameters: []
   visibility: PUBLIC
   getContainingFileSymbol: KaFileSymbol(externalDeclarations.kt)
   getContainingJvmClassName: EnumE
@@ -817,6 +830,7 @@ KaEnumEntrySymbol:
     annotations: []
     typeArguments: []
     type: EnumNotExternal
+  typeParameters: []
   visibility: PUBLIC
   getContainingFileSymbol: KaFileSymbol(externalDeclarations.kt)
   getContainingJvmClassName: EnumNotExternal
@@ -911,6 +925,7 @@ KaConstructorSymbol:
         annotations: []
         typeArguments: []
         type: kotlin/String
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(externalDeclarations.kt)
       getContainingJvmClassName: NotExternalC
@@ -1148,6 +1163,7 @@ KaKotlinPropertySymbol:
       annotations: []
       typeArguments: []
       type: kotlin/Int
+    typeParameters: []
     visibility: PRIVATE
     getContainingFileSymbol: KaFileSymbol(externalDeclarations.kt)
     getContainingJvmClassName: ExternalDeclarationsKt
@@ -1179,6 +1195,7 @@ KaKotlinPropertySymbol:
       annotations: []
       typeArguments: []
       type: kotlin/Int
+    typeParameters: []
     valueParameters: []
     visibility: PUBLIC
     getContainingFileSymbol: KaFileSymbol(externalDeclarations.kt)
@@ -1248,6 +1265,7 @@ KaKotlinPropertySymbol:
       annotations: []
       typeArguments: []
       type: kotlin/Int
+    typeParameters: []
     visibility: PRIVATE
     getContainingFileSymbol: KaFileSymbol(externalDeclarations.kt)
     getContainingJvmClassName: ExternalDeclarationsKt
@@ -1279,6 +1297,7 @@ KaKotlinPropertySymbol:
       annotations: []
       typeArguments: []
       type: kotlin/Int
+    typeParameters: []
     valueParameters: []
     visibility: PUBLIC
     getContainingFileSymbol: KaFileSymbol(externalDeclarations.kt)
@@ -1356,6 +1375,7 @@ KaKotlinPropertySymbol:
         annotations: []
         typeArguments: []
         type: kotlin/Int
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(externalDeclarations.kt)
       getContainingJvmClassName: null
@@ -1367,6 +1387,7 @@ KaKotlinPropertySymbol:
       annotations: []
       typeArguments: []
       type: kotlin/Unit
+    typeParameters: []
     valueParameters: [
       KaValueParameterSymbol:
         annotations: []
@@ -1396,6 +1417,7 @@ KaKotlinPropertySymbol:
           annotations: []
           typeArguments: []
           type: kotlin/Int
+        typeParameters: []
         visibility: PUBLIC
         getContainingFileSymbol: KaFileSymbol(externalDeclarations.kt)
         getContainingJvmClassName: null

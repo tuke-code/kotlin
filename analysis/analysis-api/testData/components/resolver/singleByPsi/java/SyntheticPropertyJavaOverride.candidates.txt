@@ -138,6 +138,7 @@
               annotations: []
               typeArguments: []
               type: JavaClass
+            typeParameters: []
             visibility: PUBLIC
           type = JavaClass
         extensionReceiver = null

@@ -41,6 +41,7 @@ scopes:
             annotations: []
             typeArguments: []
             type: kotlin/Int
+          typeParameters: []
           visibility: PRIVATE
         callableId: null
         contextParameters: []
@@ -89,11 +90,13 @@ scopes:
                   type: <local>/Schema1
               ]
               type: DataFrame<<local>/Schema1>
+            typeParameters: []
             visibility: PUBLIC
           returnType: KaUsualClassType:
             annotations: []
             typeArguments: []
             type: kotlin/Int
+          typeParameters: []
           valueParameters: []
           visibility: LOCAL
         hasBackingField: true
@@ -143,6 +146,7 @@ scopes:
                 type: <local>/Schema1
             ]
             type: DataFrame<<local>/Schema1>
+          typeParameters: []
           visibility: PUBLIC
         returnType: KaUsualClassType:
           annotations: []
@@ -210,6 +214,7 @@ scopes:
               annotations: []
               typeArguments: []
               type: kotlin/Any?
+            typeParameters: []
             visibility: PUBLIC
         ]
         visibility: PUBLIC
@@ -343,6 +348,7 @@ scopes:
             *
           ]
           type: DataFrame<*>
+        typeParameters: []
         visibility: PUBLIC
     constructors: 0
 
@@ -497,6 +503,7 @@ scopes:
                 type: T
             ]
             type: DataFrame<T>
+          typeParameters: []
           visibility: PUBLIC
         returnType: KaUsualClassType:
           annotations: []
@@ -564,6 +571,7 @@ scopes:
               annotations: []
               typeArguments: []
               type: kotlin/String
+            typeParameters: []
             visibility: PUBLIC
           KaValueParameterSymbol:
             annotations: []
@@ -597,6 +605,7 @@ scopes:
                   type: R
               ]
               type: () -> R
+            typeParameters: []
             visibility: PUBLIC
         ]
         visibility: PUBLIC
@@ -661,6 +670,7 @@ scopes:
                 *
               ]
               type: DataFrame<*>
+            typeParameters: []
             visibility: PUBLIC
         ]
         visibility: PUBLIC

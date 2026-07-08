@@ -34,6 +34,7 @@ KaAnonymousFunctionSymbol:
       annotations: []
       typeArguments: []
       type: kotlin/contracts/ContractBuilder
+    typeParameters: []
     visibility: PUBLIC
     getContainingFileSymbol: KaFileSymbol(baseConditions.kt)
     getContainingJvmClassName: null
@@ -44,6 +45,7 @@ KaAnonymousFunctionSymbol:
     annotations: []
     typeArguments: []
     type: kotlin/Unit
+  typeParameters: []
   valueParameters: []
   visibility: PUBLIC
   getContainingFileSymbol: KaFileSymbol(baseConditions.kt)
@@ -94,6 +96,7 @@ KaNamedFunctionSymbol:
                     annotations: []
                     typeArguments: []
                     type: kotlin/String?
+                  typeParameters: []
                   visibility: PUBLIC
                   getContainingFileSymbol: KaFileSymbol(baseConditions.kt)
                   getContainingJvmClassName: BaseConditionsKt
@@ -155,6 +158,7 @@ KaNamedFunctionSymbol:
         annotations: []
         typeArguments: []
         type: kotlin/String?
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(baseConditions.kt)
       getContainingJvmClassName: BaseConditionsKt
@@ -207,6 +211,7 @@ KaAnonymousFunctionSymbol:
       annotations: []
       typeArguments: []
       type: kotlin/contracts/ContractBuilder
+    typeParameters: []
     visibility: PUBLIC
     getContainingFileSymbol: KaFileSymbol(baseConditions.kt)
     getContainingJvmClassName: null
@@ -217,6 +222,7 @@ KaAnonymousFunctionSymbol:
     annotations: []
     typeArguments: []
     type: kotlin/Unit
+  typeParameters: []
   valueParameters: []
   visibility: PUBLIC
   getContainingFileSymbol: KaFileSymbol(baseConditions.kt)
@@ -267,6 +273,7 @@ KaNamedFunctionSymbol:
                     annotations: []
                     typeArguments: []
                     type: kotlin/String?
+                  typeParameters: []
                   visibility: PUBLIC
                   getContainingFileSymbol: KaFileSymbol(baseConditions.kt)
                   getContainingJvmClassName: BaseConditionsKt
@@ -328,6 +335,7 @@ KaNamedFunctionSymbol:
         annotations: []
         typeArguments: []
         type: kotlin/String?
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(baseConditions.kt)
       getContainingJvmClassName: BaseConditionsKt
@@ -380,6 +388,7 @@ KaAnonymousFunctionSymbol:
       annotations: []
       typeArguments: []
       type: kotlin/contracts/ContractBuilder
+    typeParameters: []
     visibility: PUBLIC
     getContainingFileSymbol: KaFileSymbol(baseConditions.kt)
     getContainingJvmClassName: null
@@ -390,6 +399,7 @@ KaAnonymousFunctionSymbol:
     annotations: []
     typeArguments: []
     type: kotlin/Unit
+  typeParameters: []
   valueParameters: []
   visibility: PUBLIC
   getContainingFileSymbol: KaFileSymbol(baseConditions.kt)
@@ -440,6 +450,7 @@ KaNamedFunctionSymbol:
                     annotations: []
                     typeArguments: []
                     type: kotlin/Any
+                  typeParameters: []
                   visibility: PUBLIC
                   getContainingFileSymbol: KaFileSymbol(baseConditions.kt)
                   getContainingJvmClassName: BaseConditionsKt
@@ -506,6 +517,7 @@ KaNamedFunctionSymbol:
         annotations: []
         typeArguments: []
         type: kotlin/Any
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(baseConditions.kt)
       getContainingJvmClassName: BaseConditionsKt
@@ -558,6 +570,7 @@ KaAnonymousFunctionSymbol:
       annotations: []
       typeArguments: []
       type: kotlin/contracts/ContractBuilder
+    typeParameters: []
     visibility: PUBLIC
     getContainingFileSymbol: KaFileSymbol(baseConditions.kt)
     getContainingJvmClassName: null
@@ -568,6 +581,7 @@ KaAnonymousFunctionSymbol:
     annotations: []
     typeArguments: []
     type: kotlin/Unit
+  typeParameters: []
   valueParameters: []
   visibility: PUBLIC
   getContainingFileSymbol: KaFileSymbol(baseConditions.kt)
@@ -618,6 +632,7 @@ KaNamedFunctionSymbol:
                     annotations: []
                     typeArguments: []
                     type: kotlin/Any
+                  typeParameters: []
                   visibility: PUBLIC
                   getContainingFileSymbol: KaFileSymbol(baseConditions.kt)
                   getContainingJvmClassName: BaseConditionsKt
@@ -684,6 +699,7 @@ KaNamedFunctionSymbol:
         annotations: []
         typeArguments: []
         type: kotlin/Any
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(baseConditions.kt)
       getContainingJvmClassName: BaseConditionsKt

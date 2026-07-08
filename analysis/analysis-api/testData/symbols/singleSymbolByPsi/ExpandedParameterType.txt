@@ -57,6 +57,7 @@ KaNamedFunctionSymbol:
         annotations: []
         typeArguments: []
         type: {SecondAlias=} Base
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(ExpandedParameterType.kt)
       getContainingJvmClassName: ExpandedParameterTypeKt

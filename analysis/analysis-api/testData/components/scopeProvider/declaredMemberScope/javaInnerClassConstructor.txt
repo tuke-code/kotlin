@@ -48,6 +48,7 @@ KaConstructorSymbol:
       returnType: KaFlexibleType:
         annotations: []
         type: JavaClass!
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: null
       getContainingJvmClassName: JavaClass.InnerClass

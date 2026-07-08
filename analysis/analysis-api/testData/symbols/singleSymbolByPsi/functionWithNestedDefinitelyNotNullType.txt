@@ -65,6 +65,7 @@ KaNamedFunctionSymbol:
             type: T1 & Any
         ]
         type: kotlin/collections/List<T1 & Any>
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(KotlinInterface.kt)
       getContainingJvmClassName: KotlinInterface

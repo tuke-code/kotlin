@@ -23,6 +23,7 @@ KaNamedFunctionSymbol:
         annotations: []
         typeArguments: []
         type: kotlin/Int
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(contextReceiversOnFunction.kt)
       getContainingJvmClassName: ContextReceiversOnFunctionKt
@@ -50,6 +51,7 @@ KaNamedFunctionSymbol:
         annotations: []
         typeArguments: []
         type: kotlin/String
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(contextReceiversOnFunction.kt)
       getContainingJvmClassName: ContextReceiversOnFunctionKt

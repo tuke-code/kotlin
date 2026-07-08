@@ -50,6 +50,7 @@ KaNamedFunctionSymbol:
       ]
       typeArguments: []
       type: @R|ReceiverTypeAnnotation|()  kotlin/Int
+    typeParameters: []
     visibility: PUBLIC
     getContainingFileSymbol: KaFileSymbol(functionWithReceiverAnnotation.kt)
     getContainingJvmClassName: FunctionWithReceiverAnnotationKt

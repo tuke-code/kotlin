@@ -20,6 +20,7 @@ KaEnumEntrySymbol:
     annotations: []
     typeArguments: []
     type: test/E
+  typeParameters: []
   visibility: PUBLIC
   getContainingFileSymbol: KaFileSymbol(enumClass.kt)
   getContainingJvmClassName: test.E
@@ -49,6 +50,7 @@ KaEnumEntrySymbol:
     annotations: []
     typeArguments: []
     type: test/E
+  typeParameters: []
   visibility: PUBLIC
   getContainingFileSymbol: KaFileSymbol(enumClass.kt)
   getContainingJvmClassName: test.E
@@ -160,6 +162,7 @@ KaNamedFunctionSymbol:
         annotations: []
         typeArguments: []
         type: kotlin/String
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(enumClass.kt)
       getContainingJvmClassName: test.E
@@ -209,6 +212,7 @@ KaKotlinPropertySymbol:
           type: test/E
       ]
       type: kotlin/enums/EnumEntries<test/E>
+    typeParameters: []
     valueParameters: []
     visibility: PUBLIC
     getContainingFileSymbol: KaFileSymbol(enumClass.kt)

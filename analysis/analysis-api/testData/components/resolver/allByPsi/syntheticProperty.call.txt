@@ -771,6 +771,7 @@ KtPostfixExpression(219,230): 'something++'
               annotations: []
               typeArguments: []
               type: JavaClass
+            typeParameters: []
             visibility: PUBLIC
           type = JavaClass
         extensionReceiver = null
@@ -812,6 +813,7 @@ KtNameReferenceExpression(219,228): 'something'
             annotations: []
             typeArguments: []
             type: JavaClass
+          typeParameters: []
           visibility: PUBLIC
         type = JavaClass
       extensionReceiver = null
@@ -874,6 +876,7 @@ KtOperationReferenceExpression(228,230): '++'
               annotations: []
               typeArguments: []
               type: JavaClass
+            typeParameters: []
             visibility: PUBLIC
           type = JavaClass
         extensionReceiver = null
@@ -936,6 +939,7 @@ KtPostfixExpression(235,248): '(something)++'
               annotations: []
               typeArguments: []
               type: JavaClass
+            typeParameters: []
             visibility: PUBLIC
           type = JavaClass
         extensionReceiver = null
@@ -980,6 +984,7 @@ KtNameReferenceExpression(236,245): 'something'
             annotations: []
             typeArguments: []
             type: JavaClass
+          typeParameters: []
           visibility: PUBLIC
         type = JavaClass
       extensionReceiver = null
@@ -1042,6 +1047,7 @@ KtOperationReferenceExpression(246,248): '++'
               annotations: []
               typeArguments: []
               type: JavaClass
+            typeParameters: []
             visibility: PUBLIC
           type = JavaClass
         extensionReceiver = null
@@ -1083,6 +1089,7 @@ KtBinaryExpression(253,268): '(something) = 1'
             annotations: []
             typeArguments: []
             type: JavaClass
+          typeParameters: []
           visibility: PUBLIC
         type = JavaClass
       extensionReceiver = null
@@ -1128,6 +1135,7 @@ KtNameReferenceExpression(254,263): 'something'
             annotations: []
             typeArguments: []
             type: JavaClass
+          typeParameters: []
           visibility: PUBLIC
         type = JavaClass
       extensionReceiver = null
@@ -1170,6 +1178,7 @@ KtOperationReferenceExpression(265,266): '='
             annotations: []
             typeArguments: []
             type: JavaClass
+          typeParameters: []
           visibility: PUBLIC
         type = JavaClass
       extensionReceiver = null

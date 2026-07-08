@@ -335,6 +335,7 @@ KtNameReferenceExpression(346,351): 'value'
                   type: A
               ]
               type: Either<E, A>
+            typeParameters: []
             visibility: PUBLIC
           type = Either<E, A>
         type = Either.Right<A>

@@ -46,6 +46,7 @@ KaSyntheticJavaPropertySymbol:
         annotations: []
         typeArguments: []
         type: @EnhancedNullability kotlin/String
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: null
       getContainingJvmClassName: JavaClass
@@ -56,6 +57,7 @@ KaSyntheticJavaPropertySymbol:
       annotations: []
       typeArguments: []
       type: kotlin/Int
+    typeParameters: []
     valueParameters: []
     visibility: PUBLIC
     getDispatchReceiver(): KaUsualClassType:
@@ -108,6 +110,7 @@ KaSyntheticJavaPropertySymbol:
       annotations: []
       typeArguments: []
       type: @EnhancedNullability kotlin/String
+    typeParameters: []
     visibility: PUBLIC
     getContainingFileSymbol: null
     getContainingJvmClassName: JavaClass

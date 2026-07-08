@@ -23,6 +23,7 @@ KaKotlinPropertySymbol:
       annotations: []
       typeArguments: []
       type: kotlin/Boolean
+    typeParameters: []
     visibility: PRIVATE
     getContainingFileSymbol: KaFileSymbol(propertyWithReceiverAnnotation.kt)
     getContainingJvmClassName: PropertyWithReceiverAnnotationKt
@@ -77,6 +78,7 @@ KaKotlinPropertySymbol:
         ]
         typeArguments: []
         type: @R|ReceiverTypeAnnotation|()  kotlin/Long
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(propertyWithReceiverAnnotation.kt)
       getContainingJvmClassName: PropertyWithReceiverAnnotationKt
@@ -87,6 +89,7 @@ KaKotlinPropertySymbol:
       annotations: []
       typeArguments: []
       type: kotlin/Boolean
+    typeParameters: []
     valueParameters: []
     visibility: PUBLIC
     getContainingFileSymbol: KaFileSymbol(propertyWithReceiverAnnotation.kt)
@@ -142,6 +145,7 @@ KaKotlinPropertySymbol:
       ]
       typeArguments: []
       type: @R|ReceiverTypeAnnotation|()  kotlin/Long
+    typeParameters: []
     visibility: PUBLIC
     getContainingFileSymbol: KaFileSymbol(propertyWithReceiverAnnotation.kt)
     getContainingJvmClassName: PropertyWithReceiverAnnotationKt

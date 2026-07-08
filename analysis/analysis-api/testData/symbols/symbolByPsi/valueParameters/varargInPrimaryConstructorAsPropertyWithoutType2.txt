@@ -48,6 +48,7 @@ KaConstructorSymbol:
       returnType: KaErrorType:
         annotations: []
         type: ERROR_TYPE
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(varargInPrimaryConstructorAsPropertyWithoutType2.kt)
       getContainingJvmClassName: Foo

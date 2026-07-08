@@ -192,6 +192,7 @@ KtThisExpression(223,227): 'this'
           annotations: []
           typeArguments: []
           type: MySealed
+        typeParameters: []
         visibility: PUBLIC
     ]
 
@@ -222,6 +223,7 @@ KtNameReferenceExpression(223,227): 'this'
           annotations: []
           typeArguments: []
           type: MySealed
+        typeParameters: []
         visibility: PUBLIC
     ]
 

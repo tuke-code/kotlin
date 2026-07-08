@@ -143,6 +143,7 @@ scopes:
             annotations: []
             typeArguments: []
             type: kotlin/Boolean
+          typeParameters: []
           visibility: PRIVATE
         callableId: /foo
         contextParameters: [
@@ -167,6 +168,7 @@ scopes:
               annotations: []
               typeArguments: []
               type: A
+            typeParameters: []
             visibility: PUBLIC
         ]
         contextReceivers: [
@@ -216,11 +218,13 @@ scopes:
               annotations: []
               typeArguments: []
               type: B
+            typeParameters: []
             visibility: PUBLIC
           returnType: KaUsualClassType:
             annotations: []
             typeArguments: []
             type: kotlin/Boolean
+          typeParameters: []
           valueParameters: []
           visibility: PUBLIC
         hasBackingField: false
@@ -265,6 +269,7 @@ scopes:
             annotations: []
             typeArguments: []
             type: B
+          typeParameters: []
           visibility: PUBLIC
         returnType: KaUsualClassType:
           annotations: []

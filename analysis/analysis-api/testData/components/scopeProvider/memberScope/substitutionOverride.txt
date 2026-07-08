@@ -153,6 +153,7 @@ KaNamedFunctionSymbol:
         annotations: []
         typeArguments: []
         type: test/Foo
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(substitutionOverride.kt)
       getContainingJvmClassName: test.ClassWithGenericBase
@@ -232,6 +233,7 @@ KaNamedFunctionSymbol:
         annotations: []
         typeArguments: []
         type: test/Foo
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(substitutionOverride.kt)
       getContainingJvmClassName: test.ClassWithGenericBase
@@ -328,6 +330,7 @@ KaNamedFunctionSymbol:
       returnType: KaTypeParameterType:
         annotations: []
         type: TT
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(substitutionOverride.kt)
       getContainingJvmClassName: test.Base
@@ -428,6 +431,7 @@ KaNamedFunctionSymbol:
       returnType: KaTypeParameterType:
         annotations: []
         type: TT
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(substitutionOverride.kt)
       getContainingJvmClassName: test.Base
@@ -529,6 +533,7 @@ KaNamedFunctionSymbol:
         annotations: []
         typeArguments: []
         type: test/Foo
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(substitutionOverride.kt)
       getContainingJvmClassName: test.ClassWithGenericBase
@@ -562,6 +567,7 @@ KaNamedFunctionSymbol:
       returnType: KaTypeParameterType:
         annotations: []
         type: TT
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(substitutionOverride.kt)
       getContainingJvmClassName: test.ClassWithGenericBase
@@ -659,6 +665,7 @@ KaNamedFunctionSymbol:
         annotations: []
         typeArguments: []
         type: test/Foo
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(substitutionOverride.kt)
       getContainingJvmClassName: test.ClassWithGenericBase
@@ -692,6 +699,7 @@ KaNamedFunctionSymbol:
       returnType: KaTypeParameterType:
         annotations: []
         type: TT
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(substitutionOverride.kt)
       getContainingJvmClassName: test.ClassWithGenericBase
@@ -771,6 +779,7 @@ KaNamedFunctionSymbol:
         annotations: []
         typeArguments: []
         type: kotlin/Any?
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: null
       getContainingJvmClassName: kotlin.Any

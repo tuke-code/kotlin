@@ -174,6 +174,7 @@ CONSTRUCTOR:
         isMarkedNullable: false
         isNullable: false
         hasFlexibleNullability: false
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(samClassInScript.kts)
       getContainingJvmClassName: null

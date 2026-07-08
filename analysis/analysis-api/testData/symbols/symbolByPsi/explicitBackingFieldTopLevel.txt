@@ -28,6 +28,7 @@ KaKotlinPropertySymbol:
           type: kotlin/String
       ]
       type: kotlin/collections/MutableList<kotlin/String>
+    typeParameters: []
     visibility: PRIVATE
     getContainingFileSymbol: KaFileSymbol(explicitBackingFieldTopLevel.kt)
     getContainingJvmClassName: ExplicitBackingFieldTopLevelKt
@@ -64,6 +65,7 @@ KaKotlinPropertySymbol:
           type: kotlin/String
       ]
       type: kotlin/collections/List<kotlin/String>
+    typeParameters: []
     valueParameters: []
     visibility: PUBLIC
     getContainingFileSymbol: KaFileSymbol(explicitBackingFieldTopLevel.kt)

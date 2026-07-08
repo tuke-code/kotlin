@@ -23,6 +23,7 @@ KaKotlinPropertySymbol:
       annotations: []
       typeArguments: []
       type: kotlin/Int
+    typeParameters: []
     visibility: PRIVATE
     getContainingFileSymbol: KaFileSymbol(companionProperty.kt)
     getContainingJvmClassName: CompanionPropertyKt
@@ -71,6 +72,7 @@ KaKotlinPropertySymbol:
         annotations: []
         typeArguments: []
         type: Foo
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(companionProperty.kt)
       getContainingJvmClassName: CompanionPropertyKt
@@ -81,6 +83,7 @@ KaKotlinPropertySymbol:
       annotations: []
       typeArguments: []
       type: kotlin/Int
+    typeParameters: []
     valueParameters: []
     visibility: PUBLIC
     getContainingFileSymbol: KaFileSymbol(companionProperty.kt)
@@ -130,6 +133,7 @@ KaKotlinPropertySymbol:
       annotations: []
       typeArguments: []
       type: Foo
+    typeParameters: []
     visibility: PUBLIC
     getContainingFileSymbol: KaFileSymbol(companionProperty.kt)
     getContainingJvmClassName: CompanionPropertyKt

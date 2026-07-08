@@ -68,6 +68,7 @@ KaNamedFunctionSymbol:
             type: kotlin/Unit
         ]
         type: @R|org/jetbrains/kotlin/plugin/sandbox/MyInlineable|()  some/MyInlineableFunction0<kotlin/Unit>
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(Common.kt)
       getContainingJvmClassName: test.CommonKt

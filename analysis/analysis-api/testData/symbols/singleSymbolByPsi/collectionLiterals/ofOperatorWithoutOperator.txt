@@ -78,6 +78,7 @@ KaNamedFunctionSymbol:
       returnType: KaTypeParameterType:
         annotations: []
         type: T1
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(ofOperatorWithoutOperator.kt)
       getContainingJvmClassName: MyList.Companion

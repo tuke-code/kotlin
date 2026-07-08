@@ -30,7 +30,6 @@ import org.jetbrains.kotlin.analysis.api.platform.declarations.KotlinDeclaration
 import org.jetbrains.kotlin.analysis.api.platform.declarations.KotlinDeclarationProviderFactory
 import org.jetbrains.kotlin.analysis.api.projectStructure.*
 import org.jetbrains.kotlin.analysis.api.symbols.*
-import org.jetbrains.kotlin.analysis.api.symbols.markers.KaTypeParameterOwnerSymbol
 import org.jetbrains.kotlin.analysis.low.level.api.fir.api.getModule
 import org.jetbrains.kotlin.analysis.low.level.api.fir.api.resolveToFirSymbolOfType
 import org.jetbrains.kotlin.analysis.low.level.api.fir.sessions.llFirSession
@@ -594,7 +593,7 @@ internal class KaFirSymbolRelationProvider(
                 }
             }
             is KaTypeParameterSymbol -> {
-                val actualParent = containingDeclaration(this) as? KaTypeParameterOwnerSymbol ?: return emptyList()
+                val actualParent = containingDeclaration(this) ?: return emptyList()
                 val actualIndex = actualParent.typeParameters.indexOf(this).takeIf { it >= 0 } ?: return emptyList()
                 return getExpectsForActualParent(actualParent) { expectParent ->
                     /** See [org.jetbrains.kotlin.resolve.multiplatform.ExpectActualIncompatibility.TypeParameterNames] */

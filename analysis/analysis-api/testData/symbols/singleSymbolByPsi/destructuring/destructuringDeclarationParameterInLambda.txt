@@ -26,6 +26,7 @@ KaValueParameterSymbol:
     annotations: []
     typeArguments: []
     type: X
+  typeParameters: []
   visibility: PUBLIC
   getContainingFileSymbol: KaFileSymbol(destructuringDeclarationParameterInLambda.kt)
   getContainingJvmClassName: null

@@ -203,6 +203,7 @@ KtThisExpression(182,186): 'this'
           annotations: []
           typeArguments: []
           type: MySealed
+        typeParameters: []
         visibility: PUBLIC
     ]
 
@@ -233,6 +234,7 @@ KtNameReferenceExpression(182,186): 'this'
           annotations: []
           typeArguments: []
           type: MySealed
+        typeParameters: []
         visibility: PUBLIC
     ]
 
@@ -358,6 +360,7 @@ KtThisExpression(257,261): 'this'
           annotations: []
           typeArguments: []
           type: kotlin/Any
+        typeParameters: []
         visibility: PUBLIC
     ]
 
@@ -388,6 +391,7 @@ KtNameReferenceExpression(257,261): 'this'
           annotations: []
           typeArguments: []
           type: kotlin/Any
+        typeParameters: []
         visibility: PUBLIC
     ]
 

@@ -44,6 +44,7 @@ KaNamedFunctionSymbol:
       annotations: []
       typeArguments: []
       type: Foo
+    typeParameters: []
     visibility: PUBLIC
     getContainingFileSymbol: KaFileSymbol(companionMethod.kt)
     getContainingJvmClassName: CompanionMethodKt

@@ -23,6 +23,7 @@ KaKotlinPropertySymbol:
       annotations: []
       typeArguments: []
       type: A
+    typeParameters: []
     visibility: PRIVATE
     getDispatchReceiver(): KaUsualClassType:
       annotations: []
@@ -58,6 +59,7 @@ KaKotlinPropertySymbol:
       annotations: []
       typeArguments: []
       type: A
+    typeParameters: []
     valueParameters: []
     visibility: PRIVATE
     getDispatchReceiver(): KaUsualClassType:
@@ -116,6 +118,7 @@ KaKotlinPropertySymbol:
       annotations: []
       typeArguments: []
       type: A
+    typeParameters: []
     visibility: PUBLIC
     getContainingFileSymbol: KaFileSymbol(A.kt)
     getContainingJvmClassName: I
@@ -194,6 +197,7 @@ KaConstructorSymbol:
         annotations: []
         typeArguments: []
         type: A
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(A.kt)
       getContainingJvmClassName: I

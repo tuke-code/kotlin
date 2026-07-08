@@ -51,6 +51,13 @@ public sealed class KaCallableSymbol : KaDeclarationSymbol, KaContextReceiversOw
     public abstract val contextParameters: List<KaContextParameterSymbol>
 
     /**
+     * The declaration's type parameters.
+     *
+     * See [Generics](https://kotlinlang.org/docs/generics.html)
+     */
+    public abstract val typeParameters: List<KaTypeParameterSymbol>
+
+    /**
      * Whether the callable is an [extension function or property](https://kotlinlang.org/docs/extensions.html).
      */
     public abstract val isExtension: Boolean

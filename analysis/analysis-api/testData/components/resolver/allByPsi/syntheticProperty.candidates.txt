@@ -770,6 +770,7 @@ KtNameReferenceExpression(84,93): 'javaClass'
             annotations: []
             typeArguments: []
             type: JavaClass
+          typeParameters: []
           visibility: PUBLIC
         type = JavaClass
       isContextSensitive = false
@@ -896,6 +897,7 @@ KtNameReferenceExpression(109,118): 'javaClass'
             annotations: []
             typeArguments: []
             type: JavaClass
+          typeParameters: []
           visibility: PUBLIC
         type = JavaClass
       isContextSensitive = false
@@ -1083,6 +1085,7 @@ KtNameReferenceExpression(137,146): 'javaClass'
             annotations: []
             typeArguments: []
             type: JavaClass
+          typeParameters: []
           visibility: PUBLIC
         type = JavaClass
       isContextSensitive = false
@@ -1289,6 +1292,7 @@ KtNameReferenceExpression(166,175): 'javaClass'
             annotations: []
             typeArguments: []
             type: JavaClass
+          typeParameters: []
           visibility: PUBLIC
         type = JavaClass
       isContextSensitive = false
@@ -1518,6 +1522,7 @@ KtNameReferenceExpression(194,203): 'javaClass'
             annotations: []
             typeArguments: []
             type: JavaClass
+          typeParameters: []
           visibility: PUBLIC
         type = JavaClass
       isContextSensitive = false
@@ -1621,6 +1626,7 @@ KtPostfixExpression(219,230): 'something++'
               annotations: []
               typeArguments: []
               type: JavaClass
+            typeParameters: []
             visibility: PUBLIC
           type = JavaClass
         extensionReceiver = null
@@ -1663,6 +1669,7 @@ KtNameReferenceExpression(219,228): 'something'
             annotations: []
             typeArguments: []
             type: JavaClass
+          typeParameters: []
           visibility: PUBLIC
         type = JavaClass
       extensionReceiver = null
@@ -1726,6 +1733,7 @@ KtOperationReferenceExpression(228,230): '++'
               annotations: []
               typeArguments: []
               type: JavaClass
+            typeParameters: []
             visibility: PUBLIC
           type = JavaClass
         extensionReceiver = null
@@ -1789,6 +1797,7 @@ KtPostfixExpression(235,248): '(something)++'
               annotations: []
               typeArguments: []
               type: JavaClass
+            typeParameters: []
             visibility: PUBLIC
           type = JavaClass
         extensionReceiver = null
@@ -1834,6 +1843,7 @@ KtNameReferenceExpression(236,245): 'something'
             annotations: []
             typeArguments: []
             type: JavaClass
+          typeParameters: []
           visibility: PUBLIC
         type = JavaClass
       extensionReceiver = null
@@ -1897,6 +1907,7 @@ KtOperationReferenceExpression(246,248): '++'
               annotations: []
               typeArguments: []
               type: JavaClass
+            typeParameters: []
             visibility: PUBLIC
           type = JavaClass
         extensionReceiver = null
@@ -1939,6 +1950,7 @@ KtBinaryExpression(253,268): '(something) = 1'
             annotations: []
             typeArguments: []
             type: JavaClass
+          typeParameters: []
           visibility: PUBLIC
         type = JavaClass
       extensionReceiver = null
@@ -1985,6 +1997,7 @@ KtNameReferenceExpression(254,263): 'something'
             annotations: []
             typeArguments: []
             type: JavaClass
+          typeParameters: []
           visibility: PUBLIC
         type = JavaClass
       extensionReceiver = null
@@ -2028,6 +2041,7 @@ KtOperationReferenceExpression(265,266): '='
             annotations: []
             typeArguments: []
             type: JavaClass
+          typeParameters: []
           visibility: PUBLIC
         type = JavaClass
       extensionReceiver = null
@@ -2122,6 +2136,7 @@ KtNameReferenceExpression(274,283): 'javaClass'
             annotations: []
             typeArguments: []
             type: JavaClass
+          typeParameters: []
           visibility: PUBLIC
         type = JavaClass
       isContextSensitive = false

@@ -26,6 +26,7 @@ KtCallExpression(117,127): 'thisProp()'
               annotations: []
               typeArguments: []
               type: A
+            typeParameters: []
             visibility: PUBLIC
           type = A
       ]

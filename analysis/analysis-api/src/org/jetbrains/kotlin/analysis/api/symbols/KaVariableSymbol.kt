@@ -12,7 +12,6 @@ import org.jetbrains.kotlin.analysis.api.base.KaContextReceiver
 import org.jetbrains.kotlin.analysis.api.lifetime.withValidityAssertion
 import org.jetbrains.kotlin.analysis.api.symbols.markers.KaDeclarationContainerSymbol
 import org.jetbrains.kotlin.analysis.api.symbols.markers.KaNamedSymbol
-import org.jetbrains.kotlin.analysis.api.symbols.markers.KaTypeParameterOwnerSymbol
 import org.jetbrains.kotlin.analysis.api.symbols.pointers.KaSymbolPointer
 import org.jetbrains.kotlin.builtins.StandardNames
 import org.jetbrains.kotlin.descriptors.Visibilities
@@ -90,6 +89,7 @@ public abstract class KaBackingFieldSymbol : KaVariableSymbol() {
     final override val isDelegated: Boolean get() = withValidityAssertion { false }
     final override val modality: KaSymbolModality get() = withValidityAssertion { KaSymbolModality.FINAL }
     final override val visibility: KaSymbolVisibility get() = withValidityAssertion { KaSymbolVisibility.PRIVATE }
+    final override val typeParameters: List<KaTypeParameterSymbol> get() = withValidityAssertion { emptyList() }
 
     // KT-70767: for the backing field expect/action is meaningless as it doesn't have such a semantic
 
@@ -171,6 +171,7 @@ public abstract class KaEnumEntrySymbol : KaVariableSymbol() {
     final override val receiverParameter: KaReceiverParameterSymbol? get() = withValidityAssertion { null }
 
     final override val contextParameters: List<KaContextParameterSymbol> get() = withValidityAssertion { emptyList() }
+    final override val typeParameters: List<KaTypeParameterSymbol> get() = withValidityAssertion { emptyList() }
 
     @KaExperimentalApi
     final override val contextReceivers: List<KaContextReceiver> get() = withValidityAssertion { emptyList() }
@@ -245,14 +246,15 @@ public abstract class KaJavaFieldSymbol : KaVariableSymbol() {
 
     final override val contextParameters: List<KaContextParameterSymbol> get() = withValidityAssertion { emptyList() }
 
+    final override val typeParameters: List<KaTypeParameterSymbol> get() = withValidityAssertion { emptyList() }
+
     abstract override fun createPointer(): KaSymbolPointer<KaJavaFieldSymbol>
 }
 
 /**
  * [KaPropertySymbol] represents a [property declaration](https://kotlinlang.org/docs/properties.html).
  */
-@OptIn(KaImplementationDetail::class)
-public sealed class KaPropertySymbol : KaVariableSymbol(), KaTypeParameterOwnerSymbol {
+public sealed class KaPropertySymbol : KaVariableSymbol() {
     /**
      * Whether the property has a non-null [getter].
      *
@@ -596,6 +598,7 @@ public sealed class KaParameterSymbol : KaVariableSymbol() {
     final override val contextReceivers: List<KaContextReceiver> get() = withValidityAssertion { emptyList() }
 
     final override val contextParameters: List<KaContextParameterSymbol> get() = withValidityAssertion { emptyList() }
+    final override val typeParameters: List<KaTypeParameterSymbol> get() = withValidityAssertion { emptyList() }
 
     final override val isVal: Boolean get() = withValidityAssertion { true }
     final override val isDelegated: Boolean get() = withValidityAssertion { false }

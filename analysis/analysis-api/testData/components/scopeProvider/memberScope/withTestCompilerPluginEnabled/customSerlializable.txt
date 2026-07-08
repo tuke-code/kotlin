@@ -57,6 +57,7 @@ KaNamedFunctionSymbol:
         annotations: []
         typeArguments: []
         type: test/FirstTarget
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(customSerlializable.kt)
       getContainingJvmClassName: test.Serializer
@@ -136,6 +137,7 @@ KaNamedFunctionSymbol:
         annotations: []
         typeArguments: []
         type: test/SecondTarget
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: KaFileSymbol(customSerlializable.kt)
       getContainingJvmClassName: test.Serializer
@@ -215,6 +217,7 @@ KaNamedFunctionSymbol:
         annotations: []
         typeArguments: []
         type: kotlin/Any?
+      typeParameters: []
       visibility: PUBLIC
       getContainingFileSymbol: null
       getContainingJvmClassName: kotlin.Any

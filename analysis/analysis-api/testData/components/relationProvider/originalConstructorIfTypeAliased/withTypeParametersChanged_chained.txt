@@ -91,6 +91,7 @@ Resolved constructor:
               type: test/Cell<T2>
           ]
           type: test/Cell<test/Cell<T2>>
+        typeParameters: []
         visibility: PUBLIC
         getContainingFileSymbol: KaFileSymbol(withTypeParametersChanged_chained.kt)
         getContainingJvmClassName: null
@@ -178,6 +179,7 @@ Original constructor if type aliased:
         returnType: KaTypeParameterType:
           annotations: []
           type: T
+        typeParameters: []
         visibility: PUBLIC
         getContainingFileSymbol: KaFileSymbol(withTypeParametersChanged_chained.kt)
         getContainingJvmClassName: test.MyClass
