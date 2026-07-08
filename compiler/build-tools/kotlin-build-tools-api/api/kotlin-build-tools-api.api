@@ -1341,6 +1341,7 @@ public final class org/jetbrains/kotlin/buildtools/api/arguments/enums/KotlinVer
 	public static final field V2_4 Lorg/jetbrains/kotlin/buildtools/api/arguments/enums/KotlinVersion;
 	public static final field V2_5 Lorg/jetbrains/kotlin/buildtools/api/arguments/enums/KotlinVersion;
 	public static final field V2_6 Lorg/jetbrains/kotlin/buildtools/api/arguments/enums/KotlinVersion;
+	public static final field V2_7 Lorg/jetbrains/kotlin/buildtools/api/arguments/enums/KotlinVersion;
 	public final fun getStringValue ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Lorg/jetbrains/kotlin/buildtools/api/arguments/enums/KotlinVersion;
 	public static fun values ()[Lorg/jetbrains/kotlin/buildtools/api/arguments/enums/KotlinVersion;
