@@ -374,7 +374,7 @@ internal val SwiftImportSetupAction = KotlinProjectSetupAction {
             task.dependsOn(xcodebuildDumpTask)
             task.localPackages
                 .filesToTrackFromLocalPackages
-                .set(computeLocalPackageDependencyInputFiles.flatMap { it.filesToTrackFromLocalPackages })
+                .set(computeLocalPackageDependencyInputFiles.map { it.filesToTrackFromLocalPackages.get() })
         }
 
         project.afterEvaluate {
@@ -660,7 +660,7 @@ private fun Project.enableFingerprintCoordination(
 
     fetchSyntheticImportProjectPackages.configure {
         it.syntheticPackageFingerprint.set(
-            fingerprintSyntheticPackageTask.flatMap { it.syntheticPackageFingerprint }
+            fingerprintSyntheticPackageTask.map { it.syntheticPackageFingerprint.get() }
         )
         it.coordinationService.set(fingerprintCoordinationService)
     }
