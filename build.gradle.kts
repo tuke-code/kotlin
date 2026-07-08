@@ -73,7 +73,6 @@ plugins {
     id("com.autonomousapps.dependency-analysis")
     id("project-tests-convention") apply false
     id("test-federation-convention") apply false
-    id("test-data-manager-root")
     id("nodejs-configuration") apply false
 }
 
