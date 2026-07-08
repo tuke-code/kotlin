@@ -1,6 +1,6 @@
 // RUN_PIPELINE_TILL: BACKEND
 // WITH_STDLIB
-// LANGUAGE: +EagerLambdaAnalysis, +CallCompletionRefinementsFor25, +UnitConversionsOnArbitraryExpressions, +InferThrowableTypeParameterToUpperBound
+// LANGUAGE: +EagerLambdaAnalysis, +CallCompletionRefinementsFor25, +InferThrowableTypeParameterToUpperBound
 
 fun <T> foo(a: () -> T, b: Int = 1): Int = 1
 fun foo(a: () -> Unit, vararg b: Int): String = "(2)"

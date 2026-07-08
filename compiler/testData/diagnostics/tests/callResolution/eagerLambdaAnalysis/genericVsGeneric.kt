@@ -1,6 +1,6 @@
 // RUN_PIPELINE_TILL: FRONTEND
 // WITH_STDLIB
-// LANGUAGE: +EagerLambdaAnalysis, +CallCompletionRefinementsFor25, +UnitConversionsOnArbitraryExpressions, +InferThrowableTypeParameterToUpperBound
+// LANGUAGE: +EagerLambdaAnalysis, +CallCompletionRefinementsFor25, +InferThrowableTypeParameterToUpperBound
 
 fun <T> genericUnitOrGenericT(block: () -> Unit): Int = 1
 fun <T> genericUnitOrGenericT(block: () -> T): String = "(2)"
@@ -19,11 +19,24 @@ fun testGenericUnitOrGenericT() {
     <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.String")!>stringResult<!>
 
     <!CANNOT_INFER_PARAMETER_TYPE!>genericUnitOrGenericT<!> { TODO() }
+
+    val explicitStringAndNothing = genericUnitOrGenericT<String> { TODO() }
+    <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int")!>explicitStringAndNothing<!>
+
+    val explicitStringAndString = genericUnitOrGenericT<String> { "" }
+    <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.String")!>explicitStringAndString<!>
+
+    val explicitStringAndUnit = genericUnitOrGenericT<String> { Unit }
+    <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int")!>explicitStringAndUnit<!>
+
+    val explicitUnitAndString = genericUnitOrGenericT<Unit> { "" }
+    <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int")!>explicitUnitAndString<!>
 }
 
 fun testGenericUnitOrBoundedGenericT() {
     val stringResult = genericUnitOrBoundedGenericT { "" }
     <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int")!>stringResult<!>
+
 }
 
 fun testGenericUnitOrGenericWithDefault() {
@@ -51,6 +64,15 @@ fun testGenericTOrBoundenGeneric() {
 
     val nothingResult = genericTOrBoundenGeneric { TODO() }
     <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int")!>nothingResult<!>
+
+     val explicitStringAndNothing = genericTOrBoundenGeneric<String> { TODO() }
+    <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int")!>explicitStringAndNothing<!>
+
+    val explicitStringAndString = genericTOrBoundenGeneric<String> { "" }
+    <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int")!>explicitStringAndString<!>
+
+    val explicitUnitAndString = genericTOrBoundenGeneric<Unit> { "" }
+    <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.String")!>explicitUnitAndString<!>
 }
 
 /* GENERATED_FIR_TAGS: functionDeclaration, functionalType, integerLiteral, lambdaLiteral, localProperty, nullableType,

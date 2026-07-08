@@ -1,5 +1,5 @@
 // RUN_PIPELINE_TILL: FRONTEND
-// LANGUAGE: +EagerLambdaAnalysis, +CallCompletionRefinementsFor25, +UnitConversionsOnArbitraryExpressions, +InferThrowableTypeParameterToUpperBound
+// LANGUAGE: +EagerLambdaAnalysis, +CallCompletionRefinementsFor25, +InferThrowableTypeParameterToUpperBound
 
 class GenericMemberBox<T>(val value: T) {
     fun genericMemberOrUnitLambda(block: () -> T): Int = 1
@@ -22,6 +22,9 @@ class GenericMemberBox<T>(val value: T) {
 
         val declarationResult = genericMemberOrUnitLambda { val x = 10 }
         <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.String")!>declarationResult<!>
+
+        val valueTResult = genericMemberOrUnitLambda { value }
+        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int")!>valueTResult<!>
     }
 
     fun testGenericMemberOrStringLambda() {
@@ -32,6 +35,9 @@ class GenericMemberBox<T>(val value: T) {
         genericMemberOrStringLambda { <!RETURN_TYPE_MISMATCH!>1<!> }
         <!OVERLOAD_RESOLUTION_AMBIGUITY!>genericMemberOrStringLambda<!> { TODO() }
         genericMemberOrStringLambda { <!RETURN_TYPE_MISMATCH!>val x = 10<!> }
+
+        val valueTResult = genericMemberOrStringLambda { value }
+        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int")!>valueTResult<!>
     }
 }
 

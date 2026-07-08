@@ -1,6 +1,6 @@
-// RUN_PIPELINE_TILL: BACKEND
+// RUN_PIPELINE_TILL: FRONTEND
 // WITH_STDLIB
-// LANGUAGE: +EagerLambdaAnalysis, +CallCompletionRefinementsFor25, +UnitConversionsOnArbitraryExpressions, +InferThrowableTypeParameterToUpperBound
+// LANGUAGE: +EagerLambdaAnalysis, +CallCompletionRefinementsFor25, +InferThrowableTypeParameterToUpperBound
 
 val flag = true
 
@@ -48,6 +48,12 @@ fun testVarargAndVarargWithSpecificType() {
 
     val mixedResult = varargAndVarargWithSpecificType(1, { "" }, { Unit })
     <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.String")!>mixedResult<!>
+
+    val numberAndStringResult = varargAndVarargWithSpecificType(1.0, { "" })
+    <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int")!>numberAndStringResult<!>
+
+    val numberAndUnitResult = varargAndVarargWithSpecificType(1.0, { <!RETURN_TYPE_MISMATCH!>Unit<!> })
+    <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int")!>numberAndUnitResult<!>
 }
 
 /* GENERATED_FIR_TAGS: functionDeclaration, functionalType, ifExpression, integerLiteral, lambdaLiteral, localProperty,

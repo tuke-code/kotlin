@@ -1,6 +1,6 @@
 // RUN_PIPELINE_TILL: FRONTEND
 // WITH_STDLIB
-// LANGUAGE: +EagerLambdaAnalysis, +CallCompletionRefinementsFor25, +UnitConversionsOnArbitraryExpressions, +InferThrowableTypeParameterToUpperBound
+// LANGUAGE: +EagerLambdaAnalysis, +CallCompletionRefinementsFor25, +InferThrowableTypeParameterToUpperBound
 
 object Type
 
@@ -34,21 +34,21 @@ fun testLambdaInReceinverAndArgument() {
     <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.String")!>receiverUnitResult<!>
 
     val argumentTypeResult = { Type } lambdaInReceinverAndArgument { Type }
-    <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.String")!>argumentTypeResult<!>
+    <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int")!>argumentTypeResult<!>
 
     { Unit } lambdaInReceinverAndArgument { <!RETURN_TYPE_MISMATCH!>Unit<!> }
 
-    val coercedReceiverResult = { 1 } lambdaInReceinverAndArgument { Type }
-    <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.String")!>coercedReceiverResult<!>
+    val coercedReceiverResult = { 1 } <!NONE_APPLICABLE!>lambdaInReceinverAndArgument<!> { Type }
+    <!DEBUG_INFO_EXPRESSION_TYPE("ERROR CLASS: Ambiguity: lambdaInReceinverAndArgument, [/lambdaInReceinverAndArgument, /lambdaInReceinverAndArgument]")!>coercedReceiverResult<!>
 
-    { 1 } lambdaInReceinverAndArgument { <!RETURN_TYPE_MISMATCH!>1<!> }
+    { 1 } <!NONE_APPLICABLE!>lambdaInReceinverAndArgument<!> { 1 }
 
     { TODO() } <!OVERLOAD_RESOLUTION_AMBIGUITY!>lambdaInReceinverAndArgument<!> { TODO() }
 }
 
 fun testLambdaWithArgument() {
-    val result = { 1 } lambdaWithArgument { value: String -> value.length }
-    <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int")!>result<!>
+    val result = { 1 } lambdaWithArgument { <!EXPECTED_PARAMETER_TYPE_MISMATCH!>value: String<!> -> value.length }
+    <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.String")!>result<!>
 }
 
 /* GENERATED_FIR_TAGS: funWithExtensionReceiver, functionDeclaration, functionalType, infix, integerLiteral,

@@ -1,6 +1,6 @@
 // RUN_PIPELINE_TILL: BACKEND
 // WITH_STDLIB
-// LANGUAGE: +EagerLambdaAnalysis, +CallCompletionRefinementsFor25, +UnitConversionsOnArbitraryExpressions, +InferThrowableTypeParameterToUpperBound
+// LANGUAGE: +EagerLambdaAnalysis, +CallCompletionRefinementsFor25, +InferThrowableTypeParameterToUpperBound
 // ISSUE: KT-87117
 
 val (() -> Any).property: Int
@@ -11,7 +11,7 @@ val (() -> Unit).property: String
 
 fun test() {
     val result = { "" }.property
-    <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.String")!>result<!>
+    <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int")!>result<!>
 }
 
 /* GENERATED_FIR_TAGS: functionDeclaration, functionalType, getter, integerLiteral, lambdaLiteral, localProperty,

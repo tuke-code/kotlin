@@ -1,6 +1,6 @@
 // RUN_PIPELINE_TILL: FRONTEND
 // WITH_STDLIB
-// LANGUAGE: +EagerLambdaAnalysis, +CallCompletionRefinementsFor25, +UnitConversionsOnArbitraryExpressions, +InferThrowableTypeParameterToUpperBound
+// LANGUAGE: +EagerLambdaAnalysis, +CallCompletionRefinementsFor25, +InferThrowableTypeParameterToUpperBound
 
 fun multipleOverloadsWithMultipleArguments(first: () -> String, second: () -> Number): Int = 1
 

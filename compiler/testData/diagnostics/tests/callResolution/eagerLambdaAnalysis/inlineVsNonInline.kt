@@ -1,6 +1,6 @@
 // RUN_PIPELINE_TILL: FRONTEND
 // WITH_STDLIB
-// LANGUAGE: +EagerLambdaAnalysis, +CallCompletionRefinementsFor25, +UnitConversionsOnArbitraryExpressions, +InferThrowableTypeParameterToUpperBound
+// LANGUAGE: +EagerLambdaAnalysis, +CallCompletionRefinementsFor25, +InferThrowableTypeParameterToUpperBound
 
 inline fun inlineStringOrInlineUnit(block: () -> String): Int = 1
 inline fun inlineStringOrInlineUnit(block: () -> Unit): String = "(2)"

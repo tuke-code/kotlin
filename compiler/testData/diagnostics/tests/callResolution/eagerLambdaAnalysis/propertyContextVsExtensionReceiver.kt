@@ -1,6 +1,6 @@
 // RUN_PIPELINE_TILL: FRONTEND
 // WITH_STDLIB
-// LANGUAGE: +EagerLambdaAnalysis, +CallCompletionRefinementsFor25, +UnitConversionsOnArbitraryExpressions, +InferThrowableTypeParameterToUpperBound
+// LANGUAGE: +EagerLambdaAnalysis, +CallCompletionRefinementsFor25, +InferThrowableTypeParameterToUpperBound
 // ISSUE: KT-87161
 
 object Type
@@ -15,7 +15,7 @@ val (() -> Unit).bar: String
 fun test() {
     with({ Type }) {
         val result = bar
-        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.String")!>result<!>
+        <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int")!>result<!>
     }
 }
 

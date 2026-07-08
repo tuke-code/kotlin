@@ -1,6 +1,6 @@
 // RUN_PIPELINE_TILL: FRONTEND
 // WITH_STDLIB
-// LANGUAGE: +EagerLambdaAnalysis, +CallCompletionRefinementsFor25, +UnitConversionsOnArbitraryExpressions, +InferThrowableTypeParameterToUpperBound
+// LANGUAGE: +EagerLambdaAnalysis, +CallCompletionRefinementsFor25, +InferThrowableTypeParameterToUpperBound
 
 val (() -> String).propertyWithLambdaReceiver: Int
     get() = 1
@@ -21,11 +21,9 @@ fun test() {
     val result4 = { Unit }.propertyWithLambdaReceiver
     <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.String")!>result4<!>
 
-    val result5 = with({ 8 }) { propertyWithLambdaReceiver }
-    <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.String")!>result5<!>
+    val result5 = <!CANNOT_INFER_PARAMETER_TYPE!>with<!>({ 8 }) { <!NONE_APPLICABLE!>propertyWithLambdaReceiver<!> }
 
-    val result6 = { 8 }.propertyWithLambdaReceiver
-    <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.String")!>result6<!>
+    val result6 = { 8 }.<!NONE_APPLICABLE!>propertyWithLambdaReceiver<!>
 }
 
 

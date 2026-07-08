@@ -1,6 +1,6 @@
 // RUN_PIPELINE_TILL: FRONTEND
 // WITH_STDLIB
-// LANGUAGE: +EagerLambdaAnalysis, +CallCompletionRefinementsFor25, +UnitConversionsOnArbitraryExpressions, +InferThrowableTypeParameterToUpperBound
+// LANGUAGE: +EagerLambdaAnalysis, +CallCompletionRefinementsFor25, +InferThrowableTypeParameterToUpperBound
 // ISSUE: KT-87115
 
 val (() -> Unit).propertyWithInvoke: (String) -> Int
@@ -10,8 +10,8 @@ val (() -> Int).propertyWithInvoke: (Int) -> String
     get() = { "(2)" }
 
 fun testCallSyntax() {
-    val result = { 8 }.propertyWithInvoke("")
-    <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int")!>result<!>
+    val result = { 8 }.propertyWithInvoke(<!ARGUMENT_TYPE_MISMATCH!>""<!>)
+    <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.String")!>result<!>
 }
 
 fun testExplicitInvoke() {

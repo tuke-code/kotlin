@@ -1,6 +1,6 @@
 // RUN_PIPELINE_TILL: BACKEND
 // WITH_STDLIB
-// LANGUAGE: +EagerLambdaAnalysis, +CallCompletionRefinementsFor25, +UnitConversionsOnArbitraryExpressions, +InferThrowableTypeParameterToUpperBound
+// LANGUAGE: +EagerLambdaAnalysis, +CallCompletionRefinementsFor25, +InferThrowableTypeParameterToUpperBound
 
 import kotlin.experimental.ExperimentalTypeInference
 
@@ -24,6 +24,9 @@ fun unitLambdasWithDefault(block: () -> Unit): String = "(2)"
 fun testDefaultStringLambdaOrUnitLambda() {
     val stringResult = defaultStringLambdaOrUnitLambda { "OK" }
     <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.Int")!>stringResult<!>
+
+    val parenthesizedStringResult = defaultStringLambdaOrUnitLambda({ "OK" })
+    <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.String")!>parenthesizedStringResult<!>
 
     val explicitUnitResult = defaultStringLambdaOrUnitLambda { Unit }
     <!DEBUG_INFO_EXPRESSION_TYPE("kotlin.String")!>explicitUnitResult<!>

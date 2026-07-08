@@ -1,6 +1,6 @@
 // RUN_PIPELINE_TILL: FRONTEND
 // WITH_STDLIB
-// LANGUAGE: +EagerLambdaAnalysis, +CallCompletionRefinementsFor25, +UnitConversionsOnArbitraryExpressions, +InferThrowableTypeParameterToUpperBound
+// LANGUAGE: +EagerLambdaAnalysis, +CallCompletionRefinementsFor25, +InferThrowableTypeParameterToUpperBound
 // ISSUE: KT-87151
 
 val (suspend () -> String).bar: String
@@ -12,9 +12,9 @@ val (() -> Unit).bar: String
 suspend fun suspendingString(): String = "OK"
 
 fun test() {
-    ({ "OK" }).<!OVERLOAD_RESOLUTION_AMBIGUITY!>bar<!>
+    ({ "OK" }).bar
 
-    ({ <!ILLEGAL_SUSPEND_FUNCTION_CALL!>suspendingString<!>() }).<!OVERLOAD_RESOLUTION_AMBIGUITY!>bar<!>
+    ({ <!ILLEGAL_SUSPEND_FUNCTION_CALL!>suspendingString<!>() }).bar
 }
 
 /* GENERATED_FIR_TAGS: functionDeclaration, functionalType, getter, lambdaLiteral, propertyDeclaration,
