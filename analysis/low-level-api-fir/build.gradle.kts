@@ -111,7 +111,6 @@ kotlin {
 
 projectTests {
     testTask(
-        javaLauncher = JdkMajorVersion.JDK_1_8,
         defineJDKEnvVariables = listOf(
             JdkMajorVersion.JDK_11_0, // TestsWithJava11 and others
             JdkMajorVersion.JDK_17_0, // TestsWithJava17 and others
