@@ -458,6 +458,7 @@ include(
     ":wasm:wasm.debug.browsers",
     ":repo:test-federation-runtime",
     ":repo:codebase-tests",
+    ":repo:auto-code-review",
     ":repo:artifacts-tests"
 )
 
