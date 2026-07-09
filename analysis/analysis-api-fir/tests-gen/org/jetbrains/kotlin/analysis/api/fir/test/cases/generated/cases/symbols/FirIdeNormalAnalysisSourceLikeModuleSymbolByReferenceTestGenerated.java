@@ -195,9 +195,21 @@ public class FirIdeNormalAnalysisSourceLikeModuleSymbolByReferenceTestGenerated 
   }
 
   @Test
+  @TestMetadata("enumEntriesLibrary.kt")
+  public void testEnumEntriesLibrary() {
+    run("enumEntriesLibrary.kt");
+  }
+
+  @Test
   @TestMetadata("enumValueOf.kt")
   public void testEnumValueOf() {
     run("enumValueOf.kt");
+  }
+
+  @Test
+  @TestMetadata("enumValueOfLibrary.kt")
+  public void testEnumValueOfLibrary() {
+    run("enumValueOfLibrary.kt");
   }
 
   @Test
