@@ -5652,6 +5652,12 @@ public class FirIdeNormalAnalysisLibrarySourceModuleResolveCandidatesTestGenerat
     }
 
     @Test
+    @TestMetadata("nestedClassQualifierResolvesToOwner.kt")
+    public void testNestedClassQualifierResolvesToOwner() {
+      run("nestedClassQualifierResolvesToOwner.kt");
+    }
+
+    @Test
     @TestMetadata("nullSafeCallExpression.kt")
     public void testNullSafeCallExpression() {
       run("nullSafeCallExpression.kt");
@@ -5693,6 +5699,42 @@ public class FirIdeNormalAnalysisLibrarySourceModuleResolveCandidatesTestGenerat
     @Test
     public void testAllFilesPresentInTypeAlias() {
       KtTestUtil.assertAllTestsPresentByMetadataWithExcluded(this.getClass(), new File("analysis/analysis-api/testData/components/resolver/singleByPsi/typeAlias"), Pattern.compile("^(.+)\\.(kt)$"), null, true, "withTestCompilerPluginEnabled", "withErrors", "missingDependency", "cloneable");
+    }
+
+    @Test
+    @TestMetadata("libraryNestedTypeAliasQualifierResolvesToTypeAliasOwner.kt")
+    public void testLibraryNestedTypeAliasQualifierResolvesToTypeAliasOwner() {
+      run("libraryNestedTypeAliasQualifierResolvesToTypeAliasOwner.kt");
+    }
+
+    @Test
+    @TestMetadata("nestedGenericTypeAliasQualifierResolvesToTypeAliasOwner.kt")
+    public void testNestedGenericTypeAliasQualifierResolvesToTypeAliasOwner() {
+      run("nestedGenericTypeAliasQualifierResolvesToTypeAliasOwner.kt");
+    }
+
+    @Test
+    @TestMetadata("nestedTypeAliasChainQualifierResolvesToTypeAliasOwner.kt")
+    public void testNestedTypeAliasChainQualifierResolvesToTypeAliasOwner() {
+      run("nestedTypeAliasChainQualifierResolvesToTypeAliasOwner.kt");
+    }
+
+    @Test
+    @TestMetadata("nestedTypeAliasOuterQualifierResolvesToOuterOwner.kt")
+    public void testNestedTypeAliasOuterQualifierResolvesToOuterOwner() {
+      run("nestedTypeAliasOuterQualifierResolvesToOuterOwner.kt");
+    }
+
+    @Test
+    @TestMetadata("nestedTypeAliasQualifierResolvesToNestedTypeAliasOwner.kt")
+    public void testNestedTypeAliasQualifierResolvesToNestedTypeAliasOwner() {
+      run("nestedTypeAliasQualifierResolvesToNestedTypeAliasOwner.kt");
+    }
+
+    @Test
+    @TestMetadata("nestedTypeAliasQualifierResolvesToTypeAliasOwner.kt")
+    public void testNestedTypeAliasQualifierResolvesToTypeAliasOwner() {
+      run("nestedTypeAliasQualifierResolvesToTypeAliasOwner.kt");
     }
 
     @Test
