@@ -25,10 +25,6 @@ KaKotlinPropertySymbol:
       type: kotlin/Boolean
     typeParameters: []
     visibility: PRIVATE
-    getDispatchReceiver(): KaUsualClassType:
-      annotations: []
-      typeArguments: []
-      type: Foo
     getContainingFileSymbol: null
     getContainingJvmClassName: Foo
     getContainingModule: KaLibraryModule "Library lib"
@@ -62,10 +58,6 @@ KaKotlinPropertySymbol:
     typeParameters: []
     valueParameters: []
     visibility: PUBLIC
-    getDispatchReceiver(): KaUsualClassType:
-      annotations: []
-      typeArguments: []
-      type: Foo
     getContainingFileSymbol: null
     getContainingJvmClassName: Foo
     getContainingModule: KaLibraryModule "Library lib"
@@ -99,10 +91,6 @@ KaKotlinPropertySymbol:
   setter: null
   typeParameters: []
   visibility: PUBLIC
-  getDispatchReceiver(): KaUsualClassType:
-    annotations: []
-    typeArguments: []
-    type: Foo
   getContainingFileSymbol: null
   getContainingJvmClassName: Foo
   getContainingModule: KaLibraryModule "Library lib"
