@@ -3,5 +3,5 @@ KtNameReferenceExpression(383,397): 'TypeAliasOwner'
   contextSensitiveResolutionStatus: NotAvailable
   KaSymbolResolutionSuccess:
     symbols = [
-      /ExpandedTypeOwner
+      /TypeAliasOwner
     ]
