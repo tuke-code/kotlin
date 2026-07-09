@@ -1,6 +1,3 @@
-import org.gradle.kotlin.dsl.implementation
-import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
-
 plugins {
     id("common-configuration")
     id("test-federation-convention")
@@ -88,6 +85,8 @@ dependencies {
     testFixturesApi(testFixtures(project(":plugins:plugin-sandbox")))
 
     testImplementation(testFixtures(project(":compiler:psi:psi-api")))
+    testImplementation(libs.lincheck)
+    testImplementation(libs.junit.jupiter.params)
 }
 
 sourceSets {
