@@ -17,4 +17,10 @@ fun box() = abiTest {
 
     expectSuccess("bodyChange.v2") { bodyChangeRef.invoke() }
     expectFailure(linkage("Function 'removedFun' can not be called: No function found for symbol '/A.removedFun'")) { removedFunRef.invoke() }
+
+    expectFailure(linkage("Function 'blockToObject' can not be called: No function found for symbol '/A.blockToObject'")) { blockToObjectCall() }
+    expectFailure(linkage("Function 'objectToBlock' can not be called: No function found for symbol '/A.Companion.objectToBlock'")) { objectToBlockCall() }
+
+    expectFailure(linkage("Function 'sameFun' can not be called: No function found for symbol '/RemovedBlock.sameFun'")) { noBlockSameFunCall() }
+    expectSuccess("object") { newBlockSameFunCall() }
 }

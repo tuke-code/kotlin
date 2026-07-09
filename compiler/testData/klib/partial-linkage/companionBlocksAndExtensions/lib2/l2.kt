@@ -16,3 +16,9 @@ fun removedFunCall() = A.removedFun()
 
 val bodyChangeRef = A::bodyChange
 val removedFunRef = A::removedFun
+
+fun blockToObjectCall() = A.blockToObject()
+fun objectToBlockCall() = A.objectToBlock()
+
+fun noBlockSameFunCall() = RemovedBlock.sameFun()
+fun newBlockSameFunCall() = NewBlock.sameFun()

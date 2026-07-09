@@ -8,4 +8,28 @@ class A {
         fun bodyChange() = "bodyChange.v1"
         fun removedFun() {}
     }
+
+    companion {
+        fun blockToObject() = "blockToObject"
+    }
+
+    companion object {
+        fun objectToBlock() = "objectToBlock"
+    }
+}
+
+class RemovedBlock {
+    companion {
+        fun sameFun() = "block"
+    }
+
+    companion object {
+        fun sameFun() = "object"
+    }
+}
+
+class NewBlock {
+    companion object {
+        fun sameFun() = "object"
+    }
 }
