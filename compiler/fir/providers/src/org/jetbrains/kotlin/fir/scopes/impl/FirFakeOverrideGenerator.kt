@@ -571,7 +571,7 @@ object FirFakeOverrideGenerator {
             modality = modality,
             effectiveVisibility = effectiveVisibility,
             resolvePhase = origin.resolvePhaseForCopy,
-            parameterSource = valueParameters.first().source,
+            parameterSource = newSource ?: valueParameters.first().source,
             isOverride = true,
             attributes = attributes.copy(),
         ).apply {
@@ -589,19 +589,19 @@ object FirFakeOverrideGenerator {
             resolvePhase = origin.resolvePhaseForCopy
             this.status = status.copy(visibility = newVisibility)
             this.attributes = this@buildCopy.attributes.copy()
-        }.also {
-            if (it.isSetter) {
-                val originalParameter = it.valueParameters.first()
+        }.also { fakeFirAccessor ->
+            if (fakeFirAccessor.isSetter) {
+                val originalParameter = fakeFirAccessor.valueParameters.first()
                 val newParameter = buildCopyForValueParameter(
                     original = originalParameter,
                     returnTypeRef = propertyReturnTypeRef,
                     origin = origin,
-                    containingDeclarationSymbol = it.symbol,
-                    source = originalParameter.source,
+                    containingDeclarationSymbol = fakeFirAccessor.symbol,
+                    source = fakeFirAccessor.source ?: originalParameter.source,
                 )
-                it.replaceValueParameters(listOf(newParameter))
+                fakeFirAccessor.replaceValueParameters(listOf(newParameter))
             } else {
-                it.replaceReturnTypeRef(propertyReturnTypeRef)
+                fakeFirAccessor.replaceReturnTypeRef(propertyReturnTypeRef)
             }
         }
     }.also { accessor ->
