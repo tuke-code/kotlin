@@ -25,6 +25,7 @@ KaNamedFunctionSymbol:
   modality: FINAL
   name: foo
   origin: LIBRARY
+  psi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

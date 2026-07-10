@@ -32,6 +32,7 @@ KaNamedFunctionSymbol:
                   modality: SEALED
                   name: Result
                   origin: SOURCE
+                  psi: KtClass
                   superTypes: [
                     KaUsualClassType:
                       annotations: []
@@ -70,6 +71,7 @@ KaNamedFunctionSymbol:
   modality: FINAL
   name: isFailure
   origin: SOURCE
+  psi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

@@ -187,6 +187,7 @@ KtThisExpression(223,227): 'this'
         name: <receiver>
         origin: SOURCE
         owningCallableSymbol: KaNamedFunctionSymbol(/getOrElse)
+        psi: KtTypeReference
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -218,6 +219,7 @@ KtNameReferenceExpression(223,227): 'this'
         name: <receiver>
         origin: SOURCE
         owningCallableSymbol: KaNamedFunctionSymbol(/getOrElse)
+        psi: KtTypeReference
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []

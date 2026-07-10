@@ -8,6 +8,7 @@ KaTypeParameterSymbol:
   modality: FINAL
   name: T
   origin: SOURCE
+  psi: KtTypeParameter
   upperBounds: [
     KaClassErrorType:
       annotations: []
@@ -37,6 +38,7 @@ KaLocalVariableSymbol:
   modality: FINAL
   name: x
   origin: SOURCE
+  psi: KtProperty
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -74,6 +76,7 @@ KaNamedFunctionSymbol:
   modality: FINAL
   name: f
   origin: SOURCE
+  psi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

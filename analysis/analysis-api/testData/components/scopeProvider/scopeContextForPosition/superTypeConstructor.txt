@@ -33,6 +33,7 @@ scopes:
         modality: OPEN
         name: Base
         origin: SOURCE
+        psi: KtClass
         superTypes: [
           KaUsualClassType:
             annotations: []
@@ -58,6 +59,7 @@ scopes:
         modality: FINAL
         name: Child
         origin: SOURCE
+        psi: KtClass
         superTypes: [
           KaUsualClassType:
             annotations: []

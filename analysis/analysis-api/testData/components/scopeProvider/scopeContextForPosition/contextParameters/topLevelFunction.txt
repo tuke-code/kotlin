@@ -45,6 +45,7 @@ scopes:
         modality: FINAL
         name: a
         origin: SOURCE
+        psi: KtParameter
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -75,6 +76,7 @@ scopes:
         name: p
         origin: SOURCE
         primaryConstructorProperty: null
+        psi: KtParameter
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -110,6 +112,7 @@ scopes:
         modality: FINAL
         name: A
         origin: SOURCE
+        psi: KtClass
         superTypes: [
           KaUsualClassType:
             annotations: []
@@ -139,6 +142,7 @@ scopes:
             modality: FINAL
             name: a
             origin: SOURCE
+            psi: KtParameter
             receiverParameter: null
             returnType: KaUsualClassType:
               annotations: []
@@ -162,6 +166,7 @@ scopes:
             modality: FINAL
             name: <unused var>
             origin: SOURCE
+            psi: KtParameter
             receiverParameter: null
             returnType: KaUsualClassType:
               annotations: []
@@ -203,6 +208,7 @@ scopes:
         modality: FINAL
         name: foo
         origin: SOURCE
+        psi: KtNamedFunction
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -233,6 +239,7 @@ scopes:
             name: p
             origin: SOURCE
             primaryConstructorProperty: null
+            psi: KtParameter
             receiverParameter: null
             returnType: KaUsualClassType:
               annotations: []

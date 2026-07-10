@@ -18,6 +18,7 @@ KaNamedClassSymbol:
   modality: FINAL
   name: MyClass
   origin: SOURCE
+  psi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []

@@ -24,6 +24,7 @@ FAKE_OVERRIDE_ORIGINAL:
     modality: OPEN
     name: get
     origin: JAVA_SOURCE
+    psi: PsiMethodImpl
     receiverParameter: null
     returnType: KaFlexibleType:
       annotations: []

@@ -17,6 +17,7 @@ FAKE_OVERRIDE_ORIGINAL:
     name: <receiver>
     origin: SOURCE
     owningCallableSymbol: KaNamedFunctionSymbol(test/A.foo)
+    psi: KtTypeReference
     receiverParameter: null
     returnType: KaTypeParameterType:
       annotations: []

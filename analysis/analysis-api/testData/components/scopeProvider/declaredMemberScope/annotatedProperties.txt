@@ -18,6 +18,7 @@ KaKotlinPropertySymbol:
     name: field
     origin: PROPERTY_BACKING_FIELD
     owningProperty: KaKotlinPropertySymbol(/Foo.withDefaultGetter)
+    psi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -57,6 +58,7 @@ KaKotlinPropertySymbol:
     location: PROPERTY
     modality: FINAL
     origin: SOURCE
+    psi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -116,6 +118,7 @@ KaKotlinPropertySymbol:
     name: withDefaultGetter
     origin: SOURCE
     primaryConstructorProperty: KaKotlinPropertySymbol(/Foo.withDefaultGetter)
+    psi: KtParameter
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -128,6 +131,7 @@ KaKotlinPropertySymbol:
     getContainingModule: KaSourceModule "Sources of main"
     deprecation: null
     importableFqName: null
+  psi: KtParameter
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -169,6 +173,7 @@ KaKotlinPropertySymbol:
     name: field
     origin: PROPERTY_BACKING_FIELD
     owningProperty: KaKotlinPropertySymbol(/Foo.withDefaultSetter)
+    psi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -205,6 +210,7 @@ KaKotlinPropertySymbol:
     location: PROPERTY
     modality: FINAL
     origin: SOURCE
+    psi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -264,6 +270,7 @@ KaKotlinPropertySymbol:
     name: withDefaultSetter
     origin: SOURCE
     primaryConstructorProperty: KaKotlinPropertySymbol(/Foo.withDefaultSetter)
+    psi: KtParameter
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -276,6 +283,7 @@ KaKotlinPropertySymbol:
     getContainingModule: KaSourceModule "Sources of main"
     deprecation: null
     importableFqName: null
+  psi: KtParameter
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -324,6 +332,7 @@ KaKotlinPropertySymbol:
       name: value
       origin: SOURCE
       primaryConstructorProperty: null
+      psi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -336,6 +345,7 @@ KaKotlinPropertySymbol:
       getContainingModule: KaSourceModule "Sources of main"
       deprecation: null
       importableFqName: null
+    psi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -366,6 +376,7 @@ KaKotlinPropertySymbol:
         name: value
         origin: SOURCE
         primaryConstructorProperty: null
+        psi: null
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -424,6 +435,7 @@ KaKotlinPropertySymbol:
     name: field
     origin: PROPERTY_BACKING_FIELD
     owningProperty: KaKotlinPropertySymbol(/Foo.both)
+    psi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -463,6 +475,7 @@ KaKotlinPropertySymbol:
     location: PROPERTY
     modality: FINAL
     origin: SOURCE
+    psi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -522,6 +535,7 @@ KaKotlinPropertySymbol:
     name: both
     origin: SOURCE
     primaryConstructorProperty: KaKotlinPropertySymbol(/Foo.both)
+    psi: KtParameter
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -534,6 +548,7 @@ KaKotlinPropertySymbol:
     getContainingModule: KaSourceModule "Sources of main"
     deprecation: null
     importableFqName: null
+  psi: KtParameter
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -582,6 +597,7 @@ KaKotlinPropertySymbol:
       name: value
       origin: SOURCE
       primaryConstructorProperty: null
+      psi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -594,6 +610,7 @@ KaKotlinPropertySymbol:
       getContainingModule: KaSourceModule "Sources of main"
       deprecation: null
       importableFqName: null
+    psi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -624,6 +641,7 @@ KaKotlinPropertySymbol:
         name: value
         origin: SOURCE
         primaryConstructorProperty: null
+        psi: null
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -688,6 +706,7 @@ KaKotlinPropertySymbol:
     name: field
     origin: PROPERTY_BACKING_FIELD
     owningProperty: KaKotlinPropertySymbol(/Foo.allAnnotations)
+    psi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -727,6 +746,7 @@ KaKotlinPropertySymbol:
     location: PROPERTY
     modality: FINAL
     origin: SOURCE
+    psi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -789,6 +809,7 @@ KaKotlinPropertySymbol:
     name: allAnnotations
     origin: SOURCE
     primaryConstructorProperty: KaKotlinPropertySymbol(/Foo.allAnnotations)
+    psi: KtParameter
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -801,6 +822,7 @@ KaKotlinPropertySymbol:
     getContainingModule: KaSourceModule "Sources of main"
     deprecation: null
     importableFqName: null
+  psi: KtParameter
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -852,6 +874,7 @@ KaKotlinPropertySymbol:
       name: value
       origin: SOURCE
       primaryConstructorProperty: null
+      psi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -864,6 +887,7 @@ KaKotlinPropertySymbol:
       getContainingModule: KaSourceModule "Sources of main"
       deprecation: null
       importableFqName: null
+    psi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -897,6 +921,7 @@ KaKotlinPropertySymbol:
         name: value
         origin: SOURCE
         primaryConstructorProperty: null
+        psi: null
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -959,6 +984,7 @@ KaNamedFunctionSymbol:
   modality: FINAL
   name: memberFunctionWithReceiver
   origin: SOURCE
+  psi: KtNamedFunction
   receiverParameter: KaReceiverParameterSymbol:
     annotations: [
       MyAnnotation7()
@@ -979,6 +1005,7 @@ KaNamedFunctionSymbol:
     name: <receiver>
     origin: SOURCE
     owningCallableSymbol: KaNamedFunctionSymbol(/Foo.memberFunctionWithReceiver)
+    psi: KtTypeReference
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: [
@@ -1037,6 +1064,7 @@ KaNamedFunctionSymbol:
   modality: FINAL
   name: memberFunctionWithReceiverWithNullableReceiver
   origin: SOURCE
+  psi: KtNamedFunction
   receiverParameter: KaReceiverParameterSymbol:
     annotations: [
       MyAnnotation7()
@@ -1057,6 +1085,7 @@ KaNamedFunctionSymbol:
     name: <receiver>
     origin: SOURCE
     owningCallableSymbol: KaNamedFunctionSymbol(/Foo.memberFunctionWithReceiverWithNullableReceiver)
+    psi: KtTypeReference
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: [
@@ -1101,6 +1130,7 @@ KaNamedFunctionSymbol:
       name: l
       origin: SOURCE
       primaryConstructorProperty: null
+      psi: KtParameter
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -1147,6 +1177,7 @@ KaKotlinPropertySymbol:
     name: field
     origin: PROPERTY_BACKING_FIELD
     owningProperty: KaKotlinPropertySymbol(/Foo.memberPropertyWithReceiver)
+    psi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -1183,6 +1214,7 @@ KaKotlinPropertySymbol:
     location: PROPERTY
     modality: FINAL
     origin: SOURCE
+    psi: KtPropertyAccessor
     receiverParameter: KaReceiverParameterSymbol:
       annotations: [
         MyAnnotation7()
@@ -1203,6 +1235,7 @@ KaKotlinPropertySymbol:
       name: <receiver>
       origin: SOURCE
       owningCallableSymbol: KaKotlinPropertySymbol(/Foo.memberPropertyWithReceiver)
+      psi: KtTypeReference
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: [
@@ -1250,6 +1283,7 @@ KaKotlinPropertySymbol:
   name: memberPropertyWithReceiver
   origin: SOURCE
   primaryConstructorParameter: null
+  psi: KtProperty
   receiverParameter: KaReceiverParameterSymbol:
     annotations: [
       MyAnnotation7()
@@ -1270,6 +1304,7 @@ KaKotlinPropertySymbol:
     name: <receiver>
     origin: SOURCE
     owningCallableSymbol: KaKotlinPropertySymbol(/Foo.memberPropertyWithReceiver)
+    psi: KtTypeReference
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: [
@@ -1329,6 +1364,7 @@ KaKotlinPropertySymbol:
       name: value
       origin: SOURCE
       primaryConstructorProperty: null
+      psi: KtParameter
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -1341,6 +1377,7 @@ KaKotlinPropertySymbol:
       getContainingModule: KaSourceModule "Sources of main"
       deprecation: null
       importableFqName: null
+    psi: KtPropertyAccessor
     receiverParameter: KaReceiverParameterSymbol:
       annotations: [
         MyAnnotation7()
@@ -1361,6 +1398,7 @@ KaKotlinPropertySymbol:
       name: <receiver>
       origin: SOURCE
       owningCallableSymbol: KaKotlinPropertySymbol(/Foo.memberPropertyWithReceiver)
+      psi: KtTypeReference
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: [
@@ -1405,6 +1443,7 @@ KaKotlinPropertySymbol:
         name: value
         origin: SOURCE
         primaryConstructorProperty: null
+        psi: KtParameter
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -1462,6 +1501,7 @@ KaKotlinPropertySymbol:
     name: field
     origin: PROPERTY_BACKING_FIELD
     owningProperty: KaKotlinPropertySymbol(/Foo.withCustomSetter)
+    psi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -1498,6 +1538,7 @@ KaKotlinPropertySymbol:
     location: PROPERTY
     modality: FINAL
     origin: SOURCE
+    psi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -1535,6 +1576,7 @@ KaKotlinPropertySymbol:
   name: withCustomSetter
   origin: SOURCE
   primaryConstructorParameter: null
+  psi: KtProperty
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -1580,6 +1622,7 @@ KaKotlinPropertySymbol:
       name: value
       origin: SOURCE
       primaryConstructorProperty: null
+      psi: KtParameter
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -1592,6 +1635,7 @@ KaKotlinPropertySymbol:
       getContainingModule: KaSourceModule "Sources of main"
       deprecation: null
       importableFqName: null
+    psi: KtPropertyAccessor
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -1622,6 +1666,7 @@ KaKotlinPropertySymbol:
         name: value
         origin: SOURCE
         primaryConstructorProperty: null
+        psi: KtParameter
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -1679,6 +1724,7 @@ KaKotlinPropertySymbol:
     name: field
     origin: PROPERTY_BACKING_FIELD
     owningProperty: KaKotlinPropertySymbol(/Foo.withCustomGetter)
+    psi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -1715,6 +1761,7 @@ KaKotlinPropertySymbol:
     location: PROPERTY
     modality: FINAL
     origin: SOURCE
+    psi: KtPropertyAccessor
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -1748,6 +1795,7 @@ KaKotlinPropertySymbol:
   name: withCustomGetter
   origin: SOURCE
   primaryConstructorParameter: null
+  psi: KtProperty
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -1793,6 +1841,7 @@ KaKotlinPropertySymbol:
       name: value
       origin: SOURCE
       primaryConstructorProperty: null
+      psi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -1805,6 +1854,7 @@ KaKotlinPropertySymbol:
       getContainingModule: KaSourceModule "Sources of main"
       deprecation: null
       importableFqName: null
+    psi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -1835,6 +1885,7 @@ KaKotlinPropertySymbol:
         name: value
         origin: SOURCE
         primaryConstructorProperty: null
+        psi: null
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -1896,6 +1947,7 @@ KaKotlinPropertySymbol:
     name: field
     origin: PROPERTY_BACKING_FIELD
     owningProperty: KaKotlinPropertySymbol(/Foo.custom)
+    psi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -1932,6 +1984,7 @@ KaKotlinPropertySymbol:
     location: PROPERTY
     modality: FINAL
     origin: SOURCE
+    psi: KtPropertyAccessor
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -1965,6 +2018,7 @@ KaKotlinPropertySymbol:
   name: custom
   origin: SOURCE
   primaryConstructorParameter: null
+  psi: KtProperty
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -2010,6 +2064,7 @@ KaKotlinPropertySymbol:
       name: value
       origin: SOURCE
       primaryConstructorProperty: null
+      psi: KtParameter
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -2022,6 +2077,7 @@ KaKotlinPropertySymbol:
       getContainingModule: KaSourceModule "Sources of main"
       deprecation: null
       importableFqName: null
+    psi: KtPropertyAccessor
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -2052,6 +2108,7 @@ KaKotlinPropertySymbol:
         name: value
         origin: SOURCE
         primaryConstructorProperty: null
+        psi: KtParameter
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -2109,6 +2166,7 @@ KaKotlinPropertySymbol:
     name: field
     origin: PROPERTY_BACKING_FIELD
     owningProperty: KaKotlinPropertySymbol(/Foo.variable)
+    psi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -2145,6 +2203,7 @@ KaKotlinPropertySymbol:
     location: PROPERTY
     modality: FINAL
     origin: SOURCE
+    psi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -2182,6 +2241,7 @@ KaKotlinPropertySymbol:
   name: variable
   origin: SOURCE
   primaryConstructorParameter: null
+  psi: KtProperty
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -2227,6 +2287,7 @@ KaKotlinPropertySymbol:
       name: value
       origin: SOURCE
       primaryConstructorProperty: null
+      psi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -2239,6 +2300,7 @@ KaKotlinPropertySymbol:
       getContainingModule: KaSourceModule "Sources of main"
       deprecation: null
       importableFqName: null
+    psi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -2269,6 +2331,7 @@ KaKotlinPropertySymbol:
         name: value
         origin: SOURCE
         primaryConstructorProperty: null
+        psi: null
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -2323,6 +2386,7 @@ KaConstructorSymbol:
   location: CLASS
   modality: FINAL
   origin: SOURCE
+  psi: KtPrimaryConstructor
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -2353,6 +2417,7 @@ KaConstructorSymbol:
       name: withDefaultGetter
       origin: SOURCE
       primaryConstructorProperty: KaKotlinPropertySymbol(/Foo.withDefaultGetter)
+      psi: KtParameter
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -2388,6 +2453,7 @@ KaConstructorSymbol:
       name: withDefaultSetter
       origin: SOURCE
       primaryConstructorProperty: KaKotlinPropertySymbol(/Foo.withDefaultSetter)
+      psi: KtParameter
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -2423,6 +2489,7 @@ KaConstructorSymbol:
       name: both
       origin: SOURCE
       primaryConstructorProperty: KaKotlinPropertySymbol(/Foo.both)
+      psi: KtParameter
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -2461,6 +2528,7 @@ KaConstructorSymbol:
       name: allAnnotations
       origin: SOURCE
       primaryConstructorProperty: KaKotlinPropertySymbol(/Foo.allAnnotations)
+      psi: KtParameter
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []

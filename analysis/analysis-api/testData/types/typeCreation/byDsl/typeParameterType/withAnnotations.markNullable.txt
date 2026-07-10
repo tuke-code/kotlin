@@ -20,6 +20,7 @@ KaTypeParameterType:
     modality: FINAL
     name: T
     origin: SOURCE
+    psi: KtTypeParameter
     upperBounds: []
     variance: INVARIANT
     visibility: LOCAL

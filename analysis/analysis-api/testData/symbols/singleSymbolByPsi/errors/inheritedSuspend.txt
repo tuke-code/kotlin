@@ -22,6 +22,7 @@ KaNamedFunctionSymbol:
   modality: OPEN
   name: bar
   origin: SOURCE
+  psi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

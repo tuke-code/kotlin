@@ -22,6 +22,7 @@ KaNamedFunctionSymbol:
   modality: ABSTRACT
   name: doSmth
   origin: SOURCE
+  psi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -56,6 +57,7 @@ KaNamedFunctionSymbol:
       name: x
       origin: SOURCE
       primaryConstructorProperty: null
+      psi: KtParameter
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []

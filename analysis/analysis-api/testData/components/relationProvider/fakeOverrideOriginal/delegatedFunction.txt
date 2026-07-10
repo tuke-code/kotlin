@@ -24,6 +24,7 @@ FAKE_OVERRIDE_ORIGINAL:
     modality: ABSTRACT
     name: foo
     origin: SOURCE
+    psi: KtNamedFunction
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []

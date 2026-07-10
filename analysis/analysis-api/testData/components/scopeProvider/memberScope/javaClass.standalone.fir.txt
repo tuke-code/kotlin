@@ -15,6 +15,7 @@ KaJavaFieldSymbol:
   modality: FINAL
   name: field
   origin: JAVA_SOURCE
+  psi: PsiFieldImpl
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -56,6 +57,7 @@ KaNamedFunctionSymbol:
   modality: OPEN
   name: hello
   origin: JAVA_SOURCE
+  psi: PsiMethodImpl
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -100,6 +102,7 @@ KaNamedFunctionSymbol:
   modality: OPEN
   name: method
   origin: JAVA_SOURCE
+  psi: PsiMethodImpl
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -116,6 +119,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: T
       origin: JAVA_SOURCE
+      psi: PsiTypeParameterImpl
       upperBounds: [
         KaFlexibleType:
           annotations: []
@@ -152,6 +156,7 @@ KaNamedFunctionSymbol:
       name: classes
       origin: JAVA_SOURCE
       primaryConstructorProperty: null
+      psi: PsiParameterImpl
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -194,6 +199,7 @@ KaJavaFieldSymbol:
   modality: FINAL
   name: superField
   origin: JAVA_SOURCE
+  psi: PsiFieldImpl
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -238,6 +244,7 @@ KaNamedFunctionSymbol:
   modality: OPEN
   name: getActualRandomNumber
   origin: JAVA_SOURCE
+  psi: PsiMethodImpl
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -282,6 +289,7 @@ KaNamedFunctionSymbol:
   modality: OPEN
   name: equals
   origin: LIBRARY
+  psi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -312,6 +320,7 @@ KaNamedFunctionSymbol:
       name: other
       origin: LIBRARY
       primaryConstructorProperty: null
+      psi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -362,6 +371,7 @@ KaNamedFunctionSymbol:
   modality: OPEN
   name: hashCode
   origin: LIBRARY
+  psi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -406,6 +416,7 @@ KaNamedFunctionSymbol:
   modality: OPEN
   name: toString
   origin: LIBRARY
+  psi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -443,6 +454,7 @@ KaNamedClassSymbol:
   modality: OPEN
   name: NestedClass
   origin: JAVA_SOURCE
+  psi: PsiClassImpl
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -474,6 +486,7 @@ KaNamedClassSymbol:
   modality: OPEN
   name: InnerClass
   origin: JAVA_SOURCE
+  psi: PsiClassImpl
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -505,6 +518,7 @@ KaNamedClassSymbol:
   modality: OPEN
   name: NestedSuperClass
   origin: JAVA_SOURCE
+  psi: PsiClassImpl
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -536,6 +550,7 @@ KaNamedClassSymbol:
   modality: OPEN
   name: InnerSuperClass
   origin: JAVA_SOURCE
+  psi: PsiClassImpl
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -566,6 +581,7 @@ KaConstructorSymbol:
   location: CLASS
   modality: FINAL
   origin: JAVA_SOURCE
+  psi: PsiClassImpl
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

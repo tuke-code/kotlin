@@ -15,6 +15,7 @@ KaNamedClassSymbol:
   modality: FINAL
   name: LocalClass
   origin: SOURCE
+  psi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -43,6 +44,7 @@ KaTypeAliasSymbol:
   modality: FINAL
   name: LocalTypealias
   origin: SOURCE
+  psi: KtTypeAlias
   typeParameters: []
   visibility: LOCAL
   getContainingFileSymbol: KaFileSymbol(localDeclarationsInsidePropertySetter.kt)

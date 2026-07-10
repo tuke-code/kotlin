@@ -16,6 +16,7 @@ CLASS:
   modality: FINAL
   name: RegularClass
   origin: SOURCE
+  psi: KtClass
   superTypes: [
     KaUsualClassType:
       abbreviation: null

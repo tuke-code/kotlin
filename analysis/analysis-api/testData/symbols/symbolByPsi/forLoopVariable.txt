@@ -15,6 +15,7 @@ KaLocalVariableSymbol:
   modality: FINAL
   name: loopVariable
   origin: SOURCE
+  psi: KtParameter
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -52,6 +53,7 @@ KaNamedFunctionSymbol:
   modality: FINAL
   name: usage
   origin: SOURCE
+  psi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

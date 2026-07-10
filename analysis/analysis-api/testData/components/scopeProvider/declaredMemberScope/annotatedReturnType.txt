@@ -21,6 +21,7 @@ KaKotlinPropertySymbol:
     name: field
     origin: PROPERTY_BACKING_FIELD
     owningProperty: KaKotlinPropertySymbol(test/MyInterface.property)
+    psi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: [
@@ -60,6 +61,7 @@ KaKotlinPropertySymbol:
     location: PROPERTY
     modality: ABSTRACT
     origin: SOURCE
+    psi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: [
@@ -100,6 +102,7 @@ KaKotlinPropertySymbol:
   name: property
   origin: SOURCE
   primaryConstructorParameter: null
+  psi: KtProperty
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: [
@@ -151,6 +154,7 @@ KaNamedFunctionSymbol:
   modality: ABSTRACT
   name: function
   origin: SOURCE
+  psi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: [
@@ -187,6 +191,7 @@ KaNamedFunctionSymbol:
       name: argument
       origin: SOURCE
       primaryConstructorProperty: null
+      psi: KtParameter
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: [

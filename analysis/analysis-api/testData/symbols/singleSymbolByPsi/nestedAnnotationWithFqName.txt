@@ -18,6 +18,7 @@ KaNamedClassSymbol:
   modality: OPEN
   name: Simple
   origin: SOURCE
+  psi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []

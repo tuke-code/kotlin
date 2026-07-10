@@ -22,6 +22,7 @@ KaNamedFunctionSymbol:
   modality: FINAL
   name: withOuter
   origin: SOURCE
+  psi: KtNamedFunction
   receiverParameter: null
   returnType: KaTypeParameterType:
     annotations: []

@@ -16,6 +16,7 @@ CLASS:
   modality: ABSTRACT
   name: JavaRunnable
   origin: JAVA_SOURCE
+  psi: PsiClassImpl
   superTypes: [
     KaUsualClassType:
       abbreviation: null
@@ -66,6 +67,7 @@ FUNCTIONAL INTERFACE FUNCTION:
   modality: ABSTRACT
   name: run
   origin: JAVA_SOURCE
+  psi: PsiMethodImpl
   receiverParameter: null
   returnType: KaUsualClassType:
     abbreviation: null

@@ -22,6 +22,7 @@ KaNamedFunctionSymbol:
   modality: FINAL
   name: of
   origin: SOURCE
+  psi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -42,6 +43,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: T1
       origin: SOURCE
+      psi: KtTypeParameter
       upperBounds: []
       variance: INVARIANT
       visibility: LOCAL
@@ -74,6 +76,7 @@ KaNamedFunctionSymbol:
       name: vals
       origin: SOURCE
       primaryConstructorProperty: null
+      psi: KtParameter
       receiverParameter: null
       returnType: KaTypeParameterType:
         annotations: []

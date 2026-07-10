@@ -22,6 +22,7 @@ KaNamedFunctionSymbol:
   modality: OPEN
   name: foo
   origin: JAVA_SOURCE
+  psi: PsiMethodImpl
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -66,6 +67,7 @@ KaNamedFunctionSymbol:
   modality: OPEN
   name: doo
   origin: JAVA_SOURCE
+  psi: PsiMethodImpl
   receiverParameter: null
   returnType: KaFlexibleType:
     annotations: []
@@ -95,6 +97,7 @@ KaNamedFunctionSymbol:
       name: i
       origin: JAVA_SOURCE
       primaryConstructorProperty: null
+      psi: PsiParameterImpl
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -145,6 +148,7 @@ KaNamedFunctionSymbol:
   modality: OPEN
   name: getStringValue
   origin: JAVA_SOURCE
+  psi: PsiMethodImpl
   receiverParameter: null
   returnType: KaFlexibleType:
     annotations: []
@@ -188,6 +192,7 @@ KaNamedFunctionSymbol:
   modality: OPEN
   name: equals
   origin: LIBRARY
+  psi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -218,6 +223,7 @@ KaNamedFunctionSymbol:
       name: other
       origin: LIBRARY
       primaryConstructorProperty: null
+      psi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -268,6 +274,7 @@ KaNamedFunctionSymbol:
   modality: OPEN
   name: hashCode
   origin: LIBRARY
+  psi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -312,6 +319,7 @@ KaNamedFunctionSymbol:
   modality: OPEN
   name: toString
   origin: LIBRARY
+  psi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -348,6 +356,7 @@ KaConstructorSymbol:
   location: CLASS
   modality: FINAL
   origin: JAVA_SOURCE
+  psi: PsiClassImpl
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

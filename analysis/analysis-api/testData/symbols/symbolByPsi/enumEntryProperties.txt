@@ -18,6 +18,7 @@ KaKotlinPropertySymbol:
     name: field
     origin: PROPERTY_BACKING_FIELD
     owningProperty: KaKotlinPropertySymbol(<local>/a)
+    psi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -54,6 +55,7 @@ KaKotlinPropertySymbol:
     location: PROPERTY
     modality: FINAL
     origin: SOURCE
+    psi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -91,6 +93,7 @@ KaKotlinPropertySymbol:
   name: a
   origin: SOURCE
   primaryConstructorParameter: null
+  psi: KtProperty
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -129,6 +132,7 @@ KaEnumEntrySymbol:
   modality: FINAL
   name: FirstEntry
   origin: SOURCE
+  psi: KtEnumEntry
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -159,6 +163,7 @@ KaEnumEntrySymbol:
   modality: FINAL
   name: SecondEntry
   origin: SOURCE
+  psi: KtEnumEntry
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -192,6 +197,7 @@ KaKotlinPropertySymbol:
     name: field
     origin: PROPERTY_BACKING_FIELD
     owningProperty: KaKotlinPropertySymbol(<local>/b)
+    psi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -228,6 +234,7 @@ KaKotlinPropertySymbol:
     location: PROPERTY
     modality: FINAL
     origin: SOURCE
+    psi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -265,6 +272,7 @@ KaKotlinPropertySymbol:
   name: b
   origin: SOURCE
   primaryConstructorParameter: null
+  psi: KtProperty
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -306,6 +314,7 @@ KaKotlinPropertySymbol:
     name: field
     origin: PROPERTY_BACKING_FIELD
     owningProperty: KaKotlinPropertySymbol(<local>/d)
+    psi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -342,6 +351,7 @@ KaKotlinPropertySymbol:
     location: PROPERTY
     modality: FINAL
     origin: SOURCE
+    psi: KtPropertyAccessor
     receiverParameter: KaReceiverParameterSymbol:
       annotations: []
       callableId: null
@@ -359,6 +369,7 @@ KaKotlinPropertySymbol:
       name: <receiver>
       origin: SOURCE
       owningCallableSymbol: KaKotlinPropertySymbol(<local>/d)
+      psi: KtTypeReference
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -403,6 +414,7 @@ KaKotlinPropertySymbol:
   name: d
   origin: SOURCE
   primaryConstructorParameter: null
+  psi: KtProperty
   receiverParameter: KaReceiverParameterSymbol:
     annotations: []
     callableId: null
@@ -420,6 +432,7 @@ KaKotlinPropertySymbol:
     name: <receiver>
     origin: SOURCE
     owningCallableSymbol: KaKotlinPropertySymbol(<local>/d)
+    psi: KtTypeReference
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -469,6 +482,7 @@ KaEnumEntrySymbol:
   modality: FINAL
   name: ThirdEntry
   origin: SOURCE
+  psi: KtEnumEntry
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -499,6 +513,7 @@ KaNamedClassSymbol:
   modality: FINAL
   name: MyEnumClass
   origin: SOURCE
+  psi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []

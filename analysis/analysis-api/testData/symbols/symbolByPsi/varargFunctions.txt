@@ -22,6 +22,7 @@ KaNamedFunctionSymbol:
   modality: FINAL
   name: primitive
   origin: SOURCE
+  psi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -52,6 +53,7 @@ KaNamedFunctionSymbol:
       name: a
       origin: SOURCE
       primaryConstructorProperty: null
+      psi: KtParameter
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -98,6 +100,7 @@ KaNamedFunctionSymbol:
   modality: FINAL
   name: nullablePrimitive
   origin: SOURCE
+  psi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -128,6 +131,7 @@ KaNamedFunctionSymbol:
       name: b
       origin: SOURCE
       primaryConstructorProperty: null
+      psi: KtParameter
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -174,6 +178,7 @@ KaNamedFunctionSymbol:
   modality: FINAL
   name: nonPrimitive
   origin: SOURCE
+  psi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -204,6 +209,7 @@ KaNamedFunctionSymbol:
       name: c
       origin: SOURCE
       primaryConstructorProperty: null
+      psi: KtParameter
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -250,6 +256,7 @@ KaNamedFunctionSymbol:
   modality: FINAL
   name: error
   origin: SOURCE
+  psi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -280,6 +287,7 @@ KaNamedFunctionSymbol:
       name: d
       origin: SOURCE
       primaryConstructorProperty: null
+      psi: KtParameter
       receiverParameter: null
       returnType: KaClassErrorType:
         annotations: []

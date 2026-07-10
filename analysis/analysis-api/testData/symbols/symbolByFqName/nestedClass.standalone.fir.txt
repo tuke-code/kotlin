@@ -15,6 +15,7 @@ KaNamedClassSymbol:
   modality: ABSTRACT
   name: MutableEntry
   origin: LIBRARY
+  psi: null
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -39,6 +40,7 @@ KaNamedClassSymbol:
       modality: FINAL
       name: K
       origin: LIBRARY
+      psi: null
       upperBounds: []
       variance: INVARIANT
       visibility: LOCAL
@@ -56,6 +58,7 @@ KaNamedClassSymbol:
       modality: FINAL
       name: V
       origin: LIBRARY
+      psi: null
       upperBounds: []
       variance: INVARIANT
       visibility: LOCAL

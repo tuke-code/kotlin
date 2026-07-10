@@ -15,6 +15,7 @@ KaNamedClassSymbol:
   modality: FINAL
   name: Array
   origin: LIBRARY
+  psi: null
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -40,6 +41,7 @@ KaNamedClassSymbol:
       modality: FINAL
       name: T
       origin: LIBRARY
+      psi: null
       upperBounds: []
       variance: INVARIANT
       visibility: LOCAL

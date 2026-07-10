@@ -21,6 +21,7 @@ KaSyntheticJavaPropertySymbol:
     location: PROPERTY
     modality: OPEN
     origin: JAVA_SYNTHETIC_PROPERTY
+    psi: PsiMethodImpl
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -57,6 +58,7 @@ KaSyntheticJavaPropertySymbol:
   modality: OPEN
   name: foo
   origin: JAVA_SYNTHETIC_PROPERTY
+  psi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

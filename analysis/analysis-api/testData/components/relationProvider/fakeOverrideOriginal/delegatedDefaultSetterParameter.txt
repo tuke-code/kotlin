@@ -23,6 +23,7 @@ FAKE_OVERRIDE_ORIGINAL:
     name: value
     origin: SOURCE
     primaryConstructorProperty: null
+    psi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []

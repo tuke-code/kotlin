@@ -15,6 +15,7 @@ Resolved constructor:
     location: CLASS
     modality: FINAL
     origin: SOURCE_MEMBER_GENERATED
+    psi: KtClass
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []

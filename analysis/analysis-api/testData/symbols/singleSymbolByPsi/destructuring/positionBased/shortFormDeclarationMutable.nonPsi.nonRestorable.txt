@@ -9,6 +9,7 @@ KaDestructuringDeclarationSymbol:
   location: LOCAL
   modality: FINAL
   origin: SOURCE
+  psi: KtDestructuringDeclaration
   visibility: LOCAL
   getContainingFileSymbol: KaFileSymbol(shortFormDeclarationMutable.kt)
   getContainingModule: KaSourceModule "Sources of main"

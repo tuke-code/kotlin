@@ -21,6 +21,7 @@ KaValueParameterSymbol:
   name: name
   origin: JAVA_SOURCE
   primaryConstructorProperty: null
+  psi: PsiAnnotationMethodImpl
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

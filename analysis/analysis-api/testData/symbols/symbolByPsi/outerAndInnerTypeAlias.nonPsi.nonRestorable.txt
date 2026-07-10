@@ -17,6 +17,7 @@ KaTypeAliasSymbol:
   modality: FINAL
   name: LocalTypeAlias
   origin: SOURCE
+  psi: KtTypeAlias
   typeParameters: []
   visibility: LOCAL
   getContainingFileSymbol: KaFileSymbol(outerAndInnerTypeAlias.kt)
@@ -43,6 +44,7 @@ KaTypeAliasSymbol:
   modality: FINAL
   name: NestedLevelAliasInLocalClass
   origin: SOURCE
+  psi: KtTypeAlias
   typeParameters: []
   visibility: LOCAL
   getContainingFileSymbol: KaFileSymbol(outerAndInnerTypeAlias.kt)
@@ -69,6 +71,7 @@ KaTypeAliasSymbol:
   modality: FINAL
   name: LocalTypeAlias
   origin: SOURCE
+  psi: KtTypeAlias
   typeParameters: []
   visibility: LOCAL
   getContainingFileSymbol: KaFileSymbol(outerAndInnerTypeAlias.kt)
@@ -95,6 +98,7 @@ KaTypeAliasSymbol:
   modality: FINAL
   name: NestedLevelAliasInLocalClass
   origin: SOURCE
+  psi: KtTypeAlias
   typeParameters: []
   visibility: LOCAL
   getContainingFileSymbol: KaFileSymbol(outerAndInnerTypeAlias.kt)
@@ -119,6 +123,7 @@ KaNamedClassSymbol:
   modality: FINAL
   name: LocalClass
   origin: SOURCE
+  psi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -150,6 +155,7 @@ KaNamedClassSymbol:
   modality: FINAL
   name: LocalClass
   origin: SOURCE
+  psi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []

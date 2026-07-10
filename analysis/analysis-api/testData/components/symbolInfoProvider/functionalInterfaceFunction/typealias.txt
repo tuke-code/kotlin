@@ -16,6 +16,7 @@ CLASS:
   modality: ABSTRACT
   name: IntPredicate
   origin: SOURCE
+  psi: KtClass
   superTypes: [
     KaUsualClassType:
       abbreviation: null
@@ -66,6 +67,7 @@ FUNCTIONAL INTERFACE FUNCTION:
   modality: ABSTRACT
   name: accept
   origin: SOURCE
+  psi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     abbreviation: null
@@ -107,6 +109,7 @@ FUNCTIONAL INTERFACE FUNCTION:
       name: i
       origin: SOURCE
       primaryConstructorProperty: null
+      psi: KtParameter
       receiverParameter: null
       returnType: KaUsualClassType:
         abbreviation: null

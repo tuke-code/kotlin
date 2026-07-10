@@ -22,6 +22,7 @@ KaNamedFunctionSymbol:
   modality: OPEN
   name: getFirst
   origin: LIBRARY
+  psi: null
   receiverParameter: null
   returnType: KaTypeParameterType:
     annotations: []

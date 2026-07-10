@@ -18,6 +18,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: <unused var>
       origin: LIBRARY
+      psi: KtParameter
       receiverParameter: null
       returnType: KaTypeParameterType:
         annotations: []
@@ -56,6 +57,7 @@ KaNamedFunctionSymbol:
   modality: FINAL
   name: myContext
   origin: LIBRARY
+  psi: KtNamedFunction
   receiverParameter: null
   returnType: KaTypeParameterType:
     annotations: []
@@ -71,6 +73,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: T1
       origin: LIBRARY
+      psi: KtTypeParameter
       upperBounds: []
       variance: INVARIANT
       visibility: LOCAL
@@ -88,6 +91,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: T2
       origin: LIBRARY
+      psi: KtTypeParameter
       upperBounds: []
       variance: INVARIANT
       visibility: LOCAL
@@ -105,6 +109,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: R
       origin: LIBRARY
+      psi: KtTypeParameter
       upperBounds: []
       variance: INVARIANT
       visibility: LOCAL
@@ -137,6 +142,7 @@ KaNamedFunctionSymbol:
       name: p1
       origin: LIBRARY
       primaryConstructorProperty: null
+      psi: KtParameter
       receiverParameter: null
       returnType: KaFunctionType:
         annotations: []
@@ -193,6 +199,7 @@ KaNamedFunctionSymbol:
       name: p2
       origin: LIBRARY
       primaryConstructorProperty: null
+      psi: KtParameter
       receiverParameter: null
       returnType: KaFunctionType:
         annotations: [
@@ -252,6 +259,7 @@ KaNamedFunctionSymbol:
       name: p3
       origin: LIBRARY
       primaryConstructorProperty: null
+      psi: KtParameter
       receiverParameter: null
       returnType: KaFunctionType:
         annotations: []
@@ -308,6 +316,7 @@ KaNamedFunctionSymbol:
       name: p4
       origin: LIBRARY
       primaryConstructorProperty: null
+      psi: KtParameter
       receiverParameter: null
       returnType: KaFunctionType:
         annotations: []
@@ -364,6 +373,7 @@ KaNamedFunctionSymbol:
       name: block
       origin: LIBRARY
       primaryConstructorProperty: null
+      psi: KtParameter
       receiverParameter: null
       returnType: KaFunctionType:
         annotations: []

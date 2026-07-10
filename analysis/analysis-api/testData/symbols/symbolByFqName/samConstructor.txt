@@ -13,6 +13,7 @@ KaSamConstructorSymbol:
   modality: FINAL
   name: A
   origin: SAM_CONSTRUCTOR
+  psi: KtClass
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -43,6 +44,7 @@ KaSamConstructorSymbol:
       name: function
       origin: SAM_CONSTRUCTOR
       primaryConstructorProperty: null
+      psi: null
       receiverParameter: null
       returnType: KaFunctionType:
         annotations: []

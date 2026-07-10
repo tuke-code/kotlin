@@ -15,6 +15,7 @@ KaNamedClassSymbol:
   modality: FINAL
   name: IntArray
   origin: LIBRARY
+  psi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []

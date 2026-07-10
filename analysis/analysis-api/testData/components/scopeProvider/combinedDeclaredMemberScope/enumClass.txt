@@ -15,6 +15,7 @@ KaEnumEntrySymbol:
   modality: FINAL
   name: A
   origin: SOURCE
+  psi: KtEnumEntry
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -45,6 +46,7 @@ KaEnumEntrySymbol:
   modality: FINAL
   name: B
   origin: SOURCE
+  psi: KtEnumEntry
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -82,6 +84,7 @@ KaNamedFunctionSymbol:
   modality: FINAL
   name: values
   origin: SOURCE_MEMBER_GENERATED
+  psi: KtClass
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -127,6 +130,7 @@ KaNamedFunctionSymbol:
   modality: FINAL
   name: valueOf
   origin: SOURCE_MEMBER_GENERATED
+  psi: KtClass
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -157,6 +161,7 @@ KaNamedFunctionSymbol:
       name: value
       origin: SOURCE_MEMBER_GENERATED
       primaryConstructorProperty: null
+      psi: KtClass
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -202,6 +207,7 @@ KaKotlinPropertySymbol:
     location: PROPERTY
     modality: FINAL
     origin: SOURCE_MEMBER_GENERATED
+    psi: KtClass
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -240,6 +246,7 @@ KaKotlinPropertySymbol:
   name: entries
   origin: SOURCE_MEMBER_GENERATED
   primaryConstructorParameter: null
+  psi: KtClass
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -278,6 +285,7 @@ KaConstructorSymbol:
   location: CLASS
   modality: FINAL
   origin: SOURCE_MEMBER_GENERATED
+  psi: KtClass
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

@@ -22,6 +22,7 @@ KaNamedFunctionSymbol:
   modality: FINAL
   name: static1
   origin: LIBRARY
+  psi: KtNamedFunction
   receiverParameter: KaReceiverParameterSymbol:
     annotations: []
     callableId: null
@@ -39,6 +40,7 @@ KaNamedFunctionSymbol:
     name: <receiver>
     origin: LIBRARY
     owningCallableSymbol: KaNamedFunctionSymbol(/static1)
+    psi: KtTypeReference
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []

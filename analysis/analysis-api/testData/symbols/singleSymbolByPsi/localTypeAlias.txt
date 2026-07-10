@@ -35,6 +35,7 @@ KaTypeAliasSymbol:
   modality: FINAL
   name: MyAlias
   origin: SOURCE
+  psi: KtTypeAlias
   typeParameters: [
     KaTypeParameterSymbol:
       annotations: []
@@ -46,6 +47,7 @@ KaTypeAliasSymbol:
       modality: FINAL
       name: C
       origin: SOURCE
+      psi: KtTypeParameter
       upperBounds: []
       variance: INVARIANT
       visibility: LOCAL
@@ -63,6 +65,7 @@ KaTypeAliasSymbol:
       modality: FINAL
       name: D
       origin: SOURCE
+      psi: KtTypeParameter
       upperBounds: []
       variance: INVARIANT
       visibility: LOCAL

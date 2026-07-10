@@ -15,6 +15,7 @@ KaNamedClassSymbol:
   modality: ABSTRACT
   name: JavaInterface
   origin: JAVA_LIBRARY
+  psi: ClsClassImpl
   superTypes: [
     KaUsualClassType:
       annotations: []

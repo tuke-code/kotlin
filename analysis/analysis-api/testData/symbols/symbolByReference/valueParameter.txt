@@ -21,6 +21,7 @@ KaValueParameterSymbol:
   name: abc
   origin: SOURCE
   primaryConstructorProperty: null
+  psi: KtParameter
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

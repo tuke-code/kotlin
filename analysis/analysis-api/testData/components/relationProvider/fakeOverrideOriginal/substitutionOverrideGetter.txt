@@ -17,6 +17,7 @@ FAKE_OVERRIDE_ORIGINAL:
     location: PROPERTY
     modality: OPEN
     origin: SOURCE
+    psi: KtPropertyAccessor
     receiverParameter: null
     returnType: KaTypeParameterType:
       annotations: []

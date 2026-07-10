@@ -25,6 +25,7 @@ KaKotlinPropertySymbol:
   name: dynamicPropertyAccess
   origin: JS_DYNAMIC
   primaryConstructorParameter: null
+  psi: null
   receiverParameter: null
   returnType: KaDynamicType:
     annotations: []

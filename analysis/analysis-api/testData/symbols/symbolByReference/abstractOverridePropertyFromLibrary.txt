@@ -18,6 +18,7 @@ KaKotlinPropertySymbol:
     name: field
     origin: PROPERTY_BACKING_FIELD
     owningProperty: KaKotlinPropertySymbol(/Base.foo)
+    psi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -54,6 +55,7 @@ KaKotlinPropertySymbol:
     location: PROPERTY
     modality: ABSTRACT
     origin: LIBRARY
+    psi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -91,6 +93,7 @@ KaKotlinPropertySymbol:
   name: foo
   origin: LIBRARY
   primaryConstructorParameter: null
+  psi: KtProperty
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -136,6 +139,7 @@ KaKotlinPropertySymbol:
       name: value
       origin: LIBRARY
       primaryConstructorProperty: null
+      psi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -148,6 +152,7 @@ KaKotlinPropertySymbol:
       getContainingModule: KaLibraryModule "Library lib"
       deprecation: null
       importableFqName: null
+    psi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -178,6 +183,7 @@ KaKotlinPropertySymbol:
         name: value
         origin: LIBRARY
         primaryConstructorProperty: null
+        psi: null
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []

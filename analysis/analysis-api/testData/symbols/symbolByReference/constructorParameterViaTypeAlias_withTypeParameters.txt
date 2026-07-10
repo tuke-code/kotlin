@@ -21,6 +21,7 @@ KaValueParameterSymbol:
   name: param
   origin: TYPEALIASED_CONSTRUCTOR
   primaryConstructorProperty: null
+  psi: KtClass
   receiverParameter: null
   returnType: KaTypeParameterType:
     annotations: []

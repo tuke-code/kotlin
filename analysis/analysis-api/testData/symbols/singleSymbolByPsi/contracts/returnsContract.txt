@@ -38,6 +38,7 @@ KaNamedFunctionSymbol:
                   name: value
                   origin: SOURCE
                   primaryConstructorProperty: null
+                  psi: KtParameter
                   receiverParameter: null
                   returnType: KaUsualClassType:
                     annotations: []
@@ -69,6 +70,7 @@ KaNamedFunctionSymbol:
   modality: FINAL
   name: check
   origin: SOURCE
+  psi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -99,6 +101,7 @@ KaNamedFunctionSymbol:
       name: value
       origin: SOURCE
       primaryConstructorProperty: null
+      psi: KtParameter
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []

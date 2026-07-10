@@ -17,6 +17,7 @@ FAKE_OVERRIDE_ORIGINAL:
     modality: FINAL
     name: AA
     origin: SOURCE
+    psi: KtEnumEntry
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []

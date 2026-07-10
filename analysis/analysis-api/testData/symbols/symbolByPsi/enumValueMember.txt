@@ -14,6 +14,7 @@ KaConstructorSymbol:
   location: CLASS
   modality: FINAL
   origin: SOURCE
+  psi: KtPrimaryConstructor
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -44,6 +45,7 @@ KaConstructorSymbol:
       name: value
       origin: SOURCE
       primaryConstructorProperty: KaKotlinPropertySymbol(/Style.value)
+      psi: KtParameter
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -84,6 +86,7 @@ KaKotlinPropertySymbol:
     name: field
     origin: PROPERTY_BACKING_FIELD
     owningProperty: KaKotlinPropertySymbol(<local>/exitAnimation)
+    psi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -120,6 +123,7 @@ KaKotlinPropertySymbol:
     location: PROPERTY
     modality: OPEN
     origin: SOURCE
+    psi: KtPropertyAccessor
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -153,6 +157,7 @@ KaKotlinPropertySymbol:
   name: exitAnimation
   origin: SOURCE
   primaryConstructorParameter: null
+  psi: KtProperty
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -191,6 +196,7 @@ KaEnumEntrySymbol:
   modality: FINAL
   name: SHEET
   origin: SOURCE
+  psi: KtEnumEntry
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -224,6 +230,7 @@ KaKotlinPropertySymbol:
     name: field
     origin: PROPERTY_BACKING_FIELD
     owningProperty: KaKotlinPropertySymbol(/Style.exitAnimation)
+    psi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -260,6 +267,7 @@ KaKotlinPropertySymbol:
     location: PROPERTY
     modality: ABSTRACT
     origin: SOURCE
+    psi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -297,6 +305,7 @@ KaKotlinPropertySymbol:
   name: exitAnimation
   origin: SOURCE
   primaryConstructorParameter: null
+  psi: KtProperty
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -335,6 +344,7 @@ KaNamedClassSymbol:
   modality: FINAL
   name: Style
   origin: SOURCE
+  psi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []

@@ -18,6 +18,7 @@ KaAnonymousFunctionSymbol:
       modality: FINAL
       name: parameter1
       origin: SOURCE
+      psi: KtParameter
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: [
@@ -49,6 +50,7 @@ KaAnonymousFunctionSymbol:
       modality: FINAL
       name: parameter2
       origin: SOURCE
+      psi: KtParameter
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -104,6 +106,7 @@ KaAnonymousFunctionSymbol:
   location: LOCAL
   modality: FINAL
   origin: SOURCE
+  psi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -134,6 +137,7 @@ KaAnonymousFunctionSymbol:
       name: i
       origin: SOURCE
       primaryConstructorProperty: null
+      psi: KtParameter
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []

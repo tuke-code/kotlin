@@ -23,6 +23,7 @@ FUNCTION:
   modality: FINAL
   name: plus
   origin: SOURCE
+  psi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     abbreviation: null

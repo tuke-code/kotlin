@@ -20,6 +20,7 @@ FAKE_OVERRIDE_ORIGINAL:
       name: field
       origin: PROPERTY_BACKING_FIELD
       owningProperty: KaKotlinPropertySymbol(test/MyClass.xx)
+      psi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -47,6 +48,7 @@ FAKE_OVERRIDE_ORIGINAL:
       location: PROPERTY
       modality: FINAL
       origin: SOURCE
+      psi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -97,6 +99,7 @@ FAKE_OVERRIDE_ORIGINAL:
       name: xx
       origin: SOURCE
       primaryConstructorProperty: KaKotlinPropertySymbol(test/MyClass.xx)
+      psi: KtParameter
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -104,6 +107,7 @@ FAKE_OVERRIDE_ORIGINAL:
         type: kotlin/Int
       typeParameters: []
       visibility: PUBLIC
+    psi: KtParameter
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []

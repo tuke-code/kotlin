@@ -22,6 +22,7 @@ KaUsualClassType:
               modality: FINAL
               name: T
               origin: SOURCE
+              psi: KtTypeParameter
               upperBounds: []
               variance: INVARIANT
               visibility: LOCAL
@@ -60,6 +61,7 @@ KaUsualClassType:
             modality: FINAL
             name: T
             origin: SOURCE
+            psi: KtTypeParameter
             upperBounds: []
             variance: INVARIANT
             visibility: LOCAL
@@ -84,6 +86,7 @@ KaUsualClassType:
         modality: FINAL
         name: T
         origin: SOURCE
+        psi: KtTypeParameter
         upperBounds: []
         variance: INVARIANT
         visibility: LOCAL

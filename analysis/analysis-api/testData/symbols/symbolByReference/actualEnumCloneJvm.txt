@@ -22,6 +22,7 @@ KaNamedFunctionSymbol:
   modality: FINAL
   name: clone
   origin: LIBRARY
+  psi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

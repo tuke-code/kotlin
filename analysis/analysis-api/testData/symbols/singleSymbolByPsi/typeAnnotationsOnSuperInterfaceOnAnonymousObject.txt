@@ -9,6 +9,7 @@ KaAnonymousObjectSymbol:
   modality: FINAL
   name: null
   origin: SOURCE
+  psi: KtObjectDeclaration
   superTypes: [
     KaUsualClassType:
       annotations: [

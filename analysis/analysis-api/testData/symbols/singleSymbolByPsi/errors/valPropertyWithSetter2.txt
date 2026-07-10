@@ -38,6 +38,7 @@ KaPropertySetterSymbol:
     name: value
     origin: SOURCE
     primaryConstructorProperty: null
+    psi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -50,6 +51,7 @@ KaPropertySetterSymbol:
     getContainingModule: KaSourceModule "Sources of main"
     deprecation: null
     importableFqName: null
+  psi: KtPropertyAccessor
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -80,6 +82,7 @@ KaPropertySetterSymbol:
       name: value
       origin: SOURCE
       primaryConstructorProperty: null
+      psi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []

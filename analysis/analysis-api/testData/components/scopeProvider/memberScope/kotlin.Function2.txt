@@ -22,6 +22,7 @@ KaNamedFunctionSymbol:
   modality: ABSTRACT
   name: invoke
   origin: LIBRARY
+  psi: KtNamedFunction
   receiverParameter: null
   returnType: KaTypeParameterType:
     annotations: []
@@ -51,6 +52,7 @@ KaNamedFunctionSymbol:
       name: p1
       origin: LIBRARY
       primaryConstructorProperty: null
+      psi: null
       receiverParameter: null
       returnType: KaTypeParameterType:
         annotations: []
@@ -85,6 +87,7 @@ KaNamedFunctionSymbol:
       name: p2
       origin: LIBRARY
       primaryConstructorProperty: null
+      psi: null
       receiverParameter: null
       returnType: KaTypeParameterType:
         annotations: []
@@ -144,6 +147,7 @@ KaNamedFunctionSymbol:
   modality: OPEN
   name: equals
   origin: LIBRARY
+  psi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -174,6 +178,7 @@ KaNamedFunctionSymbol:
       name: other
       origin: LIBRARY
       primaryConstructorProperty: null
+      psi: KtParameter
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -224,6 +229,7 @@ KaNamedFunctionSymbol:
   modality: OPEN
   name: hashCode
   origin: LIBRARY
+  psi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -268,6 +274,7 @@ KaNamedFunctionSymbol:
   modality: OPEN
   name: toString
   origin: LIBRARY
+  psi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

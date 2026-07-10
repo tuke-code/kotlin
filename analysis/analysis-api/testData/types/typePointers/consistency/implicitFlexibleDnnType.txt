@@ -68,6 +68,7 @@ KaFlexibleType:
                   modality: FINAL
                   name: T
                   origin: SOURCE
+                  psi: KtTypeParameter
                   upperBounds: []
                   variance: INVARIANT
                   visibility: LOCAL
@@ -91,6 +92,7 @@ KaFlexibleType:
                 modality: FINAL
                 name: T
                 origin: SOURCE
+                psi: KtTypeParameter
                 upperBounds: []
                 variance: INVARIANT
                 visibility: LOCAL
@@ -160,6 +162,7 @@ KaFlexibleType:
               modality: FINAL
               name: T
               origin: SOURCE
+              psi: KtTypeParameter
               upperBounds: []
               variance: INVARIANT
               visibility: LOCAL
@@ -183,6 +186,7 @@ KaFlexibleType:
             modality: FINAL
             name: T
             origin: SOURCE
+            psi: KtTypeParameter
             upperBounds: []
             variance: INVARIANT
             visibility: LOCAL
@@ -261,6 +265,7 @@ KaFlexibleType:
                   modality: FINAL
                   name: T
                   origin: SOURCE
+                  psi: KtTypeParameter
                   upperBounds: []
                   variance: INVARIANT
                   visibility: LOCAL
@@ -284,6 +289,7 @@ KaFlexibleType:
                 modality: FINAL
                 name: T
                 origin: SOURCE
+                psi: KtTypeParameter
                 upperBounds: []
                 variance: INVARIANT
                 visibility: LOCAL
@@ -353,6 +359,7 @@ KaFlexibleType:
               modality: FINAL
               name: T
               origin: SOURCE
+              psi: KtTypeParameter
               upperBounds: []
               variance: INVARIANT
               visibility: LOCAL
@@ -376,6 +383,7 @@ KaFlexibleType:
             modality: FINAL
             name: T
             origin: SOURCE
+            psi: KtTypeParameter
             upperBounds: []
             variance: INVARIANT
             visibility: LOCAL

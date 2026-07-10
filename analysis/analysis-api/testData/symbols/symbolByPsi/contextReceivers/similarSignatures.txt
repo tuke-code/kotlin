@@ -15,6 +15,7 @@ KaNamedClassSymbol:
   modality: FINAL
   name: A
   origin: SOURCE
+  psi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -46,6 +47,7 @@ KaNamedClassSymbol:
   modality: FINAL
   name: B
   origin: SOURCE
+  psi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -80,6 +82,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: A
       origin: SOURCE
+      psi: KtContextReceiver
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -120,6 +123,7 @@ KaNamedFunctionSymbol:
   modality: FINAL
   name: tooo
   origin: SOURCE
+  psi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -156,6 +160,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: B
       origin: SOURCE
+      psi: KtContextReceiver
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -196,6 +201,7 @@ KaNamedFunctionSymbol:
   modality: FINAL
   name: tooo
   origin: SOURCE
+  psi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -232,6 +238,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: A
       origin: SOURCE
+      psi: KtContextReceiver
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -260,6 +267,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: B
       origin: SOURCE
+      psi: KtContextReceiver
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -306,6 +314,7 @@ KaNamedFunctionSymbol:
   modality: FINAL
   name: tooo
   origin: SOURCE
+  psi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -342,6 +351,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: B
       origin: SOURCE
+      psi: KtContextReceiver
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -370,6 +380,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: A
       origin: SOURCE
+      psi: KtContextReceiver
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -416,6 +427,7 @@ KaNamedFunctionSymbol:
   modality: FINAL
   name: tooo
   origin: SOURCE
+  psi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

@@ -15,6 +15,7 @@ KaNamedClassSymbol:
   modality: FINAL
   name: LocalInnerClass
   origin: SOURCE
+  psi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -32,6 +33,7 @@ KaNamedClassSymbol:
       modality: FINAL
       name: J
       origin: SOURCE
+      psi: KtTypeParameter
       upperBounds: []
       variance: INVARIANT
       visibility: LOCAL
@@ -64,6 +66,7 @@ KaNamedClassSymbol:
   modality: FINAL
   name: LocalClass
   origin: SOURCE
+  psi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -81,6 +84,7 @@ KaNamedClassSymbol:
       modality: FINAL
       name: H
       origin: SOURCE
+      psi: KtTypeParameter
       upperBounds: []
       variance: INVARIANT
       visibility: LOCAL
@@ -113,6 +117,7 @@ KaNamedClassSymbol:
   modality: FINAL
   name: LocalInnerClass
   origin: SOURCE
+  psi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -130,6 +135,7 @@ KaNamedClassSymbol:
       modality: FINAL
       name: P
       origin: SOURCE
+      psi: KtTypeParameter
       upperBounds: []
       variance: INVARIANT
       visibility: LOCAL
@@ -162,6 +168,7 @@ KaNamedClassSymbol:
   modality: FINAL
   name: LocalClass
   origin: SOURCE
+  psi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -179,6 +186,7 @@ KaNamedClassSymbol:
       modality: FINAL
       name: N
       origin: SOURCE
+      psi: KtTypeParameter
       upperBounds: []
       variance: INVARIANT
       visibility: LOCAL

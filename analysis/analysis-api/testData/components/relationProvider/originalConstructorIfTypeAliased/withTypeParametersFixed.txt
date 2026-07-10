@@ -15,6 +15,7 @@ Resolved constructor:
     location: CLASS
     modality: FINAL
     origin: TYPEALIASED_CONSTRUCTOR
+    psi: KtTypeAlias
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -50,6 +51,7 @@ Resolved constructor:
         name: t
         origin: TYPEALIASED_CONSTRUCTOR
         primaryConstructorProperty: null
+        psi: KtClass
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -87,6 +89,7 @@ Original constructor if type aliased:
     location: CLASS
     modality: FINAL
     origin: SOURCE
+    psi: KtPrimaryConstructor
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -107,6 +110,7 @@ Original constructor if type aliased:
         modality: FINAL
         name: T
         origin: SOURCE
+        psi: KtTypeParameter
         upperBounds: []
         variance: INVARIANT
         visibility: LOCAL
@@ -139,6 +143,7 @@ Original constructor if type aliased:
         name: t
         origin: SOURCE
         primaryConstructorProperty: null
+        psi: KtParameter
         receiverParameter: null
         returnType: KaTypeParameterType:
           annotations: []

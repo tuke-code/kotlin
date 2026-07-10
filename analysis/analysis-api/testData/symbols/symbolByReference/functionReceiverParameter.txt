@@ -18,6 +18,7 @@ KaReceiverParameterSymbol:
   name: <receiver>
   origin: SOURCE
   owningCallableSymbol: KaNamedFunctionSymbol(/foo)
+  psi: KtTypeReference
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: [

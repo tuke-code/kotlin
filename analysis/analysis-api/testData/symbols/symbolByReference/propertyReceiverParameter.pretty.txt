@@ -18,6 +18,7 @@ KaReceiverParameterSymbol:
   name: <receiver>
   origin: SOURCE
   owningCallableSymbol: KaKotlinPropertySymbol(/prop)
+  psi: KtTypeReference
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: [

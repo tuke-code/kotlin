@@ -14,6 +14,7 @@ scopes:
         modality: FINAL
         name: T1
         origin: SOURCE
+        psi: KtTypeParameter
         upperBounds: []
         variance: INVARIANT
         visibility: LOCAL
@@ -32,26 +33,32 @@ scopes:
         fqName: META-INF
         location: TOP_LEVEL
         origin: SOURCE
+        psi: PsiPackage(META-INF)
       KaPackageSymbol:
         fqName: java
         location: TOP_LEVEL
         origin: SOURCE
+        psi: PsiPackage(java)
       KaPackageSymbol:
         fqName: javax
         location: TOP_LEVEL
         origin: SOURCE
+        psi: PsiPackage(javax)
       KaPackageSymbol:
         fqName: kotlin
         location: TOP_LEVEL
         origin: SOURCE
+        psi: PsiPackage(kotlin)
       KaPackageSymbol:
         fqName: org
         location: TOP_LEVEL
         origin: SOURCE
+        psi: PsiPackage(org)
       KaPackageSymbol:
         fqName: sun
         location: TOP_LEVEL
         origin: SOURCE
+        psi: PsiPackage(sun)
     classifiers: 2
       KaNamedClassSymbol:
         annotations: []
@@ -70,6 +77,7 @@ scopes:
         modality: FINAL
         name: A
         origin: SOURCE
+        psi: KtClass
         superTypes: [
           KaUsualClassType:
             annotations: []
@@ -95,6 +103,7 @@ scopes:
         modality: FINAL
         name: B
         origin: SOURCE
+        psi: KtClass
         superTypes: [
           KaUsualClassType:
             annotations: []
@@ -124,6 +133,7 @@ scopes:
           name: field
           origin: PROPERTY_BACKING_FIELD
           owningProperty: KaKotlinPropertySymbol(/foo)
+          psi: null
           receiverParameter: null
           returnType: KaUsualClassType:
             annotations: []
@@ -149,6 +159,7 @@ scopes:
             modality: FINAL
             name: a
             origin: SOURCE
+            psi: KtParameter
             receiverParameter: null
             returnType: KaUsualClassType:
               annotations: []
@@ -182,6 +193,7 @@ scopes:
           location: PROPERTY
           modality: FINAL
           origin: SOURCE
+          psi: KtPropertyAccessor
           receiverParameter: KaReceiverParameterSymbol:
             annotations: []
             callableId: null
@@ -199,6 +211,7 @@ scopes:
             name: <receiver>
             origin: SOURCE
             owningCallableSymbol: KaKotlinPropertySymbol(/foo)
+            psi: KtTypeReference
             receiverParameter: null
             returnType: KaUsualClassType:
               annotations: []
@@ -233,6 +246,7 @@ scopes:
         name: foo
         origin: SOURCE
         primaryConstructorParameter: null
+        psi: KtProperty
         receiverParameter: KaReceiverParameterSymbol:
           annotations: []
           callableId: null
@@ -250,6 +264,7 @@ scopes:
           name: <receiver>
           origin: SOURCE
           owningCallableSymbol: KaKotlinPropertySymbol(/foo)
+          psi: KtTypeReference
           receiverParameter: null
           returnType: KaUsualClassType:
             annotations: []
@@ -273,6 +288,7 @@ scopes:
             modality: FINAL
             name: T1
             origin: SOURCE
+            psi: KtTypeParameter
             upperBounds: []
             variance: INVARIANT
             visibility: LOCAL

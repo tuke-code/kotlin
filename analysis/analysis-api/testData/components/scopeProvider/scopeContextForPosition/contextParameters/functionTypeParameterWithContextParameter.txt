@@ -14,6 +14,7 @@ scopes:
         modality: FINAL
         name: T1
         origin: SOURCE
+        psi: KtTypeParameter
         upperBounds: []
         variance: INVARIANT
         visibility: LOCAL
@@ -27,6 +28,7 @@ scopes:
         modality: FINAL
         name: T2
         origin: SOURCE
+        psi: KtTypeParameter
         upperBounds: []
         variance: INVARIANT
         visibility: LOCAL
@@ -45,26 +47,32 @@ scopes:
         fqName: META-INF
         location: TOP_LEVEL
         origin: SOURCE
+        psi: PsiPackage(META-INF)
       KaPackageSymbol:
         fqName: java
         location: TOP_LEVEL
         origin: SOURCE
+        psi: PsiPackage(java)
       KaPackageSymbol:
         fqName: javax
         location: TOP_LEVEL
         origin: SOURCE
+        psi: PsiPackage(javax)
       KaPackageSymbol:
         fqName: kotlin
         location: TOP_LEVEL
         origin: SOURCE
+        psi: PsiPackage(kotlin)
       KaPackageSymbol:
         fqName: org
         location: TOP_LEVEL
         origin: SOURCE
+        psi: PsiPackage(org)
       KaPackageSymbol:
         fqName: sun
         location: TOP_LEVEL
         origin: SOURCE
+        psi: PsiPackage(sun)
     classifiers: 2
       KaNamedClassSymbol:
         annotations: []
@@ -83,6 +91,7 @@ scopes:
         modality: FINAL
         name: A
         origin: SOURCE
+        psi: KtClass
         superTypes: [
           KaUsualClassType:
             annotations: []
@@ -108,6 +117,7 @@ scopes:
         modality: FINAL
         name: B
         origin: SOURCE
+        psi: KtClass
         superTypes: [
           KaUsualClassType:
             annotations: []
@@ -137,6 +147,7 @@ scopes:
             modality: FINAL
             name: a
             origin: SOURCE
+            psi: KtParameter
             receiverParameter: null
             returnType: KaUsualClassType:
               annotations: []
@@ -172,6 +183,7 @@ scopes:
         modality: FINAL
         name: foo
         origin: SOURCE
+        psi: KtNamedFunction
         receiverParameter: KaReceiverParameterSymbol:
           annotations: []
           callableId: null
@@ -189,6 +201,7 @@ scopes:
           name: <receiver>
           origin: SOURCE
           owningCallableSymbol: KaNamedFunctionSymbol(/foo)
+          psi: KtTypeReference
           receiverParameter: null
           returnType: KaUsualClassType:
             annotations: []
@@ -211,6 +224,7 @@ scopes:
             modality: FINAL
             name: T1
             origin: SOURCE
+            psi: KtTypeParameter
             upperBounds: []
             variance: INVARIANT
             visibility: LOCAL
@@ -224,6 +238,7 @@ scopes:
             modality: FINAL
             name: T2
             origin: SOURCE
+            psi: KtTypeParameter
             upperBounds: []
             variance: INVARIANT
             visibility: LOCAL
@@ -252,6 +267,7 @@ scopes:
             name: param
             origin: SOURCE
             primaryConstructorProperty: null
+            psi: KtParameter
             receiverParameter: null
             returnType: KaUsualClassType:
               annotations: []
@@ -282,6 +298,7 @@ scopes:
             name: param2
             origin: SOURCE
             primaryConstructorProperty: null
+            psi: KtParameter
             receiverParameter: null
             returnType: KaUsualClassType:
               annotations: []

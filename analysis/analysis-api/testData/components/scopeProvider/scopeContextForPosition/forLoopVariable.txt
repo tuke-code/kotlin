@@ -28,6 +28,7 @@ scopes:
         modality: FINAL
         name: <iterator>
         origin: SOURCE
+        psi: null
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -75,6 +76,7 @@ scopes:
         name: list
         origin: SOURCE
         primaryConstructorProperty: null
+        psi: KtParameter
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -123,6 +125,7 @@ scopes:
         modality: FINAL
         name: usage
         origin: SOURCE
+        psi: KtNamedFunction
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -153,6 +156,7 @@ scopes:
             name: list
             origin: SOURCE
             primaryConstructorProperty: null
+            psi: KtParameter
             receiverParameter: null
             returnType: KaUsualClassType:
               annotations: []

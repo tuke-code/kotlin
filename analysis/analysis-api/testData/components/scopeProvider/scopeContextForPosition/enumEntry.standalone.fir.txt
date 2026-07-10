@@ -55,6 +55,7 @@ scopes:
         modality: FINAL
         name: Companion
         origin: LIBRARY
+        psi: null
         superTypes: [
           KaUsualClassType:
             annotations: []
@@ -84,6 +85,7 @@ scopes:
           name: field
           origin: PROPERTY_BACKING_FIELD
           owningProperty: KaKotlinPropertySymbol(<local>/x)
+          psi: null
           receiverParameter: null
           returnType: KaUsualClassType:
             annotations: []
@@ -111,6 +113,7 @@ scopes:
           location: PROPERTY
           modality: FINAL
           origin: SOURCE
+          psi: null
           receiverParameter: null
           returnType: KaUsualClassType:
             annotations: []
@@ -139,6 +142,7 @@ scopes:
         name: x
         origin: SOURCE
         primaryConstructorParameter: null
+        psi: KtProperty
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -171,6 +175,7 @@ scopes:
         modality: FINAL
         name: foo
         origin: SOURCE
+        psi: KtNamedFunction
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -203,6 +208,7 @@ scopes:
         modality: FINAL
         name: compareTo
         origin: SUBSTITUTION_OVERRIDE
+        psi: null
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -233,6 +239,7 @@ scopes:
             name: other
             origin: SUBSTITUTION_OVERRIDE
             primaryConstructorProperty: null
+            psi: KtClass
             receiverParameter: null
             returnType: KaUsualClassType:
               annotations: []
@@ -266,6 +273,7 @@ scopes:
         modality: FINAL
         name: clone
         origin: LIBRARY
+        psi: null
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -298,6 +306,7 @@ scopes:
         modality: FINAL
         name: equals
         origin: LIBRARY
+        psi: null
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -328,6 +337,7 @@ scopes:
             name: other
             origin: LIBRARY
             primaryConstructorProperty: null
+            psi: null
             receiverParameter: null
             returnType: KaUsualClassType:
               annotations: []
@@ -361,6 +371,7 @@ scopes:
         modality: FINAL
         name: hashCode
         origin: LIBRARY
+        psi: null
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -393,6 +404,7 @@ scopes:
         modality: OPEN
         name: toString
         origin: LIBRARY
+        psi: null
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -424,6 +436,7 @@ scopes:
           name: field
           origin: PROPERTY_BACKING_FIELD
           owningProperty: KaKotlinPropertySymbol(kotlin/Enum.name)
+          psi: null
           receiverParameter: null
           returnType: KaUsualClassType:
             annotations: []
@@ -451,6 +464,7 @@ scopes:
           location: PROPERTY
           modality: FINAL
           origin: LIBRARY
+          psi: null
           receiverParameter: null
           returnType: KaUsualClassType:
             annotations: []
@@ -479,6 +493,7 @@ scopes:
         name: name
         origin: LIBRARY
         primaryConstructorParameter: null
+        psi: null
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -507,6 +522,7 @@ scopes:
           name: field
           origin: PROPERTY_BACKING_FIELD
           owningProperty: KaKotlinPropertySymbol(kotlin/Enum.ordinal)
+          psi: null
           receiverParameter: null
           returnType: KaUsualClassType:
             annotations: []
@@ -534,6 +550,7 @@ scopes:
           location: PROPERTY
           modality: FINAL
           origin: LIBRARY
+          psi: null
           receiverParameter: null
           returnType: KaUsualClassType:
             annotations: []
@@ -562,6 +579,7 @@ scopes:
         name: ordinal
         origin: LIBRARY
         primaryConstructorParameter: null
+        psi: null
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -594,6 +612,7 @@ scopes:
         modality: FINAL
         name: getDeclaringClass
         origin: SUBSTITUTION_OVERRIDE
+        psi: ClsMethodImpl
         receiverParameter: null
         returnType: KaFlexibleType:
           annotations: []
@@ -625,6 +644,7 @@ scopes:
         modality: FINAL
         name: finalize
         origin: JAVA_SOURCE
+        psi: ClsMethodImpl
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -650,6 +670,7 @@ scopes:
         location: CLASS
         modality: FINAL
         origin: SOURCE_MEMBER_GENERATED
+        psi: KtEnumEntry
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -680,6 +701,7 @@ scopes:
         modality: FINAL
         name: A
         origin: SOURCE
+        psi: KtEnumEntry
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -711,6 +733,7 @@ scopes:
         modality: FINAL
         name: values
         origin: SOURCE_MEMBER_GENERATED
+        psi: KtClass
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -748,6 +771,7 @@ scopes:
         modality: FINAL
         name: valueOf
         origin: SOURCE_MEMBER_GENERATED
+        psi: KtClass
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -778,6 +802,7 @@ scopes:
             name: value
             origin: SOURCE_MEMBER_GENERATED
             primaryConstructorProperty: null
+            psi: KtClass
             receiverParameter: null
             returnType: KaUsualClassType:
               annotations: []
@@ -810,6 +835,7 @@ scopes:
           location: PROPERTY
           modality: FINAL
           origin: SOURCE_MEMBER_GENERATED
+          psi: KtClass
           receiverParameter: null
           returnType: KaUsualClassType:
             annotations: []
@@ -843,6 +869,7 @@ scopes:
         name: entries
         origin: SOURCE_MEMBER_GENERATED
         primaryConstructorParameter: null
+        psi: KtClass
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -878,6 +905,7 @@ scopes:
         modality: FINAL
         name: Companion
         origin: LIBRARY
+        psi: null
         superTypes: [
           KaUsualClassType:
             annotations: []
@@ -917,6 +945,7 @@ scopes:
         modality: OPEN
         name: equals
         origin: LIBRARY
+        psi: null
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -947,6 +976,7 @@ scopes:
             name: other
             origin: LIBRARY
             primaryConstructorProperty: null
+            psi: null
             receiverParameter: null
             returnType: KaUsualClassType:
               annotations: []
@@ -980,6 +1010,7 @@ scopes:
         modality: OPEN
         name: hashCode
         origin: LIBRARY
+        psi: null
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -1012,6 +1043,7 @@ scopes:
         modality: OPEN
         name: toString
         origin: LIBRARY
+        psi: null
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -1037,6 +1069,7 @@ scopes:
         location: CLASS
         modality: FINAL
         origin: LIBRARY
+        psi: null
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -1058,26 +1091,32 @@ scopes:
         fqName: META-INF
         location: TOP_LEVEL
         origin: SOURCE
+        psi: PsiPackage(META-INF)
       KaPackageSymbol:
         fqName: java
         location: TOP_LEVEL
         origin: SOURCE
+        psi: PsiPackage(java)
       KaPackageSymbol:
         fqName: javax
         location: TOP_LEVEL
         origin: SOURCE
+        psi: PsiPackage(javax)
       KaPackageSymbol:
         fqName: kotlin
         location: TOP_LEVEL
         origin: SOURCE
+        psi: PsiPackage(kotlin)
       KaPackageSymbol:
         fqName: org
         location: TOP_LEVEL
         origin: SOURCE
+        psi: PsiPackage(org)
       KaPackageSymbol:
         fqName: sun
         location: TOP_LEVEL
         origin: SOURCE
+        psi: PsiPackage(sun)
     classifiers: 1
       KaNamedClassSymbol:
         annotations: []
@@ -1096,6 +1135,7 @@ scopes:
         modality: FINAL
         name: E
         origin: SOURCE
+        psi: KtClass
         superTypes: [
           KaUsualClassType:
             annotations: []

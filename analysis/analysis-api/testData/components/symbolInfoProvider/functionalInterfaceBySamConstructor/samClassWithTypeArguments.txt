@@ -14,6 +14,7 @@ CONSTRUCTOR:
   modality: FINAL
   name: Predicate
   origin: SAM_CONSTRUCTOR
+  psi: KtClass
   receiverParameter: null
   returnType: KaUsualClassType:
     abbreviation: null
@@ -38,6 +39,7 @@ CONSTRUCTOR:
               modality: FINAL
               name: A
               origin: SAM_CONSTRUCTOR
+              psi: KtTypeParameter
               upperBounds: []
               variance: INVARIANT
               visibility: LOCAL
@@ -66,6 +68,7 @@ CONSTRUCTOR:
           modality: FINAL
           name: A
           origin: SAM_CONSTRUCTOR
+          psi: KtTypeParameter
           upperBounds: []
           variance: INVARIANT
           visibility: LOCAL
@@ -91,6 +94,7 @@ CONSTRUCTOR:
       modality: FINAL
       name: A
       origin: SAM_CONSTRUCTOR
+      psi: KtTypeParameter
       upperBounds: []
       variance: INVARIANT
       visibility: LOCAL
@@ -123,6 +127,7 @@ CONSTRUCTOR:
       name: function
       origin: SAM_CONSTRUCTOR
       primaryConstructorProperty: null
+      psi: null
       receiverParameter: null
       returnType: KaFunctionType:
         abbreviation: null
@@ -148,6 +153,7 @@ CONSTRUCTOR:
               modality: FINAL
               name: A
               origin: SAM_CONSTRUCTOR
+              psi: KtTypeParameter
               upperBounds: []
               variance: INVARIANT
               visibility: LOCAL
@@ -181,6 +187,7 @@ CONSTRUCTOR:
                   modality: FINAL
                   name: A
                   origin: SAM_CONSTRUCTOR
+                  psi: KtTypeParameter
                   upperBounds: []
                   variance: INVARIANT
                   visibility: LOCAL
@@ -240,6 +247,7 @@ CONSTRUCTOR:
               modality: FINAL
               name: A
               origin: SAM_CONSTRUCTOR
+              psi: KtTypeParameter
               upperBounds: []
               variance: INVARIANT
               visibility: LOCAL
@@ -302,6 +310,7 @@ FUNCTIONAL INTERFACE:
   modality: ABSTRACT
   name: Predicate
   origin: SOURCE
+  psi: KtClass
   superTypes: [
     KaUsualClassType:
       abbreviation: null
@@ -330,6 +339,7 @@ FUNCTIONAL INTERFACE:
       modality: FINAL
       name: A
       origin: SOURCE
+      psi: KtTypeParameter
       upperBounds: []
       variance: INVARIANT
       visibility: LOCAL

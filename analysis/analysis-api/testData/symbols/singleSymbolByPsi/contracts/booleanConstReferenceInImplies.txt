@@ -35,6 +35,7 @@ KaNamedFunctionSymbol:
   modality: FINAL
   name: booleanConstReferenceInImplies
   origin: SOURCE
+  psi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

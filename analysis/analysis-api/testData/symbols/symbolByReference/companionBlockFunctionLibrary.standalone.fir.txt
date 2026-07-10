@@ -22,6 +22,7 @@ KaNamedFunctionSymbol:
   modality: FINAL
   name: static1
   origin: LIBRARY
+  psi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

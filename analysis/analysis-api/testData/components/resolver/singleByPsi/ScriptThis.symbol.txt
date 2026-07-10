@@ -12,5 +12,6 @@ KtNameReferenceExpression(16,20): 'this'
         modality: FINAL
         name: <script-ScriptThis.kts>
         origin: SOURCE
+        psi: KtScript
         visibility: LOCAL
     ]

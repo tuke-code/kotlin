@@ -15,6 +15,7 @@ KaLocalVariableSymbol:
   modality: FINAL
   name: something1
   origin: SOURCE
+  psi: KtDestructuringDeclarationEntry
   receiverParameter: null
   returnType: KaErrorType:
     annotations: []

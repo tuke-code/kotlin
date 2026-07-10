@@ -15,6 +15,7 @@ KaNamedClassSymbol:
   modality: FINAL
   name: KotlinClass
   origin: SOURCE
+  psi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -46,6 +47,7 @@ KaNamedClassSymbol:
   modality: ABSTRACT
   name: SuperClass
   origin: JAVA_SOURCE
+  psi: PsiClassImpl
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -81,6 +83,7 @@ KaNamedClassSymbol:
   modality: OPEN
   name: JavaClass
   origin: JAVA_SOURCE
+  psi: PsiClassImpl
   superTypes: [
     KaUsualClassType:
       annotations: []

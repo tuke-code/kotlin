@@ -22,6 +22,7 @@ KaNamedFunctionSymbol:
   modality: FINAL
   name: compareTo
   origin: SUBSTITUTION_OVERRIDE
+  psi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -52,6 +53,7 @@ KaNamedFunctionSymbol:
       name: other
       origin: SUBSTITUTION_OVERRIDE
       primaryConstructorProperty: null
+      psi: KtClass
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -102,6 +104,7 @@ KaNamedFunctionSymbol:
   modality: FINAL
   name: clone
   origin: LIBRARY
+  psi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -150,6 +153,7 @@ KaNamedFunctionSymbol:
   modality: FINAL
   name: equals
   origin: LIBRARY
+  psi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -180,6 +184,7 @@ KaNamedFunctionSymbol:
       name: other
       origin: LIBRARY
       primaryConstructorProperty: null
+      psi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -234,6 +239,7 @@ KaNamedFunctionSymbol:
   modality: FINAL
   name: hashCode
   origin: LIBRARY
+  psi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -282,6 +288,7 @@ KaNamedFunctionSymbol:
   modality: OPEN
   name: toString
   origin: LIBRARY
+  psi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -329,6 +336,7 @@ KaKotlinPropertySymbol:
     name: field
     origin: PROPERTY_BACKING_FIELD
     owningProperty: KaKotlinPropertySymbol(kotlin/Enum.name)
+    psi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -369,6 +377,7 @@ KaKotlinPropertySymbol:
     location: PROPERTY
     modality: FINAL
     origin: LIBRARY
+    psi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -410,6 +419,7 @@ KaKotlinPropertySymbol:
   name: name
   origin: LIBRARY
   primaryConstructorParameter: null
+  psi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -455,6 +465,7 @@ KaKotlinPropertySymbol:
     name: field
     origin: PROPERTY_BACKING_FIELD
     owningProperty: KaKotlinPropertySymbol(kotlin/Enum.ordinal)
+    psi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -495,6 +506,7 @@ KaKotlinPropertySymbol:
     location: PROPERTY
     modality: FINAL
     origin: LIBRARY
+    psi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -536,6 +548,7 @@ KaKotlinPropertySymbol:
   name: ordinal
   origin: LIBRARY
   primaryConstructorParameter: null
+  psi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -585,6 +598,7 @@ KaNamedFunctionSymbol:
   modality: FINAL
   name: getDeclaringClass
   origin: SUBSTITUTION_OVERRIDE
+  psi: ClsMethodImpl
   receiverParameter: null
   returnType: KaFlexibleType:
     annotations: []
@@ -628,6 +642,7 @@ KaNamedFunctionSymbol:
   modality: FINAL
   name: finalize
   origin: JAVA_SOURCE
+  psi: ClsMethodImpl
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -669,6 +684,7 @@ KaNamedClassSymbol:
   modality: FINAL
   name: Companion
   origin: LIBRARY
+  psi: null
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -699,6 +715,7 @@ KaConstructorSymbol:
   location: CLASS
   modality: FINAL
   origin: SOURCE_MEMBER_GENERATED
+  psi: KtClass
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

@@ -16,6 +16,7 @@ KaDefinitelyNotNullType:
       modality: FINAL
       name: T
       origin: SOURCE
+      psi: KtTypeParameter
       upperBounds: [
         KaUsualClassType:
           abbreviation: null

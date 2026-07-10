@@ -10,5 +10,6 @@ KtThisExpression(65,69): 'this'
         modality: FINAL
         name: <script-ScriptThisExpression.kts>
         origin: SOURCE
+        psi: KtScript
         visibility: LOCAL
     ]

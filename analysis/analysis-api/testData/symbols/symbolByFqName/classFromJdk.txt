@@ -15,6 +15,7 @@ KaNamedClassSymbol:
   modality: FINAL
   name: String
   origin: JAVA_LIBRARY
+  psi: ClsClassImpl
   superTypes: [
     KaUsualClassType:
       annotations: []

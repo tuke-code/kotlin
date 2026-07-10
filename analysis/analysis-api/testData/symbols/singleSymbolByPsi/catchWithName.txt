@@ -15,6 +15,7 @@ KaLocalVariableSymbol:
   modality: FINAL
   name: myException
   origin: SOURCE
+  psi: KtParameter
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

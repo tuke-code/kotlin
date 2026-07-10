@@ -22,6 +22,7 @@ KaNamedFunctionSymbol:
   modality: FINAL
   name: noGeneric
   origin: SOURCE
+  psi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -70,6 +71,7 @@ KaNamedFunctionSymbol:
   modality: FINAL
   name: noGenericWithExplicitType
   origin: SOURCE
+  psi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -118,6 +120,7 @@ KaNamedFunctionSymbol:
   modality: FINAL
   name: withOuterGeneric
   origin: SUBSTITUTION_OVERRIDE
+  psi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -148,6 +151,7 @@ KaNamedFunctionSymbol:
       name: t
       origin: SUBSTITUTION_OVERRIDE
       primaryConstructorProperty: null
+      psi: KtClass
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -198,6 +202,7 @@ KaNamedFunctionSymbol:
   modality: FINAL
   name: withOuterGenericWithExplicitType
   origin: SUBSTITUTION_OVERRIDE
+  psi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -228,6 +233,7 @@ KaNamedFunctionSymbol:
       name: t
       origin: SUBSTITUTION_OVERRIDE
       primaryConstructorProperty: null
+      psi: KtClass
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -278,6 +284,7 @@ KaNamedFunctionSymbol:
   modality: FINAL
   name: withOwnGeneric
   origin: SOURCE
+  psi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -294,6 +301,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: TT
       origin: SOURCE
+      psi: KtTypeParameter
       upperBounds: []
       variance: INVARIANT
       visibility: LOCAL
@@ -326,6 +334,7 @@ KaNamedFunctionSymbol:
       name: tt
       origin: SOURCE
       primaryConstructorProperty: null
+      psi: KtParameter
       receiverParameter: null
       returnType: KaTypeParameterType:
         annotations: []
@@ -379,6 +388,7 @@ KaNamedFunctionSymbol:
   modality: FINAL
   name: withOwnGenericWithExplicitType
   origin: SOURCE
+  psi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -395,6 +405,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: TT
       origin: SOURCE
+      psi: KtTypeParameter
       upperBounds: []
       variance: INVARIANT
       visibility: LOCAL
@@ -427,6 +438,7 @@ KaNamedFunctionSymbol:
       name: tt
       origin: SOURCE
       primaryConstructorProperty: null
+      psi: KtParameter
       receiverParameter: null
       returnType: KaTypeParameterType:
         annotations: []
@@ -480,6 +492,7 @@ KaNamedFunctionSymbol:
   modality: FINAL
   name: withOuterAndOwnGeneric
   origin: SUBSTITUTION_OVERRIDE
+  psi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -496,6 +509,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: TT
       origin: SOURCE
+      psi: KtTypeParameter
       upperBounds: []
       variance: INVARIANT
       visibility: LOCAL
@@ -528,6 +542,7 @@ KaNamedFunctionSymbol:
       name: t
       origin: SUBSTITUTION_OVERRIDE
       primaryConstructorProperty: null
+      psi: KtClass
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -563,6 +578,7 @@ KaNamedFunctionSymbol:
       name: tt
       origin: SUBSTITUTION_OVERRIDE
       primaryConstructorProperty: null
+      psi: KtClass
       receiverParameter: null
       returnType: KaTypeParameterType:
         annotations: []
@@ -612,6 +628,7 @@ KaNamedFunctionSymbol:
   modality: FINAL
   name: withOuterAndOwnGenericWithExplicitType
   origin: SUBSTITUTION_OVERRIDE
+  psi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -628,6 +645,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: TT
       origin: SOURCE
+      psi: KtTypeParameter
       upperBounds: []
       variance: INVARIANT
       visibility: LOCAL
@@ -660,6 +678,7 @@ KaNamedFunctionSymbol:
       name: t
       origin: SUBSTITUTION_OVERRIDE
       primaryConstructorProperty: null
+      psi: KtClass
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -695,6 +714,7 @@ KaNamedFunctionSymbol:
       name: tt
       origin: SUBSTITUTION_OVERRIDE
       primaryConstructorProperty: null
+      psi: KtClass
       receiverParameter: null
       returnType: KaTypeParameterType:
         annotations: []
@@ -744,6 +764,7 @@ KaNamedFunctionSymbol:
   modality: OPEN
   name: equals
   origin: LIBRARY
+  psi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -774,6 +795,7 @@ KaNamedFunctionSymbol:
       name: other
       origin: LIBRARY
       primaryConstructorProperty: null
+      psi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -824,6 +846,7 @@ KaNamedFunctionSymbol:
   modality: OPEN
   name: hashCode
   origin: LIBRARY
+  psi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -868,6 +891,7 @@ KaNamedFunctionSymbol:
   modality: OPEN
   name: toString
   origin: LIBRARY
+  psi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -904,6 +928,7 @@ KaConstructorSymbol:
   location: CLASS
   modality: FINAL
   origin: SOURCE_MEMBER_GENERATED
+  psi: KtClass
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

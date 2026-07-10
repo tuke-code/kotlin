@@ -15,6 +15,7 @@ KaNamedClassSymbol:
   modality: OPEN
   name: Any
   origin: LIBRARY
+  psi: KtClass
   superTypes: []
   typeParameters: []
   visibility: PUBLIC

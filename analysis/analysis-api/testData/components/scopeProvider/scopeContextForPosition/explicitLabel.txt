@@ -38,6 +38,7 @@ scopes:
         modality: FINAL
         name: Companion
         origin: LIBRARY
+        psi: KtObjectDeclaration
         superTypes: [
           KaUsualClassType:
             annotations: []
@@ -74,6 +75,7 @@ scopes:
         modality: OPEN
         name: compareTo
         origin: LIBRARY
+        psi: KtNamedFunction
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -104,6 +106,7 @@ scopes:
             name: other
             origin: LIBRARY
             primaryConstructorProperty: null
+            psi: KtParameter
             receiverParameter: null
             returnType: KaUsualClassType:
               annotations: []
@@ -140,6 +143,7 @@ scopes:
         modality: OPEN
         name: equals
         origin: LIBRARY
+        psi: KtNamedFunction
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -170,6 +174,7 @@ scopes:
             name: other
             origin: LIBRARY
             primaryConstructorProperty: null
+            psi: KtParameter
             receiverParameter: null
             returnType: KaUsualClassType:
               annotations: []
@@ -206,6 +211,7 @@ scopes:
         modality: OPEN
         name: get
         origin: LIBRARY
+        psi: KtNamedFunction
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -236,6 +242,7 @@ scopes:
             name: index
             origin: LIBRARY
             primaryConstructorProperty: null
+            psi: KtParameter
             receiverParameter: null
             returnType: KaUsualClassType:
               annotations: []
@@ -272,6 +279,7 @@ scopes:
         modality: FINAL
         name: plus
         origin: LIBRARY
+        psi: KtNamedFunction
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -302,6 +310,7 @@ scopes:
             name: other
             origin: LIBRARY
             primaryConstructorProperty: null
+            psi: KtParameter
             receiverParameter: null
             returnType: KaUsualClassType:
               annotations: []
@@ -335,6 +344,7 @@ scopes:
         modality: OPEN
         name: subSequence
         origin: LIBRARY
+        psi: KtNamedFunction
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -365,6 +375,7 @@ scopes:
             name: startIndex
             origin: LIBRARY
             primaryConstructorProperty: null
+            psi: KtParameter
             receiverParameter: null
             returnType: KaUsualClassType:
               annotations: []
@@ -395,6 +406,7 @@ scopes:
             name: endIndex
             origin: LIBRARY
             primaryConstructorProperty: null
+            psi: KtParameter
             receiverParameter: null
             returnType: KaUsualClassType:
               annotations: []
@@ -431,6 +443,7 @@ scopes:
         modality: OPEN
         name: toString
         origin: LIBRARY
+        psi: KtNamedFunction
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -462,6 +475,7 @@ scopes:
           name: field
           origin: PROPERTY_BACKING_FIELD
           owningProperty: KaKotlinPropertySymbol(kotlin/String.length)
+          psi: null
           receiverParameter: null
           returnType: KaUsualClassType:
             annotations: []
@@ -489,6 +503,7 @@ scopes:
           location: PROPERTY
           modality: OPEN
           origin: LIBRARY
+          psi: null
           receiverParameter: null
           returnType: KaUsualClassType:
             annotations: []
@@ -517,6 +532,7 @@ scopes:
         name: length
         origin: LIBRARY
         primaryConstructorParameter: null
+        psi: KtProperty
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -549,6 +565,7 @@ scopes:
         modality: OPEN
         name: hashCode
         origin: LIBRARY
+        psi: KtNamedFunction
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -574,6 +591,7 @@ scopes:
         location: CLASS
         modality: FINAL
         origin: LIBRARY
+        psi: KtPrimaryConstructor
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -613,26 +631,32 @@ scopes:
         fqName: META-INF
         location: TOP_LEVEL
         origin: SOURCE
+        psi: PsiPackage(META-INF)
       KaPackageSymbol:
         fqName: java
         location: TOP_LEVEL
         origin: SOURCE
+        psi: PsiPackage(java)
       KaPackageSymbol:
         fqName: javax
         location: TOP_LEVEL
         origin: SOURCE
+        psi: PsiPackage(javax)
       KaPackageSymbol:
         fqName: kotlin
         location: TOP_LEVEL
         origin: SOURCE
+        psi: PsiPackage(kotlin)
       KaPackageSymbol:
         fqName: org
         location: TOP_LEVEL
         origin: SOURCE
+        psi: PsiPackage(org)
       KaPackageSymbol:
         fqName: sun
         location: TOP_LEVEL
         origin: SOURCE
+        psi: PsiPackage(sun)
     classifiers: 0
     callables: 2
       KaNamedFunctionSymbol:
@@ -659,6 +683,7 @@ scopes:
         modality: FINAL
         name: test
         origin: SOURCE
+        psi: KtNamedFunction
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -691,6 +716,7 @@ scopes:
         modality: FINAL
         name: block
         origin: SOURCE
+        psi: KtNamedFunction
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -721,6 +747,7 @@ scopes:
             name: value
             origin: SOURCE
             primaryConstructorProperty: null
+            psi: KtParameter
             receiverParameter: null
             returnType: KaUsualClassType:
               annotations: []
@@ -751,6 +778,7 @@ scopes:
             name: block
             origin: SOURCE
             primaryConstructorProperty: null
+            psi: KtParameter
             receiverParameter: null
             returnType: KaFunctionType:
               annotations: []

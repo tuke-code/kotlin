@@ -18,6 +18,7 @@ KaNamedClassSymbol:
   modality: FINAL
   name: Anno1
   origin: SOURCE
+  psi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -52,6 +53,7 @@ KaNamedClassSymbol:
   modality: FINAL
   name: Anno2
   origin: SOURCE
+  psi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -86,6 +88,7 @@ KaNamedClassSymbol:
   modality: FINAL
   name: Anno3
   origin: SOURCE
+  psi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -120,6 +123,7 @@ KaNamedClassSymbol:
   modality: FINAL
   name: Anno4
   origin: SOURCE
+  psi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -150,6 +154,7 @@ KaConstructorSymbol:
   location: CLASS
   modality: FINAL
   origin: SOURCE
+  psi: KtPrimaryConstructor
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -180,6 +185,7 @@ KaConstructorSymbol:
       name: s
       origin: SOURCE
       primaryConstructorProperty: KaKotlinPropertySymbol(/Anno5.s)
+      psi: KtParameter
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -220,6 +226,7 @@ KaNamedClassSymbol:
   modality: FINAL
   name: Anno5
   origin: SOURCE
+  psi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -251,6 +258,7 @@ KaNamedClassSymbol:
   modality: ABSTRACT
   name: I
   origin: SOURCE
+  psi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -289,6 +297,7 @@ KaNamedFunctionSymbol:
   modality: FINAL
   name: f
   origin: SOURCE
+  psi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: [
@@ -322,6 +331,7 @@ KaNamedFunctionSymbol:
       name: arg
       origin: SOURCE
       primaryConstructorProperty: null
+      psi: KtParameter
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: [
@@ -371,6 +381,7 @@ KaKotlinPropertySymbol:
     name: field
     origin: PROPERTY_BACKING_FIELD
     owningProperty: KaKotlinPropertySymbol(/X.x)
+    psi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: [
@@ -410,6 +421,7 @@ KaKotlinPropertySymbol:
     location: PROPERTY
     modality: FINAL
     origin: SOURCE
+    psi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: [
@@ -450,6 +462,7 @@ KaKotlinPropertySymbol:
   name: x
   origin: SOURCE
   primaryConstructorParameter: null
+  psi: KtProperty
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: [
@@ -491,6 +504,7 @@ KaNamedClassSymbol:
   modality: FINAL
   name: X
   origin: SOURCE
+  psi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: [
@@ -518,6 +532,7 @@ KaTypeParameterSymbol:
   modality: FINAL
   name: T
   origin: SOURCE
+  psi: KtTypeParameter
   upperBounds: []
   variance: INVARIANT
   visibility: LOCAL
@@ -550,6 +565,7 @@ KaNamedFunctionSymbol:
   modality: FINAL
   name: foo
   origin: SOURCE
+  psi: KtNamedFunction
   receiverParameter: KaReceiverParameterSymbol:
     annotations: []
     callableId: null
@@ -567,6 +583,7 @@ KaNamedFunctionSymbol:
     name: <receiver>
     origin: SOURCE
     owningCallableSymbol: KaNamedFunctionSymbol(/foo)
+    psi: KtTypeReference
     receiverParameter: null
     returnType: KaTypeParameterType:
       annotations: []
@@ -600,6 +617,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: T
       origin: SOURCE
+      psi: KtTypeParameter
       upperBounds: []
       variance: INVARIANT
       visibility: LOCAL
@@ -628,6 +646,7 @@ KaTypeParameterSymbol:
   modality: FINAL
   name: T
   origin: SOURCE
+  psi: KtTypeParameter
   upperBounds: []
   variance: INVARIANT
   visibility: LOCAL
@@ -660,6 +679,7 @@ KaNamedFunctionSymbol:
   modality: FINAL
   name: foo2
   origin: SOURCE
+  psi: KtNamedFunction
   receiverParameter: KaReceiverParameterSymbol:
     annotations: []
     callableId: null
@@ -677,6 +697,7 @@ KaNamedFunctionSymbol:
     name: <receiver>
     origin: SOURCE
     owningCallableSymbol: KaNamedFunctionSymbol(/foo2)
+    psi: KtTypeReference
     receiverParameter: null
     returnType: KaTypeParameterType:
       annotations: []
@@ -715,6 +736,7 @@ KaNamedFunctionSymbol:
       modality: FINAL
       name: T
       origin: SOURCE
+      psi: KtTypeParameter
       upperBounds: []
       variance: INVARIANT
       visibility: LOCAL

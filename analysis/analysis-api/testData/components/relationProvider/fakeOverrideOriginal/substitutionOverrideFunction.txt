@@ -24,6 +24,7 @@ FAKE_OVERRIDE_ORIGINAL:
     modality: OPEN
     name: foo
     origin: SOURCE
+    psi: KtNamedFunction
     receiverParameter: null
     returnType: KaTypeParameterType:
       annotations: []
@@ -53,6 +54,7 @@ FAKE_OVERRIDE_ORIGINAL:
         name: t
         origin: SOURCE
         primaryConstructorProperty: null
+        psi: KtParameter
         receiverParameter: null
         returnType: KaTypeParameterType:
           annotations: []

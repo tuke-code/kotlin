@@ -17,6 +17,7 @@ FAKE_OVERRIDE_ORIGINAL:
     location: PROPERTY
     modality: ABSTRACT
     origin: SOURCE
+    psi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []

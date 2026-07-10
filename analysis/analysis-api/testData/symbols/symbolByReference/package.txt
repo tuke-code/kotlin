@@ -2,6 +2,7 @@ KaPackageSymbol:
   fqName: one.two
   location: TOP_LEVEL
   origin: SOURCE
+  psi: PsiPackage(one.two)
   getContainingFileSymbol: null
   getContainingModule: KaSourceModule "Sources of main"
   deprecation: null

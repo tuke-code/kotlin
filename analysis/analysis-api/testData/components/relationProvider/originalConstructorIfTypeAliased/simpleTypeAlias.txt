@@ -15,6 +15,7 @@ Resolved constructor:
     location: CLASS
     modality: FINAL
     origin: TYPEALIASED_CONSTRUCTOR
+    psi: KtTypeAlias
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -46,6 +47,7 @@ Original constructor if type aliased:
     location: CLASS
     modality: FINAL
     origin: SOURCE_MEMBER_GENERATED
+    psi: KtClass
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []

@@ -15,6 +15,7 @@ KaNamedClassSymbol:
   modality: FINAL
   name: Nothing
   origin: LIBRARY
+  psi: null
   superTypes: []
   typeParameters: []
   visibility: PUBLIC

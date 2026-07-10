@@ -22,6 +22,7 @@ KaNamedFunctionSymbol:
   modality: FINAL
   name: dummyTest
   origin: PLUGIN
+  psi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -52,6 +53,7 @@ KaNamedFunctionSymbol:
       name: value
       origin: PLUGIN
       primaryConstructorProperty: null
+      psi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []

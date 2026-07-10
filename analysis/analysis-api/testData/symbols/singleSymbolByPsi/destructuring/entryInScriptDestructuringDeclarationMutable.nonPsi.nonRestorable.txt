@@ -21,6 +21,7 @@ KaKotlinPropertySymbol:
     location: PROPERTY
     modality: FINAL
     origin: SOURCE
+    psi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -54,6 +55,7 @@ KaKotlinPropertySymbol:
   name: a
   origin: SOURCE
   primaryConstructorParameter: null
+  psi: KtDestructuringDeclarationEntry
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -99,6 +101,7 @@ KaKotlinPropertySymbol:
       name: value
       origin: SOURCE
       primaryConstructorProperty: null
+      psi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -111,6 +114,7 @@ KaKotlinPropertySymbol:
       getContainingModule: KaScriptModule "Script entryInScriptDestructuringDeclarationMutable.kts"
       deprecation: null
       importableFqName: null
+    psi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -141,6 +145,7 @@ KaKotlinPropertySymbol:
         name: value
         origin: SOURCE
         primaryConstructorProperty: null
+        psi: null
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -188,6 +193,7 @@ KaPropertyGetterSymbol:
   location: PROPERTY
   modality: FINAL
   origin: SOURCE
+  psi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -242,6 +248,7 @@ KaPropertySetterSymbol:
     name: value
     origin: SOURCE
     primaryConstructorProperty: null
+    psi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -254,6 +261,7 @@ KaPropertySetterSymbol:
     getContainingModule: KaScriptModule "Script entryInScriptDestructuringDeclarationMutable.kts"
     deprecation: null
     importableFqName: null
+  psi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -284,6 +292,7 @@ KaPropertySetterSymbol:
       name: value
       origin: SOURCE
       primaryConstructorProperty: null
+      psi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -327,6 +336,7 @@ KaValueParameterSymbol:
   name: value
   origin: SOURCE
   primaryConstructorProperty: null
+  psi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

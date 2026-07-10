@@ -643,6 +643,7 @@ KtThisExpression(651,655): 'this'
         name: <receiver>
         origin: SOURCE
         owningCallableSymbol: KaAnonymousFunctionSymbol(<local>/<no name provided>)
+        psi: KtTypeReference
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -674,6 +675,7 @@ KtNameReferenceExpression(651,655): 'this'
         name: <receiver>
         origin: SOURCE
         owningCallableSymbol: KaAnonymousFunctionSymbol(<local>/<no name provided>)
+        psi: KtTypeReference
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -726,6 +728,7 @@ KtThisExpression(682,691): 'this@anon'
         name: <receiver>
         origin: SOURCE
         owningCallableSymbol: KaAnonymousFunctionSymbol(<local>/<no name provided>)
+        psi: KtTypeReference
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -757,6 +760,7 @@ KtNameReferenceExpression(682,686): 'this'
         name: <receiver>
         origin: SOURCE
         owningCallableSymbol: KaAnonymousFunctionSymbol(<local>/<no name provided>)
+        psi: KtTypeReference
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -1013,6 +1017,7 @@ KtThisExpression(917,921): 'this'
         name: <receiver>
         origin: SOURCE
         owningCallableSymbol: KaAnonymousFunctionSymbol(<local>/<no name provided>)
+        psi: KtFunctionLiteral
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -1044,6 +1049,7 @@ KtNameReferenceExpression(917,921): 'this'
         name: <receiver>
         origin: SOURCE
         owningCallableSymbol: KaAnonymousFunctionSymbol(<local>/<no name provided>)
+        psi: KtFunctionLiteral
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -1096,6 +1102,7 @@ KtThisExpression(948,959): 'this@myWith'
         name: <receiver>
         origin: SOURCE
         owningCallableSymbol: KaAnonymousFunctionSymbol(<local>/<no name provided>)
+        psi: KtFunctionLiteral
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -1127,6 +1134,7 @@ KtNameReferenceExpression(948,952): 'this'
         name: <receiver>
         origin: SOURCE
         owningCallableSymbol: KaAnonymousFunctionSymbol(<local>/<no name provided>)
+        psi: KtFunctionLiteral
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -1371,6 +1379,7 @@ KtThisExpression(1160,1170): 'this@label'
         name: <receiver>
         origin: SOURCE
         owningCallableSymbol: KaAnonymousFunctionSymbol(<local>/<no name provided>)
+        psi: KtFunctionLiteral
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -1402,6 +1411,7 @@ KtNameReferenceExpression(1160,1164): 'this'
         name: <receiver>
         origin: SOURCE
         owningCallableSymbol: KaAnonymousFunctionSymbol(<local>/<no name provided>)
+        psi: KtFunctionLiteral
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -1598,6 +1608,7 @@ KtThisExpression(1277,1281): 'this'
         name: <receiver>
         origin: SOURCE
         owningCallableSymbol: KaNamedFunctionSymbol(one/myWith)
+        psi: KtTypeReference
         receiverParameter: null
         returnType: KaTypeParameterType:
           annotations: []
@@ -1628,6 +1639,7 @@ KtNameReferenceExpression(1277,1281): 'this'
         name: <receiver>
         origin: SOURCE
         owningCallableSymbol: KaNamedFunctionSymbol(one/myWith)
+        psi: KtTypeReference
         receiverParameter: null
         returnType: KaTypeParameterType:
           annotations: []

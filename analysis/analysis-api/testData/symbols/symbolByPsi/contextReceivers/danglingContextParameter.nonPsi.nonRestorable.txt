@@ -17,6 +17,7 @@ KaContextParameterSymbol:
   modality: FINAL
   name: parameter1
   origin: SOURCE
+  psi: KtParameter
   receiverParameter: null
   returnType: KaClassErrorType:
     annotations: [
@@ -48,6 +49,7 @@ KaContextParameterSymbol:
   modality: FINAL
   name: parameter2
   origin: SOURCE
+  psi: KtParameter
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -87,6 +89,7 @@ KaContextParameterSymbol:
   modality: FINAL
   name: parameter1
   origin: SOURCE
+  psi: KtParameter
   receiverParameter: null
   returnType: KaClassErrorType:
     annotations: [
@@ -118,6 +121,7 @@ KaContextParameterSymbol:
   modality: FINAL
   name: parameter2
   origin: SOURCE
+  psi: KtParameter
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -155,6 +159,7 @@ KaNamedClassSymbol:
   modality: FINAL
   name: Foo
   origin: SOURCE
+  psi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -188,6 +193,7 @@ KaContextParameterSymbol:
   modality: FINAL
   name: parameter1
   origin: SOURCE
+  psi: KtParameter
   receiverParameter: null
   returnType: KaClassErrorType:
     annotations: [
@@ -219,6 +225,7 @@ KaContextParameterSymbol:
   modality: FINAL
   name: parameter2
   origin: SOURCE
+  psi: KtParameter
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

@@ -15,6 +15,7 @@ KaLocalVariableSymbol:
   modality: FINAL
   name: something
   origin: SOURCE
+  psi: KtProperty
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

@@ -14,6 +14,7 @@ KaConstructorSymbol:
   location: CLASS
   modality: FINAL
   origin: TYPEALIASED_CONSTRUCTOR
+  psi: KtTypeAlias
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -49,6 +50,7 @@ KaConstructorSymbol:
       name: t
       origin: TYPEALIASED_CONSTRUCTOR
       primaryConstructorProperty: null
+      psi: KtClass
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []

@@ -22,6 +22,7 @@ KaNamedFunctionSymbol:
   modality: FINAL
   name: valueOf
   origin: LIBRARY
+  psi: KtClass
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -52,6 +53,7 @@ KaNamedFunctionSymbol:
       name: value
       origin: LIBRARY
       primaryConstructorProperty: null
+      psi: KtClass
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []

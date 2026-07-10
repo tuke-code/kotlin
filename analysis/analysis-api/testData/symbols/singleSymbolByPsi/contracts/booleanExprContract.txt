@@ -43,6 +43,7 @@ KaNamedFunctionSymbol:
                       name: foo
                       origin: SOURCE
                       primaryConstructorProperty: null
+                      psi: KtParameter
                       receiverParameter: null
                       returnType: KaUsualClassType:
                         annotations: []
@@ -84,6 +85,7 @@ KaNamedFunctionSymbol:
                       name: bar
                       origin: SOURCE
                       primaryConstructorProperty: null
+                      psi: KtParameter
                       receiverParameter: null
                       returnType: KaUsualClassType:
                         annotations: []
@@ -117,6 +119,7 @@ KaNamedFunctionSymbol:
   modality: FINAL
   name: boolenExprContract
   origin: SOURCE
+  psi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -147,6 +150,7 @@ KaNamedFunctionSymbol:
       name: foo
       origin: SOURCE
       primaryConstructorProperty: null
+      psi: KtParameter
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -182,6 +186,7 @@ KaNamedFunctionSymbol:
       name: bar
       origin: SOURCE
       primaryConstructorProperty: null
+      psi: KtParameter
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []

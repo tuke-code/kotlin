@@ -22,6 +22,7 @@ KaNamedFunctionSymbol:
   modality: ABSTRACT
   name: get
   origin: LIBRARY
+  psi: null
   receiverParameter: null
   returnType: KaTypeParameterType:
     annotations: []
@@ -51,6 +52,7 @@ KaNamedFunctionSymbol:
       name: index
       origin: LIBRARY
       primaryConstructorProperty: null
+      psi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []

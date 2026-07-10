@@ -14,6 +14,7 @@ CONSTRUCTOR:
   modality: FINAL
   name: IntPredicate
   origin: SAM_CONSTRUCTOR
+  psi: KtClass
   receiverParameter: null
   returnType: KaUsualClassType:
     abbreviation: null
@@ -55,6 +56,7 @@ CONSTRUCTOR:
       name: function
       origin: SAM_CONSTRUCTOR
       primaryConstructorProperty: null
+      psi: null
       receiverParameter: null
       returnType: KaFunctionType:
         abbreviation: null
@@ -207,6 +209,7 @@ FUNCTIONAL INTERFACE:
   modality: ABSTRACT
   name: IntPredicate
   origin: SOURCE
+  psi: KtClass
   superTypes: [
     KaUsualClassType:
       abbreviation: null
