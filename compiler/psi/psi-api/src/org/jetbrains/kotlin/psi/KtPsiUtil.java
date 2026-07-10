@@ -338,7 +338,7 @@ public class KtPsiUtil {
      * @param classOrObject the class to start the search from
      * @return the outermost enclosing class; never {@code null} — at minimum {@code classOrObject} itself
      */
-    @Nullable
+    @NotNull
     public static KtClassOrObject getOutermostClassOrObject(@NotNull KtClassOrObject classOrObject) {
         KtClassOrObject current = classOrObject;
         KtClassOrObject outer;
