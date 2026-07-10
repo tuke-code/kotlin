@@ -189,6 +189,8 @@ internal abstract class DumpXcodeBuildArgs : DefaultTask() {
                 ) {
                     it.fingerprintCoordinationService.set(fingerprintCoordinationService)
                     it.key.set(claim.bucket.key)
+                    it.ideaSyncEnabled.set(ideaSyncEnabled)
+                    it.errorFile.set(errorFile)
                 }
             }
         }

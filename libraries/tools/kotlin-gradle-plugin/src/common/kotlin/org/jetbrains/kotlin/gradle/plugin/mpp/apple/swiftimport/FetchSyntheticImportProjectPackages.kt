@@ -144,6 +144,8 @@ internal abstract class FetchSyntheticImportProjectPackages : DefaultTask() {
                     it.destinationWorkspaceStateFile.set(workspaceStateJson.get().asFile)
                     it.syntheticPackageHash.set(claim.bucket.key)
                     it.coordinationService.set(coordinationService)
+                    it.ideaSyncEnabled.set(ideaSyncEnabled)
+                    it.errorFile.set(errorFile)
                 }
             }
 
