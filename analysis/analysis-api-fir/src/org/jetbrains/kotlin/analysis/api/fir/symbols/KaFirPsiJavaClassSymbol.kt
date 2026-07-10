@@ -35,11 +35,27 @@ import org.jetbrains.kotlin.name.Name
  * Implements [KaNamedClassSymbol] for a Java class. The underlying [firSymbol] is built lazily and only when needed. Many simple
  * properties are computed from the given [PsiClass] instead of [firSymbol]. This improves performance when "slow" properties don't need to
  * be accessed.
+ *
+ * **Note**: the class is designed only for [org.jetbrains.kotlin.fir.declarations.FirDeclarationOrigin.Java]
+ * and not for [org.jetbrains.kotlin.fir.declarations.FirDeclarationOrigin.Enhancement]
  */
-internal class KaFirPsiJavaClassSymbol(
+internal class KaFirPsiJavaClassSymbol private constructor(
     override val backingPsi: PsiClass,
     override val analysisSession: KaFirSession,
+    override val lazyFirSymbol: Lazy<FirRegularClassSymbol>,
 ) : KaFirNamedClassSymbolBase<PsiClass>() {
+    constructor(
+        backingPsi: PsiClass,
+        analysisSession: KaFirSession,
+        firSymbol: FirRegularClassSymbol? = null,
+    ) : this(
+        backingPsi = backingPsi,
+        analysisSession = analysisSession,
+        lazyFirSymbol = firSymbol?.let(::lazyOf) ?: lazyPub {
+            backingPsi.resolveToFirSymbol(analysisSession.resolutionFacade)
+        }
+    )
+
     /**
      * [javaClass] is used to defer some properties to the compiler's view of a Java class.
      */
@@ -134,10 +150,6 @@ internal class KaFirPsiJavaClassSymbol(
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Slow Operations (requiring access to the underlying FIR class symbol)
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    override val lazyFirSymbol: Lazy<FirRegularClassSymbol> = lazyPub {
-        backingPsi.resolveToFirSymbol(analysisSession.resolutionFacade)
-    }
-
     override val annotations: KaAnnotationList
         get() = withValidityAssertion {
             if (hasAnnotations) KaFirAnnotationListForDeclaration.create(firSymbol, builder)
