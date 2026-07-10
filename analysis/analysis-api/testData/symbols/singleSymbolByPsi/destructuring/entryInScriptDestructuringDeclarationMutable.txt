@@ -1,10 +1,12 @@
 KaKotlinPropertySymbol:
+  anchorPsi: KtDestructuringDeclarationEntry
   annotations: []
   backingFieldSymbol: null
   callableId: /a
   contextParameters: []
   contextReceivers: []
   getter: KaPropertyGetterSymbol:
+    anchorPsi: KtDestructuringDeclarationEntry
     annotations: []
     callableId: null
     contextParameters: []
@@ -64,6 +66,7 @@ KaKotlinPropertySymbol:
     typeArguments: []
     type: kotlin/Int
   setter: KaPropertySetterSymbol:
+    anchorPsi: KtDestructuringDeclarationEntry
     annotations: []
     callableId: null
     contextParameters: []
@@ -81,6 +84,7 @@ KaKotlinPropertySymbol:
     modality: FINAL
     origin: SOURCE
     parameter: KaValueParameterSymbol:
+      anchorPsi: KtDestructuringDeclarationEntry
       annotations: []
       callableId: null
       contextParameters: []
@@ -127,6 +131,7 @@ KaKotlinPropertySymbol:
     typeParameters: []
     valueParameters: [
       KaValueParameterSymbol:
+        anchorPsi: KtDestructuringDeclarationEntry
         annotations: []
         callableId: null
         contextParameters: []

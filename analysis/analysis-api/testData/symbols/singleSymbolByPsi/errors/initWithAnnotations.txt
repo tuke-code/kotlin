@@ -1,4 +1,5 @@
 KaClassInitializerSymbol:
+  anchorPsi: KtClassInitializer
   annotations: [
     low/Anno(position = "init annotation: 0")
       psi: KtAnnotationEntry

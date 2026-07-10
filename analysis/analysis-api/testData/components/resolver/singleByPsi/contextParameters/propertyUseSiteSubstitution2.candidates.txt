@@ -4,6 +4,7 @@ KtNameReferenceExpression(170,173): 'foo'
       contextArguments = [
         KaImplicitReceiverValue:
           symbol = KaReceiverParameterSymbol:
+            anchorPsi: KtTypeReference
             annotations: []
             callableId: null
             contextParameters: []
@@ -33,6 +34,7 @@ KtNameReferenceExpression(170,173): 'foo'
       ]
       dispatchReceiver = KaImplicitReceiverValue:
         symbol = KaReceiverParameterSymbol:
+          anchorPsi: KtFunctionLiteral
           annotations: []
           callableId: null
           contextParameters: []

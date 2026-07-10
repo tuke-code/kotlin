@@ -1,4 +1,5 @@
 KaConstructorSymbol:
+  anchorPsi: KtTypeAlias
   annotations: []
   callableId: null
   containingClassId: two/SimpleTypeAlias

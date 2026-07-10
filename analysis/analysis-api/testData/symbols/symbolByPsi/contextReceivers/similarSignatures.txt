@@ -1,4 +1,5 @@
 KaNamedClassSymbol:
+  anchorPsi: KtClass
   annotations: []
   classId: A
   classKind: CLASS
@@ -32,6 +33,7 @@ KaNamedClassSymbol:
   importableFqName: A
 
 KaNamedClassSymbol:
+  anchorPsi: KtClass
   annotations: []
   classId: B
   classKind: CLASS
@@ -65,10 +67,12 @@ KaNamedClassSymbol:
   importableFqName: B
 
 KaNamedFunctionSymbol:
+  anchorPsi: KtNamedFunction
   annotations: []
   callableId: /tooo
   contextParameters: [
     KaContextParameterSymbol:
+      anchorPsi: KtContextReceiver
       annotations: []
       callableId: null
       contextParameters: []
@@ -145,10 +149,12 @@ KaNamedFunctionSymbol:
   importableFqName: tooo
 
 KaNamedFunctionSymbol:
+  anchorPsi: KtNamedFunction
   annotations: []
   callableId: /tooo
   contextParameters: [
     KaContextParameterSymbol:
+      anchorPsi: KtContextReceiver
       annotations: []
       callableId: null
       contextParameters: []
@@ -225,10 +231,12 @@ KaNamedFunctionSymbol:
   importableFqName: tooo
 
 KaNamedFunctionSymbol:
+  anchorPsi: KtNamedFunction
   annotations: []
   callableId: /tooo
   contextParameters: [
     KaContextParameterSymbol:
+      anchorPsi: KtContextReceiver
       annotations: []
       callableId: null
       contextParameters: []
@@ -259,6 +267,7 @@ KaNamedFunctionSymbol:
       deprecation: null
       importableFqName: null
     KaContextParameterSymbol:
+      anchorPsi: KtContextReceiver
       annotations: []
       callableId: null
       contextParameters: []
@@ -341,10 +350,12 @@ KaNamedFunctionSymbol:
   importableFqName: tooo
 
 KaNamedFunctionSymbol:
+  anchorPsi: KtNamedFunction
   annotations: []
   callableId: /tooo
   contextParameters: [
     KaContextParameterSymbol:
+      anchorPsi: KtContextReceiver
       annotations: []
       callableId: null
       contextParameters: []
@@ -375,6 +386,7 @@ KaNamedFunctionSymbol:
       deprecation: null
       importableFqName: null
     KaContextParameterSymbol:
+      anchorPsi: KtContextReceiver
       annotations: []
       callableId: null
       contextParameters: []

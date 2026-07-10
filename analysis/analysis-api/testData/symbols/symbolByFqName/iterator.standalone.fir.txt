@@ -1,4 +1,5 @@
 KaNamedClassSymbol:
+  anchorPsi: null
   annotations: []
   classId: kotlin/collections/Iterator
   classKind: INTERFACE
@@ -25,6 +26,7 @@ KaNamedClassSymbol:
   ]
   typeParameters: [
     KaTypeParameterSymbol:
+      anchorPsi: null
       annotations: []
       isActual: false
       isExpect: false

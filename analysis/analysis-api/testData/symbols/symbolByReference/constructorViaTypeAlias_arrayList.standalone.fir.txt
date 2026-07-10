@@ -1,4 +1,5 @@
 KaConstructorSymbol:
+  anchorPsi: null
   annotations: []
   callableId: null
   containingClassId: kotlin/collections/ArrayList
@@ -27,6 +28,7 @@ KaConstructorSymbol:
     type: {kotlin/collections/ArrayList<E>=} java/util/ArrayList<E>
   typeParameters: [
     KaTypeParameterSymbol:
+      anchorPsi: null
       annotations: []
       isActual: false
       isExpect: false
@@ -48,6 +50,7 @@ KaConstructorSymbol:
   ]
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsClassImpl
       annotations: []
       callableId: null
       contextParameters: []

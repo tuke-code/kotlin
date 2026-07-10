@@ -1,4 +1,5 @@
 KaTypeParameterSymbol:
+  anchorPsi: KtTypeParameter
   annotations: [
     org/jetbrains/annotations/NotNull()
       psi: KtAnnotationEntry
@@ -22,6 +23,7 @@ KaTypeParameterSymbol:
   importableFqName: null
 
 KaTypeParameterSymbol:
+  anchorPsi: KtTypeParameter
   annotations: []
   isActual: false
   isExpect: false
@@ -42,6 +44,7 @@ KaTypeParameterSymbol:
   importableFqName: null
 
 KaNamedClassSymbol:
+  anchorPsi: KtClass
   annotations: []
   classId: A
   classKind: CLASS
@@ -68,6 +71,7 @@ KaNamedClassSymbol:
   ]
   typeParameters: [
     KaTypeParameterSymbol:
+      anchorPsi: KtTypeParameter
       annotations: [
         org/jetbrains/annotations/NotNull()
           psi: KtAnnotationEntry
@@ -90,6 +94,7 @@ KaNamedClassSymbol:
       deprecation: null
       importableFqName: null
     KaTypeParameterSymbol:
+      anchorPsi: KtTypeParameter
       annotations: []
       isActual: false
       isExpect: false

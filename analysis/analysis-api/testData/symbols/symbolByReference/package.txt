@@ -1,4 +1,5 @@
 KaPackageSymbol:
+  anchorPsi: PsiPackage(one.two)
   fqName: one.two
   location: TOP_LEVEL
   origin: SOURCE

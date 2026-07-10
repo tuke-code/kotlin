@@ -1,4 +1,5 @@
 KaFileSymbol:
+  anchorPsi: KtFile
   annotations: []
   location: TOP_LEVEL
   origin: SOURCE

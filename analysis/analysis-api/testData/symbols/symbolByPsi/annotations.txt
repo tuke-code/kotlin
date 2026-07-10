@@ -1,4 +1,5 @@
 KaConstructorSymbol:
+  anchorPsi: KtPrimaryConstructor
   annotations: []
   callableId: null
   containingClassId: Anno
@@ -24,6 +25,7 @@ KaConstructorSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: KtParameter
       annotations: []
       callableId: null
       contextParameters: []
@@ -61,6 +63,7 @@ KaConstructorSymbol:
       deprecation: null
       importableFqName: null
     KaValueParameterSymbol:
+      anchorPsi: KtParameter
       annotations: []
       callableId: null
       contextParameters: []
@@ -106,6 +109,7 @@ KaConstructorSymbol:
   importableFqName: Anno
 
 KaNamedClassSymbol:
+  anchorPsi: KtClass
   annotations: []
   classId: Anno
   classKind: ANNOTATION_CLASS
@@ -139,6 +143,7 @@ KaNamedClassSymbol:
   importableFqName: Anno
 
 KaNamedFunctionSymbol:
+  anchorPsi: KtNamedFunction
   annotations: [
     Anno(param1 = "funparam", param2 = 3)
       psi: KtAnnotationEntry
@@ -188,6 +193,7 @@ KaNamedFunctionSymbol:
   importableFqName: null
 
 KaNamedClassSymbol:
+  anchorPsi: KtClass
   annotations: [
     Anno(param1 = "param", param2 = 2)
       psi: KtAnnotationEntry

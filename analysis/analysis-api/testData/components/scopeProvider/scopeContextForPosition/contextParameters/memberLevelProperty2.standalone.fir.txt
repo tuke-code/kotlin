@@ -41,6 +41,7 @@ scopes:
     classifiers: 0
     callables: 1
       KaContextParameterSymbol:
+        anchorPsi: KtParameter
         annotations: []
         callableId: null
         contextParameters: []
@@ -72,8 +73,10 @@ scopes:
     classifiers: 0
     callables: 4
       KaKotlinPropertySymbol:
+        anchorPsi: KtProperty
         annotations: []
         backingFieldSymbol: KaBackingFieldSymbol:
+          anchorPsi: KtProperty
           annotations: []
           callableId: null
           contextParameters: []
@@ -103,6 +106,7 @@ scopes:
         callableId: one/B.foo
         contextParameters: [
           KaContextParameterSymbol:
+            anchorPsi: KtParameter
             annotations: []
             callableId: null
             contextParameters: []
@@ -128,6 +132,7 @@ scopes:
             typeParameters: []
             visibility: PUBLIC
           KaContextParameterSymbol:
+            anchorPsi: KtParameter
             annotations: []
             callableId: null
             contextParameters: []
@@ -168,6 +173,7 @@ scopes:
               type: kotlin/Int
         ]
         getter: KaPropertyGetterSymbol:
+          anchorPsi: KtPropertyAccessor
           annotations: []
           callableId: null
           contextParameters: []
@@ -225,6 +231,7 @@ scopes:
         typeParameters: []
         visibility: PUBLIC
       KaNamedFunctionSymbol:
+        anchorPsi: null
         annotations: []
         callableId: kotlin/Any.equals
         contextParameters: []
@@ -258,6 +265,7 @@ scopes:
         typeParameters: []
         valueParameters: [
           KaValueParameterSymbol:
+            anchorPsi: null
             annotations: []
             callableId: null
             contextParameters: []
@@ -292,6 +300,7 @@ scopes:
         ]
         visibility: PUBLIC
       KaNamedFunctionSymbol:
+        anchorPsi: null
         annotations: []
         callableId: kotlin/Any.hashCode
         contextParameters: []
@@ -326,6 +335,7 @@ scopes:
         valueParameters: []
         visibility: PUBLIC
       KaNamedFunctionSymbol:
+        anchorPsi: null
         annotations: []
         callableId: kotlin/Any.toString
         contextParameters: []
@@ -361,6 +371,7 @@ scopes:
         visibility: PUBLIC
     constructors: 1
       KaConstructorSymbol:
+        anchorPsi: KtClass
         annotations: []
         callableId: null
         containingClassId: one/B
@@ -397,6 +408,7 @@ scopes:
     packages: 0
     classifiers: 2
       KaNamedClassSymbol:
+        anchorPsi: KtClass
         annotations: []
         classId: one/A
         classKind: CLASS
@@ -424,6 +436,7 @@ scopes:
         typeParameters: []
         visibility: PUBLIC
       KaNamedClassSymbol:
+        anchorPsi: KtClass
         annotations: []
         classId: one/B
         classKind: CLASS

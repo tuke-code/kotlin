@@ -1,4 +1,5 @@
 KaNamedFunctionSymbol:
+  anchorPsi: KtClass
   annotations: []
   callableId: test/MyClass.materialize
   contextParameters: []

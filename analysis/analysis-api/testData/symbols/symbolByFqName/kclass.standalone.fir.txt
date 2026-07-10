@@ -1,4 +1,5 @@
 KaNamedClassSymbol:
+  anchorPsi: null
   annotations: []
   classId: kotlin/reflect/KClass
   classKind: INTERFACE
@@ -33,6 +34,7 @@ KaNamedClassSymbol:
   ]
   typeParameters: [
     KaTypeParameterSymbol:
+      anchorPsi: null
       annotations: []
       isActual: false
       isExpect: false

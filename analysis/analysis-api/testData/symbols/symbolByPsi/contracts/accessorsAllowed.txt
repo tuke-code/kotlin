@@ -1,4 +1,5 @@
 KaAnonymousFunctionSymbol:
+  anchorPsi: KtFunctionLiteral
   annotations: []
   callableId: null
   contextParameters: []
@@ -15,6 +16,7 @@ KaAnonymousFunctionSymbol:
   psi: KtFunctionLiteral
   realPsi: KtFunctionLiteral
   receiverParameter: KaReceiverParameterSymbol:
+    anchorPsi: KtFunctionLiteral
     annotations: []
     callableId: null
     contextParameters: []
@@ -59,6 +61,7 @@ KaAnonymousFunctionSymbol:
   importableFqName: null
 
 KaAnonymousFunctionSymbol:
+  anchorPsi: KtFunctionLiteral
   annotations: []
   callableId: null
   contextParameters: []
@@ -75,6 +78,7 @@ KaAnonymousFunctionSymbol:
   psi: KtFunctionLiteral
   realPsi: KtFunctionLiteral
   receiverParameter: KaReceiverParameterSymbol:
+    anchorPsi: KtFunctionLiteral
     annotations: []
     callableId: null
     contextParameters: []
@@ -119,8 +123,10 @@ KaAnonymousFunctionSymbol:
   importableFqName: null
 
 KaKotlinPropertySymbol:
+  anchorPsi: KtProperty
   annotations: []
   backingFieldSymbol: KaBackingFieldSymbol:
+    anchorPsi: KtProperty
     annotations: []
     callableId: null
     contextParameters: []
@@ -156,6 +162,7 @@ KaKotlinPropertySymbol:
   contextParameters: []
   contextReceivers: []
   getter: KaPropertyGetterSymbol:
+    anchorPsi: KtPropertyAccessor
     annotations: []
     callableId: null
     contextParameters: []
@@ -175,6 +182,7 @@ KaKotlinPropertySymbol:
     psi: KtPropertyAccessor
     realPsi: KtPropertyAccessor
     receiverParameter: KaReceiverParameterSymbol:
+      anchorPsi: KtTypeReference
       annotations: []
       callableId: null
       contextParameters: []
@@ -240,6 +248,7 @@ KaKotlinPropertySymbol:
   psi: KtProperty
   realPsi: KtProperty
   receiverParameter: KaReceiverParameterSymbol:
+    anchorPsi: KtTypeReference
     annotations: []
     callableId: null
     contextParameters: []
@@ -275,6 +284,7 @@ KaKotlinPropertySymbol:
     typeArguments: []
     type: kotlin/Int?
   setter: KaPropertySetterSymbol:
+    anchorPsi: KtPropertyAccessor
     annotations: []
     callableId: null
     contextParameters: []
@@ -292,6 +302,7 @@ KaKotlinPropertySymbol:
     modality: FINAL
     origin: SOURCE
     parameter: KaValueParameterSymbol:
+      anchorPsi: KtParameter
       annotations: []
       callableId: null
       contextParameters: []
@@ -331,6 +342,7 @@ KaKotlinPropertySymbol:
     psi: KtPropertyAccessor
     realPsi: KtPropertyAccessor
     receiverParameter: KaReceiverParameterSymbol:
+      anchorPsi: KtTypeReference
       annotations: []
       callableId: null
       contextParameters: []
@@ -368,6 +380,7 @@ KaKotlinPropertySymbol:
     typeParameters: []
     valueParameters: [
       KaValueParameterSymbol:
+        anchorPsi: KtParameter
         annotations: []
         callableId: null
         contextParameters: []
@@ -423,6 +436,7 @@ KaKotlinPropertySymbol:
   importableFqName: prop
 
 KaNamedClassSymbol:
+  anchorPsi: KtClass
   annotations: []
   classId: Status.Ok
   classKind: CLASS
@@ -456,6 +470,7 @@ KaNamedClassSymbol:
   importableFqName: Status.Ok
 
 KaConstructorSymbol:
+  anchorPsi: KtPrimaryConstructor
   annotations: []
   callableId: null
   containingClassId: Status.Error
@@ -481,6 +496,7 @@ KaConstructorSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: KtParameter
       annotations: []
       callableId: null
       contextParameters: []
@@ -526,6 +542,7 @@ KaConstructorSymbol:
   importableFqName: Status.Error
 
 KaNamedClassSymbol:
+  anchorPsi: KtClass
   annotations: []
   classId: Status.Error
   classKind: CLASS
@@ -559,6 +576,7 @@ KaNamedClassSymbol:
   importableFqName: Status.Error
 
 KaNamedClassSymbol:
+  anchorPsi: KtClass
   annotations: []
   classId: Status
   classKind: CLASS
@@ -592,6 +610,7 @@ KaNamedClassSymbol:
   importableFqName: Status
 
 KaAnonymousFunctionSymbol:
+  anchorPsi: KtFunctionLiteral
   annotations: []
   callableId: null
   contextParameters: []
@@ -608,6 +627,7 @@ KaAnonymousFunctionSymbol:
   psi: KtFunctionLiteral
   realPsi: KtFunctionLiteral
   receiverParameter: KaReceiverParameterSymbol:
+    anchorPsi: KtFunctionLiteral
     annotations: []
     callableId: null
     contextParameters: []
@@ -652,8 +672,10 @@ KaAnonymousFunctionSymbol:
   importableFqName: null
 
 KaKotlinPropertySymbol:
+  anchorPsi: KtProperty
   annotations: []
   backingFieldSymbol: KaBackingFieldSymbol:
+    anchorPsi: KtProperty
     annotations: []
     callableId: null
     contextParameters: []
@@ -689,6 +711,7 @@ KaKotlinPropertySymbol:
   contextParameters: []
   contextReceivers: []
   getter: KaPropertyGetterSymbol:
+    anchorPsi: KtPropertyAccessor
     annotations: []
     callableId: null
     contextParameters: []
@@ -708,6 +731,7 @@ KaKotlinPropertySymbol:
     psi: KtPropertyAccessor
     realPsi: KtPropertyAccessor
     receiverParameter: KaReceiverParameterSymbol:
+      anchorPsi: KtTypeReference
       annotations: []
       callableId: null
       contextParameters: []
@@ -773,6 +797,7 @@ KaKotlinPropertySymbol:
   psi: KtProperty
   realPsi: KtProperty
   receiverParameter: KaReceiverParameterSymbol:
+    anchorPsi: KtTypeReference
     annotations: []
     callableId: null
     contextParameters: []
@@ -820,6 +845,7 @@ KaKotlinPropertySymbol:
   importableFqName: isError
 
 KaAnonymousFunctionSymbol:
+  anchorPsi: KtFunctionLiteral
   annotations: []
   callableId: null
   contextParameters: []
@@ -836,6 +862,7 @@ KaAnonymousFunctionSymbol:
   psi: KtFunctionLiteral
   realPsi: KtFunctionLiteral
   receiverParameter: KaReceiverParameterSymbol:
+    anchorPsi: KtFunctionLiteral
     annotations: []
     callableId: null
     contextParameters: []
@@ -880,8 +907,10 @@ KaAnonymousFunctionSymbol:
   importableFqName: null
 
 KaKotlinPropertySymbol:
+  anchorPsi: KtProperty
   annotations: []
   backingFieldSymbol: KaBackingFieldSymbol:
+    anchorPsi: KtProperty
     annotations: []
     callableId: null
     contextParameters: []
@@ -916,6 +945,7 @@ KaKotlinPropertySymbol:
   callableId: /isContextError
   contextParameters: [
     KaContextParameterSymbol:
+      anchorPsi: KtParameter
       annotations: []
       callableId: null
       contextParameters: []
@@ -955,6 +985,7 @@ KaKotlinPropertySymbol:
         type: Status
   ]
   getter: KaPropertyGetterSymbol:
+    anchorPsi: KtPropertyAccessor
     annotations: []
     callableId: null
     contextParameters: []

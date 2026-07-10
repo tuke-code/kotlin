@@ -11,6 +11,7 @@ scopes:
     packages: 0
     classifiers: 1
       KaNamedClassSymbol:
+        anchorPsi: KtClass
         annotations: [
           <error>()
             psi: KtAnnotationEntry

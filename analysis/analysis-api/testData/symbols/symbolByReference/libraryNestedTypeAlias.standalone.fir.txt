@@ -1,4 +1,5 @@
 KaTypeAliasSymbol:
+  anchorPsi: null
   annotations: []
   classId: Foo.TA
   expandedType: KaUsualClassType:

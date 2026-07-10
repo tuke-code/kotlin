@@ -1,10 +1,12 @@
 KaSyntheticJavaPropertySymbol:
+  anchorPsi: null
   annotations: []
   backingFieldSymbol: null
   callableId: /JavaClass.count
   contextParameters: []
   contextReceivers: []
   getter: KaPropertyGetterSymbol:
+    anchorPsi: PsiMethodImpl
     annotations: []
     callableId: /JavaClass.getCount
     contextParameters: []
@@ -67,6 +69,7 @@ KaSyntheticJavaPropertySymbol:
     typeArguments: []
     type: kotlin/Int
   setter: KaPropertySetterSymbol:
+    anchorPsi: PsiMethodImpl
     annotations: []
     callableId: /JavaClass.setCount
     contextParameters: []
@@ -84,6 +87,7 @@ KaSyntheticJavaPropertySymbol:
     modality: OPEN
     origin: JAVA_SYNTHETIC_PROPERTY
     parameter: KaValueParameterSymbol:
+      anchorPsi: PsiParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -130,6 +134,7 @@ KaSyntheticJavaPropertySymbol:
     typeParameters: []
     valueParameters: [
       KaValueParameterSymbol:
+        anchorPsi: PsiParameterImpl
         annotations: []
         callableId: null
         contextParameters: []

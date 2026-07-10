@@ -1,10 +1,12 @@
 KaKotlinPropertySymbol:
+  anchorPsi: KtScriptInitializer
   annotations: []
   backingFieldSymbol: null
   callableId: /$$result
   contextParameters: []
   contextReceivers: []
   getter: KaPropertyGetterSymbol:
+    anchorPsi: KtScriptInitializer
     annotations: []
     callableId: null
     contextParameters: []

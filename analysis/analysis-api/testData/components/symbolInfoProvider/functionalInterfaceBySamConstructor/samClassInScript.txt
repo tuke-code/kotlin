@@ -1,5 +1,6 @@
 CONSTRUCTOR:
   KaSamConstructorSymbol:
+  anchorPsi: KtClass
   annotations: []
   callableId: /IntPredicate
   contextParameters: []
@@ -35,6 +36,7 @@ CONSTRUCTOR:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: null
       annotations: []
       callableId: null
       contextParameters: []
@@ -195,6 +197,7 @@ CONSTRUCTOR:
 
 FUNCTIONAL INTERFACE:
   KaNamedClassSymbol:
+  anchorPsi: KtClass
   annotations: []
   classId: IntPredicate
   classKind: INTERFACE

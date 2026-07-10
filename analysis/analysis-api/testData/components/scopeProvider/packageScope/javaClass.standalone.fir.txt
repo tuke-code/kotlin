@@ -1,4 +1,5 @@
 KaNamedClassSymbol:
+  anchorPsi: KtClass
   annotations: []
   classId: test/KotlinClass
   classKind: CLASS
@@ -32,6 +33,7 @@ KaNamedClassSymbol:
   importableFqName: test.KotlinClass
 
 KaNamedClassSymbol:
+  anchorPsi: PsiClassImpl
   annotations: []
   classId: test/SuperClass
   classKind: CLASS
@@ -69,6 +71,7 @@ KaNamedClassSymbol:
   importableFqName: test.SuperClass
 
 KaNamedClassSymbol:
+  anchorPsi: PsiClassImpl
   annotations: []
   classId: test/JavaClass
   classKind: CLASS

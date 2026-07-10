@@ -1,4 +1,5 @@
 KaPropertyGetterSymbol:
+  anchorPsi: KtPropertyAccessor
   annotations: [
     GetAnnotation()
       psi: KtAnnotationEntry

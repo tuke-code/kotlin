@@ -32,6 +32,9 @@ internal class KaFirPackageSymbol(
             ?: KtPackage(PsiManager.getInstance(project), fqName, GlobalSearchScope.allScope(project)/*TODO*/)
     }
 
+    override val anchorPsi: PsiElement?
+        get() = realPsi
+
     override val psi: PsiElement?
         get() = realPsi
 

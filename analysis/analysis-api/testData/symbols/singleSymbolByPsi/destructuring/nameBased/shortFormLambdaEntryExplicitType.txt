@@ -1,4 +1,5 @@
 KaLocalVariableSymbol:
+  anchorPsi: KtDestructuringDeclarationEntry
   annotations: []
   callableId: null
   contextParameters: []

@@ -1,6 +1,7 @@
 packages: 0
 classifiers: 1
   KaNamedClassSymbol:
+    anchorPsi: null
     annotations: []
     classId: foo/AllOpenGenerated
     classKind: CLASS

@@ -1,5 +1,6 @@
 Resolved constructor:
   KaConstructorSymbol:
+    anchorPsi: KtClass
     annotations: []
     callableId: null
     containingClassId: test/MyClass

@@ -627,6 +627,7 @@ KtThisExpression(651,655): 'this'
   KaSymbolResolutionSuccess:
     symbols = [
       KaReceiverParameterSymbol:
+        anchorPsi: KtTypeReference
         annotations: []
         callableId: null
         contextParameters: []
@@ -660,6 +661,7 @@ KtNameReferenceExpression(651,655): 'this'
   KaSymbolResolutionSuccess:
     symbols = [
       KaReceiverParameterSymbol:
+        anchorPsi: KtTypeReference
         annotations: []
         callableId: null
         contextParameters: []
@@ -714,6 +716,7 @@ KtThisExpression(682,691): 'this@anon'
   KaSymbolResolutionSuccess:
     symbols = [
       KaReceiverParameterSymbol:
+        anchorPsi: KtTypeReference
         annotations: []
         callableId: null
         contextParameters: []
@@ -747,6 +750,7 @@ KtNameReferenceExpression(682,686): 'this'
   KaSymbolResolutionSuccess:
     symbols = [
       KaReceiverParameterSymbol:
+        anchorPsi: KtTypeReference
         annotations: []
         callableId: null
         contextParameters: []
@@ -1005,6 +1009,7 @@ KtThisExpression(917,921): 'this'
   KaSymbolResolutionSuccess:
     symbols = [
       KaReceiverParameterSymbol:
+        anchorPsi: KtFunctionLiteral
         annotations: []
         callableId: null
         contextParameters: []
@@ -1038,6 +1043,7 @@ KtNameReferenceExpression(917,921): 'this'
   KaSymbolResolutionSuccess:
     symbols = [
       KaReceiverParameterSymbol:
+        anchorPsi: KtFunctionLiteral
         annotations: []
         callableId: null
         contextParameters: []
@@ -1092,6 +1098,7 @@ KtThisExpression(948,959): 'this@myWith'
   KaSymbolResolutionSuccess:
     symbols = [
       KaReceiverParameterSymbol:
+        anchorPsi: KtFunctionLiteral
         annotations: []
         callableId: null
         contextParameters: []
@@ -1125,6 +1132,7 @@ KtNameReferenceExpression(948,952): 'this'
   KaSymbolResolutionSuccess:
     symbols = [
       KaReceiverParameterSymbol:
+        anchorPsi: KtFunctionLiteral
         annotations: []
         callableId: null
         contextParameters: []
@@ -1371,6 +1379,7 @@ KtThisExpression(1160,1170): 'this@label'
   KaSymbolResolutionSuccess:
     symbols = [
       KaReceiverParameterSymbol:
+        anchorPsi: KtFunctionLiteral
         annotations: []
         callableId: null
         contextParameters: []
@@ -1404,6 +1413,7 @@ KtNameReferenceExpression(1160,1164): 'this'
   KaSymbolResolutionSuccess:
     symbols = [
       KaReceiverParameterSymbol:
+        anchorPsi: KtFunctionLiteral
         annotations: []
         callableId: null
         contextParameters: []
@@ -1602,6 +1612,7 @@ KtThisExpression(1277,1281): 'this'
   KaSymbolResolutionSuccess:
     symbols = [
       KaReceiverParameterSymbol:
+        anchorPsi: KtTypeReference
         annotations: []
         callableId: null
         contextParameters: []
@@ -1634,6 +1645,7 @@ KtNameReferenceExpression(1277,1281): 'this'
   KaSymbolResolutionSuccess:
     symbols = [
       KaReceiverParameterSymbol:
+        anchorPsi: KtTypeReference
         annotations: []
         callableId: null
         contextParameters: []

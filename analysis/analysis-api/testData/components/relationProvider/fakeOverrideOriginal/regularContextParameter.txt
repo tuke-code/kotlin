@@ -1,6 +1,7 @@
 IS_THE_SAME_SYMBOL: true
 FAKE_OVERRIDE_ORIGINAL:
   KaContextParameterSymbol:
+    anchorPsi: KtParameter
     annotations: []
     callableId: null
     contextParameters: []

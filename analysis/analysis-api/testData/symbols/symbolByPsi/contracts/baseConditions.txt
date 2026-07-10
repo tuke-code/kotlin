@@ -1,4 +1,5 @@
 KaAnonymousFunctionSymbol:
+  anchorPsi: KtFunctionLiteral
   annotations: []
   callableId: null
   contextParameters: []
@@ -15,6 +16,7 @@ KaAnonymousFunctionSymbol:
   psi: KtFunctionLiteral
   realPsi: KtFunctionLiteral
   receiverParameter: KaReceiverParameterSymbol:
+    anchorPsi: KtFunctionLiteral
     annotations: []
     callableId: null
     contextParameters: []
@@ -59,6 +61,7 @@ KaAnonymousFunctionSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: KtNamedFunction
   annotations: []
   callableId: /decode
   contextParameters: []
@@ -73,6 +76,7 @@ KaNamedFunctionSymbol:
             KaContractExplicitParameterValue:
               symbol:
                 KaValueParameterSymbol:
+                  anchorPsi: KtParameter
                   annotations: []
                   callableId: null
                   contextParameters: []
@@ -139,6 +143,7 @@ KaNamedFunctionSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: KtParameter
       annotations: []
       callableId: null
       contextParameters: []
@@ -186,6 +191,7 @@ KaNamedFunctionSymbol:
   importableFqName: decode
 
 KaAnonymousFunctionSymbol:
+  anchorPsi: KtFunctionLiteral
   annotations: []
   callableId: null
   contextParameters: []
@@ -202,6 +208,7 @@ KaAnonymousFunctionSymbol:
   psi: KtFunctionLiteral
   realPsi: KtFunctionLiteral
   receiverParameter: KaReceiverParameterSymbol:
+    anchorPsi: KtFunctionLiteral
     annotations: []
     callableId: null
     contextParameters: []
@@ -246,6 +253,7 @@ KaAnonymousFunctionSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: KtNamedFunction
   annotations: []
   callableId: /decodeFake
   contextParameters: []
@@ -260,6 +268,7 @@ KaNamedFunctionSymbol:
             KaContractExplicitParameterValue:
               symbol:
                 KaValueParameterSymbol:
+                  anchorPsi: KtParameter
                   annotations: []
                   callableId: null
                   contextParameters: []
@@ -326,6 +335,7 @@ KaNamedFunctionSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: KtParameter
       annotations: []
       callableId: null
       contextParameters: []
@@ -373,6 +383,7 @@ KaNamedFunctionSymbol:
   importableFqName: decodeFake
 
 KaAnonymousFunctionSymbol:
+  anchorPsi: KtFunctionLiteral
   annotations: []
   callableId: null
   contextParameters: []
@@ -389,6 +400,7 @@ KaAnonymousFunctionSymbol:
   psi: KtFunctionLiteral
   realPsi: KtFunctionLiteral
   receiverParameter: KaReceiverParameterSymbol:
+    anchorPsi: KtFunctionLiteral
     annotations: []
     callableId: null
     contextParameters: []
@@ -433,6 +445,7 @@ KaAnonymousFunctionSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: KtNamedFunction
   annotations: []
   callableId: /decodeIfString
   contextParameters: []
@@ -447,6 +460,7 @@ KaNamedFunctionSymbol:
             KaContractExplicitParameterValue:
               symbol:
                 KaValueParameterSymbol:
+                  anchorPsi: KtParameter
                   annotations: []
                   callableId: null
                   contextParameters: []
@@ -518,6 +532,7 @@ KaNamedFunctionSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: KtParameter
       annotations: []
       callableId: null
       contextParameters: []
@@ -565,6 +580,7 @@ KaNamedFunctionSymbol:
   importableFqName: decodeIfString
 
 KaAnonymousFunctionSymbol:
+  anchorPsi: KtFunctionLiteral
   annotations: []
   callableId: null
   contextParameters: []
@@ -581,6 +597,7 @@ KaAnonymousFunctionSymbol:
   psi: KtFunctionLiteral
   realPsi: KtFunctionLiteral
   receiverParameter: KaReceiverParameterSymbol:
+    anchorPsi: KtFunctionLiteral
     annotations: []
     callableId: null
     contextParameters: []
@@ -625,6 +642,7 @@ KaAnonymousFunctionSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: KtNamedFunction
   annotations: []
   callableId: /decodeNotNumber
   contextParameters: []
@@ -639,6 +657,7 @@ KaNamedFunctionSymbol:
             KaContractExplicitParameterValue:
               symbol:
                 KaValueParameterSymbol:
+                  anchorPsi: KtParameter
                   annotations: []
                   callableId: null
                   contextParameters: []
@@ -710,6 +729,7 @@ KaNamedFunctionSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: KtParameter
       annotations: []
       callableId: null
       contextParameters: []

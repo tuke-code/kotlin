@@ -1,8 +1,10 @@
 IS_THE_SAME_SYMBOL: true
 FAKE_OVERRIDE_ORIGINAL:
   KaKotlinPropertySymbol:
+    anchorPsi: KtParameter
     annotations: []
     backingFieldSymbol: KaBackingFieldSymbol:
+      anchorPsi: KtParameter
       annotations: []
       callableId: null
       contextParameters: []
@@ -33,6 +35,7 @@ FAKE_OVERRIDE_ORIGINAL:
     contextParameters: []
     contextReceivers: []
     getter: KaPropertyGetterSymbol:
+      anchorPsi: KtParameter
       annotations: []
       callableId: null
       contextParameters: []
@@ -79,6 +82,7 @@ FAKE_OVERRIDE_ORIGINAL:
     name: xx
     origin: SOURCE
     primaryConstructorParameter: KaValueParameterSymbol:
+      anchorPsi: KtParameter
       annotations: []
       callableId: null
       contextParameters: []

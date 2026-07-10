@@ -1,5 +1,6 @@
 CLASS:
   KaNamedClassSymbol:
+  anchorPsi: KtClass
   annotations: []
   classId: GenericPredicate
   classKind: INTERFACE
@@ -37,6 +38,7 @@ CLASS:
   ]
   typeParameters: [
     KaTypeParameterSymbol:
+      anchorPsi: KtTypeParameter
       annotations: []
       isActual: false
       isExpect: false
@@ -65,6 +67,7 @@ CLASS:
 
 FUNCTIONAL INTERFACE FUNCTION:
   KaNamedFunctionSymbol:
+  anchorPsi: KtNamedFunction
   annotations: []
   callableId: /GenericPredicate.test
   contextParameters: []
@@ -109,6 +112,7 @@ FUNCTIONAL INTERFACE FUNCTION:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: KtParameter
       annotations: []
       callableId: null
       contextParameters: []
@@ -139,6 +143,7 @@ FUNCTIONAL INTERFACE FUNCTION:
         annotations: []
         name: T
         symbol: KaTypeParameterSymbol:
+          anchorPsi: KtTypeParameter
           annotations: []
           isActual: false
           isExpect: false
@@ -183,6 +188,7 @@ FUNCTIONAL INTERFACE FUNCTION:
             annotations: []
             name: T
             symbol: KaTypeParameterSymbol:
+              anchorPsi: KtTypeParameter
               annotations: []
               isActual: false
               isExpect: false
@@ -213,6 +219,7 @@ FUNCTIONAL INTERFACE FUNCTION:
         annotations: []
         name: T
         symbol: KaTypeParameterSymbol:
+          anchorPsi: KtTypeParameter
           annotations: []
           isActual: false
           isExpect: false

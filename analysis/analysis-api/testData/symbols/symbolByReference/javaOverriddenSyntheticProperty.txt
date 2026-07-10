@@ -1,10 +1,12 @@
 KaSyntheticJavaPropertySymbol:
+  anchorPsi: null
   annotations: []
   backingFieldSymbol: null
   callableId: /JavaClass.foo
   contextParameters: []
   contextReceivers: []
   getter: KaPropertyGetterSymbol:
+    anchorPsi: PsiMethodImpl
     annotations: [
       java/lang/Override()
         psi: null
@@ -27,6 +29,7 @@ KaSyntheticJavaPropertySymbol:
     psi: PsiMethodImpl
     realPsi: null
     receiverParameter: KaReceiverParameterSymbol:
+      anchorPsi: PsiParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -95,6 +98,7 @@ KaSyntheticJavaPropertySymbol:
   psi: null
   realPsi: null
   receiverParameter: KaReceiverParameterSymbol:
+    anchorPsi: PsiParameterImpl
     annotations: []
     callableId: null
     contextParameters: []

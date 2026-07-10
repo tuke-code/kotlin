@@ -1,6 +1,7 @@
 IS_THE_SAME_SYMBOL: true
 FAKE_OVERRIDE_ORIGINAL:
   KaSamConstructorSymbol:
+    anchorPsi: KtClass
     annotations: []
     callableId: test/A
     contextParameters: []
@@ -25,6 +26,7 @@ FAKE_OVERRIDE_ORIGINAL:
     typeParameters: []
     valueParameters: [
       KaValueParameterSymbol:
+        anchorPsi: null
         annotations: []
         callableId: null
         contextParameters: []

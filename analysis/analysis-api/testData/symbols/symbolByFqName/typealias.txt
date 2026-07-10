@@ -1,4 +1,5 @@
 KaTypeAliasSymbol:
+  anchorPsi: KtTypeAlias
   annotations: []
   classId: kotlin/DeepRecursiveFunctionBlock
   expandedType: KaFunctionType:

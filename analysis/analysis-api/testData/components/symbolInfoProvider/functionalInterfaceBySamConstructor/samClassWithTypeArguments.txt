@@ -1,5 +1,6 @@
 CONSTRUCTOR:
   KaSamConstructorSymbol:
+  anchorPsi: KtClass
   annotations: []
   callableId: /Predicate
   contextParameters: []
@@ -31,6 +32,7 @@ CONSTRUCTOR:
             annotations: []
             name: A
             symbol: KaTypeParameterSymbol:
+              anchorPsi: KtTypeParameter
               annotations: []
               isActual: false
               isExpect: false
@@ -61,6 +63,7 @@ CONSTRUCTOR:
         annotations: []
         name: A
         symbol: KaTypeParameterSymbol:
+          anchorPsi: KtTypeParameter
           annotations: []
           isActual: false
           isExpect: false
@@ -88,6 +91,7 @@ CONSTRUCTOR:
     hasFlexibleNullability: false
   typeParameters: [
     KaTypeParameterSymbol:
+      anchorPsi: KtTypeParameter
       annotations: []
       isActual: false
       isExpect: false
@@ -109,6 +113,7 @@ CONSTRUCTOR:
   ]
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: null
       annotations: []
       callableId: null
       contextParameters: []
@@ -149,6 +154,7 @@ CONSTRUCTOR:
             annotations: []
             name: A
             symbol: KaTypeParameterSymbol:
+              anchorPsi: KtTypeParameter
               annotations: []
               isActual: false
               isExpect: false
@@ -184,6 +190,7 @@ CONSTRUCTOR:
                 annotations: []
                 name: A
                 symbol: KaTypeParameterSymbol:
+                  anchorPsi: KtTypeParameter
                   annotations: []
                   isActual: false
                   isExpect: false
@@ -245,6 +252,7 @@ CONSTRUCTOR:
             annotations: []
             name: A
             symbol: KaTypeParameterSymbol:
+              anchorPsi: KtTypeParameter
               annotations: []
               isActual: false
               isExpect: false
@@ -302,6 +310,7 @@ CONSTRUCTOR:
 
 FUNCTIONAL INTERFACE:
   KaNamedClassSymbol:
+  anchorPsi: KtClass
   annotations: []
   classId: Predicate
   classKind: INTERFACE
@@ -339,6 +348,7 @@ FUNCTIONAL INTERFACE:
   ]
   typeParameters: [
     KaTypeParameterSymbol:
+      anchorPsi: KtTypeParameter
       annotations: []
       isActual: false
       isExpect: false

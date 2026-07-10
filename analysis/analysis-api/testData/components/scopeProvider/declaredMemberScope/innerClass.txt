@@ -1,4 +1,5 @@
 KaNamedClassSymbol:
+  anchorPsi: KtClass
   annotations: []
   classId: test/B.InnerClassInB
   classKind: CLASS
@@ -32,6 +33,7 @@ KaNamedClassSymbol:
   importableFqName: test.B.InnerClassInB
 
 KaConstructorSymbol:
+  anchorPsi: KtClass
   annotations: []
   callableId: null
   containingClassId: test/B

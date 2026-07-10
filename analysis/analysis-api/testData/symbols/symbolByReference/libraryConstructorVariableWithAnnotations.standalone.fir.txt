@@ -1,9 +1,11 @@
 KaKotlinPropertySymbol:
+  anchorPsi: null
   annotations: [
     one/Anno()
       psi: null
   ]
   backingFieldSymbol: KaBackingFieldSymbol:
+    anchorPsi: null
     annotations: []
     callableId: null
     contextParameters: []
@@ -43,6 +45,7 @@ KaKotlinPropertySymbol:
   contextParameters: []
   contextReceivers: []
   getter: KaPropertyGetterSymbol:
+    anchorPsi: null
     annotations: [
       one/Anno()
         psi: null
@@ -109,6 +112,7 @@ KaKotlinPropertySymbol:
     typeArguments: []
     type: kotlin/Long
   setter: KaPropertySetterSymbol:
+    anchorPsi: null
     annotations: [
       one/Anno()
         psi: null
@@ -129,6 +133,7 @@ KaKotlinPropertySymbol:
     modality: FINAL
     origin: LIBRARY
     parameter: KaValueParameterSymbol:
+      anchorPsi: null
       annotations: [
         one/Anno()
           psi: null
@@ -178,6 +183,7 @@ KaKotlinPropertySymbol:
     typeParameters: []
     valueParameters: [
       KaValueParameterSymbol:
+        anchorPsi: null
         annotations: [
           one/Anno()
             psi: null

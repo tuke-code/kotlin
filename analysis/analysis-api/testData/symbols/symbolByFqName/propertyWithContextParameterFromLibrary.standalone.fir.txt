@@ -1,6 +1,8 @@
 KaKotlinPropertySymbol:
+  anchorPsi: null
   annotations: []
   backingFieldSymbol: KaBackingFieldSymbol:
+    anchorPsi: null
     annotations: []
     callableId: null
     contextParameters: []
@@ -35,6 +37,7 @@ KaKotlinPropertySymbol:
   callableId: one/foo
   contextParameters: [
     KaContextParameterSymbol:
+      anchorPsi: null
       annotations: []
       callableId: null
       contextParameters: []
@@ -65,6 +68,7 @@ KaKotlinPropertySymbol:
       deprecation: null
       importableFqName: null
     KaContextParameterSymbol:
+      anchorPsi: null
       annotations: []
       callableId: null
       contextParameters: []
@@ -110,6 +114,7 @@ KaKotlinPropertySymbol:
         type: kotlin/String
   ]
   getter: KaPropertyGetterSymbol:
+    anchorPsi: null
     annotations: []
     callableId: null
     contextParameters: []

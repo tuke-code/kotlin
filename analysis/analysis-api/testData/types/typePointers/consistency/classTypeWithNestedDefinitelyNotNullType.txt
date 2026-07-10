@@ -17,6 +17,7 @@ KaUsualClassType:
             annotations: []
             name: T1
             symbol: KaTypeParameterSymbol:
+              anchorPsi: KtTypeParameter
               annotations: []
               isActual: false
               isExpect: false
@@ -49,6 +50,7 @@ KaUsualClassType:
         annotations: []
         name: T1
         symbol: KaTypeParameterSymbol:
+          anchorPsi: KtTypeParameter
           annotations: []
           isActual: false
           isExpect: false

@@ -1,4 +1,5 @@
 KaNamedFunctionSymbol:
+  anchorPsi: null
   annotations: []
   callableId: kotlin/collections/listOf
   contextParameters: []
@@ -35,6 +36,7 @@ KaNamedFunctionSymbol:
     type: kotlin/collections/List<T>
   typeParameters: [
     KaTypeParameterSymbol:
+      anchorPsi: null
       annotations: []
       isActual: false
       isExpect: false
@@ -56,6 +58,7 @@ KaNamedFunctionSymbol:
   ]
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: null
       annotations: []
       callableId: null
       contextParameters: []
@@ -102,6 +105,7 @@ KaNamedFunctionSymbol:
   importableFqName: kotlin.collections.listOf
 
 KaNamedFunctionSymbol:
+  anchorPsi: null
   annotations: []
   callableId: kotlin/collections/listOf
   contextParameters: []
@@ -138,6 +142,7 @@ KaNamedFunctionSymbol:
     type: kotlin/collections/List<T>
   typeParameters: [
     KaTypeParameterSymbol:
+      anchorPsi: null
       annotations: []
       isActual: false
       isExpect: false
@@ -159,6 +164,7 @@ KaNamedFunctionSymbol:
   ]
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: null
       annotations: []
       callableId: null
       contextParameters: []
@@ -205,6 +211,7 @@ KaNamedFunctionSymbol:
   importableFqName: kotlin.collections.listOf
 
 KaNamedFunctionSymbol:
+  anchorPsi: null
   annotations: [
     kotlin/internal/InlineOnly()
       psi: null
@@ -244,6 +251,7 @@ KaNamedFunctionSymbol:
     type: kotlin/collections/List<T>
   typeParameters: [
     KaTypeParameterSymbol:
+      anchorPsi: null
       annotations: []
       isActual: false
       isExpect: false

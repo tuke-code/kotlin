@@ -1,4 +1,5 @@
 KaConstructorSymbol:
+  anchorPsi: KtTypeAlias
   annotations: []
   callableId: null
   containingClassId: test/MyAlias
@@ -29,6 +30,7 @@ KaConstructorSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: KtClass
       annotations: []
       callableId: null
       contextParameters: []

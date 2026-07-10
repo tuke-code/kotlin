@@ -31,6 +31,7 @@
     KaSymbolResolutionSuccess:
       symbols = [
         KaReceiverParameterSymbol:
+          anchorPsi: KtTypeReference
           annotations: []
           callableId: null
           contextParameters: []
@@ -63,6 +64,7 @@
     KaSymbolResolutionSuccess:
       symbols = [
         KaReceiverParameterSymbol:
+          anchorPsi: KtTypeReference
           annotations: []
           callableId: null
           contextParameters: []

@@ -40,6 +40,7 @@ scopes:
     classifiers: 0
     callables: 4
       KaNamedFunctionSymbol:
+        anchorPsi: KtNamedFunction
         annotations: []
         callableId: /Foo.Foo.test
         contextParameters: []
@@ -74,6 +75,7 @@ scopes:
         valueParameters: []
         visibility: PUBLIC
       KaNamedFunctionSymbol:
+        anchorPsi: null
         annotations: []
         callableId: kotlin/Any.equals
         contextParameters: []
@@ -107,6 +109,7 @@ scopes:
         typeParameters: []
         valueParameters: [
           KaValueParameterSymbol:
+            anchorPsi: null
             annotations: []
             callableId: null
             contextParameters: []
@@ -141,6 +144,7 @@ scopes:
         ]
         visibility: PUBLIC
       KaNamedFunctionSymbol:
+        anchorPsi: null
         annotations: []
         callableId: kotlin/Any.hashCode
         contextParameters: []
@@ -175,6 +179,7 @@ scopes:
         valueParameters: []
         visibility: PUBLIC
       KaNamedFunctionSymbol:
+        anchorPsi: null
         annotations: []
         callableId: kotlin/Any.toString
         contextParameters: []
@@ -210,6 +215,7 @@ scopes:
         visibility: PUBLIC
     constructors: 1
       KaConstructorSymbol:
+        anchorPsi: KtClass
         annotations: []
         callableId: null
         containingClassId: Foo.Foo
@@ -240,6 +246,7 @@ scopes:
     packages: 0
     classifiers: 1
       KaNamedClassSymbol:
+        anchorPsi: KtClass
         annotations: []
         classId: Foo.Foo
         classKind: CLASS
@@ -268,6 +275,7 @@ scopes:
         visibility: PUBLIC
     callables: 3
       KaNamedFunctionSymbol:
+        anchorPsi: null
         annotations: []
         callableId: kotlin/Any.equals
         contextParameters: []
@@ -301,6 +309,7 @@ scopes:
         typeParameters: []
         valueParameters: [
           KaValueParameterSymbol:
+            anchorPsi: null
             annotations: []
             callableId: null
             contextParameters: []
@@ -335,6 +344,7 @@ scopes:
         ]
         visibility: PUBLIC
       KaNamedFunctionSymbol:
+        anchorPsi: null
         annotations: []
         callableId: kotlin/Any.hashCode
         contextParameters: []
@@ -369,6 +379,7 @@ scopes:
         valueParameters: []
         visibility: PUBLIC
       KaNamedFunctionSymbol:
+        anchorPsi: null
         annotations: []
         callableId: kotlin/Any.toString
         contextParameters: []
@@ -404,6 +415,7 @@ scopes:
         visibility: PUBLIC
     constructors: 1
       KaConstructorSymbol:
+        anchorPsi: KtClass
         annotations: []
         callableId: null
         containingClassId: Foo
@@ -434,6 +446,7 @@ scopes:
     packages: 0
     classifiers: 1
       KaNamedClassSymbol:
+        anchorPsi: KtClass
         annotations: []
         classId: Foo.Foo
         classKind: CLASS
@@ -472,36 +485,42 @@ scopes:
   PackageMemberScope, index = 7
     packages: 6
       KaPackageSymbol:
+        anchorPsi: PsiPackage(META-INF)
         fqName: META-INF
         location: TOP_LEVEL
         origin: SOURCE
         psi: PsiPackage(META-INF)
         realPsi: PsiPackage(META-INF)
       KaPackageSymbol:
+        anchorPsi: PsiPackage(java)
         fqName: java
         location: TOP_LEVEL
         origin: SOURCE
         psi: PsiPackage(java)
         realPsi: PsiPackage(java)
       KaPackageSymbol:
+        anchorPsi: PsiPackage(javax)
         fqName: javax
         location: TOP_LEVEL
         origin: SOURCE
         psi: PsiPackage(javax)
         realPsi: PsiPackage(javax)
       KaPackageSymbol:
+        anchorPsi: PsiPackage(kotlin)
         fqName: kotlin
         location: TOP_LEVEL
         origin: SOURCE
         psi: PsiPackage(kotlin)
         realPsi: PsiPackage(kotlin)
       KaPackageSymbol:
+        anchorPsi: PsiPackage(org)
         fqName: org
         location: TOP_LEVEL
         origin: SOURCE
         psi: PsiPackage(org)
         realPsi: PsiPackage(org)
       KaPackageSymbol:
+        anchorPsi: PsiPackage(sun)
         fqName: sun
         location: TOP_LEVEL
         origin: SOURCE
@@ -509,6 +528,7 @@ scopes:
         realPsi: PsiPackage(sun)
     classifiers: 1
       KaNamedClassSymbol:
+        anchorPsi: KtClass
         annotations: []
         classId: Foo
         classKind: CLASS

@@ -17,8 +17,10 @@ scopes:
     classifiers: 0
     callables: 4
       KaKotlinPropertySymbol:
+        anchorPsi: null
         annotations: []
         backingFieldSymbol: KaBackingFieldSymbol:
+          anchorPsi: null
           annotations: []
           callableId: null
           contextParameters: []
@@ -49,6 +51,7 @@ scopes:
         contextParameters: []
         contextReceivers: []
         getter: KaPropertyGetterSymbol:
+          anchorPsi: null
           annotations: []
           callableId: null
           contextParameters: []
@@ -68,6 +71,7 @@ scopes:
           psi: null
           realPsi: null
           receiverParameter: KaReceiverParameterSymbol:
+            anchorPsi: null
             annotations: []
             callableId: null
             contextParameters: []
@@ -128,6 +132,7 @@ scopes:
         psi: null
         realPsi: null
         receiverParameter: KaReceiverParameterSymbol:
+          anchorPsi: null
           annotations: []
           callableId: null
           contextParameters: []
@@ -166,6 +171,7 @@ scopes:
         typeParameters: []
         visibility: LOCAL
       KaNamedFunctionSymbol:
+        anchorPsi: null
         annotations: []
         callableId: kotlin/Any.equals
         contextParameters: []
@@ -199,6 +205,7 @@ scopes:
         typeParameters: []
         valueParameters: [
           KaValueParameterSymbol:
+            anchorPsi: null
             annotations: []
             callableId: null
             contextParameters: []
@@ -233,6 +240,7 @@ scopes:
         ]
         visibility: PUBLIC
       KaNamedFunctionSymbol:
+        anchorPsi: null
         annotations: []
         callableId: kotlin/Any.hashCode
         contextParameters: []
@@ -267,6 +275,7 @@ scopes:
         valueParameters: []
         visibility: PUBLIC
       KaNamedFunctionSymbol:
+        anchorPsi: null
         annotations: []
         callableId: kotlin/Any.toString
         contextParameters: []
@@ -302,6 +311,7 @@ scopes:
         visibility: PUBLIC
     constructors: 1
       KaConstructorSymbol:
+        anchorPsi: null
         annotations: []
         callableId: null
         containingClassId: null
@@ -333,6 +343,7 @@ scopes:
     classifiers: 0
     callables: 1
       KaLocalVariableSymbol:
+        anchorPsi: KtProperty
         annotations: []
         callableId: null
         contextParameters: []
@@ -370,6 +381,7 @@ scopes:
     classifiers: 0
     callables: 1
       KaValueParameterSymbol:
+        anchorPsi: KtParameter
         annotations: []
         callableId: null
         contextParameters: []
@@ -414,36 +426,42 @@ scopes:
   PackageMemberScope, index = 4
     packages: 6
       KaPackageSymbol:
+        anchorPsi: PsiPackage(META-INF)
         fqName: META-INF
         location: TOP_LEVEL
         origin: SOURCE
         psi: PsiPackage(META-INF)
         realPsi: PsiPackage(META-INF)
       KaPackageSymbol:
+        anchorPsi: PsiPackage(java)
         fqName: java
         location: TOP_LEVEL
         origin: SOURCE
         psi: PsiPackage(java)
         realPsi: PsiPackage(java)
       KaPackageSymbol:
+        anchorPsi: PsiPackage(javax)
         fqName: javax
         location: TOP_LEVEL
         origin: SOURCE
         psi: PsiPackage(javax)
         realPsi: PsiPackage(javax)
       KaPackageSymbol:
+        anchorPsi: PsiPackage(kotlin)
         fqName: kotlin
         location: TOP_LEVEL
         origin: SOURCE
         psi: PsiPackage(kotlin)
         realPsi: PsiPackage(kotlin)
       KaPackageSymbol:
+        anchorPsi: PsiPackage(org)
         fqName: org
         location: TOP_LEVEL
         origin: SOURCE
         psi: PsiPackage(org)
         realPsi: PsiPackage(org)
       KaPackageSymbol:
+        anchorPsi: PsiPackage(sun)
         fqName: sun
         location: TOP_LEVEL
         origin: SOURCE
@@ -451,6 +469,7 @@ scopes:
         realPsi: PsiPackage(sun)
     classifiers: 2
       KaNamedClassSymbol:
+        anchorPsi: KtClass
         annotations: []
         classId: DataFrame
         classKind: INTERFACE
@@ -477,6 +496,7 @@ scopes:
         ]
         typeParameters: [
           KaTypeParameterSymbol:
+            anchorPsi: KtTypeParameter
             annotations: []
             isActual: false
             isExpect: false
@@ -494,6 +514,7 @@ scopes:
         ]
         visibility: PUBLIC
       KaNamedClassSymbol:
+        anchorPsi: KtClass
         annotations: []
         classId: Refine
         classKind: ANNOTATION_CLASS
@@ -522,6 +543,7 @@ scopes:
         visibility: PUBLIC
     callables: 2
       KaNamedFunctionSymbol:
+        anchorPsi: KtNamedFunction
         annotations: [
           Refine()
             psi: KtAnnotationEntry
@@ -551,6 +573,7 @@ scopes:
         psi: KtNamedFunction
         realPsi: KtNamedFunction
         receiverParameter: KaReceiverParameterSymbol:
+          anchorPsi: KtTypeReference
           annotations: []
           callableId: null
           contextParameters: []
@@ -591,6 +614,7 @@ scopes:
           type: DataFrame<kotlin/Any?>
         typeParameters: [
           KaTypeParameterSymbol:
+            anchorPsi: KtTypeParameter
             annotations: []
             isActual: false
             isExpect: false
@@ -606,6 +630,7 @@ scopes:
             variance: INVARIANT
             visibility: LOCAL
           KaTypeParameterSymbol:
+            anchorPsi: KtTypeParameter
             annotations: []
             isActual: false
             isExpect: false
@@ -623,6 +648,7 @@ scopes:
         ]
         valueParameters: [
           KaValueParameterSymbol:
+            anchorPsi: KtParameter
             annotations: []
             callableId: null
             contextParameters: []
@@ -655,6 +681,7 @@ scopes:
             typeParameters: []
             visibility: PUBLIC
           KaValueParameterSymbol:
+            anchorPsi: KtParameter
             annotations: []
             callableId: null
             contextParameters: []
@@ -693,6 +720,7 @@ scopes:
         ]
         visibility: PUBLIC
       KaNamedFunctionSymbol:
+        anchorPsi: KtNamedFunction
         annotations: []
         callableId: /test_1
         contextParameters: []
@@ -726,6 +754,7 @@ scopes:
         typeParameters: []
         valueParameters: [
           KaValueParameterSymbol:
+            anchorPsi: KtParameter
             annotations: []
             callableId: null
             contextParameters: []

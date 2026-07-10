@@ -1,4 +1,5 @@
 KaNamedClassSymbol:
+  anchorPsi: KtClass
   annotations: [
     org/jetbrains/kotlin/plugin/sandbox/MyInterfaceSupertype()
       psi: KtAnnotationEntry

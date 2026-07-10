@@ -1,4 +1,5 @@
 KaSamConstructorSymbol:
+  anchorPsi: KtClass
   annotations: []
   callableId: one/MyAlias
   contextParameters: []
@@ -23,6 +24,7 @@ KaSamConstructorSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: KtClass
       annotations: []
       callableId: null
       contextParameters: []

@@ -1,4 +1,5 @@
 KaPropertyGetterSymbol:
+  anchorPsi: KtPropertyAccessor
   annotations: [
     GetAnnotation()
       psi: KtAnnotationEntry
@@ -23,6 +24,7 @@ KaPropertyGetterSymbol:
   psi: KtPropertyAccessor
   realPsi: KtPropertyAccessor
   receiverParameter: KaReceiverParameterSymbol:
+    anchorPsi: KtTypeReference
     annotations: [
       ReceiverAnnotation()
         psi: KtAnnotationEntry

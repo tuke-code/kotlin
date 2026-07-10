@@ -1,4 +1,5 @@
 KaEnumEntrySymbol:
+  anchorPsi: null
   annotations: []
   callableId: kotlin/LazyThreadSafetyMode.SYNCHRONIZED
   contextParameters: []

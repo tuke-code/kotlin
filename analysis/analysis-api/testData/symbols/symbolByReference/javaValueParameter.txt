@@ -1,4 +1,5 @@
 KaValueParameterSymbol:
+  anchorPsi: PsiAnnotationMethodImpl
   annotations: []
   callableId: null
   contextParameters: []

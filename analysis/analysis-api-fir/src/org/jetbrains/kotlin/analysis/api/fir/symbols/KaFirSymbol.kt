@@ -6,10 +6,7 @@
 package org.jetbrains.kotlin.analysis.api.fir.symbols
 
 import com.intellij.psi.PsiElement
-import org.jetbrains.kotlin.KtFakePsiSourceElement
-import org.jetbrains.kotlin.KtFakeSourceElementKind
-import org.jetbrains.kotlin.KtRealPsiSourceElement
-import org.jetbrains.kotlin.SuspiciousFakeSourceCheck
+import org.jetbrains.kotlin.*
 import org.jetbrains.kotlin.analysis.api.fir.KaFirSession
 import org.jetbrains.kotlin.analysis.api.fir.KaSymbolByFirBuilder
 import org.jetbrains.kotlin.analysis.api.fir.findPsi
@@ -57,6 +54,11 @@ internal interface KaFirSymbol<out S : FirBasedSymbol<*>> : KaSymbol, KaLifetime
 
                 else -> null
             }
+        }
+
+    override val anchorPsi: PsiElement?
+        get() = withValidityAssertion {
+            realPsi ?: firSymbol.source?.psi
         }
 }
 

@@ -326,6 +326,7 @@ KtCallExpression(348,397): 'callsInPlace(block1, InvocationKind.EXACTLY_ONCE)'
       contextArguments = []
       dispatchReceiver = KaImplicitReceiverValue:
         symbol = KaReceiverParameterSymbol:
+          anchorPsi: KtFunctionLiteral
           annotations: []
           callableId: null
           contextParameters: []
@@ -402,6 +403,7 @@ KtNameReferenceExpression(348,360): 'callsInPlace'
       contextArguments = []
       dispatchReceiver = KaImplicitReceiverValue:
         symbol = KaReceiverParameterSymbol:
+          anchorPsi: KtFunctionLiteral
           annotations: []
           callableId: null
           contextParameters: []
@@ -547,6 +549,7 @@ KtCallExpression(406,472): 'callsInPlace(block2, kotlin.contracts.InvocationKind
       contextArguments = []
       dispatchReceiver = KaImplicitReceiverValue:
         symbol = KaReceiverParameterSymbol:
+          anchorPsi: KtFunctionLiteral
           annotations: []
           callableId: null
           contextParameters: []
@@ -623,6 +626,7 @@ KtNameReferenceExpression(406,418): 'callsInPlace'
       contextArguments = []
       dispatchReceiver = KaImplicitReceiverValue:
         symbol = KaReceiverParameterSymbol:
+          anchorPsi: KtFunctionLiteral
           annotations: []
           callableId: null
           contextParameters: []

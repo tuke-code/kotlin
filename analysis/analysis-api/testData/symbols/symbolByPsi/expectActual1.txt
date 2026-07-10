@@ -1,4 +1,5 @@
 KaNamedClassSymbol:
+  anchorPsi: KtObjectDeclaration
   annotations: []
   classId: sample/A
   classKind: OBJECT
@@ -32,6 +33,7 @@ KaNamedClassSymbol:
   importableFqName: sample.A
 
 KaConstructorSymbol:
+  anchorPsi: KtPrimaryConstructor
   annotations: []
   callableId: null
   containingClassId: sample/B
@@ -57,6 +59,7 @@ KaConstructorSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: KtParameter
       annotations: []
       callableId: null
       contextParameters: []
@@ -102,6 +105,7 @@ KaConstructorSymbol:
   importableFqName: sample.B
 
 KaConstructorSymbol:
+  anchorPsi: KtSecondaryConstructor
   annotations: []
   callableId: null
   containingClassId: sample/B
@@ -127,6 +131,7 @@ KaConstructorSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: KtParameter
       annotations: []
       callableId: null
       contextParameters: []
@@ -172,6 +177,7 @@ KaConstructorSymbol:
   importableFqName: sample.B
 
 KaNamedClassSymbol:
+  anchorPsi: KtClass
   annotations: []
   classId: sample/B.Nested
   classKind: CLASS
@@ -205,6 +211,7 @@ KaNamedClassSymbol:
   importableFqName: sample.B.Nested
 
 KaNamedFunctionSymbol:
+  anchorPsi: KtNamedFunction
   annotations: []
   callableId: sample/B.bar
   contextParameters: []
@@ -251,8 +258,10 @@ KaNamedFunctionSymbol:
   importableFqName: null
 
 KaKotlinPropertySymbol:
+  anchorPsi: KtProperty
   annotations: []
   backingFieldSymbol: KaBackingFieldSymbol:
+    anchorPsi: KtProperty
     annotations: []
     callableId: null
     contextParameters: []
@@ -292,6 +301,7 @@ KaKotlinPropertySymbol:
   contextParameters: []
   contextReceivers: []
   getter: KaPropertyGetterSymbol:
+    anchorPsi: KtProperty
     annotations: []
     callableId: null
     contextParameters: []
@@ -371,6 +381,7 @@ KaKotlinPropertySymbol:
   importableFqName: null
 
 KaNamedClassSymbol:
+  anchorPsi: KtClass
   annotations: []
   classId: sample/B
   classKind: CLASS
@@ -404,6 +415,7 @@ KaNamedClassSymbol:
   importableFqName: sample.B
 
 KaTypeAliasSymbol:
+  anchorPsi: KtTypeAlias
   annotations: []
   classId: sample/C
   expandedType: KaUsualClassType:
@@ -427,6 +439,7 @@ KaTypeAliasSymbol:
   importableFqName: sample.C
 
 KaNamedClassSymbol:
+  anchorPsi: KtClass
   annotations: []
   classId: sample/D.Nested
   classKind: CLASS
@@ -460,6 +473,7 @@ KaNamedClassSymbol:
   importableFqName: sample.D.Nested
 
 KaNamedClassSymbol:
+  anchorPsi: KtClass
   annotations: []
   classId: sample/D
   classKind: CLASS
@@ -493,6 +507,7 @@ KaNamedClassSymbol:
   importableFqName: sample.D
 
 KaNamedFunctionSymbol:
+  anchorPsi: KtNamedFunction
   annotations: []
   callableId: sample/baz
   contextParameters: []
@@ -535,8 +550,10 @@ KaNamedFunctionSymbol:
   importableFqName: sample.baz
 
 KaKotlinPropertySymbol:
+  anchorPsi: KtProperty
   annotations: []
   backingFieldSymbol: KaBackingFieldSymbol:
+    anchorPsi: KtProperty
     annotations: []
     callableId: null
     contextParameters: []
@@ -572,6 +589,7 @@ KaKotlinPropertySymbol:
   contextParameters: []
   contextReceivers: []
   getter: KaPropertyGetterSymbol:
+    anchorPsi: KtProperty
     annotations: []
     callableId: null
     contextParameters: []
@@ -631,6 +649,7 @@ KaKotlinPropertySymbol:
     typeArguments: []
     type: kotlin/Int
   setter: KaPropertySetterSymbol:
+    anchorPsi: KtProperty
     annotations: []
     callableId: null
     contextParameters: []
@@ -648,6 +667,7 @@ KaKotlinPropertySymbol:
     modality: FINAL
     origin: SOURCE
     parameter: KaValueParameterSymbol:
+      anchorPsi: KtProperty
       annotations: []
       callableId: null
       contextParameters: []
@@ -694,6 +714,7 @@ KaKotlinPropertySymbol:
     typeParameters: []
     valueParameters: [
       KaValueParameterSymbol:
+        anchorPsi: KtProperty
         annotations: []
         callableId: null
         contextParameters: []

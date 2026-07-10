@@ -1,4 +1,5 @@
 KaValueParameterSymbol:
+  anchorPsi: KtFunctionLiteral
   annotations: []
   callableId: null
   contextParameters: []

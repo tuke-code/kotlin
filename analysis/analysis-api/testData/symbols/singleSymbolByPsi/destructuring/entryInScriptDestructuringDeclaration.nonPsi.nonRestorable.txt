@@ -1,10 +1,12 @@
 KaKotlinPropertySymbol:
+  anchorPsi: KtDestructuringDeclarationEntry
   annotations: []
   backingFieldSymbol: null
   callableId: /c
   contextParameters: []
   contextReceivers: []
   getter: KaPropertyGetterSymbol:
+    anchorPsi: KtDestructuringDeclarationEntry
     annotations: []
     callableId: null
     contextParameters: []
@@ -76,6 +78,7 @@ KaKotlinPropertySymbol:
   importableFqName: c
 
 KaPropertyGetterSymbol:
+  anchorPsi: KtDestructuringDeclarationEntry
   annotations: []
   callableId: null
   contextParameters: []

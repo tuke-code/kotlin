@@ -1,4 +1,5 @@
 KaConstructorSymbol:
+  anchorPsi: KtPrimaryConstructor
   annotations: []
   callableId: null
   containingClassId: ClassC
@@ -24,6 +25,7 @@ KaConstructorSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: KtParameter
       annotations: []
       callableId: null
       contextParameters: []
@@ -69,6 +71,7 @@ KaConstructorSymbol:
   importableFqName: ClassC
 
 KaConstructorSymbol:
+  anchorPsi: KtSecondaryConstructor
   annotations: []
   callableId: null
   containingClassId: ClassC
@@ -101,6 +104,7 @@ KaConstructorSymbol:
   importableFqName: ClassC
 
 KaClassInitializerSymbol:
+  anchorPsi: KtClassInitializer
   annotations: []
   isActual: false
   isExpect: false
@@ -117,6 +121,7 @@ KaClassInitializerSymbol:
   importableFqName: null
 
 KaLocalVariableSymbol:
+  anchorPsi: KtProperty
   annotations: []
   callableId: null
   contextParameters: []
@@ -149,6 +154,7 @@ KaLocalVariableSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: KtNamedFunction
   annotations: []
   callableId: /ClassC.foo
   contextParameters: []
@@ -175,6 +181,7 @@ KaNamedFunctionSymbol:
   psi: KtNamedFunction
   realPsi: KtNamedFunction
   receiverParameter: KaReceiverParameterSymbol:
+    anchorPsi: KtTypeReference
     annotations: []
     callableId: null
     contextParameters: []
@@ -212,6 +219,7 @@ KaNamedFunctionSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: KtParameter
       annotations: []
       callableId: null
       contextParameters: []
@@ -263,6 +271,7 @@ KaNamedFunctionSymbol:
   importableFqName: null
 
 KaTypeParameterSymbol:
+  anchorPsi: KtTypeParameter
   annotations: []
   isActual: false
   isExpect: false
@@ -283,6 +292,7 @@ KaTypeParameterSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: KtNamedFunction
   annotations: []
   callableId: /ClassC.Nested.bar
   contextParameters: []
@@ -333,6 +343,7 @@ KaNamedFunctionSymbol:
   importableFqName: null
 
 KaNamedClassSymbol:
+  anchorPsi: KtClass
   annotations: []
   classId: ClassC.Nested
   classKind: CLASS
@@ -359,6 +370,7 @@ KaNamedClassSymbol:
   ]
   typeParameters: [
     KaTypeParameterSymbol:
+      anchorPsi: KtTypeParameter
       annotations: []
       isActual: false
       isExpect: false
@@ -386,8 +398,10 @@ KaNamedClassSymbol:
   importableFqName: ClassC.Nested
 
 KaKotlinPropertySymbol:
+  anchorPsi: KtProperty
   annotations: []
   backingFieldSymbol: KaBackingFieldSymbol:
+    anchorPsi: KtProperty
     annotations: []
     callableId: null
     contextParameters: []
@@ -427,6 +441,7 @@ KaKotlinPropertySymbol:
   contextParameters: []
   contextReceivers: []
   getter: KaPropertyGetterSymbol:
+    anchorPsi: KtProperty
     annotations: []
     callableId: null
     contextParameters: []
@@ -490,6 +505,7 @@ KaKotlinPropertySymbol:
     typeArguments: []
     type: kotlin/Int
   setter: KaPropertySetterSymbol:
+    anchorPsi: KtProperty
     annotations: []
     callableId: null
     contextParameters: []
@@ -507,6 +523,7 @@ KaKotlinPropertySymbol:
     modality: FINAL
     origin: SOURCE
     parameter: KaValueParameterSymbol:
+      anchorPsi: KtProperty
       annotations: []
       callableId: null
       contextParameters: []
@@ -553,6 +570,7 @@ KaKotlinPropertySymbol:
     typeParameters: []
     valueParameters: [
       KaValueParameterSymbol:
+        anchorPsi: KtProperty
         annotations: []
         callableId: null
         contextParameters: []
@@ -616,6 +634,7 @@ KaKotlinPropertySymbol:
   importableFqName: null
 
 KaNamedClassSymbol:
+  anchorPsi: KtClass
   annotations: []
   classId: ClassC
   classKind: CLASS
@@ -649,8 +668,10 @@ KaNamedClassSymbol:
   importableFqName: ClassC
 
 KaKotlinPropertySymbol:
+  anchorPsi: KtProperty
   annotations: []
   backingFieldSymbol: KaBackingFieldSymbol:
+    anchorPsi: KtProperty
     annotations: []
     callableId: null
     contextParameters: []
@@ -686,6 +707,7 @@ KaKotlinPropertySymbol:
   contextParameters: []
   contextReceivers: []
   getter: KaPropertyGetterSymbol:
+    anchorPsi: KtProperty
     annotations: []
     callableId: null
     contextParameters: []
@@ -757,6 +779,7 @@ KaKotlinPropertySymbol:
   importableFqName: prop
 
 KaEnumEntrySymbol:
+  anchorPsi: KtEnumEntry
   annotations: []
   callableId: /EnumE.EnumA
   contextParameters: []
@@ -789,6 +812,7 @@ KaEnumEntrySymbol:
   importableFqName: EnumE.EnumA
 
 KaEnumEntrySymbol:
+  anchorPsi: KtEnumEntry
   annotations: []
   callableId: /EnumE.EnumB
   contextParameters: []
@@ -821,6 +845,7 @@ KaEnumEntrySymbol:
   importableFqName: EnumE.EnumB
 
 KaNamedClassSymbol:
+  anchorPsi: KtClass
   annotations: []
   classId: EnumE
   classKind: ENUM_CLASS
@@ -859,6 +884,7 @@ KaNamedClassSymbol:
   importableFqName: EnumE
 
 KaEnumEntrySymbol:
+  anchorPsi: KtEnumEntry
   annotations: []
   callableId: /EnumNotExternal.EnumA2
   contextParameters: []
@@ -891,6 +917,7 @@ KaEnumEntrySymbol:
   importableFqName: EnumNotExternal.EnumA2
 
 KaNamedClassSymbol:
+  anchorPsi: KtClass
   annotations: []
   classId: EnumNotExternal
   classKind: ENUM_CLASS
@@ -929,6 +956,7 @@ KaNamedClassSymbol:
   importableFqName: EnumNotExternal
 
 KaConstructorSymbol:
+  anchorPsi: KtPrimaryConstructor
   annotations: []
   callableId: null
   containingClassId: NotExternalC
@@ -954,6 +982,7 @@ KaConstructorSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: KtParameter
       annotations: []
       callableId: null
       contextParameters: []
@@ -999,6 +1028,7 @@ KaConstructorSymbol:
   importableFqName: NotExternalC
 
 KaConstructorSymbol:
+  anchorPsi: KtSecondaryConstructor
   annotations: []
   callableId: null
   containingClassId: NotExternalC
@@ -1031,6 +1061,7 @@ KaConstructorSymbol:
   importableFqName: NotExternalC
 
 KaNamedClassSymbol:
+  anchorPsi: KtClass
   annotations: []
   classId: NotExternalC
   classKind: CLASS
@@ -1064,6 +1095,7 @@ KaNamedClassSymbol:
   importableFqName: NotExternalC
 
 KaNamedFunctionSymbol:
+  anchorPsi: KtNamedFunction
   annotations: []
   callableId: /InterfaceI.fooI
   contextParameters: []
@@ -1110,6 +1142,7 @@ KaNamedFunctionSymbol:
   importableFqName: null
 
 KaNamedClassSymbol:
+  anchorPsi: KtClass
   annotations: []
   classId: InterfaceI
   classKind: INTERFACE
@@ -1143,6 +1176,7 @@ KaNamedClassSymbol:
   importableFqName: InterfaceI
 
 KaNamedClassSymbol:
+  anchorPsi: KtObjectDeclaration
   annotations: []
   classId: SealedC.SealedO
   classKind: OBJECT
@@ -1176,6 +1210,7 @@ KaNamedClassSymbol:
   importableFqName: SealedC.SealedO
 
 KaNamedClassSymbol:
+  anchorPsi: KtClass
   annotations: []
   classId: SealedC
   classKind: CLASS
@@ -1209,8 +1244,10 @@ KaNamedClassSymbol:
   importableFqName: SealedC
 
 KaKotlinPropertySymbol:
+  anchorPsi: KtProperty
   annotations: []
   backingFieldSymbol: KaBackingFieldSymbol:
+    anchorPsi: KtProperty
     annotations: []
     callableId: null
     contextParameters: []
@@ -1246,6 +1283,7 @@ KaKotlinPropertySymbol:
   contextParameters: []
   contextReceivers: []
   getter: KaPropertyGetterSymbol:
+    anchorPsi: KtPropertyAccessor
     annotations: []
     callableId: null
     contextParameters: []
@@ -1317,8 +1355,10 @@ KaKotlinPropertySymbol:
   importableFqName: propWithExternalGetter
 
 KaKotlinPropertySymbol:
+  anchorPsi: KtProperty
   annotations: []
   backingFieldSymbol: KaBackingFieldSymbol:
+    anchorPsi: KtProperty
     annotations: []
     callableId: null
     contextParameters: []
@@ -1354,6 +1394,7 @@ KaKotlinPropertySymbol:
   contextParameters: []
   contextReceivers: []
   getter: KaPropertyGetterSymbol:
+    anchorPsi: KtPropertyAccessor
     annotations: []
     callableId: null
     contextParameters: []
@@ -1413,6 +1454,7 @@ KaKotlinPropertySymbol:
     typeArguments: []
     type: kotlin/Int
   setter: KaPropertySetterSymbol:
+    anchorPsi: KtPropertyAccessor
     annotations: []
     callableId: null
     contextParameters: []
@@ -1430,6 +1472,7 @@ KaKotlinPropertySymbol:
     modality: FINAL
     origin: SOURCE
     parameter: KaValueParameterSymbol:
+      anchorPsi: KtPropertyAccessor
       annotations: []
       callableId: null
       contextParameters: []
@@ -1476,6 +1519,7 @@ KaKotlinPropertySymbol:
     typeParameters: []
     valueParameters: [
       KaValueParameterSymbol:
+        anchorPsi: KtPropertyAccessor
         annotations: []
         callableId: null
         contextParameters: []

@@ -39,6 +39,7 @@ scopes:
     packages: 0
     classifiers: 1
       KaNamedClassSymbol:
+        anchorPsi: null
         annotations: []
         classId: kotlin/Enum.Companion
         classKind: COMPANION_OBJECT
@@ -67,8 +68,10 @@ scopes:
         visibility: PUBLIC
     callables: 11
       KaKotlinPropertySymbol:
+        anchorPsi: KtProperty
         annotations: []
         backingFieldSymbol: KaBackingFieldSymbol:
+          anchorPsi: KtProperty
           annotations: []
           callableId: null
           contextParameters: []
@@ -99,6 +102,7 @@ scopes:
         contextParameters: []
         contextReceivers: []
         getter: KaPropertyGetterSymbol:
+          anchorPsi: KtProperty
           annotations: []
           callableId: null
           contextParameters: []
@@ -156,6 +160,7 @@ scopes:
         typeParameters: []
         visibility: PUBLIC
       KaNamedFunctionSymbol:
+        anchorPsi: KtNamedFunction
         annotations: []
         callableId: null
         contextParameters: []
@@ -190,6 +195,7 @@ scopes:
         valueParameters: []
         visibility: PUBLIC
       KaNamedFunctionSymbol:
+        anchorPsi: KtClass
         annotations: []
         callableId: /E.compareTo
         contextParameters: []
@@ -223,6 +229,7 @@ scopes:
         typeParameters: []
         valueParameters: [
           KaValueParameterSymbol:
+            anchorPsi: KtClass
             annotations: []
             callableId: null
             contextParameters: []
@@ -257,6 +264,7 @@ scopes:
         ]
         visibility: PUBLIC
       KaNamedFunctionSymbol:
+        anchorPsi: null
         annotations: []
         callableId: kotlin/Enum.clone
         contextParameters: []
@@ -291,6 +299,7 @@ scopes:
         valueParameters: []
         visibility: PROTECTED
       KaNamedFunctionSymbol:
+        anchorPsi: null
         annotations: []
         callableId: kotlin/Enum.equals
         contextParameters: []
@@ -324,6 +333,7 @@ scopes:
         typeParameters: []
         valueParameters: [
           KaValueParameterSymbol:
+            anchorPsi: null
             annotations: []
             callableId: null
             contextParameters: []
@@ -358,6 +368,7 @@ scopes:
         ]
         visibility: PUBLIC
       KaNamedFunctionSymbol:
+        anchorPsi: null
         annotations: []
         callableId: kotlin/Enum.hashCode
         contextParameters: []
@@ -392,6 +403,7 @@ scopes:
         valueParameters: []
         visibility: PUBLIC
       KaNamedFunctionSymbol:
+        anchorPsi: null
         annotations: []
         callableId: kotlin/Enum.toString
         contextParameters: []
@@ -426,11 +438,13 @@ scopes:
         valueParameters: []
         visibility: PUBLIC
       KaKotlinPropertySymbol:
+        anchorPsi: null
         annotations: [
           kotlin/internal/IntrinsicConstEvaluation()
             psi: null
         ]
         backingFieldSymbol: KaBackingFieldSymbol:
+          anchorPsi: null
           annotations: []
           callableId: null
           contextParameters: []
@@ -461,6 +475,7 @@ scopes:
         contextParameters: []
         contextReceivers: []
         getter: KaPropertyGetterSymbol:
+          anchorPsi: null
           annotations: []
           callableId: null
           contextParameters: []
@@ -518,8 +533,10 @@ scopes:
         typeParameters: []
         visibility: PUBLIC
       KaKotlinPropertySymbol:
+        anchorPsi: null
         annotations: []
         backingFieldSymbol: KaBackingFieldSymbol:
+          anchorPsi: null
           annotations: []
           callableId: null
           contextParameters: []
@@ -550,6 +567,7 @@ scopes:
         contextParameters: []
         contextReceivers: []
         getter: KaPropertyGetterSymbol:
+          anchorPsi: null
           annotations: []
           callableId: null
           contextParameters: []
@@ -607,6 +625,7 @@ scopes:
         typeParameters: []
         visibility: PUBLIC
       KaNamedFunctionSymbol:
+        anchorPsi: KtClass
         annotations: []
         callableId: /E.getDeclaringClass
         contextParameters: []
@@ -640,6 +659,7 @@ scopes:
         valueParameters: []
         visibility: PUBLIC
       KaNamedFunctionSymbol:
+        anchorPsi: ClsMethodImpl
         annotations: []
         callableId: kotlin/Enum.finalize
         contextParameters: []
@@ -675,6 +695,7 @@ scopes:
         visibility: PACKAGE_PROTECTED
     constructors: 1
       KaConstructorSymbol:
+        anchorPsi: KtEnumEntry
         annotations: []
         callableId: null
         containingClassId: null
@@ -706,6 +727,7 @@ scopes:
     classifiers: 0
     callables: 4
       KaEnumEntrySymbol:
+        anchorPsi: KtEnumEntry
         annotations: []
         callableId: /E.A
         contextParameters: []
@@ -732,6 +754,7 @@ scopes:
         typeParameters: []
         visibility: PUBLIC
       KaNamedFunctionSymbol:
+        anchorPsi: KtClass
         annotations: []
         callableId: /E.values
         contextParameters: []
@@ -771,6 +794,7 @@ scopes:
         valueParameters: []
         visibility: PUBLIC
       KaNamedFunctionSymbol:
+        anchorPsi: KtClass
         annotations: []
         callableId: /E.valueOf
         contextParameters: []
@@ -804,6 +828,7 @@ scopes:
         typeParameters: []
         valueParameters: [
           KaValueParameterSymbol:
+            anchorPsi: KtClass
             annotations: []
             callableId: null
             contextParameters: []
@@ -838,12 +863,14 @@ scopes:
         ]
         visibility: PUBLIC
       KaKotlinPropertySymbol:
+        anchorPsi: KtClass
         annotations: []
         backingFieldSymbol: null
         callableId: /E.entries
         contextParameters: []
         contextReceivers: []
         getter: KaPropertyGetterSymbol:
+          anchorPsi: KtClass
           annotations: []
           callableId: null
           contextParameters: []
@@ -916,6 +943,7 @@ scopes:
     packages: 0
     classifiers: 1
       KaNamedClassSymbol:
+        anchorPsi: null
         annotations: []
         classId: kotlin/Enum.Companion
         classKind: COMPANION_OBJECT
@@ -950,6 +978,7 @@ scopes:
     classifiers: 0
     callables: 3
       KaNamedFunctionSymbol:
+        anchorPsi: null
         annotations: []
         callableId: kotlin/Any.equals
         contextParameters: []
@@ -983,6 +1012,7 @@ scopes:
         typeParameters: []
         valueParameters: [
           KaValueParameterSymbol:
+            anchorPsi: null
             annotations: []
             callableId: null
             contextParameters: []
@@ -1017,6 +1047,7 @@ scopes:
         ]
         visibility: PUBLIC
       KaNamedFunctionSymbol:
+        anchorPsi: null
         annotations: []
         callableId: kotlin/Any.hashCode
         contextParameters: []
@@ -1051,6 +1082,7 @@ scopes:
         valueParameters: []
         visibility: PUBLIC
       KaNamedFunctionSymbol:
+        anchorPsi: null
         annotations: []
         callableId: kotlin/Any.toString
         contextParameters: []
@@ -1086,6 +1118,7 @@ scopes:
         visibility: PUBLIC
     constructors: 1
       KaConstructorSymbol:
+        anchorPsi: null
         annotations: []
         callableId: null
         containingClassId: kotlin/Enum.Companion
@@ -1121,36 +1154,42 @@ scopes:
   PackageMemberScope, index = 7
     packages: 6
       KaPackageSymbol:
+        anchorPsi: PsiPackage(META-INF)
         fqName: META-INF
         location: TOP_LEVEL
         origin: SOURCE
         psi: PsiPackage(META-INF)
         realPsi: PsiPackage(META-INF)
       KaPackageSymbol:
+        anchorPsi: PsiPackage(java)
         fqName: java
         location: TOP_LEVEL
         origin: SOURCE
         psi: PsiPackage(java)
         realPsi: PsiPackage(java)
       KaPackageSymbol:
+        anchorPsi: PsiPackage(javax)
         fqName: javax
         location: TOP_LEVEL
         origin: SOURCE
         psi: PsiPackage(javax)
         realPsi: PsiPackage(javax)
       KaPackageSymbol:
+        anchorPsi: PsiPackage(kotlin)
         fqName: kotlin
         location: TOP_LEVEL
         origin: SOURCE
         psi: PsiPackage(kotlin)
         realPsi: PsiPackage(kotlin)
       KaPackageSymbol:
+        anchorPsi: PsiPackage(org)
         fqName: org
         location: TOP_LEVEL
         origin: SOURCE
         psi: PsiPackage(org)
         realPsi: PsiPackage(org)
       KaPackageSymbol:
+        anchorPsi: PsiPackage(sun)
         fqName: sun
         location: TOP_LEVEL
         origin: SOURCE
@@ -1158,6 +1197,7 @@ scopes:
         realPsi: PsiPackage(sun)
     classifiers: 1
       KaNamedClassSymbol:
+        anchorPsi: KtClass
         annotations: []
         classId: E
         classKind: ENUM_CLASS

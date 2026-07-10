@@ -585,6 +585,7 @@ KtNameReferenceExpression(354,355): 'X'
         dispatchReceiver = null
         extensionReceiver = KaImplicitReceiverValue:
           symbol = KaReceiverParameterSymbol:
+            anchorPsi: KtTypeReference
             annotations: []
             callableId: null
             contextParameters: []

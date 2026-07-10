@@ -1,4 +1,5 @@
 KaValueParameterSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: null
   contextParameters: []

@@ -1,4 +1,5 @@
 KaConstructorSymbol:
+  anchorPsi: PsiMethodImpl
   annotations: []
   callableId: null
   containingClassId: JavaClass
@@ -24,6 +25,7 @@ KaConstructorSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: PsiParameterImpl
       annotations: []
       callableId: null
       contextParameters: []

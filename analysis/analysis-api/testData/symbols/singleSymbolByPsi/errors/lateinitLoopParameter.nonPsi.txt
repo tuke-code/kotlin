@@ -1,4 +1,5 @@
 KaLocalVariableSymbol:
+  anchorPsi: KtParameter
   annotations: []
   callableId: null
   contextParameters: []

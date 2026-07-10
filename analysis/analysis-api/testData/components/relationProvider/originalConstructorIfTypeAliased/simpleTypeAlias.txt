@@ -1,5 +1,6 @@
 Resolved constructor:
   KaConstructorSymbol:
+    anchorPsi: KtTypeAlias
     annotations: []
     callableId: null
     containingClassId: test/MyTypeAlias
@@ -33,6 +34,7 @@ Resolved constructor:
 
 Original constructor if type aliased:
   KaConstructorSymbol:
+    anchorPsi: KtClass
     annotations: []
     callableId: null
     containingClassId: test/MyClass

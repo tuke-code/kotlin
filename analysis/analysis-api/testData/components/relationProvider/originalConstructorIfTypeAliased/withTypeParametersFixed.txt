@@ -1,5 +1,6 @@
 Resolved constructor:
   KaConstructorSymbol:
+    anchorPsi: KtTypeAlias
     annotations: []
     callableId: null
     containingClassId: test/MyTypeAlias
@@ -30,6 +31,7 @@ Resolved constructor:
     typeParameters: []
     valueParameters: [
       KaValueParameterSymbol:
+        anchorPsi: KtClass
         annotations: []
         callableId: null
         contextParameters: []
@@ -76,6 +78,7 @@ Resolved constructor:
 
 Original constructor if type aliased:
   KaConstructorSymbol:
+    anchorPsi: KtPrimaryConstructor
     annotations: []
     callableId: null
     containingClassId: test/MyClass
@@ -104,6 +107,7 @@ Original constructor if type aliased:
       type: test/MyClass<T>
     typeParameters: [
       KaTypeParameterSymbol:
+        anchorPsi: KtTypeParameter
         annotations: []
         isActual: false
         isExpect: false
@@ -125,6 +129,7 @@ Original constructor if type aliased:
     ]
     valueParameters: [
       KaValueParameterSymbol:
+        anchorPsi: KtParameter
         annotations: []
         callableId: null
         contextParameters: []

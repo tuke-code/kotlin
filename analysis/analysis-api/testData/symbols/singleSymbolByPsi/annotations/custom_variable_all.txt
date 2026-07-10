@@ -1,4 +1,5 @@
 KaKotlinPropertySymbol:
+  anchorPsi: KtProperty
   annotations: [
     Property()
       psi: KtAnnotationEntry
@@ -10,6 +11,7 @@ KaKotlinPropertySymbol:
       psi: KtAnnotationEntry
   ]
   backingFieldSymbol: KaBackingFieldSymbol:
+    anchorPsi: KtProperty
     annotations: [
       PropertyAndField()
         psi: KtAnnotationEntry
@@ -52,6 +54,7 @@ KaKotlinPropertySymbol:
   contextParameters: []
   contextReceivers: []
   getter: KaPropertyGetterSymbol:
+    anchorPsi: KtPropertyAccessor
     annotations: [
       Get()
         psi: KtAnnotationEntry
@@ -116,6 +119,7 @@ KaKotlinPropertySymbol:
     typeArguments: []
     type: kotlin/Int
   setter: KaPropertySetterSymbol:
+    anchorPsi: KtPropertyAccessor
     annotations: []
     callableId: null
     contextParameters: []
@@ -133,6 +137,7 @@ KaKotlinPropertySymbol:
     modality: FINAL
     origin: SOURCE
     parameter: KaValueParameterSymbol:
+      anchorPsi: KtParameter
       annotations: [
         Param()
           psi: KtAnnotationEntry
@@ -186,6 +191,7 @@ KaKotlinPropertySymbol:
     typeParameters: []
     valueParameters: [
       KaValueParameterSymbol:
+        anchorPsi: KtParameter
         annotations: [
           Param()
             psi: KtAnnotationEntry

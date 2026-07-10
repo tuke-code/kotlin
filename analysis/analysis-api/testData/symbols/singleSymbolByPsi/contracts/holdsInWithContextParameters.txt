@@ -1,8 +1,10 @@
 KaNamedFunctionSymbol:
+  anchorPsi: KtNamedFunction
   annotations: []
   callableId: /conditionInContext
   contextParameters: [
     KaContextParameterSymbol:
+      anchorPsi: KtParameter
       annotations: []
       callableId: null
       contextParameters: []
@@ -49,6 +51,7 @@ KaNamedFunctionSymbol:
             KaContractExplicitParameterValue:
               symbol:
                 KaContextParameterSymbol:
+                  anchorPsi: KtParameter
                   annotations: []
                   callableId: null
                   contextParameters: []
@@ -82,6 +85,7 @@ KaNamedFunctionSymbol:
         KaContractExplicitParameterValue:
           symbol:
             KaValueParameterSymbol:
+              anchorPsi: KtParameter
               annotations: []
               callableId: null
               contextParameters: []
@@ -152,6 +156,7 @@ KaNamedFunctionSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: KtParameter
       annotations: []
       callableId: null
       contextParameters: []

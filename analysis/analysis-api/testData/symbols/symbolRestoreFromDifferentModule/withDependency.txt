@@ -1,5 +1,6 @@
 Inital from Sources of main:
 KaNamedFunctionSymbol:
+  anchorPsi: KtNamedFunction
   annotations: []
   callableId: /foo
   contextParameters: []
@@ -36,6 +37,7 @@ KaNamedFunctionSymbol:
 
 Restored in Sources of restoreInContextOf:
 KaNamedFunctionSymbol:
+  anchorPsi: KtNamedFunction
   annotations: []
   callableId: /foo
   contextParameters: []

@@ -1,5 +1,6 @@
 Inital from Sources of main:
 KaNamedClassSymbol:
+  anchorPsi: KtClass
   annotations: [
     org/jetbrains/kotlin/plugin/sandbox/MyInterfaceSupertype()
       psi: KtAnnotationEntry
@@ -36,6 +37,7 @@ KaNamedClassSymbol:
 
 Restored in Sources of restoreInContextOf:
 KaNamedClassSymbol:
+  anchorPsi: KtClass
   annotations: [
     org/jetbrains/kotlin/plugin/sandbox/MyInterfaceSupertype()
       psi: KtAnnotationEntry

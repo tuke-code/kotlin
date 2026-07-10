@@ -2,6 +2,7 @@ packages: 0
 classifiers: 0
 callables: 1
   KaNamedFunctionSymbol:
+    anchorPsi: null
     annotations: []
     callableId: test/testFun_generated
     contextParameters: []

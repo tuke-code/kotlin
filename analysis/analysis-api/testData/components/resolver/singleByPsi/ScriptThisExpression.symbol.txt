@@ -2,6 +2,7 @@ KtThisExpression(65,69): 'this'
   KaSymbolResolutionSuccess:
     symbols = [
       KaScriptSymbol:
+        anchorPsi: KtScript
         annotations: []
         isActual: false
         isExpect: false

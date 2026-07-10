@@ -1,4 +1,5 @@
 KaConstructorSymbol:
+  anchorPsi: KtPrimaryConstructor
   annotations: []
   callableId: null
   containingClassId: Anno
@@ -24,6 +25,7 @@ KaConstructorSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: KtParameter
       annotations: []
       callableId: null
       contextParameters: []
@@ -69,6 +71,7 @@ KaConstructorSymbol:
   importableFqName: Anno
 
 KaNamedClassSymbol:
+  anchorPsi: KtClass
   annotations: [
     kotlin/annotation/Target(allowedTargets = [kotlin.annotation.AnnotationTarget.TYPE, kotlin.annotation.AnnotationTarget.VALUE_PARAMETER])
       psi: KtAnnotationEntry
@@ -105,6 +108,7 @@ KaNamedClassSymbol:
   importableFqName: Anno
 
 KaContextParameterSymbol:
+  anchorPsi: KtParameter
   annotations: [
     Anno(position = "param")
       psi: KtAnnotationEntry
@@ -141,6 +145,7 @@ KaContextParameterSymbol:
   importableFqName: null
 
 KaContextParameterSymbol:
+  anchorPsi: KtParameter
   annotations: []
   callableId: null
   contextParameters: []
@@ -179,6 +184,7 @@ KaContextParameterSymbol:
   importableFqName: null
 
 KaNamedClassSymbol:
+  anchorPsi: KtClass
   annotations: []
   classId: Foo
   classKind: CLASS
@@ -212,6 +218,7 @@ KaNamedClassSymbol:
   importableFqName: Foo
 
 KaContextParameterSymbol:
+  anchorPsi: KtParameter
   annotations: [
     Anno(position = "param")
       psi: KtAnnotationEntry
@@ -248,6 +255,7 @@ KaContextParameterSymbol:
   importableFqName: null
 
 KaContextParameterSymbol:
+  anchorPsi: KtParameter
   annotations: []
   callableId: null
   contextParameters: []
@@ -286,6 +294,7 @@ KaContextParameterSymbol:
   importableFqName: null
 
 KaNamedClassSymbol:
+  anchorPsi: KtClass
   annotations: []
   classId: null
   classKind: CLASS
@@ -319,6 +328,7 @@ KaNamedClassSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: KtNamedFunction
   annotations: []
   callableId: /foo
   contextParameters: []
@@ -361,6 +371,7 @@ KaNamedFunctionSymbol:
   importableFqName: foo
 
 KaContextParameterSymbol:
+  anchorPsi: KtParameter
   annotations: [
     Anno(position = "param")
       psi: KtAnnotationEntry
@@ -397,6 +408,7 @@ KaContextParameterSymbol:
   importableFqName: null
 
 KaContextParameterSymbol:
+  anchorPsi: KtParameter
   annotations: []
   callableId: null
   contextParameters: []

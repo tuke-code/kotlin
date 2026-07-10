@@ -1,4 +1,5 @@
 KaJavaFieldSymbol:
+  anchorPsi: ClsFieldImpl
   annotations: []
   callableId: java/lang/String.value
   contextParameters: []
@@ -34,6 +35,7 @@ KaJavaFieldSymbol:
   importableFqName: null
 
 KaJavaFieldSymbol:
+  anchorPsi: ClsFieldImpl
   annotations: []
   callableId: java/lang/String.hash
   contextParameters: []
@@ -70,6 +72,7 @@ KaJavaFieldSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: java/lang/String.hash32
   contextParameters: []
@@ -116,6 +119,7 @@ KaNamedFunctionSymbol:
   importableFqName: null
 
 KaJavaFieldSymbol:
+  anchorPsi: ClsFieldImpl
   annotations: []
   callableId: java/lang/String.hash32
   contextParameters: []
@@ -152,12 +156,14 @@ KaJavaFieldSymbol:
   importableFqName: null
 
 KaSyntheticJavaPropertySymbol:
+  anchorPsi: null
   annotations: []
   backingFieldSymbol: null
   callableId: java/lang/String.length
   contextParameters: []
   contextReceivers: []
   getter: KaPropertyGetterSymbol:
+    anchorPsi: ClsMethodImpl
     annotations: []
     callableId: java/lang/String.length
     contextParameters: []
@@ -235,6 +241,7 @@ KaSyntheticJavaPropertySymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: java/lang/String.isEmpty
   contextParameters: []
@@ -281,6 +288,7 @@ KaNamedFunctionSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: java/lang/String.codePointAt
   contextParameters: []
@@ -314,6 +322,7 @@ KaNamedFunctionSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -365,6 +374,7 @@ KaNamedFunctionSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: java/lang/String.codePointBefore
   contextParameters: []
@@ -398,6 +408,7 @@ KaNamedFunctionSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -449,6 +460,7 @@ KaNamedFunctionSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: java/lang/String.codePointCount
   contextParameters: []
@@ -482,6 +494,7 @@ KaNamedFunctionSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -519,6 +532,7 @@ KaNamedFunctionSymbol:
       deprecation: null
       importableFqName: null
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -570,6 +584,7 @@ KaNamedFunctionSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: java/lang/String.offsetByCodePoints
   contextParameters: []
@@ -603,6 +618,7 @@ KaNamedFunctionSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -640,6 +656,7 @@ KaNamedFunctionSymbol:
       deprecation: null
       importableFqName: null
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -691,6 +708,7 @@ KaNamedFunctionSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: java/lang/String.getChars
   contextParameters: []
@@ -724,6 +742,7 @@ KaNamedFunctionSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -760,6 +779,7 @@ KaNamedFunctionSymbol:
       deprecation: null
       importableFqName: null
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -811,6 +831,7 @@ KaNamedFunctionSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: java/lang/String.getChars
   contextParameters: []
@@ -844,6 +865,7 @@ KaNamedFunctionSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -881,6 +903,7 @@ KaNamedFunctionSymbol:
       deprecation: null
       importableFqName: null
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -918,6 +941,7 @@ KaNamedFunctionSymbol:
       deprecation: null
       importableFqName: null
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -954,6 +978,7 @@ KaNamedFunctionSymbol:
       deprecation: null
       importableFqName: null
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -1005,6 +1030,7 @@ KaNamedFunctionSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: [
     kotlin/Deprecated(message = "Deprecated in Java")
       psi: null
@@ -1041,6 +1067,7 @@ KaNamedFunctionSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -1078,6 +1105,7 @@ KaNamedFunctionSymbol:
       deprecation: null
       importableFqName: null
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -1115,6 +1143,7 @@ KaNamedFunctionSymbol:
       deprecation: null
       importableFqName: null
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -1151,6 +1180,7 @@ KaNamedFunctionSymbol:
       deprecation: null
       importableFqName: null
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -1202,6 +1232,7 @@ KaNamedFunctionSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: java/lang/String.getBytes
   contextParameters: []
@@ -1234,6 +1265,7 @@ KaNamedFunctionSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -1284,6 +1316,7 @@ KaNamedFunctionSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: java/lang/String.getBytes
   contextParameters: []
@@ -1316,6 +1349,7 @@ KaNamedFunctionSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -1366,6 +1400,7 @@ KaNamedFunctionSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: java/lang/String.getBytes
   contextParameters: []
@@ -1411,6 +1446,7 @@ KaNamedFunctionSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: java/lang/String.equals
   contextParameters: []
@@ -1444,6 +1480,7 @@ KaNamedFunctionSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -1495,6 +1532,7 @@ KaNamedFunctionSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: java/lang/String.contentEquals
   contextParameters: []
@@ -1528,6 +1566,7 @@ KaNamedFunctionSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -1578,6 +1617,7 @@ KaNamedFunctionSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: java/lang/String.contentEquals
   contextParameters: []
@@ -1611,6 +1651,7 @@ KaNamedFunctionSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -1661,6 +1702,7 @@ KaNamedFunctionSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: java/lang/String.equalsIgnoreCase
   contextParameters: []
@@ -1694,6 +1736,7 @@ KaNamedFunctionSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -1744,6 +1787,7 @@ KaNamedFunctionSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: java/lang/String.compareTo
   contextParameters: []
@@ -1777,6 +1821,7 @@ KaNamedFunctionSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -1827,6 +1872,7 @@ KaNamedFunctionSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: java/lang/String.compareToIgnoreCase
   contextParameters: []
@@ -1860,6 +1906,7 @@ KaNamedFunctionSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -1910,6 +1957,7 @@ KaNamedFunctionSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: java/lang/String.regionMatches
   contextParameters: []
@@ -1943,6 +1991,7 @@ KaNamedFunctionSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -1980,6 +2029,7 @@ KaNamedFunctionSymbol:
       deprecation: null
       importableFqName: null
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -2016,6 +2066,7 @@ KaNamedFunctionSymbol:
       deprecation: null
       importableFqName: null
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -2053,6 +2104,7 @@ KaNamedFunctionSymbol:
       deprecation: null
       importableFqName: null
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -2104,6 +2156,7 @@ KaNamedFunctionSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: java/lang/String.regionMatches
   contextParameters: []
@@ -2137,6 +2190,7 @@ KaNamedFunctionSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -2174,6 +2228,7 @@ KaNamedFunctionSymbol:
       deprecation: null
       importableFqName: null
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -2211,6 +2266,7 @@ KaNamedFunctionSymbol:
       deprecation: null
       importableFqName: null
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -2247,6 +2303,7 @@ KaNamedFunctionSymbol:
       deprecation: null
       importableFqName: null
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -2284,6 +2341,7 @@ KaNamedFunctionSymbol:
       deprecation: null
       importableFqName: null
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -2335,6 +2393,7 @@ KaNamedFunctionSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: java/lang/String.startsWith
   contextParameters: []
@@ -2368,6 +2427,7 @@ KaNamedFunctionSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -2404,6 +2464,7 @@ KaNamedFunctionSymbol:
       deprecation: null
       importableFqName: null
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -2455,6 +2516,7 @@ KaNamedFunctionSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: java/lang/String.startsWith
   contextParameters: []
@@ -2488,6 +2550,7 @@ KaNamedFunctionSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -2538,6 +2601,7 @@ KaNamedFunctionSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: java/lang/String.endsWith
   contextParameters: []
@@ -2571,6 +2635,7 @@ KaNamedFunctionSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -2621,6 +2686,7 @@ KaNamedFunctionSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: java/lang/String.hashCode
   contextParameters: []
@@ -2667,6 +2733,7 @@ KaNamedFunctionSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: java/lang/String.indexOf
   contextParameters: []
@@ -2700,6 +2767,7 @@ KaNamedFunctionSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -2751,6 +2819,7 @@ KaNamedFunctionSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: java/lang/String.indexOf
   contextParameters: []
@@ -2784,6 +2853,7 @@ KaNamedFunctionSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -2821,6 +2891,7 @@ KaNamedFunctionSymbol:
       deprecation: null
       importableFqName: null
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -2872,6 +2943,7 @@ KaNamedFunctionSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: java/lang/String.indexOf
   contextParameters: []
@@ -2905,6 +2977,7 @@ KaNamedFunctionSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -2955,6 +3028,7 @@ KaNamedFunctionSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: java/lang/String.indexOf
   contextParameters: []
@@ -2988,6 +3062,7 @@ KaNamedFunctionSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -3024,6 +3099,7 @@ KaNamedFunctionSymbol:
       deprecation: null
       importableFqName: null
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -3075,6 +3151,7 @@ KaNamedFunctionSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: java/lang/String.indexOfSupplementary
   contextParameters: []
@@ -3108,6 +3185,7 @@ KaNamedFunctionSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -3145,6 +3223,7 @@ KaNamedFunctionSymbol:
       deprecation: null
       importableFqName: null
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -3196,6 +3275,7 @@ KaNamedFunctionSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: java/lang/String.lastIndexOf
   contextParameters: []
@@ -3229,6 +3309,7 @@ KaNamedFunctionSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -3280,6 +3361,7 @@ KaNamedFunctionSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: java/lang/String.lastIndexOf
   contextParameters: []
@@ -3313,6 +3395,7 @@ KaNamedFunctionSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -3350,6 +3433,7 @@ KaNamedFunctionSymbol:
       deprecation: null
       importableFqName: null
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -3401,6 +3485,7 @@ KaNamedFunctionSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: java/lang/String.lastIndexOf
   contextParameters: []
@@ -3434,6 +3519,7 @@ KaNamedFunctionSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -3484,6 +3570,7 @@ KaNamedFunctionSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: java/lang/String.lastIndexOf
   contextParameters: []
@@ -3517,6 +3604,7 @@ KaNamedFunctionSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -3553,6 +3641,7 @@ KaNamedFunctionSymbol:
       deprecation: null
       importableFqName: null
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -3604,6 +3693,7 @@ KaNamedFunctionSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: java/lang/String.lastIndexOfSupplementary
   contextParameters: []
@@ -3637,6 +3727,7 @@ KaNamedFunctionSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -3674,6 +3765,7 @@ KaNamedFunctionSymbol:
       deprecation: null
       importableFqName: null
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -3725,6 +3817,7 @@ KaNamedFunctionSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: java/lang/String.substring
   contextParameters: []
@@ -3757,6 +3850,7 @@ KaNamedFunctionSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -3808,6 +3902,7 @@ KaNamedFunctionSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: java/lang/String.substring
   contextParameters: []
@@ -3840,6 +3935,7 @@ KaNamedFunctionSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -3877,6 +3973,7 @@ KaNamedFunctionSymbol:
       deprecation: null
       importableFqName: null
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -3928,6 +4025,7 @@ KaNamedFunctionSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: java/lang/String.subSequence
   contextParameters: []
@@ -3961,6 +4059,7 @@ KaNamedFunctionSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -3998,6 +4097,7 @@ KaNamedFunctionSymbol:
       deprecation: null
       importableFqName: null
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -4049,6 +4149,7 @@ KaNamedFunctionSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: java/lang/String.concat
   contextParameters: []
@@ -4081,6 +4182,7 @@ KaNamedFunctionSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -4131,6 +4233,7 @@ KaNamedFunctionSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: java/lang/String.replace
   contextParameters: []
@@ -4163,6 +4266,7 @@ KaNamedFunctionSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -4200,6 +4304,7 @@ KaNamedFunctionSymbol:
       deprecation: null
       importableFqName: null
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -4251,6 +4356,7 @@ KaNamedFunctionSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: java/lang/String.replace
   contextParameters: []
@@ -4283,6 +4389,7 @@ KaNamedFunctionSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -4319,6 +4426,7 @@ KaNamedFunctionSymbol:
       deprecation: null
       importableFqName: null
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -4369,6 +4477,7 @@ KaNamedFunctionSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: java/lang/String.matches
   contextParameters: []
@@ -4402,6 +4511,7 @@ KaNamedFunctionSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -4452,6 +4562,7 @@ KaNamedFunctionSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: java/lang/String.contains
   contextParameters: []
@@ -4485,6 +4596,7 @@ KaNamedFunctionSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -4535,6 +4647,7 @@ KaNamedFunctionSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: java/lang/String.replaceFirst
   contextParameters: []
@@ -4567,6 +4680,7 @@ KaNamedFunctionSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -4603,6 +4717,7 @@ KaNamedFunctionSymbol:
       deprecation: null
       importableFqName: null
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -4653,6 +4768,7 @@ KaNamedFunctionSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: java/lang/String.replaceAll
   contextParameters: []
@@ -4685,6 +4801,7 @@ KaNamedFunctionSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -4721,6 +4838,7 @@ KaNamedFunctionSymbol:
       deprecation: null
       importableFqName: null
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -4771,6 +4889,7 @@ KaNamedFunctionSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: java/lang/String.split
   contextParameters: []
@@ -4803,6 +4922,7 @@ KaNamedFunctionSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -4839,6 +4959,7 @@ KaNamedFunctionSymbol:
       deprecation: null
       importableFqName: null
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -4890,6 +5011,7 @@ KaNamedFunctionSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: java/lang/String.split
   contextParameters: []
@@ -4922,6 +5044,7 @@ KaNamedFunctionSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -4972,6 +5095,7 @@ KaNamedFunctionSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: java/lang/String.toLowerCase
   contextParameters: []
@@ -5004,6 +5128,7 @@ KaNamedFunctionSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -5054,6 +5179,7 @@ KaNamedFunctionSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: java/lang/String.toLowerCase
   contextParameters: []
@@ -5099,6 +5225,7 @@ KaNamedFunctionSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: java/lang/String.toUpperCase
   contextParameters: []
@@ -5131,6 +5258,7 @@ KaNamedFunctionSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -5181,6 +5309,7 @@ KaNamedFunctionSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: java/lang/String.toUpperCase
   contextParameters: []
@@ -5226,6 +5355,7 @@ KaNamedFunctionSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: java/lang/String.trim
   contextParameters: []
@@ -5271,6 +5401,7 @@ KaNamedFunctionSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: java/lang/String.toString
   contextParameters: []
@@ -5317,6 +5448,7 @@ KaNamedFunctionSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: java/lang/String.toCharArray
   contextParameters: []
@@ -5362,6 +5494,7 @@ KaNamedFunctionSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: java/lang/String.intern
   contextParameters: []
@@ -5407,6 +5540,7 @@ KaNamedFunctionSymbol:
   importableFqName: null
 
 KaNamedFunctionSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: java/lang/String.get
   contextParameters: []
@@ -5440,6 +5574,7 @@ KaNamedFunctionSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -5491,6 +5626,7 @@ KaNamedFunctionSymbol:
   importableFqName: null
 
 KaNamedClassSymbol:
+  anchorPsi: ClsClassImpl
   annotations: []
   classId: java/lang/String.CaseInsensitiveComparator
   classKind: CLASS
@@ -5536,6 +5672,7 @@ KaNamedClassSymbol:
   importableFqName: java.lang.String.CaseInsensitiveComparator
 
 KaConstructorSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: null
   containingClassId: java/lang/String
@@ -5568,6 +5705,7 @@ KaConstructorSymbol:
   importableFqName: java.lang.String
 
 KaConstructorSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: null
   containingClassId: java/lang/String
@@ -5593,6 +5731,7 @@ KaConstructorSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -5637,6 +5776,7 @@ KaConstructorSymbol:
   importableFqName: java.lang.String
 
 KaConstructorSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: null
   containingClassId: java/lang/String
@@ -5662,6 +5802,7 @@ KaConstructorSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -5706,6 +5847,7 @@ KaConstructorSymbol:
   importableFqName: java.lang.String
 
 KaConstructorSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: null
   containingClassId: java/lang/String
@@ -5731,6 +5873,7 @@ KaConstructorSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -5767,6 +5910,7 @@ KaConstructorSymbol:
       deprecation: null
       importableFqName: null
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -5804,6 +5948,7 @@ KaConstructorSymbol:
       deprecation: null
       importableFqName: null
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -5849,6 +5994,7 @@ KaConstructorSymbol:
   importableFqName: java.lang.String
 
 KaConstructorSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: null
   containingClassId: java/lang/String
@@ -5874,6 +6020,7 @@ KaConstructorSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -5910,6 +6057,7 @@ KaConstructorSymbol:
       deprecation: null
       importableFqName: null
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -5947,6 +6095,7 @@ KaConstructorSymbol:
       deprecation: null
       importableFqName: null
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -5992,6 +6141,7 @@ KaConstructorSymbol:
   importableFqName: java.lang.String
 
 KaConstructorSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: [
     kotlin/Deprecated(message = "Deprecated in Java")
       psi: null
@@ -6020,6 +6170,7 @@ KaConstructorSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -6056,6 +6207,7 @@ KaConstructorSymbol:
       deprecation: null
       importableFqName: null
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -6093,6 +6245,7 @@ KaConstructorSymbol:
       deprecation: null
       importableFqName: null
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -6130,6 +6283,7 @@ KaConstructorSymbol:
       deprecation: null
       importableFqName: null
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -6175,6 +6329,7 @@ KaConstructorSymbol:
   importableFqName: java.lang.String
 
 KaConstructorSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: [
     kotlin/Deprecated(message = "Deprecated in Java")
       psi: null
@@ -6203,6 +6358,7 @@ KaConstructorSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -6239,6 +6395,7 @@ KaConstructorSymbol:
       deprecation: null
       importableFqName: null
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -6284,6 +6441,7 @@ KaConstructorSymbol:
   importableFqName: java.lang.String
 
 KaConstructorSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: null
   containingClassId: java/lang/String
@@ -6309,6 +6467,7 @@ KaConstructorSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -6345,6 +6504,7 @@ KaConstructorSymbol:
       deprecation: null
       importableFqName: null
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -6382,6 +6542,7 @@ KaConstructorSymbol:
       deprecation: null
       importableFqName: null
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -6419,6 +6580,7 @@ KaConstructorSymbol:
       deprecation: null
       importableFqName: null
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -6463,6 +6625,7 @@ KaConstructorSymbol:
   importableFqName: java.lang.String
 
 KaConstructorSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: null
   containingClassId: java/lang/String
@@ -6488,6 +6651,7 @@ KaConstructorSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -6524,6 +6688,7 @@ KaConstructorSymbol:
       deprecation: null
       importableFqName: null
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -6561,6 +6726,7 @@ KaConstructorSymbol:
       deprecation: null
       importableFqName: null
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -6598,6 +6764,7 @@ KaConstructorSymbol:
       deprecation: null
       importableFqName: null
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -6642,6 +6809,7 @@ KaConstructorSymbol:
   importableFqName: java.lang.String
 
 KaConstructorSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: null
   containingClassId: java/lang/String
@@ -6667,6 +6835,7 @@ KaConstructorSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -6703,6 +6872,7 @@ KaConstructorSymbol:
       deprecation: null
       importableFqName: null
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -6747,6 +6917,7 @@ KaConstructorSymbol:
   importableFqName: java.lang.String
 
 KaConstructorSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: null
   containingClassId: java/lang/String
@@ -6772,6 +6943,7 @@ KaConstructorSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -6808,6 +6980,7 @@ KaConstructorSymbol:
       deprecation: null
       importableFqName: null
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -6852,6 +7025,7 @@ KaConstructorSymbol:
   importableFqName: java.lang.String
 
 KaConstructorSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: null
   containingClassId: java/lang/String
@@ -6877,6 +7051,7 @@ KaConstructorSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -6913,6 +7088,7 @@ KaConstructorSymbol:
       deprecation: null
       importableFqName: null
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -6950,6 +7126,7 @@ KaConstructorSymbol:
       deprecation: null
       importableFqName: null
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -6995,6 +7172,7 @@ KaConstructorSymbol:
   importableFqName: java.lang.String
 
 KaConstructorSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: null
   containingClassId: java/lang/String
@@ -7020,6 +7198,7 @@ KaConstructorSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -7064,6 +7243,7 @@ KaConstructorSymbol:
   importableFqName: java.lang.String
 
 KaConstructorSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: null
   containingClassId: java/lang/String
@@ -7089,6 +7269,7 @@ KaConstructorSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -7133,6 +7314,7 @@ KaConstructorSymbol:
   importableFqName: java.lang.String
 
 KaConstructorSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: null
   containingClassId: java/lang/String
@@ -7158,6 +7340,7 @@ KaConstructorSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -7202,6 +7385,7 @@ KaConstructorSymbol:
   importableFqName: java.lang.String
 
 KaConstructorSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: []
   callableId: null
   containingClassId: java/lang/String
@@ -7227,6 +7411,7 @@ KaConstructorSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -7263,6 +7448,7 @@ KaConstructorSymbol:
       deprecation: null
       importableFqName: null
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -7308,6 +7494,7 @@ KaConstructorSymbol:
   importableFqName: java.lang.String
 
 KaConstructorSymbol:
+  anchorPsi: ClsMethodImpl
   annotations: [
     kotlin/Deprecated(message = "Deprecated in Java")
       psi: null
@@ -7336,6 +7523,7 @@ KaConstructorSymbol:
   typeParameters: []
   valueParameters: [
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -7373,6 +7561,7 @@ KaConstructorSymbol:
       deprecation: null
       importableFqName: null
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []
@@ -7410,6 +7599,7 @@ KaConstructorSymbol:
       deprecation: null
       importableFqName: null
     KaValueParameterSymbol:
+      anchorPsi: ClsParameterImpl
       annotations: []
       callableId: null
       contextParameters: []

@@ -1,6 +1,7 @@
 IS_THE_SAME_SYMBOL: false
 FAKE_OVERRIDE_ORIGINAL:
   KaNamedFunctionSymbol:
+    anchorPsi: PsiMethodImpl
     annotations: []
     callableId: test/JavaBase.get
     contextParameters: []

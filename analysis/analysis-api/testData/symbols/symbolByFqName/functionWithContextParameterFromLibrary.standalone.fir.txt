@@ -1,8 +1,10 @@
 KaNamedFunctionSymbol:
+  anchorPsi: null
   annotations: []
   callableId: one/foo
   contextParameters: [
     KaContextParameterSymbol:
+      anchorPsi: null
       annotations: []
       callableId: null
       contextParameters: []
@@ -33,6 +35,7 @@ KaNamedFunctionSymbol:
       deprecation: null
       importableFqName: null
     KaContextParameterSymbol:
+      anchorPsi: null
       annotations: []
       callableId: null
       contextParameters: []

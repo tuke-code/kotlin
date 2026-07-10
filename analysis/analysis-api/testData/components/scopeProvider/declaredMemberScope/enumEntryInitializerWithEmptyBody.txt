@@ -1,4 +1,5 @@
 KaConstructorSymbol:
+  anchorPsi: KtEnumEntry
   annotations: []
   callableId: null
   containingClassId: null
