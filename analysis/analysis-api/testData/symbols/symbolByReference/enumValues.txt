@@ -23,6 +23,7 @@ KaNamedFunctionSymbol:
   name: values
   origin: SOURCE_MEMBER_GENERATED
   psi: KtClass
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

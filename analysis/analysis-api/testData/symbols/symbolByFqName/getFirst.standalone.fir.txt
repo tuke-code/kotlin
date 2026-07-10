@@ -23,6 +23,7 @@ KaNamedFunctionSymbol:
   name: getFirst
   origin: LIBRARY
   psi: null
+  realPsi: null
   receiverParameter: null
   returnType: KaTypeParameterType:
     annotations: []

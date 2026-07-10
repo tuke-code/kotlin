@@ -15,6 +15,7 @@ KaConstructorSymbol:
   modality: FINAL
   origin: SOURCE
   psi: KtPrimaryConstructor
+  realPsi: KtPrimaryConstructor
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -46,6 +47,7 @@ KaConstructorSymbol:
       origin: SOURCE
       primaryConstructorProperty: KaKotlinPropertySymbol(/Anno.position)
       psi: KtParameter
+      realPsi: KtParameter
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -87,6 +89,7 @@ KaNamedClassSymbol:
   name: Anno
   origin: SOURCE
   psi: KtClass
+  realPsi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -121,6 +124,7 @@ KaContextParameterSymbol:
   name: parameter1
   origin: SOURCE
   psi: KtParameter
+  realPsi: KtParameter
   receiverParameter: null
   returnType: KaClassErrorType:
     annotations: [
@@ -153,6 +157,7 @@ KaContextParameterSymbol:
   name: parameter2
   origin: SOURCE
   psi: KtParameter
+  realPsi: KtParameter
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -191,6 +196,7 @@ KaNamedClassSymbol:
   name: Foo
   origin: SOURCE
   psi: KtClass
+  realPsi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -225,6 +231,7 @@ KaContextParameterSymbol:
   name: parameter1
   origin: SOURCE
   psi: KtParameter
+  realPsi: KtParameter
   receiverParameter: null
   returnType: KaClassErrorType:
     annotations: [
@@ -257,6 +264,7 @@ KaContextParameterSymbol:
   name: parameter2
   origin: SOURCE
   psi: KtParameter
+  realPsi: KtParameter
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -295,6 +303,7 @@ KaNamedClassSymbol:
   name: Foo
   origin: SOURCE
   psi: KtClass
+  realPsi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -334,6 +343,7 @@ KaNamedFunctionSymbol:
   name: foo
   origin: SOURCE
   psi: KtNamedFunction
+  realPsi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -370,6 +380,7 @@ KaContextParameterSymbol:
   name: parameter1
   origin: SOURCE
   psi: KtParameter
+  realPsi: KtParameter
   receiverParameter: null
   returnType: KaClassErrorType:
     annotations: [
@@ -402,6 +413,7 @@ KaContextParameterSymbol:
   name: parameter2
   origin: SOURCE
   psi: KtParameter
+  realPsi: KtParameter
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

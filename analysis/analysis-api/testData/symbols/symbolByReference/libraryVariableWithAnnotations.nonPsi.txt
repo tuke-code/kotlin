@@ -22,6 +22,7 @@ KaKotlinPropertySymbol:
     origin: PROPERTY_BACKING_FIELD
     owningProperty: KaKotlinPropertySymbol(one/topLevelVariableWithAnnotations)
     psi: null
+    realPsi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -58,6 +59,7 @@ KaKotlinPropertySymbol:
     modality: FINAL
     origin: LIBRARY
     psi: null
+    realPsi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -92,6 +94,7 @@ KaKotlinPropertySymbol:
   origin: LIBRARY
   primaryConstructorParameter: null
   psi: KtProperty
+  realPsi: KtProperty
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -144,6 +147,7 @@ KaKotlinPropertySymbol:
       origin: LIBRARY
       primaryConstructorProperty: null
       psi: KtParameter
+      realPsi: KtParameter
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -157,6 +161,7 @@ KaKotlinPropertySymbol:
       deprecation: null
       importableFqName: null
     psi: KtPropertyAccessor
+    realPsi: KtPropertyAccessor
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -191,6 +196,7 @@ KaKotlinPropertySymbol:
         origin: LIBRARY
         primaryConstructorProperty: null
         psi: KtParameter
+        realPsi: KtParameter
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []

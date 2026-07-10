@@ -52,8 +52,36 @@ public interface KaSymbol : KaLifetimeOwner {
      *
      * For other (usually synthetic) origins, the [psi] might be `null` or non-null. The Analysis API makes no consistent guarantees about
      * the PSI of such origins.
+     *
+     * @see realPsi
      */
     public val psi: PsiElement?
+
+    /**
+     * A [PsiElement] explicitly present in the code (source or library). This [PsiElement] is sufficient to restore the symbol
+     * via the [symbol] API without any additional information.
+     *
+     * It can have a value only for the following [origin]s:
+     *
+     * - [KaSymbolOrigin.SOURCE]
+     * - [KaSymbolOrigin.JAVA_SOURCE]
+     * - [KaSymbolOrigin.LIBRARY]
+     * - [KaSymbolOrigin.JAVA_LIBRARY]
+     *
+     * For all other [origin]s, the value is `null`.
+     *
+     * ### Examples:
+     *
+     * ```kotlin
+     * class MyClass
+     * ```
+     *
+     * For this code, [KaNamedClassSymbol] represents the class, while [KaConstructorSymbol] represents the implicit constructor.
+     * The class is present in the code as a [KtClassOrObject][org.jetbrains.kotlin.psi.KtClassOrObject], and this is sufficient to
+     * obtain the same symbol. In contrast, the constructor is not present in the code and can only be obtained via the class, so
+     * [realPsi] is `null` for it.
+     */
+    public val realPsi: PsiElement?
 
     /**
      * Creates a [KaSymbolPointer] which can be used to retrieve the symbol in a different [analyze][org.jetbrains.kotlin.analysis.api.session.analyze]

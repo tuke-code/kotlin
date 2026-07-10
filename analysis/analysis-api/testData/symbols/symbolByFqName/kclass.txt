@@ -16,6 +16,7 @@ KaNamedClassSymbol:
   name: KClass
   origin: LIBRARY
   psi: KtClass
+  realPsi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -42,6 +43,7 @@ KaNamedClassSymbol:
       name: T
       origin: LIBRARY
       psi: KtTypeParameter
+      realPsi: KtTypeParameter
       upperBounds: [
         KaUsualClassType:
           annotations: []

@@ -23,6 +23,7 @@ KaNamedFunctionSymbol:
   name: foo
   origin: SOURCE
   psi: KtNamedFunction
+  realPsi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -61,6 +62,7 @@ KaNamedClassSymbol:
   name: InterfaceA
   origin: SOURCE
   psi: KtClass
+  realPsi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -100,6 +102,7 @@ KaNamedFunctionSymbol:
   name: foo
   origin: SOURCE
   psi: KtNamedFunction
+  realPsi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -137,6 +140,7 @@ KaConstructorSymbol:
   modality: FINAL
   origin: SOURCE
   psi: KtSecondaryConstructor
+  realPsi: KtSecondaryConstructor
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -176,6 +180,7 @@ KaNamedFunctionSymbol:
   name: function
   origin: SOURCE
   psi: KtNamedFunction
+  realPsi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -221,6 +226,7 @@ KaNamedFunctionSymbol:
   name: privateFunction
   origin: SOURCE
   psi: KtNamedFunction
+  realPsi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -266,6 +272,7 @@ KaNamedFunctionSymbol:
   name: internalFunction
   origin: SOURCE
   psi: KtNamedFunction
+  realPsi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -307,6 +314,7 @@ KaKotlinPropertySymbol:
     origin: PROPERTY_BACKING_FIELD
     owningProperty: KaKotlinPropertySymbol(/Object.variable)
     psi: null
+    realPsi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -344,6 +352,7 @@ KaKotlinPropertySymbol:
     modality: FINAL
     origin: SOURCE
     psi: null
+    realPsi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -382,6 +391,7 @@ KaKotlinPropertySymbol:
   origin: SOURCE
   primaryConstructorParameter: null
   psi: KtProperty
+  realPsi: KtProperty
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -428,6 +438,7 @@ KaKotlinPropertySymbol:
       origin: SOURCE
       primaryConstructorProperty: null
       psi: null
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -441,6 +452,7 @@ KaKotlinPropertySymbol:
       deprecation: null
       importableFqName: null
     psi: null
+    realPsi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -472,6 +484,7 @@ KaKotlinPropertySymbol:
         origin: SOURCE
         primaryConstructorProperty: null
         psi: null
+        realPsi: null
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -531,6 +544,7 @@ KaKotlinPropertySymbol:
     origin: PROPERTY_BACKING_FIELD
     owningProperty: KaKotlinPropertySymbol(/Object.privateVariable)
     psi: null
+    realPsi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -568,6 +582,7 @@ KaKotlinPropertySymbol:
     modality: FINAL
     origin: SOURCE
     psi: null
+    realPsi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -606,6 +621,7 @@ KaKotlinPropertySymbol:
   origin: SOURCE
   primaryConstructorParameter: null
   psi: KtProperty
+  realPsi: KtProperty
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -652,6 +668,7 @@ KaKotlinPropertySymbol:
       origin: SOURCE
       primaryConstructorProperty: null
       psi: null
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -665,6 +682,7 @@ KaKotlinPropertySymbol:
       deprecation: null
       importableFqName: null
     psi: null
+    realPsi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -696,6 +714,7 @@ KaKotlinPropertySymbol:
         origin: SOURCE
         primaryConstructorProperty: null
         psi: null
+        realPsi: null
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -755,6 +774,7 @@ KaKotlinPropertySymbol:
     origin: PROPERTY_BACKING_FIELD
     owningProperty: KaKotlinPropertySymbol(/Object.internalVariable)
     psi: null
+    realPsi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -792,6 +812,7 @@ KaKotlinPropertySymbol:
     modality: FINAL
     origin: SOURCE
     psi: null
+    realPsi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -830,6 +851,7 @@ KaKotlinPropertySymbol:
   origin: SOURCE
   primaryConstructorParameter: null
   psi: KtProperty
+  realPsi: KtProperty
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -876,6 +898,7 @@ KaKotlinPropertySymbol:
       origin: SOURCE
       primaryConstructorProperty: null
       psi: null
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -889,6 +912,7 @@ KaKotlinPropertySymbol:
       deprecation: null
       importableFqName: null
     psi: null
+    realPsi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -920,6 +944,7 @@ KaKotlinPropertySymbol:
         origin: SOURCE
         primaryConstructorProperty: null
         psi: null
+        realPsi: null
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -976,6 +1001,7 @@ KaNamedClassSymbol:
   name: NestedClass
   origin: SOURCE
   psi: KtClass
+  realPsi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -1008,6 +1034,7 @@ KaNamedClassSymbol:
   name: InnerClass
   origin: SOURCE
   psi: KtClass
+  realPsi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -1040,6 +1067,7 @@ KaNamedClassSymbol:
   name: NestedObject
   origin: SOURCE
   psi: KtObjectDeclaration
+  realPsi: KtObjectDeclaration
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -1072,6 +1100,7 @@ KaNamedClassSymbol:
   name: NestedInterface
   origin: SOURCE
   psi: KtClass
+  realPsi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -1104,6 +1133,7 @@ KaNamedClassSymbol:
   name: NestedAnnotation
   origin: SOURCE
   psi: KtClass
+  realPsi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -1133,6 +1163,7 @@ KaTypeAliasSymbol:
   name: NestedTypeAlias
   origin: SOURCE
   psi: KtTypeAlias
+  realPsi: KtTypeAlias
   typeParameters: []
   visibility: PUBLIC
   getContainingFileSymbol: KaFileSymbol(object.kt)
@@ -1158,6 +1189,7 @@ KaNamedClassSymbol:
   name: Object
   origin: SOURCE
   psi: KtObjectDeclaration
+  realPsi: KtObjectDeclaration
   superTypes: [
     KaUsualClassType:
       annotations: []

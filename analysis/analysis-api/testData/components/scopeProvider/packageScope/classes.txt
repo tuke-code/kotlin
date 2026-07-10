@@ -16,6 +16,7 @@ KaNamedClassSymbol:
   name: A
   origin: SOURCE
   psi: KtClass
+  realPsi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -48,6 +49,7 @@ KaNamedClassSymbol:
   name: InternalA
   origin: SOURCE
   psi: KtClass
+  realPsi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -80,6 +82,7 @@ KaNamedClassSymbol:
   name: PrivateA
   origin: SOURCE
   psi: KtClass
+  realPsi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -112,6 +115,7 @@ KaNamedClassSymbol:
   name: B
   origin: SOURCE
   psi: KtClass
+  realPsi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -144,6 +148,7 @@ KaNamedClassSymbol:
   name: InternalB
   origin: SOURCE
   psi: KtClass
+  realPsi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -176,6 +181,7 @@ KaNamedClassSymbol:
   name: PrivateB
   origin: SOURCE
   psi: KtClass
+  realPsi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []

@@ -17,6 +17,7 @@ KaDefinitelyNotNullType:
       name: T
       origin: SOURCE
       psi: KtTypeParameter
+      realPsi: KtTypeParameter
       upperBounds: [
         KaUsualClassType:
           abbreviation: null

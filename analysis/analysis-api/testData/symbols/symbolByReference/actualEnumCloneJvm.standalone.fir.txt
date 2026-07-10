@@ -23,6 +23,7 @@ KaNamedFunctionSymbol:
   name: clone
   origin: LIBRARY
   psi: null
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

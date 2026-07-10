@@ -16,6 +16,7 @@ KaReceiverParameterSymbol:
   origin: SOURCE
   owningCallableSymbol: KaAnonymousFunctionSymbol(<local>/<no name provided>)
   psi: KtFunctionLiteral
+  realPsi: KtFunctionLiteral
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -47,6 +48,7 @@ KaReceiverParameterSymbol:
   origin: SOURCE
   owningCallableSymbol: KaAnonymousFunctionSymbol(<local>/<no name provided>)
   psi: KtFunctionLiteral
+  realPsi: KtFunctionLiteral
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -78,6 +80,7 @@ KaReceiverParameterSymbol:
   origin: SOURCE
   owningCallableSymbol: KaAnonymousFunctionSymbol(<local>/<no name provided>)
   psi: KtFunctionLiteral
+  realPsi: KtFunctionLiteral
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -109,6 +112,7 @@ KaReceiverParameterSymbol:
   origin: SOURCE
   owningCallableSymbol: KaAnonymousFunctionSymbol(<local>/<no name provided>)
   psi: KtFunctionLiteral
+  realPsi: KtFunctionLiteral
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

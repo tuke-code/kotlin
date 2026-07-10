@@ -19,6 +19,7 @@ KaKotlinPropertySymbol:
     origin: PROPERTY_BACKING_FIELD
     owningProperty: KaKotlinPropertySymbol(<local>/column)
     psi: null
+    realPsi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -56,6 +57,7 @@ KaKotlinPropertySymbol:
     modality: FINAL
     origin: PLUGIN
     psi: null
+    realPsi: null
     receiverParameter: KaReceiverParameterSymbol:
       annotations: []
       callableId: null
@@ -74,6 +76,7 @@ KaKotlinPropertySymbol:
       origin: PLUGIN
       owningCallableSymbol: KaKotlinPropertySymbol(<local>/column)
       psi: null
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -128,6 +131,7 @@ KaKotlinPropertySymbol:
   origin: PLUGIN
   primaryConstructorParameter: null
   psi: null
+  realPsi: null
   receiverParameter: KaReceiverParameterSymbol:
     annotations: []
     callableId: null
@@ -146,6 +150,7 @@ KaKotlinPropertySymbol:
     origin: PLUGIN
     owningCallableSymbol: KaKotlinPropertySymbol(<local>/column)
     psi: null
+    realPsi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []

@@ -22,6 +22,7 @@ KaKotlinPropertySymbol:
     modality: FINAL
     origin: PLUGIN
     psi: null
+    realPsi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -56,6 +57,7 @@ KaKotlinPropertySymbol:
   origin: PLUGIN
   primaryConstructorParameter: null
   psi: KtScriptInitializer
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

@@ -15,6 +15,7 @@ KaConstructorSymbol:
   modality: FINAL
   origin: SOURCE
   psi: KtPrimaryConstructor
+  realPsi: KtPrimaryConstructor
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -46,6 +47,7 @@ KaConstructorSymbol:
       origin: SOURCE
       primaryConstructorProperty: null
       psi: KtParameter
+      realPsi: KtParameter
       receiverParameter: null
       returnType: KaErrorType:
         annotations: []
@@ -83,6 +85,7 @@ KaNamedClassSymbol:
   name: Foo
   origin: SOURCE
   psi: KtClass
+  realPsi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []

@@ -23,6 +23,7 @@ KaNamedFunctionSymbol:
   name: a
   origin: SOURCE
   psi: KtNamedFunction
+  realPsi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -68,6 +69,7 @@ KaNamedFunctionSymbol:
   name: foo
   origin: SOURCE
   psi: KtNamedFunction
+  realPsi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -106,6 +108,7 @@ KaEnumEntrySymbol:
   name: FirstEntry
   origin: SOURCE
   psi: KtEnumEntry
+  realPsi: KtEnumEntry
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -144,6 +147,7 @@ KaNamedFunctionSymbol:
   name: foo
   origin: SOURCE
   psi: KtNamedFunction
+  realPsi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -185,6 +189,7 @@ KaKotlinPropertySymbol:
     origin: PROPERTY_BACKING_FIELD
     owningProperty: KaKotlinPropertySymbol(<local>/i)
     psi: null
+    realPsi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -222,6 +227,7 @@ KaKotlinPropertySymbol:
     modality: OPEN
     origin: SOURCE
     psi: KtPropertyAccessor
+    realPsi: KtPropertyAccessor
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -256,6 +262,7 @@ KaKotlinPropertySymbol:
   origin: SOURCE
   primaryConstructorParameter: null
   psi: KtProperty
+  realPsi: KtProperty
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -295,6 +302,7 @@ KaEnumEntrySymbol:
   name: SecondEntry
   origin: SOURCE
   psi: KtEnumEntry
+  realPsi: KtEnumEntry
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -333,6 +341,7 @@ KaNamedFunctionSymbol:
   name: foo
   origin: SOURCE
   psi: KtNamedFunction
+  realPsi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -378,6 +387,7 @@ KaNamedFunctionSymbol:
   name: foo
   origin: SOURCE
   psi: KtNamedFunction
+  realPsi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -409,6 +419,7 @@ KaNamedFunctionSymbol:
       origin: SOURCE
       primaryConstructorProperty: null
       psi: KtParameter
+      realPsi: KtParameter
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -453,6 +464,7 @@ KaEnumEntrySymbol:
   name: ThirdEntry
   origin: SOURCE
   psi: KtEnumEntry
+  realPsi: KtEnumEntry
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -491,6 +503,7 @@ KaNamedFunctionSymbol:
   name: foo
   origin: SOURCE
   psi: KtNamedFunction
+  realPsi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -536,6 +549,7 @@ KaNamedFunctionSymbol:
   name: foo
   origin: SOURCE
   psi: KtNamedFunction
+  realPsi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -567,6 +581,7 @@ KaNamedFunctionSymbol:
       origin: SOURCE
       primaryConstructorProperty: null
       psi: KtParameter
+      realPsi: KtParameter
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -614,6 +629,7 @@ KaKotlinPropertySymbol:
     origin: PROPERTY_BACKING_FIELD
     owningProperty: KaKotlinPropertySymbol(/MyEnumClass.i)
     psi: null
+    realPsi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -651,6 +667,7 @@ KaKotlinPropertySymbol:
     modality: OPEN
     origin: SOURCE
     psi: null
+    realPsi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -689,6 +706,7 @@ KaKotlinPropertySymbol:
   origin: SOURCE
   primaryConstructorParameter: null
   psi: KtProperty
+  realPsi: KtProperty
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -728,6 +746,7 @@ KaNamedClassSymbol:
   name: MyEnumClass
   origin: SOURCE
   psi: KtClass
+  realPsi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []

@@ -22,6 +22,7 @@ KaKotlinPropertySymbol:
     modality: OPEN
     origin: DELEGATED
     psi: KtClass
+    realPsi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -60,6 +61,7 @@ KaKotlinPropertySymbol:
   origin: DELEGATED
   primaryConstructorParameter: null
   psi: KtProperty
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

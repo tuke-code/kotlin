@@ -16,6 +16,7 @@ KaLocalVariableSymbol:
   name: something1
   origin: SOURCE
   psi: KtDestructuringDeclarationEntry
+  realPsi: KtDestructuringDeclarationEntry
   receiverParameter: null
   returnType: KaErrorType:
     annotations: []

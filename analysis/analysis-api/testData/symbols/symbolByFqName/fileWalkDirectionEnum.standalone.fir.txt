@@ -23,6 +23,7 @@ KaNamedFunctionSymbol:
   name: listOf
   origin: LIBRARY
   psi: null
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -44,6 +45,7 @@ KaNamedFunctionSymbol:
       name: T
       origin: LIBRARY
       psi: null
+      realPsi: null
       upperBounds: []
       variance: INVARIANT
       visibility: LOCAL
@@ -77,6 +79,7 @@ KaNamedFunctionSymbol:
       origin: LIBRARY
       primaryConstructorProperty: null
       psi: null
+      realPsi: null
       receiverParameter: null
       returnType: KaTypeParameterType:
         annotations: []
@@ -123,6 +126,7 @@ KaNamedFunctionSymbol:
   name: listOf
   origin: LIBRARY
   psi: null
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -144,6 +148,7 @@ KaNamedFunctionSymbol:
       name: T
       origin: LIBRARY
       psi: null
+      realPsi: null
       upperBounds: []
       variance: INVARIANT
       visibility: LOCAL
@@ -177,6 +182,7 @@ KaNamedFunctionSymbol:
       origin: LIBRARY
       primaryConstructorProperty: null
       psi: null
+      realPsi: null
       receiverParameter: null
       returnType: KaTypeParameterType:
         annotations: []
@@ -226,6 +232,7 @@ KaNamedFunctionSymbol:
   name: listOf
   origin: LIBRARY
   psi: null
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -247,6 +254,7 @@ KaNamedFunctionSymbol:
       name: T
       origin: LIBRARY
       psi: null
+      realPsi: null
       upperBounds: []
       variance: INVARIANT
       visibility: LOCAL

@@ -23,6 +23,7 @@ KaNamedFunctionSymbol:
   name: memberFunctionWithReceiver
   origin: LIBRARY
   psi: KtNamedFunction
+  realPsi: KtNamedFunction
   receiverParameter: KaReceiverParameterSymbol:
     annotations: [
       MyAnnotation7()
@@ -44,6 +45,7 @@ KaNamedFunctionSymbol:
     origin: LIBRARY
     owningCallableSymbol: KaNamedFunctionSymbol(/Foo.memberFunctionWithReceiver)
     psi: KtTypeReference
+    realPsi: KtTypeReference
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: [
@@ -103,6 +105,7 @@ KaNamedFunctionSymbol:
   name: memberFunctionWithReceiverWithNullableReceiver
   origin: LIBRARY
   psi: KtNamedFunction
+  realPsi: KtNamedFunction
   receiverParameter: KaReceiverParameterSymbol:
     annotations: [
       MyAnnotation7()
@@ -124,6 +127,7 @@ KaNamedFunctionSymbol:
     origin: LIBRARY
     owningCallableSymbol: KaNamedFunctionSymbol(/Foo.memberFunctionWithReceiverWithNullableReceiver)
     psi: KtTypeReference
+    realPsi: KtTypeReference
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: [
@@ -169,6 +173,7 @@ KaNamedFunctionSymbol:
       origin: LIBRARY
       primaryConstructorProperty: null
       psi: KtParameter
+      realPsi: KtParameter
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -222,6 +227,7 @@ KaKotlinPropertySymbol:
     origin: PROPERTY_BACKING_FIELD
     owningProperty: KaKotlinPropertySymbol(/Foo.allAnnotations)
     psi: null
+    realPsi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -262,6 +268,7 @@ KaKotlinPropertySymbol:
     modality: FINAL
     origin: LIBRARY
     psi: null
+    realPsi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -300,6 +307,7 @@ KaKotlinPropertySymbol:
   origin: LIBRARY
   primaryConstructorParameter: null
   psi: KtProperty
+  realPsi: KtProperty
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -352,6 +360,7 @@ KaKotlinPropertySymbol:
       origin: LIBRARY
       primaryConstructorProperty: null
       psi: KtParameter
+      realPsi: KtParameter
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -365,6 +374,7 @@ KaKotlinPropertySymbol:
       deprecation: null
       importableFqName: null
     psi: KtPropertyAccessor
+    realPsi: KtPropertyAccessor
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -399,6 +409,7 @@ KaKotlinPropertySymbol:
         origin: LIBRARY
         primaryConstructorProperty: null
         psi: KtParameter
+        realPsi: KtParameter
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -458,6 +469,7 @@ KaKotlinPropertySymbol:
     origin: PROPERTY_BACKING_FIELD
     owningProperty: KaKotlinPropertySymbol(/Foo.both)
     psi: null
+    realPsi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -498,6 +510,7 @@ KaKotlinPropertySymbol:
     modality: FINAL
     origin: LIBRARY
     psi: null
+    realPsi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -536,6 +549,7 @@ KaKotlinPropertySymbol:
   origin: LIBRARY
   primaryConstructorParameter: null
   psi: KtProperty
+  realPsi: KtProperty
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -585,6 +599,7 @@ KaKotlinPropertySymbol:
       origin: LIBRARY
       primaryConstructorProperty: null
       psi: null
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -598,6 +613,7 @@ KaKotlinPropertySymbol:
       deprecation: null
       importableFqName: null
     psi: null
+    realPsi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -629,6 +645,7 @@ KaKotlinPropertySymbol:
         origin: LIBRARY
         primaryConstructorProperty: null
         psi: null
+        realPsi: null
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -691,6 +708,7 @@ KaKotlinPropertySymbol:
     origin: PROPERTY_BACKING_FIELD
     owningProperty: KaKotlinPropertySymbol(/Foo.custom)
     psi: null
+    realPsi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -728,6 +746,7 @@ KaKotlinPropertySymbol:
     modality: FINAL
     origin: LIBRARY
     psi: KtPropertyAccessor
+    realPsi: KtPropertyAccessor
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -766,6 +785,7 @@ KaKotlinPropertySymbol:
   origin: LIBRARY
   primaryConstructorParameter: null
   psi: KtProperty
+  realPsi: KtProperty
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -812,6 +832,7 @@ KaKotlinPropertySymbol:
       origin: LIBRARY
       primaryConstructorProperty: null
       psi: KtParameter
+      realPsi: KtParameter
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -825,6 +846,7 @@ KaKotlinPropertySymbol:
       deprecation: null
       importableFqName: null
     psi: KtPropertyAccessor
+    realPsi: KtPropertyAccessor
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -856,6 +878,7 @@ KaKotlinPropertySymbol:
         origin: LIBRARY
         primaryConstructorProperty: null
         psi: KtParameter
+        realPsi: KtParameter
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -915,6 +938,7 @@ KaKotlinPropertySymbol:
     origin: PROPERTY_BACKING_FIELD
     owningProperty: KaKotlinPropertySymbol(/Foo.memberPropertyWithReceiver)
     psi: null
+    realPsi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -952,6 +976,7 @@ KaKotlinPropertySymbol:
     modality: FINAL
     origin: LIBRARY
     psi: KtPropertyAccessor
+    realPsi: KtPropertyAccessor
     receiverParameter: KaReceiverParameterSymbol:
       annotations: [
         MyAnnotation7()
@@ -973,6 +998,7 @@ KaKotlinPropertySymbol:
       origin: LIBRARY
       owningCallableSymbol: KaKotlinPropertySymbol(/Foo.memberPropertyWithReceiver)
       psi: KtTypeReference
+      realPsi: KtTypeReference
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: [
@@ -1025,6 +1051,7 @@ KaKotlinPropertySymbol:
   origin: LIBRARY
   primaryConstructorParameter: null
   psi: KtProperty
+  realPsi: KtProperty
   receiverParameter: KaReceiverParameterSymbol:
     annotations: [
       MyAnnotation7()
@@ -1046,6 +1073,7 @@ KaKotlinPropertySymbol:
     origin: LIBRARY
     owningCallableSymbol: KaKotlinPropertySymbol(/Foo.memberPropertyWithReceiver)
     psi: KtTypeReference
+    realPsi: KtTypeReference
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: [
@@ -1106,6 +1134,7 @@ KaKotlinPropertySymbol:
       origin: LIBRARY
       primaryConstructorProperty: null
       psi: KtParameter
+      realPsi: KtParameter
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -1119,6 +1148,7 @@ KaKotlinPropertySymbol:
       deprecation: null
       importableFqName: null
     psi: KtPropertyAccessor
+    realPsi: KtPropertyAccessor
     receiverParameter: KaReceiverParameterSymbol:
       annotations: [
         MyAnnotation7()
@@ -1140,6 +1170,7 @@ KaKotlinPropertySymbol:
       origin: LIBRARY
       owningCallableSymbol: KaKotlinPropertySymbol(/Foo.memberPropertyWithReceiver)
       psi: KtTypeReference
+      realPsi: KtTypeReference
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: [
@@ -1185,6 +1216,7 @@ KaKotlinPropertySymbol:
         origin: LIBRARY
         primaryConstructorProperty: null
         psi: KtParameter
+        realPsi: KtParameter
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -1247,6 +1279,7 @@ KaKotlinPropertySymbol:
     origin: PROPERTY_BACKING_FIELD
     owningProperty: KaKotlinPropertySymbol(/Foo.variable)
     psi: null
+    realPsi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -1284,6 +1317,7 @@ KaKotlinPropertySymbol:
     modality: FINAL
     origin: LIBRARY
     psi: null
+    realPsi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -1322,6 +1356,7 @@ KaKotlinPropertySymbol:
   origin: LIBRARY
   primaryConstructorParameter: null
   psi: KtProperty
+  realPsi: KtProperty
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -1368,6 +1403,7 @@ KaKotlinPropertySymbol:
       origin: LIBRARY
       primaryConstructorProperty: null
       psi: null
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -1381,6 +1417,7 @@ KaKotlinPropertySymbol:
       deprecation: null
       importableFqName: null
     psi: null
+    realPsi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -1412,6 +1449,7 @@ KaKotlinPropertySymbol:
         origin: LIBRARY
         primaryConstructorProperty: null
         psi: null
+        realPsi: null
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -1474,6 +1512,7 @@ KaKotlinPropertySymbol:
     origin: PROPERTY_BACKING_FIELD
     owningProperty: KaKotlinPropertySymbol(/Foo.withCustomGetter)
     psi: null
+    realPsi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -1511,6 +1550,7 @@ KaKotlinPropertySymbol:
     modality: FINAL
     origin: LIBRARY
     psi: KtPropertyAccessor
+    realPsi: KtPropertyAccessor
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -1549,6 +1589,7 @@ KaKotlinPropertySymbol:
   origin: LIBRARY
   primaryConstructorParameter: null
   psi: KtProperty
+  realPsi: KtProperty
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -1595,6 +1636,7 @@ KaKotlinPropertySymbol:
       origin: LIBRARY
       primaryConstructorProperty: null
       psi: null
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -1608,6 +1650,7 @@ KaKotlinPropertySymbol:
       deprecation: null
       importableFqName: null
     psi: null
+    realPsi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -1639,6 +1682,7 @@ KaKotlinPropertySymbol:
         origin: LIBRARY
         primaryConstructorProperty: null
         psi: null
+        realPsi: null
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -1701,6 +1745,7 @@ KaKotlinPropertySymbol:
     origin: PROPERTY_BACKING_FIELD
     owningProperty: KaKotlinPropertySymbol(/Foo.withCustomSetter)
     psi: null
+    realPsi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -1738,6 +1783,7 @@ KaKotlinPropertySymbol:
     modality: FINAL
     origin: LIBRARY
     psi: null
+    realPsi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -1776,6 +1822,7 @@ KaKotlinPropertySymbol:
   origin: LIBRARY
   primaryConstructorParameter: null
   psi: KtProperty
+  realPsi: KtProperty
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -1822,6 +1869,7 @@ KaKotlinPropertySymbol:
       origin: LIBRARY
       primaryConstructorProperty: null
       psi: KtParameter
+      realPsi: KtParameter
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -1835,6 +1883,7 @@ KaKotlinPropertySymbol:
       deprecation: null
       importableFqName: null
     psi: KtPropertyAccessor
+    realPsi: KtPropertyAccessor
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -1866,6 +1915,7 @@ KaKotlinPropertySymbol:
         origin: LIBRARY
         primaryConstructorProperty: null
         psi: KtParameter
+        realPsi: KtParameter
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -1925,6 +1975,7 @@ KaKotlinPropertySymbol:
     origin: PROPERTY_BACKING_FIELD
     owningProperty: KaKotlinPropertySymbol(/Foo.withDefaultGetter)
     psi: null
+    realPsi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -1965,6 +2016,7 @@ KaKotlinPropertySymbol:
     modality: FINAL
     origin: LIBRARY
     psi: null
+    realPsi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -2003,6 +2055,7 @@ KaKotlinPropertySymbol:
   origin: LIBRARY
   primaryConstructorParameter: null
   psi: KtProperty
+  realPsi: KtProperty
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -2045,6 +2098,7 @@ KaKotlinPropertySymbol:
     origin: PROPERTY_BACKING_FIELD
     owningProperty: KaKotlinPropertySymbol(/Foo.withDefaultSetter)
     psi: null
+    realPsi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -2082,6 +2136,7 @@ KaKotlinPropertySymbol:
     modality: FINAL
     origin: LIBRARY
     psi: null
+    realPsi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -2120,6 +2175,7 @@ KaKotlinPropertySymbol:
   origin: LIBRARY
   primaryConstructorParameter: null
   psi: KtProperty
+  realPsi: KtProperty
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -2169,6 +2225,7 @@ KaKotlinPropertySymbol:
       origin: LIBRARY
       primaryConstructorProperty: null
       psi: null
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -2182,6 +2239,7 @@ KaKotlinPropertySymbol:
       deprecation: null
       importableFqName: null
     psi: null
+    realPsi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -2213,6 +2271,7 @@ KaKotlinPropertySymbol:
         origin: LIBRARY
         primaryConstructorProperty: null
         psi: null
+        realPsi: null
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -2268,6 +2327,7 @@ KaConstructorSymbol:
   modality: FINAL
   origin: LIBRARY
   psi: KtPrimaryConstructor
+  realPsi: KtPrimaryConstructor
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -2299,6 +2359,7 @@ KaConstructorSymbol:
       origin: LIBRARY
       primaryConstructorProperty: null
       psi: KtParameter
+      realPsi: KtParameter
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -2335,6 +2396,7 @@ KaConstructorSymbol:
       origin: LIBRARY
       primaryConstructorProperty: null
       psi: KtParameter
+      realPsi: KtParameter
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -2371,6 +2433,7 @@ KaConstructorSymbol:
       origin: LIBRARY
       primaryConstructorProperty: null
       psi: KtParameter
+      realPsi: KtParameter
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -2410,6 +2473,7 @@ KaConstructorSymbol:
       origin: LIBRARY
       primaryConstructorProperty: null
       psi: KtParameter
+      realPsi: KtParameter
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []

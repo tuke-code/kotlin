@@ -23,6 +23,7 @@ KaNamedFunctionSymbol:
   name: hashCode
   origin: LIBRARY
   psi: KtNamedFunction
+  realPsi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

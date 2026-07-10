@@ -16,6 +16,7 @@ KaNamedClassSymbol:
   name: InnerClass
   origin: SOURCE
   psi: KtClass
+  realPsi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []

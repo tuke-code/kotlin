@@ -16,6 +16,7 @@ KaNamedClassSymbol:
   name: MyInterface
   origin: SOURCE
   psi: KtClass
+  realPsi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []

@@ -16,6 +16,7 @@ KaNamedClassSymbol:
   name: String
   origin: JAVA_LIBRARY
   psi: ClsClassImpl
+  realPsi: ClsClassImpl
   superTypes: [
     KaUsualClassType:
       annotations: []

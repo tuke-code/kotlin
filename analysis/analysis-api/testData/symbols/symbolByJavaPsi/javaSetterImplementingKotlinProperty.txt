@@ -23,6 +23,7 @@ KaNamedFunctionSymbol:
   name: setFoo
   origin: JAVA_SOURCE
   psi: PsiMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -54,6 +55,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_SOURCE
       primaryConstructorProperty: null
       psi: PsiParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []

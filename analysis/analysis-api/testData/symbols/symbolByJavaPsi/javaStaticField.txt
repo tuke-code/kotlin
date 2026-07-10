@@ -16,6 +16,7 @@ KaJavaFieldSymbol:
   name: count
   origin: JAVA_SOURCE
   psi: PsiFieldImpl
+  realPsi: PsiFieldImpl
   receiverParameter: null
   returnType: KaFlexibleType:
     annotations: []

@@ -19,6 +19,7 @@ KaNamedFunctionSymbol:
       name: <unused var>
       origin: LIBRARY
       psi: KtParameter
+      realPsi: KtParameter
       receiverParameter: null
       returnType: KaTypeParameterType:
         annotations: []
@@ -58,6 +59,7 @@ KaNamedFunctionSymbol:
   name: myContext
   origin: LIBRARY
   psi: KtNamedFunction
+  realPsi: KtNamedFunction
   receiverParameter: null
   returnType: KaTypeParameterType:
     annotations: []
@@ -74,6 +76,7 @@ KaNamedFunctionSymbol:
       name: T1
       origin: LIBRARY
       psi: KtTypeParameter
+      realPsi: KtTypeParameter
       upperBounds: []
       variance: INVARIANT
       visibility: LOCAL
@@ -92,6 +95,7 @@ KaNamedFunctionSymbol:
       name: T2
       origin: LIBRARY
       psi: KtTypeParameter
+      realPsi: KtTypeParameter
       upperBounds: []
       variance: INVARIANT
       visibility: LOCAL
@@ -110,6 +114,7 @@ KaNamedFunctionSymbol:
       name: R
       origin: LIBRARY
       psi: KtTypeParameter
+      realPsi: KtTypeParameter
       upperBounds: []
       variance: INVARIANT
       visibility: LOCAL
@@ -143,6 +148,7 @@ KaNamedFunctionSymbol:
       origin: LIBRARY
       primaryConstructorProperty: null
       psi: KtParameter
+      realPsi: KtParameter
       receiverParameter: null
       returnType: KaFunctionType:
         annotations: []
@@ -200,6 +206,7 @@ KaNamedFunctionSymbol:
       origin: LIBRARY
       primaryConstructorProperty: null
       psi: KtParameter
+      realPsi: KtParameter
       receiverParameter: null
       returnType: KaFunctionType:
         annotations: [
@@ -260,6 +267,7 @@ KaNamedFunctionSymbol:
       origin: LIBRARY
       primaryConstructorProperty: null
       psi: KtParameter
+      realPsi: KtParameter
       receiverParameter: null
       returnType: KaFunctionType:
         annotations: []
@@ -317,6 +325,7 @@ KaNamedFunctionSymbol:
       origin: LIBRARY
       primaryConstructorProperty: null
       psi: KtParameter
+      realPsi: KtParameter
       receiverParameter: null
       returnType: KaFunctionType:
         annotations: []
@@ -374,6 +383,7 @@ KaNamedFunctionSymbol:
       origin: LIBRARY
       primaryConstructorProperty: null
       psi: KtParameter
+      realPsi: KtParameter
       receiverParameter: null
       returnType: KaFunctionType:
         annotations: []

@@ -109,6 +109,7 @@ KaNamedFunctionSymbol:
   name: toString
   origin: LIBRARY
   psi: null
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -142,6 +143,7 @@ KaNamedFunctionSymbol:
   name: component1
   origin: LIBRARY
   psi: null
+  realPsi: null
   receiverParameter: null
   returnType: KaTypeParameterType:
     annotations: []
@@ -174,6 +176,7 @@ KaNamedFunctionSymbol:
   name: component2
   origin: LIBRARY
   psi: null
+  realPsi: null
   receiverParameter: null
   returnType: KaTypeParameterType:
     annotations: []
@@ -206,6 +209,7 @@ KaNamedFunctionSymbol:
   name: copy
   origin: LIBRARY
   psi: null
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -244,6 +248,7 @@ KaNamedFunctionSymbol:
       origin: LIBRARY
       primaryConstructorProperty: null
       psi: null
+      realPsi: null
       receiverParameter: null
       returnType: KaTypeParameterType:
         annotations: []
@@ -274,6 +279,7 @@ KaNamedFunctionSymbol:
       origin: LIBRARY
       primaryConstructorProperty: null
       psi: null
+      realPsi: null
       receiverParameter: null
       returnType: KaTypeParameterType:
         annotations: []
@@ -307,6 +313,7 @@ KaNamedFunctionSymbol:
   name: equals
   origin: LIBRARY
   psi: null
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -338,6 +345,7 @@ KaNamedFunctionSymbol:
       origin: LIBRARY
       primaryConstructorProperty: null
       psi: null
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -372,6 +380,7 @@ KaNamedFunctionSymbol:
   name: hashCode
   origin: LIBRARY
   psi: null
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -401,6 +410,7 @@ KaKotlinPropertySymbol:
     origin: PROPERTY_BACKING_FIELD
     owningProperty: KaKotlinPropertySymbol(kotlin/Pair.first)
     psi: null
+    realPsi: null
     receiverParameter: null
     returnType: KaTypeParameterType:
       annotations: []
@@ -428,6 +438,7 @@ KaKotlinPropertySymbol:
     modality: FINAL
     origin: LIBRARY
     psi: null
+    realPsi: null
     receiverParameter: null
     returnType: KaTypeParameterType:
       annotations: []
@@ -456,6 +467,7 @@ KaKotlinPropertySymbol:
   origin: LIBRARY
   primaryConstructorParameter: null
   psi: null
+  realPsi: null
   receiverParameter: null
   returnType: KaTypeParameterType:
     annotations: []
@@ -484,6 +496,7 @@ KaKotlinPropertySymbol:
     origin: PROPERTY_BACKING_FIELD
     owningProperty: KaKotlinPropertySymbol(kotlin/Pair.second)
     psi: null
+    realPsi: null
     receiverParameter: null
     returnType: KaTypeParameterType:
       annotations: []
@@ -511,6 +524,7 @@ KaKotlinPropertySymbol:
     modality: FINAL
     origin: LIBRARY
     psi: null
+    realPsi: null
     receiverParameter: null
     returnType: KaTypeParameterType:
       annotations: []
@@ -539,6 +553,7 @@ KaKotlinPropertySymbol:
   origin: LIBRARY
   primaryConstructorParameter: null
   psi: null
+  realPsi: null
   receiverParameter: null
   returnType: KaTypeParameterType:
     annotations: []

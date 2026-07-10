@@ -25,6 +25,7 @@ FAKE_OVERRIDE_ORIGINAL:
     name: get
     origin: JAVA_SOURCE
     psi: PsiMethodImpl
+    realPsi: null
     receiverParameter: null
     returnType: KaFlexibleType:
       annotations: []

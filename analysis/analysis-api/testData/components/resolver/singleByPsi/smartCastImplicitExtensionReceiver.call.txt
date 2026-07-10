@@ -24,6 +24,7 @@ KtCallExpression(51,56): 'foo()'
             origin: SOURCE
             owningCallableSymbol: KaNamedFunctionSymbol(/test)
             psi: KtTypeReference
+            realPsi: KtTypeReference
             receiverParameter: null
             returnType: KaUsualClassType:
               annotations: []

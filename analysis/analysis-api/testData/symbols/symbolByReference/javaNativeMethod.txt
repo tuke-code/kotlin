@@ -23,6 +23,7 @@ KaNamedFunctionSymbol:
   name: count
   origin: JAVA_SOURCE
   psi: PsiMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

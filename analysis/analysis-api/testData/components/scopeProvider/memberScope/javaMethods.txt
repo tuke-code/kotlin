@@ -23,6 +23,7 @@ KaNamedFunctionSymbol:
   name: foo
   origin: JAVA_SOURCE
   psi: PsiMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -68,6 +69,7 @@ KaNamedFunctionSymbol:
   name: doo
   origin: JAVA_SOURCE
   psi: PsiMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaFlexibleType:
     annotations: []
@@ -98,6 +100,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_SOURCE
       primaryConstructorProperty: null
       psi: PsiParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -149,6 +152,7 @@ KaNamedFunctionSymbol:
   name: getStringValue
   origin: JAVA_SOURCE
   psi: PsiMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaFlexibleType:
     annotations: []
@@ -193,6 +197,7 @@ KaNamedFunctionSymbol:
   name: equals
   origin: LIBRARY
   psi: KtNamedFunction
+  realPsi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -224,6 +229,7 @@ KaNamedFunctionSymbol:
       origin: LIBRARY
       primaryConstructorProperty: null
       psi: KtParameter
+      realPsi: KtParameter
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -275,6 +281,7 @@ KaNamedFunctionSymbol:
   name: hashCode
   origin: LIBRARY
   psi: KtNamedFunction
+  realPsi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -320,6 +327,7 @@ KaNamedFunctionSymbol:
   name: toString
   origin: LIBRARY
   psi: KtNamedFunction
+  realPsi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -357,6 +365,7 @@ KaConstructorSymbol:
   modality: FINAL
   origin: JAVA_SOURCE
   psi: PsiClassImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

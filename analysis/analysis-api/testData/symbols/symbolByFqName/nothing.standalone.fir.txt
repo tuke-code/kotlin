@@ -16,6 +16,7 @@ KaNamedClassSymbol:
   name: Nothing
   origin: LIBRARY
   psi: null
+  realPsi: null
   superTypes: []
   typeParameters: []
   visibility: PUBLIC

@@ -16,6 +16,7 @@ KaNamedClassSymbol:
   name: KotlinClass
   origin: SOURCE
   psi: KtClass
+  realPsi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -48,6 +49,7 @@ KaNamedClassSymbol:
   name: SuperClass
   origin: JAVA_SOURCE
   psi: PsiClassImpl
+  realPsi: PsiClassImpl
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -84,6 +86,7 @@ KaNamedClassSymbol:
   name: JavaClass
   origin: JAVA_SOURCE
   psi: PsiClassImpl
+  realPsi: PsiClassImpl
   superTypes: [
     KaUsualClassType:
       annotations: []

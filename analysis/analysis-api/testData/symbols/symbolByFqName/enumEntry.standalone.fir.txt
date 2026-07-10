@@ -16,6 +16,7 @@ KaEnumEntrySymbol:
   name: SYNCHRONIZED
   origin: LIBRARY
   psi: null
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

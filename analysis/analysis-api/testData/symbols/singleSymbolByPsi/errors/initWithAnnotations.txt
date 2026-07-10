@@ -10,6 +10,7 @@ KaClassInitializerSymbol:
   modality: FINAL
   origin: SOURCE
   psi: KtClassInitializer
+  realPsi: KtClassInitializer
   visibility: LOCAL
   getContainingFileSymbol: KaFileSymbol(initWithAnnotations.kt)
   getContainingModule: KaSourceModule "Sources of main"

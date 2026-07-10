@@ -16,6 +16,7 @@ KaNamedClassSymbol:
   name: A
   origin: SOURCE
   psi: KtClass
+  realPsi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -48,6 +49,7 @@ KaNamedClassSymbol:
   name: B
   origin: SOURCE
   psi: KtClass
+  realPsi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -83,6 +85,7 @@ KaNamedFunctionSymbol:
       name: A
       origin: SOURCE
       psi: KtContextReceiver
+      realPsi: KtContextReceiver
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -124,6 +127,7 @@ KaNamedFunctionSymbol:
   name: tooo
   origin: SOURCE
   psi: KtNamedFunction
+  realPsi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -161,6 +165,7 @@ KaNamedFunctionSymbol:
       name: B
       origin: SOURCE
       psi: KtContextReceiver
+      realPsi: KtContextReceiver
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -202,6 +207,7 @@ KaNamedFunctionSymbol:
   name: tooo
   origin: SOURCE
   psi: KtNamedFunction
+  realPsi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -239,6 +245,7 @@ KaNamedFunctionSymbol:
       name: A
       origin: SOURCE
       psi: KtContextReceiver
+      realPsi: KtContextReceiver
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -268,6 +275,7 @@ KaNamedFunctionSymbol:
       name: B
       origin: SOURCE
       psi: KtContextReceiver
+      realPsi: KtContextReceiver
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -315,6 +323,7 @@ KaNamedFunctionSymbol:
   name: tooo
   origin: SOURCE
   psi: KtNamedFunction
+  realPsi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -352,6 +361,7 @@ KaNamedFunctionSymbol:
       name: B
       origin: SOURCE
       psi: KtContextReceiver
+      realPsi: KtContextReceiver
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -381,6 +391,7 @@ KaNamedFunctionSymbol:
       name: A
       origin: SOURCE
       psi: KtContextReceiver
+      realPsi: KtContextReceiver
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -428,6 +439,7 @@ KaNamedFunctionSymbol:
   name: tooo
   origin: SOURCE
   psi: KtNamedFunction
+  realPsi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

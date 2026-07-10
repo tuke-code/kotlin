@@ -19,6 +19,7 @@ KaNamedFunctionSymbol:
       name: Int
       origin: SOURCE
       psi: KtContextReceiver
+      realPsi: KtContextReceiver
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -48,6 +49,7 @@ KaNamedFunctionSymbol:
       name: s
       origin: SOURCE
       psi: KtContextReceiver
+      realPsi: KtContextReceiver
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -95,6 +97,7 @@ KaNamedFunctionSymbol:
   name: y
   origin: SOURCE
   psi: KtNamedFunction
+  realPsi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

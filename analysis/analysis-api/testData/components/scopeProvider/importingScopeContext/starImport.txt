@@ -33,6 +33,7 @@ scopes:
         name: A
         origin: SOURCE
         psi: KtClass
+        realPsi: KtClass
         superTypes: [
           KaUsualClassType:
             annotations: []
@@ -67,6 +68,7 @@ scopes:
         name: b
         origin: SOURCE
         psi: KtNamedFunction
+        realPsi: KtNamedFunction
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []

@@ -16,6 +16,7 @@ KaNamedClassSymbol:
   name: FileWalkDirection
   origin: LIBRARY
   psi: KtClass
+  realPsi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []

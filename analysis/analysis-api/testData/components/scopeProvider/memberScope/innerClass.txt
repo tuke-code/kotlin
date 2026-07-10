@@ -23,6 +23,7 @@ KaNamedFunctionSymbol:
   name: equals
   origin: LIBRARY
   psi: KtNamedFunction
+  realPsi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -54,6 +55,7 @@ KaNamedFunctionSymbol:
       origin: LIBRARY
       primaryConstructorProperty: null
       psi: KtParameter
+      realPsi: KtParameter
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -105,6 +107,7 @@ KaNamedFunctionSymbol:
   name: hashCode
   origin: LIBRARY
   psi: KtNamedFunction
+  realPsi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -150,6 +153,7 @@ KaNamedFunctionSymbol:
   name: toString
   origin: LIBRARY
   psi: KtNamedFunction
+  realPsi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -188,6 +192,7 @@ KaNamedClassSymbol:
   name: ClassInB
   origin: SOURCE
   psi: KtClass
+  realPsi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -220,6 +225,7 @@ KaNamedClassSymbol:
   name: InnerClassInB
   origin: SOURCE
   psi: KtClass
+  realPsi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -252,6 +258,7 @@ KaNamedClassSymbol:
   name: ClassInA
   origin: SOURCE
   psi: KtClass
+  realPsi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -284,6 +291,7 @@ KaNamedClassSymbol:
   name: InnerClassInA
   origin: SOURCE
   psi: KtClass
+  realPsi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -315,6 +323,7 @@ KaConstructorSymbol:
   modality: FINAL
   origin: SOURCE_MEMBER_GENERATED
   psi: KtClass
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

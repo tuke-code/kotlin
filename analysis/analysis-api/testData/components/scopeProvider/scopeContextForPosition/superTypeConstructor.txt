@@ -34,6 +34,7 @@ scopes:
         name: Base
         origin: SOURCE
         psi: KtClass
+        realPsi: KtClass
         superTypes: [
           KaUsualClassType:
             annotations: []
@@ -60,6 +61,7 @@ scopes:
         name: Child
         origin: SOURCE
         psi: KtClass
+        realPsi: KtClass
         superTypes: [
           KaUsualClassType:
             annotations: []

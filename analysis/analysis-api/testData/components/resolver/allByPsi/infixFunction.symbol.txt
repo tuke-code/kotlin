@@ -106,6 +106,7 @@ KtThisExpression(37,41): 'this'
         origin: SOURCE
         owningCallableSymbol: KaNamedFunctionSymbol(/myMinus)
         psi: KtTypeReference
+        realPsi: KtTypeReference
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -138,6 +139,7 @@ KtNameReferenceExpression(37,41): 'this'
         origin: SOURCE
         owningCallableSymbol: KaNamedFunctionSymbol(/myMinus)
         psi: KtTypeReference
+        realPsi: KtTypeReference
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []

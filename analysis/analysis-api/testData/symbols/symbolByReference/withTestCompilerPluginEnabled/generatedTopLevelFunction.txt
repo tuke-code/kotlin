@@ -23,6 +23,7 @@ KaNamedFunctionSymbol:
   name: dummyTest
   origin: PLUGIN
   psi: null
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -54,6 +55,7 @@ KaNamedFunctionSymbol:
       origin: PLUGIN
       primaryConstructorProperty: null
       psi: null
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []

@@ -21,6 +21,7 @@ KaPropertyGetterSymbol:
   modality: FINAL
   origin: SOURCE
   psi: KtPropertyAccessor
+  realPsi: KtPropertyAccessor
   receiverParameter: KaReceiverParameterSymbol:
     annotations: [
       ReceiverAnnotation()
@@ -42,6 +43,7 @@ KaPropertyGetterSymbol:
     origin: SOURCE
     owningCallableSymbol: KaKotlinPropertySymbol(/x)
     psi: KtTypeReference
+    realPsi: KtTypeReference
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: [

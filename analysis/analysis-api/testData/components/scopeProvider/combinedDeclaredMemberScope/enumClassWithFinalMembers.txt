@@ -16,6 +16,7 @@ KaEnumEntrySymbol:
   name: A
   origin: SOURCE
   psi: KtEnumEntry
+  realPsi: KtEnumEntry
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -47,6 +48,7 @@ KaEnumEntrySymbol:
   name: B
   origin: SOURCE
   psi: KtEnumEntry
+  realPsi: KtEnumEntry
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -81,6 +83,7 @@ KaKotlinPropertySymbol:
     origin: PROPERTY_BACKING_FIELD
     owningProperty: KaKotlinPropertySymbol(test/E.foo)
     psi: null
+    realPsi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -118,6 +121,7 @@ KaKotlinPropertySymbol:
     modality: FINAL
     origin: SOURCE
     psi: null
+    realPsi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -156,6 +160,7 @@ KaKotlinPropertySymbol:
   origin: SOURCE
   primaryConstructorParameter: null
   psi: KtProperty
+  realPsi: KtProperty
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -202,6 +207,7 @@ KaNamedFunctionSymbol:
   name: bar
   origin: SOURCE
   psi: KtNamedFunction
+  realPsi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -247,6 +253,7 @@ KaNamedFunctionSymbol:
   name: values
   origin: SOURCE_MEMBER_GENERATED
   psi: KtClass
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -293,6 +300,7 @@ KaNamedFunctionSymbol:
   name: valueOf
   origin: SOURCE_MEMBER_GENERATED
   psi: KtClass
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -324,6 +332,7 @@ KaNamedFunctionSymbol:
       origin: SOURCE_MEMBER_GENERATED
       primaryConstructorProperty: null
       psi: KtClass
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -370,6 +379,7 @@ KaKotlinPropertySymbol:
     modality: FINAL
     origin: SOURCE_MEMBER_GENERATED
     psi: KtClass
+    realPsi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -409,6 +419,7 @@ KaKotlinPropertySymbol:
   origin: SOURCE_MEMBER_GENERATED
   primaryConstructorParameter: null
   psi: KtClass
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -448,6 +459,7 @@ KaConstructorSymbol:
   modality: FINAL
   origin: SOURCE_MEMBER_GENERATED
   psi: KtClass
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

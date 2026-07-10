@@ -17,6 +17,7 @@ FAKE_OVERRIDE_ORIGINAL:
     modality: FINAL
     origin: SOURCE
     psi: KtSecondaryConstructor
+    realPsi: KtSecondaryConstructor
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -48,6 +49,7 @@ FAKE_OVERRIDE_ORIGINAL:
         origin: SOURCE
         primaryConstructorProperty: null
         psi: KtParameter
+        realPsi: KtParameter
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []

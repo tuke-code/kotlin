@@ -29,6 +29,7 @@ KaNamedFunctionSymbol:
               origin: SOURCE
               owningCallableSymbol: KaNamedFunctionSymbol(/referenceReceiverInContract)
               psi: KtTypeReference
+              realPsi: KtTypeReference
               receiverParameter: null
               returnType: KaFunctionType:
                 annotations: []
@@ -67,6 +68,7 @@ KaNamedFunctionSymbol:
   name: referenceReceiverInContract
   origin: SOURCE
   psi: KtNamedFunction
+  realPsi: KtNamedFunction
   receiverParameter: KaReceiverParameterSymbol:
     annotations: []
     callableId: null
@@ -85,6 +87,7 @@ KaNamedFunctionSymbol:
     origin: SOURCE
     owningCallableSymbol: KaNamedFunctionSymbol(/referenceReceiverInContract)
     psi: KtTypeReference
+    realPsi: KtTypeReference
     receiverParameter: null
     returnType: KaFunctionType:
       annotations: []

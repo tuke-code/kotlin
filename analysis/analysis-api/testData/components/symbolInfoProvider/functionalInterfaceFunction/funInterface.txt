@@ -17,6 +17,7 @@ CLASS:
   name: IntPredicate
   origin: SOURCE
   psi: KtClass
+  realPsi: KtClass
   superTypes: [
     KaUsualClassType:
       abbreviation: null
@@ -68,6 +69,7 @@ FUNCTIONAL INTERFACE FUNCTION:
   name: accept
   origin: SOURCE
   psi: KtNamedFunction
+  realPsi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     abbreviation: null
@@ -110,6 +112,7 @@ FUNCTIONAL INTERFACE FUNCTION:
       origin: SOURCE
       primaryConstructorProperty: null
       psi: KtParameter
+      realPsi: KtParameter
       receiverParameter: null
       returnType: KaUsualClassType:
         abbreviation: null

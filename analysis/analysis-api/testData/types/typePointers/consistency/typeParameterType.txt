@@ -15,6 +15,7 @@ KaTypeParameterType:
     name: T
     origin: SOURCE
     psi: KtTypeParameter
+    realPsi: KtTypeParameter
     upperBounds: []
     variance: OUT_VARIANCE
     visibility: LOCAL

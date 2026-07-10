@@ -16,6 +16,7 @@ KaNamedClassSymbol:
   name: Lazy
   origin: LIBRARY
   psi: null
+  realPsi: null
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -34,6 +35,7 @@ KaNamedClassSymbol:
       name: T
       origin: LIBRARY
       psi: null
+      realPsi: null
       upperBounds: []
       variance: OUT_VARIANCE
       visibility: LOCAL

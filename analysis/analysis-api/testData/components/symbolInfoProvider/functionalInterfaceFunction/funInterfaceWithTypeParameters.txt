@@ -17,6 +17,7 @@ CLASS:
   name: GenericPredicate
   origin: SOURCE
   psi: KtClass
+  realPsi: KtClass
   superTypes: [
     KaUsualClassType:
       abbreviation: null
@@ -46,6 +47,7 @@ CLASS:
       name: T
       origin: SOURCE
       psi: KtTypeParameter
+      realPsi: KtTypeParameter
       upperBounds: []
       variance: INVARIANT
       visibility: LOCAL
@@ -87,6 +89,7 @@ FUNCTIONAL INTERFACE FUNCTION:
   name: test
   origin: SOURCE
   psi: KtNamedFunction
+  realPsi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     abbreviation: null
@@ -129,6 +132,7 @@ FUNCTIONAL INTERFACE FUNCTION:
       origin: SOURCE
       primaryConstructorProperty: null
       psi: KtParameter
+      realPsi: KtParameter
       receiverParameter: null
       returnType: KaTypeParameterType:
         abbreviation: null
@@ -145,6 +149,7 @@ FUNCTIONAL INTERFACE FUNCTION:
           name: T
           origin: SOURCE
           psi: KtTypeParameter
+          realPsi: KtTypeParameter
           upperBounds: []
           variance: INVARIANT
           visibility: LOCAL
@@ -188,6 +193,7 @@ FUNCTIONAL INTERFACE FUNCTION:
               name: T
               origin: SOURCE
               psi: KtTypeParameter
+              realPsi: KtTypeParameter
               upperBounds: []
               variance: INVARIANT
               visibility: LOCAL
@@ -217,6 +223,7 @@ FUNCTIONAL INTERFACE FUNCTION:
           name: T
           origin: SOURCE
           psi: KtTypeParameter
+          realPsi: KtTypeParameter
           upperBounds: []
           variance: INVARIANT
           visibility: LOCAL

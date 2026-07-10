@@ -15,6 +15,7 @@ CONSTRUCTOR:
   name: IntPredicate
   origin: SAM_CONSTRUCTOR
   psi: KtClass
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     abbreviation: null
@@ -57,6 +58,7 @@ CONSTRUCTOR:
       origin: SAM_CONSTRUCTOR
       primaryConstructorProperty: null
       psi: null
+      realPsi: null
       receiverParameter: null
       returnType: KaFunctionType:
         abbreviation: null
@@ -210,6 +212,7 @@ FUNCTIONAL INTERFACE:
   name: IntPredicate
   origin: SOURCE
   psi: KtClass
+  realPsi: KtClass
   superTypes: [
     KaUsualClassType:
       abbreviation: null

@@ -9,6 +9,7 @@ KaTypeParameterSymbol:
   name: T
   origin: SOURCE
   psi: KtTypeParameter
+  realPsi: KtTypeParameter
   upperBounds: [
     KaClassErrorType:
       annotations: []
@@ -39,6 +40,7 @@ KaLocalVariableSymbol:
   name: x
   origin: SOURCE
   psi: KtProperty
+  realPsi: KtProperty
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -77,6 +79,7 @@ KaNamedFunctionSymbol:
   name: f
   origin: SOURCE
   psi: KtNamedFunction
+  realPsi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

@@ -23,6 +23,7 @@ KaNamedFunctionSymbol:
   name: getFirst
   origin: JAVA_SOURCE
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaFlexibleType:
     annotations: []

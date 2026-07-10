@@ -28,6 +28,7 @@ scopes:
         name: BaseInterface
         origin: SOURCE
         psi: KtClass
+        realPsi: KtClass
         superTypes: [
           KaUsualClassType:
             annotations: []
@@ -54,6 +55,7 @@ scopes:
         name: Base
         origin: SOURCE
         psi: KtClass
+        realPsi: KtClass
         superTypes: [
           KaUsualClassType:
             annotations: []
@@ -72,6 +74,7 @@ scopes:
             name: T
             origin: SOURCE
             psi: KtTypeParameter
+            realPsi: KtTypeParameter
             upperBounds: []
             variance: INVARIANT
             visibility: LOCAL
@@ -95,6 +98,7 @@ scopes:
         name: Child
         origin: SOURCE
         psi: KtClass
+        realPsi: KtClass
         superTypes: [
           KaUsualClassType:
             annotations: []

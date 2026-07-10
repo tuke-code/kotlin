@@ -16,6 +16,7 @@ KaNamedClassSymbol:
   name: MyInterface
   origin: LIBRARY
   psi: null
+  realPsi: null
   superTypes: [
     KaUsualClassType:
       annotations: []

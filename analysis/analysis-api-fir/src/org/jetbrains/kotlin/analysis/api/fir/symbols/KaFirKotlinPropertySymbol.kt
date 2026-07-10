@@ -5,6 +5,7 @@
 
 package org.jetbrains.kotlin.analysis.api.fir.symbols
 
+import com.intellij.psi.PsiElement
 import org.jetbrains.kotlin.analysis.api.KaExperimentalApi
 import org.jetbrains.kotlin.analysis.api.KaInitializerValue
 import org.jetbrains.kotlin.analysis.api.KaNonConstantInitializerValue
@@ -449,6 +450,12 @@ private class KaFirKotlinPropertyKtParameterBasedSymbol : KaFirKotlinPropertySym
 
         require(declaration.hasValOrVar())
     }
+
+    /**
+     * [KtParameter] in hands isn't enough to decide whether the parameter or generated property should be obtained
+     */
+    override val realPsi: PsiElement?
+        get() = withValidityAssertion { null }
 
     override val location: KaSymbolLocation
         get() = withValidityAssertion { KaSymbolLocation.CLASS }

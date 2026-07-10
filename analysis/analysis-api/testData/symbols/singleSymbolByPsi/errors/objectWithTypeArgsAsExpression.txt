@@ -10,6 +10,7 @@ KaAnonymousObjectSymbol:
   name: null
   origin: SOURCE
   psi: KtObjectDeclaration
+  realPsi: KtObjectDeclaration
   superTypes: [
     KaUsualClassType:
       annotations: []

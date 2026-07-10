@@ -23,6 +23,7 @@ KaNamedFunctionSymbol:
   name: foo
   origin: DELEGATED
   psi: KtNamedFunction
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -68,6 +69,7 @@ KaNamedFunctionSymbol:
   name: bar
   origin: DELEGATED
   psi: KtNamedFunction
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

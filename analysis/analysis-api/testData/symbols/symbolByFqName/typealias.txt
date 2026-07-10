@@ -29,6 +29,7 @@ KaTypeAliasSymbol:
   name: DeepRecursiveFunctionBlock
   origin: LIBRARY
   psi: KtTypeAlias
+  realPsi: KtTypeAlias
   typeParameters: []
   visibility: PRIVATE
   getContainingFileSymbol: null

@@ -47,6 +47,7 @@ scopes:
         name: fromReceiver
         origin: SOURCE
         psi: KtNamedFunction
+        realPsi: KtNamedFunction
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -80,6 +81,7 @@ scopes:
         name: equals
         origin: LIBRARY
         psi: KtNamedFunction
+        realPsi: KtNamedFunction
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -111,6 +113,7 @@ scopes:
             origin: LIBRARY
             primaryConstructorProperty: null
             psi: KtParameter
+            realPsi: KtParameter
             receiverParameter: null
             returnType: KaUsualClassType:
               annotations: []
@@ -145,6 +148,7 @@ scopes:
         name: hashCode
         origin: LIBRARY
         psi: KtNamedFunction
+        realPsi: KtNamedFunction
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -178,6 +182,7 @@ scopes:
         name: toString
         origin: LIBRARY
         psi: KtNamedFunction
+        realPsi: KtNamedFunction
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -204,6 +209,7 @@ scopes:
         modality: FINAL
         origin: SOURCE_MEMBER_GENERATED
         psi: KtClass
+        realPsi: null
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -252,6 +258,7 @@ scopes:
         name: Receiver
         origin: SOURCE
         psi: KtClass
+        realPsi: KtClass
         superTypes: [
           KaUsualClassType:
             annotations: []
@@ -278,6 +285,7 @@ scopes:
         name: Base
         origin: SOURCE
         psi: KtClass
+        realPsi: KtClass
         superTypes: [
           KaUsualClassType:
             annotations: []
@@ -304,6 +312,7 @@ scopes:
         name: Child
         origin: SOURCE
         psi: KtClass
+        realPsi: KtClass
         superTypes: [
           KaUsualClassType:
             annotations: []

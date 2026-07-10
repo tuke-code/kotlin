@@ -11,5 +11,6 @@ KtThisExpression(65,69): 'this'
         name: <script-ScriptThisExpression.kts>
         origin: SOURCE
         psi: KtScript
+        realPsi: KtScript
         visibility: LOCAL
     ]

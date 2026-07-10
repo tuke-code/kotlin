@@ -41,6 +41,7 @@ scopes:
           origin: PROPERTY_BACKING_FIELD
           owningProperty: KaKotlinPropertySymbol(test/MyClass.property)
           psi: null
+          realPsi: null
           receiverParameter: null
           returnType: KaUsualClassType:
             annotations: []
@@ -69,6 +70,7 @@ scopes:
           modality: FINAL
           origin: SOURCE
           psi: null
+          realPsi: null
           receiverParameter: null
           returnType: KaUsualClassType:
             annotations: []
@@ -98,6 +100,7 @@ scopes:
         origin: SOURCE
         primaryConstructorParameter: null
         psi: KtProperty
+        realPsi: KtProperty
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -131,6 +134,7 @@ scopes:
         name: member
         origin: SOURCE
         psi: KtNamedFunction
+        realPsi: KtNamedFunction
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -164,6 +168,7 @@ scopes:
         name: equals
         origin: LIBRARY
         psi: KtNamedFunction
+        realPsi: KtNamedFunction
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -195,6 +200,7 @@ scopes:
             origin: LIBRARY
             primaryConstructorProperty: null
             psi: KtParameter
+            realPsi: KtParameter
             receiverParameter: null
             returnType: KaUsualClassType:
               annotations: []
@@ -229,6 +235,7 @@ scopes:
         name: hashCode
         origin: LIBRARY
         psi: KtNamedFunction
+        realPsi: KtNamedFunction
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -262,6 +269,7 @@ scopes:
         name: toString
         origin: LIBRARY
         psi: KtNamedFunction
+        realPsi: KtNamedFunction
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -288,6 +296,7 @@ scopes:
         modality: FINAL
         origin: SOURCE
         psi: KtPrimaryConstructor
+        realPsi: KtPrimaryConstructor
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -309,6 +318,7 @@ scopes:
             name: TypeParam
             origin: SOURCE
             psi: KtTypeParameter
+            realPsi: KtTypeParameter
             upperBounds: []
             variance: INVARIANT
             visibility: LOCAL
@@ -338,6 +348,7 @@ scopes:
             origin: SOURCE
             primaryConstructorProperty: null
             psi: KtParameter
+            realPsi: KtParameter
             receiverParameter: null
             returnType: KaUsualClassType:
               annotations: []
@@ -369,6 +380,7 @@ scopes:
             origin: SOURCE
             primaryConstructorProperty: null
             psi: KtParameter
+            realPsi: KtParameter
             receiverParameter: null
             returnType: KaUsualClassType:
               annotations: []
@@ -393,6 +405,7 @@ scopes:
         name: TypeParam
         origin: SOURCE
         psi: KtTypeParameter
+        realPsi: KtTypeParameter
         upperBounds: []
         variance: INVARIANT
         visibility: LOCAL
@@ -426,6 +439,7 @@ scopes:
         name: Param1
         origin: SOURCE
         psi: KtClass
+        realPsi: KtClass
         superTypes: [
           KaUsualClassType:
             annotations: []
@@ -452,6 +466,7 @@ scopes:
         name: Param2
         origin: SOURCE
         psi: KtClass
+        realPsi: KtClass
         superTypes: [
           KaUsualClassType:
             annotations: []
@@ -478,6 +493,7 @@ scopes:
         name: MyClass
         origin: SOURCE
         psi: KtClass
+        realPsi: KtClass
         superTypes: [
           KaUsualClassType:
             annotations: []
@@ -496,6 +512,7 @@ scopes:
             name: TypeParam
             origin: SOURCE
             psi: KtTypeParameter
+            realPsi: KtTypeParameter
             upperBounds: []
             variance: INVARIANT
             visibility: LOCAL

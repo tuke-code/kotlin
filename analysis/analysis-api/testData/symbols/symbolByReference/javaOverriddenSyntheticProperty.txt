@@ -25,6 +25,7 @@ KaSyntheticJavaPropertySymbol:
     modality: OPEN
     origin: JAVA_SYNTHETIC_PROPERTY
     psi: PsiMethodImpl
+    realPsi: null
     receiverParameter: KaReceiverParameterSymbol:
       annotations: []
       callableId: null
@@ -43,6 +44,7 @@ KaSyntheticJavaPropertySymbol:
       origin: JAVA_SYNTHETIC_PROPERTY
       owningCallableSymbol: KaPropertyGetterSymbol(/JavaClass.getFoo)
       psi: PsiParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -91,6 +93,7 @@ KaSyntheticJavaPropertySymbol:
   name: foo
   origin: JAVA_SYNTHETIC_PROPERTY
   psi: null
+  realPsi: null
   receiverParameter: KaReceiverParameterSymbol:
     annotations: []
     callableId: null
@@ -109,6 +112,7 @@ KaSyntheticJavaPropertySymbol:
     origin: JAVA_SYNTHETIC_PROPERTY
     owningCallableSymbol: KaSyntheticJavaPropertySymbol(/JavaClass.foo)
     psi: PsiParameterImpl
+    realPsi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []

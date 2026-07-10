@@ -23,6 +23,7 @@ KaNamedFunctionSymbol:
   name: materialize
   origin: PLUGIN
   psi: null
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

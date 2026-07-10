@@ -15,6 +15,7 @@ KaContextParameterSymbol:
   name: parameter2
   origin: SOURCE
   psi: KtParameter
+  realPsi: KtParameter
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

@@ -16,6 +16,7 @@ KaJavaFieldSymbol:
   name: field
   origin: JAVA_SOURCE
   psi: PsiFieldImpl
+  realPsi: PsiFieldImpl
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -51,6 +52,7 @@ KaJavaFieldSymbol:
   name: field2
   origin: JAVA_SOURCE
   psi: PsiFieldImpl
+  realPsi: PsiFieldImpl
   receiverParameter: null
   returnType: KaFlexibleType:
     annotations: []
@@ -92,6 +94,7 @@ KaNamedFunctionSymbol:
   name: equals
   origin: LIBRARY
   psi: null
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -123,6 +126,7 @@ KaNamedFunctionSymbol:
       origin: LIBRARY
       primaryConstructorProperty: null
       psi: null
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -174,6 +178,7 @@ KaNamedFunctionSymbol:
   name: hashCode
   origin: LIBRARY
   psi: null
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -219,6 +224,7 @@ KaNamedFunctionSymbol:
   name: toString
   origin: LIBRARY
   psi: null
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -256,6 +262,7 @@ KaConstructorSymbol:
   modality: FINAL
   origin: JAVA_SOURCE
   psi: PsiClassImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

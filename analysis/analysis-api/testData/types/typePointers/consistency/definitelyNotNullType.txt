@@ -18,6 +18,7 @@ KaDefinitelyNotNullType:
       name: T1
       origin: SOURCE
       psi: KtTypeParameter
+      realPsi: KtTypeParameter
       upperBounds: []
       variance: INVARIANT
       visibility: LOCAL

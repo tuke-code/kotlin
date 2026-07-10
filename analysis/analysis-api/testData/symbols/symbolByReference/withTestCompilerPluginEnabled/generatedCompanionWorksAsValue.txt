@@ -16,6 +16,7 @@ KaNamedClassSymbol:
   name: Companion
   origin: PLUGIN
   psi: null
+  realPsi: null
   superTypes: [
     KaUsualClassType:
       annotations: []

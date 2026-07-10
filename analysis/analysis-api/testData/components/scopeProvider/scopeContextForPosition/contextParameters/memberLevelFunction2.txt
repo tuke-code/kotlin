@@ -68,6 +68,7 @@ scopes:
         name: Companion
         origin: LIBRARY
         psi: KtObjectDeclaration
+        realPsi: KtObjectDeclaration
         superTypes: [
           KaUsualClassType:
             annotations: []
@@ -105,6 +106,7 @@ scopes:
         name: compareTo
         origin: LIBRARY
         psi: KtNamedFunction
+        realPsi: KtNamedFunction
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -136,6 +138,7 @@ scopes:
             origin: LIBRARY
             primaryConstructorProperty: null
             psi: KtParameter
+            realPsi: KtParameter
             receiverParameter: null
             returnType: KaUsualClassType:
               annotations: []
@@ -173,6 +176,7 @@ scopes:
         name: equals
         origin: LIBRARY
         psi: KtNamedFunction
+        realPsi: KtNamedFunction
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -204,6 +208,7 @@ scopes:
             origin: LIBRARY
             primaryConstructorProperty: null
             psi: KtParameter
+            realPsi: KtParameter
             receiverParameter: null
             returnType: KaUsualClassType:
               annotations: []
@@ -241,6 +246,7 @@ scopes:
         name: get
         origin: LIBRARY
         psi: KtNamedFunction
+        realPsi: KtNamedFunction
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -272,6 +278,7 @@ scopes:
             origin: LIBRARY
             primaryConstructorProperty: null
             psi: KtParameter
+            realPsi: KtParameter
             receiverParameter: null
             returnType: KaUsualClassType:
               annotations: []
@@ -309,6 +316,7 @@ scopes:
         name: plus
         origin: LIBRARY
         psi: KtNamedFunction
+        realPsi: KtNamedFunction
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -340,6 +348,7 @@ scopes:
             origin: LIBRARY
             primaryConstructorProperty: null
             psi: KtParameter
+            realPsi: KtParameter
             receiverParameter: null
             returnType: KaUsualClassType:
               annotations: []
@@ -374,6 +383,7 @@ scopes:
         name: subSequence
         origin: LIBRARY
         psi: KtNamedFunction
+        realPsi: KtNamedFunction
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -405,6 +415,7 @@ scopes:
             origin: LIBRARY
             primaryConstructorProperty: null
             psi: KtParameter
+            realPsi: KtParameter
             receiverParameter: null
             returnType: KaUsualClassType:
               annotations: []
@@ -436,6 +447,7 @@ scopes:
             origin: LIBRARY
             primaryConstructorProperty: null
             psi: KtParameter
+            realPsi: KtParameter
             receiverParameter: null
             returnType: KaUsualClassType:
               annotations: []
@@ -473,6 +485,7 @@ scopes:
         name: toString
         origin: LIBRARY
         psi: KtNamedFunction
+        realPsi: KtNamedFunction
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -505,6 +518,7 @@ scopes:
           origin: PROPERTY_BACKING_FIELD
           owningProperty: KaKotlinPropertySymbol(kotlin/String.length)
           psi: null
+          realPsi: null
           receiverParameter: null
           returnType: KaUsualClassType:
             annotations: []
@@ -533,6 +547,7 @@ scopes:
           modality: OPEN
           origin: LIBRARY
           psi: null
+          realPsi: null
           receiverParameter: null
           returnType: KaUsualClassType:
             annotations: []
@@ -562,6 +577,7 @@ scopes:
         origin: LIBRARY
         primaryConstructorParameter: null
         psi: KtProperty
+        realPsi: KtProperty
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -595,6 +611,7 @@ scopes:
         name: hashCode
         origin: LIBRARY
         psi: KtNamedFunction
+        realPsi: KtNamedFunction
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -621,6 +638,7 @@ scopes:
         modality: FINAL
         origin: LIBRARY
         psi: KtPrimaryConstructor
+        realPsi: KtPrimaryConstructor
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -651,6 +669,7 @@ scopes:
         name: b
         origin: SOURCE
         psi: KtParameter
+        realPsi: KtParameter
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -682,6 +701,7 @@ scopes:
         origin: SOURCE
         primaryConstructorProperty: null
         psi: KtParameter
+        realPsi: KtParameter
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -716,6 +736,7 @@ scopes:
             name: b
             origin: SOURCE
             psi: KtParameter
+            realPsi: KtParameter
             receiverParameter: null
             returnType: KaUsualClassType:
               annotations: []
@@ -740,6 +761,7 @@ scopes:
             name: <unused var>
             origin: SOURCE
             psi: KtParameter
+            realPsi: KtParameter
             receiverParameter: null
             returnType: KaUsualClassType:
               annotations: []
@@ -782,6 +804,7 @@ scopes:
         name: foo
         origin: SOURCE
         psi: KtNamedFunction
+        realPsi: KtNamedFunction
         receiverParameter: KaReceiverParameterSymbol:
           annotations: []
           callableId: null
@@ -800,6 +823,7 @@ scopes:
           origin: SOURCE
           owningCallableSymbol: KaNamedFunctionSymbol(one/B.foo)
           psi: KtTypeReference
+          realPsi: KtTypeReference
           receiverParameter: null
           returnType: KaUsualClassType:
             annotations: []
@@ -837,6 +861,7 @@ scopes:
             origin: SOURCE
             primaryConstructorProperty: null
             psi: KtParameter
+            realPsi: KtParameter
             receiverParameter: null
             returnType: KaUsualClassType:
               annotations: []
@@ -871,6 +896,7 @@ scopes:
         name: equals
         origin: LIBRARY
         psi: KtNamedFunction
+        realPsi: KtNamedFunction
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -902,6 +928,7 @@ scopes:
             origin: LIBRARY
             primaryConstructorProperty: null
             psi: KtParameter
+            realPsi: KtParameter
             receiverParameter: null
             returnType: KaUsualClassType:
               annotations: []
@@ -936,6 +963,7 @@ scopes:
         name: hashCode
         origin: LIBRARY
         psi: KtNamedFunction
+        realPsi: KtNamedFunction
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -969,6 +997,7 @@ scopes:
         name: toString
         origin: LIBRARY
         psi: KtNamedFunction
+        realPsi: KtNamedFunction
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -995,6 +1024,7 @@ scopes:
         modality: FINAL
         origin: SOURCE_MEMBER_GENERATED
         psi: KtClass
+        realPsi: null
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -1031,6 +1061,7 @@ scopes:
         name: A
         origin: SOURCE
         psi: KtClass
+        realPsi: KtClass
         superTypes: [
           KaUsualClassType:
             annotations: []
@@ -1057,6 +1088,7 @@ scopes:
         name: B
         origin: SOURCE
         psi: KtClass
+        realPsi: KtClass
         superTypes: [
           KaUsualClassType:
             annotations: []

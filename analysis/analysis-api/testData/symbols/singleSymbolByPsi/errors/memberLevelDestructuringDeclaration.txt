@@ -11,6 +11,7 @@ KaDestructuringDeclarationSymbol:
   modality: FINAL
   origin: SOURCE
   psi: KtDestructuringDeclaration
+  realPsi: KtDestructuringDeclaration
   visibility: LOCAL
   getContainingFileSymbol: KaFileSymbol(memberLevelDestructuringDeclaration.kt)
   getContainingModule: KaSourceModule "Sources of main"

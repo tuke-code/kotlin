@@ -33,6 +33,7 @@ KaNamedFunctionSymbol:
                   name: Result
                   origin: SOURCE
                   psi: KtClass
+                  realPsi: KtClass
                   superTypes: [
                     KaUsualClassType:
                       annotations: []
@@ -72,6 +73,7 @@ KaNamedFunctionSymbol:
   name: isFailure
   origin: SOURCE
   psi: KtNamedFunction
+  realPsi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

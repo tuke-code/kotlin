@@ -19,6 +19,7 @@ KaKotlinPropertySymbol:
     origin: PROPERTY_BACKING_FIELD
     owningProperty: KaKotlinPropertySymbol(/Foo.p)
     psi: null
+    realPsi: null
     receiverParameter: null
     returnType: KaDynamicType:
       annotations: []
@@ -55,6 +56,7 @@ KaKotlinPropertySymbol:
     modality: FINAL
     origin: SOURCE
     psi: null
+    realPsi: null
     receiverParameter: null
     returnType: KaDynamicType:
       annotations: []
@@ -92,6 +94,7 @@ KaKotlinPropertySymbol:
   origin: SOURCE
   primaryConstructorParameter: null
   psi: KtProperty
+  realPsi: KtProperty
   receiverParameter: null
   returnType: KaDynamicType:
     annotations: []
@@ -127,6 +130,7 @@ KaAnonymousFunctionSymbol:
   modality: FINAL
   origin: SOURCE
   psi: KtFunctionLiteral
+  realPsi: KtFunctionLiteral
   receiverParameter: null
   returnType: KaDynamicType:
     annotations: []
@@ -165,6 +169,7 @@ KaNamedFunctionSymbol:
   name: f
   origin: SOURCE
   psi: KtNamedFunction
+  realPsi: KtNamedFunction
   receiverParameter: null
   returnType: KaDynamicType:
     annotations: []
@@ -195,6 +200,7 @@ KaNamedFunctionSymbol:
       origin: SOURCE
       primaryConstructorProperty: null
       psi: KtParameter
+      realPsi: KtParameter
       receiverParameter: null
       returnType: KaDynamicType:
         annotations: []
@@ -238,6 +244,7 @@ KaNamedClassSymbol:
   name: Foo
   origin: SOURCE
   psi: KtClass
+  realPsi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []

@@ -36,6 +36,7 @@ KaNamedFunctionSymbol:
   name: booleanConstReferenceInImplies
   origin: SOURCE
   psi: KtNamedFunction
+  realPsi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

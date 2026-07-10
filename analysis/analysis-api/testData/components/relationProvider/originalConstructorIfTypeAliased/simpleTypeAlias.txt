@@ -16,6 +16,7 @@ Resolved constructor:
     modality: FINAL
     origin: TYPEALIASED_CONSTRUCTOR
     psi: KtTypeAlias
+    realPsi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -48,6 +49,7 @@ Original constructor if type aliased:
     modality: FINAL
     origin: SOURCE_MEMBER_GENERATED
     psi: KtClass
+    realPsi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []

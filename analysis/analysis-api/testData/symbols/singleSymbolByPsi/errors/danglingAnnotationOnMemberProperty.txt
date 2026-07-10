@@ -19,6 +19,7 @@ KaLocalVariableSymbol:
   name: localVal
   origin: SOURCE
   psi: KtProperty
+  realPsi: KtProperty
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

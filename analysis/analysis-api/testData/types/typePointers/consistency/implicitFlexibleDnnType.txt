@@ -69,6 +69,7 @@ KaFlexibleType:
                   name: T
                   origin: SOURCE
                   psi: KtTypeParameter
+                  realPsi: KtTypeParameter
                   upperBounds: []
                   variance: INVARIANT
                   visibility: LOCAL
@@ -93,6 +94,7 @@ KaFlexibleType:
                 name: T
                 origin: SOURCE
                 psi: KtTypeParameter
+                realPsi: KtTypeParameter
                 upperBounds: []
                 variance: INVARIANT
                 visibility: LOCAL
@@ -163,6 +165,7 @@ KaFlexibleType:
               name: T
               origin: SOURCE
               psi: KtTypeParameter
+              realPsi: KtTypeParameter
               upperBounds: []
               variance: INVARIANT
               visibility: LOCAL
@@ -187,6 +190,7 @@ KaFlexibleType:
             name: T
             origin: SOURCE
             psi: KtTypeParameter
+            realPsi: KtTypeParameter
             upperBounds: []
             variance: INVARIANT
             visibility: LOCAL
@@ -266,6 +270,7 @@ KaFlexibleType:
                   name: T
                   origin: SOURCE
                   psi: KtTypeParameter
+                  realPsi: KtTypeParameter
                   upperBounds: []
                   variance: INVARIANT
                   visibility: LOCAL
@@ -290,6 +295,7 @@ KaFlexibleType:
                 name: T
                 origin: SOURCE
                 psi: KtTypeParameter
+                realPsi: KtTypeParameter
                 upperBounds: []
                 variance: INVARIANT
                 visibility: LOCAL
@@ -360,6 +366,7 @@ KaFlexibleType:
               name: T
               origin: SOURCE
               psi: KtTypeParameter
+              realPsi: KtTypeParameter
               upperBounds: []
               variance: INVARIANT
               visibility: LOCAL
@@ -384,6 +391,7 @@ KaFlexibleType:
             name: T
             origin: SOURCE
             psi: KtTypeParameter
+            realPsi: KtTypeParameter
             upperBounds: []
             variance: INVARIANT
             visibility: LOCAL

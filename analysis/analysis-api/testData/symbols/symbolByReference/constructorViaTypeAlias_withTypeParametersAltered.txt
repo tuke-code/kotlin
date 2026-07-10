@@ -15,6 +15,7 @@ KaConstructorSymbol:
   modality: FINAL
   origin: TYPEALIASED_CONSTRUCTOR
   psi: KtTypeAlias
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -41,6 +42,7 @@ KaConstructorSymbol:
       name: TT
       origin: SOURCE
       psi: KtTypeParameter
+      realPsi: KtTypeParameter
       upperBounds: []
       variance: INVARIANT
       visibility: LOCAL
@@ -74,6 +76,7 @@ KaConstructorSymbol:
       origin: TYPEALIASED_CONSTRUCTOR
       primaryConstructorProperty: null
       psi: KtClass
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []

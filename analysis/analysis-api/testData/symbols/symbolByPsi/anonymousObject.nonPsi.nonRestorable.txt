@@ -16,6 +16,7 @@ KaNamedClassSymbol:
   name: NestedClass
   origin: SOURCE
   psi: KtClass
+  realPsi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -48,6 +49,7 @@ KaNamedClassSymbol:
   name: InnerClass
   origin: SOURCE
   psi: KtClass
+  realPsi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -80,6 +82,7 @@ KaNamedClassSymbol:
   name: NestedObject
   origin: SOURCE
   psi: KtObjectDeclaration
+  realPsi: KtObjectDeclaration
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -112,6 +115,7 @@ KaNamedClassSymbol:
   name: NestedInterface
   origin: SOURCE
   psi: KtClass
+  realPsi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -144,6 +148,7 @@ KaNamedClassSymbol:
   name: NestedAnnotation
   origin: SOURCE
   psi: KtClass
+  realPsi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -173,6 +178,7 @@ KaTypeAliasSymbol:
   name: NestedTypeAlias
   origin: SOURCE
   psi: KtTypeAlias
+  realPsi: KtTypeAlias
   typeParameters: []
   visibility: LOCAL
   getContainingFileSymbol: KaFileSymbol(anonymousObject.kt)

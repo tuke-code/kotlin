@@ -49,6 +49,7 @@ KaPropertySetterSymbol:
     origin: SOURCE
     primaryConstructorProperty: null
     psi: KtParameter
+    realPsi: KtParameter
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -62,6 +63,7 @@ KaPropertySetterSymbol:
     deprecation: null
     importableFqName: null
   psi: KtPropertyAccessor
+  realPsi: KtPropertyAccessor
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -98,6 +100,7 @@ KaPropertySetterSymbol:
       origin: SOURCE
       primaryConstructorProperty: null
       psi: KtParameter
+      realPsi: KtParameter
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []

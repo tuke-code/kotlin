@@ -41,6 +41,7 @@ FAKE_OVERRIDE_ORIGINAL:
       origin: SOURCE
       primaryConstructorProperty: null
       psi: KtParameter
+      realPsi: KtParameter
       receiverParameter: null
       returnType: KaTypeParameterType:
         annotations: []
@@ -48,6 +49,7 @@ FAKE_OVERRIDE_ORIGINAL:
       typeParameters: []
       visibility: PUBLIC
     psi: KtPropertyAccessor
+    realPsi: KtPropertyAccessor
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -79,6 +81,7 @@ FAKE_OVERRIDE_ORIGINAL:
         origin: SOURCE
         primaryConstructorProperty: null
         psi: KtParameter
+        realPsi: KtParameter
         receiverParameter: null
         returnType: KaTypeParameterType:
           annotations: []

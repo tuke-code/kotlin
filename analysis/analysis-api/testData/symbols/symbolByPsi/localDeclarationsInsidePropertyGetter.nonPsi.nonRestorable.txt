@@ -16,6 +16,7 @@ KaNamedClassSymbol:
   name: LocalClass
   origin: SOURCE
   psi: KtClass
+  realPsi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -45,6 +46,7 @@ KaTypeAliasSymbol:
   name: LocalTypealias
   origin: SOURCE
   psi: KtTypeAlias
+  realPsi: KtTypeAlias
   typeParameters: []
   visibility: LOCAL
   getContainingFileSymbol: KaFileSymbol(localDeclarationsInsidePropertyGetter.kt)

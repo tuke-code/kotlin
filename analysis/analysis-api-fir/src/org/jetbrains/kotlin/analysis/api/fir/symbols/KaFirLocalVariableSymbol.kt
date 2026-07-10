@@ -5,6 +5,7 @@
 
 package org.jetbrains.kotlin.analysis.api.fir.symbols
 
+import com.intellij.psi.PsiElement
 import org.jetbrains.kotlin.KtFakeSourceElementKind
 import org.jetbrains.kotlin.analysis.api.annotations.KaAnnotationList
 import org.jetbrains.kotlin.analysis.api.fir.KaFirSession
@@ -167,4 +168,7 @@ internal class KaFirErrorVariableSymbol : KaFirLocalOrErrorVariableSymbol {
      */
     override val isVal: Boolean
         get() = withValidityAssertion { true }
+
+    override val realPsi: PsiElement?
+        get() = withValidityAssertion { null }
 }

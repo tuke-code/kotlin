@@ -17,6 +17,7 @@ FAKE_OVERRIDE_ORIGINAL:
     name: xx
     origin: SOURCE
     psi: KtParameter
+    realPsi: KtParameter
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []

@@ -17,6 +17,7 @@ CLASS:
   name: RegularInterface
   origin: SOURCE
   psi: KtClass
+  realPsi: KtClass
   superTypes: [
     KaUsualClassType:
       abbreviation: null

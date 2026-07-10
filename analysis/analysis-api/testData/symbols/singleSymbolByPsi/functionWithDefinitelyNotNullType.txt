@@ -23,6 +23,7 @@ KaNamedFunctionSymbol:
   name: doSmth
   origin: SOURCE
   psi: KtNamedFunction
+  realPsi: KtNamedFunction
   receiverParameter: null
   returnType: KaDefinitelyNotNullType:
     annotations: []
@@ -53,6 +54,7 @@ KaNamedFunctionSymbol:
       origin: SOURCE
       primaryConstructorProperty: null
       psi: KtParameter
+      realPsi: KtParameter
       receiverParameter: null
       returnType: KaDefinitelyNotNullType:
         annotations: []

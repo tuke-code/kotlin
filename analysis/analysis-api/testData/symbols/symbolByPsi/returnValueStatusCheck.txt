@@ -23,6 +23,7 @@ KaNamedFunctionSymbol:
   name: mustUse
   origin: SOURCE
   psi: KtNamedFunction
+  realPsi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -71,6 +72,7 @@ KaNamedFunctionSymbol:
   name: ignorable
   origin: SOURCE
   psi: KtNamedFunction
+  realPsi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -112,6 +114,7 @@ KaNamedClassSymbol:
   name: Marked
   origin: SOURCE
   psi: KtClass
+  realPsi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -151,6 +154,7 @@ KaNamedFunctionSymbol:
   name: unspecified
   origin: SOURCE
   psi: KtNamedFunction
+  realPsi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

@@ -21,6 +21,7 @@ FAKE_OVERRIDE_ORIGINAL:
       origin: PROPERTY_BACKING_FIELD
       owningProperty: KaKotlinPropertySymbol(test/I.foo)
       psi: null
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -49,6 +50,7 @@ FAKE_OVERRIDE_ORIGINAL:
       modality: ABSTRACT
       origin: SOURCE
       psi: null
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -78,6 +80,7 @@ FAKE_OVERRIDE_ORIGINAL:
     origin: SOURCE
     primaryConstructorParameter: null
     psi: KtProperty
+    realPsi: KtProperty
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []

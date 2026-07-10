@@ -18,6 +18,7 @@ FAKE_OVERRIDE_ORIGINAL:
     name: value
     origin: JAVA_SOURCE
     psi: PsiFieldImpl
+    realPsi: PsiFieldImpl
     receiverParameter: null
     returnType: KaFlexibleType:
       annotations: []

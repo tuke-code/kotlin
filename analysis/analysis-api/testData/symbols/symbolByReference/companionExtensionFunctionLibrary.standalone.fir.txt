@@ -23,6 +23,7 @@ KaNamedFunctionSymbol:
   name: static1
   origin: LIBRARY
   psi: null
+  realPsi: null
   receiverParameter: KaReceiverParameterSymbol:
     annotations: []
     callableId: null
@@ -41,6 +42,7 @@ KaNamedFunctionSymbol:
     origin: LIBRARY
     owningCallableSymbol: KaNamedFunctionSymbol(/static1)
     psi: null
+    realPsi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []

@@ -16,6 +16,7 @@ KaLocalVariableSymbol:
   name: <error property>
   origin: SOURCE
   psi: KtDestructuringDeclaration
+  realPsi: null
   receiverParameter: null
   returnType: KaErrorType:
     annotations: []

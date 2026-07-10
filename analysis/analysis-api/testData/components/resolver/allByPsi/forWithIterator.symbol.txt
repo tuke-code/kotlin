@@ -193,6 +193,7 @@ KtThisExpression(147,160): 'this@iterator'
         origin: SOURCE
         owningCallableSymbol: KaNamedFunctionSymbol(f/iterator)
         psi: KtTypeReference
+        realPsi: KtTypeReference
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -225,6 +226,7 @@ KtNameReferenceExpression(147,151): 'this'
         origin: SOURCE
         owningCallableSymbol: KaNamedFunctionSymbol(f/iterator)
         psi: KtTypeReference
+        realPsi: KtTypeReference
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -311,6 +313,7 @@ KtThisExpression(207,220): 'this@iterator'
         origin: SOURCE
         owningCallableSymbol: KaNamedFunctionSymbol(f/iterator)
         psi: KtTypeReference
+        realPsi: KtTypeReference
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []
@@ -343,6 +346,7 @@ KtNameReferenceExpression(207,211): 'this'
         origin: SOURCE
         owningCallableSymbol: KaNamedFunctionSymbol(f/iterator)
         psi: KtTypeReference
+        realPsi: KtTypeReference
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []

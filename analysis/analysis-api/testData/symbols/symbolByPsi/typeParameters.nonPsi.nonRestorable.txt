@@ -9,6 +9,7 @@ KaTypeParameterSymbol:
   name: T
   origin: SOURCE
   psi: KtTypeParameter
+  realPsi: KtTypeParameter
   upperBounds: [
     KaClassErrorType:
       annotations: []

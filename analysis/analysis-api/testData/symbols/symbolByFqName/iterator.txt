@@ -16,6 +16,7 @@ KaNamedClassSymbol:
   name: Iterator
   origin: LIBRARY
   psi: KtClass
+  realPsi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -34,6 +35,7 @@ KaNamedClassSymbol:
       name: T
       origin: LIBRARY
       psi: KtTypeParameter
+      realPsi: KtTypeParameter
       upperBounds: []
       variance: OUT_VARIANCE
       visibility: LOCAL

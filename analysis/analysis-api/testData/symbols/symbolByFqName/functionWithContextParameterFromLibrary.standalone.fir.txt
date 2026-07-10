@@ -19,6 +19,7 @@ KaNamedFunctionSymbol:
       name: a
       origin: LIBRARY
       psi: null
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -48,6 +49,7 @@ KaNamedFunctionSymbol:
       name: b
       origin: LIBRARY
       psi: null
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -95,6 +97,7 @@ KaNamedFunctionSymbol:
   name: foo
   origin: LIBRARY
   psi: null
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []

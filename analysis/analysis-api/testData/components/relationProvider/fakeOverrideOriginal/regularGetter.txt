@@ -18,6 +18,7 @@ FAKE_OVERRIDE_ORIGINAL:
     modality: FINAL
     origin: SOURCE
     psi: null
+    realPsi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []

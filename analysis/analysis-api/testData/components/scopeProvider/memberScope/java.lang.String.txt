@@ -16,6 +16,7 @@ KaJavaFieldSymbol:
   name: value
   origin: JAVA_LIBRARY
   psi: ClsFieldImpl
+  realPsi: ClsFieldImpl
   receiverParameter: null
   returnType: KaFlexibleType:
     annotations: []
@@ -50,6 +51,7 @@ KaJavaFieldSymbol:
   name: hash
   origin: JAVA_LIBRARY
   psi: ClsFieldImpl
+  realPsi: ClsFieldImpl
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -92,6 +94,7 @@ KaNamedFunctionSymbol:
   name: hash32
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -130,6 +133,7 @@ KaJavaFieldSymbol:
   name: hash32
   origin: JAVA_LIBRARY
   psi: ClsFieldImpl
+  realPsi: ClsFieldImpl
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -171,6 +175,7 @@ KaSyntheticJavaPropertySymbol:
     modality: OPEN
     origin: JAVA_SYNTHETIC_PROPERTY
     psi: ClsMethodImpl
+    realPsi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -208,6 +213,7 @@ KaSyntheticJavaPropertySymbol:
   name: length
   origin: JAVA_SYNTHETIC_PROPERTY
   psi: null
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -253,6 +259,7 @@ KaNamedFunctionSymbol:
   name: isEmpty
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -298,6 +305,7 @@ KaNamedFunctionSymbol:
   name: codePointAt
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -329,6 +337,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -380,6 +389,7 @@ KaNamedFunctionSymbol:
   name: codePointBefore
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -411,6 +421,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -462,6 +473,7 @@ KaNamedFunctionSymbol:
   name: codePointCount
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -493,6 +505,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -529,6 +542,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -580,6 +594,7 @@ KaNamedFunctionSymbol:
   name: offsetByCodePoints
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -611,6 +626,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -647,6 +663,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -698,6 +715,7 @@ KaNamedFunctionSymbol:
   name: getChars
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -729,6 +747,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -764,6 +783,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -815,6 +835,7 @@ KaNamedFunctionSymbol:
   name: getChars
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -846,6 +867,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -882,6 +904,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -918,6 +941,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -953,6 +977,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -1007,6 +1032,7 @@ KaNamedFunctionSymbol:
   name: getBytes
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -1038,6 +1064,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -1074,6 +1101,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -1110,6 +1138,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -1145,6 +1174,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -1196,6 +1226,7 @@ KaNamedFunctionSymbol:
   name: getBytes
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaFlexibleType:
     annotations: []
@@ -1226,6 +1257,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -1276,6 +1308,7 @@ KaNamedFunctionSymbol:
   name: getBytes
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaFlexibleType:
     annotations: []
@@ -1306,6 +1339,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -1356,6 +1390,7 @@ KaNamedFunctionSymbol:
   name: getBytes
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaFlexibleType:
     annotations: []
@@ -1400,6 +1435,7 @@ KaNamedFunctionSymbol:
   name: equals
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -1431,6 +1467,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -1482,6 +1519,7 @@ KaNamedFunctionSymbol:
   name: contentEquals
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -1513,6 +1551,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -1563,6 +1602,7 @@ KaNamedFunctionSymbol:
   name: contentEquals
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -1594,6 +1634,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -1644,6 +1685,7 @@ KaNamedFunctionSymbol:
   name: equalsIgnoreCase
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -1675,6 +1717,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -1725,6 +1768,7 @@ KaNamedFunctionSymbol:
   name: compareTo
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -1756,6 +1800,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -1806,6 +1851,7 @@ KaNamedFunctionSymbol:
   name: compareToIgnoreCase
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -1837,6 +1883,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -1887,6 +1934,7 @@ KaNamedFunctionSymbol:
   name: regionMatches
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -1918,6 +1966,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -1954,6 +2003,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -1989,6 +2039,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -2025,6 +2076,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -2076,6 +2128,7 @@ KaNamedFunctionSymbol:
   name: regionMatches
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -2107,6 +2160,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -2143,6 +2197,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -2179,6 +2234,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -2214,6 +2270,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -2250,6 +2307,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -2301,6 +2359,7 @@ KaNamedFunctionSymbol:
   name: startsWith
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -2332,6 +2391,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -2367,6 +2427,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -2418,6 +2479,7 @@ KaNamedFunctionSymbol:
   name: startsWith
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -2449,6 +2511,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -2499,6 +2562,7 @@ KaNamedFunctionSymbol:
   name: endsWith
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -2530,6 +2594,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -2580,6 +2645,7 @@ KaNamedFunctionSymbol:
   name: hashCode
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -2625,6 +2691,7 @@ KaNamedFunctionSymbol:
   name: indexOf
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -2656,6 +2723,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -2707,6 +2775,7 @@ KaNamedFunctionSymbol:
   name: indexOf
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -2738,6 +2807,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -2774,6 +2844,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -2825,6 +2896,7 @@ KaNamedFunctionSymbol:
   name: indexOf
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -2856,6 +2928,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -2906,6 +2979,7 @@ KaNamedFunctionSymbol:
   name: indexOf
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -2937,6 +3011,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -2972,6 +3047,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -3023,6 +3099,7 @@ KaNamedFunctionSymbol:
   name: indexOfSupplementary
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -3054,6 +3131,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -3090,6 +3168,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -3141,6 +3220,7 @@ KaNamedFunctionSymbol:
   name: lastIndexOf
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -3172,6 +3252,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -3223,6 +3304,7 @@ KaNamedFunctionSymbol:
   name: lastIndexOf
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -3254,6 +3336,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -3290,6 +3373,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -3341,6 +3425,7 @@ KaNamedFunctionSymbol:
   name: lastIndexOf
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -3372,6 +3457,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -3422,6 +3508,7 @@ KaNamedFunctionSymbol:
   name: lastIndexOf
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -3453,6 +3540,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -3488,6 +3576,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -3539,6 +3628,7 @@ KaNamedFunctionSymbol:
   name: lastIndexOfSupplementary
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -3570,6 +3660,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -3606,6 +3697,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -3657,6 +3749,7 @@ KaNamedFunctionSymbol:
   name: substring
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaFlexibleType:
     annotations: []
@@ -3687,6 +3780,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -3738,6 +3832,7 @@ KaNamedFunctionSymbol:
   name: substring
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaFlexibleType:
     annotations: []
@@ -3768,6 +3863,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -3804,6 +3900,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -3855,6 +3952,7 @@ KaNamedFunctionSymbol:
   name: subSequence
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -3886,6 +3984,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -3922,6 +4021,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -3973,6 +4073,7 @@ KaNamedFunctionSymbol:
   name: concat
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaFlexibleType:
     annotations: []
@@ -4003,6 +4104,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -4053,6 +4155,7 @@ KaNamedFunctionSymbol:
   name: replace
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaFlexibleType:
     annotations: []
@@ -4083,6 +4186,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -4119,6 +4223,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -4170,6 +4275,7 @@ KaNamedFunctionSymbol:
   name: replace
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaFlexibleType:
     annotations: []
@@ -4200,6 +4306,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -4235,6 +4342,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -4285,6 +4393,7 @@ KaNamedFunctionSymbol:
   name: matches
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -4316,6 +4425,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -4366,6 +4476,7 @@ KaNamedFunctionSymbol:
   name: contains
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -4397,6 +4508,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -4447,6 +4559,7 @@ KaNamedFunctionSymbol:
   name: replaceFirst
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaFlexibleType:
     annotations: []
@@ -4477,6 +4590,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -4512,6 +4626,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -4562,6 +4677,7 @@ KaNamedFunctionSymbol:
   name: replaceAll
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaFlexibleType:
     annotations: []
@@ -4592,6 +4708,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -4627,6 +4744,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -4677,6 +4795,7 @@ KaNamedFunctionSymbol:
   name: split
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaFlexibleType:
     annotations: []
@@ -4707,6 +4826,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -4742,6 +4862,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -4793,6 +4914,7 @@ KaNamedFunctionSymbol:
   name: split
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaFlexibleType:
     annotations: []
@@ -4823,6 +4945,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -4873,6 +4996,7 @@ KaNamedFunctionSymbol:
   name: toLowerCase
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaFlexibleType:
     annotations: []
@@ -4903,6 +5027,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -4953,6 +5078,7 @@ KaNamedFunctionSymbol:
   name: toLowerCase
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaFlexibleType:
     annotations: []
@@ -4997,6 +5123,7 @@ KaNamedFunctionSymbol:
   name: toUpperCase
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaFlexibleType:
     annotations: []
@@ -5027,6 +5154,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -5077,6 +5205,7 @@ KaNamedFunctionSymbol:
   name: toUpperCase
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaFlexibleType:
     annotations: []
@@ -5121,6 +5250,7 @@ KaNamedFunctionSymbol:
   name: trim
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaFlexibleType:
     annotations: []
@@ -5165,6 +5295,7 @@ KaNamedFunctionSymbol:
   name: toString
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -5210,6 +5341,7 @@ KaNamedFunctionSymbol:
   name: toCharArray
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaFlexibleType:
     annotations: []
@@ -5254,6 +5386,7 @@ KaNamedFunctionSymbol:
   name: intern
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaFlexibleType:
     annotations: []
@@ -5298,6 +5431,7 @@ KaNamedFunctionSymbol:
   name: get
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -5329,6 +5463,7 @@ KaNamedFunctionSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -5373,6 +5508,7 @@ KaNamedClassSymbol:
   name: CaseInsensitiveComparator
   origin: JAVA_LIBRARY
   psi: ClsClassImpl
+  realPsi: ClsClassImpl
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -5416,6 +5552,7 @@ KaConstructorSymbol:
   modality: FINAL
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -5447,6 +5584,7 @@ KaConstructorSymbol:
   modality: FINAL
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -5478,6 +5616,7 @@ KaConstructorSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -5514,6 +5653,7 @@ KaConstructorSymbol:
   modality: FINAL
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -5545,6 +5685,7 @@ KaConstructorSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -5581,6 +5722,7 @@ KaConstructorSymbol:
   modality: FINAL
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -5612,6 +5754,7 @@ KaConstructorSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -5647,6 +5790,7 @@ KaConstructorSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -5683,6 +5827,7 @@ KaConstructorSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -5720,6 +5865,7 @@ KaConstructorSymbol:
   modality: FINAL
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -5751,6 +5897,7 @@ KaConstructorSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -5786,6 +5933,7 @@ KaConstructorSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -5822,6 +5970,7 @@ KaConstructorSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -5862,6 +6011,7 @@ KaConstructorSymbol:
   modality: FINAL
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -5893,6 +6043,7 @@ KaConstructorSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -5928,6 +6079,7 @@ KaConstructorSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -5964,6 +6116,7 @@ KaConstructorSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -6000,6 +6153,7 @@ KaConstructorSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -6040,6 +6194,7 @@ KaConstructorSymbol:
   modality: FINAL
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -6071,6 +6226,7 @@ KaConstructorSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -6106,6 +6262,7 @@ KaConstructorSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -6143,6 +6300,7 @@ KaConstructorSymbol:
   modality: FINAL
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -6174,6 +6332,7 @@ KaConstructorSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -6209,6 +6368,7 @@ KaConstructorSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -6245,6 +6405,7 @@ KaConstructorSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -6281,6 +6442,7 @@ KaConstructorSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -6317,6 +6479,7 @@ KaConstructorSymbol:
   modality: FINAL
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -6348,6 +6511,7 @@ KaConstructorSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -6383,6 +6547,7 @@ KaConstructorSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -6419,6 +6584,7 @@ KaConstructorSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -6455,6 +6621,7 @@ KaConstructorSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -6491,6 +6658,7 @@ KaConstructorSymbol:
   modality: FINAL
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -6522,6 +6690,7 @@ KaConstructorSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -6557,6 +6726,7 @@ KaConstructorSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -6593,6 +6763,7 @@ KaConstructorSymbol:
   modality: FINAL
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -6624,6 +6795,7 @@ KaConstructorSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -6659,6 +6831,7 @@ KaConstructorSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -6695,6 +6868,7 @@ KaConstructorSymbol:
   modality: FINAL
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -6726,6 +6900,7 @@ KaConstructorSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -6761,6 +6936,7 @@ KaConstructorSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -6797,6 +6973,7 @@ KaConstructorSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -6834,6 +7011,7 @@ KaConstructorSymbol:
   modality: FINAL
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -6865,6 +7043,7 @@ KaConstructorSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -6901,6 +7080,7 @@ KaConstructorSymbol:
   modality: FINAL
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -6932,6 +7112,7 @@ KaConstructorSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -6968,6 +7149,7 @@ KaConstructorSymbol:
   modality: FINAL
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -6999,6 +7181,7 @@ KaConstructorSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -7035,6 +7218,7 @@ KaConstructorSymbol:
   modality: FINAL
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -7066,6 +7250,7 @@ KaConstructorSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []
@@ -7101,6 +7286,7 @@ KaConstructorSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -7141,6 +7327,7 @@ KaConstructorSymbol:
   modality: FINAL
   origin: JAVA_LIBRARY
   psi: ClsMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -7172,6 +7359,7 @@ KaConstructorSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -7208,6 +7396,7 @@ KaConstructorSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -7244,6 +7433,7 @@ KaConstructorSymbol:
       origin: JAVA_LIBRARY
       primaryConstructorProperty: null
       psi: ClsParameterImpl
+      realPsi: null
       receiverParameter: null
       returnType: KaFlexibleType:
         annotations: []

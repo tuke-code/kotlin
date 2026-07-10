@@ -26,6 +26,7 @@ KaNamedFunctionSymbol:
   name: add
   origin: LIBRARY
   psi: null
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -57,6 +58,7 @@ KaNamedFunctionSymbol:
       origin: LIBRARY
       primaryConstructorProperty: null
       psi: null
+      realPsi: null
       receiverParameter: null
       returnType: KaTypeParameterType:
         annotations: []
@@ -111,6 +113,7 @@ KaNamedFunctionSymbol:
   name: add
   origin: LIBRARY
   psi: null
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -142,6 +145,7 @@ KaNamedFunctionSymbol:
       origin: LIBRARY
       primaryConstructorProperty: null
       psi: null
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -178,6 +182,7 @@ KaNamedFunctionSymbol:
       origin: LIBRARY
       primaryConstructorProperty: null
       psi: null
+      realPsi: null
       receiverParameter: null
       returnType: KaTypeParameterType:
         annotations: []
@@ -235,6 +240,7 @@ KaNamedFunctionSymbol:
   name: remove
   origin: LIBRARY
   psi: null
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -266,6 +272,7 @@ KaNamedFunctionSymbol:
       origin: LIBRARY
       primaryConstructorProperty: null
       psi: null
+      realPsi: null
       receiverParameter: null
       returnType: KaTypeParameterType:
         annotations: []
@@ -323,6 +330,7 @@ KaNamedFunctionSymbol:
   name: addAll
   origin: LIBRARY
   psi: null
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -354,6 +362,7 @@ KaNamedFunctionSymbol:
       origin: LIBRARY
       primaryConstructorProperty: null
       psi: null
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -416,6 +425,7 @@ KaNamedFunctionSymbol:
   name: addAll
   origin: LIBRARY
   psi: null
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -447,6 +457,7 @@ KaNamedFunctionSymbol:
       origin: LIBRARY
       primaryConstructorProperty: null
       psi: null
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -483,6 +494,7 @@ KaNamedFunctionSymbol:
       origin: LIBRARY
       primaryConstructorProperty: null
       psi: null
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -545,6 +557,7 @@ KaNamedFunctionSymbol:
   name: removeAll
   origin: LIBRARY
   psi: null
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -576,6 +589,7 @@ KaNamedFunctionSymbol:
       origin: LIBRARY
       primaryConstructorProperty: null
       psi: null
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -638,6 +652,7 @@ KaNamedFunctionSymbol:
   name: retainAll
   origin: LIBRARY
   psi: null
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -669,6 +684,7 @@ KaNamedFunctionSymbol:
       origin: LIBRARY
       primaryConstructorProperty: null
       psi: null
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -728,6 +744,7 @@ KaNamedFunctionSymbol:
   name: clear
   origin: LIBRARY
   psi: null
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -780,6 +797,7 @@ KaNamedFunctionSymbol:
   name: set
   origin: LIBRARY
   psi: null
+  realPsi: null
   receiverParameter: null
   returnType: KaTypeParameterType:
     annotations: []
@@ -810,6 +828,7 @@ KaNamedFunctionSymbol:
       origin: LIBRARY
       primaryConstructorProperty: null
       psi: null
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -846,6 +865,7 @@ KaNamedFunctionSymbol:
       origin: LIBRARY
       primaryConstructorProperty: null
       psi: null
+      realPsi: null
       receiverParameter: null
       returnType: KaTypeParameterType:
         annotations: []
@@ -903,6 +923,7 @@ KaNamedFunctionSymbol:
   name: removeAt
   origin: LIBRARY
   psi: null
+  realPsi: null
   receiverParameter: null
   returnType: KaTypeParameterType:
     annotations: []
@@ -933,6 +954,7 @@ KaNamedFunctionSymbol:
       origin: LIBRARY
       primaryConstructorProperty: null
       psi: null
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -988,6 +1010,7 @@ KaNamedFunctionSymbol:
   name: listIterator
   origin: LIBRARY
   psi: null
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -1041,6 +1064,7 @@ KaNamedFunctionSymbol:
   name: listIterator
   origin: LIBRARY
   psi: null
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -1076,6 +1100,7 @@ KaNamedFunctionSymbol:
       origin: LIBRARY
       primaryConstructorProperty: null
       psi: null
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -1131,6 +1156,7 @@ KaNamedFunctionSymbol:
   name: subList
   origin: LIBRARY
   psi: null
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -1166,6 +1192,7 @@ KaNamedFunctionSymbol:
       origin: LIBRARY
       primaryConstructorProperty: null
       psi: null
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -1202,6 +1229,7 @@ KaNamedFunctionSymbol:
       origin: LIBRARY
       primaryConstructorProperty: null
       psi: null
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -1256,6 +1284,7 @@ KaKotlinPropertySymbol:
     modality: ABSTRACT
     origin: INTERSECTION_OVERRIDE
     psi: null
+    realPsi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -1298,6 +1327,7 @@ KaKotlinPropertySymbol:
   origin: INTERSECTION_OVERRIDE
   primaryConstructorParameter: null
   psi: null
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -1348,6 +1378,7 @@ KaNamedFunctionSymbol:
   name: isEmpty
   origin: INTERSECTION_OVERRIDE
   psi: null
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -1397,6 +1428,7 @@ KaNamedFunctionSymbol:
   name: contains
   origin: INTERSECTION_OVERRIDE
   psi: null
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -1428,6 +1460,7 @@ KaNamedFunctionSymbol:
       origin: INTERSECTION_OVERRIDE
       primaryConstructorProperty: null
       psi: null
+      realPsi: null
       receiverParameter: null
       returnType: KaTypeParameterType:
         annotations: []
@@ -1482,6 +1515,7 @@ KaNamedFunctionSymbol:
   name: iterator
   origin: INTERSECTION_OVERRIDE
   psi: null
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -1535,6 +1569,7 @@ KaNamedFunctionSymbol:
   name: containsAll
   origin: INTERSECTION_OVERRIDE
   psi: null
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -1566,6 +1601,7 @@ KaNamedFunctionSymbol:
       origin: INTERSECTION_OVERRIDE
       primaryConstructorProperty: null
       psi: null
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -1625,6 +1661,7 @@ KaNamedFunctionSymbol:
   name: get
   origin: SUBSTITUTION_OVERRIDE
   psi: null
+  realPsi: null
   receiverParameter: null
   returnType: KaTypeParameterType:
     annotations: []
@@ -1655,6 +1692,7 @@ KaNamedFunctionSymbol:
       origin: SUBSTITUTION_OVERRIDE
       primaryConstructorProperty: null
       psi: null
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -1710,6 +1748,7 @@ KaNamedFunctionSymbol:
   name: indexOf
   origin: SUBSTITUTION_OVERRIDE
   psi: null
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -1741,6 +1780,7 @@ KaNamedFunctionSymbol:
       origin: SUBSTITUTION_OVERRIDE
       primaryConstructorProperty: null
       psi: null
+      realPsi: null
       receiverParameter: null
       returnType: KaTypeParameterType:
         annotations: []
@@ -1795,6 +1835,7 @@ KaNamedFunctionSymbol:
   name: lastIndexOf
   origin: SUBSTITUTION_OVERRIDE
   psi: null
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -1826,6 +1867,7 @@ KaNamedFunctionSymbol:
       origin: SUBSTITUTION_OVERRIDE
       primaryConstructorProperty: null
       psi: null
+      realPsi: null
       receiverParameter: null
       returnType: KaTypeParameterType:
         annotations: []
@@ -1880,6 +1922,7 @@ KaNamedFunctionSymbol:
   name: equals
   origin: LIBRARY
   psi: null
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -1911,6 +1954,7 @@ KaNamedFunctionSymbol:
       origin: LIBRARY
       primaryConstructorProperty: null
       psi: null
+      realPsi: null
       receiverParameter: null
       returnType: KaUsualClassType:
         annotations: []
@@ -1962,6 +2006,7 @@ KaNamedFunctionSymbol:
   name: hashCode
   origin: LIBRARY
   psi: null
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -2007,6 +2052,7 @@ KaNamedFunctionSymbol:
   name: toString
   origin: LIBRARY
   psi: null
+  realPsi: null
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -2052,6 +2098,7 @@ KaNamedFunctionSymbol:
   name: getFirst
   origin: SUBSTITUTION_OVERRIDE
   psi: null
+  realPsi: null
   receiverParameter: null
   returnType: KaTypeParameterType:
     annotations: []
@@ -2100,6 +2147,7 @@ KaNamedFunctionSymbol:
   name: getLast
   origin: SUBSTITUTION_OVERRIDE
   psi: null
+  realPsi: null
   receiverParameter: null
   returnType: KaTypeParameterType:
     annotations: []

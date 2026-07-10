@@ -9,6 +9,7 @@ KaTypeParameterSymbol:
   name: A
   origin: SOURCE
   psi: KtTypeParameter
+  realPsi: KtTypeParameter
   upperBounds: [
     KaUsualClassType:
       annotations: []
@@ -47,6 +48,7 @@ KaNamedFunctionSymbol:
   name: topLevelFunction
   origin: SOURCE
   psi: KtNamedFunction
+  realPsi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -64,6 +66,7 @@ KaNamedFunctionSymbol:
       name: A
       origin: SOURCE
       psi: KtTypeParameter
+      realPsi: KtTypeParameter
       upperBounds: [
         KaUsualClassType:
           annotations: []
@@ -98,6 +101,7 @@ KaTypeParameterSymbol:
   name: B
   origin: SOURCE
   psi: KtTypeParameter
+  realPsi: KtTypeParameter
   upperBounds: []
   variance: INVARIANT
   visibility: LOCAL
@@ -127,6 +131,7 @@ KaKotlinPropertySymbol:
     origin: PROPERTY_BACKING_FIELD
     owningProperty: KaKotlinPropertySymbol(/topLevelProperty)
     psi: null
+    realPsi: null
     receiverParameter: null
     returnType: KaTypeParameterType:
       annotations: []
@@ -159,6 +164,7 @@ KaKotlinPropertySymbol:
     modality: FINAL
     origin: SOURCE
     psi: KtPropertyAccessor
+    realPsi: KtPropertyAccessor
     receiverParameter: KaReceiverParameterSymbol:
       annotations: []
       callableId: null
@@ -177,6 +183,7 @@ KaKotlinPropertySymbol:
       origin: SOURCE
       owningCallableSymbol: KaKotlinPropertySymbol(/topLevelProperty)
       psi: KtTypeReference
+      realPsi: KtTypeReference
       receiverParameter: null
       returnType: KaTypeParameterType:
         annotations: []
@@ -220,6 +227,7 @@ KaKotlinPropertySymbol:
   origin: SOURCE
   primaryConstructorParameter: null
   psi: KtProperty
+  realPsi: KtProperty
   receiverParameter: KaReceiverParameterSymbol:
     annotations: []
     callableId: null
@@ -238,6 +246,7 @@ KaKotlinPropertySymbol:
     origin: SOURCE
     owningCallableSymbol: KaKotlinPropertySymbol(/topLevelProperty)
     psi: KtTypeReference
+    realPsi: KtTypeReference
     receiverParameter: null
     returnType: KaTypeParameterType:
       annotations: []
@@ -265,6 +274,7 @@ KaKotlinPropertySymbol:
       name: B
       origin: SOURCE
       psi: KtTypeParameter
+      realPsi: KtTypeParameter
       upperBounds: []
       variance: INVARIANT
       visibility: LOCAL
@@ -294,6 +304,7 @@ KaTypeParameterSymbol:
   name: C
   origin: SOURCE
   psi: KtTypeParameter
+  realPsi: KtTypeParameter
   upperBounds: []
   variance: INVARIANT
   visibility: LOCAL
@@ -313,6 +324,7 @@ KaTypeParameterSymbol:
   name: D
   origin: SOURCE
   psi: KtTypeParameter
+  realPsi: KtTypeParameter
   upperBounds: [
     KaTypeParameterType:
       annotations: []
@@ -342,6 +354,7 @@ KaConstructorSymbol:
   modality: FINAL
   origin: SOURCE
   psi: KtSecondaryConstructor
+  realPsi: KtSecondaryConstructor
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -366,6 +379,7 @@ KaConstructorSymbol:
       name: C
       origin: SOURCE
       psi: KtTypeParameter
+      realPsi: KtTypeParameter
       upperBounds: []
       variance: INVARIANT
       visibility: LOCAL
@@ -384,6 +398,7 @@ KaConstructorSymbol:
       name: D
       origin: SOURCE
       psi: KtTypeParameter
+      realPsi: KtTypeParameter
       upperBounds: [
         KaTypeParameterType:
           annotations: []
@@ -421,6 +436,7 @@ KaConstructorSymbol:
       origin: SOURCE
       primaryConstructorProperty: null
       psi: KtParameter
+      realPsi: KtParameter
       receiverParameter: null
       returnType: KaTypeParameterType:
         annotations: []
@@ -451,6 +467,7 @@ KaTypeParameterSymbol:
   name: E
   origin: SOURCE
   psi: KtTypeParameter
+  realPsi: KtTypeParameter
   upperBounds: []
   variance: INVARIANT
   visibility: LOCAL
@@ -470,6 +487,7 @@ KaTypeParameterSymbol:
   name: F
   origin: SOURCE
   psi: KtTypeParameter
+  realPsi: KtTypeParameter
   upperBounds: []
   variance: INVARIANT
   visibility: LOCAL
@@ -489,6 +507,7 @@ KaTypeParameterSymbol:
   name: G
   origin: SOURCE
   psi: KtTypeParameter
+  realPsi: KtTypeParameter
   upperBounds: []
   variance: INVARIANT
   visibility: LOCAL
@@ -508,6 +527,7 @@ KaTypeParameterSymbol:
   name: H
   origin: SOURCE
   psi: KtTypeParameter
+  realPsi: KtTypeParameter
   upperBounds: []
   variance: INVARIANT
   visibility: LOCAL
@@ -527,6 +547,7 @@ KaTypeParameterSymbol:
   name: I
   origin: SOURCE
   psi: KtTypeParameter
+  realPsi: KtTypeParameter
   upperBounds: []
   variance: INVARIANT
   visibility: LOCAL
@@ -560,6 +581,7 @@ KaNamedFunctionSymbol:
   name: localMemberFunction
   origin: SOURCE
   psi: KtNamedFunction
+  realPsi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -577,6 +599,7 @@ KaNamedFunctionSymbol:
       name: I
       origin: SOURCE
       psi: KtTypeParameter
+      realPsi: KtTypeParameter
       upperBounds: []
       variance: INVARIANT
       visibility: LOCAL
@@ -614,6 +637,7 @@ KaTypeParameterSymbol:
   name: J
   origin: SOURCE
   psi: KtTypeParameter
+  realPsi: KtTypeParameter
   upperBounds: []
   variance: INVARIANT
   visibility: LOCAL
@@ -640,6 +664,7 @@ KaNamedClassSymbol:
   name: LocalInnerClass
   origin: SOURCE
   psi: KtClass
+  realPsi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -658,6 +683,7 @@ KaNamedClassSymbol:
       name: J
       origin: SOURCE
       psi: KtTypeParameter
+      realPsi: KtTypeParameter
       upperBounds: []
       variance: INVARIANT
       visibility: LOCAL
@@ -691,6 +717,7 @@ KaNamedClassSymbol:
   name: LocalClass
   origin: SOURCE
   psi: KtClass
+  realPsi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -709,6 +736,7 @@ KaNamedClassSymbol:
       name: H
       origin: SOURCE
       psi: KtTypeParameter
+      realPsi: KtTypeParameter
       upperBounds: []
       variance: INVARIANT
       visibility: LOCAL
@@ -749,6 +777,7 @@ KaNamedFunctionSymbol:
   name: localFunction
   origin: SOURCE
   psi: KtNamedFunction
+  realPsi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -766,6 +795,7 @@ KaNamedFunctionSymbol:
       name: G
       origin: SOURCE
       psi: KtTypeParameter
+      realPsi: KtTypeParameter
       upperBounds: []
       variance: INVARIANT
       visibility: LOCAL
@@ -809,6 +839,7 @@ KaNamedFunctionSymbol:
   name: nestedFunction
   origin: SOURCE
   psi: KtNamedFunction
+  realPsi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -826,6 +857,7 @@ KaNamedFunctionSymbol:
       name: F
       origin: SOURCE
       psi: KtTypeParameter
+      realPsi: KtTypeParameter
       upperBounds: []
       variance: INVARIANT
       visibility: LOCAL
@@ -870,6 +902,7 @@ KaNamedClassSymbol:
   name: NestedClass
   origin: SOURCE
   psi: KtClass
+  realPsi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -888,6 +921,7 @@ KaNamedClassSymbol:
       name: E
       origin: SOURCE
       psi: KtTypeParameter
+      realPsi: KtTypeParameter
       upperBounds: []
       variance: INVARIANT
       visibility: LOCAL
@@ -914,6 +948,7 @@ KaTypeParameterSymbol:
   name: K
   origin: SOURCE
   psi: KtTypeParameter
+  realPsi: KtTypeParameter
   upperBounds: []
   variance: INVARIANT
   visibility: LOCAL
@@ -933,6 +968,7 @@ KaTypeParameterSymbol:
   name: L
   origin: SOURCE
   psi: KtTypeParameter
+  realPsi: KtTypeParameter
   upperBounds: []
   variance: INVARIANT
   visibility: LOCAL
@@ -952,6 +988,7 @@ KaTypeParameterSymbol:
   name: M
   origin: SOURCE
   psi: KtTypeParameter
+  realPsi: KtTypeParameter
   upperBounds: []
   variance: INVARIANT
   visibility: LOCAL
@@ -971,6 +1008,7 @@ KaTypeParameterSymbol:
   name: N
   origin: SOURCE
   psi: KtTypeParameter
+  realPsi: KtTypeParameter
   upperBounds: []
   variance: INVARIANT
   visibility: LOCAL
@@ -990,6 +1028,7 @@ KaTypeParameterSymbol:
   name: O
   origin: SOURCE
   psi: KtTypeParameter
+  realPsi: KtTypeParameter
   upperBounds: []
   variance: INVARIANT
   visibility: LOCAL
@@ -1023,6 +1062,7 @@ KaNamedFunctionSymbol:
   name: localMemberFunction
   origin: SOURCE
   psi: KtNamedFunction
+  realPsi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -1040,6 +1080,7 @@ KaNamedFunctionSymbol:
       name: O
       origin: SOURCE
       psi: KtTypeParameter
+      realPsi: KtTypeParameter
       upperBounds: []
       variance: INVARIANT
       visibility: LOCAL
@@ -1077,6 +1118,7 @@ KaTypeParameterSymbol:
   name: P
   origin: SOURCE
   psi: KtTypeParameter
+  realPsi: KtTypeParameter
   upperBounds: []
   variance: INVARIANT
   visibility: LOCAL
@@ -1103,6 +1145,7 @@ KaNamedClassSymbol:
   name: LocalInnerClass
   origin: SOURCE
   psi: KtClass
+  realPsi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -1121,6 +1164,7 @@ KaNamedClassSymbol:
       name: P
       origin: SOURCE
       psi: KtTypeParameter
+      realPsi: KtTypeParameter
       upperBounds: []
       variance: INVARIANT
       visibility: LOCAL
@@ -1154,6 +1198,7 @@ KaNamedClassSymbol:
   name: LocalClass
   origin: SOURCE
   psi: KtClass
+  realPsi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -1172,6 +1217,7 @@ KaNamedClassSymbol:
       name: N
       origin: SOURCE
       psi: KtTypeParameter
+      realPsi: KtTypeParameter
       upperBounds: []
       variance: INVARIANT
       visibility: LOCAL
@@ -1212,6 +1258,7 @@ KaNamedFunctionSymbol:
   name: localFunction
   origin: SOURCE
   psi: KtNamedFunction
+  realPsi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -1229,6 +1276,7 @@ KaNamedFunctionSymbol:
       name: M
       origin: SOURCE
       psi: KtTypeParameter
+      realPsi: KtTypeParameter
       upperBounds: []
       variance: INVARIANT
       visibility: LOCAL
@@ -1265,6 +1313,7 @@ KaLocalVariableSymbol:
   name: localProperty
   origin: SOURCE
   psi: KtProperty
+  realPsi: KtProperty
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -1303,6 +1352,7 @@ KaNamedFunctionSymbol:
   name: nestedFunction
   origin: SOURCE
   psi: KtNamedFunction
+  realPsi: KtNamedFunction
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -1320,6 +1370,7 @@ KaNamedFunctionSymbol:
       name: L
       origin: SOURCE
       psi: KtTypeParameter
+      realPsi: KtTypeParameter
       upperBounds: []
       variance: INVARIANT
       visibility: LOCAL
@@ -1364,6 +1415,7 @@ KaNamedClassSymbol:
   name: InnerClass
   origin: SOURCE
   psi: KtClass
+  realPsi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -1382,6 +1434,7 @@ KaNamedClassSymbol:
       name: K
       origin: SOURCE
       psi: KtTypeParameter
+      realPsi: KtTypeParameter
       upperBounds: []
       variance: INVARIANT
       visibility: LOCAL
@@ -1415,6 +1468,7 @@ KaNamedClassSymbol:
   name: TopLevelClass
   origin: SOURCE
   psi: KtClass
+  realPsi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -1433,6 +1487,7 @@ KaNamedClassSymbol:
       name: C
       origin: SOURCE
       psi: KtTypeParameter
+      realPsi: KtTypeParameter
       upperBounds: []
       variance: INVARIANT
       visibility: LOCAL
@@ -1451,6 +1506,7 @@ KaNamedClassSymbol:
       name: D
       origin: SOURCE
       psi: KtTypeParameter
+      realPsi: KtTypeParameter
       upperBounds: [
         KaTypeParameterType:
           annotations: []
@@ -1481,6 +1537,7 @@ KaTypeParameterSymbol:
   name: Q
   origin: SOURCE
   psi: KtTypeParameter
+  realPsi: KtTypeParameter
   upperBounds: []
   variance: INVARIANT
   visibility: LOCAL
@@ -1504,6 +1561,7 @@ KaTypeAliasSymbol:
   name: TopLevelTypeAlias
   origin: SOURCE
   psi: KtTypeAlias
+  realPsi: KtTypeAlias
   typeParameters: [
     KaTypeParameterSymbol:
       annotations: []
@@ -1516,6 +1574,7 @@ KaTypeAliasSymbol:
       name: Q
       origin: SOURCE
       psi: KtTypeParameter
+      realPsi: KtTypeParameter
       upperBounds: []
       variance: INVARIANT
       visibility: LOCAL

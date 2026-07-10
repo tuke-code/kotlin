@@ -16,6 +16,7 @@ KaJavaFieldSymbol:
   name: foo
   origin: JAVA_SOURCE
   psi: PsiFieldImpl
+  realPsi: PsiFieldImpl
   receiverParameter: null
   returnType: KaUsualClassType:
     annotations: []
@@ -54,6 +55,7 @@ KaNamedFunctionSymbol:
   name: bar
   origin: JAVA_SOURCE
   psi: PsiMethodImpl
+  realPsi: null
   receiverParameter: null
   returnType: KaFlexibleType:
     annotations: []
@@ -87,6 +89,7 @@ KaNamedClassSymbol:
   name: NestedClass
   origin: JAVA_SOURCE
   psi: PsiClassImpl
+  realPsi: PsiClassImpl
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -119,6 +122,7 @@ KaNamedClassSymbol:
   name: InnerClass
   origin: JAVA_SOURCE
   psi: PsiClassImpl
+  realPsi: PsiClassImpl
   superTypes: [
     KaUsualClassType:
       annotations: []

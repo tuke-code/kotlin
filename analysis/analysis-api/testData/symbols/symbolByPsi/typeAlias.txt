@@ -9,6 +9,7 @@ KaTypeParameterSymbol:
   name: T
   origin: SOURCE
   psi: KtTypeParameter
+  realPsi: KtTypeParameter
   upperBounds: []
   variance: INVARIANT
   visibility: LOCAL
@@ -35,6 +36,7 @@ KaNamedClassSymbol:
   name: X
   origin: SOURCE
   psi: KtClass
+  realPsi: KtClass
   superTypes: [
     KaUsualClassType:
       annotations: []
@@ -53,6 +55,7 @@ KaNamedClassSymbol:
       name: T
       origin: SOURCE
       psi: KtTypeParameter
+      realPsi: KtTypeParameter
       upperBounds: []
       variance: INVARIANT
       visibility: LOCAL
@@ -79,6 +82,7 @@ KaTypeParameterSymbol:
   name: Z
   origin: SOURCE
   psi: KtTypeParameter
+  realPsi: KtTypeParameter
   upperBounds: []
   variance: INVARIANT
   visibility: LOCAL
@@ -106,6 +110,7 @@ KaTypeAliasSymbol:
   name: Y
   origin: SOURCE
   psi: KtTypeAlias
+  realPsi: KtTypeAlias
   typeParameters: [
     KaTypeParameterSymbol:
       annotations: []
@@ -118,6 +123,7 @@ KaTypeAliasSymbol:
       name: Z
       origin: SOURCE
       psi: KtTypeParameter
+      realPsi: KtTypeParameter
       upperBounds: []
       variance: INVARIANT
       visibility: LOCAL

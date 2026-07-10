@@ -18,6 +18,7 @@ classifiers: 1
     name: AllOpenGenerated
     origin: PLUGIN
     psi: null
+    realPsi: null
     superTypes: [
       KaUsualClassType:
         annotations: []
@@ -52,6 +53,7 @@ callables: 1
     name: dummyTest
     origin: PLUGIN
     psi: null
+    realPsi: null
     receiverParameter: null
     returnType: KaUsualClassType:
       annotations: []
@@ -83,6 +85,7 @@ callables: 1
         origin: PLUGIN
         primaryConstructorProperty: null
         psi: null
+        realPsi: null
         receiverParameter: null
         returnType: KaUsualClassType:
           annotations: []

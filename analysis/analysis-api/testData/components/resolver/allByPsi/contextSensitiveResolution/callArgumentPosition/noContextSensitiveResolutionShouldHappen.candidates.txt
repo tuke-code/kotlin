@@ -550,6 +550,7 @@ KtCallExpression(350,356): 'foo(X)'
           origin: SOURCE
           owningCallableSymbol: KaNamedFunctionSymbol(<local>/bar)
           psi: KtTypeReference
+          realPsi: KtTypeReference
           receiverParameter: null
           returnType: KaUsualClassType:
             annotations: []
@@ -629,6 +630,7 @@ KtNameReferenceExpression(350,353): 'foo'
           origin: SOURCE
           owningCallableSymbol: KaNamedFunctionSymbol(<local>/bar)
           psi: KtTypeReference
+          realPsi: KtTypeReference
           receiverParameter: null
           returnType: KaUsualClassType:
             annotations: []
@@ -713,6 +715,7 @@ KtNameReferenceExpression(354,355): 'X'
           origin: SOURCE
           owningCallableSymbol: KaNamedFunctionSymbol(<local>/bar)
           psi: KtTypeReference
+          realPsi: KtTypeReference
           receiverParameter: null
           returnType: KaUsualClassType:
             annotations: []

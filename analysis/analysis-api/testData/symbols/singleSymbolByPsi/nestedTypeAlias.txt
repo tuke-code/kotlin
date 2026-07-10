@@ -20,6 +20,7 @@ KaTypeAliasSymbol:
   name: MyAlias
   origin: SOURCE
   psi: KtTypeAlias
+  realPsi: KtTypeAlias
   typeParameters: [
     KaTypeParameterSymbol:
       annotations: []
@@ -32,6 +33,7 @@ KaTypeAliasSymbol:
       name: C
       origin: SOURCE
       psi: KtTypeParameter
+      realPsi: KtTypeParameter
       upperBounds: []
       variance: INVARIANT
       visibility: LOCAL
@@ -50,6 +52,7 @@ KaTypeAliasSymbol:
       name: D
       origin: SOURCE
       psi: KtTypeParameter
+      realPsi: KtTypeParameter
       upperBounds: []
       variance: INVARIANT
       visibility: LOCAL
