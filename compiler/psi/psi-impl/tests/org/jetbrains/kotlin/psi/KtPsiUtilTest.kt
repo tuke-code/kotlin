@@ -11,6 +11,7 @@ import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.psi.psiUtil.collectDescendantsOfType
 import org.jetbrains.kotlin.psi.psiUtil.findDescendantOfType
+import org.jetbrains.kotlin.psi.psiUtil.getChildOfType
 import org.jetbrains.kotlin.psi.psiUtil.isCallee
 import org.jetbrains.kotlin.psi.psiUtil.isSingleQuoted
 import org.jetbrains.kotlin.psi.psiUtil.plainContent
@@ -139,6 +140,35 @@ class KtPsiUtilTest(private val testInfo: TestInfo) : KotlinTestWithEnvironment(
     fun testIsCallee() {
         checkExpression(KtSimpleNameExpression::isCallee)
     }
+
+    @Test
+    fun testGetOutermostClassOrObjectForCompanionBlockMember() {
+        val file = KtPsiFactory(project).createFile(
+            """
+            class C {
+                companion {
+                    class Nested
+                    object NestedObject
+                }
+            }
+            """.trimIndent()
+        )
+
+        val topLevel = file.getChildOfType<KtClass>()
+        checkNotNull(topLevel) { "Top-level class C is expected" }
+
+        for (memberName in listOf("Nested", "NestedObject")) {
+            val member = file.findClassOrObjectByName(memberName)
+            Assertions.assertSame(
+                topLevel,
+                KtPsiUtil.getOutermostClassOrObject(member),
+                "getOutermostClassOrObject of companion-block member $memberName must be the enclosing class C"
+            )
+        }
+    }
+
+    private fun KtFile.findClassOrObjectByName(name: String): KtClassOrObject =
+        findDescendantOfType<KtClassOrObject> { it.name == name } ?: error("Class or object '$name' is not found")
 
     private fun getImportPathFromParsed(text: String): ImportPath? {
         val importDirective = KtPsiFactory(project).createFile(text).findDescendantOfType<KtImportDirective>()
