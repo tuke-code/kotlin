@@ -128,10 +128,6 @@ if (!project.hasProperty("versions.kotlin-native")) {
     }
 }
 
-extra["kotlinJpsPluginMavenDependenciesNonTransitiveLibs"] = listOf(
-    commonDependency("org.jetbrains.kotlin:kotlin-reflect")
-)
-
 val coreLibProjects by extra {
     listOfNotNull(
         ":kotlin-stdlib",
