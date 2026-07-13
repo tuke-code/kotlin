@@ -5,6 +5,9 @@ import runLambda = JS_TESTS.foo.runLambda;
 import runVoidLambda = JS_TESTS.foo.runVoidLambda;
 import chain = JS_TESTS.foo.chain;
 import roundTrip = JS_TESTS.foo.roundTrip;
+import genericRoundTrip = JS_TESTS.foo.genericRoundTrip;
+import nullableSuspendLambda = JS_TESTS.foo.nullableSuspendLambda;
+import callNullableSuspendLambda = JS_TESTS.foo.callNullableSuspendLambda;
 import LambdaHolder = JS_TESTS.foo.LambdaHolder;
 import callKotlinLambdaFromKotlin = JS_TESTS.foo.callKotlinLambdaFromKotlin;
 import produceArrayOfSuspendLambdas = JS_TESTS.foo.produceArrayOfSuspendLambdas;
@@ -18,6 +21,12 @@ import InterfaceWithSuspendLambdaProp = JS_TESTS.foo.InterfaceWithSuspendLambdaP
 import AbstractClassWithSuspendLambdaProp = JS_TESTS.foo.AbstractClassWithSuspendLambdaProp;
 import callHandlerFromInterface = JS_TESTS.foo.callHandlerFromInterface;
 import callHandlerFromAbstractClass = JS_TESTS.foo.callHandlerFromAbstractClass;
+import callbackThatThrows = JS_TESTS.foo.callbackThatThrows;
+import throwingSuspendLambda = JS_TESTS.foo.throwingSuspendLambda;
+import applyAll = JS_TESTS.foo.applyAll;
+import withDefaultCallback = JS_TESTS.foo.withDefaultCallback;
+import produceNestedSuspendLambda = JS_TESTS.foo.produceNestedSuspendLambda;
+import callNestedSuspendLambda = JS_TESTS.foo.callNestedSuspendLambda;
 
 class TSInterfaceImpl implements InterfaceWithSuspendLambdaProp {
     readonly handler = async (x: number) => "value:" + x;
@@ -52,6 +61,17 @@ async function box(): Promise<string> {
 
     const back = roundTrip(async (x: number) => x * 2);
     assert(await back(10) === 21, "roundTrip");
+
+    const genericBack = genericRoundTrip(async (x: string) => x + "!");
+    assert(await genericBack("OK") === "OK!", "genericRoundTrip");
+
+    const checkedNullableSuspendLambda = nullableSuspendLambda;
+    if (checkedNullableSuspendLambda == null) {
+        throw "Assertion failed: nullableSuspendLambda presence";
+    }
+    assert(await checkedNullableSuspendLambda() === "nullable", "nullableSuspendLambda");
+    assert(await callNullableSuspendLambda(async (x: number) => "nullable:" + x, 5) === "nullable:5", "callNullableSuspendLambda");
+    assert(await callNullableSuspendLambda(null, 5) == null, "callNullableSuspendLambda null");
 
     const holder = new LambdaHolder(100);
     assert(await holder.multiplier(3, 4) === 12, "holder.multiplier");
@@ -105,6 +125,42 @@ async function box(): Promise<string> {
     // TypeScript override of suspend lambda property from Kotlin abstract class
     const tsAbstractImpl = new TSAbstractClassImpl();
     assert(await callHandlerFromAbstractClass(tsAbstractImpl, 7) === "abstract:7", "callHandlerFromAbstractClass");
+
+    assert(
+        await callbackThatThrows(async () => { throw new Error("ts-error") }) === "caught:ts-error",
+        "callbackThatThrows (TS throws)"
+    );
+
+    let caughtFromKotlin: unknown = undefined;
+    try {
+        await throwingSuspendLambda();
+    } catch (e) {
+        caughtFromKotlin = e;
+    }
+    assert(
+        caughtFromKotlin !== undefined && String(caughtFromKotlin).indexOf("boom") >= 0,
+        "throwingSuspendLambda rejects with 'boom'"
+    );
+
+    assert(
+        await applyAll(2, [async (x: number) => x + 1, async (x: number) => x * 10, async (x: number) => x - 5]) === 25,
+        "applyAll (vararg, 3 callbacks)"
+    );
+    assert(await applyAll(7, []) === 7, "applyAll (zero varargs)");
+
+    assert(await withDefaultCallback(5) === 105, "withDefaultCallback (default fires)");
+    assert(await withDefaultCallback(5, async (x: number) => x * 7) === 35, "withDefaultCallback (TS override)");
+
+    const kotlinNested = produceNestedSuspendLambda();
+    const innerFromKotlin = await kotlinNested();
+    assert(await innerFromKotlin() === "NESTED", "produceNestedSuspendLambda (Kotlin)");
+    assert(
+        await callNestedSuspendLambda(async () => async () => "TS-NESTED") === "TS-NESTED",
+        "callNestedSuspendLambda (TS-side)"
+    );
+
+    const kotlinLambdaForRoundTrip = produceSuspendLambda();
+    assert(await runLambda(kotlinLambdaForRoundTrip) === 84, "round-trip Kotlin->TS->Kotlin");
 
     return "OK";
 }

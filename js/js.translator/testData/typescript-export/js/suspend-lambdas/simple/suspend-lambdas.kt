@@ -46,6 +46,17 @@ fun roundTrip(callback: suspend (Int) -> Int): suspend (Int) -> Int =
     { x -> callback(x) + 1 }
 
 @JsExport
+fun <T> genericRoundTrip(callback: suspend (T) -> T): suspend (T) -> T =
+    { x -> callback(x) }
+
+@JsExport
+val nullableSuspendLambda: (suspend () -> String)? = { "nullable" }
+
+@JsExport
+suspend fun callNullableSuspendLambda(callback: (suspend (Int) -> String)?, x: Int): String? =
+    callback?.invoke(x)
+
+@JsExport
 class LambdaHolder(private val base: Int) {
     val multiplier: suspend (Int, Int) -> Int = { x, y -> x * y }
 
@@ -125,3 +136,31 @@ suspend fun callHandlerFromInterface(holder: InterfaceWithSuspendLambdaProp, x: 
 @JsExport
 suspend fun callHandlerFromAbstractClass(holder: AbstractClassWithSuspendLambdaProp, x: Int): String =
     holder.handler(x)
+
+@JsExport
+suspend fun callbackThatThrows(callback: suspend () -> String): String =
+    try {
+        callback()
+    } catch (e: Throwable) {
+        "caught:" + (e.message ?: "<no-message>")
+    }
+
+@JsExport
+suspend fun throwingSuspendLambda(): String =
+    throw Throwable("boom")
+
+@JsExport
+suspend fun applyAll(start: Int, vararg callbacks: suspend (Int) -> Int): Int {
+    var acc = start
+    for (cb in callbacks) acc = cb(acc)
+    return acc
+}
+
+@JsExport
+suspend fun withDefaultCallback(x: Int, cb: suspend (Int) -> Int = { it + 100 }): Int = cb(x)
+
+@JsExport
+fun produceNestedSuspendLambda(): suspend () -> suspend () -> String = { { "NESTED" } }
+
+@JsExport
+suspend fun callNestedSuspendLambda(maker: suspend () -> suspend () -> String): String = maker()()
