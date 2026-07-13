@@ -17,6 +17,18 @@ fun removedFunCall() = A.removedFun()
 val bodyChangeRef = A::bodyChange
 val removedFunRef = A::removedFun
 
+fun removedClassCall() = A.removedClass()
+fun removedClassValueCall() = A.removedClassValue()
+fun removedClassParameterCall() = A.removedClassParameter(RemovedClass(42))
+fun removedClassTypeParameterCall() = A.removedClassTypeParameter<RemovedClass>()
+
+fun removedCompanionValCall() = B.removedCompanionVal
+fun removedCompanionVarCall() = B.removedCompanionVar
+fun removedCompanionVarSet() {
+    B.removedCompanionVar = 0
+}
+fun removedCompanionFunCall() = B.removedCompanionFun()
+
 fun blockToObjectCall() = A.blockToObject()
 fun objectToBlockCall() = A.objectToBlock()
 

@@ -7,6 +7,11 @@ class A {
 
         fun bodyChange() = "bodyChange.v1"
         fun removedFun() {}
+
+        fun removedClass(): Any = RemovedClass(42)
+        fun removedClassValue() = RemovedClass(42).value
+        fun removedClassParameter(p: RemovedClass) {}
+        fun <T : RemovedClass> removedClassTypeParameter() {}
     }
 
     companion {
@@ -31,5 +36,15 @@ class RemovedBlock {
 class NewBlock {
     companion object {
         fun sameFun() = "object"
+    }
+}
+
+class RemovedClass(val value: Int)
+
+class B {
+    companion object {
+        val removedCompanionVal = 42
+        var removedCompanionVar = 42
+        fun removedCompanionFun() = "removedCompanionFun"
     }
 }
