@@ -1,4 +1,4 @@
-// CompanionBlocksKt.class
+// CompanionBlocksAndExtensionsKt.class
 // ------------------------------------------
 package {
 
@@ -46,6 +46,6 @@ public final class Vector : kotlin/Any {
 // ------------------------------------------
 module {
   package <root> {
-    CompanionBlocksKt
+    CompanionBlocksAndExtensionsKt
   }
 }
