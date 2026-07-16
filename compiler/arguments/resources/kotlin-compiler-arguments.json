@@ -3932,7 +3932,8 @@
                                 "current": false,
                                 "valueInVersions": []
                             }
-                        }
+                        },
+                        "deprecatedMessage": null
                     },
                     {
                         "name": "Xexpect-actual-classes",
