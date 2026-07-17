@@ -605,7 +605,7 @@ abstract class AbstractAnalysisApiBasedTest : TestWithDisposable(), ManagedTest 
     protected fun <E : KtElement, R> copyAwareAnalyzeForTest(
         contextElement: E,
         danglingFileResolutionMode: KaDanglingFileResolutionMode = KaDanglingFileResolutionMode.IGNORE_SELF,
-        action: KaSession.(E) -> R,
+        action: context(KaSession) (E) -> R,
     ): R {
         return if (configurator.analyseInDependentSession) {
             val originalContainingFile = contextElement.containingKtFile
@@ -617,10 +617,10 @@ abstract class AbstractAnalysisApiBasedTest : TestWithDisposable(), ManagedTest 
                             " (original file: '$originalContainingFile', copied file: '$fileCopy')."
                 }
 
-                contextOf<KaSession>().action(getDependentElementFromFile(contextElement, fileCopy))
+                action(getDependentElementFromFile(contextElement, fileCopy))
             }
         } else {
-            analyze(contextElement, action = { contextOf<KaSession>().action(contextElement) })
+            analyze(contextElement, action = { action(contextElement) })
         }
     }
 
@@ -645,7 +645,7 @@ abstract class AbstractAnalysisApiBasedTest : TestWithDisposable(), ManagedTest 
      *
      * If the test supports dependent analysis, [copyAwareAnalyzeForTest] should be used instead.
      */
-    protected fun <R> analyzeForTest(contextElement: KtElement, action: KaSession.() -> R): R {
+    protected fun <R> analyzeForTest(contextElement: KtElement, action: context(KaSession) () -> R): R {
         check(!configurator.analyseInDependentSession) {
             "The `analyzeForTest` function should not be used in tests which support dependent analysis mode." +
                     " Use `copyAwareAnalyzeForTest` instead."

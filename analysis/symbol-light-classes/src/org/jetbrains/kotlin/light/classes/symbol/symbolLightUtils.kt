@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2025 JetBrains s.r.o. and Kotlin Programming Language contributors.
+ * Copyright 2010-2026 JetBrains s.r.o. and Kotlin Programming Language contributors.
  * Use of this source code is governed by the Apache 2.0 license that can be found in the license/LICENSE.txt file.
  */
 
@@ -320,8 +320,8 @@ internal inline fun <T : KaSymbol> compareSymbolPointers(
 
 internal inline fun <T : KaSymbol, R> KaSymbolPointer<T>.withSymbol(
     ktModule: KaModule,
-    crossinline action: KaSession.(T) -> R,
-): R = analyzeForLightClasses(ktModule) { action(this, restoreSymbolOrThrowIfDisposed(this@withSymbol)) }
+    crossinline action: context(KaSession) (T) -> R,
+): R = analyzeForLightClasses(ktModule) { action(restoreSymbolOrThrowIfDisposed(this@withSymbol)) }
 
 internal val KaPropertySymbol.isConstOrJvmField: Boolean get() = isConst || isJvmField
 internal val KaPropertySymbol.isJvmField: Boolean get() = backingFieldSymbol?.hasJvmFieldAnnotation() == true
