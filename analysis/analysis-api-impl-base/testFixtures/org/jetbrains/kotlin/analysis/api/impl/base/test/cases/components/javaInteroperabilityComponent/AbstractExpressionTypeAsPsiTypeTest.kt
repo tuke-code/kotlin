@@ -7,6 +7,7 @@ package org.jetbrains.kotlin.analysis.api.impl.base.test.cases.components.javaIn
 
 import com.intellij.psi.util.parentOfType
 import org.jetbrains.kotlin.analysis.api.KaSession
+import org.jetbrains.kotlin.analysis.api.components.asPsiType
 import org.jetbrains.kotlin.analysis.api.impl.base.test.cases.components.javaInteroperabilityComponent.JavaInteroperabilityComponentTestUtils.findLightDeclarationContext
 import org.jetbrains.kotlin.analysis.api.impl.base.test.cases.components.javaInteroperabilityComponent.JavaInteroperabilityComponentTestUtils.getContainingKtLightClass
 import org.jetbrains.kotlin.analysis.api.impl.base.test.cases.components.javaInteroperabilityComponent.JavaInteroperabilityComponentTestUtils.render
@@ -52,8 +53,9 @@ abstract class AbstractExpressionTypeAsPsiTypeTest : AbstractAnalysisApiBasedTes
     }
 }
 
-private fun KaSession.renderActual(expressionType: KaType, psiContext: KtLightElement<*, *>): String = prettyPrint {
-    appendLine("${KaType::class.simpleName}: ${expressionType.render(useSiteSession)}")
+context(analysisSession: KaSession)
+private fun renderActual(expressionType: KaType, psiContext: KtLightElement<*, *>): String = prettyPrint {
+    appendLine("${KaType::class.simpleName}: ${expressionType.render()}")
     for (allowErrorTypes in listOf(false, true)) {
         for (typeMappingMode in KaTypeMappingMode.entries) {
             for (isAnnotationMethod in listOf(false, true)) {

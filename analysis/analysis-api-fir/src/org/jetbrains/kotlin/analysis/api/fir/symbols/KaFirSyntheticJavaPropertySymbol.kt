@@ -96,7 +96,7 @@ internal class KaFirSyntheticJavaPropertySymbol(
 
     override fun createPointer(): KaSymbolPointer<KaSyntheticJavaPropertySymbol> = withValidityAssertion {
         KaFirJavaSyntheticPropertySymbolPointer(
-            ownerPointer = analysisSession.createOwnerPointer(this),
+            ownerPointer = createOwnerPointer(),
             propertyName = name,
             isSynthetic = firSymbol is SyntheticSymbol,
             originalSymbol = this

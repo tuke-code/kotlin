@@ -82,7 +82,7 @@ internal class KaFirContextReceiverBasedContextParameterSymbol private construct
 
         val parameters = ownerSymbol.firSymbol.fir.contextParameters
         return KaBaseContextParameterSymbolPointer(
-            ownerPointer = analysisSession.createOwnerPointer(this),
+            ownerPointer = createOwnerPointer(),
             name = name,
             index = parameters.indexOf(firSymbol.fir),
             originalSymbol = this,

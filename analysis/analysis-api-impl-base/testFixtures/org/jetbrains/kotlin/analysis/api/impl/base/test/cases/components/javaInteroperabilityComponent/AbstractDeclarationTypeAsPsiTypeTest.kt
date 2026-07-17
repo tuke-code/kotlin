@@ -55,7 +55,7 @@ abstract class AbstractDeclarationTypeAsPsiTypeTest : AbstractAnalysisApiBasedTe
                     val mode = testServices.moduleStructure.allDirectives.singleOrZeroValue(TYPE_MAPPING_MODE) ?: KaTypeMappingMode.DEFAULT
                     val psiType = kaType.asPsiType(psiContext, allowErrorTypes = false, mode = mode)
 
-                    appendLine("${KaType::class.simpleName}: ${kaType.render(useSiteSession)}")
+                    appendLine("${KaType::class.simpleName}: ${kaType.render()}")
                     appendLine("${PsiType::class.simpleName}: ${psiType?.render()}")
 
                     if (mainModule.testModule.directives.contains(RENDER_CLASS_DUMP)) {

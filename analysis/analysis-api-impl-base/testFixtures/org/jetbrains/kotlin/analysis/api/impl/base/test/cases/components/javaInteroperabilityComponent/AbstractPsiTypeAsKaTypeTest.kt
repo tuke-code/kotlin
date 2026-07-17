@@ -40,7 +40,7 @@ abstract class AbstractPsiTypeAsKaTypeTest : AbstractAnalysisApiBasedTest() {
                     testServices.assertions.assertNotNull(psiType)
                     val kaType = psiType!!.asKaType(useSitePosition ?: psiDeclaration)!!
                     appendLine("${PsiType::class.simpleName}: ${psiType.render()}")
-                    appendLine("${KaType::class.simpleName}: ${kaType.render(useSiteSession)}")
+                    appendLine("${KaType::class.simpleName}: ${kaType.render()}")
                 }
             }
         }

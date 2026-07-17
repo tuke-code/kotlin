@@ -61,7 +61,7 @@ internal class KaFirContextParameterSymbol private constructor(
         }
 
         return KaBaseContextParameterSymbolPointer(
-            ownerPointer = analysisSession.createOwnerPointer(this),
+            ownerPointer = createOwnerPointer(),
             name = name,
             index = index,
             originalSymbol = this,

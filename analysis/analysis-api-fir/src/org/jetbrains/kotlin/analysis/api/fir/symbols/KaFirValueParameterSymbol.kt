@@ -139,7 +139,7 @@ internal class KaFirValueParameterSymbol private constructor(
     override fun createPointer(): KaSymbolPointer<KaValueParameterSymbol> = withValidityAssertion {
         psiBasedSymbolPointerOfTypeIfSource<KaValueParameterSymbol>()?.let { return it }
         return KaFirValueParameterSymbolPointer(
-            ownerPointer = analysisSession.createOwnerPointer(this),
+            ownerPointer = createOwnerPointer(),
             name = name,
             index = index,
             originalSymbol = this
