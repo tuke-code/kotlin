@@ -79,12 +79,12 @@ abstract class AbstractResolveDanglingFileSymbolTest : AbstractResolveSymbolTest
         }
     }
 
-    override fun <R> analyzeSymbolElement(element: KtElement, testServices: TestServices, action: KaSession.() -> R): R {
+    override fun <R> analyzeSymbolElement(element: KtElement, testServices: TestServices, action: context(KaSession) () -> R): R {
         val resolutionMode = testServices.moduleStructure.allDirectives.singleOrZeroValue(Directives.COPY_RESOLUTION_MODE)
         return if (resolutionMode != null) {
-            analyzeCopy(element, resolutionMode) { contextOf<KaSession>().action() }
+            analyzeCopy(element, resolutionMode, action)
         } else {
-            analyze(element) { action() }
+            analyze(element, action)
         }
     }
 
