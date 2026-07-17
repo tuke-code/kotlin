@@ -1,13 +1,13 @@
 /*
- * Copyright 2010-2023 JetBrains s.r.o. and Kotlin Programming Language contributors.
+ * Copyright 2010-2026 JetBrains s.r.o. and Kotlin Programming Language contributors.
  * Use of this source code is governed by the Apache 2.0 license that can be found in the license/LICENSE.txt file.
  */
 
 package org.jetbrains.kotlin.objcexport.tests
 
-import org.jetbrains.kotlin.analysis.api.KaSession
 import org.jetbrains.kotlin.analysis.api.scopes.memberScope
 import org.jetbrains.kotlin.analysis.api.session.analyze
+import org.jetbrains.kotlin.analysis.api.session.useSiteSession
 import org.jetbrains.kotlin.export.test.InlineSourceCodeAnalysis
 import org.jetbrains.kotlin.export.test.getClassOrFail
 import org.jetbrains.kotlin.export.test.getFunctionOrFail
@@ -24,7 +24,7 @@ class IsVisibleInObjCTest(
     fun `test - simple public function`() {
         val file = inlineSourceCodeAnalysis.createKtFile("fun foo() = Unit")
         analyze(file) {
-            val session = contextOf<KaSession>()
+            val session = useSiteSession
             val fooSymbol = session.getFunctionOrFail(file, "foo")
             assertTrue(session.isVisibleInObjC(fooSymbol))
         }
@@ -34,7 +34,7 @@ class IsVisibleInObjCTest(
     fun `test - internal function`() {
         val file = inlineSourceCodeAnalysis.createKtFile("internal fun foo() = Unit")
         analyze(file) {
-            val session = contextOf<KaSession>()
+            val session = useSiteSession
             val fooSymbol = session.getFunctionOrFail(file, "foo")
             assertFalse(session.isVisibleInObjC(fooSymbol))
         }
@@ -50,7 +50,7 @@ class IsVisibleInObjCTest(
         )
 
         analyze(file) {
-            val session = contextOf<KaSession>()
+            val session = useSiteSession
             val fooSymbol = session.getFunctionOrFail(file, "foo")
             assertFalse(session.isVisibleInObjC(fooSymbol))
         }
@@ -69,7 +69,7 @@ class IsVisibleInObjCTest(
         )
 
         analyze(file) {
-            val session = contextOf<KaSession>()
+            val session = useSiteSession
             val fooSymbol = session.getFunctionOrFail(file, "foo")
             assertFalse(session.isVisibleInObjC(fooSymbol))
         }
@@ -85,7 +85,7 @@ class IsVisibleInObjCTest(
         )
 
         analyze(file) {
-            val session = contextOf<KaSession>()
+            val session = useSiteSession
             val fooSymbol = session.getFunctionOrFail(file, "foo")
             assertTrue(session.isVisibleInObjC(fooSymbol))
         }
@@ -101,7 +101,7 @@ class IsVisibleInObjCTest(
         )
 
         analyze(file) {
-            val session = contextOf<KaSession>()
+            val session = useSiteSession
             val fooSymbol = session.getFunctionOrFail(file, "foo")
             assertFalse(session.isVisibleInObjC(fooSymbol))
         }
@@ -111,7 +111,7 @@ class IsVisibleInObjCTest(
     fun `test - public class`() {
         val file = inlineSourceCodeAnalysis.createKtFile("class Foo")
         analyze(file) {
-            val session = contextOf<KaSession>()
+            val session = useSiteSession
             val fooSymbol = session.getClassOrFail(file, "Foo")
             assertTrue(session.isVisibleInObjC(fooSymbol))
         }
@@ -121,7 +121,7 @@ class IsVisibleInObjCTest(
     fun `test - internal class`() {
         val file = inlineSourceCodeAnalysis.createKtFile("internal class Foo")
         analyze(file) {
-            val session = contextOf<KaSession>()
+            val session = useSiteSession
             val fooSymbol = session.getClassOrFail(file, "Foo")
             assertFalse(session.isVisibleInObjC(fooSymbol))
         }
@@ -137,7 +137,7 @@ class IsVisibleInObjCTest(
         )
 
         analyze(file) {
-            val session = contextOf<KaSession>()
+            val session = useSiteSession
             val fooSymbol = session.getClassOrFail(file, "Foo")
             assertFalse(session.isVisibleInObjC(fooSymbol))
         }
@@ -147,7 +147,7 @@ class IsVisibleInObjCTest(
     fun `test - inline class`() {
         val file = inlineSourceCodeAnalysis.createKtFile("inline class Foo(val x: Int)")
         analyze(file) {
-            val session = contextOf<KaSession>()
+            val session = useSiteSession
             val fooSymbol = session.getClassOrFail(file, "Foo")
             assertFalse(session.isVisibleInObjC(fooSymbol))
         }
@@ -157,7 +157,7 @@ class IsVisibleInObjCTest(
     fun `test - expect class`() {
         val file = inlineSourceCodeAnalysis.createKtFile("expect class Foo")
         analyze(file) {
-            val session = contextOf<KaSession>()
+            val session = useSiteSession
             val fooSymbol = session.getClassOrFail(file, "Foo")
             assertFalse(session.isVisibleInObjC(fooSymbol))
         }
@@ -173,7 +173,7 @@ class IsVisibleInObjCTest(
         )
 
         analyze(file) {
-            val session = contextOf<KaSession>()
+            val session = useSiteSession
             val fooSymbol = session.getClassOrFail(file, "Foo")
             assertFalse(session.isVisibleInObjC(fooSymbol))
         }
@@ -192,7 +192,7 @@ class IsVisibleInObjCTest(
         )
 
         analyze(file) {
-            val session = contextOf<KaSession>()
+            val session = useSiteSession
             val fooSymbol = session.getClassOrFail(file, "Foo")
             assertFalse(session.isVisibleInObjC(fooSymbol))
         }
@@ -209,7 +209,7 @@ class IsVisibleInObjCTest(
         )
 
         analyze(file) {
-            val session = contextOf<KaSession>()
+            val session = useSiteSession
             assertTrue(session.isVisibleInObjC(session.getClassOrFail(file, "PublicClass").getFunctionOrFail("foo", session)))
         }
     }
@@ -225,7 +225,7 @@ class IsVisibleInObjCTest(
         )
 
         analyze(file) {
-            val session = contextOf<KaSession>()
+            val session = useSiteSession
             assertFalse(session.isVisibleInObjC(session.getClassOrFail(file, "PrivateClass").getFunctionOrFail("foo", session)))
         }
     }
@@ -245,7 +245,7 @@ class IsVisibleInObjCTest(
         )
 
         analyze(file) {
-            val session = contextOf<KaSession>()
+            val session = useSiteSession
             val foo = file
                 .getClassOrFail("PublicA", session).memberScope
                 .getClassOrFail("PublicB").memberScope
@@ -270,7 +270,7 @@ class IsVisibleInObjCTest(
         )
 
         analyze(file) {
-            val session = contextOf<KaSession>()
+            val session = useSiteSession
             val foo = file
                 .getClassOrFail("PublicA", session).memberScope
                 .getClassOrFail("PrivateB").memberScope
@@ -304,7 +304,7 @@ class IsVisibleInObjCTest(
         )
 
         analyze(file) {
-            val session = contextOf<KaSession>()
+            val session = useSiteSession
             val publicA = session.getClassOrFail(file, "PublicA")
             val hiddenB = publicA.memberScope.getClassOrFail("HiddenB")
             val hiddenC = hiddenB.memberScope.getClassOrFail("HiddenC")

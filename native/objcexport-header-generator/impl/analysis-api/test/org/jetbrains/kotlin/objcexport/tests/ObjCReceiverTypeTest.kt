@@ -1,14 +1,14 @@
 /*
- * Copyright 2010-2024 JetBrains s.r.o. and Kotlin Programming Language contributors.
+ * Copyright 2010-2026 JetBrains s.r.o. and Kotlin Programming Language contributors.
  * Use of this source code is governed by the Apache 2.0 license that can be found in the license/LICENSE.txt file.
  */
 
 package org.jetbrains.kotlin.objcexport.tests
 
-import org.jetbrains.kotlin.analysis.api.KaSession
 import org.jetbrains.kotlin.analysis.api.components.buildClassType
 import org.jetbrains.kotlin.analysis.api.scopes.memberScope
 import org.jetbrains.kotlin.analysis.api.session.analyze
+import org.jetbrains.kotlin.analysis.api.session.useSiteSession
 import org.jetbrains.kotlin.analysis.api.types.expandedSymbol
 import org.jetbrains.kotlin.builtins.StandardNames
 import org.jetbrains.kotlin.export.test.InlineSourceCodeAnalysis
@@ -37,7 +37,7 @@ class ObjCReceiverTypeTest(
 
         analyze(file) {
 
-            val session = contextOf<KaSession>()
+            val session = useSiteSession
             val outerClass = session.getClassOrFail(file, "Outer")
             val innerClass = outerClass.memberScope.getClassOrFail("Inner")
             val innerClassConstructor = innerClass.memberScope.constructors.first()
@@ -63,7 +63,7 @@ class ObjCReceiverTypeTest(
 
         analyze(file) {
 
-            val session = contextOf<KaSession>()
+            val session = useSiteSession
             val outerClass = session.getClassOrFail(file, "Outer")
             val innerClass = outerClass.memberScope.getClassOrFail("Inner")
             val foo = innerClass.memberScope.getFunctionOrFail("foo")
@@ -90,7 +90,7 @@ class ObjCReceiverTypeTest(
 
         analyze(file) {
 
-            val session = contextOf<KaSession>()
+            val session = useSiteSession
             val outerClass = session.getClassOrFail(file, "Outer")
             val innerClass = outerClass.memberScope.getClassOrFail("Inner")
             val getter = innerClass.memberScope.getPropertyOrFail("prop").getter
@@ -118,7 +118,7 @@ class ObjCReceiverTypeTest(
 
         analyze(file) {
 
-            val session = contextOf<KaSession>()
+            val session = useSiteSession
             val outerClass = session.getClassOrFail(file, "Outer")
             val innerClass = outerClass.memberScope.getClassOrFail("Inner")
             val setter = innerClass.memberScope.getPropertyOrFail("prop").setter
@@ -147,7 +147,7 @@ class ObjCReceiverTypeTest(
 
         analyze(file) {
 
-            val session = contextOf<KaSession>()
+            val session = useSiteSession
             val fooClass = session.getClassOrFail(file, "Foo")
             val foo = fooClass.memberScope.getFunctionOrFail("foo")
             val setter = fooClass.memberScope.getPropertyOrFail("prop").setter

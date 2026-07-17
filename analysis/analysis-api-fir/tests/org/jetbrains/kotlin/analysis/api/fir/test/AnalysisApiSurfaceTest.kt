@@ -16,6 +16,7 @@ import org.jetbrains.kotlin.analysis.api.scopes.memberScope
 import org.jetbrains.kotlin.analysis.api.scopes.staticMemberScope
 import org.jetbrains.kotlin.analysis.api.session.analyze
 import org.jetbrains.kotlin.analysis.api.session.analyzeCopy
+import org.jetbrains.kotlin.analysis.api.session.useSiteSession
 import org.jetbrains.kotlin.analysis.api.symbols.*
 import org.jetbrains.kotlin.analysis.api.symbols.pointers.restoreSymbol
 import org.jetbrains.kotlin.analysis.api.types.*
@@ -108,7 +109,7 @@ class AnalysisApiSurfaceTest : AbstractAnalysisApiExecutionTest("testData/surfac
         assertEquals("test", testFunction.name)
 
         analyze(testFunction) {
-            val session = contextOf<KaSession>()
+            val session = useSiteSession
             val valueParameter = testFunction.valueParameters.single()
 
             val kotlinType = valueParameter.symbol.returnType
@@ -140,7 +141,7 @@ class AnalysisApiSurfaceTest : AbstractAnalysisApiExecutionTest("testData/surfac
         assertEquals("test", testFunction.name)
 
         analyze(testFunction) {
-            val session = contextOf<KaSession>()
+            val session = useSiteSession
             val valueParameter = testFunction.valueParameters.single()
 
             val kotlinType = valueParameter.symbol.returnType
@@ -173,7 +174,7 @@ class AnalysisApiSurfaceTest : AbstractAnalysisApiExecutionTest("testData/surfac
         assertEquals("MyAnnotation", annotationClass.name)
 
         analyze(annotationClass) {
-            val session = contextOf<KaSession>()
+            val session = useSiteSession
             val classSymbol = annotationClass.classSymbol!!
 
             val memberMethod = session::class.java

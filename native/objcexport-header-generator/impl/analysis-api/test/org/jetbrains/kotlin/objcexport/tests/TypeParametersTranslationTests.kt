@@ -1,8 +1,13 @@
+/*
+ * Copyright 2010-2026 JetBrains s.r.o. and Kotlin Programming Language contributors.
+ * Use of this source code is governed by the Apache 2.0 license that can be found in the license/LICENSE.txt file.
+ */
+
 package org.jetbrains.kotlin.objcexport.tests
 
 import org.intellij.lang.annotations.Language
-import org.jetbrains.kotlin.analysis.api.KaSession
 import org.jetbrains.kotlin.analysis.api.session.analyze
+import org.jetbrains.kotlin.analysis.api.session.useSiteSession
 import org.jetbrains.kotlin.analysis.api.symbols.KaNamedFunctionSymbol
 import org.jetbrains.kotlin.analysis.api.symbols.KaPropertySymbol
 import org.jetbrains.kotlin.backend.konan.objcexport.ObjCGenericTypeParameterUsage
@@ -230,7 +235,7 @@ class TypeParametersTranslationTests(
         analyze(file) {
             with(
                 ObjCExportContext(
-                    analysisSession = contextOf<KaSession>(),
+                    analysisSession = useSiteSession,
                     exportSession = KtObjCExportSessionImpl(
                         KtObjCExportConfiguration(),
                         moduleNaming = KtObjCExportModuleNaming.default,

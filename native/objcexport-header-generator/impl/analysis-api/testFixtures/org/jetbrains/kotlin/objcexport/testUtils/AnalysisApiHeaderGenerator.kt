@@ -1,16 +1,16 @@
 /*
- * Copyright 2010-2023 JetBrains s.r.o. and Kotlin Programming Language contributors.
+ * Copyright 2010-2026 JetBrains s.r.o. and Kotlin Programming Language contributors.
  * Use of this source code is governed by the Apache 2.0 license that can be found in the license/LICENSE.txt file.
  */
 
 package org.jetbrains.kotlin.objcexport.testUtils
 
-import org.jetbrains.kotlin.analysis.api.KaSession
 import org.jetbrains.kotlin.analysis.api.projectStructure.KaLibraryModule
 import org.jetbrains.kotlin.analysis.api.projectStructure.KaModule
 import org.jetbrains.kotlin.analysis.api.projectStructure.allDirectDependencies
 import org.jetbrains.kotlin.analysis.api.session.analyze
 import org.jetbrains.kotlin.analysis.api.session.useSiteModule
+import org.jetbrains.kotlin.analysis.api.session.useSiteSession
 import org.jetbrains.kotlin.backend.konan.objcexport.ObjCHeader
 import org.jetbrains.kotlin.backend.konan.testUtils.HeaderGenerator
 import org.jetbrains.kotlin.export.test.LibraryModuleInfo
@@ -65,7 +65,7 @@ object AnalysisApiHeaderGenerator : HeaderGenerator {
                     module == useSiteModule || module is KaLibraryModule && module in exportedLibraries
                 }
             ) {
-                with(ObjCExportContext(analysisSession = contextOf<KaSession>(), exportSession = this)) {
+                with(ObjCExportContext(analysisSession = useSiteSession, exportSession = this)) {
                     translateToObjCHeader(
                         files.map { it as KtFile }.map(::KtObjCExportFile) + exportedLibraryFiles,
                         withObjCBaseDeclarations = configuration.withObjCBaseDeclarationStubs

@@ -1,13 +1,13 @@
 /*
- * Copyright 2010-2023 JetBrains s.r.o. and Kotlin Programming Language contributors.
+ * Copyright 2010-2026 JetBrains s.r.o. and Kotlin Programming Language contributors.
  * Use of this source code is governed by the Apache 2.0 license that can be found in the license/LICENSE.txt file.
  */
 
 package org.jetbrains.kotlin.objcexport.tests
 
-import org.jetbrains.kotlin.analysis.api.KaSession
 import org.jetbrains.kotlin.analysis.api.export.utilities.getSuperClassSymbolNotAny
 import org.jetbrains.kotlin.analysis.api.session.analyze
+import org.jetbrains.kotlin.analysis.api.session.useSiteSession
 import org.jetbrains.kotlin.export.test.InlineSourceCodeAnalysis
 import org.jetbrains.kotlin.export.test.getClassOrFail
 import org.junit.jupiter.api.Test
@@ -22,7 +22,7 @@ class GetSuperClassSymbolNotAnyTest(
     fun `test - no declared superclass - returns null`() {
         val file = inlineSourceCodeAnalysis.createKtFile("""class Foo""")
         analyze(file) {
-            val session = contextOf<KaSession>()
+            val session = useSiteSession
             val foo = session.getClassOrFail(file, "Foo")
             assertNull(session.getSuperClassSymbolNotAny(foo))
         }
@@ -38,7 +38,7 @@ class GetSuperClassSymbolNotAnyTest(
         )
 
         analyze(file) {
-            val session = contextOf<KaSession>()
+            val session = useSiteSession
             val fooSymbol = session.getClassOrFail(file, "Foo")
             val barSymbol = session.getSuperClassSymbolNotAny(fooSymbol)
             assertEquals(barSymbol, session.getClassOrFail(file, "Bar"))
@@ -56,7 +56,7 @@ class GetSuperClassSymbolNotAnyTest(
         )
 
         analyze(file) {
-            val session = contextOf<KaSession>()
+            val session = useSiteSession
             val aSymbol = session.getClassOrFail(file, "A")
             val bSymbol = session.getClassOrFail(file, "B")
             val cSymbol = session.getClassOrFail(file, "C")
@@ -79,7 +79,7 @@ class GetSuperClassSymbolNotAnyTest(
         )
 
         analyze(file) {
-            val session = contextOf<KaSession>()
+            val session = useSiteSession
             val aSymbol = session.getClassOrFail(file, "A")
             val i1Symbol = session.getClassOrFail(file, "I1")
             val i2Symbol = session.getClassOrFail(file, "I2")

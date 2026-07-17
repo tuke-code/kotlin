@@ -1,7 +1,12 @@
+/*
+ * Copyright 2010-2026 JetBrains s.r.o. and Kotlin Programming Language contributors.
+ * Use of this source code is governed by the Apache 2.0 license that can be found in the license/LICENSE.txt file.
+ */
+
 package org.jetbrains.kotlin.objcexport.tests
 
-import org.jetbrains.kotlin.analysis.api.KaSession
 import org.jetbrains.kotlin.analysis.api.session.analyze
+import org.jetbrains.kotlin.analysis.api.session.useSiteSession
 import org.jetbrains.kotlin.export.test.InlineSourceCodeAnalysis
 import org.jetbrains.kotlin.export.test.getClassOrFail
 import org.jetbrains.kotlin.export.test.getFunctionOrFail
@@ -25,7 +30,7 @@ class IsTopLevelTests(
         )
 
         analyze(ktFile) {
-            val session = contextOf<KaSession>()
+            val session = useSiteSession
             assertTrue(session.isTopLevel(ktFile.getFunctionOrFail("topFun", session)))
             assertFalse(session.isTopLevel(ktFile.getClassOrFail("TopClass", session).getFunctionOrFail("classFun", session)))
         }

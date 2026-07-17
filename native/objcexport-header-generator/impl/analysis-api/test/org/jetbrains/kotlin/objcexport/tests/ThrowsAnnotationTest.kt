@@ -1,8 +1,13 @@
+/*
+ * Copyright 2010-2026 JetBrains s.r.o. and Kotlin Programming Language contributors.
+ * Use of this source code is governed by the Apache 2.0 license that can be found in the license/LICENSE.txt file.
+ */
+
 package org.jetbrains.kotlin.objcexport.tests
 
-import org.jetbrains.kotlin.analysis.api.KaSession
 import org.jetbrains.kotlin.analysis.api.scopes.memberScope
 import org.jetbrains.kotlin.analysis.api.session.analyze
+import org.jetbrains.kotlin.analysis.api.session.useSiteSession
 import org.jetbrains.kotlin.export.test.InlineSourceCodeAnalysis
 import org.jetbrains.kotlin.export.test.getClassOrFail
 import org.jetbrains.kotlin.export.test.getFunctionOrFail
@@ -27,7 +32,7 @@ class ThrowsAnnotationTest(private val inlineSourceCodeAnalysis: InlineSourceCod
         )
 
         analyze(file) {
-            val session = contextOf<KaSession>()
+            val session = useSiteSession
             assertTrue(session.getFunctionOrFail(file, "foo").hasThrowsAnnotation)
         }
     }
@@ -47,7 +52,7 @@ class ThrowsAnnotationTest(private val inlineSourceCodeAnalysis: InlineSourceCod
         )
 
         analyze(file) {
-            val session = contextOf<KaSession>()
+            val session = useSiteSession
             val classA = session.getClassOrFail(file, "A")
             val classB = session.getClassOrFail(file, "B")
 
@@ -66,7 +71,7 @@ class ThrowsAnnotationTest(private val inlineSourceCodeAnalysis: InlineSourceCod
         )
 
         analyze(file) {
-            val session = contextOf<KaSession>()
+            val session = useSiteSession
             val foo = session.getFunctionOrFail(file, "foo")
             assertEquals(listOf("IllegalStateException", "RuntimeException"), session.getDefinedThrows(foo).mapName())
         }
@@ -94,7 +99,7 @@ class ThrowsAnnotationTest(private val inlineSourceCodeAnalysis: InlineSourceCod
 
         analyze(file) {
 
-            val session = contextOf<KaSession>()
+            val session = useSiteSession
             val classA = session.getClassOrFail(file, "A")
             val fooA = getFunctionOrFail(classA.memberScope, "foo")
             assertEquals(listOf("IllegalStateException"), session.getEffectiveThrows(fooA).mapName())
@@ -121,7 +126,7 @@ class ThrowsAnnotationTest(private val inlineSourceCodeAnalysis: InlineSourceCod
         )
 
         analyze(file) {
-            val session = contextOf<KaSession>()
+            val session = useSiteSession
             val foo = session.getClassOrFail(file, "Foo").memberScope.constructors.first()
             assertEquals(listOf("IllegalStateException"), session.getEffectiveThrows(foo).mapName())
             assertEquals(listOf("IllegalStateException"), session.getDefinedThrows(foo).mapName())
@@ -141,7 +146,7 @@ class ThrowsAnnotationTest(private val inlineSourceCodeAnalysis: InlineSourceCod
         )
 
         analyze(file) {
-            val session = contextOf<KaSession>()
+            val session = useSiteSession
             val foo = session.getFunctionOrFail(file, "foo")
             assertEquals(listOf("RuntimeException"), session.getDefinedThrows(foo).mapName())
         }

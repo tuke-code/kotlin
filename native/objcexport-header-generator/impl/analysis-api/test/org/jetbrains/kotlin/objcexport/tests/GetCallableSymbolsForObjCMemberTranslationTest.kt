@@ -1,12 +1,12 @@
 /*
- * Copyright 2010-2024 JetBrains s.r.o. and Kotlin Programming Language contributors.
+ * Copyright 2010-2026 JetBrains s.r.o. and Kotlin Programming Language contributors.
  * Use of this source code is governed by the Apache 2.0 license that can be found in the license/LICENSE.txt file.
  */
 
 package org.jetbrains.kotlin.objcexport.tests
 
-import org.jetbrains.kotlin.analysis.api.KaSession
 import org.jetbrains.kotlin.analysis.api.session.analyze
+import org.jetbrains.kotlin.analysis.api.session.useSiteSession
 import org.jetbrains.kotlin.analysis.api.symbols.KaNamedFunctionSymbol
 import org.jetbrains.kotlin.analysis.api.symbols.markers.KaNamedSymbol
 import org.jetbrains.kotlin.export.test.InlineSourceCodeAnalysis
@@ -34,7 +34,7 @@ class GetCallableSymbolsForObjCMemberTranslationTest(
             """.trimIndent()
         )
         analyze(file) {
-            val session = contextOf<KaSession>()
+            val session = useSiteSession
             val fooSymbol = session.getClassOrFail(file, "Foo")
             assertEquals(
                 listOf("bar", "abstractFun"),
@@ -53,7 +53,7 @@ class GetCallableSymbolsForObjCMemberTranslationTest(
             """.trimIndent()
         )
         analyze(file) {
-            val session = contextOf<KaSession>()
+            val session = useSiteSession
             val foo = session.getClassOrFail(file, "Foo")
             assertEquals(
                 listOf("component1", "copy", "equals", "hashCode", "toString", "a"),
@@ -75,7 +75,7 @@ class GetCallableSymbolsForObjCMemberTranslationTest(
             """.trimIndent()
         )
         analyze(file) {
-            val session = contextOf<KaSession>()
+            val session = useSiteSession
             val foo = session.getClassOrFail(file, "Foo")
             assertEquals(
                 emptyList(),
@@ -98,7 +98,7 @@ class GetCallableSymbolsForObjCMemberTranslationTest(
             """.trimIndent()
         )
         analyze(file) {
-            val session = contextOf<KaSession>()
+            val session = useSiteSession
             val foo = session.getClassOrFail(file, "Foo")
             assertEquals(
                 listOf("a", "b"),
