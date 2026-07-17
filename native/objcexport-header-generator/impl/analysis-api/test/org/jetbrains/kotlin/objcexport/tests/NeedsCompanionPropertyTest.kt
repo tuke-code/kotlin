@@ -1,9 +1,10 @@
 package org.jetbrains.kotlin.objcexport.tests
 
-import org.jetbrains.kotlin.analysis.api.analyze
+import org.jetbrains.kotlin.analysis.api.KaSession
+import org.jetbrains.kotlin.analysis.api.session.analyze
 import org.jetbrains.kotlin.export.test.InlineSourceCodeAnalysis
-import org.jetbrains.kotlin.objcexport.hasCompanionObject
 import org.jetbrains.kotlin.export.test.getClassOrFail
+import org.jetbrains.kotlin.objcexport.hasCompanionObject
 import org.junit.jupiter.api.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
@@ -22,7 +23,8 @@ class NeedsCompanionPropertyTest(
         """.trimIndent()
         )
         analyze(file) {
-            assertFalse(hasCompanionObject(getClassOrFail(file, "NoCompanion")))
+            val session = contextOf<KaSession>()
+            assertFalse(session.hasCompanionObject(session.getClassOrFail(file, "NoCompanion")))
         }
     }
 
@@ -36,7 +38,8 @@ class NeedsCompanionPropertyTest(
         """.trimIndent()
         )
         analyze(file) {
-            assertTrue(hasCompanionObject(getClassOrFail(file, "EmptyCompanion")))
+            val session = contextOf<KaSession>()
+            assertTrue(session.hasCompanionObject(session.getClassOrFail(file, "EmptyCompanion")))
         }
     }
 
@@ -52,7 +55,8 @@ class NeedsCompanionPropertyTest(
         """.trimIndent()
         )
         analyze(file) {
-            assertTrue(hasCompanionObject(getClassOrFail(file, "SimpleCompanion")))
+            val session = contextOf<KaSession>()
+            assertTrue(session.hasCompanionObject(session.getClassOrFail(file, "SimpleCompanion")))
         }
     }
 }

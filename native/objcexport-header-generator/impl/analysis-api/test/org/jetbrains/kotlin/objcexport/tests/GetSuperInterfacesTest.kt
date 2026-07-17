@@ -5,8 +5,9 @@
 
 package org.jetbrains.kotlin.objcexport.tests
 
-import org.jetbrains.kotlin.analysis.api.analyze
+import org.jetbrains.kotlin.analysis.api.KaSession
 import org.jetbrains.kotlin.analysis.api.export.utilities.getDeclaredSuperInterfaceSymbols
+import org.jetbrains.kotlin.analysis.api.session.analyze
 import org.jetbrains.kotlin.export.test.InlineSourceCodeAnalysis
 import org.jetbrains.kotlin.export.test.getClassOrFail
 import org.junit.jupiter.api.Test
@@ -31,11 +32,12 @@ class GetSuperInterfacesTest(
         )
 
         analyze(file) {
-            val foo = getClassOrFail(file, "Foo")
+            val session = contextOf<KaSession>()
+            val foo = session.getClassOrFail(file, "Foo")
 
             assertEquals(
-                listOf(getClassOrFail(file, "X"), getClassOrFail(file, "Y")),
-                getDeclaredSuperInterfaceSymbols(foo)
+                listOf(session.getClassOrFail(file, "X"), session.getClassOrFail(file, "Y")),
+                session.getDeclaredSuperInterfaceSymbols(foo)
             )
         }
     }
@@ -52,9 +54,10 @@ class GetSuperInterfacesTest(
         )
 
         analyze(file) {
+            val session = contextOf<KaSession>()
             assertEquals(
-                listOf(getClassOrFail(file, "A"), getClassOrFail(file, "B")),
-                getDeclaredSuperInterfaceSymbols(getClassOrFail(file, "Foo"))
+                listOf(session.getClassOrFail(file, "A"), session.getClassOrFail(file, "B")),
+                session.getDeclaredSuperInterfaceSymbols(session.getClassOrFail(file, "Foo"))
             )
         }
     }
@@ -70,9 +73,10 @@ class GetSuperInterfacesTest(
         )
 
         analyze(file) {
+            val session = contextOf<KaSession>()
             assertEquals(
-                listOf(getClassOrFail(file, "A"), getClassOrFail(file, "B")),
-                getDeclaredSuperInterfaceSymbols(getClassOrFail(file, "Foo"))
+                listOf(session.getClassOrFail(file, "A"), session.getClassOrFail(file, "B")),
+                session.getDeclaredSuperInterfaceSymbols(session.getClassOrFail(file, "Foo"))
             )
         }
     }

@@ -5,10 +5,12 @@
 
 package org.jetbrains.kotlin.objcexport.testUtils
 
-import org.jetbrains.kotlin.analysis.api.analyze
+import org.jetbrains.kotlin.analysis.api.KaSession
 import org.jetbrains.kotlin.analysis.api.projectStructure.KaLibraryModule
 import org.jetbrains.kotlin.analysis.api.projectStructure.KaModule
 import org.jetbrains.kotlin.analysis.api.projectStructure.allDirectDependencies
+import org.jetbrains.kotlin.analysis.api.session.analyze
+import org.jetbrains.kotlin.analysis.api.session.useSiteModule
 import org.jetbrains.kotlin.backend.konan.objcexport.ObjCHeader
 import org.jetbrains.kotlin.backend.konan.testUtils.HeaderGenerator
 import org.jetbrains.kotlin.export.test.LibraryModuleInfo
@@ -43,7 +45,6 @@ object AnalysisApiHeaderGenerator : HeaderGenerator {
 
         val [module, files] = session.modulesWithFiles.entries.single()
         return analyze(module) {
-            val kaSession = this
             val exportedLibraryNames = configuration.exportedDependencies
                 .map { it.toLibraryModuleInfo().libraryName }.toSet()
 
@@ -64,7 +65,7 @@ object AnalysisApiHeaderGenerator : HeaderGenerator {
                     module == useSiteModule || module is KaLibraryModule && module in exportedLibraries
                 }
             ) {
-                with(ObjCExportContext(analysisSession = kaSession, exportSession = this)) {
+                with(ObjCExportContext(analysisSession = contextOf<KaSession>(), exportSession = this)) {
                     translateToObjCHeader(
                         files.map { it as KtFile }.map(::KtObjCExportFile) + exportedLibraryFiles,
                         withObjCBaseDeclarations = configuration.withObjCBaseDeclarationStubs

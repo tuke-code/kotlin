@@ -6,7 +6,8 @@
 package org.jetbrains.kotlin.objcexport.tests
 
 import org.intellij.lang.annotations.Language
-import org.jetbrains.kotlin.analysis.api.analyze
+import org.jetbrains.kotlin.analysis.api.KaSession
+import org.jetbrains.kotlin.analysis.api.session.analyze
 import org.jetbrains.kotlin.export.test.InlineSourceCodeAnalysis
 import org.jetbrains.kotlin.objcexport.*
 import org.junit.jupiter.api.Disabled
@@ -118,7 +119,7 @@ class TestHiddenContextParameters(
         analyze(file) {
             with(
                 ObjCExportContext(
-                    analysisSession = this, exportSession = KtObjCExportSessionImpl(
+                    analysisSession = contextOf<KaSession>(), exportSession = KtObjCExportSessionImpl(
                         KtObjCExportConfiguration(),
                         moduleNaming = KtObjCExportModuleNaming.default,
                         moduleClassifier = KtObjCExportModuleClassifier.default,

@@ -5,8 +5,9 @@
 
 package org.jetbrains.kotlin.objcexport.tests
 
-import org.jetbrains.kotlin.analysis.api.analyze
+import org.jetbrains.kotlin.analysis.api.KaSession
 import org.jetbrains.kotlin.analysis.api.export.utilities.getKDocString
+import org.jetbrains.kotlin.analysis.api.session.analyze
 import org.jetbrains.kotlin.export.test.InlineSourceCodeAnalysis
 import org.jetbrains.kotlin.export.test.getClassOrFail
 import org.jetbrains.kotlin.export.test.getFunctionOrFail
@@ -28,7 +29,8 @@ class GetKdocStringTest(
         )
 
         analyze(ktFile) {
-            val foo = ktFile.getClassOrFail("Foo", this)
+            val session = contextOf<KaSession>()
+            val foo = ktFile.getClassOrFail("Foo", session)
             assertEquals(
                 """
                     /**
@@ -52,7 +54,8 @@ class GetKdocStringTest(
         )
 
         analyze(ktFile) {
-            val foo = ktFile.getFunctionOrFail("foo", this)
+            val session = contextOf<KaSession>()
+            val foo = ktFile.getFunctionOrFail("foo", session)
             assertEquals(
                 """
                     /**

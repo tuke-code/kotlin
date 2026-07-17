@@ -5,10 +5,11 @@
 
 package org.jetbrains.kotlin.objcexport.tests
 
-import org.jetbrains.kotlin.analysis.api.analyze
-import org.jetbrains.kotlin.objcexport.analysisApiUtils.getObjCDocumentedAnnotations
+import org.jetbrains.kotlin.analysis.api.KaSession
+import org.jetbrains.kotlin.analysis.api.session.analyze
 import org.jetbrains.kotlin.export.test.InlineSourceCodeAnalysis
 import org.jetbrains.kotlin.export.test.getClassOrFail
+import org.jetbrains.kotlin.objcexport.analysisApiUtils.getObjCDocumentedAnnotations
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 import kotlin.test.fail
@@ -20,8 +21,9 @@ class GetObjCDocumentedAnnotationsTest(
     fun `test - no annotation present`() {
         val file = inlineSourceCodeAnalysis.createKtFile("class Foo")
         analyze(file) {
-            val foo = getClassOrFail(file, "Foo")
-            val objCDocumentedAnnotations = getObjCDocumentedAnnotations(foo)
+            val session = contextOf<KaSession>()
+            val foo = session.getClassOrFail(file, "Foo")
+            val objCDocumentedAnnotations = session.getObjCDocumentedAnnotations(foo)
             if (objCDocumentedAnnotations.isNotEmpty())
                 fail("Expected no 'ObjC Documented Annotation present, Found. $objCDocumentedAnnotations")
         }
@@ -41,8 +43,9 @@ class GetObjCDocumentedAnnotationsTest(
         )
 
         analyze(file) {
-            val foo = getClassOrFail(file, "Foo")
-            val objCDocumentedAnnotations = getObjCDocumentedAnnotations(foo)
+            val session = contextOf<KaSession>()
+            val foo = session.getClassOrFail(file, "Foo")
+            val objCDocumentedAnnotations = session.getObjCDocumentedAnnotations(foo)
             if (objCDocumentedAnnotations.size != 1)
                 fail("Expected single documented annotation. Found: $objCDocumentedAnnotations")
 
@@ -67,8 +70,9 @@ class GetObjCDocumentedAnnotationsTest(
         )
 
         analyze(file) {
-            val foo = getClassOrFail(file, "Foo")
-            val objCDocumentedAnnotations = getObjCDocumentedAnnotations(foo)
+            val session = contextOf<KaSession>()
+            val foo = session.getClassOrFail(file, "Foo")
+            val objCDocumentedAnnotations = session.getObjCDocumentedAnnotations(foo)
             if (objCDocumentedAnnotations.size != 1)
                 fail("Expected single documented annotation. Found: $objCDocumentedAnnotations")
 

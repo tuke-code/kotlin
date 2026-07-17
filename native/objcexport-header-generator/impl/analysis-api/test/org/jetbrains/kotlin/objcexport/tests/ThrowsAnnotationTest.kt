@@ -1,13 +1,15 @@
 package org.jetbrains.kotlin.objcexport.tests
 
-import org.jetbrains.kotlin.analysis.api.analyze
+import org.jetbrains.kotlin.analysis.api.KaSession
+import org.jetbrains.kotlin.analysis.api.scopes.memberScope
+import org.jetbrains.kotlin.analysis.api.session.analyze
 import org.jetbrains.kotlin.export.test.InlineSourceCodeAnalysis
+import org.jetbrains.kotlin.export.test.getClassOrFail
+import org.jetbrains.kotlin.export.test.getFunctionOrFail
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.objcexport.analysisApiUtils.getDefinedThrows
 import org.jetbrains.kotlin.objcexport.analysisApiUtils.getEffectiveThrows
 import org.jetbrains.kotlin.objcexport.analysisApiUtils.hasThrowsAnnotation
-import org.jetbrains.kotlin.export.test.getClassOrFail
-import org.jetbrains.kotlin.export.test.getFunctionOrFail
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -25,7 +27,8 @@ class ThrowsAnnotationTest(private val inlineSourceCodeAnalysis: InlineSourceCod
         )
 
         analyze(file) {
-            assertTrue(getFunctionOrFail(file, "foo").hasThrowsAnnotation)
+            val session = contextOf<KaSession>()
+            assertTrue(session.getFunctionOrFail(file, "foo").hasThrowsAnnotation)
         }
     }
 
@@ -44,11 +47,12 @@ class ThrowsAnnotationTest(private val inlineSourceCodeAnalysis: InlineSourceCod
         )
 
         analyze(file) {
-            val classA = getClassOrFail(file, "A")
-            val classB = getClassOrFail(file, "B")
+            val session = contextOf<KaSession>()
+            val classA = session.getClassOrFail(file, "A")
+            val classB = session.getClassOrFail(file, "B")
 
-            assertTrue(getFunctionOrFail(classA, "foo").hasThrowsAnnotation)
-            assertFalse(getFunctionOrFail(classB, "foo").hasThrowsAnnotation)
+            assertTrue(session.getFunctionOrFail(classA, "foo").hasThrowsAnnotation)
+            assertFalse(session.getFunctionOrFail(classB, "foo").hasThrowsAnnotation)
         }
     }
 
@@ -62,8 +66,9 @@ class ThrowsAnnotationTest(private val inlineSourceCodeAnalysis: InlineSourceCod
         )
 
         analyze(file) {
-            val foo = getFunctionOrFail(file, "foo")
-            assertEquals(listOf("IllegalStateException", "RuntimeException"), getDefinedThrows(foo).mapName())
+            val session = contextOf<KaSession>()
+            val foo = session.getFunctionOrFail(file, "foo")
+            assertEquals(listOf("IllegalStateException", "RuntimeException"), session.getDefinedThrows(foo).mapName())
         }
     }
 
@@ -89,20 +94,21 @@ class ThrowsAnnotationTest(private val inlineSourceCodeAnalysis: InlineSourceCod
 
         analyze(file) {
 
-            val classA = getClassOrFail(file, "A")
+            val session = contextOf<KaSession>()
+            val classA = session.getClassOrFail(file, "A")
             val fooA = getFunctionOrFail(classA.memberScope, "foo")
-            assertEquals(listOf("IllegalStateException"), getEffectiveThrows(fooA).mapName())
-            assertEquals(listOf("IllegalStateException"), getDefinedThrows(fooA).mapName())
+            assertEquals(listOf("IllegalStateException"), session.getEffectiveThrows(fooA).mapName())
+            assertEquals(listOf("IllegalStateException"), session.getDefinedThrows(fooA).mapName())
 
-            val classB = getClassOrFail(file, "B")
+            val classB = session.getClassOrFail(file, "B")
             val fooB = getFunctionOrFail(classB.memberScope, "foo")
-            assertEquals(listOf("IllegalStateException"), getEffectiveThrows(fooB).mapName())
-            assertEquals(listOf("RuntimeException"), getDefinedThrows(fooB).mapName())
+            assertEquals(listOf("IllegalStateException"), session.getEffectiveThrows(fooB).mapName())
+            assertEquals(listOf("RuntimeException"), session.getDefinedThrows(fooB).mapName())
 
-            val classC = getClassOrFail(file, "C")
+            val classC = session.getClassOrFail(file, "C")
             val fooC = getFunctionOrFail(classC.memberScope, "foo")
-            assertEquals(listOf("IllegalStateException"), getEffectiveThrows(fooC).mapName())
-            assertEquals(listOf("IndexOutOfBoundsException"), getDefinedThrows(fooC).mapName())
+            assertEquals(listOf("IllegalStateException"), session.getEffectiveThrows(fooC).mapName())
+            assertEquals(listOf("IndexOutOfBoundsException"), session.getDefinedThrows(fooC).mapName())
         }
     }
 
@@ -115,9 +121,10 @@ class ThrowsAnnotationTest(private val inlineSourceCodeAnalysis: InlineSourceCod
         )
 
         analyze(file) {
-            val foo = getClassOrFail(file, "Foo").memberScope.constructors.first()
-            assertEquals(listOf("IllegalStateException"), getEffectiveThrows(foo).mapName())
-            assertEquals(listOf("IllegalStateException"), getDefinedThrows(foo).mapName())
+            val session = contextOf<KaSession>()
+            val foo = session.getClassOrFail(file, "Foo").memberScope.constructors.first()
+            assertEquals(listOf("IllegalStateException"), session.getEffectiveThrows(foo).mapName())
+            assertEquals(listOf("IllegalStateException"), session.getDefinedThrows(foo).mapName())
         }
     }
 
@@ -134,8 +141,9 @@ class ThrowsAnnotationTest(private val inlineSourceCodeAnalysis: InlineSourceCod
         )
 
         analyze(file) {
-            val foo = getFunctionOrFail(file, "foo")
-            assertEquals(listOf("RuntimeException"), getDefinedThrows(foo).mapName())
+            val session = contextOf<KaSession>()
+            val foo = session.getFunctionOrFail(file, "foo")
+            assertEquals(listOf("RuntimeException"), session.getDefinedThrows(foo).mapName())
         }
     }
 }

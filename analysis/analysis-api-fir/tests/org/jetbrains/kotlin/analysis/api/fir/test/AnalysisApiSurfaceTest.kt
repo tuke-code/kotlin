@@ -7,22 +7,18 @@ package org.jetbrains.kotlin.analysis.api.fir.test
 
 import com.intellij.psi.PsiClass
 import org.jetbrains.kotlin.analysis.api.KaSession
-import org.jetbrains.kotlin.analysis.api.analyze
 import org.jetbrains.kotlin.analysis.api.fir.symbols.KaFirPsiJavaClassSymbol
 import org.jetbrains.kotlin.analysis.api.fir.symbols.KaFirPsiJavaTypeParameterSymbol
 import org.jetbrains.kotlin.analysis.api.fir.symbols.pointers.KaFirPrimaryConstructorSymbolPointer
+import org.jetbrains.kotlin.analysis.api.javaInterop.namedClassSymbol
 import org.jetbrains.kotlin.analysis.api.projectStructure.KaDanglingFileResolutionMode
 import org.jetbrains.kotlin.analysis.api.scopes.memberScope
 import org.jetbrains.kotlin.analysis.api.scopes.staticMemberScope
+import org.jetbrains.kotlin.analysis.api.session.analyze
 import org.jetbrains.kotlin.analysis.api.session.analyzeCopy
-import org.jetbrains.kotlin.analysis.api.symbols.KaClassSymbol
-import org.jetbrains.kotlin.analysis.api.symbols.KaEnumEntrySymbol
-import org.jetbrains.kotlin.analysis.api.symbols.KaNamedClassSymbol
-import org.jetbrains.kotlin.analysis.api.symbols.classSymbol
+import org.jetbrains.kotlin.analysis.api.symbols.*
 import org.jetbrains.kotlin.analysis.api.symbols.pointers.restoreSymbol
-import org.jetbrains.kotlin.analysis.api.types.KaClassType
-import org.jetbrains.kotlin.analysis.api.types.KaType
-import org.jetbrains.kotlin.analysis.api.types.buildSubstitutor
+import org.jetbrains.kotlin.analysis.api.types.*
 import org.jetbrains.kotlin.analysis.low.level.api.fir.test.configurators.LLSourceLikeTestConfigurator
 import org.jetbrains.kotlin.analysis.test.framework.base.AbstractAnalysisApiExecutionTest
 import org.jetbrains.kotlin.builtins.functions.FunctionTypeKind
@@ -112,11 +108,12 @@ class AnalysisApiSurfaceTest : AbstractAnalysisApiExecutionTest("testData/surfac
         assertEquals("test", testFunction.name)
 
         analyze(testFunction) {
+            val session = contextOf<KaSession>()
             val valueParameter = testFunction.valueParameters.single()
 
             val kotlinType = valueParameter.symbol.returnType
 
-            val memberMethod = this@analyze::class.java
+            val memberMethod = session::class.java
                 .getMethod("mapToJvmType", KaType::class.java, TypeMappingMode::class.java)
 
             assert(memberMethod.isSynthetic)
@@ -129,10 +126,10 @@ class AnalysisApiSurfaceTest : AbstractAnalysisApiExecutionTest("testData/surfac
 
             val expectedResult = Type.getType("LFoo;")
 
-            val memberResult = memberMethod.invoke(this@analyze, kotlinType, TypeMappingMode.DEFAULT)
+            val memberResult = memberMethod.invoke(session, kotlinType, TypeMappingMode.DEFAULT)
             assertEquals(expectedResult, memberResult)
 
-            val contextParameterBridgeResult = contextParameterBridgeMethod.invoke(null, this@analyze, kotlinType, TypeMappingMode.DEFAULT)
+            val contextParameterBridgeResult = contextParameterBridgeMethod.invoke(null, session, kotlinType, TypeMappingMode.DEFAULT)
             assertEquals(expectedResult, contextParameterBridgeResult)
         }
     }
@@ -143,11 +140,12 @@ class AnalysisApiSurfaceTest : AbstractAnalysisApiExecutionTest("testData/surfac
         assertEquals("test", testFunction.name)
 
         analyze(testFunction) {
+            val session = contextOf<KaSession>()
             val valueParameter = testFunction.valueParameters.single()
 
             val kotlinType = valueParameter.symbol.returnType
 
-            val memberMethod = this@analyze::class.java
+            val memberMethod = session::class.java
                 .getMethod("getFunctionTypeKind", KaType::class.java)
 
             // For some reason, getters of HIDDEN-deprecated interface properties aren't synthetic
@@ -161,10 +159,10 @@ class AnalysisApiSurfaceTest : AbstractAnalysisApiExecutionTest("testData/surfac
 
             val expectedResult = FunctionTypeKind.Function
 
-            val memberResult = memberMethod.invoke(this@analyze, kotlinType)
+            val memberResult = memberMethod.invoke(session, kotlinType)
             assertEquals(expectedResult, memberResult)
 
-            val contextParameterBridgeResult = contextParameterBridgeMethod.invoke(null, this@analyze, kotlinType)
+            val contextParameterBridgeResult = contextParameterBridgeMethod.invoke(null, session, kotlinType)
             assertEquals(expectedResult, contextParameterBridgeResult)
         }
     }
@@ -175,9 +173,10 @@ class AnalysisApiSurfaceTest : AbstractAnalysisApiExecutionTest("testData/surfac
         assertEquals("MyAnnotation", annotationClass.name)
 
         analyze(annotationClass) {
+            val session = contextOf<KaSession>()
             val classSymbol = annotationClass.classSymbol!!
 
-            val memberMethod = this@analyze::class.java
+            val memberMethod = session::class.java
                 .getMethod("getAnnotationApplicableTargets", KaClassSymbol::class.java)
 
             // For some reason, getters of HIDDEN-deprecated interface properties aren't synthetic
@@ -190,12 +189,12 @@ class AnalysisApiSurfaceTest : AbstractAnalysisApiExecutionTest("testData/surfac
             assert(contextParameterBridgeMethod.isSynthetic)
 
             @Suppress("UNCHECKED_CAST")
-            val memberResult = memberMethod.invoke(this@analyze, classSymbol) as Set<KotlinTarget>
+            val memberResult = memberMethod.invoke(session, classSymbol) as Set<KotlinTarget>
             assert(KotlinTarget.CLASS in memberResult)
             assert(KotlinTarget.FUNCTION in memberResult)
 
             @Suppress("UNCHECKED_CAST")
-            val contextParameterBridgeResult = contextParameterBridgeMethod.invoke(null, this@analyze, classSymbol) as Set<KotlinTarget>
+            val contextParameterBridgeResult = contextParameterBridgeMethod.invoke(null, session, classSymbol) as Set<KotlinTarget>
             assertEquals(memberResult, contextParameterBridgeResult)
         }
     }

@@ -1,7 +1,8 @@
 package org.jetbrains.kotlin.objcexport.tests
 
 import org.intellij.lang.annotations.Language
-import org.jetbrains.kotlin.analysis.api.analyze
+import org.jetbrains.kotlin.analysis.api.KaSession
+import org.jetbrains.kotlin.analysis.api.session.analyze
 import org.jetbrains.kotlin.analysis.api.symbols.KaNamedFunctionSymbol
 import org.jetbrains.kotlin.analysis.api.symbols.KaPropertySymbol
 import org.jetbrains.kotlin.backend.konan.objcexport.ObjCGenericTypeParameterUsage
@@ -13,7 +14,7 @@ import org.jetbrains.kotlin.export.test.getClassOrFail
 import org.jetbrains.kotlin.export.test.getFunctionOrFail
 import org.jetbrains.kotlin.export.test.getPropertyOrFail
 import org.jetbrains.kotlin.objcexport.*
-import org.jetbrains.kotlin.objcexport.testUtils.*
+import org.jetbrains.kotlin.objcexport.testUtils.second
 import org.jetbrains.kotlin.psi.KtFile
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
@@ -229,7 +230,7 @@ class TypeParametersTranslationTests(
         analyze(file) {
             with(
                 ObjCExportContext(
-                    analysisSession = this,
+                    analysisSession = contextOf<KaSession>(),
                     exportSession = KtObjCExportSessionImpl(
                         KtObjCExportConfiguration(),
                         moduleNaming = KtObjCExportModuleNaming.default,

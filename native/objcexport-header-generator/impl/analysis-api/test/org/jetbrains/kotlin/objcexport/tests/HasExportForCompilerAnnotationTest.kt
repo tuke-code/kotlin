@@ -2,9 +2,9 @@ package org.jetbrains.kotlin.objcexport.tests
 
 import org.jetbrains.kotlin.analysis.api.KaExperimentalApi
 import org.jetbrains.kotlin.analysis.api.KaSession
-import org.jetbrains.kotlin.analysis.api.analyze
-import org.jetbrains.kotlin.analysis.api.symbols.KaPropertySymbol
 import org.jetbrains.kotlin.analysis.api.export.utilities.hasExportForCompilerAnnotation
+import org.jetbrains.kotlin.analysis.api.session.analyze
+import org.jetbrains.kotlin.analysis.api.symbols.KaPropertySymbol
 import org.jetbrains.kotlin.export.test.InlineSourceCodeAnalysis
 import org.jetbrains.kotlin.export.test.getPropertyOrFail
 import org.junit.jupiter.api.Test
@@ -27,14 +27,15 @@ class HasExportForCompilerAnnotationTest(
         )
 
         analyze(ktFile) {
+            val session = contextOf<KaSession>()
             assertTrue(
-                verifyHasExportForCompilerAnnotation(ktFile.getPropertyOrFail("array", this))
+                session.verifyHasExportForCompilerAnnotation(ktFile.getPropertyOrFail("array", session))
             )
             assertFalse(
-                verifyHasExportForCompilerAnnotation(ktFile.getPropertyOrFail("iterator", this))
+                session.verifyHasExportForCompilerAnnotation(ktFile.getPropertyOrFail("iterator", session))
             )
             assertFalse(
-                verifyHasExportForCompilerAnnotation(ktFile.getPropertyOrFail("foo", this))
+                session.verifyHasExportForCompilerAnnotation(ktFile.getPropertyOrFail("foo", session))
             )
         }
     }

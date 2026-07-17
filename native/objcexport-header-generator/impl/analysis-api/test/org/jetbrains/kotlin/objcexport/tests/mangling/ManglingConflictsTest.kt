@@ -1,14 +1,15 @@
 package org.jetbrains.kotlin.objcexport.tests.mangling
 
 import org.intellij.lang.annotations.Language
-import org.jetbrains.kotlin.analysis.api.analyze
+import org.jetbrains.kotlin.analysis.api.KaSession
+import org.jetbrains.kotlin.analysis.api.session.analyze
 import org.jetbrains.kotlin.analysis.api.symbols.KaClassSymbol
 import org.jetbrains.kotlin.export.test.InlineSourceCodeAnalysis
+import org.jetbrains.kotlin.export.test.getClassOrFail
 import org.jetbrains.kotlin.objcexport.KtObjCExportConfiguration
 import org.jetbrains.kotlin.objcexport.ObjCExportContext
 import org.jetbrains.kotlin.objcexport.mangling.hasMethodConflicts
 import org.jetbrains.kotlin.objcexport.mangling.hasPropertiesConflicts
-import org.jetbrains.kotlin.export.test.getClassOrFail
 import org.jetbrains.kotlin.objcexport.translateToObjCExportStub
 import org.jetbrains.kotlin.objcexport.withKtObjCExportSession
 import org.junit.jupiter.api.Test
@@ -81,10 +82,10 @@ class ManglingConflictsTest(
     private fun doTest(@Language("kotlin") code: String, run: ObjCExportContext.(KaClassSymbol) -> Unit) {
         val file = inlineSourceCodeAnalysis.createKtFile(code.trimMargin())
         analyze(file) {
-            val foo = getClassOrFail(file, "Foo")
-            val kaSession = this
+            val session = contextOf<KaSession>()
+            val foo = session.getClassOrFail(file, "Foo")
             withKtObjCExportSession(KtObjCExportConfiguration()) {
-                with(ObjCExportContext(analysisSession = kaSession, exportSession = this)) {
+                with(ObjCExportContext(analysisSession = session, exportSession = this)) {
                     run(foo)
                 }
             }

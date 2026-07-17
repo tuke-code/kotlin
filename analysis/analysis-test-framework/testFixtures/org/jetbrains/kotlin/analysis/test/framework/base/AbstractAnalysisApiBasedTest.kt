@@ -14,8 +14,8 @@ import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.testFramework.TestDataFile
 import org.jetbrains.kotlin.TestWithDisposable
 import org.jetbrains.kotlin.analysis.api.KaSession
-import org.jetbrains.kotlin.analysis.api.analyze
 import org.jetbrains.kotlin.analysis.api.projectStructure.KaDanglingFileResolutionMode
+import org.jetbrains.kotlin.analysis.api.session.analyze
 import org.jetbrains.kotlin.analysis.api.session.analyzeCopy
 import org.jetbrains.kotlin.analysis.api.standalone.base.projectStructure.AnalysisApiServiceRegistrar
 import org.jetbrains.kotlin.analysis.test.data.manager.ManagedTest
@@ -620,7 +620,7 @@ abstract class AbstractAnalysisApiBasedTest : TestWithDisposable(), ManagedTest 
                 contextOf<KaSession>().action(getDependentElementFromFile(contextElement, fileCopy))
             }
         } else {
-            analyze(contextElement, action = { action(contextElement) })
+            analyze(contextElement, action = { contextOf<KaSession>().action(contextElement) })
         }
     }
 

@@ -6,24 +6,15 @@
 package org.jetbrains.kotlin.sir.providers.support
 
 import org.jetbrains.kotlin.analysis.api.KaSession
-import org.jetbrains.kotlin.analysis.api.analyze
 import org.jetbrains.kotlin.analysis.api.projectStructure.KaModule
+import org.jetbrains.kotlin.analysis.api.scopes.fileScope
+import org.jetbrains.kotlin.analysis.api.session.analyze
+import org.jetbrains.kotlin.analysis.api.session.useSiteModule
+import org.jetbrains.kotlin.analysis.api.symbols.symbol
 import org.jetbrains.kotlin.psi.KtFile
 import org.jetbrains.kotlin.sir.SirDeclaration
 import org.jetbrains.kotlin.sir.builder.buildModule
-import org.jetbrains.kotlin.sir.providers.SirBridgeProvider
-import org.jetbrains.kotlin.sir.providers.SirChildrenProvider
-import org.jetbrains.kotlin.sir.providers.SirCustomTypeTranslator
-import org.jetbrains.kotlin.sir.providers.SirDeclarationNamer
-import org.jetbrains.kotlin.sir.providers.SirDeclarationProvider
-import org.jetbrains.kotlin.sir.providers.SirEnumGenerator
-import org.jetbrains.kotlin.sir.providers.SirModuleProvider
-import org.jetbrains.kotlin.sir.providers.SirParentProvider
-import org.jetbrains.kotlin.sir.providers.SirSession
-import org.jetbrains.kotlin.sir.providers.SirTrampolineDeclarationsProvider
-import org.jetbrains.kotlin.sir.providers.SirTypeNamer
-import org.jetbrains.kotlin.sir.providers.SirTypeProvider
-import org.jetbrains.kotlin.sir.providers.SirVisibilityChecker
+import org.jetbrains.kotlin.sir.providers.*
 import org.jetbrains.kotlin.sir.providers.impl.*
 import org.jetbrains.kotlin.sir.providers.impl.BridgeProvider.SirBridgeProviderImpl
 import org.jetbrains.kotlin.sir.providers.impl.BridgeProvider.SirCustomTypeTranslatorImpl
@@ -91,6 +82,6 @@ inline fun <R> withAnalysisSession(
     action: KaSession.(KtFile) -> R
 ) {
     analyze(file) {
-        action(file)
+        contextOf<KaSession>().action(file)
     }
 }
