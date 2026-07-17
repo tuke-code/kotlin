@@ -12,16 +12,16 @@ import com.intellij.psi.AbstractFileViewProvider
 import com.intellij.psi.impl.PsiManagerEx
 import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.testFramework.TestDataFile
+import org.jetbrains.kotlin.TestWithDisposable
 import org.jetbrains.kotlin.analysis.api.KaSession
 import org.jetbrains.kotlin.analysis.api.analyze
-import org.jetbrains.kotlin.analysis.api.analyzeCopy
 import org.jetbrains.kotlin.analysis.api.projectStructure.KaDanglingFileResolutionMode
+import org.jetbrains.kotlin.analysis.api.session.analyzeCopy
 import org.jetbrains.kotlin.analysis.api.standalone.base.projectStructure.AnalysisApiServiceRegistrar
 import org.jetbrains.kotlin.analysis.test.data.manager.ManagedTest
 import org.jetbrains.kotlin.analysis.test.data.manager.ManagedTestAssertions
 import org.jetbrains.kotlin.analysis.test.data.manager.TestVariantChain
 import org.jetbrains.kotlin.analysis.test.framework.AnalysisApiTestDirectives
-import org.jetbrains.kotlin.TestWithDisposable
 import org.jetbrains.kotlin.analysis.test.framework.projectStructure.KtTestModule
 import org.jetbrains.kotlin.analysis.test.framework.projectStructure.ktTestModuleStructure
 import org.jetbrains.kotlin.analysis.test.framework.services.*
@@ -616,7 +616,8 @@ abstract class AbstractAnalysisApiBasedTest : TestWithDisposable(), ManagedTest 
                     "The copied file should have the same original file as the original file" +
                             " (original file: '$originalContainingFile', copied file: '$fileCopy')."
                 }
-                action(getDependentElementFromFile(contextElement, fileCopy))
+
+                contextOf<KaSession>().action(getDependentElementFromFile(contextElement, fileCopy))
             }
         } else {
             analyze(contextElement, action = { action(contextElement) })

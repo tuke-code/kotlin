@@ -8,10 +8,10 @@ package org.jetbrains.kotlin.analysis.api.impl.base.test.cases.components.resolv
 import com.intellij.psi.PsiFileFactory
 import org.jetbrains.kotlin.analysis.api.KaSession
 import org.jetbrains.kotlin.analysis.api.analyze
-import org.jetbrains.kotlin.analysis.api.analyzeCopy
 import org.jetbrains.kotlin.analysis.api.projectStructure.KaDanglingFileResolutionMode
 import org.jetbrains.kotlin.analysis.api.resolution.KaSymbolResolutionAttempt
 import org.jetbrains.kotlin.analysis.api.resolution.symbols
+import org.jetbrains.kotlin.analysis.api.session.analyzeCopy
 import org.jetbrains.kotlin.analysis.test.framework.projectStructure.KtTestModule
 import org.jetbrains.kotlin.analysis.test.framework.services.expressionMarkerProvider
 import org.jetbrains.kotlin.psi.KtElement
@@ -82,7 +82,7 @@ abstract class AbstractResolveDanglingFileSymbolTest : AbstractResolveSymbolTest
     override fun <R> analyzeSymbolElement(element: KtElement, testServices: TestServices, action: KaSession.() -> R): R {
         val resolutionMode = testServices.moduleStructure.allDirectives.singleOrZeroValue(Directives.COPY_RESOLUTION_MODE)
         return if (resolutionMode != null) {
-            analyzeCopy(element, resolutionMode) { action() }
+            analyzeCopy(element, resolutionMode) { contextOf<KaSession>().action() }
         } else {
             analyze(element) { action() }
         }
