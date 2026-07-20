@@ -190,6 +190,7 @@ public abstract class KaAnonymousObjectSymbol : KaClassSymbol() {
     //region Implementation details
     final override val classKind: KaClassKind get() = withValidityAssertion { KaClassKind.ANONYMOUS_OBJECT }
     final override val classId: ClassId? get() = withValidityAssertion { null }
+    final override val typeParameters: List<KaTypeParameterSymbol> get() = withValidityAssertion { emptyList() }
     final override val location: KaSymbolLocation get() = withValidityAssertion { KaSymbolLocation.LOCAL }
     final override val modality: KaSymbolModality get() = withValidityAssertion { KaSymbolModality.FINAL }
     final override val visibility: KaSymbolVisibility get() = withValidityAssertion { KaSymbolVisibility.LOCAL }

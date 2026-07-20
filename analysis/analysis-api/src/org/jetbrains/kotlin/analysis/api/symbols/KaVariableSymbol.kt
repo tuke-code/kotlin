@@ -601,6 +601,12 @@ public sealed class KaParameterSymbol : KaVariableSymbol() {
     abstract override fun createPointer(): KaSymbolPointer<KaParameterSymbol>
 
     //region Implementation details
+    final override val visibility: KaSymbolVisibility get() = withValidityAssertion { KaSymbolVisibility.PUBLIC }
+
+    @KaExperimentalApi
+    @Deprecated("Use 'visibility' instead", level = DeprecationLevel.HIDDEN)
+    final override val compilerVisibility: Visibility get() = withValidityAssertion { Visibilities.Public }
+
     final override val location: KaSymbolLocation get() = withValidityAssertion { KaSymbolLocation.LOCAL }
 
     final override val callableId: CallableId? get() = withValidityAssertion { null }

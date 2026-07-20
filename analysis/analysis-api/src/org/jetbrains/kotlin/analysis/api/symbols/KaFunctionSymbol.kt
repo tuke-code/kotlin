@@ -12,6 +12,8 @@ import org.jetbrains.kotlin.analysis.api.contracts.description.KaContractEffectD
 import org.jetbrains.kotlin.analysis.api.lifetime.withValidityAssertion
 import org.jetbrains.kotlin.analysis.api.symbols.markers.KaNamedSymbol
 import org.jetbrains.kotlin.analysis.api.symbols.pointers.KaSymbolPointer
+import org.jetbrains.kotlin.descriptors.Visibilities
+import org.jetbrains.kotlin.descriptors.Visibility
 import org.jetbrains.kotlin.name.CallableId
 import org.jetbrains.kotlin.name.ClassId
 
@@ -50,6 +52,14 @@ public abstract class KaAnonymousFunctionSymbol : KaFunctionSymbol() {
     abstract override fun createPointer(): KaSymbolPointer<KaAnonymousFunctionSymbol>
 
     //region Implementation details
+    final override val typeParameters: List<KaTypeParameterSymbol> get() = withValidityAssertion { emptyList() }
+
+    final override val visibility: KaSymbolVisibility get() = withValidityAssertion { KaSymbolVisibility.PUBLIC }
+
+    @KaExperimentalApi
+    @Deprecated("Use 'visibility' instead", level = DeprecationLevel.HIDDEN)
+    final override val compilerVisibility: Visibility get() = withValidityAssertion { Visibilities.Public }
+
     final override val location: KaSymbolLocation get() = withValidityAssertion { KaSymbolLocation.LOCAL }
     final override val callableId: CallableId? get() = withValidityAssertion { null }
     final override val isActual: Boolean get() = withValidityAssertion { false }
