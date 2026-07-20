@@ -438,7 +438,6 @@ object CompilerModules {
         ":prepare:ide-plugin-dependencies:analysis-api-for-ide",
         ":prepare:ide-plugin-dependencies:analysis-api-impl-base-for-ide",
         ":prepare:ide-plugin-dependencies:analysis-api-k2-for-ide",
-        ":prepare:ide-plugin-dependencies:analysis-api-fe10-for-ide",
         ":prepare:ide-plugin-dependencies:analysis-api-platform-interface-for-ide",
         ":prepare:ide-plugin-dependencies:symbol-light-classes-for-ide",
         ":prepare:ide-plugin-dependencies:analysis-api-standalone-for-ide",
