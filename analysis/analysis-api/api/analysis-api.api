@@ -964,7 +964,6 @@ public abstract class org/jetbrains/kotlin/analysis/api/symbols/KaBackingFieldSy
 	public final fun getLocation ()Lorg/jetbrains/kotlin/analysis/api/symbols/KaSymbolLocation;
 	public final fun getModality ()Lorg/jetbrains/kotlin/analysis/api/symbols/KaSymbolModality;
 	public final fun getName ()Lorg/jetbrains/kotlin/name/Name;
-	public fun getOrigin ()Lorg/jetbrains/kotlin/analysis/api/symbols/KaSymbolOrigin;
 	public abstract fun getOwningProperty ()Lorg/jetbrains/kotlin/analysis/api/symbols/KaKotlinPropertySymbol;
 	public final fun getReceiverParameter ()Lorg/jetbrains/kotlin/analysis/api/symbols/KaReceiverParameterSymbol;
 	public final fun getTypeParameters ()Ljava/util/List;
@@ -1205,8 +1204,6 @@ public abstract class org/jetbrains/kotlin/analysis/api/symbols/KaPropertyAccess
 	public final fun getTypeParameters ()Ljava/util/List;
 	public final fun isActual ()Z
 	public abstract fun isDefault ()Z
-	public fun isExpect ()Z
-	public fun isExtension ()Z
 	public abstract fun isInline ()Z
 	public abstract fun isNotDefault ()Z
 	public abstract fun isOverride ()Z
@@ -1380,7 +1377,6 @@ public abstract class org/jetbrains/kotlin/analysis/api/symbols/KaSyntheticJavaP
 	public abstract fun getJavaGetterSymbol ()Lorg/jetbrains/kotlin/analysis/api/symbols/KaNamedFunctionSymbol;
 	public abstract fun getJavaSetterSymbol ()Lorg/jetbrains/kotlin/analysis/api/symbols/KaNamedFunctionSymbol;
 	public final fun getLocation ()Lorg/jetbrains/kotlin/analysis/api/symbols/KaSymbolLocation;
-	public fun getOrigin ()Lorg/jetbrains/kotlin/analysis/api/symbols/KaSymbolOrigin;
 	public final fun isDelegated ()Z
 	public final fun isFromPrimaryConstructor ()Z
 }

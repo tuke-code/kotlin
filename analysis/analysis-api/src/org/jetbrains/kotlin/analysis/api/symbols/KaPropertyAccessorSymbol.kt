@@ -106,10 +106,6 @@ public sealed class KaPropertyAccessorSymbol : KaFunctionSymbol() {
     abstract override fun createPointer(): KaSymbolPointer<KaPropertyAccessorSymbol>
 
     //region Implementation details
-    override val isExtension: Boolean get() = withValidityAssertion { false }
-
-    override val isExpect: Boolean get() = withValidityAssertion { false }
-
     @KaExperimentalApi
     final override val isCompanion: Boolean get() = withValidityAssertion { false }
 

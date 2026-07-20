@@ -41,6 +41,9 @@ internal class KaFirSyntheticPropertyGetterSymbol(
     override val isInline: Boolean
         get() = withValidityAssertion { false }
 
+    override val isExpect: Boolean
+        get() = withValidityAssertion { false }
+
     override val isOverride: Boolean
         get() = withValidityAssertion {
             firSymbol.isOverride || firSymbol.fir.propertySymbol.isOverride

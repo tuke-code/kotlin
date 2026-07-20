@@ -85,7 +85,6 @@ public abstract class KaBackingFieldSymbol : KaVariableSymbol() {
     final override val name: Name get() = withValidityAssertion { StandardNames.BACKING_FIELD }
 
     final override val location: KaSymbolLocation get() = withValidityAssertion { KaSymbolLocation.PROPERTY }
-    override val origin: KaSymbolOrigin get() = withValidityAssertion { KaSymbolOrigin.PROPERTY_BACKING_FIELD }
     final override val callableId: CallableId? get() = withValidityAssertion { null }
     final override val isExtension: Boolean get() = withValidityAssertion { false }
     final override val receiverParameter: KaReceiverParameterSymbol? get() = withValidityAssertion { null }
@@ -546,7 +545,6 @@ public abstract class KaSyntheticJavaPropertySymbol : KaPropertySymbol() {
         ReplaceWith("primaryConstructorParameter != null")
     )
     final override val isFromPrimaryConstructor: Boolean get() = withValidityAssertion { false }
-    override val origin: KaSymbolOrigin get() = withValidityAssertion { KaSymbolOrigin.JAVA_SYNTHETIC_PROPERTY }
 
     final override val contextParameters: List<KaContextParameterSymbol> get() = withValidityAssertion { emptyList() }
     //endregion
