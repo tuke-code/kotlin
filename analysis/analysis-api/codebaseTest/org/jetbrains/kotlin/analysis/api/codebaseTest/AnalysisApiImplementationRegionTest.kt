@@ -18,21 +18,21 @@ import org.junit.jupiter.api.Test
 import java.io.File
 
 /**
- * Guards the structural convention of the Analysis API symbol surface (see KT-87578).
+ * Guards the structural convention of the Analysis API surface (see KT-87578).
  *
- * In each symbol class, members whose value is a genuine constant for the symbol kind are declared as `final override` and
- * grouped at the very end of the class body inside a `//region Implementation details` … `//endregion` fold, right after
- * [createPointer][org.jetbrains.kotlin.analysis.api.symbols.KaSymbol.createPointer]. Members that vary between implementations
- * must stay abstract and be implemented per symbol, so they must not be pinned here.
+ * In each surface class, members whose value is a genuine constant for that kind of declaration are declared as
+ * `final override` and grouped at the very end of the class body inside a `//region Implementation details` …
+ * `//endregion` fold, right after `createPointer()`. Members that vary between implementations must stay abstract and be
+ * implemented per declaration, so they must not be pinned here.
  *
- * The test enforces, for every class under the symbols package:
+ * The test enforces, for every class under the surface:
  * - every `final override` member is inside the region, and the region contains nothing but `final override` members;
  * - no declaration appears after `//endregion` (the region is the last block);
  * - `createPointer()`, when declared, is the last declaration before the region opens.
  */
-class AnalysisApiSymbolImplementationRegionTest : AbstractAnalysisApiCodebaseValidationTest() {
+class AnalysisApiImplementationRegionTest : AbstractAnalysisApiCodebaseValidationTest() {
     override val sourceDirectories: List<SourceDirectory.ForValidation> = listOf(
-        SourceDirectory.ForValidation(listOf("src/org/jetbrains/kotlin/analysis/api/symbols")),
+        SourceDirectory.ForValidation(listOf("src")),
     )
 
     override fun processFile(file: File, psiFile: PsiFile) {
@@ -127,8 +127,9 @@ class AnalysisApiSymbolImplementationRegionTest : AbstractAnalysisApiCodebaseVal
         const val CREATE_POINTER: String = "createPointer"
 
         const val EXPLANATION: String =
-            "Members whose value is a constant for the symbol kind must be declared as `final override` and grouped at the end " +
-                    "of the class inside a `$REGION_OPEN` … `$REGION_CLOSE` fold, right after `$CREATE_POINTER()`. Members that " +
-                    "vary between implementations must stay abstract and be implemented per symbol instead of being pinned here."
+            "Members whose value is a constant for that kind of declaration must be declared as `final override` and grouped " +
+                    "at the end of the class inside a `$REGION_OPEN` … `$REGION_CLOSE` fold, right after `$CREATE_POINTER()`. " +
+                    "Members that vary between implementations must stay abstract and be implemented per declaration instead of " +
+                    "being pinned here."
     }
 }
