@@ -262,6 +262,12 @@ public class AtomicfuJsWithInlinedFunInKlibTestGenerated extends AbstractAtomicf
     public void testDelegatedPropertiesTest() {
       run("DelegatedPropertiesTest.kt");
     }
+
+    @Test
+    @TestMetadata("InitializationOrderTest.kt")
+    public void testInitializationOrderTest() {
+      run("InitializationOrderTest.kt");
+    }
   }
 
   @Nested
