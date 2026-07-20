@@ -47,6 +47,9 @@ public sealed class KaFunctionSymbol : KaCallableSymbol() {
 @OptIn(KaExperimentalApi::class)
 @SubclassOptInRequired(KaImplementationDetail::class)
 public abstract class KaAnonymousFunctionSymbol : KaFunctionSymbol() {
+    abstract override fun createPointer(): KaSymbolPointer<KaAnonymousFunctionSymbol>
+
+    //region Implementation details
     final override val location: KaSymbolLocation get() = withValidityAssertion { KaSymbolLocation.LOCAL }
     final override val callableId: CallableId? get() = withValidityAssertion { null }
     final override val isActual: Boolean get() = withValidityAssertion { false }
@@ -57,8 +60,7 @@ public abstract class KaAnonymousFunctionSymbol : KaFunctionSymbol() {
 
     @KaExperimentalApi
     final override val isCompanion: Boolean get() = withValidityAssertion { false }
-
-    abstract override fun createPointer(): KaSymbolPointer<KaAnonymousFunctionSymbol>
+    //endregion
 }
 
 /**
@@ -86,6 +88,9 @@ public abstract class KaAnonymousFunctionSymbol : KaFunctionSymbol() {
 @OptIn(KaImplementationDetail::class)
 @SubclassOptInRequired(KaImplementationDetail::class)
 public abstract class KaSamConstructorSymbol : KaFunctionSymbol(), KaNamedSymbol {
+    abstract override fun createPointer(): KaSymbolPointer<KaSamConstructorSymbol>
+
+    //region Implementation details
     final override val location: KaSymbolLocation get() = withValidityAssertion { KaSymbolLocation.TOP_LEVEL }
     final override val receiverParameter: KaReceiverParameterSymbol? get() = withValidityAssertion { null }
 
@@ -95,8 +100,7 @@ public abstract class KaSamConstructorSymbol : KaFunctionSymbol(), KaNamedSymbol
 
     @KaExperimentalApi
     final override val isCompanion: Boolean get() = withValidityAssertion { false }
-
-    abstract override fun createPointer(): KaSymbolPointer<KaSamConstructorSymbol>
+    //endregion
 }
 
 /**
@@ -182,6 +186,9 @@ public abstract class KaConstructorSymbol : KaFunctionSymbol() {
      */
     public abstract val containingClassId: ClassId?
 
+    abstract override fun createPointer(): KaSymbolPointer<KaConstructorSymbol>
+
+    //region Implementation details
     final override val callableId: CallableId? get() = withValidityAssertion { null }
     final override val location: KaSymbolLocation get() = withValidityAssertion { KaSymbolLocation.CLASS }
     final override val isExtension: Boolean get() = withValidityAssertion { false }
@@ -196,6 +203,5 @@ public abstract class KaConstructorSymbol : KaFunctionSymbol() {
     final override val contextReceivers: List<KaContextReceiver> get() = withValidityAssertion { emptyList() }
 
     final override val modality: KaSymbolModality get() = withValidityAssertion { KaSymbolModality.FINAL }
-
-    abstract override fun createPointer(): KaSymbolPointer<KaConstructorSymbol>
+    //endregion
 }
