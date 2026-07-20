@@ -1278,7 +1278,7 @@ private fun KaDiagnosticConverterBuilder.addConversions23() {
             token,
         )
     }
-    add(FirErrors.IMPOSSIBLE_IS_CHECK.errorFactory) { firDiagnostic ->
+    add(FirErrors.IMPOSSIBLE_IS_CHECK_ERROR) { firDiagnostic ->
         ImpossibleIsCheckErrorImpl(
             firDiagnostic.a,
             firDiagnostic as KtPsiDiagnostic,
@@ -1964,6 +1964,13 @@ private fun KaDiagnosticConverterBuilder.addConversions39() {
             token,
         )
     }
+    add(FirErrors.IMPOSSIBLE_IS_CHECK_RELYING_ON_NULL_DEPRECATION.warningFactory) { firDiagnostic ->
+        ImpossibleIsCheckRelyingOnNullDeprecationWarningImpl(
+            firDiagnostic.a,
+            firDiagnostic as KtPsiDiagnostic,
+            token,
+        )
+    }
     add(FirErrors.COMPONENT_FUNCTION_MISSING) { firDiagnostic ->
         ComponentFunctionMissingImpl(
             firDiagnostic.a,
@@ -2385,7 +2392,7 @@ private fun KaDiagnosticConverterBuilder.addConversions51() {
             token,
         )
     }
-    add(FirErrors.IMPOSSIBLE_IS_CHECK_RELYING_ON_NULL.warningFactory) { firDiagnostic ->
+    add(FirErrors.IMPOSSIBLE_IS_CHECK_RELYING_ON_NULL_WARNING) { firDiagnostic ->
         ImpossibleIsCheckRelyingOnNullWarningImpl(
             firDiagnostic.a,
             firDiagnostic as KtPsiDiagnostic,
@@ -2857,6 +2864,13 @@ private fun KaDiagnosticConverterBuilder.addConversions63() {
     }
     add(FirErrors.CANNOT_INFER_RECEIVER_PARAMETER_TYPE) { firDiagnostic ->
         CannotInferReceiverParameterTypeImpl(
+            firDiagnostic as KtPsiDiagnostic,
+            token,
+        )
+    }
+    add(FirErrors.IMPOSSIBLE_IS_CHECK_DEPRECATION.warningFactory) { firDiagnostic ->
+        ImpossibleIsCheckDeprecationWarningImpl(
+            firDiagnostic.a,
             firDiagnostic as KtPsiDiagnostic,
             token,
         )
@@ -4431,7 +4445,7 @@ private fun KaDiagnosticConverterBuilder.addConversions99() {
             token,
         )
     }
-    add(FirErrors.IMPOSSIBLE_IS_CHECK.warningFactory) { firDiagnostic ->
+    add(FirErrors.IMPOSSIBLE_IS_CHECK_WARNING) { firDiagnostic ->
         ImpossibleIsCheckWarningImpl(
             firDiagnostic.a,
             firDiagnostic as KtPsiDiagnostic,
@@ -4663,7 +4677,7 @@ private fun KaDiagnosticConverterBuilder.addConversions103() {
             token,
         )
     }
-    add(FirErrors.IMPOSSIBLE_IS_CHECK_RELYING_ON_NULL.errorFactory) { firDiagnostic ->
+    add(FirErrors.IMPOSSIBLE_IS_CHECK_RELYING_ON_NULL_ERROR) { firDiagnostic ->
         ImpossibleIsCheckRelyingOnNullErrorImpl(
             firDiagnostic.a,
             firDiagnostic as KtPsiDiagnostic,
@@ -5175,6 +5189,13 @@ private fun KaDiagnosticConverterBuilder.addConversions115() {
         ParameterNameChangedOnOverrideImpl(
             firSymbolBuilder.classifierBuilder.buildClassLikeSymbol(firDiagnostic.a),
             firSymbolBuilder.buildSymbol(firDiagnostic.b),
+            firDiagnostic as KtPsiDiagnostic,
+            token,
+        )
+    }
+    add(FirErrors.IMPOSSIBLE_IS_CHECK_RELYING_ON_NULL_DEPRECATION.errorFactory) { firDiagnostic ->
+        ImpossibleIsCheckRelyingOnNullDeprecationErrorImpl(
+            firDiagnostic.a,
             firDiagnostic as KtPsiDiagnostic,
             token,
         )
@@ -7703,6 +7724,13 @@ private fun KaDiagnosticConverterBuilder.addConversions173() {
     }
     add(FirErrors.MISPLACED_TYPE_PARAMETER_CONSTRAINTS) { firDiagnostic ->
         MisplacedTypeParameterConstraintsImpl(
+            firDiagnostic as KtPsiDiagnostic,
+            token,
+        )
+    }
+    add(FirErrors.IMPOSSIBLE_IS_CHECK_DEPRECATION.errorFactory) { firDiagnostic ->
+        ImpossibleIsCheckDeprecationErrorImpl(
+            firDiagnostic.a,
             firDiagnostic as KtPsiDiagnostic,
             token,
         )
