@@ -6,47 +6,92 @@
 package org.jetbrains.kotlin.repoTestFixtures
 
 import org.eclipse.jgit.ignore.IgnoreNode
+import java.nio.channels.Channels
+import java.nio.file.Files
+import java.nio.file.LinkOption
 import java.nio.file.Path
-import kotlin.io.path.*
+import java.nio.file.StandardOpenOption
+import kotlin.io.path.Path
+import kotlin.io.path.absolute
+import kotlin.io.path.invariantSeparatorsPathString
+import kotlin.io.path.isDirectory
 
-private val repositoryRoot = Path("").absolute()
+private val repositoryRoot by lazy {
+    findRepositoryRoot(Path("").absolute())
+        ?: error("Cannot find the repository root from the current working directory")
+}
 
 /**
  * Returns true if the path is ignored (as in listed in any '.gitignore').
  * @throws IllegalArgumentException if the path is not within the repository root.
  */
-fun Path.isGitIgnored(): Boolean {
-    val isDirectory = this.isDirectory()
-    val thisPath = repositoryRoot.relativize(this.absolute()).invariantSeparatorsPathString
-    if (thisPath == ".git") return true
+fun Path.isGitIgnored(): Boolean = (if (isAbsolute) this else repositoryRoot.resolve(this)).isGitIgnored(repositoryRoot)
 
-    /*
-    Resolve .gitignore files from parent directories to determine if the current path is git ignored.
-     */
-    var currentDirectory: Path? = parent?.absolute()
-    while (currentDirectory != null) {
-        val gitIgnoreNode = currentDirectory.resolve(".gitignore").getOrParseGitIgnoreNode()
-        gitIgnoreNode?.checkIgnored(thisPath, isDirectory)?.let { result ->
-            return result
-        }
+internal fun Path.isGitIgnored(repositoryRoot: Path): Boolean {
+    val absoluteRepositoryRoot = repositoryRoot.absolute().normalize()
+    val absolutePath = (if (isAbsolute) this else absoluteRepositoryRoot.resolve(this)).absolute().normalize()
 
-        currentDirectory = currentDirectory.parent
-        if (currentDirectory == repositoryRoot) {
-            break
+    require(absolutePath.startsWith(absoluteRepositoryRoot)) {
+        "Path '$this' is not within the repository root '$repositoryRoot'"
+    }
+
+    val relativePath = absoluteRepositoryRoot.relativize(absolutePath)
+    if (relativePath.any { it.toString() == ".git" }) return true
+
+    val ignoreNodes = buildList {
+        var currentDirectory = if (absolutePath.isDirectory()) absolutePath else absolutePath.parent
+        while (currentDirectory != null) {
+            val node = currentDirectory.resolve(".gitignore").getOrParseGitIgnoreNode(repositoryRoot)
+            if (node != null) add(IgnoreNodeInDirectory(currentDirectory, node))
+
+            if (currentDirectory == absoluteRepositoryRoot) break
+            currentDirectory = currentDirectory.parent
         }
     }
 
-    return false
+    return ignoreNodes.checkIgnored(absolutePath, absolutePath.isDirectory()) ?: false
 }
 
-private val ignoreNodesCache = hashMapOf<Path, IgnoreNode?>()
+internal fun findRepositoryRoot(startingPath: Path): Path? {
+    var currentPath: Path? = startingPath.absolute().normalize()
+    while (currentPath != null) {
+        val gitMetadata = currentPath.resolve(".git")
+        if (Files.isDirectory(gitMetadata, LinkOption.NOFOLLOW_LINKS) ||
+            Files.isRegularFile(gitMetadata, LinkOption.NOFOLLOW_LINKS)
+        ) {
+            return currentPath
+        }
+        currentPath = currentPath.parent
+    }
+    return null
+}
+
+private class IgnoreNodeInDirectory(val directory: Path, private val node: IgnoreNode) {
+    fun checkIgnored(path: Path, isDirectory: Boolean): Boolean? = synchronized(node) {
+        node.checkIgnored(directory.relativize(path).invariantSeparatorsPathString, isDirectory)
+    }
+}
+
+private fun List<IgnoreNodeInDirectory>.checkIgnored(path: Path, isDirectory: Boolean): Boolean? {
+    forEach { node ->
+        node.checkIgnored(path, isDirectory)?.let { return it }
+    }
+    return null
+}
+
+private val ignoreNodesCache = hashMapOf<IgnoreNodeCacheKey, IgnoreNode?>()
+
+data class IgnoreNodeCacheKey(val repositoryRoot: Path, val path: Path)
 
 @Synchronized
-private fun Path.getOrParseGitIgnoreNode(): IgnoreNode? = ignoreNodesCache.getOrPut(this) {
-    if (!this.isRegularFile()) return@getOrPut null
-    val node = IgnoreNode()
-    inputStream().use { stream ->
-        node.parse(repositoryRoot.relativize(this).invariantSeparatorsPathString, stream)
+private fun Path.getOrParseGitIgnoreNode(repositoryRoot: Path): IgnoreNode? =
+    ignoreNodesCache.getOrPut(IgnoreNodeCacheKey(repositoryRoot, this)) {
+        if (!Files.isRegularFile(this, LinkOption.NOFOLLOW_LINKS)) return@getOrPut null
+        val node = IgnoreNode()
+        Files.newByteChannel(this, setOf(StandardOpenOption.READ, LinkOption.NOFOLLOW_LINKS)).use { channel ->
+            Channels.newInputStream(channel).use { stream ->
+                node.parse(repositoryRoot.relativize(this).invariantSeparatorsPathString, stream)
+            }
+        }
+        node
     }
-    node
-}

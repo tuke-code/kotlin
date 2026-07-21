@@ -23,5 +23,12 @@ kotlin {
 }
 
 dependencies {
+    testImplementation(kotlin("test-junit5"))
+    testRuntimeOnly(libs.junit.jupiter.engine)
+    testRuntimeOnly(libs.junit.platform.launcher)
     testFixturesImplementation(libs.jgit)
+}
+
+tasks.test {
+    useJUnitPlatform()
 }
